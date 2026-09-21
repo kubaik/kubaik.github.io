@@ -14,7 +14,7 @@
   "meta_description": "MCP servers in 2026: real memory leaks, bandwidth inflation, proxy timeouts, and the TLS trap most teams miss before going live.",
   "featured_image": "/static/images/mcp-servers-the-3-hidden-costs-nobody-quotes.jpg",
   "created_at": "2026-08-05T02:46:23.521442",
-  "updated_at": "2026-09-21T08:28:27.286022+00:00",
+  "updated_at": "2026-09-19T08:27:14.230629+00:00",
   "seo_keywords": [
     "McpServerProduction",
     "McpMemoryLeak",

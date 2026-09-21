@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T08:13:32.910198",
+  "built_at": "2026-09-21T08:28:11.607433",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5295,6 +5295,11 @@
       "slug": "golden-paths-become-load-bearing-walls",
       "title": "Golden paths become load-bearing walls",
       "summary": "The same cursor claude mistake shows up across production codebases often enough to be a pattern, not bad luck. It works in the simple case and breaks in a specific way under load. Here's the version I wish someone had handed me first. The conventional wisdom (and why it's incomplete) Every platform"
+    },
+    {
+      "slug": "golden-paths-that-dont-handcuff",
+      "title": "Golden paths that don't handcuff",
+      "summary": "The golden paths section of a postmortem is easy to skim past, right up until it's the section that matters. The gap between the demo and the incident report is where this actually lives. This covers the fix, the cost of not knowing sooner, and what we monitor now. The problem this solves A golden p"
     }
   ]
 }

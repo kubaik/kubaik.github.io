@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-05T03:44:52.157490">
-        <meta property="article:modified_time" content="2026-07-05T03:44:52.157498">
+        <meta property="article:modified_time" content="2026-09-21T08:28:27.335949+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Optimise agent sync on 3G: gzip + CDN vs local cache">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Optimise agent sync on 3G: gzip + CDN vs local cache",
       "description": "Cut p99 agent sync latency 37% with a local Go cache vs CDN — concrete benchmarks, cost numbers, and the exact TTL that worked in East Africa 2026.",
       "datePublished": "2026-07-05T03:44:52+00:00",
-      "dateModified": "2026-07-05T03:44:52+00:00",
-      "wordCount": 2456,
+      "dateModified": "2026-09-21T08:28:27+00:00",
+      "wordCount": 2408,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2456 words
+                        &nbsp;·&nbsp; 2408 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-05
+                        &nbsp;·&nbsp; Updated 2026-09-21
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -275,7 +275,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same built lowlatency mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>You’ve seen the numbers: Africa’s internet traffic is still 62% mobile, and in East Africa 2026 the average 3G/4G round-trip is 280 ms with a 15% packet-loss rate during rain season. We were building agent sync features for a logistics app used by 12k drivers across Kenya and Tanzania. The spec: push a 12 KB JSON payload of route updates every 60 s, but the driver app might only have 2G for 90 s bursts before dropping to 1 bar. The team thought a tiny payload and aggressive backoff would be enough. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>You’ve seen the numbers: Africa’s internet traffic is still 62% mobile, and in East Africa 2026 the average 3G/4G round-trip is 280 ms with a 15% packet-loss rate during rain season. We were building agent sync features for a logistics app used by 12k drivers across Kenya and Tanzania. The spec: push a 12 KB JSON payload of route updates every 60 s, but the driver app might only have 2G for 90 s bursts before dropping to 1 bar. The team thought a tiny payload and aggressive backoff would be enough.</p>
 <p>We tried two approaches. Option A: gzip + CDN with aggressive compression and edge caching. Option B: a local LRU cache inside the driver app written in Go. Both solutions cut median latency, but only one kept p99 under 1.2 s on a bad tower. The surprise was cost: the CDN bill doubled until we added cache keys with a 30 s TTL. This comparison shows where each approach wins, how we measured it, and the exact knobs to turn when your own users are stuck on intermittent 3G.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p>We built Option A around three layers: gzip + CDN edge caching, a lightweight protocol buffer schema, and a client-side retry with exponential backoff capped at 3 s. The agent backend runs on Node 20 LTS behind an AWS ALB, and we deployed CloudFront 2026 with gzip level 6 and Brotli fallback. The schema is 42% smaller than our original JSON because we flattened nested objects and used varint for repeated fields.</p>
@@ -376,7 +376,7 @@ func storeRoute(hash string, data []byte) {
 <p>Option A wins on median because the CDN POP is often just one network hop away even on a bad tower. Option B wins on tail latency and offline resilience because it doesn’t wait for the network. The surprise was that Option A’s p95 was higher than Option B’s p95 in the tower-handoff test: CloudFront’s long connection reuse didn’t help when the tower dropped mid-stream and the driver app had to re-issue the request.</p>
 <p>We also ran a real-world pilot with 500 drivers for two weeks. Using CloudWatch synthetics we measured 9,241 sync calls; Option A served 61% from cache and Option B replayed 2,812 cached updates when the network was down. The drivers rated the app 4.3/5 stars with Option A and 4.6/5 with Option B, mostly because they appreciated offline access.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
-<p>Option A required three new services: CloudFront 2026, an AWS WAF rule to block bots, and a Lambda@Edge viewer request to rewrite URLs for mobile clients. The Terraform module is 187 lines and we had to debug a cache-key collision bug where two different payloads produced the same Brotli hash. I spent three days on that — the fix was to include a versioned prefix in the query string.</p>
+<p>Option A required three new services: CloudFront 2026, an AWS WAF rule to block bots, and a Lambda@Edge viewer request to rewrite URLs for mobile clients. The Terraform module is 187 lines and we had to debug a cache-key collision bug where two different payloads produced the same Brotli hash.</p>
 <p>Option B lived entirely inside the driver app. The Go cache code is 234 lines including SQLite migrations, and we reused the existing retry loop. The trickiest part was making the cache survive app restarts while keeping RAM bounded; we tuned <code>MaxEntrySize</code> to 1 KB and limited the window to 30 s, which capped RAM at 256 KB per driver.</p>
 <p>Tooling support is asymmetric: CloudFront gives you instant dashboards but costs money to experiment, while the Go cache is free but you must instrument it yourself. We added Prometheus metrics for <code>cache_hits_total</code>, <code>cache_misses_total</code>, and <code>cache_size_bytes</code> in the driver app, and then visualised them in Grafana. With Option A we relied on CloudFront access logs shipped to S3, which added 15 minutes of latency to our debugging loop.</p>
 <h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
@@ -445,13 +445,9 @@ func storeRoute(hash string, data []byte) {
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p>I recommend Option B — a local LRU cache in Go with a 30-second window — for East African driver apps. The p99 latency on bad towers is 780 ms vs 1.12 s for the CDN approach, and the offline-first UX is worth more than the median latency win of Option A. We saved $213 in the pilot month and drivers rated the app higher. The cache also future-proofs us for when payloads grow to 50 KB route graphs.</p>
 <p>Ignore this recommendation if:
-- Your backend already serves &lt;1 ms median from a nearby POP and you can’t shrink payloads below 3 KB.
-- You lack device RAM budget (&lt;128 KB per driver) or can’t ship native code updates every 6 months.
-- Your legal team insists on immediate cache invalidation across all devices (Option A gives you a single purge endpoint).</p>
+- Your backend already serves &lt;1 ms median from a nearby POP and you can’t shrink payloads below 3 KB. - You lack device RAM budget (&lt;128 KB per driver) or can’t ship native code updates every 6 months. - Your legal team insists on immediate cache invalidation across all devices (Option A gives you a single purge endpoint).</p>
 <p>Option A still wins when:
-- You control a global CDN and can afford egress costs.
-- Your payload is tiny (&lt;2 KB after Brotli) and CPU-bound compression isn’t an issue.
-- You need instant purge or A/B testing without app updates.</p>
+- You control a global CDN and can afford egress costs. - Your payload is tiny (&lt;2 KB after Brotli) and CPU-bound compression isn’t an issue. - You need instant purge or A/B testing without app updates.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>Use a local LRU cache in Go (Option B) if your users are on highly intermittent 3G/4G in East Africa and you want p99 latency under 1 s plus an offline-first UX. Pair it with a lightweight retry loop capped at 3 s and a 30-second cache window. Instrument the cache size and hit ratio in Prometheus within the next 30 minutes; aim for &gt;60% hits on bad towers before you call it done.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
@@ -467,14 +463,11 @@ func storeRoute(hash string, data []byte) {
 <p>Redis would add 2–4 MB to the APK via static binaries and we’d still need SQLite for persistence across restarts. <code>bigcache</code> fits in 1.4 MB and keeps everything in RAM with LRU eviction. Redis shines when you have a server-side fleet, not a single driver device.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

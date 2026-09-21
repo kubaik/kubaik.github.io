@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-29T14:18:17.130040">
-        <meta property="article:modified_time" content="2026-09-19T08:27:14.324453+00:00">
+        <meta property="article:modified_time" content="2026-09-21T08:28:27.322193+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="One misconfigured vector DB killed our RAG pipeline">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/one-misconfigured-vector-db-killed-our-rag-pipeline/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "One misconfigured vector DB killed our RAG pipeline",
       "description": "RAG pipeline failures at 3am: index misconfiguration, vector DB timeouts, and the observability patterns that prevent them — with concrete numbers and fixes…",
       "datePublished": "2026-07-29T14:18:17+00:00",
-      "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2508,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-09-21T08:28:27+00:00",
+      "wordCount": 2478,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -263,10 +263,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2508 words
+                        12 min read
+                        &nbsp;·&nbsp; 2478 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-09-21
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,7 +277,7 @@
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>I was on call over a public holiday weekend when the error rate for our RAG pipeline climbed from 0.5% to 42% in under 10 minutes. The pipeline had been stable for weeks, handling 1.2k requests per minute with P99 latencies under 600ms. No code changes, no traffic spike — just a single misconfigured index in our vector database that caused every similarity search to return a 500 error.</p>
 <p>This failure mode is specific to RAG systems that rely on vector databases like <a href="https://docs.pinecone.io/docs/2026-release-notes">Pinecone 2026.04</a> or <a href="https://weaviate.io/blog/weaviate-1-24">Weaviate 1.24</a>, but the root cause applies to any system using external vector search.</p>
-<p>The key insight I missed for too long: vector databases don’t just store embeddings; they’re compute-heavy services that can silently fail under load when their own resource limits are exceeded. Most tutorials show how to build a RAG pipeline, but none cover what happens when the vector DB starts returning 5xx errors because its indexing or query queues are saturated.</p>
+<p>The key insight I missed for too long: vector databases don’t just store embeddings; they’re compute-heavy services that can silently fail under load when their own resource limits are exceeded.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>This guide assumes you already have a working RAG pipeline using embeddings and vector search. If you don’t, stop here and get a basic pipeline running first. You’ll need:</p>
 <ul>

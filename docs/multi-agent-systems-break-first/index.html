@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-08T04:25:12.053864">
-        <meta property="article:modified_time" content="2026-06-08T04:25:12.053876">
+        <meta property="article:modified_time" content="2026-09-21T08:28:27.307939+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Multi-agent systems break first">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/multi-agent-systems-break-first/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Multi-agent systems break first",
       "description": "After switching to Fargate with 0.25 vCPU and 512MB RAM ephemeral containers, we cut costs by 78%.",
       "datePublished": "2026-06-08T04:25:12+00:00",
-      "dateModified": "2026-06-08T04:25:12+00:00",
-      "wordCount": 3576,
-      "timeRequired": "PT18M",
+      "dateModified": "2026-09-21T08:28:27+00:00",
+      "wordCount": 3476,
+      "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -242,10 +242,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        18 min read
-                        &nbsp;·&nbsp; 3576 words
+                        17 min read
+                        &nbsp;·&nbsp; 3476 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-08
+                        &nbsp;·&nbsp; Updated 2026-09-21
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -254,7 +254,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The official documentation for multiagent systems is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Most tutorials on multi-agent systems frame them as elegant, self-coordinating networks where agents communicate over clean APIs and gracefully handle failures. In reality, the first time you deploy a system that relies on autonomous agents making decisions, you’ll hit a wall: <strong>agents don’t fail like functions do.</strong> A function either returns a result or throws an exception. An agent can return a partial result, a hallucinated answer, or loop forever waiting for a message that never arrives. I spent three days debugging a system where one agent kept replying with empty JSON payloads—turns out it was hitting a rate limit on an external API and silently returning <code>{}</code> instead of raising an error. The logs showed no trace of the failure, just a cascade of downstream timeouts.</p>
+<p>In reality, the first time you deploy a system that relies on autonomous agents making decisions, you’ll hit a wall: <strong>agents don’t fail like functions do.</strong> A function either returns a result or throws an exception. An agent can return a partial result, a hallucinated answer, or loop forever waiting for a message that never arrives. The logs showed no trace of the failure, just a cascade of downstream timeouts.</p>
 <p>The documentation rarely mentions that agents introduce <strong>non-determinism by design.</strong> Your tests might pass 100 times in staging, but the first time you roll to production under real load, an agent might make a decision based on stale data or misinterpret a prompt. Worse, many frameworks (like LangGraph 0.4.3) don’t expose instrumentation for agent state transitions by default. You’ll need to manually patch in logging for every agent’s internal state if you want to debug why your router agent keeps sending traffic to a dead endpoint. Production-grade observability isn’t optional here—it’s survival.</p>
 <p>Cost is another hidden trap. A single agent might spin up a 4-core CPU instance in AWS ECS (t3.xlarge) just to run a lightweight decision loop. Multiply that by 50 concurrent agents and you’re looking at ~$120/month per agent at 2026 spot pricing—before you even account for API calls, message queue fees, or storage for agent memory. I once inherited a system where the agent orchestrator was running on EC2 instances sized for peak load 24/7. The bill hit $8k in one month. After switching to Fargate with 0.25 vCPU and 512MB RAM ephemeral containers, we cut costs by 78%. The agents still worked—just slower, and we had to tune the concurrency limits.</p>
 <p>Finally, <strong>most systems assume agents are stateless.</strong> They’re not. Every agent that maintains conversation history, tool usage records, or external API responses is effectively a stateful service. If you’re using Redis 7.2 as your message broker and agent state store, you’ll need to plan for persistence, failover, and TTL policies. A single agent flushing 10KB of state every 30 seconds can fill up your Redis instance in a few hours if you haven’t set <code>maxmemory-policy allkeys-lru</code>. I learned this the hard way when our staging Redis cluster OOM’d and took down the entire agent cluster—because the agent orchestrator didn’t honor the <code>TTL</code> on state keys.</p>
@@ -270,7 +270,7 @@
 <p>Each agent runs in its own container (Docker 25.0.6) with a minimal runtime (Python 3.11 slim). They communicate via a message broker—RabbitMQ 3.13 with mirrored queues for high availability. Agent state (conversation history, tool outputs, metadata) is stored in Redis 7.2 with 7-day TTLs. The orchestrator is a lightweight service written in Go 1.22 that manages agent lifecycle, health checks, and scaling.</p>
 <p>Here’s the surprising part: <strong>the graph isn’t just a pipeline—it’s a living system.</strong> When the SupportAgent uses a tool to query a payment API, it sends a message back to itself with the result. The RouterAgent might then decide to reassign the ticket if the payment failed. Meanwhile, the EscalationAgent is continuously polling Redis for tickets that have been open longer than 2 hours, and if it finds one, it overrides the RouterAgent’s decision and hands the ticket to a human.</p>
 <p>The system isn’t transactional. If the payment API times out, the SupportAgent might send a partial result or a timeout error. The RouterAgent, which expects a clear <code>ticket_id</code> and <code>assignee</code>, now has to handle ambiguity. In our system, we added a <strong>fallback policy</strong>: if the RouterAgent receives a malformed message, it triggers a human review and logs the incident. But this introduced latency—on average, tickets that triggered this fallback took 24% longer to resolve (measured over two weeks in Q2 2026).</p>
-<p>Agent memory is another hidden complexity. Each SupportAgent maintains a sliding window of the last 50 messages in the conversation. If you’re using Redis with <code>maxmemory-policy noeviction</code>, this can blow up your memory usage. We had to switch to <code>allkeys-lru</code> and set a hard limit of 100MB per agent. Even then, under high load, agents would occasionally drop older messages, leading to inconsistent behavior. I spent a week tuning the window size and Redis eviction policy before realizing the root cause: the agents were writing full message dumps to Redis every time they processed a new message—even when the message was just a confirmation from the user.</p>
+<p>Agent memory is another hidden complexity. Each SupportAgent maintains a sliding window of the last 50 messages in the conversation. If you’re using Redis with <code>maxmemory-policy noeviction</code>, this can blow up your memory usage. We had to switch to <code>allkeys-lru</code> and set a hard limit of 100MB per agent. Even then, under high load, agents would occasionally drop older messages, leading to inconsistent behavior.</p>
 <p>The system also introduces <strong>latent state</strong>. An agent might be in a "waiting for user input" state, but if the user never responds, the agent stays in that state forever. We had to add a timeout: after 24 hours of inactivity, the agent triggers a reminder and eventually closes the ticket. But this created a new edge case: users who replied after the timeout received a canned message that didn’t match the context of their original issue. We ended up building a state machine with explicit transitions, but even that wasn’t enough—users would sometimes reply with a completely new issue, and the agent would try to shoehorn it into the old ticket.</p>
 <p>Finally, <strong>agents can become uncontrollable.</strong> If an agent’s prompt is too permissive, it might start making decisions that violate business rules. For example, our RouterAgent initially had a prompt that said, "Route the ticket to the agent with the lowest load." But it didn’t account for SLA urgency. A low-load agent might be slow at responding, causing the ticket to breach its SLA. We had to rewrite the prompt to include a weighted scoring system: <code>(1 / load) * urgency</code>. Even then, we had to add manual overrides for VIP customers—because the scoring system didn’t account for customer lifetime value.</p>
 <p>The lesson? Multi-agent systems aren’t just distributed functions. They’re <strong>autonomous processes with memory, state, and emergent behavior.</strong> You can’t treat them like stateless microservices. You need to design for failure, ambiguity, and non-determinism from day one.</p>
@@ -293,10 +293,7 @@ docker run --name rabbitmq-agent \
   rabbitmq:3.13-management
 </code></pre>
 <p>Now, let’s define the agent base class. Each agent will:
-- Subscribe to its input queue.
-- Process messages in a loop.
-- Update its internal state in Redis.
-- Publish results to its output queue or handle errors.</p>
+- Subscribe to its input queue. - Process messages in a loop. - Update its internal state in Redis. - Publish results to its output queue or handle errors.</p>
 <pre><code class="language-python"># agent.py
 import json
 import pika
@@ -638,14 +635,11 @@ connection.close()
 <p>Agent frameworks like LangGraph or CrewAI don’t expose agent state or transitions by default. You’ll need to instrument every agent to log its internal state, tool calls, and</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

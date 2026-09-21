@@ -175,69 +175,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "found-niche-in-2026-saas-that-ai-cant-copy",
-    "title": "Found niche in 2026: SaaS that AI can’t copy",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that none of the incumbents had moved into this space.; I needed a niche so narrow that a fine-tuned open-source LLM couldn’t replace it",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "global-state-is-the-wrong-tool-for-ai-features",
-    "title": "Global state is the wrong tool for AI features",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about state management during a code review recently, and m; Here's what actually worked, and why.; I ran into this when we launched a new AI co-pilot in our SaaS product last year",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "json-modes-silent-failures-exposed",
-    "title": "JSON mode’s silent failures exposed",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a job that returned a stringified JSON object wrapp; I spent two hours debugging this before realizing the client was serializing the",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "kubernetes-in-2026-what-teams-offload",
-    "title": "Kubernetes in 2026: what teams offload",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three weeks last quarter chasing a 500ms p99 latency regression that tra; I ran into this when a team asked me to help debug why their Wasm workloads kept; I was surprised that even teams with strong DevOps practices kept hitting this.",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "latency-trade-offs-nairobi-teams-beat-global-ai-providers",
-    "title": "Latency trade-offs: Nairobi teams beat global AI providers",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this nairobibased teams problem while migrating a service under a har; I ran into this when a client’s AI chatbot in Kampala kept timing out on AWS Bed; I saw this firsthand when a client’s legal chatbot hallucinated case law until w",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "mcp-servers-the-3-hidden-costs-nobody-quotes",
     "title": "MCP servers: the 3 hidden costs nobody quotes",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the most common outage wasn’t CPU or memory, but the combin; I once used Datadog’s MCP integration until I realized it samples every 10 s, mi",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "multi-agent-systems-break-first",
     "title": "Multi-agent systems break first",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a system where one agent kept replying with empty J; I once inherited a system where the agent orchestrator was running on EC2 instan; I learned this the hard way when our staging Redis cluster OOM’d and took down t",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "one-misconfigured-vector-db-killed-our-rag-pipeline",
     "title": "One misconfigured vector DB killed our RAG pipeline",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've hit the same our beautiful mistake in more than one production codebase ove; I spent three days debugging a connection pool issue that turned out to be a sin; Most tutorials show how to build a RAG pipeline, but none cover what happens whe",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache",
     "title": "Optimise agent sync on 3G: gzip + CDN vs local cache",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same built lowlatency mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "payments-fail-how-we-fixed-flutterwave-paystack-m-pesa",
     "title": "Payments fail? How we fixed Flutterwave, Paystack, M-Pesa…",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days assuming the webhook payload was correct before realizing the; I hit this when a **Paystack** webhook with idempotency key   was retried after ; I was surprised when Flutterwave’s   endpoint returned events in reverse order f",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "pulumi-vs-terraform-vs-opentofu-in-2026",
@@ -1681,6 +1651,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "found-niche-in-2026-saas-that-ai-cant-copy",
+    "title": "Found niche in 2026: SaaS that AI can’t copy",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that none of the incumbents had moved into this space.; I needed a niche so narrow that a fine-tuned open-source LLM couldn’t replace it",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "global-state-is-the-wrong-tool-for-ai-features",
+    "title": "Global state is the wrong tool for AI features",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about state management during a code review recently, and m; Here's what actually worked, and why.; I ran into this when we launched a new AI co-pilot in our SaaS product last year",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "json-modes-silent-failures-exposed",
+    "title": "JSON mode’s silent failures exposed",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a job that returned a stringified JSON object wrapp; I spent two hours debugging this before realizing the client was serializing the",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "kubernetes-in-2026-what-teams-offload",
+    "title": "Kubernetes in 2026: what teams offload",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three weeks last quarter chasing a 500ms p99 latency regression that tra; I ran into this when a team asked me to help debug why their Wasm workloads kept; I was surprised that even teams with strong DevOps practices kept hitting this.",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "latency-trade-offs-nairobi-teams-beat-global-ai-providers",
+    "title": "Latency trade-offs: Nairobi teams beat global AI providers",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this nairobibased teams problem while migrating a service under a har; I ran into this when a client’s AI chatbot in Kampala kept timing out on AWS Bed; I saw this firsthand when a client’s legal chatbot hallucinated case law until w",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "build-a-search-system-in-2026-semantic-keyword",
