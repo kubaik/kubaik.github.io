@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T11:42:41.624576",
+  "built_at": "2026-09-21T18:02:38.287986",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5320,6 +5320,11 @@
       "slug": "when-your-agent-goes-silent-degrade-gracefully",
       "title": "When your agent goes silent: degrade gracefully",
       "summary": "The edge cases only show up once real users hit the system. The evaluationdriven development advice that circulates internally rarely matches what's in the public docs. Here's what actually worked, and why. The one-paragraph version (read this first) When an upstream agent or model is slow or wrong,"
+    },
+    {
+      "slug": "sandboxed-computer-use-agents-with-gvisor",
+      "title": "Sandboxed computer-use agents with gVisor",
+      "summary": "Inherited productionizing computer setups tend to come with no explanation, just a working system and a long reverse-engineering session. It works in the simple case and breaks in a specific way under load. Here's what actually worked, and why. The problem, in general terms Computer-use agents — mod"
     }
   ]
 }

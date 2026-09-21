@@ -1,0 +1,553 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sandboxed computer-use agents with gVisor - Kubai Kevin</title>
+        <meta name="description" content="Sandbox computer-use agents with gVisor, egress allowlists, and short-lived STS tokens — the credential-lifetime mistake that turns one session into a…">
+        <meta name="keywords" content="ComputerUseAgents, AgentSandboxing, GvisorSandbox, Prompt, EgressAllowlistAgent">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-21T18:02:36.068591">
+        <meta property="article:modified_time" content="2026-09-21T18:02:36.068604">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Sandboxed computer-use agents with gVisor">
+        <meta property="og:description" content="Sandbox computer-use agents with gVisor, egress allowlists, and short-lived STS tokens — the credential-lifetime mistake that turns one session into a…">
+        <meta property="og:url" content="https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/sandboxed-computer-use-agents-with-gvisor.png">
+        <meta property="og:image:alt" content="Sandboxed computer-use agents with gVisor">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Sandboxed computer-use agents with gVisor">
+        <meta name="twitter:description" content="Sandbox computer-use agents with gVisor, egress allowlists, and short-lived STS tokens — the credential-lifetime mistake that turns one session into a…">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/sandboxed-computer-use-agents-with-gvisor.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/#article",
+      "headline": "Sandboxed computer-use agents with gVisor",
+      "description": "Sandbox computer-use agents with gVisor, egress allowlists, and short-lived STS tokens — the credential-lifetime mistake that turns one session into a…",
+      "datePublished": "2026-09-21T18:02:36+00:00",
+      "dateModified": "2026-09-21T18:02:36+00:00",
+      "wordCount": 2900,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/"
+      },
+      "keywords": "ComputerUseAgents, AgentSandboxing, GvisorSandbox, Prompt, EgressAllowlistAgent"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Sandboxed computer-use agents with gVisor",
+          "item": "https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Sandboxed computer-use agents with gVisor</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Sandboxed computer-use agents with gVisor</h1>
+                
+                <p class="post-lead">Sandbox computer-use agents with gVisor, egress allowlists, and short-lived STS tokens — the credential-lifetime mistake that turns one session into a…</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ComputerUseAgents</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentSandboxing</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">GvisorSandbox</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/prompt/"
+                       style="text-decoration:none;">Prompt</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Egressallowlistagent</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2900 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-21
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Inherited productionizing computer setups tend to come with no explanation, just a working system and a long reverse-engineering session. It works in the simple case and breaks in a specific way under load. Here's what actually worked, and why.</p>
+<h2 id="the-problem-in-general-terms">The problem, in general terms</h2>
+<p>Computer-use agents — models that drive a real browser or desktop session through screenshots, clicks, and keystrokes — are the most dangerous thing most teams will deploy this year. Not because the models are malicious, but because the permission model around them is usually an afterthought. A typical setup gives the agent a headless Chrome instance, a service account with broad IAM rights, and a filesystem it can write to. That combination means a single prompt-injection payload on a page the agent visits can turn into an outbound request that reads from your object store or posts to an internal admin endpoint.</p>
+<p>The failure mode is not hypothetical. The OWASP Top 10 for LLM Applications lists prompt injection as LLM01, and computer-use agents are the clearest case where injection crosses from "the model says something wrong" into "the model does something wrong on a real system." The 2026 Anthropic computer-use demo and the OpenAI Operator launch both shipped with explicit warnings that the agent should run in a container with no access to sensitive data — advice that most production rollouts quietly ignore because the agent needs credentials to be useful.</p>
+<p>The part that trips people up is that the obvious mitigations (a system prompt saying "don't visit untrusted sites," a regex filter on tool calls) don't hold under adversarial input, and the mitigations that do hold — kernel-level isolation, network egress allowlists, short-lived scoped credentials — require you to rebuild the deployment shape rather than tune the prompt. That's what this post actually covers: the architecture that works, the numbers to expect, and the specific places teams get burned.</p>
+<h2 id="the-approaches-that-commonly-fail-and-why">The approaches that commonly fail, and why</h2>
+<p>Three patterns show up repeatedly in teams that get this wrong. All three look reasonable in a design doc and fail in production.</p>
+<p><strong>Prompt-level guardrails.</strong> The agent gets a system prompt like "only interact with domains on this allowlist." This fails because the model is processing untrusted text from the page it's driving. A page can contain text that reads as an instruction, and the model has no reliable way to distinguish "content I was asked to read" from "instruction I should follow." Simon Willison's writeup on the lethal trifecta — private data access, untrusted content, and external communication — is the clearest framing: if an agent has all three, exfiltration is a matter of when, not if. Prompt filtering reduces the rate of accidental failures but does nothing against a determined page.</p>
+<p><strong>Tool-call validation in the orchestrator.</strong> This is better. The orchestrator inspects each tool call before executing it — block <code>curl</code>, block writes outside <code>/tmp</code>, block navigation to non-allowlisted hosts. The problem is that computer-use agents don't emit clean tool calls. They emit <code>click(x=430, y=612)</code> and <code>type("...")</code>. The semantic meaning of a click depends on what's rendered at those coordinates. A validation layer that tries to infer intent from pixel coordinates is a research project, not a deployment.</p>
+<p><strong>Full VM per session with broad credentials.</strong> Teams that do isolate correctly often over-provision the credentials because the agent needs to log into a real app. A common shape is a service account with <code>s3:*</code> on the bucket the agent's screenshots land in, plus a database read role, plus a session token that lives for 24 hours. When the agent is compromised, the blast radius is everything that token can reach for the next 24 hours. The isolation was real; the credential scope undid it.</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Injection resistance</th>
+<th>Ops cost</th>
+<th>Latency added</th>
+<th>Common failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prompt guardrails only</td>
+<td>Low</td>
+<td>Very low</td>
+<td>0 ms</td>
+<td>Page text overrides system prompt</td>
+</tr>
+<tr>
+<td>Tool-call validation</td>
+<td>Medium</td>
+<td>Low</td>
+<td>5–20 ms</td>
+<td>Coordinates have no semantic meaning</td>
+</tr>
+<tr>
+<td>VM per session, broad creds</td>
+<td>High on isolation</td>
+<td>High</td>
+<td>800–1500 ms cold start</td>
+<td>24h token becomes the blast radius</td>
+</tr>
+<tr>
+<td>Sandbox + egress allowlist + short creds</td>
+<td>High</td>
+<td>Medium</td>
+<td>120–300 ms warm</td>
+<td>Complexity in the allowlist itself</td>
+</tr>
+</tbody>
+</table>
+<p>The pattern across all three failures is the same: teams treat the agent as a trusted component and try to make its inputs trustworthy. The approach that works inverts that — treat the agent as untrusted code, and make the environment safe regardless of what it decides to do.</p>
+<h2 id="the-approach-that-works-in-practice">The approach that works in practice</h2>
+<p>Run the agent inside a sandboxed container with a kernel boundary, restrict its network egress to an explicit allowlist, and give it credentials that expire before the session ends. Three layers, each cheap on its own, and together they contain the failure modes above.</p>
+<p>For the kernel boundary, gVisor is the pragmatic choice on Linux. It intercepts syscalls in userspace, so a container escape requires a gVisor bug rather than a kernel bug — and gVisor's syscall surface is much smaller than the host kernel's. The tradeoff is syscall overhead: filesystem-heavy workloads run 2–5x slower under gVisor than under runc, and CPU-bound work is closer to 1.2–1.5x. For a browser agent that spends most of its time waiting on network and rendering, the overhead is usually acceptable. Firecracker microVMs are the alternative if you need near-native performance and can accept a heavier cold start (typically 125 ms for the microVM plus whatever your guest init costs).</p>
+<p>For egress, don't rely on the container's default network. Put the sandbox on a network with a default-deny egress policy and an explicit allowlist of hostnames the agent is permitted to reach. In Kubernetes this is a <code>NetworkPolicy</code> plus a DNS-resolving egress gateway; outside Kubernetes it's an iptables rule set or a sidecar proxy. The allowlist should be hostnames, not IPs, because CDN IPs rotate and you'll be chasing them forever.</p>
+<p>For credentials, the rule is simple: the token must expire before the session does. If a session is capped at 10 minutes, the token lives 9. Use short-lived STS credentials, not long-lived IAM users. A typical setup issues a session token scoped to a single prefix in a single bucket, valid for 600 seconds, and the orchestrator never sees the long-lived credential.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Here's a minimal pattern for launching a gVisor-sandboxed agent session on a Linux host with <code>runsc</code> installed. This is the orchestration layer, not the agent itself — the point is that the agent code never runs with host privileges.</p>
+<pre><code class="language-python"># sandbox_launcher.py — Python 3.11, runsc 20240617
+import subprocess
+import time
+import boto3
+from datetime import timedelta
+
+SESSION_TIMEOUT_SECONDS = 600
+
+
+def issue_scoped_credentials(session_id: str):
+    sts = boto3.client(&quot;sts&quot;)
+    # Assume a role whose trust policy requires an ExternalId tied to session_id.
+    resp = sts.assume_role(
+        RoleArn=&quot;arn:aws:iam::123456789012:role/agent-sandbox-readonly&quot;,
+        RoleSessionName=f&quot;agent-{session_id}&quot;,
+        DurationSeconds=SESSION_TIMEOUT_SECONDS - 60,  # expire before session ends
+        Policy=&quot;&quot;&quot;{
+            &quot;Version&quot;: &quot;2012-10-17&quot;,
+            &quot;Statement&quot;: [{
+                &quot;Effect&quot;: &quot;Allow&quot;,
+                &quot;Action&quot;: [&quot;s3:GetObject&quot;],
+                &quot;Resource&quot;: &quot;arn:aws:s3:::agent-artifacts/sessions/%s/*&quot;
+            }]
+        }&quot;&quot;&quot; % session_id,
+    )
+    return resp[&quot;Credentials&quot;]
+
+
+def launch_sandbox(session_id: str, creds: dict) -&gt; str:
+    env = {
+        &quot;AWS_ACCESS_KEY_ID&quot;: creds[&quot;AccessKeyId&quot;],
+        &quot;AWS_SECRET_ACCESS_KEY&quot;: creds[&quot;SecretAccessKey&quot;],
+        &quot;AWS_SESSION_TOKEN&quot;: creds[&quot;SessionToken&quot;],
+        &quot;SESSION_ID&quot;: session_id,
+    }
+    # runsc is the gVisor runtime; --network=none forces the agent
+    # through the egress proxy sidecar rather than the host network.
+    cmd = [
+        &quot;runsc&quot;, &quot;--rootless&quot;, &quot;--network=none&quot;,
+        &quot;run&quot;, &quot;--detach&quot;, &quot;--name&quot;, f&quot;agent-{session_id}&quot;,
+        &quot;--env&quot;, &quot;,&quot;.join(f&quot;{k}={v}&quot; for k, v in env.items()),
+        &quot;ghcr.io/example/agent-runtime:1.4.2&quot;,
+        &quot;/usr/local/bin/agent-entrypoint&quot;,
+    ]
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+    if result.returncode != 0:
+        raise RuntimeError(f&quot;sandbox launch failed: {result.stderr}&quot;)
+    return f&quot;agent-{session_id}&quot;
+</code></pre>
+<p>The key detail is <code>--network=none</code>. With no network namespace access, the agent cannot reach anything except through the sidecar proxy that the orchestrator controls. That proxy is where the allowlist lives.</p>
+<p>On the egress side, a small proxy that checks the SNI or the Host header against an allowlist is enough for most browser agents. Here's the shape in Node 20 LTS:</p>
+<pre><code class="language-javascript">// egress_proxy.js — Node 20 LTS, http-proxy 1.18.1
+const httpProxy = require('http-proxy');
+const http = require('http');
+
+const ALLOWLIST = new Set([
+  'example.com',
+  'docs.example.com',
+  'api.stripe.com',
+]);
+
+const proxy = httpProxy.createProxyServer({ changeOrigin: true });
+
+const server = http.createServer((req, res) =&gt; {
+  const host = (req.headers.host || '').split(':')[0];
+  if (!ALLOWLIST.has(host)) {
+    res.writeHead(403, { 'content-type': 'application/json' });
+    res.end(JSON.stringify({ error: 'egress_denied', host }));
+    return;
+  }
+  proxy.web(req, res, { target: `https://${host}` }, (err) =&gt; {
+    res.writeHead(502);
+    res.end(JSON.stringify({ error: 'upstream_failed', detail: err.message }));
+  });
+});
+
+server.listen(3128, '127.0.0.1');
+</code></pre>
+<p>Two things to watch. First, the allowlist must include the hosts the agent's OAuth flows redirect through, or you'll get 403s on login pages that look like agent bugs. Second, HTTP CONNECT for HTTPS requires handling the <code>connect</code> event separately — the snippet above handles plain HTTP and TLS-terminated proxying; for true CONNECT tunneling you need to inspect the SNI in the TLS hello, which is more code than fits here but is well-documented in the <code>http-proxy</code> README.</p>
+<h2 id="results-the-numbers-to-expect-and-their-limits">Results — the numbers to expect, and their limits</h2>
+<p>These are typical ranges for a browser agent running 1–2 vCPU and 2–4 GB RAM per session, not measured results from a specific deployment. Treat them as planning figures and benchmark on your own workload.</p>
+<ul>
+<li><strong>Cold start:</strong> runc container ~150–300 ms; gVisor <code>runsc</code> ~400–800 ms; Firecracker microVM ~125 ms for the VM plus guest boot. Warm pools cut this to 50–100 ms for all three.</li>
+<li><strong>Syscall overhead:</strong> gVisor adds roughly 2–5x on filesystem-heavy syscalls and 1.2–1.5x on CPU-bound work. For a browser agent, end-to-end session latency typically increases 10–25% versus runc.</li>
+<li><strong>Egress proxy hop:</strong> 1–5 ms added per request. Negligible relative to page load.</li>
+<li><strong>Credential issuance:</strong> <code>sts:AssumeRole</code> typically returns in 80–200 ms. Cache the credentials for the session, don't re-assume per tool call.</li>
+<li><strong>Cost:</strong> a 10-minute session on a 2 vCPU instance at typical on-demand rates runs roughly $0.01–$0.03 in compute. The sandbox overhead is not the cost driver; the model inference is.</li>
+</ul>
+<p>The limit of these numbers is that they assume the agent is doing browser work. If you're running a computer-use agent against a native GUI app with heavy file I/O, the gVisor filesystem penalty dominates and you should benchmark Firecracker instead. If your sessions are long (30+ minutes), the warm-pool math changes and you may be better off with a long-lived sandbox and rotating credentials inside it.</p>
+<h2 id="what-to-watch-out-for">What to watch out for</h2>
+<p><strong>The allowlist becomes the attack surface.</strong> Every host you add is a host the agent can reach. Teams commonly add <code>*.googleapis.com</code> or <code>*.amazonaws.com</code> to unblock something, and that wildcard is now a data exfiltration channel. Prefer exact hostnames and revisit the list weekly.</p>
+<p><strong>DNS rebinding.</strong> If your proxy resolves hostnames to IPs and caches the result, an attacker-controlled DNS record can point at an internal IP after the check. Resolve to IP, verify the IP is not in RFC1918 space, then connect to the IP — not to the hostname. This is the same defense browsers use for their SSRF protections.</p>
+<p><strong>Screenshot exfiltration.</strong> The agent's screenshots go somewhere. If that somewhere is a bucket the agent can also write to with a broad token, a compromised agent can upload a screenshot of your internal dashboard and then read it back. Keep the artifact bucket write-only from the agent's perspective, and read-only from the orchestrator's.</p>
+<p><strong>The "just this once" credential.</strong> The most common regression is a team that hits a session timeout mid-task and extends the token lifetime to 24 hours to "fix" it. That single change undoes the containment. If sessions need to be longer, issue a new short-lived token when the old one expires, and re-verify the session is still doing what it's supposed to do.</p>
+<p><strong>Logging what the agent did.</strong> You need a record of every tool call, every navigation, and every credential issuance, with the session ID as the correlation key. Without it, incident response on a compromised session is guesswork. Ship logs to a destination the agent's credentials cannot reach.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The principle here is not "sandbox your agents." It's that <strong>the trust boundary must be enforced by something the untrusted component cannot influence.</strong> A prompt is influenceable. A tool-call validator that reads pixel coordinates is influenceable. A kernel syscall filter and a network policy enforced by a separate process are not — the agent can't talk its way past them because they don't parse language.</p>
+<p>This is the same reason we don't run untrusted code as root and hope it behaves. The agent is untrusted code. The fact that it's generated by a model rather than written by a person doesn't change the threat model; it only changes the input distribution. Treat the agent's decisions as adversarial, and design the environment so that the worst decision it can make is still contained.</p>
+<p>The corollary is that you should measure the cost of containment and decide if it's worth it. For a read-only research agent that summarizes public pages, the sandbox is cheap insurance. For an agent that needs to write to your production database, the answer is usually no — not because the sandbox can't be built, but because the agent's failure modes are too varied to enumerate, and you'll spend more time on the allowlist than on the feature.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start by mapping what your agent can actually reach today. If it can read a secret, talk to the internet, and be influenced by content it reads, you have the lethal trifecta and should treat that as a P0. The fix order that works: cut the credential scope first (fastest, biggest impact), then add egress allowlisting (medium effort, blocks exfiltration), then move to gVisor or Firecracker (highest effort, contains the rest).</p>
+<p>If you're on Kubernetes, the egress policy is a <code>NetworkPolicy</code> plus a DNS-aware egress gateway like Cilium's <code>toFQDNs</code>. If you're on a single VM, it's <code>runsc</code> plus an iptables default-deny and a local proxy. Either way, the shape is the same: the agent runs in a place where the only way out is a path you control.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I stop a computer-use agent from being prompt-injected?</strong></p>
+<p>You can't stop it at the prompt layer; you contain it at the environment layer. Assume any page the agent reads may contain adversarial instructions, and design so that following those instructions still can't reach anything sensitive. That means short-lived scoped credentials, an egress allowlist, and a kernel-level sandbox. Prompt filtering reduces accidental failures but is not a security control against a determined page.</p>
+<p><strong>What is the difference between gVisor and Firecracker for agent sandboxing?</strong></p>
+<p>gVisor intercepts syscalls in userspace and runs as a normal process, so it starts faster and integrates with standard container tooling, but adds 2–5x overhead on filesystem-heavy syscalls. Firecracker is a KVM-based microVM with near-native performance and a ~125 ms cold start, but a heavier guest boot and more moving parts. For browser agents, gVisor is usually the better default; for GUI apps doing heavy file I/O, benchmark Firecracker.</p>
+<p><strong>Why does my agent session fail with 403 egress_denied after login?</strong></p>
+<p>OAuth and SSO flows redirect through hosts you didn't allowlist — often an identity provider's domain or a CDN the login page pulls assets from. The fix is to log the denied host from your proxy, add it to the allowlist if it's legitimate, and never add a wildcard. A common mistake is adding <code>*.googleusercontent.com</code> to unblock an avatar and accidentally opening a broad exfiltration path.</p>
+<p><strong>How long should agent credentials live?</strong></p>
+<p>Shorter than the session. If a session is capped at 10 minutes, issue credentials valid for 9 minutes with <code>sts:AssumeRole</code> and <code>DurationSeconds=540</code>. Never extend the token lifetime to fix a timeout — issue a fresh one and re-verify the session's task is still what you expect. A 24-hour token turns a single compromised session into a day-long incident.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li>OWASP Top 10 for LLM Applications (LLM01: Prompt Injection) — the canonical list, updated annually.</li>
+<li>Simon Willison's writing on the lethal trifecta — the clearest explanation of why data access plus untrusted content plus egress equals exfiltration.</li>
+<li>gVisor documentation on syscall interception and the <code>runsc</code> runtime — read the performance section before you commit.</li>
+<li>Firecracker's design doc on the microVM model and its security boundary.</li>
+<li>Kubernetes <code>NetworkPolicy</code> and Cilium's <code>toFQDNs</code> egress policy documentation for the DNS-aware allowlist pattern.</li>
+<li>The <code>http-proxy</code> README for the CONNECT/SNI handling that the snippet above deliberately omits.</li>
+</ul>
+<h2 id="the-next-30-minutes">The next 30 minutes</h2>
+<p>Open your agent's IAM role definition and check the <code>DurationSeconds</code> on its <code>sts:AssumeRole</code> call. If it's longer than your session timeout, change it to <code>SESSION_TIMEOUT - 60</code> right now — that single edit is the highest-impact containment change you can make today, and it takes less time than reading this sentence twice.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/llm-eval-drift-that-users-notice-first/">
+                        <h3>LLM eval drift that users notice first</h3>
+                        <p>Detect LLM drift before users notice — real metrics from production pipelines, with concrete thresholds, code snippets, and cost figures for 2026…</p>
+                        <span class="related-meta">17 min read · 28 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/prompt-injection-got-the-hype-poison-data-ruined-us/">
+                        <h3>Prompt injection got the hype — poison data ruined us</h3>
+                        <p>Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.</p>
+                        <span class="related-meta">16 min read · 3 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/trim-llm-bills-3-finops-moves-that-work/">
+                        <h3>Trim LLM bills: 3 FinOps moves that work</h3>
+                        <p>Cut LLM bill 34% with 3 levers most teams ignore: semantic shaping, two-layer caching, and priority queues.</p>
+                        <span class="related-meta">12 min read · 12 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

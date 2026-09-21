@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "agent-design-after-llm-4-we-broke-5-assumptions",
-    "title": "Agent design after LLM-4: we broke 5 assumptions",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when paging alerts fired every 20 minutes during peak hours; the; I spent two weeks tweaking HPA thresholds until I realized the bottleneck wasn’t",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "ai-agent-postmortem-human-loop-vs-blind-replay",
-    "title": "AI agent postmortem: human loop vs blind replay",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-api-docs-what-humans-still-write-in-2026",
-    "title": "AI API docs: what humans still write in 2026",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks debugging a payment callback that failed 12% of the time bec; I saw a single microservice where the AI kept switching between  ,  , and   in t",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "ai-apps-break-your-stack-heres-the-fix",
-    "title": "AI apps break your stack — here’s the fix",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran this exact playbook for a chatbot in 2026.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-cost-attribution-without-the-spreadsheet-hell",
-    "title": "AI cost attribution without the spreadsheet hell",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this cost attribution problem while migrating a service under a hard ; I ran each system for two weeks in production on Node 20 LTS with AWS Lambda (ar; I measured:\n\n- **P99 latency increase** — how much slower the API got after addi",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ai-engineer-role-vanished-in-6-months",
     "title": "AI Engineer role vanished in 6 months",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into my first surprise in February.; I said yes because it was the hot thing.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-glue-code-3-ways-to-avoid-duct-taping-models",
     "title": "AI glue code: 3 ways to avoid duct-taping models",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when a team I mentored in Nairobi built a Swahili chatbot in Jan; I benchmarked our adapter weekly and saw a 12 % drop in F1-score over 30 days wi; I spent two weeks debugging a model that kept returning 78 % confidence answers ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-interviews-4-questions-that-caught-80-of-weak",
     "title": "AI interviews: 4 questions that caught 80% of weak",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when we moved a Nairobi-based fintech from a 45-minute take-home; I assumed senior candidates would instinctively wrap Redis calls in retries and ; I only realized this after watching a candidate fail because their API couldn’t ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-pair-coding-killed-pull-request-reviews",
     "title": "AI pair coding killed pull request reviews",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I approved a PR that changed how we rounded AWS Reserved In; I was surprised that the biggest win wasn’t technical—it was social.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-pair-prompts-9-setups-we-tried-in-2026",
     "title": "AI pair prompts: 9 setups we tried in 2026",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this pair programming problem while migrating a service under a hard ; Here's what actually worked.; I spent three days on this before realising the problem wasn’t in the stack; it ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-sales-cycle-what-changed-for-devtool-founders",
@@ -1531,6 +1501,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "agent-design-after-llm-4-we-broke-5-assumptions",
+    "title": "Agent design after LLM-4: we broke 5 assumptions",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when paging alerts fired every 20 minutes during peak hours; the; I spent two weeks tweaking HPA thresholds until I realized the bottleneck wasn’t",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "ai-agent-postmortem-human-loop-vs-blind-replay",
+    "title": "AI agent postmortem: human loop vs blind replay",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-api-docs-what-humans-still-write-in-2026",
+    "title": "AI API docs: what humans still write in 2026",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks debugging a payment callback that failed 12% of the time bec; I saw a single microservice where the AI kept switching between  ,  , and   in t",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "ai-apps-break-your-stack-heres-the-fix",
+    "title": "AI apps break your stack — here’s the fix",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran this exact playbook for a chatbot in 2026.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-cost-attribution-without-the-spreadsheet-hell",
+    "title": "AI cost attribution without the spreadsheet hell",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this cost attribution problem while migrating a service under a hard ; I ran each system for two weeks in production on Node 20 LTS with AWS Lambda (ar; I measured:\n\n- **P99 latency increase** — how much slower the API got after addi",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "zero-trust-mcp-servers-auth-trap-youll-hit-first",

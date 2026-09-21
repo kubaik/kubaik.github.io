@@ -429,6 +429,7 @@ replace-env-with-these-in-2026,100,3673,Replace .env with these in 2026,2026-06-
 replace-managed-services-with-postgres-17,100,2672,Replace managed services with Postgres 17,2026-08-16T12:45:50.709187,0,
 row-level-security-for-saas-in-2026-the-surprise-cost,100,2435,Row-level security for SaaS in 2026: the surprise cost,2026-06-26T00:03:12.747859,0,
 rust-rewrites-where-they-pay-off-where-they-dont,100,2799,"Rust rewrites: where they pay off, where they don't",2026-09-21T10:01:49.793555,0,
+sandboxed-computer-use-agents-with-gvisor,100,2900,Sandboxed computer-use agents with gVisor,2026-09-21T18:02:36.068591,0,
 ship-faster-with-a-paved-road-4-weeks-to-80-less-toil,100,3011,Ship faster with a paved road: 4 weeks to 80% less toil,2026-06-08T09:23:12.631343,0,
 soft-deletes-fail-what-breaks-first,100,2526,Soft deletes fail: what breaks first,2026-06-09T23:03:28.443649,0,
 spot-evictions-the-retry-logic-that-holds-up,100,2803,Spot evictions: the retry logic that holds up,2026-08-12T12:52:38.265562,0,

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Sep 2026 11:43:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2026 18:02:55 +0000</lastBuildDate>
+    <item>
+      <title>Sandboxed computer-use agents with gVisor</title>
+      <link>https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/</link>
+      <description>Sandbox computer-use agents with gVisor, egress allowlists, and short-lived STS tokens — the credential-lifetime mistake that turns one session into a…</description>
+      <pubDate>Mon, 21 Sep 2026 18:02:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/</guid>
+    </item>
     <item>
       <title>When your agent goes silent: degrade gracefully</title>
       <link>https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/</link>
@@ -138,13 +145,6 @@
       <description>AI inflates output, not accountability. Learn to negotiate pay by quantifying business outcomes and the 20% of AI code you catch before it ships.</description>
       <pubDate>Sat, 19 Sep 2026 03:48:59 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiating-pay-when-ai-inflates-output/</guid>
-    </item>
-    <item>
-      <title>Mobile money agents: when M-Pesa API fails</title>
-      <link>https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/</link>
-      <description>Mobile money agents fail when callbacks are missed or duplicated. Fix pending transactions, idempotency, and provider timeouts before users lose trust.</description>
-      <pubDate>Fri, 18 Sep 2026 16:47:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/</guid>
     </item>
   </channel>
 </rss>
