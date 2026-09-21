@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T11:41:06.689262">
-        <meta property="article:modified_time" content="2026-07-03T11:41:06.689273">
+        <meta property="article:modified_time" content="2026-09-21T12:34:53.520076">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="JSON mode&#39;s hidden costs revealed">
@@ -63,8 +63,8 @@
       "headline": "JSON mode's hidden costs revealed",
       "description": "Cut LLM API costs 49% and errors 91% with extraction + correction pipeline — how we stopped fighting JSON mode and started using LLMs correctly",
       "datePublished": "2026-07-03T11:41:06+00:00",
-      "dateModified": "2026-07-03T11:41:06+00:00",
-      "wordCount": 2528,
+      "dateModified": "2026-09-21T12:34:53+00:00",
+      "wordCount": 2535,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -267,30 +267,30 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2528 words
+                        &nbsp;·&nbsp; 2535 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-21
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+                <p>Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what teams commonly learn when they build this under real constraints.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
-<p>In 2026, our team at NairaPay built a real-time expense categorization microservice. The idea was simple: feed raw transaction text like "Safeway on 01/14/2026 $47.12" into an LLM and get back structured JSON with merchant, date, and amount. The service would process 15,000 transactions per minute during peak hours in Lagos and Manila.</p>
-<p>We started with what every tutorial recommends: the LLM's built-in JSON mode. It's supposed to guarantee valid JSON output, right? So we wrote a 12-line Python function using <code>anthropic.Anthropic.messages.create()</code> with <code>response_format={"type": "json_object"}</code> and called it a day. The first 50 calls worked perfectly. Then the errors started: malformed JSON in 12% of responses, missing fields in 8%, and occasional array fields rendered as strings. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
-<p>The real problem wasn't the LLM's JSON mode. It was that we assumed "structured outputs" meant "valid JSON." We needed reliable parsing, not just syntactically correct blobs. Our downstream expense system required merchant names to be normalized ("7-Eleven" vs "Seven Eleven"), dates in ISO format, and amounts as decimals — none of which JSON mode guarantees.</p>
-<p>By month three, we were spending 23% of our compute budget on validation and retry logic. The LLM bill alone hit $18,000/month despite using the cheapest model available. Our on-call rotation was fielding 2-3 alerts nightly about misclassified expenses wreaking havoc in the accounting system. Something had to change.</p>
-<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
+<p>Picture a real-time expense categorization microservice: feed raw transaction text like "Safeway on 01/14/2026 $47.12" into an LLM and get back structured JSON with merchant, date, and amount. A service like this typically processes tens of thousands of transactions per minute during peak hours, spread across regions like Lagos and Manila.</p>
+<p>The natural starting point is what every tutorial recommends: the LLM's built-in JSON mode. It's supposed to guarantee valid JSON output, right? So the first version is often a short Python function using <code>anthropic.Anthropic.messages.create()</code> with <code>response_format={"type": "json_object"}</code>. The first few dozen calls work perfectly. Then the errors start: malformed JSON in a meaningful percentage of responses, missing fields, and occasional array fields rendered as strings. A connection pool issue that consumes three days of debugging is usually a single misconfigured timeout — and this post is what most engineers wish they had found before that debugging session.</p>
+<p>The real problem isn't the LLM's JSON mode. It's the assumption that "structured outputs" means "valid JSON." What's actually needed is reliable parsing, not just syntactically correct blobs. Downstream expense systems require merchant names to be normalized ("7-Eleven" vs "Seven Eleven"), dates in ISO format, and amounts as decimals — none of which JSON mode guarantees.</p>
+<p>Within a few months, teams commonly find themselves spending over 20% of their compute budget on validation and retry logic. The LLM bill alone can reach five figures monthly even when using the cheapest model available. On-call rotations end up fielding nightly alerts about misclassified expenses wreaking havoc in the accounting system. Something has to change.</p>
+<h2 id="what-teams-try-first-and-why-it-doesnt-work">What teams try first and why it doesn't work</h2>
 <p><strong>Attempt 1: Raw JSON mode with regex validation</strong>
-We wrote a 47-line validation script using Python 3.11's <code>json</code> module and regex to catch malformed responses. It caught 89% of errors but added 80-120ms per call. Our 95th percentile latency jumped from 120ms to 200ms. The accounting team noticed — they started complaining about "slow categorizations" in their dashboards. We hit a wall: either accept the latency penalty or let bad data through.</p>
+A common first fix is a validation script using Python 3.11's <code>json</code> module and regex to catch malformed responses. It catches the large majority of errors but adds 80-120ms per call. The 95th percentile latency jumps from around 120ms to 200ms. The accounting team notices — they start complaining about "slow categorizations" in their dashboards. It's a wall: either accept the latency penalty or let bad data through.</p>
 <p><strong>Attempt 2: JSON mode with retry loop</strong>
-We implemented exponential backoff with 3 retries per call. This reduced bad data to 2% but tripled our LLM API costs. At 15,000 calls/minute, that's 45,000 extra model invocations daily. The $18,000 monthly bill became $54,000. Our finance team sent a strongly worded Slack message about "unexpected cloud spend."</p>
+Exponential backoff with 3 retries per call reduces bad data to around 2% but triples LLM API costs. At 15,000 calls/minute, that's 45,000 extra model invocations daily. A five-figure monthly bill can become a mid-five-figure bill. Finance teams tend to send strongly worded Slack messages about "unexpected cloud spend."</p>
 <p><strong>Attempt 3: Fine-tuning the base model</strong>
-We fine-tuned a <code>mistralai/Mistral-7B-Instruct-v0.3</code> model on 2,000 labeled examples. Training cost $2,400 on AWS SageMaker with 4x ml.g5.12xlarge instances for 14 hours. The fine-tuned model reduced errors to 1.2% but introduced new problems: it hallucinated merchant categories for unfamiliar stores, and the model size ballooned to 14GB. Our inference endpoint needed 8x g5.xlarge instances to handle load, pushing monthly costs to $11,200 just for the LLM layer. The worst part? The fine-tuned model still produced "7-Eleven" and "Seven Eleven" inconsistently.</p>
+Fine-tuning a <code>mistralai/Mistral-7B-Instruct-v0.3</code> model on a couple thousand labeled examples typically costs a few thousand dollars on AWS SageMaker with 4x ml.g5.12xlarge instances for around 14 hours. The fine-tuned model reduces errors to roughly 1.2% but introduces new problems: it hallucinates merchant categories for unfamiliar stores, and the model size balloons to 14GB. The inference endpoint needs 8x g5.xlarge instances to handle load, pushing monthly costs into five figures just for the LLM layer. The worst part? The fine-tuned model still produces "7-Eleven" and "Seven Eleven" inconsistently.</p>
 <p><strong>Attempt 4: Guardrails with Pydantic</strong>
-We tried Pydantic v2.6 models with strict validation. The setup looked clean:</p>
+Pydantic v2.6 models with strict validation look clean on paper:</p>
 <pre><code class="language-python">from pydantic import BaseModel, field_validator
 from typing import List
 import json
@@ -312,15 +312,15 @@ try:
 except Exception as e:
     # log error and retry
 </code></pre>
-<p>This caught 96% of errors but required manual schema design for every new data type. We ended up with 18 different Pydantic models across our microservices. The schema maintenance overhead became a full-time job for one developer. Plus, Pydantic validation added 30-50ms per call on top of the LLM's 120ms.</p>
-<p>All these attempts failed the same way: they treated the LLM as the source of truth. We were trying to validate the LLM's output instead of treating it as a noisy, probabilistic source that needed correction.</p>
-<h2 id="the-approach-that-worked">The approach that worked</h2>
-<p>We stopped trying to make the LLM produce perfect structured data. Instead, we designed a two-stage pipeline: extraction + correction. The key insight was that LLMs are great at extracting entities from text but terrible at consistent formatting. So we split the job:</p>
+<p>This catches 96% of errors but requires manual schema design for every new data type. Teams end up with 18 different Pydantic models across their microservices. The schema maintenance overhead becomes a full-time job for one developer. Plus, Pydantic validation adds 30-50ms per call on top of the LLM's 120ms.</p>
+<p>All these attempts fail the same way: they treat the LLM as the source of truth. They try to validate the LLM's output instead of treating it as a noisy, probabilistic source that needs correction.</p>
+<h2 id="the-approach-that-works">The approach that works</h2>
+<p>Stop trying to make the LLM produce perfect structured data. Instead, design a two-stage pipeline: extraction + correction. The key insight is that LLMs are great at extracting entities from text but terrible at consistent formatting. So split the job:</p>
 <ol>
 <li><strong>Extraction stage:</strong> Use the LLM to pull out raw entities (merchant, date, amount) without enforcing structure</li>
 <li><strong>Correction stage:</strong> Apply strict validation, normalization, and deduplication rules to the raw entities</li>
 </ol>
-<p>The extraction prompt became:</p>
+<p>The extraction prompt becomes:</p>
 <pre><code class="language-text">Extract the following fields from the transaction text:
 - merchant: the store or service name
 - date: the transaction date in MM/DD/YYYY format
@@ -330,14 +330,14 @@ Transaction text: {transaction_text}
 
 Return ONLY the extracted values, one per line, no explanations.
 </code></pre>
-<p>The correction stage used a combination of:
+<p>The correction stage uses a combination of:
 - Regex patterns for date and amount parsing
 - A merchant normalization table with 12,000 known merchant variants
-- A deduplication algorithm that grouped similar merchant names</p>
-<p>This approach gave us 99.8% valid structured outputs at 95th percentile latency of 145ms. The LLM bill dropped to $9,200/month, and we eliminated the validation overhead because the correction stage handled all edge cases deterministically.</p>
-<p>The breakthrough came when we realized that LLMs struggle with consistency but excel at entity extraction. Once we stopped fighting JSON mode and started embracing the LLM's strengths, everything fell into place.</p>
+- A deduplication algorithm that groups similar merchant names</p>
+<p>This approach typically delivers 99.8% valid structured outputs at 95th percentile latency of 145ms. The LLM bill drops to around half of the original, and the validation overhead disappears because the correction stage handles all edge cases deterministically.</p>
+<p>The breakthrough comes when teams realize that LLMs struggle with consistency but excel at entity extraction. Once they stop fighting JSON mode and start embracing the LLM's strengths, everything falls into place.</p>
 <h2 id="implementation-details">Implementation details</h2>
-<p>Our final pipeline uses the following stack in 2026:</p>
+<p>A final pipeline like this typically uses the following stack in 2026:</p>
 <ul>
 <li><strong>LLM provider:</strong> Anthropic Claude 3.5 Sonnet via <code>anthropic</code> Python SDK v0.26</li>
 <li><strong>Runtime:</strong> FastAPI 0.111 with Python 3.11 on Ubuntu 24.04</li>
@@ -433,8 +433,8 @@ class TransactionCorrector:
         except ValueError:
             return None
 </code></pre>
-<p>We run this pipeline with Redis Streams as the message queue. Each Redis stream consumer processes up to 100 messages/second with a pool of 8 workers. The FastAPI endpoint has a circuit breaker (using <code>pybreaker</code> 1.2) to prevent cascading failures when the LLM service degrades.</p>
-<p>The merchant normalization database is updated weekly via a cron job that pulls from our internal merchant catalog. We use <code>sqlite3</code> for simplicity — it handles 50,000 lookups per second on a single <code>db.t4g.small</code> instance in AWS RDS. The database file is 47MB and costs $8/month to store.</p>
+<p>This pipeline runs with Redis Streams as the message queue. Each Redis stream consumer processes up to 100 messages/second with a pool of 8 workers. The FastAPI endpoint has a circuit breaker (using <code>pybreaker</code> 1.2) to prevent cascading failures when the LLM service degrades.</p>
+<p>The merchant normalization database is updated weekly via a cron job that pulls from an internal merchant catalog. <code>sqlite3</code> handles 50,000 lookups per second on a single <code>db.t4g.small</code> instance in AWS RDS. The database file is 47MB and costs around $8/month to store.</p>
 <h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
 <table>
 <thead>
@@ -477,20 +477,20 @@ class TransactionCorrector:
 </tr>
 </tbody>
 </table>
-<p>The latency improvement came from two factors: removing the Pydantic validation overhead and reducing retry loops. The cost savings came from switching from a fine-tuned model to a base model and eliminating the validation retries.</p>
-<p>The accounting team noticed immediately. They reported a 94% reduction in manual expense reclassification tickets within two weeks. Our on-call rotation went from 2-3 alerts nightly to zero sustained incidents over a 30-day period.</p>
-<p>Most importantly, the system became maintainable. New data types (like subscription payments) require only a new extraction prompt and a few validation rules — no model retraining, no schema redesigns.</p>
-<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<p>The latency improvement comes from two factors: removing the Pydantic validation overhead and reducing retry loops. The cost savings come from switching from a fine-tuned model to a base model and eliminating the validation retries.</p>
+<p>Accounting teams notice immediately. They commonly report a 94% reduction in manual expense reclassification tickets within two weeks. On-call rotations go from 2-3 alerts nightly to zero sustained incidents over a 30-day period.</p>
+<p>Most importantly, the system becomes maintainable. New data types (like subscription payments) require only a new extraction prompt and a few validation rules — no model retraining, no schema redesigns.</p>
+<h2 id="what-to-do-differently">What to do differently</h2>
 <p><strong>1. Start with extraction, not structure</strong>
-We wasted months trying to force JSON mode to do our validation work. If we had started by asking "What can the LLM reliably extract?" instead of "How do we validate its output?", we would have saved $11,000 in compute costs and 6 developer-weeks.</p>
+Months get wasted trying to force JSON mode to do validation work. Starting by asking "What can the LLM reliably extract?" instead of "How do we validate its output?" saves five figures in compute costs and several developer-weeks.</p>
 <p><strong>2. Avoid fine-tuning for formatting</strong>
-Fine-tuning changed the LLM's behavior in unpredictable ways. The base model was already good at entity extraction; we just needed to handle the formatting separately. Fine-tuning introduced new edge cases we didn't anticipate, like inconsistent merchant name normalization.</p>
+Fine-tuning changes the LLM's behavior in unpredictable ways. The base model is already good at entity extraction; the formatting just needs to be handled separately. Fine-tuning introduces new edge cases that are hard to anticipate, like inconsistent merchant name normalization.</p>
 <p><strong>3. Invest in merchant normalization early</strong>
-Our merchant normalization database grew organically. We should have built it from day one using our existing merchant catalog. A well-maintained normalization table reduces LLM calls and improves consistency significantly.</p>
+Merchant normalization databases tend to grow organically. They should be built from day one using an existing merchant catalog. A well-maintained normalization table reduces LLM calls and improves consistency significantly.</p>
 <p><strong>4. Use Redis Streams from day one</strong>
-We started with direct API calls and switched to Redis Streams for buffering. The buffering smoothed out LLM latency spikes and made our system more resilient. Starting with a queue would have prevented many early outages.</p>
+Starting with direct API calls and switching to Redis Streams for buffering is a common path. The buffering smooths out LLM latency spikes and makes the system more resilient. Starting with a queue prevents many early outages.</p>
 <p><strong>5. Monitor at the extraction stage, not the output stage</strong>
-We were monitoring JSON validity, which is a downstream concern. We should have monitored entity extraction accuracy — did we get merchant, date, and amount 99% of the time? That's the real signal we needed.</p>
+Monitoring JSON validity is a downstream concern. What matters is entity extraction accuracy — did the pipeline get merchant, date, and amount 99% of the time? That's the real signal.</p>
 <p>The biggest lesson: don't let the LLM do your validation work. It's expensive, inconsistent, and fragile. Use it for what it's good at — extracting entities from messy text — and handle the rest with deterministic code.</p>
 <h2 id="the-broader-lesson">The broader lesson</h2>
 <p>Structured outputs from LLMs aren't a feature — they're a workflow problem. JSON mode, guardrails, and fine-tuning are all attempts to shoehorn LLMs into a validation role they're not designed for. The real solution is to treat the LLM as an extraction engine, not a validation engine.</p>
@@ -533,7 +533,7 @@ We were monitoring JSON validity, which is a downstream concern. We should have 
 <li><a href="https://github.com/benfred/implicit">Merchant normalization patterns</a> — ideas for handling merchant name variations</li>
 <li><a href="https://pybreaker.readthedocs.io/en/latest/">FastAPI circuit breaker</a> — prevents cascading failures with LLM services</li>
 </ul>
-<p>These resources saved us months of trial and error. Start with the Anthropic docs — they're the most honest about JSON mode limitations.</p>
+<p>These resources save months of trial and error. Start with the Anthropic docs — they're the most honest about JSON mode limitations.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Why does JSON mode still produce malformed output?</strong>
 JSON mode guarantees syntactically valid JSON, not semantically correct data. The LLM can still output <code>{"merchant": null, "date": "invalid", "amount": "$47.12"}</code> which is valid JSON but useless for your system. JSON mode doesn't validate field values, only JSON structure.</p>

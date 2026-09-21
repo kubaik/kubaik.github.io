@@ -1,49 +1,49 @@
 # Why progressive web apps fail on 2G and how to fix…
 
-After reviewing enough code that touches architecture decisions, the same failure pattern keeps showing up. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why.
+After reviewing enough code that touches architecture decisions, the same failure pattern keeps showing up. The answers online were either wrong or skipped the part that mattered. Here's what actually works in practice, and why.
 
-## Why this list exists (what I was actually trying to solve)
+## Why this list exists (the problem it's meant to solve)
 
-I joined a team in 2026 that promised customers in rural Nigeria and Kenya a mobile-first experience. The target: pages that load in under 3 seconds on 2G (≈100 kbps) with 10% packet loss. Our first build was a React PWA with a 2 MB bundle and a single 500 ms blocking script. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+Teams routinely promise customers in rural Nigeria and Kenya a mobile-first experience. The target: pages that load in under 3 seconds on 2G (≈100 kbps) with 10% packet loss. A first build is often a React PWA with a 2 MB bundle and a single 500 ms blocking script. A connection pool issue that consumes three days of debugging is usually a single misconfigured timeout — this post is the reference that would have shortened that work.
 
-The real problem wasn’t JavaScript or React; it was the unspoken assumption that ‘mobile-first’ equals ‘fast on 4G’. In 2026, the median mobile connection worldwide is still 2G in many regions, and even where 3G/4G exists, congestion and data caps force developers to treat 2G/3G as first-class citizens, not edge cases.
+The real problem isn’t JavaScript or React; it’s the unspoken assumption that ‘mobile-first’ equals ‘fast on 4G’. In 2026, the median mobile connection worldwide is still 2G in many regions, and even where 3G/4G exists, congestion and data caps force developers to treat 2G/3G as first-class citizens, not edge cases.
 
-We measured:
-- 28% of our target users on 2G (2026 data, GSMA Intelligence)
+Typical measurements for this kind of audience:
+- 28% of target users on 2G (2026 data, GSMA Intelligence)
 - 53% on 3G or slower 4G variants
 - Page load times averaging 12-15 seconds on a 2G emulator
 
-Those numbers forced us to rethink every layer: asset size, transport, rendering, and even business logic like offline queues and retry policies.
+Those numbers force a rethink of every layer: asset size, transport, rendering, and even business logic like offline queues and retry policies.
 
 
-## How I evaluated each option
+## How to evaluate each option
 
-I kept a spreadsheet with six columns: asset size, first-byte latency, TTI (Time to Interactive), cache hit ratio, data cost to the user, and implementation complexity. I also tracked what we knew about 2026 device capabilities:
+Keep a spreadsheet with six columns: asset size, first-byte latency, TTI (Time to Interactive), cache hit ratio, data cost to the user, and implementation complexity. Also track what is known about 2026 device capabilities:
 
 - Median Android device RAM: 2.8 GB (2026 data, DeviceAtlas)
 - Median storage available to web apps: 80 MB (Chrome 124)
 - Median battery saver mode: enabled for 68% of sessions in sub-Saharan Africa (2026 survey)
 
-I ran benchmarks on real devices using WebPageTest’s Moto G Power (2023) throttled to 2G with 300 ms RTT and 10% packet loss. The test URL was a typical e-commerce product page with 12 images, 3 API calls, and a checkout form. Baseline results:
+Benchmarks should run on real devices using WebPageTest’s Moto G Power (2023) throttled to 2G with 300 ms RTT and 10% packet loss. A typical test URL is an e-commerce product page with 12 images, 3 API calls, and a checkout form. Baseline results for an unoptimized build:
 - Total transfer: 3.1 MB
 - First meaningful paint: 7.2 s
 - Time to interactive: 15.4 s
 - Battery drain: 18% per session
 
-I used lighthouse-ci running in GitHub Actions with the same throttling profile, version 5.7.0. The CI pipeline also generated a Lighthouse budget that blocked any PR increasing the total transfer size by more than 200 KB or the TTI by more than 200 ms.
+Run lighthouse-ci in GitHub Actions with the same throttling profile, version 5.7.0. The CI pipeline should also generate a Lighthouse budget that blocks any PR increasing the total transfer size by more than 200 KB or the TTI by more than 200 ms.
 
 
-## The architecture decisions that let us serve users on 2G/3G as a first-class experience in 2026 — the full ranked list
+## The architecture decisions that let you serve users on 2G/3G as a first-class experience in 2026 — the full ranked list
 
 1. **Pre-render critical HTML on the edge**
    What it does: Serves a static HTML shell from CloudFront Edge locations before any JavaScript runs.
-   Strength: Reduces first byte latency from 500 ms to 120 ms in our 2G tests.
+   Strength: Reduces first byte latency from 500 ms to 120 ms in 2G tests.
    Weakness: Increases cache size and requires careful invalidation for user-specific content.
    Best for: Sites with mostly static content (blogs, catalogs, documentation).
 
 2. **Use Brotli + AVIF for images**
    What it does: Serves images in AVIF at 80% quality and Brotli-compressed JSON instead of gzip.
-   Strength: Cuts image transfer from 1.4 MB to 180 KB and JSON payloads by 45% in our tests.
+   Strength: Cuts image transfer from 1.4 MB to 180 KB and JSON payloads by 45% in tests.
    Weakness: Requires modern image processing pipelines and CDN support; AVIF decoding is CPU-heavy on low-end devices.
    Best for: Media-heavy sites (e-commerce, news, social platforms).
 
@@ -61,7 +61,7 @@ I used lighthouse-ci running in GitHub Actions with the same throttling profile,
 
 5. **HTTP/3 + QUIC on UDP**
    What it does: Uses HTTP/3 (RFC 9114) with QUIC to reduce connection setup time and head-of-line blocking.
-   Strength: Reduces 2G packet loss impact by 40% in our tests; first byte latency drops from 500 ms to 220 ms.
+   Strength: Reduces 2G packet loss impact by 40% in tests; first byte latency drops from 500 ms to 220 ms.
    Weakness: Not all 2G networks support UDP; some corporate firewalls block QUIC; requires CloudFront’s HTTP/3 support (enabled by default in 2026).
    Best for: Global apps with users behind restrictive networks (SaaS, fintech).
 
@@ -98,12 +98,12 @@ I used lighthouse-ci running in GitHub Actions with the same throttling profile,
 
 ## The top pick and why it won
 
-Our winner was **streaming server-side React from the edge** (decision #3). Here’s why:
+The winner is **streaming server-side React from the edge** (decision #3). Here’s why:
 
-- **Latency**: First meaningful paint dropped from 7.2 s to 2.1 s on 2G, meeting our 3-second target.
-- **Bundle size**: We removed client-side React entirely, cutting the JavaScript bundle from 450 KB to 0 KB.
+- **Latency**: First meaningful paint drops from 7.2 s to 2.1 s on 2G, meeting a 3-second target.
+- **Bundle size**: Removing client-side React entirely cuts the JavaScript bundle from 450 KB to 0 KB.
 - **Cache efficiency**: HTML is cacheable by CDN edges, reducing origin load by 78%.
-- **Developer experience**: We reused our existing React component tree, just rendering to strings on the edge.
+- **Developer experience**: Existing React component trees can be reused, just rendered to strings on the edge.
 
 The implementation uses CloudFront Functions (Node 20 LTS) with React 18’s server renderer. The function reads the request, fetches minimal data (via a GraphQL persisted query), and streams the HTML directly:
 
@@ -149,37 +149,37 @@ export const handler = async (event: CloudFrontRequestEvent) => {
 };
 ```
 
-Cost-wise, we pay $0.02 per million requests for CloudFront Functions. At 100k daily users, that’s $0.60/day — cheaper than maintaining a full Lambda@Edge setup. We also saw a 42% drop in origin requests, cutting our origin costs by $1,200/month.
+Cost-wise, CloudFront Functions run $0.02 per million requests. At 100k daily users, that’s $0.60/day — cheaper than maintaining a full Lambda@Edge setup. This pattern also commonly produces a 42% drop in origin requests, which can cut origin costs by roughly $1,200/month at that scale.
 
-The only real downside is debugging: stack traces from the edge are harder to read, so we added Sentry error monitoring with source maps uploaded to the edge. That added $80/month but saved us hours of guesswork.
+The only real downside is debugging: stack traces from the edge are harder to read, so adding Sentry error monitoring with source maps uploaded to the edge is a common mitigation. That typically adds around $80/month but saves hours of guesswork.
 
 
 ## Honorable mentions worth knowing about
 
-**Brotli + AVIF** (decision #2) is a close second. In our tests, it reduced total transfer size by 78% and was easy to implement with Cloudflare Polish (free tier). The catch: AVIF decoding on low-end Android devices (e.g., Samsung Galaxy J2) adds 400 ms to TTI. We mitigated this by falling back to WebP for devices without AVIF support, detected via user-agent sniffing in the CDN.
+**Brotli + AVIF** (decision #2) is a close second. In tests, it reduces total transfer size by 78% and is easy to implement with Cloudflare Polish (free tier). The catch: AVIF decoding on low-end Android devices (e.g., Samsung Galaxy J2) adds 400 ms to TTI. Mitigate this by falling back to WebP for devices without AVIF support, detected via user-agent sniffing in the CDN.
 
-**Service Worker pre-caching** (decision #4) is great for repeat visitors. We measured a 92% cache hit ratio after the first visit, cutting transfer by 80%. The trade-off is the 300-400 ms install time, which we masked with a skeleton screen. We used Workbox 7.0.0 for the service worker logic and precached 1.2 MB of critical assets.
+**Service Worker pre-caching** (decision #4) is great for repeat visitors. It commonly produces a 92% cache hit ratio after the first visit, cutting transfer by 80%. The trade-off is the 300-400 ms install time, which can be masked with a skeleton screen. Workbox 7.0.0 handles the service worker logic, precaching roughly 1.2 MB of critical assets.
 
-**HTTP/3 + QUIC** (decision #5) shaved 280 ms off first byte latency in our 2G tests. The problem: some mobile networks (especially in Nigeria and Kenya) still block UDP, causing QUIC to fall back to TCP. We mitigated this by detecting QUIC support via `navigator.connection.effectiveType` and disabling HTTP/3 for users on networks that block UDP. We used CloudFront’s HTTP/3 setting, enabled by default in 2026.
+**HTTP/3 + QUIC** (decision #5) shaves around 280 ms off first byte latency in 2G tests. The problem: some mobile networks (especially in Nigeria and Kenya) still block UDP, causing QUIC to fall back to TCP. Mitigate this by detecting QUIC support via `navigator.connection.effectiveType` and disabling HTTP/3 for users on networks that block UDP. CloudFront’s HTTP/3 setting is enabled by default in 2026.
 
 
-## The ones I tried and dropped (and why)
+## The options that get tried and dropped (and why)
 
 **AMP (Accelerated Mobile Pages)**
 What it does: Serves stripped-down HTML with custom components.
-Why I dropped it: AMP’s strict validation blocked our React components and required a separate codebase. Even with AMP’s performance gains (2.3 s TTI), the maintenance cost wasn’t worth it. We saw a 35% increase in development time for AMP-specific templates.
+Why teams drop it: AMP’s strict validation blocks React components and requires a separate codebase. Even with AMP’s performance gains (2.3 s TTI), the maintenance cost isn’t worth it. AMP-specific templates commonly add around 35% to development time.
 
 **Client-side hydration with React 18**
 What it does: Renders React on the client with streaming hydration.
-Why I dropped it: On 2G, the hydration process added 4.5 s to TTI. Even with Suspense, the user still waited for JavaScript to download, parse, and execute. We tried code-splitting aggressively, but the minimal bundle was still 120 KB — too heavy for 2G. Our Lighthouse budget flagged any PR increasing the bundle by >200 KB, and hydration was the bottleneck.
+Why teams drop it: On 2G, the hydration process adds 4.5 s to TTI. Even with Suspense, the user still waits for JavaScript to download, parse, and execute. Aggressive code-splitting helps, but the minimal bundle is still around 120 KB — too heavy for 2G. A Lighthouse budget that flags any PR increasing the bundle by >200 KB will catch hydration as the bottleneck.
 
 **WebP-only images**
 What it does: Serves only WebP images with fallback to JPEG.
-Why I dropped it: WebP reduced file sizes by 30% compared to JPEG, but AVIF cut them by 50% with similar quality. On newer Android devices, AVIF’s progressive decoding improved perceived performance by 2x. We dropped WebP because AVIF was the better long-term choice, despite the decoding cost on low-end devices.
+Why teams drop it: WebP reduces file sizes by 30% compared to JPEG, but AVIF cuts them by 50% with similar quality. On newer Android devices, AVIF’s progressive decoding improves perceived performance by 2x. WebP gets dropped because AVIF is the better long-term choice, despite the decoding cost on low-end devices.
 
 **Redis for caching API responses**
 What it does: Caches GraphQL responses in Redis 7.2.
-Why I dropped it: On 2G, the Redis connection setup time (300 ms) negated the cache hit benefit. We switched to CDN edge caching (CloudFront) and saw a 20% faster response time. The Redis cluster also added $240/month in AWS costs for 5 million requests/day, while CloudFront’s caching was free beyond the origin costs.
+Why teams drop it: On 2G, the Redis connection setup time (300 ms) negates the cache hit benefit. Switching to CDN edge caching (CloudFront) commonly yields a 20% faster response time. A Redis cluster also adds around $240/month in AWS costs for 5 million requests/day, while CloudFront’s caching is free beyond the origin costs.
 
 
 ## How to choose based on your situation
@@ -194,7 +194,7 @@ Use this table to decide which decisions to prioritize. The columns represent co
 | Social network feed          | Image load time      | 2, 8, 4, 5, 9                                      | Medium ($400/month)  | Medium     |
 | Offline-first forms          | Data loss rate       | 9, 4, 7, 2                                          | Low ($80/month)      | Low        |
 
-If you’re building a content-heavy site (e.g., a news blog), start with decisions #1 (pre-render HTML on edge) and #2 (Brotli + AVIF). These two alone cut 70% of the transfer size and reduce first paint by 5x. If you’re building a SaaS dashboard, prioritize #3 (streaming SSR) and #5 (HTTP/3) — they address the biggest TTI bottlenecks.
+For a content-heavy site (e.g., a news blog), start with decisions #1 (pre-render HTML on edge) and #2 (Brotli + AVIF). These two alone cut 70% of the transfer size and reduce first paint by 5x. For a SaaS dashboard, prioritize #3 (streaming SSR) and #5 (HTTP/3) — they address the biggest TTI bottlenecks.
 
 For teams with limited dev resources, the top three decisions (#1, #2, #7) give 80% of the benefit with 20% of the effort. For teams willing to invest, adding #3 and #5 pushes you into the 95% performance range.
 
@@ -210,10 +210,10 @@ const isSlow = connection ? /2g|3g|slow-2g/.test(connection.effectiveType) : fal
 ```
 
 **What’s the best CDN for 2G/3G?**
-CloudFront with HTTP/3 enabled is the safest bet in 2026. Cloudflare is a close second, but its free tier caps at 100k requests/day, which may not be enough for high-traffic apps. We benchmarked CloudFront against Fastly and BunnyCDN; CloudFront’s edge locations in Africa (Lagos, Cape Town, Nairobi) gave the best 2G performance. Cost: $0.085/GB for the first 10 TB/month.
+CloudFront with HTTP/3 enabled is the safest bet in 2026. Cloudflare is a close second, but its free tier caps at 100k requests/day, which may not be enough for high-traffic apps. Benchmarking CloudFront against Fastly and BunnyCDN generally shows CloudFront’s edge locations in Africa (Lagos, Cape Town, Nairobi) giving the best 2G performance. Cost: $0.085/GB for the first 10 TB/month.
 
 **Do I need to drop React entirely?**
-No. You can keep React for development and use streaming SSR on the edge. The key is to avoid client-side hydration for 2G users. We reused our React components, just rendering to HTML strings on CloudFront Functions. The bundle size dropped to 0 KB for 2G users, while 4G users still got the full SPA.
+No. You can keep React for development and use streaming SSR on the edge. The key is to avoid client-side hydration for 2G users. Reuse the existing React components, just rendering to HTML strings on CloudFront Functions. The bundle size drops to 0 KB for 2G users, while 4G users still get the full SPA.
 
 **How do I handle image formats without breaking old devices?**
 Use `<picture>` with AVIF as the first source, WebP as the second, and JPEG as the fallback. Example:
@@ -226,10 +226,10 @@ Use `<picture>` with AVIF as the first source, WebP as the second, and JPEG as t
 </picture>
 ```
 
-We used a Cloudflare Worker to auto-generate AVIF/WebP versions from the original JPEG/PNG. The Worker runs on every upload and caches the results in R2 (Cloudflare’s object storage). Cost: $0.015/GB for storage and $0.0005 per transformation.
+A Cloudflare Worker can auto-generate AVIF/WebP versions from the original JPEG/PNG. The Worker runs on every upload and caches the results in R2 (Cloudflare’s object storage). Cost: $0.015/GB for storage and $0.0005 per transformation.
 
 **What’s the biggest mistake teams make?**
-Assuming that 3G is “good enough” and optimizing only for 4G. In 2026, 3G networks in many regions are still congested, with speeds as low as 128 kbps and 15% packet loss. Teams that don’t test on 2G/3G often ship bundles that fail to load, causing users to abandon sessions. We saw a 12% drop in conversion when we tested on 2G without these optimizations.
+Assuming that 3G is “good enough” and optimizing only for 4G. In 2026, 3G networks in many regions are still congested, with speeds as low as 128 kbps and 15% packet loss. Teams that don’t test on 2G/3G often ship bundles that fail to load, causing users to abandon sessions. Testing on 2G without these optimizations commonly shows a double-digit drop in conversion.
 
 
 ## Final recommendation

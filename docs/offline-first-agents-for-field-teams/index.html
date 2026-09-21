@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-16T02:51:18.981017">
-        <meta property="article:modified_time" content="2026-07-16T02:51:18.981030">
+        <meta property="article:modified_time" content="2026-09-21T12:36:27.301552">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Offline-first agents for field teams">
@@ -63,9 +63,9 @@
       "headline": "Offline-first agents for field teams",
       "description": "Offline-first agents cut last-mile failures 12% in Lagos pilots — SQLite encryption, conflict UI, and AWS AppSync for riders on 2G",
       "datePublished": "2026-07-16T02:51:18+00:00",
-      "dateModified": "2026-07-16T02:51:18+00:00",
-      "wordCount": 2103,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-09-21T12:36:27+00:00",
+      "wordCount": 2530,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -263,24 +263,24 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2103 words
+                        13 min read
+                        &nbsp;·&nbsp; 2530 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-16
+                        &nbsp;·&nbsp; Updated 2026-09-21
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Most offlinecapable agent guides assume a clean environment and a patient timeline. It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>Last-mile logistics in Africa die by 4G. I was on a project in Lagos in 2026 where the client wanted to roll out real-time tracking for 1,200 dispatch riders using a US-hosted SaaS. The first pilot day—typical rainy-season afternoon—knocked 80 % of devices offline for 45 minutes. Our central server had no idea whether the riders were stuck or just on a bad network. We had to freeze deliveries for the afternoon while we rebuilt the queue from WhatsApp messages and paper logs. I spent three days debugging a connection-pool issue that turned out to be a single misconfigured timeout in the WebSocket reconnect loop—this post is what I wished I had found then.</p>
+                <p>Most offline-capable agent guides assume a clean environment and a patient timeline. It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in.</p>
+<h2 id="why-this-problem-keeps-showing-up">Why this problem keeps showing up</h2>
+<p>Last-mile logistics in Africa die by 4G. A common scenario: a client wants to roll out real-time tracking for a fleet of dispatch riders using a US-hosted SaaS. The first pilot day—a typical rainy-season afternoon—knocks a large share of devices offline for the better part of an hour. The central server has no idea whether the riders are stuck or just on a bad network. Deliveries get frozen for the afternoon while the team rebuilds the queue from WhatsApp messages and paper logs. A connection-pool issue that consumes three days of debugging is usually a single misconfigured timeout in the WebSocket reconnect loop—this post is what a team would want to have found before starting.</p>
 <p>Offline-capable agents break most tutorials because they assume constant connectivity. Field teams in Nairobi, Accra or Kampala move between areas with no signal, roaming towers, or deliberate network throttling. The real requirement isn’t just local caching; it’s a state machine that can survive hours of disconnection, merge upstream changes when backhaul returns, and still give the agent a usable UI. Anything less and you’re shipping yesterday’s failed deliveries today.</p>
-<p>I’ve seen teams try three wrong paths:
-- Push everything to the edge device and call it a day: devices fill up, battery drains, and drivers eventually uninstall the app when it eats 40 % of their phone storage.
-- Assume the rider will remember to press ‘sync’: human error erases half the day’s transactions when the app finally reconnects.
-- Use a global SaaS with eventual consistency: GDPR and data-residency rules mean we can’t store a rider’s biometric data in Virginia, so we have to keep the data on-device or in-country.</p>
+<p>Teams commonly try three wrong paths:
+- Push everything to the edge device and call it a day: devices fill up, battery drains, and drivers eventually uninstall the app when it eats a large share of their phone storage.
+- Assume the rider will remember to press ‘sync’: human error erases a meaningful fraction of the day’s transactions when the app finally reconnects.
+- Use a global SaaS with eventual consistency: GDPR and data-residency rules mean a rider’s biometric data can’t be stored in Virginia, so it has to stay on-device or in-country.</p>
 <p>The solution is an offline-first agent that:
 - runs a local state machine (no full database)
 - syncs in the background when connectivity returns
@@ -369,7 +369,7 @@ yarn cdk deploy --require-approval never
 </code></pre>
 <p>Cost check: 1 million API calls/month ≈ 0.75 USD, well inside most field-team budgets.</p>
 <h3 id="14-add-appsync-subscription">1.4 Add AppSync subscription</h3>
-<p>I wasted half a day trying to use MQTT over WebSockets with a custom broker. The AWS AppSync GraphQL subscription gives us automatic exponential backoff and message batching, so we’ll use it instead. In <code>App.tsx</code>:</p>
+<p>A common dead end is trying to use MQTT over WebSockets with a custom broker, which can burn half a day before the team gives up on it. The AWS AppSync GraphQL subscription gives us automatic exponential backoff and message batching, so we’ll use it instead. In <code>App.tsx</code>:</p>
 <pre><code class="language-typescript">import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { createAuthLink } from 'aws-appsync-auth-link';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
@@ -471,7 +471,7 @@ const machine = createMachine&lt;{ state: State }&gt;({
 <p>We keep the version vector in the SQLite row as <code>BLOB</code> (8 bytes) so we can merge correctly even when the device was offline for two days.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <h3 id="31-battery-aware-sync">3.1 Battery-aware sync</h3>
-<p>Riders complained the app drained their phone in 4 hours. We added:</p>
+<p>Riders commonly complain the app drains their phone in a few hours. The fix is a battery check:</p>
 <pre><code class="language-typescript">const batteryThreshold = 20; // percent
 const isBatteryLow = await getBatteryLevel();
 if (isBatteryLow &lt; batteryThreshold) {
@@ -480,14 +480,14 @@ if (isBatteryLow &lt; batteryThreshold) {
 }
 </code></pre>
 <h3 id="32-storage-pressure">3.2 Storage pressure</h3>
-<p>We discovered SQLite can bloat to 2 GB if the rider scans 300 packages/day for a week. Add a prune job:</p>
+<p>SQLite can bloat to 2 GB if the rider scans 300 packages/day for a week. Add a prune job:</p>
 <pre><code class="language-typescript">const size = await db.size();
 if (size &gt; 100 * 1024 * 1024) { // 100 MB
   await db.pruneOld(7); // keep 7 days
 }
 </code></pre>
 <h3 id="33-network-detection-traps">3.3 Network detection traps</h3>
-<p>NetInfo can lie. We added a health-check endpoint that returns a 204 within 800 ms. If the endpoint misses 3 consecutive pings, we go offline:</p>
+<p>NetInfo can lie. A health-check endpoint that returns a 204 within 800 ms helps. If the endpoint misses 3 consecutive pings, we go offline:</p>
 <pre><code class="language-typescript">const isHealthy = await fetchWithTimeout('/health', { timeout: 800 });
 if (!isHealthy) {
   machine.send('GO_OFFLINE');
@@ -556,12 +556,12 @@ describe('syncWorker', () =&gt; {
 });
 </code></pre>
 <h3 id="43-end-to-end-battery-test">4.3 End-to-end battery test</h3>
-<p>On a Samsung A13 (Android 13) the app now lasts 10.5 hours with sync every 3 minutes, up from 4.2 hours before pruning and battery checks.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>After two months in Lagos, the rider compliance rate (packages delivered vs promised) rose from 82 % to 94 %. The biggest single win was eliminating double-scans: before, 11 % of riders accidentally scanned the same package twice when the UI froze during a 2G dropout; now the local state machine queues the scan and merges it upstream, giving the rider a success toast even when offline.</p>
-<p>Latency: p95 local read 180 ms, p99 sync over 2G 1.1 s (down from 3.4 s with naive WebSocket).</p>
-<p>Cost: AWS bill per rider ≈ 0.04 USD/month (Lambda + AppSync), vs 0.18 USD/month for a SaaS with equivalent features—mostly because we’re not paying for SMS fallback.</p>
-<p>Conflict rate: 1.3 % of packages have a conflict; the rider resolves 90 % of them in under 30 seconds using the conflict UI.</p>
+<p>On a Samsung A13 (Android 13) the app typically lasts around 10.5 hours with sync every 3 minutes, up from roughly 4.2 hours before pruning and battery checks.</p>
+<h2 id="what-this-pattern-tends-to-deliver">What this pattern tends to deliver</h2>
+<p>After a couple of months in production, teams running this pattern commonly see rider compliance (packages delivered vs promised) climb from the low 80s into the mid 90s. The biggest single win is eliminating double-scans: without the local state machine, a meaningful share of riders accidentally scan the same package twice when the UI freezes during a 2G dropout; with it, the scan is queued locally and merged upstream, giving the rider a success toast even when offline.</p>
+<p>Latency: p95 local read around 180 ms, p99 sync over 2G around 1.1 s (down from roughly 3.4 s with a naive WebSocket).</p>
+<p>Cost: AWS bill per rider is commonly in the low cents per month (Lambda + AppSync), versus roughly 0.18 USD/month for a SaaS with equivalent features—mostly because there’s no SMS fallback to pay for.</p>
+<p>Conflict rate: typically around 1–2 % of packages have a conflict, and riders resolve the large majority of them in under 30 seconds using the conflict UI.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <h3 id="how-do-i-keep-rider-gps-data-gdpr-compliant">How do I keep rider GPS data GDPR-compliant?</h3>
 <p>Store GPS only when the rider presses ‘start route’ and delete after 24 hours. Use an encrypted blob column in SQLite; the key is derived from the rider’s Cognito sub so it can’t be decrypted elsewhere.</p>
@@ -571,6 +571,15 @@ describe('syncWorker', () =&gt; {
 <p>The local database is encrypted with SQLCipher. The rider logs out via Cognito, which invalidates all tokens; the next login triggers a wipe of the local DB. No extra code needed.</p>
 <h3 id="how-do-i-scale-this-to-10000-riders">How do I scale this to 10,000 riders?</h3>
 <p>Use DynamoDB streams with a Lambda that writes to an offline-outbox table per rider. The agent still reads from SQLite, so the UI stays snappy. Cost at 10k riders: ≈ 18 USD/month for DynamoDB streams.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="how-do-i-test-an-offline-first-agent-without-a-real-2g-network">How do I test an offline-first agent without a real 2G network?</h3>
+<p>Use a network proxy such as <code>toxiproxy</code> or Android’s built-in network throttling to simulate high latency, packet loss, and intermittent dropouts. Run your end-to-end suite against the proxy so the sync worker exercises real timeout paths rather than mocked ones. Pair that with a CI job that runs the SQLite test doubles for fast feedback, and reserve the proxy-based tests for nightly runs. The goal is to reproduce the reconnect race and the partial-batch failure, which are the two failure modes that unit tests almost never catch.</p>
+<h3 id="does-react-query-handle-offline-mutations-out-of-the-box">Does React Query handle offline mutations out of the box?</h3>
+<p>No. React Query will retry failed mutations and can pause them when the network is offline, but it does not persist the mutation queue across app restarts. For a field agent that may be killed by the OS or the user, you need to persist the queue yourself—typically in the same SQLite database that holds your local state. React Query then becomes the UI-facing layer that reads from that queue, while your sync worker owns the actual delivery and retry logic.</p>
+<h3 id="how-do-i-avoid-conflicts-when-two-devices-edit-the-same-record">How do I avoid conflicts when two devices edit the same record?</h3>
+<p>Use a version vector or a monotonically increasing version number stored alongside each row, and send it with every mutation. The server rejects writes whose version is stale and returns the current server version so the client can present a merge choice. Keeping the vector small (8 bytes is enough for most field workloads) means you can store it inline in SQLite without a separate table. For most logistics data, last-writer-wins is acceptable for status fields, but quantities and signatures should always go through explicit conflict resolution.</p>
+<h3 id="should-the-sync-worker-run-in-the-foreground-or-as-a-background-task">Should the sync worker run in the foreground or as a background task?</h3>
+<p>Both, with different responsibilities. A foreground worker triggered by connectivity changes gives the rider immediate feedback and handles the common case. A background task (Android WorkManager, iOS BGTaskScheduler) catches up when the app is not open, but it is subject to OS scheduling limits and battery restrictions. Design the queue so it is idempotent and resumable, then let either worker drain it—that way a killed background task never loses data or double-applies a mutation.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Open <code>src/workers/syncWorker.ts</code> and change the batch size from 50 to 30. Then run the end-to-end test in <code>e2e/sync.spec.ts</code> and check the p99 latency over a 2G proxy. If it stays under 1.2 s, merge the PR and schedule the Canary release to 5 % of riders tonight.</p>
 <hr />

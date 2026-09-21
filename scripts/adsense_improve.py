@@ -17,9 +17,9 @@ timeout." Those are unverifiable claims presented as lived experience,
 which is exactly what Google's Helpful Content signal flags.
 
 This script rewrites those sentences in-place without touching the rest
-of the article. It uses the same LLM provider chain blog_system.py uses
-at generation time (via BlogSystem._call_api_with_fallback), so no new
-credentials or provider configuration is needed.
+of the article. Model calls go through scripts/blog_llm_client.py —
+a standalone provider chain that reads API keys directly from the
+environment and doesn't require config.yaml or BlogSystem to boot.
 
 SAFETY
 ------
@@ -43,6 +43,15 @@ SAFETY
    provider chain. The default of 10 posts per run keeps each batch
    under ~5 minutes.
 
+ENVIRONMENT
+-----------
+Set at least one LLM provider key before running. Run:
+
+    python scripts/blog_llm_client.py --check
+
+to verify which providers are currently working. The chain is tried in
+order and the first that succeeds is used.
+
 AFTER RUNNING
 -------------
 Always rebuild the site so the updated content is reflected in HTML:
@@ -60,6 +69,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import re
 import shutil
 import sys
 from datetime import datetime
@@ -69,21 +79,61 @@ _ROOT = Path(__file__).resolve().parent.parent
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
-# Reuse the same detection primitives and provider chain blog_system.py
+# Sibling import: blog_llm_client lives in this same scripts/ directory.
+_SCRIPTS_DIR = Path(__file__).resolve().parent
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
+
+# Reuse the same detection primitives blog_system.py's publish-time gate
 # uses, so the validation here and the publish-time gate can never drift.
+# NOTE (2026-09-21): _reject_if_narrative_title is deliberately NOT
+# imported. It's designed for titles and flags past-tense action verbs at
+# the start of a string ("Added X"), which are incidents in a title but
+# perfectly normal technical prose in a body. Body-level incident
+# detection delegates to _flag_fabricated_anecdotes(), which uses the
+# two-tier check.
 from blog_system import (
-    BlogSystem,
     _flag_fabricated_anecdotes,
     _reject_if_fabricated_citation,
-    _reject_if_narrative_title,
     _check_expansion_completeness,
     MIN_ACCEPTABLE_WORDS,
 )
+
+# Standalone LLM client — reads provider keys directly from os.environ,
+# tries each configured provider in order, returns raw text.
+from blog_llm_client import generate_text, configured_providers
 
 
 _DOCS_DIR = Path("./docs")
 _TRIAGE_DIR = Path("./.adsense_triage")
 _BACKUP_DIR = Path("./.adsense_backups")
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Prompt sentinel handling
+# ─────────────────────────────────────────────────────────────────────
+
+# The prompt wraps the source post between these markers. The LLM
+# occasionally echoes the closing marker into its output, which then
+# fails the "ends on a finished sentence" check in
+# _check_expansion_completeness(). Strip them before validation and
+# before saving.
+_PROMPT_SENTINEL_RE = re.compile(
+    r'^\s*-{2,}\s*(?:END\s+(?:OF\s+)?POST|BEGIN\s+POST)\s*-{2,}\s*$',
+    re.IGNORECASE,
+)
+
+
+def _strip_prompt_sentinels(text: str) -> str:
+    """
+    Remove trailing prompt sentinel lines the LLM may have echoed. Only
+    strips from the end — a sentinel appearing mid-body is left alone
+    since it's more likely real content (e.g. inside a code block).
+    """
+    lines = text.rstrip().split("\n")
+    while lines and _PROMPT_SENTINEL_RE.match(lines[-1]):
+        lines.pop()
+    return "\n".join(lines).rstrip()
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -159,9 +209,11 @@ def _build_prompt(post_data: dict) -> list[dict]:
         "actually search for, each answered in 3-5 sentences. If one is "
         "already present, leave it alone.\n"
         "\n"
-        "7. Return ONLY the complete rewritten markdown body. No title "
-        "repetition, no meta commentary, no code fences around the whole "
-        "output, no preamble."
+        "7. Return ONLY the complete rewritten markdown body. Do NOT "
+        "include the '--- BEGIN POST ---' or '--- END POST ---' "
+        "delimiters in your output. Do not repeat the title. Do not add "
+        "meta commentary. Do not wrap the whole output in a code fence. "
+        "No preamble."
     )
 
     user = (
@@ -181,6 +233,29 @@ def _build_prompt(post_data: dict) -> list[dict]:
 # Validation
 # ─────────────────────────────────────────────────────────────────────
 
+def _body_has_fabricated_incident(body: str) -> str | None:
+    """
+    Body-specific version of the narrative check.
+
+    _reject_if_narrative_title() is designed for TITLES: it flags
+    first-person pronouns AND past-tense action verbs at the start of the
+    string. In a body, only the first of those is unambiguously an
+    incident claim — "Added retry logic" is a normal way to describe a
+    change, whereas "I added retry logic" is a fabricated incident.
+
+    This delegates to _flag_fabricated_anecdotes(), which uses the
+    two-tier check from blog_system.py, so there's one source of truth
+    for what counts as a body-level incident.
+    """
+    incidents = _flag_fabricated_anecdotes(body)
+    if incidents:
+        return (
+            f"body still contains {len(incidents)} first-person "
+            f"incident(s), first: {incidents[0][:60]!r}"
+        )
+    return None
+
+
 def _validate_rewrite(original: str, rewritten: str) -> str | None:
     """
     Return None if the rewrite is acceptable, else a short human-readable
@@ -189,6 +264,10 @@ def _validate_rewrite(original: str, rewritten: str) -> str | None:
     """
     if not rewritten or not rewritten.strip():
         return "empty rewrite"
+
+    # Strip any echoed prompt sentinel before the truncation check, so a
+    # well-formed rewrite doesn't fail because it ended on "--- END POST ---".
+    rewritten = _strip_prompt_sentinels(rewritten)
 
     # Truncation / mid-generation cutoff / mid-code-block ending
     issues = _check_expansion_completeness(rewritten)
@@ -207,18 +286,12 @@ def _validate_rewrite(original: str, rewritten: str) -> str | None:
         )
 
     # Content-level gates must all clear after the rewrite
-    if _reject_if_narrative_title(rewritten):
-        return "rewrite still contains a narrative-title pattern in body"
-
     if _reject_if_fabricated_citation(rewritten):
         return "rewrite still contains a fabricated citation"
 
-    incidents = _flag_fabricated_anecdotes(rewritten)
-    if incidents:
-        return (
-            f"rewrite still contains {len(incidents)} first-person "
-            f"incident(s), first: {incidents[0][:60]!r}"
-        )
+    incident_problem = _body_has_fabricated_incident(rewritten)
+    if incident_problem:
+        return incident_problem
 
     return None
 
@@ -228,9 +301,9 @@ def _validate_rewrite(original: str, rewritten: str) -> str | None:
 # ─────────────────────────────────────────────────────────────────────
 
 async def _improve_one(
-    blog: BlogSystem,
     slug: str,
     dry_run: bool,
+    verbose: bool,
 ) -> str:
     """
     Rewrite one post. Returns a status string for the run log. Never
@@ -257,10 +330,22 @@ async def _improve_one(
     # generation default; the 16000 ceiling caps provider cost.
     budget = min(16000, max(6500, len(content) // 4 + 3000))
 
+    if verbose:
+        print(f"\n  [{slug}] sending {len(content.split())} words, "
+              f"budget {budget} tokens")
+
     try:
-        rewritten = await blog._call_api_with_fallback(messages, max_tokens=budget)
+        rewritten = await generate_text(
+            messages=messages,
+            max_tokens=budget,
+            verbose=verbose,
+        )
     except Exception as e:
-        return f"FAIL {slug}: LLM call failed ({e})"
+        return f"FAIL {slug}: all providers failed ({e})"
+
+    # Strip any sentinel the LLM echoed before validation, so the string
+    # we validate is the same string we write.
+    rewritten = _strip_prompt_sentinels(rewritten)
 
     rejection = _validate_rewrite(content, rewritten)
     if rejection:
@@ -337,17 +422,20 @@ async def _run_batch(args) -> int:
     )
     print(f"docs dir:   {_DOCS_DIR}")
     print(f"backup dir: {_BACKUP_DIR}")
-    print()
 
-    # ── Initialize the BlogSystem so the provider chain is ready ─────
-    # BlogSystem() with no config reads ./config.yaml and initializes
-    # the same _call_api_with_fallback chain used by `blog_system.py
-    # auto`. This is why the script doesn't need its own provider code.
-    try:
-        blog = BlogSystem()
-    except Exception as e:
-        print(f"Could not initialize BlogSystem: {e}")
+    # ── Report which providers will be tried ──────────────────────────
+    configured = configured_providers()
+    if not configured:
+        print()
+        print("❌ No LLM providers configured. Set at least one of:")
+        print("   DEEPSEEK_API_KEY, GROQ_API_KEY, GEMINI_API_KEY,")
+        print("   OPENROUTER_API_KEY, MISTRAL_API_KEY, GITHUB_TOKEN,")
+        print("   NVIDIA_API_KEY, ZAI_API_KEY")
+        print()
+        print("Verify with: python scripts/blog_llm_client.py --check")
         return 1
+    print(f"providers:  {' → '.join(configured)}")
+    print()
 
     ok = 0
     dry = 0
@@ -360,7 +448,7 @@ async def _run_batch(args) -> int:
         if not slug:
             continue
 
-        result = await _improve_one(blog, slug, dry_run=dry_run)
+        result = await _improve_one(slug, dry_run=dry_run, verbose=not args.quiet)
         print(f"  {result}")
 
         if result.startswith("OK "):
@@ -395,8 +483,9 @@ async def _run_batch(args) -> int:
             print("is unchanged. Inspect the REJECT lines above to see why.")
         if failed:
             print()
-            print("Failures were likely LLM provider issues. Re-run with the")
-            print("same --limit to retry; successful posts are already written.")
+            print("Failures were likely LLM provider issues. Check provider")
+            print("connectivity with:")
+            print("    python scripts/blog_llm_client.py --check")
 
     return 0
 
@@ -440,6 +529,10 @@ def main() -> int:
     parser.add_argument(
         "--backup-dir", default="./.adsense_backups",
         help="Where to back up originals (default: ./.adsense_backups).",
+    )
+    parser.add_argument(
+        "--quiet", action="store_true",
+        help="Suppress per-provider attempt lines; only print final status.",
     )
     args = parser.parse_args()
 

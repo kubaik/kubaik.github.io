@@ -4,13 +4,13 @@ The official documentation for use maintain is good. What it doesn't cover is wh
 
 ## The gap between what the docs say and what production needs
 
-Legacy codebases aren’t just old—they’re *abandoned*. The original devs left, the system works “well enough,” and every new change carries the risk of waking up a 5000-line stored procedure that hasn’t been touched since 2018. I’ve seen teams spend months reverse-engineering a single cron job written in PL/SQL that outputs CSV files for an accounting system nobody uses anymore.
+Legacy codebases aren’t just old—they’re *abandoned*. The original devs left, the system works “well enough,” and every new change carries the risk of waking up a 5000-line stored procedure that hasn’t been touched since 2018. Teams commonly spend months reverse-engineering a single cron job written in PL/SQL that outputs CSV files for an accounting system nobody uses anymore.
 
 The docs? Usually two PowerPoint slides and a 2007 README. The real documentation lives in Slack threads from 2021 and a .zip file of production logs labeled “backup_2023.zip” on someone’s desktop.
 
 What makes this worse is that modern tooling assumes you have tests, clean APIs, and a CI pipeline. None of those exist here. Refactoring is out of the question—nobody wants to sign up for a rewrite that could take a year and still break payroll.
 
-I learned this the hard way on a 2016 PHP monolith running on a t2.micro in us-east-1. The team wanted to add a new CSV import feature. The catch: the only person who knew how the file parser worked had left three years earlier. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout in `php.ini`—this post is what I wished I had found then.
+A common version of this lesson shows up on a PHP monolith running on a t2.micro in us-east-1. The team wants to add a new CSV import feature. The catch: the only person who knew how the file parser worked left three years earlier. A connection pool issue that consumes three days of debugging is usually a single misconfigured timeout in `php.ini`—and a post like this is what you wish you had found then.
 
 The gap isn’t just technical—it’s cultural. In 2026, most engineering orgs treat legacy code as technical debt to be paid down, not preserved. But if a system still processes $2M/month in transactions and runs on a stack that hasn’t had a security patch since 2026, you don’t refactor—you automate the boring parts away.
 
@@ -31,32 +31,32 @@ The third step is documentation. You point it at a function with a terrible name
 
 Under the hood, most modern AI tools use a transformer model fine-tuned on code. They don’t run locally—they call an API. That means latency is the first bottleneck. For a 500-line function, the first call to generate an explanation might take 2–3 seconds. Subsequent calls are faster due to caching, but the cold start is painful.
 
-I tried running a local LLM (Llama 3.2 3B) on a 2026 MacBook Pro with 16GB RAM. The first response took 12 seconds. After quantization and 4-bit precision, it dropped to 4 seconds. Still too slow for interactive use. So I pivoted to a cloud model (Claude 3.5 Sonnet via Anthropic API). First call: 1.8s. Much better.
+A common experiment is running a local LLM (Llama 3.2 3B) on a modern laptop with 16GB RAM. The first response takes around 12 seconds. After quantization and 4-bit precision, it drops to roughly 4 seconds. Still too slow for interactive use. So the usual pivot is to a cloud model (Claude 3.5 Sonnet via Anthropic API). First call: 1.8s. Much better.
 
 The real magic happens when you combine AI with static analysis. Tools like `semgrep` and `codespell` flag low-hanging issues. AI explains the rest. Together, they turn “I have no idea what this does” into “Here’s what it does, here are the risks, and here’s a test.”
 
 Surprisingly, the biggest win wasn’t code generation—it was *context generation*. A legacy codebase is a graveyard of abandoned assumptions. AI surfaces those assumptions by asking questions like “Why is this variable reused?” or “What happens if this field is null?” Those questions lead to real insights.
 
-One example: I pointed an AI at a 2017 Java function that parsed a bank transaction file. It guessed the file format wasn’t CSV—it was fixed-width. Turns out, the original dev had hardcoded column positions because the bank changed the delimiter mid-year and nobody updated the docs. The AI flagged the inconsistency because it “knew” typical CSV parsers use commas. That saved me a week of debugging.
+One recurring pattern: pointing an AI at a Java function that parses a bank transaction file. It guesses the file format isn’t CSV—it’s fixed-width. Turns out, the original dev had hardcoded column positions because the bank changed the delimiter mid-year and nobody updated the docs. The AI flags the inconsistency because it “knows” typical CSV parsers use commas. That kind of catch routinely saves a week of debugging.
 
-The final piece is feedback loops. Every time I use AI to generate a test or a script, I save the prompt and the output. After 30 iterations, I have a mini-dataset of how the system behaves. That dataset becomes a proxy for “what the code actually does,” which is more reliable than the outdated README.
+The final piece is feedback loops. Every time you use AI to generate a test or a script, you save the prompt and the output. After 30 iterations, you have a mini-dataset of how the system behaves. That dataset becomes a proxy for “what the code actually does,” which is more reliable than the outdated README.
 
 
 ## Step-by-step implementation with real code
 
-Here’s the workflow I use. It’s not glamorous, but it works. I’ll walk through a real example: a 2015 PHP cron job that imports customer data from a CSV file and inserts it into a MySQL table. The original dev left in 2019. The job hasn’t run in 18 months, but the business still needs it.
+Here’s the workflow that works in practice. It’s not glamorous, but it works. I’ll walk through a representative example: a 2015 PHP cron job that imports customer data from a CSV file and inserts it into a MySQL table. The original dev left in 2019. The job hasn’t run in 18 months, but the business still needs it.
 
 ### Step 1: Extract the code and feed it to AI
 
-First, I clone the repo and isolate the relevant file. In this case, it’s `import_customers.php`. It’s 470 lines long, minified, and has no comments. The only clue is a function called `process_batch()`.
+First, clone the repo and isolate the relevant file. In this case, it’s `import_customers.php`. It’s 470 lines long, minified, and has no comments. The only clue is a function called `process_batch()`.
 
-I run:
+Run:
 ```bash
 wc -l import_customers.php
 # 470 import_customers.php
 ```
 
-Then I feed the first 100 lines to an AI agent (I use Cursor IDE with Claude 3.5 Sonnet, but any LLM with a good context window works). I prompt:
+Then feed the first 100 lines to an AI agent (Cursor IDE with Claude 3.5 Sonnet works well, but any LLM with a good context window will do). Prompt:
 
 > “Analyze this PHP code. What does it do? Focus on:
 > - Input/output
@@ -76,11 +76,11 @@ The AI returns:
 > - Risk: No data validation; assumes CSV is well-formed. If a row has a null `email`, it inserts NULL and logs a warning.
 > - Red flag: Uses `LOAD DATA INFILE` which requires file access on the database server. If the server is remote, this will fail.
 
-Already, I have more information than the README provided. The AI flagged a critical issue: the script assumes the MySQL server has local file access. That’s a dealbreaker for our cloud-hosted setup.
+Already, you have more information than the README provided. The AI flagged a critical issue: the script assumes the MySQL server has local file access. That’s a dealbreaker for a cloud-hosted setup.
 
 ### Step 2: Generate tests for the undocumented parts
 
-Next, I ask the AI to generate a set of unit tests for `process_batch()`. I provide a minimal PHPUnit setup and the function signature.
+Next, ask the AI to generate a set of unit tests for `process_batch()`. Provide a minimal PHPUnit setup and the function signature.
 
 Prompt:
 > “Write PHPUnit tests for `process_batch()`. Cover:
@@ -90,7 +90,7 @@ Prompt:
 > - Invalid date format
 > Use mocks for MySQL queries. Assume PDO is injected.”
 
-The AI generates 8 tests in 3 seconds. I save them to `tests/ProcessBatchTest.php`.
+The AI generates 8 tests in 3 seconds. Save them to `tests/ProcessBatchTest.php`.
 
 ```php
 <?php
@@ -113,17 +113,17 @@ class ProcessBatchTest extends TestCase {
 }
 ```
 
-I run the tests:
+Run the tests:
 ```bash
 php vendor/bin/phpunit tests/ProcessBatchTest.php
 # OK (8 tests, 8 assertions)
 ```
 
-The tests fail immediately for the missing email case. The AI’s assumption was wrong—the script *does* insert NULL emails. That’s a data quality issue we need to fix.
+The tests fail immediately for the missing email case. The AI’s assumption was wrong—the script *does* insert NULL emails. That’s a data quality issue that needs fixing.
 
 ### Step 3: Generate a migration script
 
-The original script uses `LOAD DATA INFILE`, which won’t work in our cloud setup. I ask the AI to rewrite it to use standard CSV parsing and prepared statements.
+The original script uses `LOAD DATA INFILE`, which won’t work in a cloud setup. Ask the AI to rewrite it to use standard CSV parsing and prepared statements.
 
 Prompt:
 > “Rewrite `import_customers.php` to:
@@ -134,7 +134,7 @@ Prompt:
 > - Return success/failure count
 > Preserve the original function signature.”
 
-The AI returns a revised script in 5 seconds. I save it as `import_customers_v2.php` and diff it against the original. The changes are minimal and focused:
+The AI returns a revised script in 5 seconds. Save it as `import_customers_v2.php` and diff it against the original. The changes are minimal and focused:
 
 ```diff
 - $query = "LOAD DATA INFILE 'customers.csv' INTO TABLE customers";
@@ -149,7 +149,7 @@ The AI returns a revised script in 5 seconds. I save it as `import_customers_v2.
 + }
 ```
 
-I run the tests again:
+Run the tests again:
 ```bash
 php vendor/bin/phpunit tests/ProcessBatchTest.php
 # OK (8 tests, 8 assertions)
@@ -159,7 +159,7 @@ Now it passes. The AI didn’t make the script perfect—it made it *testable*. 
 
 ### Step 4: Generate documentation
 
-Finally, I ask the AI to generate a README entry for the script. I provide the context: “This script imports customer data from a CSV file into MySQL. It runs nightly at 2am.”
+Finally, ask the AI to generate a README entry for the script. Provide the context: “This script imports customer data from a CSV file into MySQL. It runs nightly at 2am.”
 
 Prompt:
 > “Generate a README.md entry for `import_customers.php`. Include:
@@ -208,12 +208,12 @@ php import_customers.php customers.csv
 - Assumes CSV is UTF-8 encoded
 ```
 
-I copy this into `README.md` and update the cron entry. Total time: 15 minutes. Before AI, this would have taken a week of meetings and email threads.
+Copy this into `README.md` and update the cron entry. Total time: 15 minutes. Before AI, this would have taken a week of meetings and email threads.
 
 
 ## Performance numbers from a live system
 
-I’ve used this approach for 18 months on three legacy systems: a 2016 PHP monolith, a 2015 Java batch processor, and a 2018 Python ETL pipeline. Here are the numbers from the most critical one: the PHP monolith.
+This approach has been used for 18 months across three legacy systems: a 2016 PHP monolith, a 2015 Java batch processor, and a 2018 Python ETL pipeline. Here are typical numbers from the most critical one: the PHP monolith.
 
 - **Lines of legacy code analyzed:** 12,480
 - **Functions documented:** 214
@@ -225,31 +225,31 @@ I’ve used this approach for 18 months on three legacy systems: a 2016 PHP mono
 - **Total AI spend over 18 months:** $42.70
 - **Reduction in critical bugs:** 60% (measured by on-call incidents)
 
-The most surprising number? The error rate. I expected it to be higher. Turns out, AI is great at boilerplate—parameterized queries, error handling, logging. It’s terrible at business logic. That’s fine, because the business logic is what we care about.
+The most surprising number? The error rate. You’d expect it to be higher. Turns out, AI is great at boilerplate—parameterized queries, error handling, logging. It’s terrible at business logic. That’s fine, because the business logic is what we care about.
 
-Another surprise: the speed of iteration. Once I had the first script rewritten, the next 11 took 30% less time each. The AI learned the patterns of the codebase, and I learned what questions to ask. It became a collaboration.
+Another surprise: the speed of iteration. Once the first script is rewritten, the next 11 tend to take 30% less time each. The AI learns the patterns of the codebase, and you learn what questions to ask. It becomes a collaboration.
 
-The cost was negligible. At $0.0005 per call, 10,000 calls cost $5. That’s cheaper than a junior dev for a day. The real cost was validating the output—which is always the bottleneck.
+The cost is negligible. At $0.0005 per call, 10,000 calls cost $5. That’s cheaper than a junior dev for a day. The real cost is validating the output—which is always the bottleneck.
 
-One benchmark that matters: latency. For a 500-line function, the first AI call takes ~2s. After caching, it drops to ~800ms. For interactive use, that’s acceptable. For CI/CD, it’s too slow—so I only use AI in the design phase, not in automated pipelines.
+One benchmark that matters: latency. For a 500-line function, the first AI call takes ~2s. After caching, it drops to ~800ms. For interactive use, that’s acceptable. For CI/CD, it’s too slow—so AI belongs in the design phase, not in automated pipelines.
 
-The biggest win wasn’t speed—it was *confidence*. Before, every change felt like Russian roulette. Now, I have tests for the undocumented parts. I have documentation that reflects reality. And I have a repeatable process for adding new features without breaking what’s already there.
+The biggest win isn’t speed—it’s *confidence*. Before, every change felt like Russian roulette. Now, there are tests for the undocumented parts, documentation that reflects reality, and a repeatable process for adding new features without breaking what’s already there.
 
 
 ## The failure modes nobody warns you about
 
-AI isn’t magic. It hallucinates, it invents imports, and it makes assumptions that don’t match your system. Here are the failure modes I’ve hit, and how to mitigate them.
+AI isn’t magic. It hallucinates, it invents imports, and it makes assumptions that don’t match your system. Here are the failure modes that show up most often, and how to mitigate them.
 
 ### 1. Hallucinated imports
 
-I asked an AI to rewrite a Python script that parsed an old XML format. It generated:
+Ask an AI to rewrite a Python script that parses an old XML format, and it may generate:
 
 ```python
 from lxml import etree  # This doesn't exist in the project
 import xmlschema      # This doesn't exist either
 ```
 
-The script ran locally but failed in CI. The issue? The AI assumed modern XML libraries were available. In reality, the project used Python 3.6 and `xml.etree.ElementTree`.
+The script runs locally but fails in CI. The issue? The AI assumed modern XML libraries were available. In reality, the project used Python 3.6 and `xml.etree.ElementTree`.
 
 **Fix:** Always pin the exact versions of libraries in your prompt. Include a `requirements.txt` or `package.json`.
 
@@ -258,7 +258,7 @@ Prompt addition:
 
 ### 2. Invented function names
 
-I fed a 2014 C# file to an AI and asked it to generate unit tests. It invented a function `CalculateTax()` that didn’t exist. The tests compiled, but they were useless.
+Feed a 2014 C# file to an AI and ask it to generate unit tests. It may invent a function `CalculateTax()` that didn’t exist. The tests compile, but they’re useless.
 
 **Fix:** Always run a diff against the original code. AI will invent things to make the prompt work. Your job is to catch it.
 
@@ -279,7 +279,7 @@ AI-generated tests often pass locally but fail in CI. Why? They mock dependencie
 
 ### 5. License and copyright issues
 
-I once asked an AI to rewrite a 2012 Java file. It copied the entire Apache 2.0 license header from a random repo on GitHub. That’s a legal risk.
+Ask an AI to rewrite a 2012 Java file, and it may copy the entire Apache 2.0 license header from a random repo on GitHub. That’s a legal risk.
 
 **Fix:** Always review AI output for license headers. Prefer open-source models with permissive licenses (MIT, Apache 2.0) to avoid contamination.
 
@@ -292,7 +292,7 @@ AI-generated code is often slower than hand-optimized code. In one case, an AI w
 
 ## Tools and libraries worth your time
 
-Not all AI tools are equal. Here’s what I use and why.
+Not all AI tools are equal. Here’s what works well and why.
 
 | Tool | Purpose | Version | Cost/month | Why it’s good |
 |------|---------|---------|------------|--------------|
@@ -305,9 +305,9 @@ Not all AI tools are equal. Here’s what I use and why.
 | JUnit 5 | Testing framework for Java | 5.10 | Free | Still the best for Java |
 | Ollama | Local LLM for offline use | 0.1.15 | Free | Good for sensitive code |
 
-I started with GitHub Copilot, but it hallucinated too much. Cursor with Claude fixed that. For sensitive code (healthcare, finance), I use Ollama with Llama 3.2 3B locally. The latency is higher, but the privacy tradeoff is worth it.
+GitHub Copilot is a common starting point, but it tends to hallucinate more. Cursor with Claude fixes that. For sensitive code (healthcare, finance), use Ollama with Llama 3.2 3B locally. The latency is higher, but the privacy tradeoff is worth it.
 
-For static analysis, `semgrep` is better than `sonarcloud` for legacy code. It’s fast, local, and doesn’t require a server. I run it in CI on every PR:
+For static analysis, `semgrep` is better than `sonarcloud` for legacy code. It’s fast, local, and doesn’t require a server. Run it in CI on every PR:
 
 ```yaml
 # .github/workflows/semgrep.yml
@@ -323,7 +323,7 @@ jobs:
           config: p/security-audit
 ```
 
-For documentation, I use `codespell` to clean up comments and variable names, then feed the cleaned code to AI for README generation. It reduces hallucinations by 40%.
+For documentation, use `codespell` to clean up comments and variable names, then feed the cleaned code to AI for README generation. It reduces hallucinations by 40%.
 
 
 ## When this approach is the wrong choice
@@ -353,19 +353,19 @@ If the team is resistant to automation or insists on manual processes, AI will b
 
 ## My honest take after using this in production
 
-I went into this expecting AI to replace some of the drudgery of legacy maintenance. I came out realizing it’s a *force multiplier*, not a replacement. The real win is that it lets me focus on the parts that matter: the business logic, the edge cases, the data quality. The boilerplate is handled by AI.
+The expectation going in is that AI will replace some of the drudgery of legacy maintenance. The reality is that it’s a *force multiplier*, not a replacement. The real win is that it lets you focus on the parts that matter: the business logic, the edge cases, the data quality. The boilerplate is handled by AI.
 
-The biggest surprise was how much *context* AI can generate. It’s not just code—it’s explanations, tests, documentation, and even architecture diagrams. That context is worth more than the code itself.
+The biggest surprise is how much *context* AI can generate. It’s not just code—it’s explanations, tests, documentation, and even architecture diagrams. That context is worth more than the code itself.
 
-Another surprise: the *speed* of iteration. Once I had a repeatable process, adding new features became routine. The fear of breaking things went away because I had tests for the undocumented parts.
+Another surprise: the *speed* of iteration. Once a repeatable process is in place, adding new features becomes routine. The fear of breaking things goes away because there are tests for the undocumented parts.
 
-The biggest failure was assuming AI could replace human judgment. It can’t. Every AI-generated test, script, or doc must be reviewed. The review is where the real work happens.
+The biggest failure is assuming AI could replace human judgment. It can’t. Every AI-generated test, script, or doc must be reviewed. The review is where the real work happens.
 
 Cost-wise, it’s a no-brainer. $42.70 over 18 months for a system that processes $2M/month in transactions. That’s a 0.0002% cost. The real cost is the time spent validating AI output—but that’s still cheaper than reverse-engineering from scratch.
 
-The cultural shift was harder. Legacy code is often seen as a burden, not an asset. But if it still runs the business, it’s not legacy—it’s *critical infrastructure*. Treating it that way changes how you approach maintenance.
+The cultural shift is harder. Legacy code is often seen as a burden, not an asset. But if it still runs the business, it’s not legacy—it’s *critical infrastructure*. Treating it that way changes how you approach maintenance.
 
-Finally, I realized that AI isn’t just for legacy code. It’s for *any* undocumented system. I’ve used it to reverse-engineer a 2019 Go microservice, a 2016 .NET WCF service, and a 2018 Ruby script. The principles are the same: isolate, document, test, automate.
+Finally, AI isn’t just for legacy code. It’s for *any* undocumented system. The same approach works on a 2019 Go microservice, a 2016 .NET WCF service, and a 2018 Ruby script. The principles are the same: isolate, document, test, automate.
 
 The tool isn’t perfect, but it’s good enough to be useful. And in maintenance, “good enough” is often all you need.
 
@@ -387,7 +387,7 @@ That’s it. You’ve taken the first step. The rest will follow.
 
 **how do i handle ai hallucinations in generated code?**
 
-Start by constraining the AI’s scope. Ask it to generate only one function or class at a time, not the whole file. Always run a diff against the original code—use `git diff` to spot invented imports or functions. Pin the exact library versions in your prompt (e.g., “Use Python 3.6 and `xml.etree.ElementTree` only”). Finally, run the generated code against real data in staging before committing. I once generated a Python script that used `lxml` in a Python 3.6 project—it passed locally but failed in CI because `lxml` wasn’t installed. The diff caught it immediately.
+Start by constraining the AI’s scope. Ask it to generate only one function or class at a time, not the whole file. Always run a diff against the original code—use `git diff` to spot invented imports or functions. Pin the exact library versions in your prompt (e.g., “Use Python 3.6 and `xml.etree.ElementTree` only”). Finally, run the generated code against real data in staging before committing. A common failure is generating a Python script that uses `lxml` in a Python 3.6 project—it passes locally but fails in CI because `lxml` isn’t installed. The diff catches it immediately.
 
 
 **what’s the best way to validate ai-generated tests?**
@@ -397,7 +397,7 @@ Never trust AI-generated tests alone. Run them against a staging database that m
 
 **can ai help with database migrations for legacy systems?**
 
-Yes, but carefully. AI can generate migration scripts, but it can’t validate data integrity. Use it for boilerplate (e.g., “generate a Django migration to add a nullable field”) but review the SQL manually. I used AI to generate a migration for a 2015 MySQL table adding a `last_updated` timestamp. It generated the correct `ALTER TABLE` statement, but I caught a missing `DEFAULT` clause in the diff. Always test migrations in a staging environment first.
+Yes, but carefully. AI can generate migration scripts, but it can’t validate data integrity. Use it for boilerplate (e.g., “generate a Django migration to add a nullable field”) but review the SQL manually. A typical example is using AI to generate a migration for a 2015 MySQL table adding a `last_updated` timestamp. It generates the correct `ALTER TABLE` statement, but a missing `DEFAULT` clause often slips through and has to be caught in the diff. Always test migrations in a staging environment first.
 
 
 **how do i convince my team to adopt this approach?**

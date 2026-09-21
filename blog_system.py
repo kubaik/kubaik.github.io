@@ -279,10 +279,38 @@ def _extract_numbers(text: str) -> str:
     return ""
 
 
-_SKIP_PATTERNS = re.compile(
+# ─────────────────────────────────────────────────────────────────
+# PATCH (2026-09-21): two-tier incident detection.
+#
+# The previous single-tier _SKIP_PATTERNS put "The short version" and
+# "Most tutorials" in the same alternation as the "I spent X" family.
+# That flagged legitimate expository framing ("The short version: the
+# conventional advice on caching is incomplete") as a fabricated
+# incident, producing ~50% false positives during the AdSense rewrite
+# run — 12 of 18 rejects in a single batch were this shape.
+#
+# The fix splits into two tiers:
+#
+#   TIER 1 — phrases that always indicate a fabricated incident when
+#   they open a sentence. "I spent three days...", "A colleague asked
+#   me...", "cost us three weeks...".
+#
+#   TIER 2 — phrases that only indicate a fabricated incident when the
+#   SAME sentence also contains a first-person pronoun. "The short
+#   version: the tradeoff comes down to X" is fine; "The short version:
+#   I spent three days on this" is not.
+#
+# _SKIP_PATTERNS is kept as an alias for the tier-1 regex so existing
+# call sites in _derive_description() don't need updating; those sites
+# want conservative behaviour (avoid picking anything incident-shaped
+# as a meta description) and can safely be stricter than the gating
+# check.
+# ─────────────────────────────────────────────────────────────────
+
+_INCIDENT_OPENERS_RE = re.compile(
     r'^('
-    r'A colleague\b|This took me\b|The short version\b|Writing this\b|'
-    r'This is a topic\b|Most of the answers\b|Most tutorials\b|'
+    r'A colleague\b|This took me\b|Writing this\b|'
+    r'This is a topic\b|'
     r"I(?:'ve|'m|\s+have)?\s+(?:spent|built|shipped|deployed|migrated|"
     r"worked\s+(?:on|with|at)|ran\s+into|debugged|broke|fixed|caught|"
     r"hit\s+a|dealt\s+with|went\s+through|had\s+to|ended\s+up|"
@@ -300,8 +328,49 @@ _SKIP_PATTERNS = re.compile(
     re.IGNORECASE
 )
 
+# TIER 2 — only an incident when the sentence also has a first-person
+# pronoun. Word-bounded so "try" doesn't match "I", and second-person
+# pronouns ("you", "your") are excluded — those are direct address, not
+# an incident claim.
+_AMBIGUOUS_OPENERS_RE = re.compile(
+    r'^(?:The short version|Most of the answers|Most tutorials)\b',
+    re.IGNORECASE,
+)
+
+_FIRST_PERSON_MARKER_RE = re.compile(
+    r"\b(?:I|I've|I'm|I'd|I'll|me|my|mine|myself|"
+    r"we|we've|we're|we'd|we'll|us|our|ours|ourselves)\b"
+)
+
+# Backward-compat alias. Existing call sites in _derive_description()
+# use this to skip incident-shaped sentences when deriving a meta
+# description; they can safely use the stricter tier-1 regex without
+# changing behaviour, since a meta description that omits the tier-2
+# openers is still fine.
+_SKIP_PATTERNS = _INCIDENT_OPENERS_RE
+
+
+def _is_incident_sentence(sent: str) -> bool:
+    """Two-tier check: tier-1 openers are always an incident; tier-2
+    openers only count when paired with a first-person marker."""
+    if _INCIDENT_OPENERS_RE.match(sent):
+        return True
+    if _AMBIGUOUS_OPENERS_RE.match(sent) and _FIRST_PERSON_MARKER_RE.search(sent):
+        return True
+    return False
+
 
 def _flag_fabricated_anecdotes(content: str) -> List[str]:
+    """
+    Scan a full post body for unverifiable first-person anecdote openers.
+    Returns the offending sentences (truncated to 80 chars) for logging
+    and gating.
+
+    Uses the two-tier _is_incident_sentence() check so legitimate
+    expository framing ("The short version: the tradeoff comes down to
+    X") is not flagged, while genuine fabricated incidents ("The short
+    version: I spent three days on this") still are.
+    """
     text = re.sub(r"```[\s\S]*?```", " ", content)
     text = re.sub(r"`[^`]+`", " ", text)
     hits = []
@@ -309,7 +378,7 @@ def _flag_fabricated_anecdotes(content: str) -> List[str]:
         sent = sent.strip()
         if len(sent) < 15:
             continue
-        if _SKIP_PATTERNS.match(sent):
+        if _is_incident_sentence(sent):
             hits.append(sent[:80])
     return hits
 
@@ -333,7 +402,7 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
         sent = sent.strip()
         if len(sent) < 40 or len(sent) > max_len * 2:
             continue
-        if _SKIP_PATTERNS.match(sent):
+        if _is_incident_sentence(sent):
             continue
         if _NUMBER_RE.search(sent):
             if len(sent) > max_len:
@@ -349,7 +418,7 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
         sent = sent.strip()
         if len(sent) < 40:
             continue
-        if _SKIP_PATTERNS.match(sent):
+        if _is_incident_sentence(sent):
             continue
         if _TOOL_RE.search(sent):
             if len(sent) > max_len:
@@ -360,7 +429,7 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
         sent = sent.strip()
         if len(sent) < 40:
             continue
-        if _SKIP_PATTERNS.match(sent):
+        if _is_incident_sentence(sent):
             continue
         if len(sent) > max_len:
             sent = sent[:max_len].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
@@ -1269,59 +1338,28 @@ def _build_humanization_note(topic: str) -> str:
     return _AUTHOR_CONTEXTS[idx]
 
 
-# ─────────────────────────────────────────────────────────────────
-# PATCH (2026-09-21): fabricated-citation patterns — scoped case-
-# sensitivity fix.
-#
-# The previous version of this list compiled every pattern with a single
-# re.IGNORECASE flag applied to the whole pattern. That silently turned
-# [A-Z] — intended to mean "the start of a proper noun, i.e. a named
-# source" — into [A-Za-z], i.e. "any letter". The result was that
-# ordinary engineering prose like "according to the process exit code"
-# and "report from the BigQuery table" matched the fabricated-citation
-# pattern, and ~50% of triage deletions on the live corpus were false
-# positives.
-#
-# The fix uses Python's scoped inline flags — (?i:...) — so the literal
-# English phrases ("according to", "survey that found") remain case-
-# insensitive, but every proper-noun capture group ([A-Z][\w&.'-]*...)
-# is compiled with case-sensitivity ON. Under that scoping, "according
-# to the process exit code" no longer matches (lowercase 'process' fails
-# the [A-Z] check) while "according to Gartner" and "a 2026 Freelance
-# Pulse survey found" still do.
-#
-# Also: the 'by|from' alternation and the survey-type alternation are
-# wrapped in their own (?i:...) groups so they don't inherit the case-
-# sensitivity the surrounding literal contexts need to keep off the
-# proper-noun matcher.
 _FABRICATED_CITATION_PATTERNS = [
-    # "a/the [YEAR] study/paper/report/research/survey/analysis by/from <ProperNoun>"
     r'\b(?i:(?:a|the)\s+)?(?:\d{4}\s+)?'
     r'(?i:(?:study|paper|report|research|survey|analysis)\s+(?:by|from)\s+)'
     r'([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,5})',
 
-    # "according to <ProperNoun>"
     r'\b(?i:according to\s+)(?:(?i:a|an|the)\s+)?'
     r'([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,5})',
 
-    # "<ProperNoun>'s <study|research|red-team|findings|report|analysis|survey>"
     r'\b([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,3})\'s\s+'
     r'(?i:study|research|red[\s-]?team|findings|report|analysis|survey)\b',
 
-    # Named-entity fast checks — always case-insensitive (real names)
     r'(?i:\baccording to\s+(?:a\s+|an\s+)?(?:\d{4}\s+)?'
     r'(?:stack overflow|gartner|forrester|mckinsey|gitlab|github|jetbrains)\b)',
     r'(?i:\b(?:\d{4}\s+)?(?:stack overflow|gartner|forrester|mckinsey)'
     r'\s+(?:survey|report|study)\b)',
     r'(?i:\ba (?:survey|study) of [\d,]+\s+(?:developers|engineers|teams|companies)\b)',
 
-    # "<ProperNoun> survey/study that/which found/shows/tracked"
     r'\b(?:(?i:a|the)\s+)?(?:\d{4}\s+)?'
     r'([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,3})\s+'
     r'(?i:(?:survey|study|report|research|analysis|benchmark)\s+'
     r'(?:that|which)?\s*(?:found|shows?|tracked|reveals?|says?|showed))\b',
 
-    # Bare possessive-less "<ProperNoun> survey shows" / "<ProperNoun> report finds"
     r'\b([A-Z][\w&\'-]+)\s+'
     r'(?i:(?:survey|study|report)\s+'
     r'(?:shows?|finds?|found|showed|revealed|estimates?))\b',
@@ -1379,33 +1417,12 @@ def _reject_if_generic_meta_description(meta_description: str) -> Optional[str]:
     return None
 
 
-# ─────────────────────────────────────────────────────────────────
-# PATCH (2026-09-21): allow-list of legitimate contexts.
-#
-# The expanded version below covers two categories the previous list
-# missed, which caused "according to X" and "report from Y" false
-# positives during triage:
-#
-#   1. Runtime/operational context — references to a process's own state,
-#      logs, exit code, query result, dashboard, or config. These are NOT
-#      citations to a third-party source; they're ordinary technical
-#      writing about what a system reports about itself. Examples that
-#      were misflagged: "according to the process exit code",
-#      "according to its own logs", "report from the BigQuery table".
-#
-#   2. Primary-documentation context — unchanged from before, still
-#      covers docs/changelog/README/RFC/error-message shapes.
-#
-# Any match whose surrounding 400-char window contains one of these
-# phrases is treated as legitimate and skipped.
 _LEGITIMATE_SOURCE_CONTEXT = re.compile(
     r'\b('
-    # Primary documentation
     r'documentation|docs\b|changelog|release notes|official (docs|'
     r'documentation|guide)|readme|man page|manual|rfc\s?\d|spec(ification)?|'
     r'error message|log output|log files?|logs?\b|stack trace|source code|'
     r'the source|\.md\b|github\.com|repository|'
-    # Runtime / operational context (added 2026-09-21)
     r'exit code|runtime|its own|their own|'
     r'the (query|table|response|output|payload|request|config|settings|'
     r'dashboard|metrics|monitor|system|service|application|process|'
@@ -1419,37 +1436,18 @@ _LEGITIMATE_SOURCE_CONTEXT = re.compile(
 
 
 def _reject_if_fabricated_citation(content: str) -> Optional[str]:
-    """
-    Returns a rejection reason if the draft names a real-world third party
-    as the source of a claim without a URL or nearby primary-documentation
-    context. This is citation fabrication, not just an unsourced number.
-
-    PATCH (2026-09-21): added a minimum-word-count guard against matches
-    that are sentence-boundary artifacts rather than real citations. Under
-    the old case-insensitive pattern, "According to the" alone could match
-    and then extend into whatever capitalized-looking words followed. A
-    real citation always has at least 3 words ("according to the McKinsey
-    report" or "a 2026 Freelance Pulse survey"); anything shorter is
-    noise.
-    """
     for pattern in _FABRICATED_CITATION_PATTERNS:
         for match in _re.finditer(pattern, content):
             matched_text = match.group(0).strip()
 
-            # Guard 1: minimum 3 words. Anything shorter is a sentence
-            # boundary artifact, not an actionable citation.
             if len(matched_text.split()) < 3:
                 continue
 
             window = content[max(0, match.start() - 200):match.end() + 200]
 
-            # Guard 2: a real URL nearby means it's actually sourced.
             if _re.search(r'https?://', window):
                 continue
 
-            # Guard 3: referencing official/primary documentation, runtime
-            # state, or a system's own logs is legitimate technical writing,
-            # not a fabricated third-party study.
             if _LEGITIMATE_SOURCE_CONTEXT.search(window):
                 continue
 
@@ -5740,5 +5738,3 @@ if __name__ == "__main__":
               "test-twitter | dedup | fix-descriptions | fix-titles | refresh-stale | "
               "audit-links | audit-slugs | audit-freshness | velocity | preflight-rebuild | "
               "preflight-check")
-
-        
