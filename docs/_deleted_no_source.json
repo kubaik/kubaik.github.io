@@ -274,5 +274,13 @@
   "trim-aws-iam-policies-in-one-afternoon": {
     "deleted_at": "2026-09-21T11:24:18.867801",
     "reason": "missing post.json (no source of truth)"
+  },
+  "breakdown-nairobi-saas-infra-costs-2026": {
+    "deleted_at": "2026-09-21T14:38:51.237567",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "progressive-web-apps-what-browser-apis-finally-fixed": {
+    "deleted_at": "2026-09-21T14:38:51.238087",
+    "reason": "missing post.json (no source of truth)"
   }
 }
