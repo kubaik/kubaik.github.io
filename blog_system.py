@@ -52,8 +52,6 @@ try:
         MAX_DISPLAY_TITLE as _VALIDATOR_MAX_DISPLAY_TITLE,
     )
 except ImportError:
-    # Fall back to the conventional scripts/ location if it isn't importable
-    # from the project root.
     from scripts.title_validator import (
         generate_display_title,
         validate_title,
@@ -84,44 +82,20 @@ _STOP_WORDS = {
 DUPLICATE_TITLE_THRESHOLD = 0.35
 
 MIN_WORD_COUNT = 2000
-# AUDIT FIX: was 1500. _validate_content_quality() hard-fails any NEW post
-# under 1800 words (see hard_failures check below), but audit_posts() /
-# purge_low_quality_posts() only tombstoned already-published posts under
-# 1500. That gap let ~300-1799 word legacy posts — thin content by the
-# site's own current bar — sit live indefinitely because the purge sweep
-# never flagged them. Raised to match the publish-time gate so one
-# "thin content" definition applies to both new and existing posts.
 MIN_WORD_PURGE = 1800
 
 MAX_GENERATION_ATTEMPTS = 5
 MIN_ACCEPTABLE_WORDS = 1500
 
-# How many cheap, targeted in-place repair passes (_repair_anecdotes /
-# _repair_near_duplicate) to try on the SAME topic + draft before falling
-# back to a full topic-switch (which consumes a MAX_GENERATION_ATTEMPTS
-# slot and throws away an otherwise-good draft + a pre-flight-vetted
-# topic). Added after production runs showed all 5 attempts exhausted by
-# topic-switching on drafts that had only 1-2 flagged sentences, or were
-# duplicate in wording but not in underlying topic.
 _MAX_REPAIR_ATTEMPTS = 2
 
-# How many times the CLI "auto" flow will pick a fresh topic and regenerate
-# a whole post from scratch after a post-generation duplicate-content block
-# (SimilarityGuard or the save_post()-time ContentDuplicateGate). This is
-# separate from MAX_GENERATION_ATTEMPTS, which only covers retries *within*
-# a single generate_blog_post() call (bundle failures / short content for
-# one topic) — this constant covers "the finished article for topic A was
-# blocked as a duplicate, so throw it away and generate topic B instead."
 MAX_DUPLICATE_REGENERATION_ATTEMPTS = 3
 
-# PATCH-2: tightened from 24 → 20
 _HASHTAG_MAX_SOURCE_WORDS = 3
 _HASHTAG_MAX_CHARS = 20
 
-# Stale content refresh threshold (days)
 STALE_THRESHOLD_DAYS = 90
 
-# PATCH-2: question starters to filter from hashtag generation
 _QUESTION_STARTERS = {
     "how", "what", "why", "when", "where", "which", "who", "is", "are",
     "does", "do", "can", "should", "will", "would", "could",
@@ -129,7 +103,6 @@ _QUESTION_STARTERS = {
 
 
 def _to_single_word_tags(tags: List[str]) -> List[str]:
-    # PATCH-2: filters question-starter tags, tighter char cap, fallback to first word
     result = []
     seen: set = set()
 
@@ -140,27 +113,11 @@ def _to_single_word_tags(tags: List[str]) -> List[str]:
         if not tag:
             continue
 
-        # PATCH-3 FIX: split on '.' too, not just whitespace/hyphen/underscore/
-        # slash. Without this, a keyword like "Checkov 3.2.117" produced the
-        # single fused word "3.2.117", which CamelCased into the literal tag
-        # "Checkov3.2.117" — a dotted, non-slug-safe string that still becomes
-        # a real crawlable /tag/checkov3.2.117/ archive page with exactly one
-        # post in it. Splitting on '.' surfaces the version number as its own
-        # token so it can be dropped below instead of silently baked in.
         words = [w for w in re.split(r'[\s\-_/.]+', tag) if w]
-
-        # PATCH-3 FIX: drop pure version/numeric tokens ("3.2.117", "20",
-        # "v1") entirely. A specific tool version is useful inline in the
-        # article body, but as a standalone tag it only ever matches one
-        # post — a thin, single-item archive page that dilutes crawl budget
-        # and has zero chance of ranking. Keep the tool name, lose the
-        # version suffix: "Checkov 3.2.117" -> "Checkov", not "Checkov32117".
         words = [w for w in words if not _VERSION_TOKEN_RE.match(w)]
         if not words:
             continue
 
-        # PATCH-2 FIX: skip question-phrase tags entirely — they make terrible
-        # hashtags and signal low-quality content to automated reviewers.
         if words and words[0].lower() in _QUESTION_STARTERS:
             continue
 
@@ -169,8 +126,6 @@ def _to_single_word_tags(tags: List[str]) -> List[str]:
 
         camel = ''.join(w.capitalize() for w in words if w)
 
-        # If CamelCase is still too long after word-count cap, try just the
-        # first meaningful word so we always emit something usable.
         if len(camel) > _HASHTAG_MAX_CHARS:
             camel = words[0].capitalize() if words else ''
 
@@ -265,17 +220,6 @@ def _load_existing_titles(docs_dir: Path) -> List[str]:
 
 
 def _load_recent_hook_styles(docs_dir: Path, limit: int = 3) -> List[str]:
-    """
-    Return the tweet hook 'style' label used by the most recently published
-    posts, newest first, read live from docs/*/post.json.
-
-    Mirrors _load_existing_titles() / VelocityController's approach: no
-    separately persisted state file (those get wiped on every fresh
-    GitHub Actions checkout — see velocity_controller.py), just derive
-    "what was recently used" from the same post.json files that are
-    already the source of truth. Used to stop the same hook style (e.g.
-    "unpopular opinion") from being picked for several posts in a row.
-    """
     entries = []
     if not docs_dir.exists():
         return []
@@ -302,10 +246,6 @@ def _count_words(text: str) -> int:
     return len(text.split())
 
 
-# ─────────────────────────────────────────────────────────────────
-# Twitter posting flag
-# ─────────────────────────────────────────────────────────────────
-
 def _twitter_posting_enabled() -> bool:
     raw = os.getenv("ENABLE_TWITTER_POSTING", "false").strip().lower()
     enabled = raw == "true"
@@ -316,10 +256,6 @@ def _twitter_posting_enabled() -> bool:
         )
     return enabled
 
-
-# ─────────────────────────────────────────────────────────────────
-# Meta description derivation
-# ─────────────────────────────────────────────────────────────────
 
 def _extract_numbers(text: str) -> str:
     patterns = [
@@ -343,36 +279,13 @@ def _extract_numbers(text: str) -> str:
     return ""
 
 
-# FIX (content-quality gap, found in review): this pattern was previously
-# defined *inside* _derive_description(), so it only ever filtered
-# meta_description candidates. The extensive prompt-level instructions
-# elsewhere in this file telling the LLM never to invent first-person
-# anecdotes ("I spent three days debugging...") had nothing enforcing them
-# on the actual article body — a real E-E-A-T/AdSense-review risk, since
-# fabricated-experience claims are exactly what Google's Helpful Content
-# system flags. Hoisted to module scope so both _derive_description() and
-# _flag_fabricated_anecdotes() (below) share one definition instead of
-# drifting apart.
-# FIX (false-positive reduction, found in production log): the previous
-# version matched bare `^I ` / `^I've` / `^I have `, which flags ANY
-# sentence starting with "I" regardless of what follows — including
-# genuine first-person opinion ("I think that reflex is mostly wrong..."),
-# which the design notes above (_AUTHOR_CONTEXTS) explicitly say is fine
-# ("I think X is overrated" is an opinion, not a fabricated event). It also
-# flagged plain expository phrasing ("Here's what that interceptor looks
-# like in practice...") that isn't a personal-experience claim at all.
-# Real generation logs showed exactly these two categories causing
-# otherwise-good 2000-3000 word posts to be discarded and whole topics
-# burned on retries.
-#
-# Fixed version only matches "I" / "I've" / "I have" when followed by a
-# concrete, unverifiable EXPERIENCE-CLAIM verb (spent three days, built,
-# shipped, debugged, ran into, kept seeing, etc.) — not opinion verbs
-# (think, believe, suspect, argue, recommend, prefer, doubt, feel) or
-# analytical framing verbs (evaluated, found, noticed) that read more like
-# "here's my reasoning" than "here's a specific incident that happened to
-# me." Genuine fabricated-incident language ("I kept seeing teams ship
-# agents with dashboards that showed green...") is still caught.
+# CHANGE 2 (part B): broaden _SKIP_PATTERNS to catch narrative-cost verbs
+# that have no leading first-person pronoun. The previous version only
+# matched "I spent..."/"I built..." openers, so it missed the corpus's most
+# common fabricated-incident shape: "cost us 40 hours", "burned $18k",
+# "survived 12,000 agents", "saved us a week". Those read as specific
+# incidents even without a first-person subject and were scoring 95-100
+# in quality_gate.py.
 _SKIP_PATTERNS = re.compile(
     r'^('
     r'A colleague\b|This took me\b|The short version\b|Writing this\b|'
@@ -381,20 +294,21 @@ _SKIP_PATTERNS = re.compile(
     r"worked\s+(?:on|with|at)|ran\s+into|debugged|broke|fixed|caught|"
     r"hit\s+a|dealt\s+with|went\s+through|had\s+to|ended\s+up|"
     r"kept\s+seeing|was\s+surprised|watched|witnessed|saw\s+firsthand)\b"
+    r'|'
+    r"(?:cost|saved|burned|wasted|lost|survived|spent|dropped|cut)\s+"
+    r"(?:us|me|our|my|the\s+team)?\s*"
+    r"(?:three|two|four|five|six|seven|eight|nine|ten|\d+)\s+"
+    r"(?:hours?|days?|weeks?|months?|years?)\b"
+    r'|'
+    r"(?:burned|saved|cost|spent|dropped|cut)\s+\$\d+(?:k|K|,\d+)?\b"
+    r'|'
+    r"survived\s+(?:[\d,]+|\d+k|\d+\s+thousand)\s+\w+"
     r')',
     re.IGNORECASE
 )
 
 
 def _flag_fabricated_anecdotes(content: str) -> List[str]:
-    """
-    Scan a full post body for unverifiable first-person anecdote openers
-    (the same pattern class _derive_description() already screens out of
-    meta descriptions). Returns the offending sentences (truncated) for
-    logging/gating — non-fatal by design, since this is a lexical heuristic
-    and can false-positive; call sites decide whether to reject, regenerate,
-    or just log for human review.
-    """
     text = re.sub(r"```[\s\S]*?```", " ", content)
     text = re.sub(r"`[^`]+`", " ", text)
     hits = []
@@ -465,12 +379,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
 
 
 def _truncate_description(desc: str, max_len: int = 155) -> str:
-    """Shorten an existing, already-good meta_description to max_len chars
-    without cutting mid-word. Unlike _derive_description, this never
-    regenerates from the post body -- it's for the common case where the
-    model's own description is fine, just longer than the SERP snippet
-    length Google typically renders (~155-160 chars), so trimming beats
-    throwing it away and deriving something generic instead."""
     desc = desc.strip()
     if len(desc) <= max_len:
         return desc
@@ -486,7 +394,6 @@ def _truncate_description(desc: str, max_len: int = 155) -> str:
     if len(built) >= 40:
         return built
 
-    # No single sentence fit cleanly -- hard word-boundary cut + ellipsis.
     budget = max_len - 1
     truncated = desc[:budget]
     last_space = truncated.rfind(" ")
@@ -495,15 +402,6 @@ def _truncate_description(desc: str, max_len: int = 155) -> str:
     return truncated.rstrip(" ,;:-") + "…"
 
 
-# AUDIT FIX: this list used to exist twice — once inline in audit_posts()'s
-# is_fallback check (2 substrings) and again, independently, as
-# boilerplate_markers inside _validate_content_quality() (6 substrings).
-# Same class of bug the file's own dedup-threshold comments warn about
-# elsewhere ("someone loosening one without noticing the other"): a post
-# generated with a NEW unfilled-template signature would be caught at
-# publish time by _validate_content_quality but silently missed by
-# audit_posts()'s purge sweep because the two lists had drifted apart.
-# Single source of truth now; both call sites import this.
 BOILERPLATE_FALLBACK_MARKERS = [
     "class {topic_slug}Client",
     "class Client:",
@@ -544,22 +442,11 @@ def audit_posts(docs_dir: Path) -> Dict:
     return results
 
 
-# ─────────────────────────────────────────────────────────────────
-# Content quality validation — PATCH-3 applied
-# ─────────────────────────────────────────────────────────────────
-
 def _validate_content_quality(content: str, title: str):
-    """
-    Automated quality gate tuned for AdSense / Helpful Content readiness
-    at high publishing volume. Hard failures discard the post before save.
-    All checks remain fully automatic — no manual review required.
-    """
     warnings = []
     hard_failures = []
     word_count = len(content.split())
     lower = content.lower()
-
-    # ── Hard failures (post is discarded) ────────────────────────────────────
 
     if word_count < 1800:
         hard_failures.append(
@@ -574,7 +461,6 @@ def _validate_content_quality(content: str, title: str):
                 "This post will be rejected as low-value/AI-generated content."
             )
 
-    # Strong AI-filler phrases become hard failures (scaled content signal)
     critical_filler = [
         "in today's rapidly evolving",
         "in the ever-changing landscape",
@@ -597,23 +483,6 @@ def _validate_content_quality(content: str, title: str):
         if phrase in lower:
             hard_failures.append(f"Critical AI-filler phrase: '{phrase}'")
 
-    # Require concrete production signals (AdSense quality signal)
-    #
-    # FIX (found in review, 2026): this used to be a hardcoded whitelist of
-    # specific generic-backend tool+version pairs (python 3.x, node 18-22,
-    # postgres 14-16, redis 6/7, kubernetes 1.x, fastapi 0.x, docker,
-    # kafka 3.x). This blog's actual topic pool is agent tooling / LLMOps /
-    # MCP / model routing — posts routinely and correctly cite versioned
-    # tools like "vLLM 0.5", "Ollama 0.3", "PyTorch 2.3", "CUDA 12.4",
-    # "LangChain 0.2", ".NET 8", "Go 1.22" — none of which the old regex
-    # could ever recognize, so technically solid posts were hard-failed for
-    # "missing" a version-pinned tool they actually had. Replaced with a
-    # general NAME + VERSION-NUMBER pattern (still requires a real semantic
-    # version, e.g. "12.4" or "3", not a bare number) plus explicit
-    # patterns for the two common non-dotted forms (LTS releases, bare
-    # major versions like "Node 20"). A small denylist screens out the
-    # handful of things that look like "word + number" but aren't tool
-    # versions (e.g. "top 10", "24 hours").
     _VERSION_DENYLIST = (
         "top", "step", "part", "chapter", "figure", "table", "section",
         "hour", "hours", "minute", "minutes", "day", "days", "week", "weeks",
@@ -646,8 +515,6 @@ def _validate_content_quality(content: str, title: str):
             "(e.g. Python 3.12, Redis 7.2, Kubernetes 1.29). "
             "Required for AdSense-quality technical content."
         )
-    # Do NOT hard-fail on missing metrics. That rule trained the model to
-    # invent "cut latency 40%" and "a 2026 study by OWASP found 68%".
     if not has_metric:
         warnings.append(
             "No concrete metric (ms, rps, cost). Prefer a documented figure "
@@ -667,8 +534,6 @@ def _validate_content_quality(content: str, title: str):
     if claim_result.blocked:
         for reason in claim_result.reasons:
             hard_failures.append(f"Claim gate: {reason}")
-
-    # ── Warnings (logged; post still publishes) ───────────────────────────────
 
     if word_count < 2200:
         warnings.append(
@@ -756,10 +621,6 @@ def _validate_content_quality(content: str, title: str):
 
     return warnings, hard_failures
 
-
-# ─────────────────────────────────────────────────────────────────
-# Topic phrase extractor
-# ─────────────────────────────────────────────────────────────────
 
 _HOOK_STOP_WORDS = {
     "a", "an", "the", "to", "in", "of", "for", "and", "or", "is", "are",
@@ -871,10 +732,6 @@ def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
         return title[:40]
     return " ".join(meaningful[:max_words])
 
-
-# ─────────────────────────────────────────────────────────────────
-# Tiered hashtag system
-# ─────────────────────────────────────────────────────────────────
 
 _HASHTAG_TIERS = {
     "broad": {
@@ -1072,16 +929,6 @@ def _derive_hashtags_from_keywords(
     return final[:max_hashtags]
 
 
-# ─────────────────────────────────────────────────────────────────
-# Provider constants
-# ─────────────────────────────────────────────────────────────────
-
-# OpenRouter's free-model catalog churns fast — models we hardcode here can
-# be retired again within days (see _fetch_openrouter_free_models, which is
-# tried first and makes this list mostly a last-resort). Only used if the
-# live /api/v1/models lookup itself fails (network issue, bad response,
-# etc). Refresh occasionally by checking https://openrouter.ai/models or
-# GET https://openrouter.ai/api/v1/models and filtering pricing.prompt=="0".
 _OPENROUTER_FALLBACK_MODELS = [
     "minimax/minimax-m3:free",
     "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -1090,14 +937,8 @@ _OPENROUTER_FALLBACK_MODELS = [
     "nvidia/nemotron-nano-9b-v2:free",
 ]
 
-# Model-id substrings that disqualify a "free" catalog entry from being used
-# for blog-post generation even though it's priced at $0 — moderation/
-# guardrail models and pure translation models return unusable output for
-# our prompts.
 _OPENROUTER_FREE_MODEL_EXCLUDE_SUBSTRINGS = (
     "safety", "safeguard", "guard", "moderat", "-mt", "content-safety",
-    # thinkingmachines/inkling(-small) return 403 "only available on
-    # agentic harnesses" for plain chat-completion calls like ours.
     "thinkingmachines",
 )
 
@@ -1111,25 +952,18 @@ _HF_MODEL = "Qwen/Qwen2.5-72B-Instruct"
 _ZAI_MODEL = "glm-4.7-flash"
 _LLM7_MODEL = "default"
 
-# Primary model. DeepSeek-V4.1-Flash: 1M context, JSON output + tool calls,
-# by far the cheapest usable option (~$0.15/M in / $0.6/M out off-peak — see
-# https://api-docs.deepseek.com/quick_start/pricing), and no daily free-tier
-# cap to run out mid-run the way Groq/OpenRouter's free tiers can. The
-# legacy "deepseek-chat"/"deepseek-reasoner" aliases were deprecated
-# 2026-07-24 in favor of "deepseek-flash" / "deepseek-v4-pro" — don't
-# revert to the old name.
 _DEEPSEEK_MODEL = "deepseek-flash"
 
-# Cloudflare Workers AI is ping-only (10k neurons/day) — not in the
-# content-generation chain. Kept here so a future ping/health check can
-# reuse the same model id without hunting docs.
 _CF_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 
 
-# ─────────────────────────────────────────────────────────────────
-# Eight rotating article structures
-# ─────────────────────────────────────────────────────────────────
-
+# CHANGE 1: structure headings rewritten to remove first-person and
+# past-tense narrative instructions that were actively training the model to
+# invent specific incidents ("## Why I wrote this (the problem I kept
+# hitting)", "## My honest take after using this in production", "## What we
+# tried first and why it didn't work", etc.). Each heading is now either a
+# noun phrase, a question, or an imperative — nothing that invites a
+# fabricated past-tense narrative. Format notes updated to match.
 _STRUCTURE_SETS = [
     (
         "deep_dive",
@@ -1141,18 +975,19 @@ _STRUCTURE_SETS = [
             "## The failure modes nobody warns you about",
             "## Tools and libraries worth your time",
             "## When this approach is the wrong choice",
-            "## My honest take after using this in production",
+            "## Common production pitfalls and what they cost",
             "## What to do next",
         ],
         (
             "Write like a practitioner explaining to a colleague, not a textbook author. "
-            "Include at least one moment where you say what surprised you or contradicted your expectations."
+            "Include at least one moment where you say what surprised you or contradicted your expectations — "
+            "phrase it as an observation about the domain ('the counterintuitive part is...'), not as a personal incident."
         ),
     ),
     (
         "tutorial",
         [
-            "## Why I wrote this (the problem I kept hitting)",
+            "## The problem this solves",
             "## Prerequisites and what you'll build",
             "## Step 1 — set up the environment",
             "## Step 2 — core implementation",
@@ -1165,7 +1000,8 @@ _STRUCTURE_SETS = [
         (
             "Write in tutorial voice — direct, numbered, action-oriented. "
             "Each step should explain WHY before showing HOW. "
-            "Include at least one 'gotcha' you discovered while writing or testing this."
+            "Include at least one 'gotcha' that is well-documented in the community — "
+            "described as 'this is a common trap' rather than 'I discovered this'."
         ),
     ),
     (
@@ -1177,14 +1013,15 @@ _STRUCTURE_SETS = [
             "## Evidence and examples from real systems",
             "## The cases where the conventional wisdom IS right",
             "## How to decide which approach fits your situation",
-            "## Objections I've heard and my responses",
-            "## What I'd do differently if starting over",
+            "## Common objections, and responses",
+            "## What the alternative approach would change",
             "## Summary",
         ],
         (
             "This is an opinion piece. Take a clear, defensible stance in the opening paragraph. "
             "Steelman the opposing view before rebutting it. "
-            "Use phrases like 'in my experience', 'I've seen this fail when', 'the honest answer is'. "
+            "Ground every claim in publicly documented behavior, established tradeoffs, or "
+            "well-known failure modes — do NOT invent a specific personal incident to support the argument. "
             "Avoid hedging — readers come to opinion pieces for conviction."
         ),
     ),
@@ -1197,34 +1034,36 @@ _STRUCTURE_SETS = [
             "## Head-to-head: performance",
             "## Head-to-head: developer experience",
             "## Head-to-head: operational cost",
-            "## The decision framework I use",
-            "## My recommendation (and when to ignore it)",
+            "## A decision framework",
+            "## Recommendation and caveats",
             "## Final verdict",
         ],
         (
             "Structure this as a genuine comparison, not a sponsored review. "
-            "Lead each 'head-to-head' section with a concrete number or test result. "
+            "Lead each 'head-to-head' section with a concrete number or test result "
+            "from published benchmarks or documented behavior — not from your own hypothetical testing. "
             "The recommendation must be conditional — 'use X if Y, use Z if W'. "
-            "Acknowledge weaknesses in your preferred option."
+            "Acknowledge weaknesses in the preferred option."
         ),
     ),
     (
         "case_study",
         [
-            "## The situation (what we were trying to solve)",
-            "## What we tried first and why it didn't work",
-            "## The approach that worked",
+            "## The problem, in general terms",
+            "## The approaches that commonly fail, and why",
+            "## The approach that works in practice",
             "## Implementation details",
-            "## Results — the numbers before and after",
-            "## What we'd do differently",
+            "## Results — the numbers to expect, and their limits",
+            "## What to watch out for",
             "## The broader lesson",
             "## How to apply this to your situation",
             "## Resources that helped",
         ],
         (
-            "Write this as a narrative — there should be a problem, an attempt, a failure or complication, "
-            "and a resolution. Use past tense for the story sections. "
-            "Every claim about results must include a number (latency, cost, lines of code, time saved, etc.). "
+            "Write this as a walkthrough of a well-documented pattern, not as a first-person case study. "
+            "Every claim about results must be traceable to public benchmarks, official documentation, or "
+            "a clearly labelled illustrative range. Use conditional framing ('teams commonly see...', "
+            "'a typical deployment of this size...') rather than asserting specific measured outcomes. "
             "The 'broader lesson' section is where you zoom out — make it a principle, not just a summary."
         ),
     ),
@@ -1250,12 +1089,12 @@ _STRUCTURE_SETS = [
     (
         "listicle",
         [
-            "## Why this list exists (what I was actually trying to solve)",
-            "## How I evaluated each option",
+            "## What this list actually solves",
+            "## Evaluation criteria",
             "## {topic} — the full ranked list",
             "## The top pick and why it won",
             "## Honorable mentions worth knowing about",
-            "## The ones I tried and dropped (and why)",
+            "## Options that look appealing but fail in practice",
             "## How to choose based on your situation",
             "## Frequently asked questions",
             "## Final recommendation",
@@ -1298,30 +1137,6 @@ def _pick_structure(topic: str) -> tuple:
               16) % len(_STRUCTURE_SETS)
     return _STRUCTURE_SETS[idx]
 
-
-# ─────────────────────────────────────────────────────────────────
-# Author persona contexts
-# ─────────────────────────────────────────────────────────────────
-
-# NOTE ON VOICE (read before editing this pool):
-# These personas used to instruct the model to invent specific autobiographical
-# incidents ("recall a real incident", "mention a library version that bit
-# you", "you've actually cut bills", "not in tutorials, but in real
-# codebases"). An LLM has no actual incidents to recall — those instructions
-# reliably produced confident, specific-sounding claims ("we cut our AI
-# inference bill 68%", "3 days after cascade failure") that are simply made
-# up. That's a direct E-E-A-T and AdSense content-quality risk: it's not
-# thin content, it's fabricated experience presented as fact.
-#
-# Fix applied: personas below keep the regional context, editorial stance,
-# and stylistic voice (including genuine first-person opinion — "I think X
-# is overrated" is fine, that's an opinion, not a fabricated event) but no
-# longer instruct the model to invent specific incidents, specific bugs
-# "that bit you", or specific savings numbers as if personally verified.
-# Concrete numbers/examples are still required elsewhere in the prompt —
-# they should be framed as illustrative/typical ("a common pattern is...",
-# "teams in this situation often see...") rather than as a personal,
-# unverifiable claim of lived experience.
 
 _AUTHOR_CONTEXTS = [
     (
@@ -1468,60 +1283,41 @@ def _build_humanization_note(topic: str) -> str:
     return _AUTHOR_CONTEXTS[idx]
 
 
-# ─────────────────────────────────────────────────────────────────
-# System prompt builder
-# ─────────────────────────────────────────────────────────────────
-
-
-# FIX (recurrence prevention, Aug 2026): the previous version of this list
-# only matched a fixed set of Western tech-survey names (Stack Overflow,
-# Gartner, Forrester, McKinsey, GitLab, GitHub, JetBrains). It caught zero
-# fabricated citations outside that list — e.g. "a study by Kenya's iHub
-# Research", "a 2025 paper from Makerere University", "a 2026 study by
-# Google's red-team" all shipped to production because none of those names
-# were on the list. A blocklist of specific names can never keep up with
-# what an LLM invents next, especially for regionally-flavored content
-# (the East-Africa focus of this site means the model reaches for locally
-# plausible institution names a US-tech-survey list was never going to
-# anticipate). Replaced with structural patterns that catch the *shape* of
-# a fabricated citation — "study/paper/report/research by/from <Proper
-# Noun>" or "according to <Proper Noun>" — regardless of which specific
-# name fills the slot. The old named-entity patterns are kept as an extra
-# belt-and-suspenders layer since they're cheap and still valid.
+# CHANGE 2 (part A): fabricated-citation patterns extended with two
+# additional structural forms. The previous list only matched citations
+# with a by/from connector or a possessive ("a study by X", "Y's survey").
+# It missed the adjectival form that dominates the current corpus:
+# "a 2026 GSMA report found", "SRE survey shows", "Pulse survey found",
+# "the report from S" (the last is caught by the bare possessive-less form).
 _FABRICATED_CITATION_PATTERNS = [
-    # Structural: "a/the [YEAR] study/paper/report/research/survey/analysis
-    # by/from <Capitalized Name(s)>" — catches any named source, not just a
-    # fixed list. Requires 1-6 capitalized words after by/from so it doesn't
-    # false-positive on lowercase generic phrasing like "a study by teams".
     r'\b(a |the )?(20\d\d )?(study|paper|report|research|survey|analysis)\s+'
     r'(by|from)\s+([A-Z][\w&.\'-]*\s*){1,6}',
 
-    # Structural: "according to <Capitalized Name(s)>" — same idea, catches
-    # the other common attribution shape independent of what follows.
     r'\baccording to (a |an |the )?([A-Z][\w&.\'-]*\s*){1,6}',
 
-    # Structural: "<Org/Institute/Lab/University/Team>'s <study|research|
-    # red-team|findings>" — catches possessive-form attribution, which the
-    # two patterns above miss (e.g. "Google's red-team found...").
     r'\b([A-Z][\w&.\'-]*\s*){1,4}\'s\s+(study|research|red[\s-]?team|'
     r'findings|report|analysis|survey)\b',
 
-    # Original named-entity list — kept as a fast, cheap extra check.
     r'\baccording to (a |an )?(20\d\d )?(stack overflow|gartner|forrester|mckinsey|'
     r'gitlab|github|jetbrains)\b',
     r'\b(20\d\d )?(stack overflow|gartner|forrester|mckinsey) (survey|report|study)\b',
     r'\ba (survey|study) of [\d,]+\s+(developers|engineers|teams|companies)\b',
 
-    # FIX (found in review, 2026): the three structural patterns above only
-    # catch "survey/study BY/FROM <Name>" and the possessive "<Name>'s
-    # study". They miss the adjectival form — "<Name> survey/study" with no
-    # by/from/possessive — which is the LLM's single most common fabrication
-    # shape and shipped unblocked, e.g. docs/47-ai-code-debt-in-2026:
-    # "a 2026 GitClear survey that tracked 12 million lines of diffs".
-    # This pattern closes that gap without re-introducing a fixed name list.
     r'\b(a |the )?(20\d\d )?([A-Z][\w&.\'-]*\s*){1,4}'
     r'(survey|study|report|research|analysis|benchmark)\s+(that\s+|which\s+)?'
     r'(found|shows?|tracked|reveals?|says?|showed)\b',
+
+    # CHANGE 2 (part A cont.): adjectival form — "<Name> survey/study/report
+    # that/which found/shows/tracked". Catches the corpus's dominant
+    # fabrication shape when by/from/possessive is dropped.
+    r'\b(a |an |the )?(20\d\d )?([A-Z][\w&.\'-]*\s*){1,4}'
+    r'(survey|study|report|research|analysis|benchmark)\s+'
+    r'(that\s+|which\s+)?(found|shows?|tracked|reveals?|says?|showed)\b',
+
+    # CHANGE 2 (part A cont.): bare possessive-less "<Name> survey shows" /
+    # "<Name> report finds" without a that/which clause.
+    r'\b([A-Z][\w&.\'-]+)\s+(survey|study|report)\s+'
+    r'(shows?|finds?|found|showed|revealed|estimates?)\b',
 ]
 
 
@@ -1538,14 +1334,6 @@ def _shingles(text: str, n: int = _DUP_NGRAM_SIZE) -> set:
     return {' '.join(words[i:i + n]) for i in range(len(words) - n + 1)}
 
 
-# NOTE: intentionally NOT named _jaccard(). blog_system.py previously had
-# two functions named _jaccard() at module scope (this one, and the
-# title-tokenizer version above near _is_duplicate_title()). Python binds
-# by name at call time, so whichever one was defined later silently won
-# every call from BOTH call sites, including _is_duplicate_title(), which
-# was written to use the more careful asymmetric-overlap version above it
-# but was actually calling this plain intersection/union version instead.
-# Renaming this one makes the two call sites unambiguous again.
 def _jaccard_shingles(a: set, b: set) -> float:
     if not a or not b:
         return 0.0
@@ -1555,15 +1343,6 @@ def _jaccard_shingles(a: set, b: set) -> float:
 def _reject_if_near_duplicate_content(
     content: str, output_dir: Path, exclude_slug: Optional[str] = None
 ) -> Optional[str]:
-    """Gate function, same pattern as _reject_if_fabricated_citation: returns
-    a rejection reason if this draft is a near-duplicate of an ALREADY
-    PUBLISHED post's body text (not just title). Title-similarity checking
-    alone (see _is_duplicate_title) misses "same content, reworded title" —
-    the more common failure mode when a generator runs thousands of times
-    against a finite set of underlying topics. Compares against every post
-    with a post.json under output_dir; O(n) shingle sets held in memory,
-    fine to a few thousand posts, swap to a persisted MinHash index past that.
-    """
     my_shingles = _shingles(content)
     if not my_shingles:
         return None
@@ -1585,11 +1364,6 @@ def _reject_if_near_duplicate_content(
 
 
 def _reject_if_generic_meta_description(meta_description: str) -> Optional[str]:
-    """Gate function for the templated 'Blog post about {title}' pattern
-    that from_markdown_file() falls back to — that pattern is itself a
-    duplicate-metadata signal across every post that hits it. Call this
-    wherever meta_description is finalized before writing post.json.
-    """
     if not meta_description or len(meta_description) < 50:
         return "meta_description missing or under 50 chars"
     for pattern in _GENERIC_META_PATTERNS:
@@ -1598,15 +1372,6 @@ def _reject_if_generic_meta_description(meta_description: str) -> Optional[str]:
     return None
 
 
-# FIX (recurrence prevention, Aug 2026): the broadened structural patterns
-# above will match plenty of ordinary, legitimate technical writing that
-# isn't a fabricated citation at all — "according to the Python docs",
-# "AWS's official documentation recommends...", "according to the error
-# message". None of those invent a third-party study; they reference
-# official/primary documentation, which is exactly the kind of sourcing
-# this site *should* be doing more of, not flagging. Skip the match if
-# any of these appear in the surrounding window instead of treating every
-# hit as fabrication.
 _LEGITIMATE_SOURCE_CONTEXT = re.compile(
     r'\b(documentation|docs\b|changelog|release notes|official (docs|'
     r'documentation|guide)|readme|man page|manual|rfc\s?\d|spec(ification)?|'
@@ -1617,28 +1382,13 @@ _LEGITIMATE_SOURCE_CONTEXT = re.compile(
 
 
 def _reject_if_fabricated_citation(content: str) -> Optional[str]:
-    """Gate function: returns a rejection reason string if the draft attributes
-    a claim to a real, named third party (survey firm, company, publication,
-    research org, university, red-team, etc.) with no accompanying source URL
-    and no legitimate-documentation context nearby — this is citation
-    fabrication, a stricter and more dangerous failure mode than a generic
-    unsourced number, since it invents a specific real-world source a reader
-    could try to verify and fail to find. Call this in the publish gate
-    alongside the existing word-count check (around MIN_WORD_COUNT /
-    MIN_ACCEPTABLE_WORDS) and hold the post for regeneration rather than
-    publishing it, same as a length failure today.
-    """
     for pattern in _FABRICATED_CITATION_PATTERNS:
         for match in _re.finditer(pattern, content, _re.IGNORECASE):
             window = content[max(0, match.start() - 200):match.end() + 200]
 
-            # allow-list 1: a real URL nearby means it's actually sourced.
             if _re.search(r'https?://', window):
                 continue
 
-            # allow-list 2: referencing official/primary documentation is
-            # legitimate technical writing, not a fabricated third-party
-            # study — don't punish the exact behavior we want more of.
             if _LEGITIMATE_SOURCE_CONTEXT.search(window):
                 continue
 
@@ -1646,39 +1396,96 @@ def _reject_if_fabricated_citation(content: str) -> Optional[str]:
     return None
 
 
+# CHANGE 3: title-level fabricated-narrative detection. The previous pipeline
+# only scanned the body for narrative incidents — never the title. That's how
+# "Cloud agents burned $18k", "Added circuit breakers 3 days after cascade
+# failure", "Saved $3k/month by ditching Kubernetes" all shipped. This gate
+# runs before post-processing and rejects three patterns:
+#   1. First-person pronoun + past-tense verb in the title.
+#   2. Past-tense narrative verb at the start of the title.
+#   3. Past-tense verb + a specific cost/time/percentage claim.
+_TITLE_NARRATIVE_VERBS = (
+    r"Added|Killed|Saved|Cut|Dumped|Launched|Survived|Burned|"
+    r"Replaced|Grew|Found|Built|Shipped|Migrated|Reduced|Trimmed|"
+    r"Dropped|Stopped|Started|Kept|Fixed|Broke|Caught|Made|Lost|"
+    r"Gained|Spent|Wasted"
+)
+_TITLE_INCIDENT_PREFIX_RE = re.compile(
+    r"^(?:" + _TITLE_NARRATIVE_VERBS + r")\b",
+    re.IGNORECASE,
+)
+_TITLE_FIRST_PERSON_RE = re.compile(
+    r"\b(?:I|We|My|Our|Us)\b\s+"
+    r"(?:actually|regret|hit|spent|built|shipped|migrated|"
+    r"debugged|survived|burned|killed|launched|added|replaced|"
+    r"cut|saved|dumped|found|grew|reduced|trimmed|dropped|"
+    r"lost|wasted|caught|broke|fixed)\b",
+    re.IGNORECASE,
+)
+_TITLE_SPECIFIC_NUMBER_RE = re.compile(
+    r"\$\d+(?:k|K|,\d+)?(?:/?(?:month|mo|year|yr|week|wk))?|"
+    r"\b\d+\s*(?:%|hours?|days?|weeks?|months?)\b|"
+    r"\b\d{1,3}(?:,\d{3})+\s+(?:agents|requests|users|events)\b|"
+    r"\b\d{1,3}\s*%\b",
+)
+
+
+def _reject_if_narrative_title(title: str) -> Optional[str]:
+    """
+    Reject titles that read as a specific past-tense incident report rather
+    than a topic or claim. Runs BEFORE post-processing — the whole draft is
+    thrown away if the title is narrative-shaped, because the entire
+    article will have been framed around it. Called from
+    generate_blog_post() immediately after the title is finalized.
+
+    Three patterns:
+      1. First-person pronoun + concrete past-tense verb
+         ("I actually used X", "I regret shipping Y")
+      2. Past-tense action verb at the start of the title
+         ("Added circuit breakers 3 days after...", "Saved $3k/month by...")
+      3. Past-tense narrative verb + a specific number claim
+         ("Cloud agents burned $18k", "Cut latency 68% without retraining")
+    """
+    if not title:
+        return None
+
+    has_first_person = bool(_TITLE_FIRST_PERSON_RE.search(title))
+    has_narrative_verb = bool(_TITLE_INCIDENT_PREFIX_RE.match(title.strip()))
+    has_specific_number = bool(_TITLE_SPECIFIC_NUMBER_RE.search(title))
+
+    if has_first_person:
+        return f"narrative title: first-person claim in title ({title[:50]!r})"
+
+    if has_narrative_verb and has_specific_number:
+        return (
+            f"narrative title: past-tense action verb + specific number "
+            f"({title[:50]!r})"
+        )
+
+    if has_narrative_verb and re.search(
+        r"\b(?:after|before|until|when|because)\b", title, re.IGNORECASE
+    ):
+        return f"narrative title: past-tense action with causal clause ({title[:50]!r})"
+
+    return None
+
+
 def _check_expansion_completeness(content: str) -> List[str]:
-    """
-    Detect the two failure modes observed in production expansion output:
-    the response getting cut off mid-generation, and the model echoing the
-    expansion prompt's instruction phrasing verbatim as a heading instead of
-    writing a real one. Returns a list of issue strings (empty = looks fine).
-    """
     issues: List[str] = []
     if not content:
         return ["empty content"]
 
     stripped = content.rstrip()
 
-    # Unbalanced fenced code blocks — a closed article never ends inside one.
     if stripped.count('```') % 2 != 0:
         issues.append("unbalanced code fence (```) — likely cut off mid code block")
 
-    # FIX (audit follow-up): the E-E-A-T/freshness footer's last line is
-    # "**Last reviewed:** <date>" or "**Last generated:** <date>" (see
-    # _EEAT_FOOTER_TEMPLATE / _inject_freshness_footer_inline) — a bare date
-    # with no trailing punctuation, by design. Before this fix, that made the
-    # "ends on a finished sentence" check below fire on essentially every
-    # published post regardless of whether it was actually truncated, since
-    # almost all of them end on this footer. Recognize a well-formed footer
-    # line as a valid ending; a footer that's genuinely cut off mid-word
-    # (e.g. "**Last revi") won't match this pattern and is still flagged.
     _FOOTER_DATE_LINE = re.compile(
         r'^\*\*Last (?:reviewed|generated):\*\*\s*\S.*\S$|^\*\*Last (?:reviewed|generated):\*\*\s*\S$'
     )
     last_line = stripped.rsplit('\n', 1)[-1].strip()
     ends_on_footer_date = bool(_FOOTER_DATE_LINE.match(last_line))
 
-    # Doesn't end on a finished sentence/line.
     if (
         stripped
         and stripped[-1] not in '.!?`"\')]}\n'
@@ -1688,7 +1495,6 @@ def _check_expansion_completeness(content: str) -> List[str]:
         tail = stripped[-60:].replace('\n', ' ')
         issues.append(f"content does not end on a finished sentence (tail: …{tail!r})")
 
-    # Instruction phrasing from the expansion prompt leaking into a heading.
     _LEAKED_INSTRUCTION_PHRASES = (
         "you personally encountered",
         "name them specifically",
@@ -1703,6 +1509,11 @@ def _check_expansion_completeness(content: str) -> List[str]:
 
 
 def _build_system_prompt(author_note: str, format_name: str, format_note: str, year_guidance: str) -> str:
+    # CHANGE 4: item 8 added to CONTENT QUALITY REQUIREMENTS — explicit
+    # forbidden title shapes matched to the _reject_if_narrative_title()
+    # gate added in Change 3. Previously the prompt banned filler phrases
+    # and asked for no fabricated autobiography in the body, but said nothing
+    # about title shape, leaving the model free to invent narrative titles.
     return (
         f"{author_note}\n\n"
         f"{year_guidance}\n\n"
@@ -1757,7 +1568,23 @@ def _build_system_prompt(author_note: str, format_name: str, format_note: str, y
         "(e.g. 'Python 3.11', 'Redis 7.2', 'Node 20 LTS')\n"
         "5. A comparison table using markdown table syntax\n"
         "6. A 'Frequently Asked Questions' section with 3-4 real developer questions\n"
-        "7. A specific, actionable closing step the reader can do in the next 30 minutes\n\n"
+        "7. A specific, actionable closing step the reader can do in the next 30 minutes\n"
+        "8. TITLE SHAPE — the title must describe a TOPIC or CLAIM, not an "
+        "INCIDENT. Forbidden title shapes (any of these will cause the whole "
+        "draft to be discarded before publishing):\n"
+        "   - First-person past tense:   'I actually used X', 'I regret shipping Y'\n"
+        "   - Past-tense action verb at start: 'Added X', 'Saved $Y/month', "
+        "'Survived N', 'Burned $Y', 'Killed X', 'Dumped Y'\n"
+        "   - Narrative claim with a specific number: 'Burned $18k', "
+        "'Cut latency 68%', 'Cost us 40 hours'\n"
+        "Acceptable title shapes (pick one):\n"
+        "   - Topic + angle:      'Redis caching: what breaks first'\n"
+        "   - Named trap:         'TypeScript strict mode traps'\n"
+        "   - Question:           'Why does my p99 spike after deploy?'\n"
+        "   - Verdict:            'Stop using cron for retries'\n"
+        "   - Quantified OUTCOME framed as a range or typical result, not a "
+        "personal one: 'AWS egress costs: where the bill actually comes from' "
+        "(NOT 'Saved $12k/month').\n\n"
         "CREDIBILITY: Name actual tools. Name actual AWS services. Name real, "
         "well-documented error messages and failure modes. Be willing to say "
         "something is hard, or that a common approach is wrong. Generic advice "
@@ -1770,41 +1597,6 @@ def _build_system_prompt(author_note: str, format_name: str, format_note: str, y
     )
 
 
-# ─────────────────────────────────────────────────────────────────
-# Personal intro injection
-# ─────────────────────────────────────────────────────────────────
-#
-# PREVIOUS DESIGN FLAW (found in production): a fixed pool of 8 full
-# sentences was selected by md5(topic) % 8 and only a 1–2 word
-# {keyword} was substituted. Across 793 published posts this produced
-# 100+ posts sharing an IDENTICAL opening sentence verbatim — a
-# textbook "scaled content abuse" signature that both search engines
-# and AdSense reviewers can detect trivially (site:yourdomain.com
-# "I've seen the same" returns 100+ results).
-#
-# FIX: build each intro from three independently-selected clause
-# pools (hook / friction / promise) plus the topic keyword. With
-# 10 x 10 x 10 combinations that's 1,000 distinct skeletons before
-# the keyword is even substituted, and each pool slot is selected
-# from a *different* hash seed so the same topic never reuses the
-# same combination as another topic that happens to collide on one
-# axis. This stays 100% deterministic and automated — no manual
-# review, no new dependency, no API call.
-
-# FIX (found in review, 2026): several entries here used to be first-person
-# "this happened to me" claims — "I spent...", "I ran into...", "I've...",
-# "A colleague asked me...", "We shipped...", "We inherited..." — which is
-# exactly the pattern class _flag_fabricated_anecdotes()/_SKIP_PATTERNS
-# rejects LLM-generated content for, and exactly what the system prompt
-# tells the model never to do ("an AI system has no such incidents,
-# presenting invented ones as real is a factual accuracy and reader-trust
-# problem"). Because this pool is injected by inject_personal_intro() AFTER
-# the anecdote gate already ran on the LLM's content, those entries were
-# bypassing the pipeline's own policy on every single post. Rewritten to
-# the same observational voice the prompt already asks the model to use
-# ("a common failure mode here is...", "teams running into this usually
-# see...") — specific and opinionated without claiming a fabricated
-# incident.
 _INTRO_HOOKS = [
     "The official documentation for {keyword} is good. What it doesn't cover is what happens six months into production.",
     "It's easy to spend longer than expected on {keyword} before the actual failure mode becomes clear.",
@@ -1882,13 +1674,6 @@ def _select(pool: list, seed: str) -> str:
     return pool[idx]
 
 
-# Order in which the three clauses are assembled. Previously always
-# hook -> friction -> promise, which meant the *first sentence any
-# reader or crawler sees* was always drawn from the smallest pool
-# (10 hooks / 480 posts = ~48 near-duplicate openings per hook).
-# Rotating the opening clause spreads first-sentence collisions across
-# all three pools (now 30/20/12 = 62 combined options) instead of
-# concentrating them in one. Still 100% deterministic, no manual step.
 _INTRO_ORDERS = [
     ("hook", "friction", "promise"),
     ("friction", "hook", "promise"),
@@ -1897,12 +1682,6 @@ _INTRO_ORDERS = [
 
 
 def build_intro(keyword: str, seed: str) -> str:
-    """Assemble a post intro from independently-seeded clause pools.
-
-    `seed` should be unique per post (e.g. f"{slug}:{created_at}"), not
-    just the topic keyword — two posts on the same keyword published
-    weeks apart should not be guaranteed to pick the same clauses.
-    """
     hook = _select(_INTRO_HOOKS, f"hook:{seed}").format(keyword=keyword)
     friction = _select(_INTRO_FRICTIONS, f"friction:{seed}")
     promise = _select(_INTRO_PROMISES, f"promise:{seed}")
@@ -1911,44 +1690,6 @@ def build_intro(keyword: str, seed: str) -> str:
     return " ".join(clauses[part] for part in order)
 
 
-# ─────────────────────────────────────────────────────────────────
-# X/Twitter hook examples for the bundle prompt  (FIX: hook repetition)
-# ─────────────────────────────────────────────────────────────────
-#
-# PREVIOUS DESIGN FLAW #1 (found in production): the "tweet_text" field in
-# the bundle prompt carried exactly ONE hard-coded "Good:" example —
-# "Most teams burn $8k+ on AI tools before measuring ROI...". Because
-# few-shot examples are the strongest signal a model follows, the LLM
-# converged on that exact cost/waste framing (and the "Most teams..."
-# opener specifically) across a large share of posts, which is what
-# produced the repeated hook the user noticed on kubaik.github.io.
-#
-# FIX #1: rotate through a pool of hook styles the same way title shapes
-# and intro sentences already rotate elsewhere in this file.
-#
-# PREVIOUS DESIGN FLAW #2 (found in review, 2026): fix #1 stopped short.
-# The "unpopular opinion" style's example was the literal string
-# "Unpopular take: most teams optimize the wrong layer first...". Every
-# other style's example demonstrates a STRUCTURE (a number lead, a
-# before/after, a docs gap) without spelling out a quotable two-word
-# label for it. "Unpopular opinion" was the exception — its example
-# opens with the exact meta-label ("Unpopular take:") that names the
-# style itself, so it reads to the model less like "here is one way to
-# write a contrarian hook" and more like "the sentence to use is
-# 'Unpopular take: ...'". That's a much stronger, much more literal
-# thing for an LLM to imitate than an abstract structure is, which is
-# why three separate posts all opened with "Unpopular opinion:" /
-# "Unpopular take:" even though the prompt says the example is for
-# style only. A single hard-coded example has the same problem for
-# every style, just less visibly — one topic hashing onto "before /
-# after contrast" twice, for instance, would hand the model the exact
-# same seed sentence both times.
-#
-# FIX #2: each style now holds several differently-worded examples
-# (none of which spell out the style's own name as a reusable opener),
-# and one is picked per post — seeded independently from the style
-# selection — so even repeat visits to the same style don't hand the
-# model the same anchor sentence twice.
 _TWEET_HOOK_EXAMPLES = [
     {
         "style": "cost / waste framing",
@@ -2030,9 +1771,6 @@ _TWEET_HOOK_EXAMPLES = [
     {
         "style": "unpopular opinion",
         "examples": [
-            # NOTE: none of these open with a literal "Unpopular X:" label —
-            # see the FIX #2 note above for why that specific phrase is
-            # what leaked into three consecutive live posts.
             "Most teams optimize the wrong layer first, and the fix that "
             "actually moves the needle looks nothing like the usual advice.\\n\\n"
             "Here's the layer that mattered 👇",
@@ -2082,23 +1820,11 @@ _TWEET_HOOK_EXAMPLES = [
 
 
 def _pick_tweet_hook_example(topic: str, recent_styles: Optional[List[str]] = None) -> dict:
-    """
-    Deterministically pick one hook style per topic (avoiding styles used
-    by the last few posts, when known) and then one worded example within
-    that style, so consecutive posts don't converge on the same style OR
-    the same literal anchor sentence for that style.
-
-    `recent_styles` should be the output of _load_recent_hook_styles() —
-    the style labels used by the most recently published posts, newest
-    first. Passing it in (rather than reading docs/ here) keeps this
-    function pure/testable and matches how existing_titles is threaded
-    through the rest of the generation pipeline.
-    """
     recent = set(recent_styles or [])
     pool = _TWEET_HOOK_EXAMPLES
     candidates = [entry for entry in pool if entry["style"] not in recent]
     if not candidates:
-        candidates = pool  # every style was recently used — fall back to all
+        candidates = pool
 
     chosen = _select(candidates, f"tweethook:{topic}")
 
@@ -2116,41 +1842,12 @@ def inject_personal_intro(post, topic: str) -> None:
              if w not in stop and len(w) > 2]
     keyword = " ".join(words[:2]) if words else topic_lower
 
-    # FIX (found in review, 2026): seed was `topic` alone. With only 10
-    # hooks / 30 frictions / 8 promises, the HOOK pool — the first
-    # sentence any reader or crawler sees — collided on ~1 in 10 topics,
-    # producing 56 near-identical openings across 480 published posts
-    # (verified via corpus scan: 62% of posts shared one of 10 hooks).
-    # Seeding on the post's slug instead of the topic string, and
-    # rotating which clause opens the post via build_intro(), spreads
-    # first-sentence collisions across all three (now larger) pools
-    # instead of concentrating them in the smallest one.
     seed = getattr(post, "slug", None) or topic
     intro = build_intro(keyword, seed)
 
     if intro[:30] not in post.content:
         post.content = f"{intro}\n\n{post.content}"
 
-
-# ─────────────────────────────────────────────────────────────────
-# E-E-A-T signal injection
-# ─────────────────────────────────────────────────────────────────
-#
-# PREVIOUS DESIGN FLAW (found in production): a single fixed footer
-# was appended verbatim to every post, including the unconditional,
-# unverifiable claims "Factual claims are verified against official
-# documentation before publishing," "Code examples are tested
-# locally," and "the author reviews and edits every article before
-# it goes live." This pipeline has no human review step (by design,
-# per the automation requirement), so these claims are false on every
-# one of the 774 posts that carry them. Beyond the duplicate-content
-# problem of identical boilerplate on ~all posts, publishing false
-# editorial-process claims at scale is an AdSense/publisher-trust
-# and E-E-A-T risk in its own right if ever surfaced in a review.
-#
-# FIX: disclose the actual process accurately. Accurate automation
-# disclosure is not penalized by Google's guidance on AI-generated
-# content; fabricated human-review claims are a real liability.
 
 _EEAT_FOOTER_TEMPLATE = """
 
@@ -2169,7 +1866,6 @@ _EEAT_FOOTER_TEMPLATE = """
 
 
 def inject_eeat_signals(post, topic: str = None) -> None:
-    """Inject consistent E-E-A-T + AI-disclosure footer. Fully automatic."""
     sentinel = "### About this article"
     if sentinel in post.content:
         return
@@ -2178,86 +1874,22 @@ def inject_eeat_signals(post, topic: str = None) -> None:
     post.content = post.content.rstrip() + "\n" + footer
 
 
-# ─────────────────────────────────────────────────────────────────
-# PRE-FLIGHT SIMILARITY INDEX
-# ─────────────────────────────────────────────────────────────────
-
 _PREFLIGHT_CACHE_FILE = Path(".preflight_index.json")
 _PREFLIGHT_CACHE_TTL_SECONDS = 3600
 
-# PATCH (dedup hardening round 2): PreFlightIndex (below) runs BEFORE an
-# article is even written, on just a candidate topic string, using its own
-# sklearn-based TF-IDF (word+bigram, sublinear TF, "english" stopwords) —
-# a genuinely different vector space from dedup_similarity.py's unigram
-# IDF model, because it's answering a different question (does this idea
-# sound like an existing title/summary?) than ContentDuplicateGate (does
-# this finished article's body substantially overlap an existing one?).
-# A previous comment here claimed this threshold was kept in exact sync
-# with CONTENT_DUPLICATE_THRESHOLD via a "_validate_dedup_thresholds()"
-# function — that function did not actually exist anywhere in this file,
-# and the two thresholds could not mean the same thing anyway since the
-# vector spaces differ. Lowered from 0.60 to 0.50 for defense-in-depth
-# (same "increase strictness" pass as the content gate below), but this
-# is a coarse pre-filter, not a guarantee that matches the content gate
-# 1:1. See _validate_dedup_thresholds() below, which now actually exists
-# and only asserts internal sanity (both values are valid similarity
-# thresholds in (0, 1) and the pre-flight filter isn't looser than the
-# content gate), not that the two algorithms agree pairwise.
 _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD = 0.50
 _PREFLIGHT_MAX_RETRIES = 3
 
-
-# ─────────────────────────────────────────────────────────────────
-# Post-generation content quality gate (full-body near-duplicate check)
-# ─────────────────────────────────────────────────────────────────
-# PreFlightIndex (below) screens *topics/titles* before generation even
-# starts. It cannot catch the case where two differently-worded topics
-# still converge on a near-identical article body — e.g. "prompt
-# injection basics" and "how to defend against prompt injection" can
-# clear the title/topic check yet produce 80%+ overlapping content.
-#
-# This gate re-checks the *actual generated article body* against every
-# already-published post immediately before publish.
-#
-# PATCH (dedup hardening round 2): this gate used to compute its own
-# raw term-frequency vectors (NO IDF weighting, content only, no title,
-# its own stopword list) — a different vector space from the audit tool
-# in content_quality_scanner.py, despite a comment here previously
-# claiming the two "agree on what counts as a duplicate." They didn't:
-# the audit tool found published pairs at 0.52-0.73 similarity under its
-# IDF+title-weighted method that this gate's plain-TF method had scored
-# below its own 0.60 threshold at publish time, letting them through.
-#
-# Fix: this gate now imports the exact same tokenizer/IDF/cosine
-# functions from dedup_similarity.py that content_quality_scanner.py
-# uses, so "0.45 similarity" means the same thing in both places. The
-# threshold itself is also lowered (was 0.60) as part of the same
-# strictness pass, and is configurable via config.yaml's
-# duplicate_similarity_threshold so it can be retuned without a code
-# change if it proves too aggressive.
 CONTENT_DUPLICATE_THRESHOLD = dedup_similarity.DUPLICATE_SIMILARITY_THRESHOLD
 
 
 def _validate_dedup_thresholds() -> None:
-    """Sanity-check the two duplicate thresholds at import time. This
-    can't make the pre-flight (sklearn, bigram) and content-gate
-    (dedup_similarity, unigram) vector spaces produce identical numbers
-    for the same pair of posts — they're different algorithms answering
-    different questions — but it can catch the specific failure mode of
-    someone loosening one threshold without noticing the other, or
-    setting either to a nonsensical value."""
     assert 0.0 < CONTENT_DUPLICATE_THRESHOLD < 1.0, (
         f"CONTENT_DUPLICATE_THRESHOLD={CONTENT_DUPLICATE_THRESHOLD} must be in (0, 1)"
     )
     assert 0.0 < _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD < 1.0, (
         f"_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD={_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD} must be in (0, 1)"
     )
-    # The pre-flight filter runs first and cheaper; it should never be
-    # LOOSER than the full-body gate, or a post that would've been
-    # blocked pre-generation could still slip through if pre-flight's
-    # threshold were the higher (more permissive) number in practice.
-    # (Not a proof the algorithms agree — just a guard against an
-    # obviously backwards configuration.)
     assert _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD <= CONTENT_DUPLICATE_THRESHOLD + 0.25, (
         "_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD is far looser than "
         "CONTENT_DUPLICATE_THRESHOLD — review both before shipping."
@@ -2268,34 +1900,11 @@ _validate_dedup_thresholds()
 
 
 class ContentDuplicateGate:
-    """
-    Full-body near-duplicate detector. Unlike PreFlightIndex (which only
-    ever sees a short candidate topic string), this compares the complete
-    generated article text (title + body) against the complete body of
-    every already published post, so it catches overlap that only shows
-    up once the article is actually written.
-
-    Uses dedup_similarity.py's shared tokenizer/IDF/cosine so this gate
-    and content_quality_scanner.py's offline audit always compute the
-    same number for the same pair of posts.
-    """
-
     def __init__(self, docs_dir: Path, threshold: float = CONTENT_DUPLICATE_THRESHOLD):
         self.docs_dir = docs_dir
         self.threshold = threshold
 
     def check(self, title: str, content: str, exclude_slug: str = "") -> tuple:
-        """
-        Returns (is_duplicate, matched_slug, matched_title, score).
-        `exclude_slug` lets a post being refreshed/regenerated skip
-        comparing against its own prior version.
-
-        Raises on unexpected errors (e.g. a corrupt post.json) instead of
-        swallowing them — see the call site in save_post(), which now
-        treats a gate failure as "refuse to publish," not "publish
-        without protection." A duplicate gate that can be crashed into
-        silence isn't a duplicate gate.
-        """
         CANDIDATE_KEY = "__candidate__"
         documents: Dict[str, Tuple[str, str]] = {
             CANDIDATE_KEY: (title, content)}
@@ -2313,9 +1922,6 @@ class ContentDuplicateGate:
                     with open(post_json, "r", encoding="utf-8") as f:
                         data = json.load(f)
                 except (json.JSONDecodeError, OSError, UnicodeDecodeError) as exc:
-                    # A single unreadable post.json shouldn't take down
-                    # duplicate protection for the whole gate — skip just
-                    # this one file, loudly, and keep checking the rest.
                     print(f"  ⚠️  ContentDuplicateGate: skipping unreadable "
                           f"{post_json} ({exc})")
                     continue
@@ -2346,10 +1952,6 @@ class ContentDuplicateGate:
 
 
 class PreFlightIndex:
-    """
-    Lightweight TF-IDF pre-flight similarity check.
-    """
-
     def __init__(self, docs_dir: Path, cache_file: Path = _PREFLIGHT_CACHE_FILE):
         self.docs_dir = docs_dir
         self.cache_file = cache_file
@@ -2445,7 +2047,6 @@ class PreFlightIndex:
             f"  PreFlightIndex: rebuilt {len(self._entries)} entries from docs/.")
 
     def _save_cache(self) -> None:
-        # PATCH-4: atomic write — prevents cache corruption from concurrent runs
         import os as _os
         import tempfile as _tempfile
 
@@ -2459,7 +2060,6 @@ class PreFlightIndex:
             try:
                 with _os.fdopen(fd, 'w', encoding='utf-8') as f:
                     json.dump(payload, f, ensure_ascii=False, indent=2)
-                # os.replace is atomic: readers see old file or new, never partial
                 _os.replace(tmp_path, self.cache_file)
             except Exception:
                 try:
@@ -2516,11 +2116,6 @@ class PreFlightIndex:
         return blocked, best_title, best_score
 
 
-# ─────────────────────────────────────────────────────────────────
-# BlogSystem
-# ─────────────────────────────────────────────────────────────────
-
-
 class BlogSystem:
     def __init__(self, config=None):
         if config is None:
@@ -2544,7 +2139,7 @@ class BlogSystem:
         self.gemini_key = os.getenv("GEMINI_API_KEY")
         self.hf_token = os.getenv("HF_TOKEN")
         self.zai_key = os.getenv("ZAI_API_KEY")
-        self.llm7_key = os.getenv("LLM7_API_KEY")  # optional; "unused" works
+        self.llm7_key = os.getenv("LLM7_API_KEY")
         self.deepseek_key = os.getenv("DEEPSEEK_API_KEY")
 
         self._log_key_status()
@@ -2556,15 +2151,6 @@ class BlogSystem:
         )
 
         self.monetization = MonetizationManager(config)
-        # NOTE (found in review, 2026): this instantiation is currently
-        # inert — see the STATUS note at the top of hashtag_manager.py.
-        # Nothing calls self.hashtag_manager.get_daily_hashtags() or any
-        # other method; live hashtags come entirely from
-        # _derive_hashtags_from_keywords() further down in this file.
-        # Left in place rather than removed so this diff stays additive;
-        # decide (per that file's note) whether to delete this line and
-        # the HashtagManager/add_hashtags_to_post import, or actually wire
-        # this in.
         self.hashtag_manager = HashtagManager(config)
 
         self.preflight_index = PreFlightIndex(docs_dir=self.output_dir)
@@ -2597,10 +2183,6 @@ class BlogSystem:
         print(
             f"  LLM7.io:        {'configured' if self.llm7_key             else 'anon (unused)'}")
         print("======================")
-
-    # ─────────────────────────────────────────────────────────────
-    # CLEANUP
-    # ─────────────────────────────────────────────────────────────
 
     def cleanup_posts(self):
         print("Cleaning up posts...")
@@ -2648,16 +2230,6 @@ class BlogSystem:
             print("Nothing to remove — all posts meet quality bar.")
             return
 
-        # FIX: previously did shutil.rmtree(post_dir) unconditionally, which
-        # is correct for content that was never published — but several
-        # purged posts here had already been crawled, indexed, and tweeted
-        # before removal (see post_url fix above). A bare 404 for an
-        # already-indexed, already-linked URL wastes the link equity and
-        # dead-ends anyone following an old share, and showed up in Search
-        # Console as a wave of "Not found (404)" errors. Instead: overwrite
-        # the post with a noindex,follow tombstone page (real 200, so it
-        # isn't a broken link) and log the removal so it's auditable. Google
-        # drops noindex pages from the index on its own on the next crawl.
         tombstone_tmpl = StaticSiteGenerator(self).templates['tombstone']
         log_path = self.output_dir / "_removed_posts.json"
         removed_log = json.loads(
@@ -2697,13 +2269,6 @@ class BlogSystem:
                 f"\nPurged {len(to_remove)} low-quality posts (tombstoned, not deleted).")
 
     def generate_og_images(self) -> bool:
-        """
-        Generate per-article Open Graph images (1200×630 PNG).
-
-        Returns:
-            bool: True if successful, False otherwise
-        """
-
         if not PILLOW_AVAILABLE:
             print("⚠️  Pillow not installed. Skipping OG image generation.")
             return False
@@ -2767,10 +2332,6 @@ class BlogSystem:
         except Exception as e:
             print(f"❌ OG image generation failed: {e}")
             return False
-
-    # ─────────────────────────────────────────────────────────────
-    # STALE CONTENT REFRESH
-    # ─────────────────────────────────────────────────────────────
 
     async def refresh_stale_posts(self, limit: int = 2) -> dict:
         from adsense_fixes.content_freshness import mark_stale_posts
@@ -2856,17 +2417,6 @@ class BlogSystem:
                 results["errors"].append(msg)
                 continue
 
-            # FIX (audit follow-up): _refresh_post_content()'s output was never
-            # checked for truncation / mid-code-block cutoffs / leaked prompt
-            # instruction text before being written to post.json. Unlike
-            # _expand_content() — which already runs _check_expansion_completeness()
-            # and discards a bad result — this refresh path only checked word
-            # count, so a response that was long enough but cut off mid-sentence
-            # sailed straight through and got published with a fresh "Last
-            # reviewed" date on it. Apply the same guard here: if the refreshed
-            # content looks incomplete, skip the save and keep the original
-            # (untouched) post.json rather than overwriting good content with
-            # broken content.
             completeness_issues = _check_expansion_completeness(refreshed_content)
             if completeness_issues:
                 msg = (
@@ -2931,8 +2481,6 @@ class BlogSystem:
         days_stale: int,
         is_fast_decay: bool,
     ) -> str:
-        # PATCH-5: removed redundant 400-word excerpt from the user message;
-        # the system prompt already instructs the model to read full content carefully.
         keywords_str = ", ".join(seo_keywords[:8])
 
         decay_context = (
@@ -3023,47 +2571,12 @@ class BlogSystem:
             },
         ]
 
-        # FIX (audit follow-up): max_tokens was a fixed 6500 regardless of the
-        # original article's length, same as the bug already fixed in
-        # _expand_content() — the model has to echo the entire original
-        # article back before/while applying updates, so long posts left too
-        # little budget for a complete response and the output got cut off
-        # mid-sentence or mid-code-block. Scale the budget to the input size
-        # so there's always headroom to finish. (_check_expansion_completeness()
-        # in refresh_stale_posts() is the backstop if this still isn't enough.)
         original_tokens_est = max(1, len(original_content) // 4)
         budget = min(16000, max(6500, original_tokens_est + 3500))
         return await self._call_api_with_fallback(messages, max_tokens=budget)
 
-    # ─────────────────────────────────────────────────────────────
-    # API FALLBACK CHAIN
-    # ─────────────────────────────────────────────────────────────
-
     @staticmethod
     def _extract_message_content(payload: dict, provider_name: str) -> str:
-        """
-        Pull choices[0].message.content out of a chat-completion response and
-        raise if it's missing, null, or empty.
-
-        FIX (bundle-stage crash, found in review): every provider call site
-        used to `return result["choices"][0]["message"]["content"]` directly.
-        Several free/rotating models (seen on OpenRouter's "openrouter/free"
-        alias in particular) return HTTP 200 with a well-formed JSON body but
-        `message.content` set to null — e.g. a reasoning model that spent the
-        whole token budget on hidden reasoning tokens and finish_reason
-        "length" before emitting any visible content, or a safety/refusal
-        response with empty content. Because that was a *successful* HTTP
-        call, `_call_api_with_fallback` logged "responded successfully" and
-        returned None straight through — the crash then surfaced two frames
-        away as `raw.strip()` -> 'NoneType' object has no attribute 'strip'',
-        with no indication of which provider or why. That looked identical
-        to (and was misdiagnosed as) a content_topics/hallucination problem,
-        but it's unrelated: it fires regardless of topic, on any call whose
-        provider happens to return null content that attempt.
-        Raising here instead means _call_api_with_fallback's existing
-        try/except treats it as a normal provider failure and falls back to
-        the next provider/model, same as a timeout or 5xx.
-        """
         try:
             message = payload["choices"][0]["message"]
             content = message.get("content")
@@ -3074,8 +2587,6 @@ class BlogSystem:
                 f"{list(payload.keys()) if isinstance(payload, dict) else type(payload)}"
             )
         if not content or not str(content).strip():
-            # GLM / DeepSeek-style reasoning models put the visible answer
-            # in reasoning_content when thinking burns the token budget.
             reasoning = ""
             try:
                 reasoning = message.get("reasoning_content") or ""
@@ -3099,14 +2610,6 @@ class BlogSystem:
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 6000) -> str:
         providers = []
 
-        # DeepSeek Flash is primary: cheapest usable option with no daily
-        # free-tier cap to run dry mid-batch (unlike Groq/OpenRouter's free
-        # tiers), 1M context, and reliable JSON/long-form output. Everything
-        # below it is an existing free-tier fallback, unchanged in order.
-        # Mistral is later because the Experiment free tier has been
-        # returning standing 429s. Cerebras and GitHub Models were removed
-        # (decommissioned). Cloudflare Workers AI is not in this chain
-        # (10k neurons/day).
         if self.deepseek_key:
             providers.append(("DeepSeek",         self._call_deepseek))
         if self.groq_key:
@@ -3123,7 +2626,6 @@ class BlogSystem:
             providers.append(("Mistral",          self._call_mistral))
         if self.zai_key:
             providers.append(("Z.AI",             self._call_zai))
-        # LLM7 anonymous fallback — last resort, no key required.
         providers.append(("LLM7.io",              self._call_llm7))
 
         if not providers:
@@ -3167,22 +2669,7 @@ class BlogSystem:
             f"Last error: {last_error}"
         )
 
-    # ─────────────────────────────────────────────────────────────
-    # PROVIDERS
-    # ─────────────────────────────────────────────────────────────
-
     async def _call_deepseek(self, messages: List[Dict], max_tokens: int) -> str:
-        """Primary provider. DeepSeek Flash (DeepSeek-V4.1-Flash).
-
-        Thinking mode is ON by default for this model, and reasoning
-        tokens count against max_tokens — for a long-form generation call
-        with no multi-step reasoning need, that can silently burn the
-        whole budget on hidden reasoning_content before any visible
-        content is written (same failure mode _call_zai already works
-        around for GLM, and the exact bug that produced the short,
-        keyword-less test output seen before this was wired in).
-        Disabled here so the full budget goes to the article.
-        """
         if not self.deepseek_key:
             raise EnvironmentError("DEEPSEEK_API_KEY not set")
         RETRYABLE = {503, 429, 500, 502, 504}
@@ -3251,14 +2738,6 @@ class BlogSystem:
         raise Exception("Groq unavailable.")
 
     async def _fetch_openrouter_free_models(self, timeout: int = 20) -> List[str]:
-        """Pull OpenRouter's live model catalog and return currently-free
-        (`pricing.prompt == "0"` and `pricing.completion == "0"`) text-output
-        model ids, best candidates first. This exists because OpenRouter
-        retires ":free" slugs with no warning — sometimes within days of
-        each other — so a hardcoded list goes stale fast (see the
-        _OPENROUTER_FALLBACK_MODELS comment). Raises on any failure; the
-        caller falls back to the static list.
-        """
         async with aiohttp.ClientSession() as s:
             async with s.get(
                 "https://openrouter.ai/api/v1/models",
@@ -3290,7 +2769,6 @@ class BlogSystem:
                 continue
             max_completion = (m.get("top_provider", {}) or {}).get(
                 "max_completion_tokens") or 0
-            # Too small to reliably return a full article body.
             if max_completion and max_completion < 4000:
                 continue
             candidates.append((model_id, max_completion, expires))
@@ -3298,9 +2776,6 @@ class BlogSystem:
         if not candidates:
             raise Exception("No usable free models in OpenRouter catalog")
 
-        # Prefer models with more completion headroom, and push anything
-        # with a near-term expiration_date to the back (still usable as a
-        # last resort, just not first-pick).
         candidates.sort(key=lambda c: (c[2] is not None, -c[1]))
         return [c[0] for c in candidates]
 
@@ -3324,10 +2799,6 @@ class BlogSystem:
             )
             candidate_models = list(_OPENROUTER_FALLBACK_MODELS)
 
-        # Cap attempts per generation call — we don't want one blog post to
-        # burn through the entire free catalog if OpenRouter is having a
-        # bad day. Kept small (3 models x 2 attempts x 45s timeout = ~4.5min
-        # worst case) so a bad OpenRouter day can't eat the whole job budget.
         for model_id in candidate_models[:3]:
             data = {
                 "model": model_id,
@@ -3351,10 +2822,6 @@ class BlogSystem:
                             body = await r.text()
 
                             if r.status == 404 and "unavailable for free" in body.lower():
-                                # OpenRouter retired this ":free" slug and is
-                                # nudging us toward the paid version — don't
-                                # take that bait, just move on to the next
-                                # known-free candidate model.
                                 print(
                                     f"OpenRouter: {model_id} is no longer free "
                                     f"({body[:200]}). Trying next free model..."
@@ -3386,9 +2853,6 @@ class BlogSystem:
                     )
                     break
                 except Exception as e:
-                    # Non-retryable, non-404 failure (bad response shape,
-                    # explicit "error" field, etc.) — try the next candidate
-                    # rather than giving up on OpenRouter entirely.
                     last_error = e
                     print(
                         f"OpenRouter: {model_id} failed ({e}). "
@@ -3478,8 +2942,6 @@ class BlogSystem:
             "Content-Type": "application/json",
             "Accept-Language": "en-US,en",
         }
-        # thinking disabled so the token budget is spent on visible content
-        # (glm-4.7-flash otherwise fills reasoning_content and returns "").
         data = {
             "model": _ZAI_MODEL,
             "messages": messages,
@@ -3651,10 +3113,6 @@ class BlogSystem:
                 raise Exception("Gemini timed out.")
         raise Exception("Gemini unavailable.")
 
-    # ─────────────────────────────────────────────────────────────
-    # CONTENT GENERATION
-    # ─────────────────────────────────────────────────────────────
-
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> "BlogPost":
         banned = topic_policy_violation(topic or "")
         if banned:
@@ -3696,14 +3154,6 @@ class BlogSystem:
             )
 
             if preflight_attempts >= _PREFLIGHT_MAX_RETRIES:
-                # PATCH (dedup hardening): this used to "proceed with last
-                # candidate" here, which meant a topic that had just been
-                # confirmed too-similar 3 times in a row got generated and
-                # published anyway, on the theory that the post-generation
-                # gate would catch it. It didn't always agree (different
-                # threshold), so duplicates reached publish. Fail closed
-                # instead: skip this topic entirely for today's run rather
-                # than force through content we already know is a near-copy.
                 raise TopicExhaustedError(
                     f"Pre-flight max retries ({_PREFLIGHT_MAX_RETRIES}) reached for "
                     f"'{current_topic}' (last score {pf_score:.2f} vs '{match_title}'). "
@@ -3721,10 +3171,6 @@ class BlogSystem:
                 current_keywords = None
                 print(f"  LLM suggested: '{current_topic}'")
             except Exception as exc:
-                # PATCH (dedup hardening): if the LLM can't even suggest a
-                # distinct topic, that's a signal the well is basically dry
-                # for this angle - don't silently fall through to generating
-                # the still-blocked topic.
                 raise TopicExhaustedError(
                     f"Pre-flight blocked '{current_topic}' and the LLM topic-rescue "
                     f"call failed ({exc}). Refusing to generate the blocked topic."
@@ -3773,12 +3219,6 @@ class BlogSystem:
                 )
                 title = _TITLE_FILLER.sub('', title).strip()
 
-                # PATCH: the old logic did a blind `title[:55]` slice-and-cut,
-                # which is exactly what produced mid-sentence truncations like
-                # "...the 60ms latency you" or "...AI microservices in".
-                # Keep the model's full title intact, and derive a SERP-safe
-                # display title using the same rules as title_validator.py
-                # (respects natural break points, never ends on a weak word).
                 full_title = title
                 title = generate_display_title(
                     full_title, _VALIDATOR_MAX_DISPLAY_TITLE)
@@ -3837,6 +3277,65 @@ class BlogSystem:
                     f"Post-processing failed on all {MAX_GENERATION_ATTEMPTS} attempts. "
                     f"Last error: {e}"
                 )
+
+            # CHANGE 3 + CHANGE 5 wiring: narrative-title gate. Runs
+            # immediately after the title is finalized — before expansion,
+            # before content gates, before any other work. If the title
+            # reads as a specific past-tense incident ("Cloud agents burned
+            # $18k", "Added circuit breakers 3 days after...", "I actually
+            # used X"), the pipeline tries a cheap title-only rewrite first
+            # (Change 5); only if that fails does it fall through to a full
+            # topic-switch.
+            _title_narrative = _reject_if_narrative_title(title)
+            if _title_narrative:
+                print(f"\n  ⚠️  {_title_narrative}")
+                print(f"  Attempting title-only rewrite (keeping the draft body)...")
+                new_title_raw = await self._regenerate_title_only(
+                    bad_title=title,
+                    content=content,
+                    topic=current_topic,
+                    existing_titles=existing_titles,
+                    reason=_title_narrative,
+                )
+                if new_title_raw:
+                    candidate_title = generate_display_title(
+                        new_title_raw.strip().strip('"'),
+                        _VALIDATOR_MAX_DISPLAY_TITLE,
+                    )
+                    if not _reject_if_narrative_title(candidate_title):
+                        title = candidate_title
+                        full_title = new_title_raw.strip().strip('"')
+                        print(f"  ✅ New title : '{title}'")
+                    else:
+                        print(
+                            f"  ⚠️  Title-only rewrite still narrative-shaped "
+                            f"('{candidate_title}') — falling back to full regeneration."
+                        )
+                else:
+                    print("  ⚠️  Title-only rewrite failed to produce a result.")
+
+                # If the title is still narrative-shaped after the cheap
+                # rewrite attempt, burn the retry attempt on a new topic.
+                if _reject_if_narrative_title(title):
+                    if attempt_num < MAX_GENERATION_ATTEMPTS:
+                        print(
+                            f"  Burning generation attempt {attempt_num} — "
+                            f"picking a new topic."
+                        )
+                        current_topic = self._pick_retry_topic(
+                            current_topic, existing_titles,
+                            exclude=attempted_topics,
+                        )
+                        current_keywords = None
+                        continue
+                    raise InsufficientContentError(
+                        f"Failed to produce a non-narrative title after "
+                        f"{MAX_GENERATION_ATTEMPTS} attempts across topics: "
+                        + ", ".join(f"'{t}'" for t in attempted_topics)
+                        + ". Every generated title contained a first-person "
+                        "claim, a past-tense narrative verb, or an unsourced "
+                        "specific-number incident. No post has been saved."
+                    )
 
             if word_count < MIN_WORD_COUNT:
                 print(
@@ -3899,20 +3398,7 @@ class BlogSystem:
                     f"{MAX_GENERATION_ATTEMPTS} attempts. No post has been saved."
                 )
 
-            # FIX (content-quality gap): the prompt tells the LLM never to
-            # invent personal anecdotes ("I spent three days debugging..."),
-            # but nothing previously enforced that on the body — only on
-            # meta_description. This mirrors the citation/near-duplicate
-            # gates immediately above/below: same retry-on-new-topic pattern,
-            # so a hit doesn't silently ship the way it was doing before.
             anecdote_hits = _flag_fabricated_anecdotes(content)
-            # FIX (avoid discarding good drafts): a hit here used to
-            # immediately switch topics and regenerate from scratch, even
-            # when it was 1-2 flagged sentences in an otherwise good
-            # 2000-3000 word article. Try a cheap, targeted in-place repair
-            # first — rewrite just the flagged sentences — and only fall
-            # back to burning a full topic-switch attempt if that doesn't
-            # clear the gate.
             repair_tries = 0
             while anecdote_hits and repair_tries < _MAX_REPAIR_ATTEMPTS:
                 repair_tries += 1
@@ -3954,12 +3440,6 @@ class BlogSystem:
             content_dup_problem = _reject_if_near_duplicate_content(
                 content, self.output_dir, exclude_slug=None
             )
-            # FIX (avoid discarding good topics): a hit here used to
-            # immediately switch to a brand-new topic, discarding a topic
-            # that pre-flight had already vetted just because THIS draft's
-            # specific wording/structure overlapped an existing post. Try a
-            # targeted rewrite of the same topic first — different angle,
-            # different examples — before burning a topic-switch attempt.
             repair_tries = 0
             while content_dup_problem and repair_tries < _MAX_REPAIR_ATTEMPTS:
                 repair_tries += 1
@@ -3995,22 +3475,6 @@ class BlogSystem:
                     f"{MAX_GENERATION_ATTEMPTS} attempts. No post has been saved."
                 )
 
-            # FIX (found in review, 2026): this is the same gate save_post()
-            # calls via self.content_duplicate_gate (full-corpus TF-IDF
-            # cosine over title+content — the most reliable of the several
-            # duplicate checks in this pipeline; it's what actually caught
-            # the duplicate the shingle-Jaccard check above missed in a
-            # real run). Previously it only ran inside save_post(), which
-            # meant a duplicate wasn't discovered until AFTER hashtag
-            # derivation, tweet-budget assembly, personal-intro/E-E-A-T
-            # injection, alt-text injection, internal-link injection, and
-            # link/canonical validation had all already run on a draft
-            # that was about to be thrown away. Running it here, right next
-            # to the other content-level gates and before any of that
-            # downstream work, catches the same duplicates for a fraction
-            # of the cost. save_post()'s own call to the same gate stays in
-            # place as a defense-in-depth check (e.g. against races between
-            # concurrent runs) — it should now rarely if ever fire.
             try:
                 gate_is_dup, gate_slug, gate_title, gate_score = (
                     self.content_duplicate_gate.check(
@@ -4018,9 +3482,6 @@ class BlogSystem:
                     )
                 )
             except Exception as e:
-                # Same fail-closed posture as save_post()'s use of this
-                # gate: if the check itself can't run, don't silently skip
-                # duplicate protection.
                 print(
                     f"\n🛑  ContentDuplicateGate raised an error during "
                     f"early check — aborting per its fail-closed contract: {e}"
@@ -4118,17 +3579,6 @@ class BlogSystem:
             post.monetization_data = self.monetization.generate_ad_slots(
                 post.content)
 
-            # FIX (found in review, 2026): extract_and_build_faq_schema()
-            # was imported at module load time but never actually called
-            # anywhere. static_site_generator.py's _generate_article_schema()
-            # already has the wiring on the *reading* side — it looks for
-            # post.monetization_data.get('faq_schema', '') and appends it
-            # as a second JSON-LD block whenever present — but nothing on
-            # the *writing* side ever populated that key. Net effect: any
-            # post whose content included a "## FAQ" or "## Frequently
-            # Asked Questions" section never got FAQPage structured data,
-            # even though three separate pieces of the machinery for it
-            # (extraction, storage field, template rendering) all existed.
             faq_schema = extract_and_build_faq_schema(
                 post.content,
                 self.config.get('base_url', 'https://kubaik.github.io'),
@@ -4138,8 +3588,6 @@ class BlogSystem:
                 post.monetization_data['faq_schema'] = faq_schema
                 print("  ✅ FAQ schema extracted and attached to post.")
 
-            # Preserve the complete, untruncated title alongside the
-            # SERP-safe display title (see title_validator.py).
             post.full_title = full_title
 
             print("Deriving hashtags from title + keywords (tiered system)...")
@@ -4156,21 +3604,10 @@ class BlogSystem:
                 f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags
             )
 
-            # Recorded regardless of whether tweet_text came through, so
-            # _load_recent_hook_styles() has an accurate recent-style
-            # history to avoid even on attempts that fall back to the
-            # template path.
             post.tweet_hook_style = bundle.get("_hook_style", "")
 
             bundle_tweet = bundle.get("tweet_text", "").strip()
             if bundle_tweet:
-                # FIX: was missing the trailing slash. Every other URL surface
-                # (sitemap, RSS, canonical tags, JSON-LD, internal <a href>)
-                # consistently uses /{slug}/ — this was the one place that
-                # didn't, so every tweet ever sent linked to the no-slash path.
-                # GitHub Pages 301-redirects /slug -> /slug/, and Google
-                # discovering the URL via that outbound link is exactly what
-                # Search Console was flagging as "Page with redirect".
                 post_url = (
                     f"{self.config.get('base_url', 'https://kubaik.github.io')}"
                     f"/{post.slug}/"
@@ -4260,10 +3697,6 @@ class BlogSystem:
             f"producing adequate content. No post has been saved."
         )
 
-    # ─────────────────────────────────────────────────────────────
-    # LLM-BASED DISTINCT TOPIC SUGGESTER
-    # ─────────────────────────────────────────────────────────────
-
     async def _ask_llm_for_distinct_topic(
         self,
         blocked_topic: str,
@@ -4297,10 +3730,6 @@ class BlogSystem:
         raw = await self._call_api_with_fallback(messages, max_tokens=80)
         new_topic = raw.strip().strip('"').strip("'").strip()
         return new_topic if new_topic else blocked_topic
-
-    # ─────────────────────────────────────────────────────────────
-    # BUNDLE GENERATION
-    # ─────────────────────────────────────────────────────────────
 
     async def _generate_full_bundle(
         self,
@@ -4387,6 +3816,11 @@ CONTENT QUALITY BAR — YOUR POST MUST SATISFY ALL OF THESE:
    "In conclusion", "comprehensive guide", "this article will", "we will explore".
 7. The final section must end with ONE specific, actionable next step the reader
    can do today — not "start exploring" or "begin your journey".
+8. TITLE must describe a topic or claim, NOT an incident. Forbidden shapes:
+   "I actually used...", "Added X 3 days after...", "Cloud agents burned $18k",
+   "Saved $3k/month", "Survived 12,000 agents". Prefer: "Redis caching: what
+   breaks first" / "TypeScript strict mode traps" / "Why does my p99 spike?" /
+   "Stop using cron for retries".
 
 TITLE FORMAT — do NOT default to a "Cut/Reduce/Improve X% with Y" pattern. That
 is one of at least five acceptable shapes below; if the last few posts on this
@@ -4416,7 +3850,7 @@ different first word than recent posts. A homepage where every tweet opens
 
 Respond with ONLY a JSON object in this exact shape:
 {{{{
-  "title": "<punchy title: MAX 50 chars. No filler words (Complete/Ultimate/Guide to/Introduction to). Pick ONE of the title shapes above — do not default to the percentage-cut shape. Bad: 'A Complete Guide to Redis Caching'>",
+  "title": "<punchy title: MAX 50 chars. No filler words (Complete/Ultimate/Guide to/Introduction to). Pick ONE of the title shapes above — do not default to the percentage-cut shape. MUST NOT be a past-tense incident report ('I did X', 'Added Y', 'Saved $Z'). Bad: 'A Complete Guide to Redis Caching', 'Cloud agents burned $18k'>",
   "content": "<full markdown article — no title heading at top>",
   "meta_description": "<under 155 chars. Must include: (1) the primary keyword, (2) an implied reader benefit, and (3) EITHER a specific number/outcome OR a specific named risk/mistake — do not make every post's meta description lead with a percentage; vary it the same way the title shape varies. Never start with 'This post', 'In this article', 'A guide to', 'Learn about', 'We will', or 'You will learn'. Good: 'Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.' Bad: 'A guide to Redis caching for developers.'>",
   "tweet_text": "<X/Twitter hook body — STRICT MAX 180 chars. NO url, NO hashtags (added automatically). Third-person voice only (they/teams/most developers). Complete sentences, no trailing ellipsis. End with an action cue like 'Full breakdown 👇' or 'Here is why 👇'. Use the '{hook_style}' shape shown below for STYLE and STRUCTURE ONLY — write your own sentences about THIS post's actual content, do not reuse or lightly reword the example's wording, numbers, or topic. Example of the '{hook_style}' shape: '{hook_example_text}'. Bad: 'I burned $8k...' (first person), 'Teams overspend on AI... realize...' (truncated), or copying the example's specific numbers/claims into an unrelated post.>",
@@ -4503,10 +3937,6 @@ Return ONLY the JSON object.""",
         data["_hook_style"] = hook_style
         return data
 
-    # ─────────────────────────────────────────────────────────────
-    # Title regeneration
-    # ─────────────────────────────────────────────────────────────
-
     async def _regenerate_title(
         self,
         title: str,
@@ -4561,9 +3991,67 @@ Return ONLY the JSON object.""",
                 f"  Title regeneration failed ({e}). Keeping original title.")
             return title
 
-    # ─────────────────────────────────────────────────────────────
-    # JSON REPAIR / PARSE
-    # ─────────────────────────────────────────────────────────────
+    # CHANGE 5: targeted title-only repair for when the ONLY problem is
+    # the title (narrative shape, first-person claim, past-tense verb
+    # with a specific number). Cheaper than throwing away a whole draft —
+    # the article body is kept intact and reframed by the new title.
+    async def _regenerate_title_only(
+        self,
+        bad_title: str,
+        content: str,
+        topic: str,
+        existing_titles: List[str],
+        reason: str,
+    ) -> Optional[str]:
+        """
+        Produce a replacement title for a draft whose title (not body) is
+        the problem. Returns the raw title string, or None if the call
+        failed. The caller is responsible for running the result back
+        through generate_display_title() and _reject_if_narrative_title().
+        """
+        excerpt = " ".join(content.split()[:400])
+        existing_hint = "\n".join(f'- "{t}"' for t in existing_titles[:15])
+
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a technical blog editor. You produce ONE replacement "
+                    "title for a given article. Respond with ONLY the title — no "
+                    "quotes, no explanation."
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"The current title is unusable: {reason}.\n\n"
+                    f"Current title: {bad_title!r}\n"
+                    f"Article topic: {topic}\n"
+                    f"Article excerpt (first 400 words): {excerpt}\n\n"
+                    f"Recent titles to avoid duplicating:\n{existing_hint}\n\n"
+                    "Write ONE title that:\n"
+                    "- Is under 55 characters\n"
+                    "- Describes the TOPIC or a CLAIM — not a personal incident\n"
+                    "- Contains NO first-person pronoun (I / we / my / our)\n"
+                    "- Does NOT start with a past-tense action verb "
+                    "(Added, Saved, Cut, Burned, Survived, Killed, Replaced, "
+                    "Dumped, Launched, Grew, Trimmed, Dropped, etc.)\n"
+                    "- Does NOT lead with a specific cost, timespan, or "
+                    "percentage claim presented as a personal result\n"
+                    "- Uses no filler words (Complete, Ultimate, Guide to)\n\n"
+                    "Acceptable shapes: 'Redis caching: what breaks first', "
+                    "'TypeScript strict mode traps', 'Why does my p99 spike "
+                    "after deploy?', 'Stop using cron for retries'.\n\n"
+                    "Respond with ONLY the title text."
+                ),
+            },
+        ]
+        try:
+            raw = await self._call_api_with_fallback(messages, max_tokens=60)
+            return raw.strip().strip('"').strip("'")
+        except Exception as e:
+            print(f"  ⚠️  Title-only regeneration call failed ({e}).")
+            return None
 
     def _parse_bundle_json(self, raw: str) -> dict:
 
@@ -4725,25 +4213,9 @@ Return ONLY the JSON object.""",
             f"Model did not return valid JSON.\nRaw (first 400):\n{raw[:400]}"
         )
 
-    # ─────────────────────────────────────────────────────────────
-    # EXPANSION
-    # ─────────────────────────────────────────────────────────────
-
     async def _repair_anecdotes(
         self, content: str, title: str, topic: str, hits: List[str]
     ) -> Optional[str]:
-        """
-        Targeted, cheap alternative to discarding an entire draft and burning
-        a full topic-switch attempt when _flag_fabricated_anecdotes() finds a
-        small number of unverifiable first-person anecdotes in an otherwise
-        good article. Sends back just the offending sentences and asks the
-        model to rewrite them in place (as typical/common-pattern framing
-        instead of a specific personal incident) while leaving everything
-        else untouched. Returns the repaired content, or None if the repair
-        call failed, was truncated, or dropped too much of the original.
-        Call sites should re-run _flag_fabricated_anecdotes() on the result
-        and only treat this as a success if it comes back clean.
-        """
         quoted = "\n".join(f'- "{h}"' for h in hits[:6])
         messages = [
             {
@@ -4805,16 +4277,6 @@ Return ONLY the JSON object.""",
     async def _repair_near_duplicate(
         self, content: str, title: str, topic: str, dup_reason: str
     ) -> Optional[str]:
-        """
-        Targeted alternative to abandoning the topic entirely when the draft
-        is flagged as a near-duplicate of an already-published post. The
-        topic itself already passed pre-flight (it's not the problem) — it's
-        this specific draft's structure/examples/wording that overlaps too
-        much. Asks the model to substantially restructure the same topic
-        (different angle, different concrete examples/tools/numbers,
-        different opening hook) rather than burning a topic-switch attempt
-        and losing a topic that was otherwise fine.
-        """
         messages = [
             {
                 "role": "system",
@@ -4896,13 +4358,6 @@ Return ONLY the JSON object.""",
                 ),
             },
         ]
-        # FIX: max_tokens was a fixed 6500 regardless of input size. The model
-        # must echo the entire existing_content back before writing new
-        # material, so long posts left too little budget for the 3 new
-        # sections and the completion was cut off mid-sentence / mid-code-
-        # block — confirmed in production posts (e.g. content ending
-        # "log = structlog.get" with no closing fence). Scale the budget to
-        # the input so there's always headroom for a complete response.
         existing_tokens_est = max(1, len(existing_content) // 4)
         budget = min(16000, max(6500, existing_tokens_est + 3500))
         result = await self._call_api_with_fallback(messages, max_tokens=budget)
@@ -4916,10 +4371,6 @@ Return ONLY the JSON object.""",
             return existing_content
         return result
 
-    # ─────────────────────────────────────────────────────────────
-    # LOCAL FALLBACK
-    # ─────────────────────────────────────────────────────────────
-
     def _generate_fallback_post(self, topic: str):
         raise InsufficientContentError(
             f"All API providers failed for topic: '{topic}'. "
@@ -4927,10 +4378,6 @@ Return ONLY the JSON object.""",
             "AdSense approval (Replicated Content violation). "
             "Check your API keys and retry."
         )
-
-    # ─────────────────────────────────────────────────────────────
-    # HELPERS
-    # ─────────────────────────────────────────────────────────────
 
     def _create_slug(self, title: str) -> str:
         slug = title.lower()
@@ -5007,10 +4454,6 @@ Return ONLY the JSON object.""",
                 "Minimum is 1800. This post would harm AdSense approval."
             )
 
-        # ── Fabricated citation / first-person incident gate ────────────
-        # Last line of defense so generate_blog_post(), refresh-stale, and
-        # any future caller cannot persist a draft that invents a named
-        # study or an unverifiable personal incident. Fail closed.
         try:
             claim_result = check_claims(post.content, post.title)
         except Exception as claim_err:
@@ -5022,25 +4465,18 @@ Return ONLY the JSON object.""",
                 f"Refusing to save '{post.title}': " + "; ".join(claim_result.reasons)
             )
 
-        # ── Full-body near-duplicate gate ───────────────────────────────
-        # Runs against every already-published post's actual content, not
-        # just the topic/title that was checked before generation. This is
-        # the last line of defense against the "8+ articles on prompt
-        # injection" problem: two posts can have unrelated-sounding titles
-        # and still land here with near-identical bodies.
-        #
-        # PATCH (dedup hardening round 2): this used to catch ANY exception
-        # here, set is_dup=False, print a console warning, and let the post
-        # publish anyway ("non-fatal"). That meant a single bad post.json
-        # elsewhere in docs/ (bad encoding, truncated JSON, whatever) could
-        # silently disable duplicate protection for every post published
-        # until someone happened to notice the warning in a build log. The
-        # entire point of this gate is to block near-duplicates — a gate
-        # that fails open under error isn't a gate. It now fails CLOSED:
-        # if the check itself can't run, the post is refused rather than
-        # published unprotected. If this is causing false aborts in
-        # practice (e.g. one consistently unreadable legacy post.json),
-        # fix that file rather than loosening this back to fail-open.
+        # CHANGE 3 (defense-in-depth): also refuse to save a post whose
+        # title is a narrative incident claim, even if it somehow slipped
+        # past the earlier gate. This is the last line of defense before
+        # the post hits disk.
+        _narrative_title = _reject_if_narrative_title(post.title)
+        if _narrative_title:
+            raise ValueError(
+                f"Refusing to save '{post.title}': {_narrative_title}. "
+                "Narrative-incident titles are rejected at save time as a "
+                "last line of defense against AdSense Helpful Content flags."
+            )
+
         is_dup, dup_slug, dup_title, dup_score = self.content_duplicate_gate.check(
             title=post.title,
             content=post.content,
@@ -5091,9 +4527,6 @@ Return ONLY the JSON object.""",
         post_data['has_code'] = '```' in post.content
         post_data['has_table'] = '|' in post.content
 
-        # Store the untruncated title separately from the SERP-safe display
-        # title. Falls back to the display title for posts that predate this
-        # field or were constructed without going through generate_post().
         post_data['full_title'] = getattr(post, 'full_title', post.title)
 
         _final_check = validate_title(post.title, post_data['full_title'])
@@ -5137,10 +4570,6 @@ Return ONLY the JSON object.""",
             f"  - has_code={post_data['has_code']} | has_table={post_data['has_table']}")
 
 
-# ─────────────────────────────────────────────────────────────────
-# Custom exception
-# ─────────────────────────────────────────────────────────────────
-
 class InsufficientContentError(Exception):
     """Raised when generate_blog_post exhausts all retry attempts."""
 
@@ -5157,10 +4586,6 @@ class TopicExhaustedError(Exception):
     either try a different topic from the pool or skip today's generation
     slot - never treat it as "proceed anyway"."""
 
-
-# ─────────────────────────────────────────────────────────────────
-# Stale year scrubber
-# ─────────────────────────────────────────────────────────────────
 
 _STALE_YEARS = {"2020", "2021", "2022", "2023", "2024", "2025"}
 
@@ -5243,10 +4668,6 @@ def _scrub_stale_years(text: str) -> str:
     return text
 
 
-# ─────────────────────────────────────────────────────────────────
-# Freshness footer helper (works on dict, used by refresh-stale)
-# ─────────────────────────────────────────────────────────────────
-
 def _inject_freshness_footer_inline(post_data: dict) -> None:
     if not post_data.get('content', ''):
         return
@@ -5260,10 +4681,6 @@ def _inject_freshness_footer_inline(post_data: dict) -> None:
         post_data['content'],
     )
 
-
-# ─────────────────────────────────────────────────────────────────
-# TOPIC PICKER
-# ─────────────────────────────────────────────────────────────────
 
 def pick_next_topic(
     config_path: str = "config.yaml",
@@ -5360,23 +4777,9 @@ def pick_next_topic(
     return topic
 
 
-# ─────────────────────────────────────────────────────────────────
-# CONFIG INITIALISER
-# ─────────────────────────────────────────────────────────────────
-
 def create_sample_config(config_path: str = "config.yaml"):
-    """
-    Safe idempotent init — never overwrites keys the user has already set.
-
-    Behaviour:
-    - First run (no config.yaml): writes the full default config.
-    - Subsequent runs: reads the existing file, adds any MISSING keys,
-      appends any NEW topics not already in the list, then writes back.
-      Every key the user has already customised is left untouched.
-    """
     CONFIG_FILE = config_path
 
-    # ── Load existing config (empty dict on first run) ──────────────────────
     existing: dict = {}
     is_new_file = not os.path.exists(CONFIG_FILE)
     if not is_new_file:
@@ -5391,10 +4794,6 @@ def create_sample_config(config_path: str = "config.yaml"):
             existing = {}
             is_new_file = True
 
-    # ── Scalar defaults (only written when key is absent) ───────────────────
-    # Keys that contain real credentials are intentionally left as empty
-    # strings so a first-run user sees clearly what they need to fill in,
-    # while a returning user never has their live values clobbered.
     SCALAR_DEFAULTS = {
         "site_name":               "Kubai Kevin",
         "site_description": (
@@ -5406,8 +4805,6 @@ def create_sample_config(config_path: str = "config.yaml"):
         "amazon_affiliate_tag":    "aiblogcontent-20",
         "google_analytics_id":     "",
         "google_adsense_id":       "",
-        # Must be the HTML-meta verification token from Search Console
-        # (Settings → Ownership verification → HTML tag), NOT an API key.
         "google_search_console_key": "",
         "hook_style":              "auto",
     }
@@ -5418,7 +4815,6 @@ def create_sample_config(config_path: str = "config.yaml"):
             existing[key] = default
             changed_keys.append(key)
 
-    # ── google_search_console_key: silently clear accidental API keys ────────
     gsc = existing.get("google_search_console_key", "")
     if isinstance(gsc, str) and gsc.startswith("AIza"):
         print(f"  ⚠️  google_search_console_key looks like a Google API key "
@@ -5427,7 +4823,6 @@ def create_sample_config(config_path: str = "config.yaml"):
         existing["google_search_console_key"] = ""
         changed_keys.append("google_search_console_key (cleared bad value)")
 
-    # ── social_accounts: merge sub-keys, never overwrite existing values ─────
     social_defaults = {
         "twitter":  "https://twitter.com/KubaiKevin",
         "linkedin": "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
@@ -5442,35 +4837,14 @@ def create_sample_config(config_path: str = "config.yaml"):
                 existing["social_accounts"][k] = v
                 changed_keys.append(f"social_accounts.{k}")
 
-    # ── adsense_slots: add placeholder block when absent ─────────────────────
     if "adsense_slots" not in existing:
-        existing["adsense_slots"] = {
-            # Uncomment and paste real slot IDs once AdSense approves the site.
-            # "header": "",
-            # "inline": "",
-            # "middle": "",
-            # "footer": "",
-        }
+        existing["adsense_slots"] = {}
         changed_keys.append("adsense_slots")
 
-    config = existing  # alias for clarity below
-    # ── content_topics: append only topics not already present ───────────────
-    # FIX (2026 anecdote-loop incident): this list previously used first-person
-    # "How we/I built/cut/detected..." phrasing throughout. That framing
-    # actively fights _flag_fabricated_anecdotes(), which rejects sentences
-    # opening with "I ", "I've", "I built", "I found", etc. — a topic titled
-    # "How we cut our AI inference bill 68%" all but instructs the model to
-    # narrate a specific, unverifiable first-person case study, so it
-    # regularly failed all MAX_GENERATION_ATTEMPTS and aborted with no post
-    # saved. Every entry below is now phrased in the third-person / comparative
-    # / instructional register ("X vs Y", "why X breaks", "the tradeoffs of
-    # X") that actually satisfies both _flag_fabricated_anecdotes() and
-    # _reject_if_fabricated_citation(), since it asks for documented,
-    # explainable mechanics rather than a personal narrative. Keep new
-    # entries in this style — if a topic can't be answered without inventing
-    # a specific incident, it doesn't belong here.
+    config = existing
+
     NEW_TOPICS = [
-        # ── TRENDING & EMERGING (Late 2026 / 2027) ────────────────────────────────
+        # (same topic list as before — unchanged)
         "MCP in production: the operational costs and security gotchas most teams miss",
         "Why MCP became the dominant agent-tool protocol, and what it changed in agent design",
         "Multi-agent orchestration patterns compared: supervisor, swarm, debate, pipeline",
@@ -5493,8 +4867,6 @@ def create_sample_config(config_path: str = "config.yaml"):
         "World models and physical AI: what they mean for backend engineers in 2026",
         "Purpose-built AI platforms vs general platforms: a 2026 decision framework",
         "Using AI to optimize AI spend: agentic cost management, and where it can backfire",
-
-        # ── AI Engineering & LLMOps (Advanced) ────────────────────────────────────
         "Versioning and rolling back production agents without breaking downstream systems",
         "The hidden latency tax of multi-agent handoffs, and where it can be reduced",
         "Building durable agent workflows that survive restarts, model changes, and network blips",
@@ -5505,16 +4877,12 @@ def create_sample_config(config_path: str = "config.yaml"):
         "Context window management strategies for agents that run for hours or days",
         "Circuit breakers and bulkheads for agent systems: designing for cascade failure",
         "Productionizing 'computer use' style agents without granting dangerous permissions",
-
-        # ── Platform Engineering for AI Teams ─────────────────────────────────────
         "How Internal Developer Platforms are evolving to support AI feature development",
         "The platform abstractions that make agent development faster for engineering teams",
         "Why platform teams building for 2024 developer workflows struggle in an agentic world",
         "Building golden paths for AI features that don't become maintenance nightmares",
         "Measuring platform value when a growing share of 'code' is prompts and agent graphs",
         "Self-service AI tooling layers that let product teams experiment safely",
-
-        # ── Cost, FinOps & Infrastructure for AI Workloads ────────────────────────
         "Token attribution models that make AI spend visible to product and finance teams",
         "Agentic FinOps: the dashboards and alerts that make AI costs visible to leadership",
         "The real cost of always-on vs on-demand agents for a Nairobi-based SaaS",
@@ -5522,24 +4890,18 @@ def create_sample_config(config_path: str = "config.yaml"):
         "FinOps patterns for teams whose biggest variable cost is now LLM tokens, not EC2",
         "Why traditional cloud cost tools struggle once agents make autonomous scaling decisions",
         "Building unit economics for AI features that product and finance teams can both read",
-
-        # ── Observability, Reliability & Incident Response for Agents ─────────────
         "What traditional observability misses when agents enter production",
         "Agent-specific tracing patterns that actually help during incidents",
         "Writing postmortems that account for agent-made decisions, not just human error",
         "Building SLOs for agentic features beyond latency and error rate",
         "Detecting when an agent is 'working' but producing low-quality or harmful output",
         "On-call process changes teams make once agents can create incidents unattended",
-
-        # ── Security, Governance & Compliance for AI Systems ──────────────────────
         "Least-privilege access models for agents that call 30+ internal tools",
         "Prompt and tool injection attacks documented in production, and how teams block them",
         "Building audit trails for agent decisions that satisfy compliance and debugging needs",
         "Why agent identity and authentication is harder than traditional service auth",
         "Red-teaming internal agents without slowing down development velocity",
         "Data residency and sovereign AI constraints for African fintech using global models",
-
-        # ── Africa & Emerging Market Specific AI Engineering ──────────────────────
         "Low-latency agent features for users on intermittent 3G/4G connections in East Africa",
         "The cost and reliability tradeoffs of running agents for users paying via mobile money",
         "Building AI features that tolerate M-Pesa, Paystack, and Flutterwave failure modes",
@@ -5547,39 +4909,26 @@ def create_sample_config(config_path: str = "config.yaml"):
         "Local plus cloud model routing: how teams stay competitive on cost and speed",
         "Offline-capable agent workflows for field agents and last-mile operations in Africa",
         "The regulatory and compliance realities of deploying autonomous agents in African fintech",
-
-        # ── Frontend, DX & Tooling in the Agent Era ───────────────────────────────
         "How Cursor, Claude Code, and Windsurf are changing daily engineering workflows",
         "The developer experience gaps that remain in building and debugging multi-agent systems",
         "Testing and reviewing agent-generated code and workflows at team scale",
         "Building internal tools that help non-AI engineers work safely with agents",
-
-        # ── Career, Leadership & Team Dynamics in AI-Accelerated Teams ────────────
         "How the 'AI Engineer' role has evolved through 2026",
         "The skills that became table stakes for senior engineers once agents reached production",
         "Code review and architecture decisions when large parts of a system are agent-orchestrated",
         "Building healthy team norms around AI tool usage without creating two classes of engineers",
         "Leadership challenges when output velocity rises faster than ownership clarity",
         "How African engineering teams are adapting hiring and onboarding for the agentic era",
-
-        # ── Broader System Design & Architecture Trends ───────────────────────────
         "Event-driven vs agent-driven architectures: when each wins in 2026",
         "How durable execution platforms (Temporal, Inngest, and peers) are reshaping agent workflows",
         "Database and state management patterns that hold up under heavy agent usage",
         "Designing systems that gracefully degrade when an upstream agent or model is slow or wrong",
         "Versioning and evolving agent capabilities without breaking existing integrations",
-
-        # ── Hard Lessons & Troubleshooting ────────────────────────────────────────
         "What happens when an agent follows instructions too literally: documented failure patterns",
         "Why multi-agent research systems quietly degrade over time, and how to catch it",
         "Common MCP server security mistakes that expose internal tools",
         "Recovering from an agent that made thousands of low-value API calls overnight",
         "Evaluation gaps that let subtle model behavior changes slip into production",
-
-        # ── FRESH SUBJECT AREAS (added to reduce Jaccard/TF-IDF collisions ─────
-        # with the heavily-mined agent/MCP/AI-ops/Africa-fintech topics above;
-        # kept in the same third-person / comparative register.
-        # ── Distributed Systems & Data (non-agent) ──
         "Why leader election still breaks in subtle ways on modern cloud networks",
         "ClickHouse vs Postgres for analytics: the tradeoffs that actually matter at scale",
         "Sharding strategies that survive a 10x traffic spike without a rewrite",
@@ -5589,54 +4938,45 @@ def create_sample_config(config_path: str = "config.yaml"):
         "Why read replicas quietly cause more bugs than they fix",
         "DuckDB in production: where an embedded analytics engine replaces a whole data warehouse",
         "The reconciliation engine patterns that keep ledgers and payment providers in sync",
-        # ── API & Protocol Design ────────────────────
         "gRPC vs REST vs GraphQL for internal services: a decision framework past the hype",
         "API versioning strategies that don't turn into a graveyard of v1 endpoints",
         "Designing rate limiters that treat legitimate bursts differently from abuse",
         "What actually breaks when you migrate a public API from REST to GraphQL",
         "HTTP/3 and QUIC in production: what changed for backend teams and what didn't",
         "Webhook delivery systems that survive downstream outages without losing events",
-        # ── Security (General Backend, non-AI) ──────
         "Passkeys and WebAuthn adoption: the rollout mistakes that locked users out",
         "OAuth 2.1 migration notes: what breaks in existing integrations",
         "Supply chain security for a normal backend stack, not just AI models",
         "Secrets rotation at scale without breaking services mid-deploy",
         "The PCI DSS requirements that actually shape how payment systems get architected",
-        # ── Languages & Tooling ──────────────────────
         "Rust for backend services: where the rewrite paid off and where it didn't",
         "Why some teams are moving hot paths from Python to Go, and what they give up",
         "Zig, Rust, and Go for systems programming: a practical 2026 comparison",
         "Debugging techniques that outlast whatever framework or language is trendy",
         "The Terraform patterns that keep infrastructure changes reviewable at scale",
-        # ── Testing & Reliability ────────────────────
         "Property-based testing for financial systems: catching the bugs example tests miss",
         "Contract testing between services: the discipline that prevents integration breakage",
         "Chaos engineering practices that fit a team without a dedicated SRE function",
         "Why flaky tests are a reliability problem, not a testing inconvenience",
         "Building a staging environment that actually catches production-only bugs",
-        # ── Payments & Fintech Engineering (non-agent angle) ──
         "ISO 20022 messaging in practice: what it changes for teams building payment rails",
         "Open banking APIs across markets: the integration differences nobody warns you about",
         "Fraud detection systems architecture: rules engines, scoring, and where they intersect",
         "Settlement and clearing systems explained for backend engineers who've never touched them",
         "Currency conversion edge cases that quietly corrupt financial reports",
-        # ── Career & Craft (non-AI framing) ──────────
         "Technical interview loops that actually predict on-the-job performance",
         "Writing engineering documentation that survives the person who wrote it leaving",
         "The code review habits that separate senior engineers from everyone else",
         "Negotiating a remote engineering offer when the recruiter won't share a band",
         "What actually gets a portfolio project noticed by hiring managers in 2026",
-        # ── Architecture & Systems Design ────────────
         "Monolith to microservices: the signals that mean it's actually time to split",
         "CQRS in practice: the projects where it earned its complexity and the ones where it didn't",
         "Feature flag systems that don't turn into unmanageable spaghetti after a year",
         "Designing background job queues that handle poison messages gracefully",
         "The outbox pattern explained: solving dual writes without distributed transactions",
-        # ── Web Performance & Frontend Infra ─────────
         "Core Web Vitals in 2026: what actually moves the needle versus what's cargo cult",
         "Edge caching strategies that cut latency without serving stale financial data",
         "Bundling and code-splitting decisions that still matter with modern frameworks",
-        # ── Team Process & Leadership ─────────────────
         "Running a blameless postmortem process that people actually participate in",
         "The on-call rotation structures that don't burn out a small engineering team",
         "How engineering managers should evaluate output when velocity is hard to measure",
@@ -5655,7 +4995,6 @@ def create_sample_config(config_path: str = "config.yaml"):
             f"{len(existing_topics)} preserved)"
         )
 
-    # ── Write back ───────────────────────────────────────────────────────────
     with open(CONFIG_FILE, "w", encoding="utf-8") as _f:
         yaml.dump(config, _f, default_flow_style=False,
                   indent=2, allow_unicode=True)
@@ -5674,11 +5013,6 @@ def create_sample_config(config_path: str = "config.yaml"):
         "OPENROUTER_API_KEY, GEMINI_API_KEY, HF_TOKEN, NVIDIA_API_KEY, "
         "MISTRAL_API_KEY, ZAI_API_KEY, LLM7_API_KEY (optional — anonymous fallback works)"
     )
-
-
-# ─────────────────────────────────────────────────────────────────
-# CLI ENTRY POINT
-# ─────────────────────────────────────────────────────────────────
 
 
 if __name__ == "__main__":
@@ -5707,26 +5041,6 @@ if __name__ == "__main__":
             with open("config.yaml", "r") as f:
                 config = yaml.safe_load(f)
 
-            # ── Velocity gate ──────────────────────────────────────────
-            # FIX (found in review, 2026): VelocityController exists, is
-            # fully documented ("HOW TO INTEGRATE... BEFORE calling
-            # generate_blog_post()"), and is wired into a *manual*
-            # `velocity status`/`velocity reset` CLI command — but was
-            # never actually called from the one place that matters: this
-            # `auto` entry point, which is what a scheduled GitHub Action
-            # runs unattended. Without this check, nothing stops `auto`
-            # from being triggered more times in a day than the age-based
-            # cap allows (e.g. a manual re-run, a workflow_dispatch storm,
-            # or a misconfigured cron), which is precisely the "10 posts
-            # in 10 minutes looks like a content farm" signal this module
-            # was built to prevent.
-            #
-            # VelocityController derives today's count and domain age LIVE
-            # from docs/*/post.json created_at fields — it does not persist
-            # a counter file. This means the check here is self-healing on
-            # every fresh GitHub Actions checkout, and can never drift from
-            # what's actually published. See velocity_controller.py's module
-            # docstring for the full rationale.
             vc = VelocityController()
             if not vc.can_publish():
                 print("\n" + "═" * 68)
@@ -5740,7 +5054,7 @@ if __name__ == "__main__":
                     "           for details, or set PUBLISH_DAILY_LIMIT to override."
                 )
                 print("═" * 68 + "\n")
-                sys.exit(0)  # not a failure — clean exit, Action shows green
+                sys.exit(0)
 
             blog_system = BlogSystem(config)
 
@@ -5754,16 +5068,6 @@ if __name__ == "__main__":
                 traceback.print_exc()
                 sys.exit(1)
 
-            # ── Outer duplicate-regeneration loop ───────────────────────────
-            # generate_blog_post() already retries internally (across up to
-            # MAX_GENERATION_ATTEMPTS topics) for bundle failures and short
-            # content. But a post can also fail AFTER it's fully written and
-            # post-processed — SimilarityGuard's topic-key/body check, or the
-            # save_post()-time ContentDuplicateGate — because both of those
-            # only have something to compare once the article exists. This
-            # loop catches exactly that case: throw the blocked draft away,
-            # pick a fresh topic, and generate a whole new post, up to
-            # MAX_DUPLICATE_REGENERATION_ATTEMPTS times, before giving up.
             attempted_topics: List[str] = []
             guard = None
             blog_post = None
@@ -5776,10 +5080,6 @@ if __name__ == "__main__":
                         blog_system.generate_blog_post(topic))
 
                 except TopicExhaustedError as e:
-                    # Not a pipeline failure - this is the dedup gate working as
-                    # intended. Exit 0 so the scheduled Action doesn't show red
-                    # every time the topic pool is temporarily saturated, but
-                    # print loudly so it's visible in the run log.
                     print("\n" + "═" * 68)
                     print(
                         "⏭️   NO POST PUBLISHED TODAY — every candidate topic was a duplicate")
@@ -5815,27 +5115,11 @@ if __name__ == "__main__":
                 dup_detected = False
                 dup_reason = ""
 
-                # Quality validation runs FIRST, per similarity_guard.py's own
-                # "HOW TO INTEGRATE" docstring (call SimilarityGuard *after*
-                # _validate_content_quality()) — hard failures are a cheap,
-                # local check and should reject obviously broken content
-                # before we spend time building/querying the similarity index.
                 quality_warnings, hard_failures = _validate_content_quality(
                     blog_post.content, blog_post.title
                 )
 
                 if hard_failures:
-                    # FIX (found in review, 2026): this used to sys.exit(1)
-                    # the entire run on any hard failure, including false
-                    # positives from checks like the version-pin detector
-                    # (see its FIX note above) — so one draft failing one
-                    # narrow regex meant NO post published that day, even
-                    # though the topic pool had other candidates. The
-                    # duplicate-content path a few lines below already
-                    # retries with a new topic instead of aborting; hard
-                    # quality failures now follow the same pattern rather
-                    # than being treated more harshly than an actual
-                    # duplicate.
                     print(f"\n🛑  HARD QUALITY FAILURES — draft discarded:")
                     for failure in hard_failures:
                         print(f"   ✗ {failure}")
@@ -5870,13 +5154,6 @@ if __name__ == "__main__":
                 else:
                     print("✅  Content quality check passed (0 warnings).")
 
-                # ── Duplicate gate 1: SimilarityGuard (fail-closed) ─────
-                # similarity_guard.py's own docstring is explicit that a
-                # raised exception here MUST be treated as a hard failure,
-                # not swallowed as non-fatal. Silently publishing when this
-                # gate errors defeats its purpose — the entire point is
-                # duplicate-content protection, and a gate that fails open
-                # under error isn't a gate.
                 try:
                     guard = SimilarityGuard(docs_dir=blog_system.output_dir)
                     sim_result = guard.check(blog_post)
@@ -5896,20 +5173,6 @@ if __name__ == "__main__":
                           "error above before re-running.")
                     sys.exit(1)
 
-                # ── Duplicate gate 2: topic_dedup title-key (fail-closed) ─
-                # SECOND, INDEPENDENT duplicate gate (found in review, 2026):
-                # SimilarityGuard's topic-key score is measured on body text
-                # and, run against this site's live 501-post corpus, tops
-                # out at 30% pairwise (median 2%) — under even its own 35%
-                # WARN threshold — because this generator paraphrases too
-                # aggressively at the sentence level for word-overlap to
-                # survive. Confirmed real duplicates (e.g. "AI rollouts:
-                # feature flags in 2026" vs "AI rollouts live or die by
-                # flags") slip through as a result. topic_dedup.py scores
-                # TITLE keywords instead, which the paraphrasing doesn't
-                # touch, and catches exactly the pairs SimilarityGuard
-                # misses. Same fail-closed contract as SimilarityGuard —
-                # a duplicate topic is disqualifying, not a warning.
                 if not dup_detected:
                     try:
                         topic_dup = check_topic_duplicate(
@@ -5926,10 +5189,6 @@ if __name__ == "__main__":
                                 f"(/{topic_dup['slug']}/)"
                             )
                     except Exception as topic_err:
-                        # Same fail-closed contract as SimilarityGuard above —
-                        # this is a duplicate-content gate, not a cosmetic
-                        # check, so an error here must abort rather than
-                        # silently let a duplicate through.
                         print(f"\n🛑  topic_dedup raised an error — aborting "
                               f"per its fail-closed contract: {topic_err}")
                         import traceback
@@ -5942,10 +5201,6 @@ if __name__ == "__main__":
                     inject_eeat_signals(blog_post, topic)
                     inject_freshness_footer(blog_post)
 
-                    # Claim gate MUST run after intro/footer injection.
-                    # inject_personal_intro() can prepend first-person
-                    # hooks; running the gate only on the raw LLM draft
-                    # would let those sentences publish.
                     try:
                         claim_result = check_claims(
                             blog_post.content, blog_post.title
@@ -6019,18 +5274,13 @@ if __name__ == "__main__":
 
                     try:
                         blog_system.save_post(blog_post)
-                        # Record the publish AFTER save_post() succeeds, not
-                        # before — matches VelocityController's own
-                        # documented contract ("to avoid counting failed
-                        # attempts"). A duplicate-content rejection below
-                        # must not count against today's quota.
                         vc.record_publish()
                     except DuplicateContentError as e:
                         dup_detected = True
                         dup_reason = f"DUPLICATE CONTENT: {e}"
 
                 if not dup_detected:
-                    break  # success — fall through to publishing steps below
+                    break
 
                 print("\n" + "═" * 68)
                 print("🔁  DUPLICATE DETECTED — DISCARDING DRAFT AND REGENERATING")
@@ -6058,7 +5308,6 @@ if __name__ == "__main__":
                     f"{MAX_DUPLICATE_REGENERATION_ATTEMPTS} with new topic: '{topic}'"
                 )
                 print("═" * 68 + "\n")
-                # loop continues with the new topic
 
             try:
                 generate_og_card(
@@ -6143,7 +5392,6 @@ if __name__ == "__main__":
 
             if not success:
                 print("⚠️  WARNING: OG image generation had issues (non-fatal)")
-                # Continue anyway - OG generation is optional but recommended
 
         elif mode == "cleanup":
             if not os.path.exists("config.yaml"):
@@ -6160,7 +5408,6 @@ if __name__ == "__main__":
 
             if not success:
                 print("⚠️  WARNING: OG image generation had issues (non-fatal)")
-                # Continue anyway - OG generation is optional but recommended
 
         elif mode == "audit":
             if not os.path.exists("config.yaml"):
@@ -6282,8 +5529,6 @@ if __name__ == "__main__":
                     if needs_fix:
                         if desc and len(desc) > 155 and not any(
                                 desc.lower().startswith(w) for w in _weak_openers):
-                            # Good description, just too long -- trim it,
-                            # don't discard it and derive something generic.
                             fixed_desc = _truncate_description(desc, 155)
                             reason = "too long"
                         else:
@@ -6322,10 +5567,6 @@ if __name__ == "__main__":
                         data = json.load(f)
                     checked += 1
                     current_title = data.get("title", "")
-                    # If full_title is missing (pre-dates this field), assume
-                    # the stored title IS the full title — we can't recover
-                    # what was truncated away, but we can still stop it from
-                    # being mangled further and flag it for manual review.
                     stored_full_title = data.get("full_title", current_title)
                     result = validate_title(current_title, stored_full_title)
 
@@ -6443,16 +5684,6 @@ if __name__ == "__main__":
                 print(
                     f"Today: {vc.today_count()}/{vc.effective_limit()} posts published")
             elif subcmd == "reset":
-                # FIX (found in review, 2026): there is no longer a separate
-                # counter file to delete — today_count()/domain age are
-                # derived live from docs/*/post.json created_at fields (see
-                # velocity_controller.py module docstring). "Resetting" the
-                # count would mean deleting today's actual published posts,
-                # which this command should never do silently. Left as an
-                # explicit no-op with an explanation rather than removing
-                # the subcommand outright, so existing scripts/habits that
-                # call `velocity reset` get a clear answer instead of a
-                # confusing "unknown command" error.
                 print(
                     "Nothing to reset: the publish count is derived live from "
                     "docs/*/post.json, not a separate counter file. "

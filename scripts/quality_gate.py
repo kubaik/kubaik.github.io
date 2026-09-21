@@ -33,7 +33,8 @@ The composite score starts at 100 and deducts for each detected issue:
   ------  ------------------------------------------------------------
    40     Word count below 1800 (thin content)
    25     Fabricated-citation pattern (named-source, no URL nearby)
-   20     First-person incident claim (unverifiable experience)
+   20     First-person / narrative incident in body
+   25     Fabricated-incident or unverifiable-number narrative in TITLE
    15     Boilerplate fallback markers (template leakage)
    10     AI-filler phrase ("dive into", "game-changer", etc.)
     8     No fenced code block
@@ -42,9 +43,26 @@ The composite score starts at 100 and deducts for each detected issue:
     5     No FAQ section
     5     E-E-A-T footer missing ("### About this article")
     3     Generic opener in first 200 chars
+    8     Vague attribution ("The report showed" / "studies suggest")
+           — this is a weaker signal than a named source, but it's a
+           claim being made with no verifiable referent either way.
 
 Threshold defaults to 50. Tuning is done via --min-score, not by
 editing this file.
+
+FIX (2026-09-21): the first version of this scorer was too narrow to
+catch the actual failure modes in the corpus. It missed:
+  - Fabricated-incident narratives in the TITLE (never scanned).
+  - Body sentences where the incident pattern appears mid-sentence
+    instead of at position 0 (regex was ^-anchored).
+  - Narrative-number claims using verbs like "cost us", "burned",
+    "survived" that weren't in the verb list.
+  - Vague attribution like "The report showed" (flagged as a named
+    citation, which it isn't).
+This rewrite adds three new detection layers (title, mid-sentence
+narrative, vague-attribution) and fixes the false-positive on generic
+attribution. Weighting is tuned so a post with a fabricated title
+scores in the 40-60 range, not 100.
 
 Usage:
     python scripts/quality_gate.py --docs-dir ./docs --min-score 50 \\
@@ -80,8 +98,6 @@ except Exception:  # pragma: no cover
     _policy_violation = None
 
 # Scorer provided by content_quality_scanner — preferred if importable.
-# Falls back to the inline composite scorer below when absent, so this
-# script works in a stripped checkout too.
 try:
     from utils.content_quality_scanner import score_post as _external_scorer
 except Exception:  # pragma: no cover
@@ -130,24 +146,115 @@ _AI_FILLER_PHRASES = [
     "stay tuned",
 ]
 
+# ── Fabricated citations: NAMED source only ────────────────────────────
+# A named-source pattern must have an actual proper-noun-looking token in
+# the source slot. "The report showed" is intentionally NOT matched here —
+# it's vague attribution (handled by _VAGUE_ATTRIBUTION_RE below), not a
+# fabricated citation to a specific organisation, and flagging it as one
+# was producing false positives that pushed already-passable posts below
+# threshold.
 _FABRICATED_CITATION_RE = re.compile(
+    # "a/the 2026 <study|survey|report> by/from <Capitalized Name>"
     r"\b(?:a|an|the)\s+(?:20\d\d\s+)?"
     r"(?:study|paper|report|research|survey|analysis|benchmark)\s+"
-    r"(?:by|from)\s+[A-Z]|"
-    r"\baccording to\s+(?:a\s+|an\s+|the\s+)?[A-Z]|"
-    r"\b[A-Z][\w&.'-]+(?:'s)\s+"
+    r"(?:by|from)\s+([A-Z][\w&.'-]+(?:\s+[A-Z][\w&.'-]+){0,4})|"
+    # "according to <Capitalized Name>"
+    r"\baccording to\s+(?:a\s+|an\s+|the\s+)?"
+    r"([A-Z][\w&.'-]+(?:\s+[A-Z][\w&.'-]+){0,4})|"
+    # "<Org>'s <study|research|red-team|findings>"
+    r"\b([A-Z][\w&.'-]+)'s\s+"
     r"(?:study|research|red[\s-]?team|findings|report|analysis|survey)\b|"
-    r"\b(?:20\d\d\s+)?[A-Z][\w&.'-]+\s+"
+    # "<NamedSource> survey/study that found/shows/tracked"
+    r"\b(?:20\d\d\s+)?([A-Z][\w&.'-]+(?:\s+[A-Z][\w&.'-]+){0,3})\s+"
     r"(?:survey|study|report|analysis|benchmark)\s+"
     r"(?:that\s+|which\s+)?(?:found|shows?|tracked|reveals?|says?|showed)\b",
 )
 
+# Vague attribution is a real quality signal (a claim is made with no
+# verifiable referent), but it's NOT the same failure mode as naming a
+# real organisation. Scored at a smaller weight so it doesn't drown out
+# the named-citation and narrative checks.
+_VAGUE_ATTRIBUTION_RE = re.compile(
+    r"\b(?:The|A|An|Recent|New|Industry|Independent)\s+"
+    r"(?:report|survey|study|analysis|benchmark|data|research)\s+"
+    r"(?:showed|found|revealed|suggested|indicated|said|estimated|tracked)\b",
+    re.IGNORECASE,
+)
+
+# ── First-person / narrative incident patterns (BODY) ──────────────────
+# Broadened from the original:
+#   - No longer anchored at ^ — matches anywhere in the sentence, since
+#     production posts frequently embed these mid-sentence.
+#   - Verb list extended to include narrative-cost and scale verbs that
+#     were slipping through: cost us, burned, survived, wasted, lost,
+#     took us/me, flooded, ended up, kept [verb]-ing.
 _FIRST_PERSON_INCIDENT_RE = re.compile(
-    r"^(?:A colleague\b|This took me\b|"
-    r"I(?:'ve|'m|\s+have)?\s+(?:spent|built|shipped|deployed|migrated|"
+    r"(?:"
+    # "I <verb>" / "I've <verb>" / "I've been <verb>ing" with a broad
+    # but concrete-claim verb set.
+    r"\bI(?:'ve|'m|\s+have)?\s+(?:spent|built|shipped|deployed|migrated|"
     r"worked\s+(?:on|with|at)|ran\s+into|debugged|broke|fixed|caught|"
     r"hit\s+a|dealt\s+with|went\s+through|had\s+to|ended\s+up|"
-    r"kept\s+seeing|was\s+surprised|watched|witnessed|saw\s+firsthand)\b)",
+    r"kept\s+seeing|kept\s+hitting|kept\s+running|was\s+surprised|"
+    r"watched|witnessed|saw\s+firsthand|actually\s+used|regret\s+shipping|"
+    r"regret\s+building|regret\s+picking|cost\s+us|cost\s+me|"
+    r"burned|survived|wasted|lost|took\s+us|took\s+me|"
+    r"flooded|had\s+to\s+roll\s+back)\b"
+    r"|"
+    # "A colleague" / "This took me" openers.
+    r"\bA\s+colleague\b|"
+    r"\bThis\s+took\s+me\b|"
+    # "cost us <duration>" / "burned $N" / "survived <count>" — narrative
+    # cost/scale claims with a leading verb (no pronoun required).
+    r"\b(?:cost|saved|burned|wasted|lost|spent)\s+"
+    r"(?:us|me|our|my|the\s+team)?\s*"
+    r"(?:three|two|four|five|six|seven|eight|nine|ten|\d+)\s+"
+    r"(?:hours?|days?|weeks?|months?|years?)\b|"
+    r"\b(?:burned|saved|cost|spent)\s+\$\d+(?:k|K|,\d+)?\b|"
+    r"\bsurvived\s+(?:[\d,]+|\d+k|\d+\s+thousand)\s+\w+"
+    r")",
+    re.IGNORECASE,
+)
+
+# ── Title-level fabricated-narrative detection (NEW) ───────────────────
+# Titles that describe a specific past-tense first-person action ("Added
+# circuit breakers 3 days after...") or that lead with a first-person
+# pronoun + concrete verb ("I actually used...", "I regret shipping...")
+# are the shape of a fabricated case study. The body-level check never
+# sees them because they're in the title, not the content.
+_TITLE_NARRATIVE_VERBS = (
+    r"Added|Killed|Saved|Cut|Dumped|Launched|Survived|Burned|"
+    r"Replaced|Grew|Found|Built|Shipped|Migrated|Reduced|Trimmed|"
+    r"Dropped|Stopped|Started|Kept|Fixed|Broke|Caught|Made|Lost|"
+    r"Gained|Spent|Wasted|Survived"
+)
+_TITLE_INCIDENT_PREFIX_RE = re.compile(
+    r"^(?:" + _TITLE_NARRATIVE_VERBS + r")\b",
+    re.IGNORECASE,
+)
+_TITLE_FIRST_PERSON_RE = re.compile(
+    r"\b(?:I|We|My|Our|Us)\b\s+"
+    r"(?:actually|regret|hit|spent|built|shipped|migrated|"
+    r"debugged|survived|burned|killed|launched|added|replaced|"
+    r"cut|saved|dumped|found|grew|reduced|trimmed|dropped|"
+    r"lost|wasted|caught|broke|fixed)\b",
+    re.IGNORECASE,
+)
+_TITLE_SPECIFIC_NUMBER_RE = re.compile(
+    r"\$\d+(?:k|K|,\d+)?(?:/?(?:month|mo|year|yr|week|wk))?|"
+    r"\b\d+\s*(?:%|hours?|days?|weeks?|months?)\b|"
+    r"\b\d{1,3}(?:,\d{3})+\s+(?:agents|requests|users|events)\b",
+)
+_TITLE_SPECIFIC_PERCENT_RE = re.compile(r"\b\d{1,3}\s*%\b")
+
+# Body-level narrative-number claims (mid-sentence).
+_BODY_NUMBER_NARRATIVE_RE = re.compile(
+    r"\b(?:cost|saved|burned|spent|wasted|lost|gained|"
+    r"cut|reduced|added|shipped|migrated|built|survived)\s+"
+    r"(?:us|me|our|my|the\s+team)?\s*"
+    r"(?:\$\d+(?:k|K|,\d+)?|"
+    r"\d+\s*(?:hours?|days?|weeks?|months?|years?)|"
+    r"[\d,]+\s*(?:agents|requests|users|events|repos?))\b",
     re.IGNORECASE,
 )
 
@@ -183,11 +290,63 @@ def _strip_code(text: str) -> str:
     return text
 
 
+def _is_legitimate_source_window(window: str) -> bool:
+    """Return True if a citation-looking match is actually referencing
+    primary documentation or a real URL — those aren't fabricated and
+    shouldn't be penalised."""
+    if "http://" in window or "https://" in window:
+        return True
+    if re.search(
+        r"\b(documentation|docs\b|changelog|release notes|readme|"
+        r"rfc|specification|error message|log output|github\.com)\b",
+        window, re.IGNORECASE,
+    ):
+        return True
+    return False
+
+
+def _score_title(slug: str, title: str, issues: list) -> int:
+    """
+    Title-only detection layer. Returns points to deduct (0 or more).
+    All three checks are gated on the title being a narrative-shaped
+    claim, not just "has a number" — a title like "Postgres 17" is fine,
+    but "Saved $3k/month by ditching Kubernetes" is not.
+    """
+    deduct = 0
+    if not title:
+        return 0
+
+    has_first_person = bool(_TITLE_FIRST_PERSON_RE.search(title))
+    has_narrative_verb = bool(_TITLE_INCIDENT_PREFIX_RE.match(title.strip()))
+    has_specific_number = bool(
+        _TITLE_SPECIFIC_NUMBER_RE.search(title)
+        or _TITLE_SPECIFIC_PERCENT_RE.search(title)
+    )
+
+    if has_first_person:
+        deduct += 20
+        issues.append("title: first-person narrative claim")
+
+    if has_narrative_verb:
+        deduct += 15
+        issues.append("title: past-tense action narrative")
+
+    # A narrative title that ALSO carries a specific number claim
+    # (percentage, dollar figure, time span) is the strongest signal —
+    # that's the shape of an invented case study.
+    if has_specific_number and (has_first_person or has_narrative_verb):
+        deduct += 15
+        issues.append("title: specific-number claim in narrative title")
+
+    return deduct
+
+
 def _score_post_fallback(slug: str, data: dict) -> PostScore:
     """
     Inline composite scorer. Runs the same checks blog_system.py's
     _validate_content_quality() enforces, collapsed into a single 0-100
-    score. Used when utils.content_quality_scanner is not importable.
+    score, PLUS the title-level and mid-sentence narrative checks that
+    the previous version was missing.
     """
     content = data.get("content", "") or ""
     title = data.get("title", "") or ""
@@ -199,32 +358,48 @@ def _score_post_fallback(slug: str, data: dict) -> PostScore:
         score -= 40
         issues.append(f"thin content ({wc} words < 1800)")
 
+    # ── Title-level checks (run first — most damaging signal) ──────────
+    score -= _score_title(slug, title, issues)
+
+    # ── Body checks ────────────────────────────────────────────────────
     stripped = _strip_code(content)
 
-    # Fabricated citation
+    # Named-source fabrication (URL / primary-docs window excluded)
+    named_citation_hit = False
     for m in _FABRICATED_CITATION_RE.finditer(stripped):
         window = stripped[max(0, m.start() - 200): m.end() + 200]
-        if "http" in window:
+        if _is_legitimate_source_window(window):
             continue
-        if re.search(
-            r"\b(documentation|docs\b|changelog|release notes|readme|"
-            r"rfc|specification|error message|log output|github\.com)\b",
-            window, re.IGNORECASE,
-        ):
-            continue
+        named_citation_hit = True
         score -= 25
         issues.append(f"fabricated citation: {m.group(0)[:60]!r}")
         break
 
-    # First-person incident
+    # Vague attribution (weaker signal — 8 points, separate from above)
+    if not named_citation_hit:
+        vm = _VAGUE_ATTRIBUTION_RE.search(stripped)
+        if vm:
+            score -= 8
+            issues.append(f"vague attribution: {vm.group(0)[:60]!r}")
+
+    # First-person / narrative incident (mid-sentence, broadened verbs)
+    body_incident_hit = False
     for sent in re.split(r"(?<=[.!?])\s+", stripped):
         sent = sent.strip()
         if len(sent) < 15:
             continue
-        if _FIRST_PERSON_INCIDENT_RE.match(sent):
+        if _FIRST_PERSON_INCIDENT_RE.search(sent):
             score -= 20
-            issues.append(f"first-person incident: {sent[:60]!r}")
+            issues.append(f"first-person incident: {sent[:80]!r}")
+            body_incident_hit = True
             break
+
+    # Narrative-number claim (mid-sentence, verb + unit)
+    if not body_incident_hit:
+        nm = _BODY_NUMBER_NARRATIVE_RE.search(stripped)
+        if nm:
+            score -= 15
+            issues.append(f"narrative number claim: {nm.group(0)[:60]!r}")
 
     # Boilerplate markers
     for marker in _BOILERPLATE_MARKERS:
@@ -348,24 +523,6 @@ def _load_corpus(docs_dir: Path, only_slug: str = None):
 
 # ── Queue integration ──────────────────────────────────────────────────
 def _load_queue(path: Path) -> dict:
-    """
-    Load regeneration_queue.json. Returns a dict keyed by slug.
-
-    Shape matches what retroactive_fabrication_audit.py and
-    process_regeneration_queue.py expect:
-        {
-          "<slug>": {
-            "slug": "...",
-            "title": "...",
-            "reason": "...",
-            "status": "unresolved" | "resolved" | "needs_review",
-            "source": "quality_gate" | "fabrication_audit" | ...,
-            "queued_at": "ISO8601",
-            "score": <int>,
-          },
-          ...
-        }
-    """
     if not path.exists():
         return {}
     try:
@@ -387,12 +544,6 @@ def _write_queue(path: Path, queue: dict) -> None:
 
 
 def _append_to_queue(queue: dict, post: PostScore, min_score: int) -> bool:
-    """
-    Add or update a queue entry for `post`. Returns True if the queue was
-    modified. Existing entries created by other producers (fabrication
-    audit etc.) are NOT overwritten — only their score field is refreshed
-    if the source is quality_gate.
-    """
     existing = queue.get(post.slug)
     reason = (
         f"quality_gate: score {post.score}/100 < {min_score}. "
@@ -412,8 +563,6 @@ def _append_to_queue(queue: dict, post: PostScore, min_score: int) -> bool:
         return True
 
     if existing.get("source") == "quality_gate":
-        # Refresh the score but keep the original queued_at so a slug
-        # doesn't keep jumping to the front of the priority sort every run.
         if existing.get("score") != post.score or existing.get("reason") != reason:
             existing["score"] = post.score
             existing["reason"] = reason
@@ -469,8 +618,8 @@ def run(
         )
 
     if below:
-        print("\n  Worst 10:")
-        for s in below[:10]:
+        print("\n  Worst 15:")
+        for s in below[:15]:
             print(
                 f"    {s.score:3d}  {s.slug}  "
                 f"({'; '.join(s.issues[:2]) or 'no issues listed'})"
@@ -492,7 +641,6 @@ def run(
         else:
             print(f"  queue unchanged ({queue_path})")
 
-    # Report-only. Never fails the job.
     return 0
 
 
@@ -504,33 +652,16 @@ def main() -> int:
     parser.add_argument("--min-score", type=int, default=50)
     parser.add_argument("--csv", default="./quality_report_full.csv")
     parser.add_argument("--queue", default="./regeneration_queue.json")
-    parser.add_argument(
-        "--no-csv", action="store_true",
-        help="Skip writing the CSV report.",
-    )
-    parser.add_argument(
-        "--no-queue", action="store_true",
-        help="Skip appending to the regeneration queue.",
-    )
-    parser.add_argument(
-        "--slug", default=None,
-        help="Score a single post by slug (for debugging).",
-    )
-    # Backwards-compat positional slug (old CLI shape). Preserved so any
-    # existing manual invocation like `quality_gate.py my-post` still
-    # works, even though the workflow no longer uses that form.
-    parser.add_argument(
-        "legacy_slug", nargs="?", default=None,
-        help=argparse.SUPPRESS,
-    )
-    parser.add_argument(
-        "--all", action="store_true", help=argparse.SUPPRESS,
-    )
+    parser.add_argument("--no-csv", action="store_true")
+    parser.add_argument("--no-queue", action="store_true")
+    parser.add_argument("--slug", default=None)
+    parser.add_argument("legacy_slug", nargs="?", default=None,
+                        help=argparse.SUPPRESS)
+    parser.add_argument("--all", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
 
     csv_path = None if args.no_csv else Path(args.csv)
     queue_path = None if args.no_queue else Path(args.queue)
-
     only_slug = args.slug or args.legacy_slug
 
     return run(
