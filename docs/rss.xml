@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Sep 2026 14:29:26 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2026 11:34:31 +0000</lastBuildDate>
+    <item>
+      <title>CQRS: when it pays off and when it breaks</title>
+      <link>https://kubaik.github.io/cqrs-when-it-pays-off-and-when-it-breaks/</link>
+      <description>CQRS adds eventual consistency and projection lag. Learn the specific errors that mean it&amp;#x27;s overkill, and when a read replica beats it.</description>
+      <pubDate>Mon, 21 Sep 2026 11:34:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/cqrs-when-it-pays-off-and-when-it-breaks/</guid>
+    </item>
     <item>
       <title>Rust rewrites: where they pay off, where they don&apos;t</title>
       <link>https://kubaik.github.io/rust-rewrites-where-they-pay-off-where-they-dont/</link>
@@ -138,13 +145,6 @@
       <description>Spot vs on-demand GPU instances for AI experiments: the $8k/month crossover, checkpoint interval math, and the resume bug that silently corrupts results.</description>
       <pubDate>Fri, 18 Sep 2026 13:01:40 +0000</pubDate>
       <guid>https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/</guid>
-    </item>
-    <item>
-      <title>Local LLM agents: vLLM vs Ollama for fintech</title>
-      <link>https://kubaik.github.io/local-llm-agents-vllm-vs-ollama-for-fintech/</link>
-      <description>vLLM vs Ollama for local fintech LLM agents: concurrency limits, guided JSON, and the p95 latency number that decides which serving stack you actually…</description>
-      <pubDate>Fri, 18 Sep 2026 12:42:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/local-llm-agents-vllm-vs-ollama-for-fintech/</guid>
     </item>
   </channel>
 </rss>

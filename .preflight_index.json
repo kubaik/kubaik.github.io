@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T10:01:52.979103",
+  "built_at": "2026-09-21T11:34:07.826444",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5310,6 +5310,11 @@
       "slug": "rust-rewrites-where-they-pay-off-where-they-dont",
       "title": "Rust rewrites: where they pay off, where they don't",
       "summary": "The workaround gets copy-pasted forward long after the original reason is forgotten. The rust backend advice that circulates internally rarely matches what's in the public docs. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what producti"
+    },
+    {
+      "slug": "cqrs-when-it-pays-off-and-when-it-breaks",
+      "title": "CQRS: when it pays off and when it breaks",
+      "summary": "Most reconciliation engine writeups assume the reader has already made the mistake they're warning about. Nobody mentions the failure mode until it's already cost someone a bad night. This is the version of the write-up that includes the part that broke. The error and why it's confusing You've proba"
     }
   ]
 }

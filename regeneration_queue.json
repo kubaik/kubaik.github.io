@@ -175,45 +175,11 @@
     "status": "needs_review"
   },
   {
-    "slug": "self-healing-ai-agents-vs-rule-based-ops-40-fewer",
-    "title": "Self-healing AI agents vs rule-based ops: 40% fewer",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same built selfhealing mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three weeks debugging that agent before I realized it was using a derive",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ship-faster-with-a-paved-road-4-weeks-to-80-less-toil",
-    "title": "Ship faster with a paved road: 4 weeks to 80% less toil",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I still remember the day a junior engineer opened a ticket titled “My app works ; I thought the team would rebel.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "supervisor-vs-swarm-vs-debate-vs-pipeline",
-    "title": "Supervisor vs swarm vs debate vs pipeline",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I learned this the hard way when a single   from an external API triggered 8,000; I once watched a supervisor burn through 1,200 restarts in 20 minutes because th; I tested a swarm of 12 agents processing 5,000 requests per second.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "tool-calls-under-load-async-batch-vs-fire-and-forget",
-    "title": "Tool calls under load: async batch vs fire-and-forget",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same toolcalling patterns mistake in multiple production codebases; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into a nasty edge case when we set the batch size to 200 in Scenario 1.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "treat-every-user-input-as-hostile-in-2026",
-    "title": "Treat every user input as hostile in 2026",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about detect prompt during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I spent two weeks debugging a support bot that kept leaking internal docs becaus",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "zero-trust-mcp-servers-auth-trap-youll-hit-first",
     "title": "Zero-trust MCP servers: auth trap you’ll hit first",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I once inherited a system where the MCP server ran as the same user as the agent; I had to write custom OPA rules that map SPIFFE IDs to a set of allowed operatio",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "3-mistakes-that-break-deployments-for-everyone",
@@ -226,25 +192,29 @@
     "slug": "7-patterns-for-systems-that-stay-up-when-everything",
     "title": "7 patterns for systems that stay up when everything",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this building eventual problem while migrating a service under a hard; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "7-patterns-for-systems-that-wont-die-when-networks",
     "title": "7 patterns for systems that won’t die when networks",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this building eventual problem while migrating a service under a hard; Here's what actually worked.; I also looked at real-world incidents from 2026 and 2026:\n\n- The 2026 Twilio bre",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "african-devs-ai-tools-that-work-now-2026",
     "title": "African devs: AI tools that work now (2026)",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when I tried to deploy a Python 3.11 microservice with Django RE; I was surprised that even tools claiming \"offline-first\" support failed when the; I once spent a day debugging why a Next.js app failed in production — the AI sug",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agent-auth-the-silent-deployment-killer",
     "title": "Agent auth: the silent deployment killer",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I built this system twice: once with the patterns we used in 2026, and once with; I expected some improvement, but not that much.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agent-design-after-llm-4-we-broke-5-assumptions",
@@ -1591,6 +1561,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "self-healing-ai-agents-vs-rule-based-ops-40-fewer",
+    "title": "Self-healing AI agents vs rule-based ops: 40% fewer",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same built selfhealing mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three weeks debugging that agent before I realized it was using a derive",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ship-faster-with-a-paved-road-4-weeks-to-80-less-toil",
+    "title": "Ship faster with a paved road: 4 weeks to 80% less toil",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I still remember the day a junior engineer opened a ticket titled “My app works ; I thought the team would rebel.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "supervisor-vs-swarm-vs-debate-vs-pipeline",
+    "title": "Supervisor vs swarm vs debate vs pipeline",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I learned this the hard way when a single   from an external API triggered 8,000; I once watched a supervisor burn through 1,200 restarts in 20 minutes because th; I tested a swarm of 12 agents processing 5,000 requests per second.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "tool-calls-under-load-async-batch-vs-fire-and-forget",
+    "title": "Tool calls under load: async batch vs fire-and-forget",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same toolcalling patterns mistake in multiple production codebases; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into a nasty edge case when we set the batch size to 200 in Scenario 1.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "treat-every-user-input-as-hostile-in-2026",
+    "title": "Treat every user input as hostile in 2026",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about detect prompt during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I spent two weeks debugging a support bot that kept leaking internal docs becaus",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "pulumi-vs-terraform-vs-opentofu-in-2026",

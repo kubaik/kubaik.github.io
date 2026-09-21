@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-30T08:41:42.797134">
-        <meta property="article:modified_time" content="2026-09-21T12:31:26.775346">
+        <meta property="article:modified_time" content="2026-09-21T11:34:23.786604+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agent auth: the silent deployment killer">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/agent-auth-the-silent-deployment-killer/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Agent auth: the silent deployment killer",
       "description": "Agent identity in 2026: why SPIFFE, JWTs, and Redis caches break under real African power and network conditions.",
       "datePublished": "2026-07-30T08:41:42+00:00",
-      "dateModified": "2026-09-21T12:31:26+00:00",
+      "dateModified": "2026-09-21T11:34:23+00:00",
       "wordCount": 3369,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
@@ -291,9 +291,7 @@
 <p>In 2026, agent identity isn't just about who the agent is—it's about where the agent <em>is</em>, what battery level it has, and whether it's allowed to speak to a specific service at this exact moment. Let's break down the layers teams typically have to add:</p>
 <h3 id="1-identity-as-a-state-machine">1. Identity as a state machine</h3>
 <p>Moving from static SPIFFE IDs to a stateful identity model means tracking:
-- <strong>Region lock</strong>: A vehicle-tracking agent in Kenya must not be allowed to talk to a Tanzanian toll system, even if it has a valid SPIFFE ID.
-- <strong>Battery threshold</strong>: If the agent's battery is below 20%, it can only send heartbeats, not payloads.
-- <strong>Network class</strong>: Agents on 2G/EDGE get a degraded identity that expires in 3 minutes instead of 15.</p>
+- <strong>Region lock</strong>: A vehicle-tracking agent in Kenya must not be allowed to talk to a Tanzanian toll system, even if it has a valid SPIFFE ID. - <strong>Battery threshold</strong>: If the agent's battery is below 20%, it can only send heartbeats, not payloads. - <strong>Network class</strong>: Agents on 2G/EDGE get a degraded identity that expires in 3 minutes instead of 15.</p>
 <p>This adds three new claims to the JWT payload:</p>
 <pre><code class="language-json">{
   &quot;spiffe_id&quot;: &quot;spiffe://nigeria/toll-collector/agent-123&quot;,
@@ -306,9 +304,7 @@
 <p>A lightweight sidecar identity provider (SIP) deployed in each region solves a large share of this. The SIP speaks mTLS to the SPIRE server for SVID renewal, but also caches a fallback JWT that can be used when SPIRE is unreachable. The fallback JWT has a longer expiry (24 hours) and is signed by a regional CA instead of the global one. This pattern is what eliminates the majority of the 403 errors seen in the first week of a rollout.</p>
 <h3 id="3-adaptive-retry-and-backoff-in-the-agent-client">3. Adaptive retry and backoff in the agent client</h3>
 <p>The agent client is typically rewritten in Go 1.22 with a custom retry loop that:
-- Detects network class by measuring round-trip time (RTT) to a regional health endpoint.
-- Adjusts retry intervals: 50 ms on 4G, 500 ms on 3G, 3,000 ms on 2G.
-- Skips SPIRE renewal if battery &lt; 20% and uses the fallback JWT.</p>
+- Detects network class by measuring round-trip time (RTT) to a regional health endpoint. - Adjusts retry intervals: 50 ms on 4G, 500 ms on 3G, 3,000 ms on 2G. - Skips SPIRE renewal if battery &lt; 20% and uses the fallback JWT.</p>
 <p>This adds roughly 80 lines of code but commonly cuts 403 errors by around 78% in field tests.</p>
 <h3 id="4-cross-region-attestation-cache">4. Cross-region attestation cache</h3>
 <p>Instead of hitting the CA in every region, a cross-region attestation cache replicates SPIFFE SVIDs across regions with a 5-minute TTL. When an agent in Lagos talks to a service in Kigali, the service validates the SVID against the local cache entry. The cache is updated via a low-bandwidth gossip protocol between region proxies. This typically reduces CA load by around 64% and cuts cross-region latency by roughly 400 ms on average.</p>
@@ -667,9 +663,7 @@ fi
 <hr />
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <p>This stack is overkill if:
-- Your agents run on high-end devices with stable power and 4G networks.
-- You only have one region and no cross-border traffic.
-- You can tolerate 2–3 second latency spikes during power loss.</p>
+- Your agents run on high-end devices with stable power and 4G networks. - You only have one region and no cross-border traffic. - You can tolerate 2–3 second latency spikes during power loss.</p>
 <p>In those cases, the 2026 stack (SPIFFE/SPIRE + short-lived JWTs + Redis cache) is enough. It works fine as a control in Rwanda—until the first solar outage. Then the 403 errors start, and migration to the 2026 stack becomes necessary.</p>
 <hr />
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
