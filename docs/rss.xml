@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 22 Sep 2026 03:59:09 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Sep 2026 16:35:49 +0000</lastBuildDate>
+    <item>
+      <title>Tool calls: why retries stampede</title>
+      <link>https://kubaik.github.io/tool-calls-why-retries-stampede/</link>
+      <description>Tool-use retries that scale vs thundering herds — shared token buckets, single-flight caching, and the retry amplification trap that turns a blip into an…</description>
+      <pubDate>Tue, 22 Sep 2026 16:35:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/tool-calls-why-retries-stampede/</guid>
+    </item>
     <item>
       <title>Agent compliance: the layer you build after failure</title>
       <link>https://kubaik.github.io/agent-compliance-the-layer-you-build-after-failure/</link>
@@ -138,13 +145,6 @@
       <description>Long-running agents forget constraints when context windows fill.</description>
       <pubDate>Sat, 19 Sep 2026 08:48:07 +0000</pubDate>
       <guid>https://kubaik.github.io/context-windows-agents-that-run-for-days/</guid>
-    </item>
-    <item>
-      <title>Most LLM cost dashboards lie…</title>
-      <link>https://kubaik.github.io/most-llm-cost-dashboards-lie/</link>
-      <description>LLM bills hide 30-60% of real spend in retries, cache misses, and agent loops.</description>
-      <pubDate>Sat, 19 Sep 2026 08:31:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/most-llm-cost-dashboards-lie/</guid>
     </item>
   </channel>
 </rss>

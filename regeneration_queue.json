@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-sales-cycle-what-changed-for-devtool-founders",
-    "title": "AI sales cycle: what changed for devtool founders",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three weeks watching our trial-to-paid conversion drop from 22% to 8% wi; I remember a Zoom call where a prospect said, “Your chatbot just returned a 404 ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-sales-cycles-why-dev-tools-now-need-3-demos",
-    "title": "AI sales cycles: why dev tools now need 3 demos",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a mid-sized fintech in Lagos wanted to buy 200 licenses.; I spent two weeks editing a 9-minute video showing   catching a 400ms spike on a",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-scans-your-code-real-risks-and-defenses",
-    "title": "AI scans your code: real risks and defenses",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on being used is incomplete.; I once set up a scanner that flagged every SQL string concatenation as a SQL inj; I saw a pull request where the AI suggested adding   to fix a path traversal in ",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "airflows-replacement-what-80-of-teams-moved-to-in",
-    "title": "Airflow’s replacement: what 80% of teams moved to in",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I joined a team that prided itself on \"infrastructure as co; I spent two weeks rewriting our largest pipeline in Prefect, only to discover th",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "api-abuse-2026-5-attacks-we-missed-until-costs-spiked",
-    "title": "API abuse 2026: 5 attacks we missed until costs spiked",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection-pool issue that turned out to be a sin; I had to add a 2-second timeout and a local LRU cache of the last 1000 keys to s",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "batteries-included-offline-mode-for-unreliable-networks",
     "title": "Batteries-included offline mode for unreliable networks",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three weeks chasing a background-sync bug that turned out to be a single; I expected the problem to be the network stack, but it was the user journey: peo",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "build-a-portfolio-that-beats-the-ai-clone-pile",
     "title": "Build a portfolio that beats the AI clone pile",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I reviewed 47 portfolios for an engineering lead role at a ; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "bundle-size-70-lighter-with-server-components",
     "title": "Bundle size: 70% lighter with server components",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when we replaced a Django admin dashboard with a Next.js fronten; I spent two weeks on this before realising the payload isn’t just JSON—it’s a bi; I also underestimated how much weight comes from non-React dependencies.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "buy-vs-build-ai-3-hard-rules-for-2026",
     "title": "Buy vs build AI: 3 hard rules for 2026",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've hit the same build buy mistake in more than one production codebase over th; Here's what actually worked, and why.; I discarded frameworks that required Kubernetes 1.30 or newer unless they shippe",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "core-web-vitals-2026-inp-is-now-stable",
     "title": "Core Web Vitals 2026: INP is now stable",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days profiling the portal on a feature phone and realized the bigg; I was surprised to find Hotjar’s inline script was adding a 200ms idle callback ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "css-2026-container-queries-retired-our-utility-class",
@@ -1471,6 +1441,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "ai-sales-cycle-what-changed-for-devtool-founders",
+    "title": "AI sales cycle: what changed for devtool founders",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three weeks watching our trial-to-paid conversion drop from 22% to 8% wi; I remember a Zoom call where a prospect said, “Your chatbot just returned a 404 ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-sales-cycles-why-dev-tools-now-need-3-demos",
+    "title": "AI sales cycles: why dev tools now need 3 demos",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a mid-sized fintech in Lagos wanted to buy 200 licenses.; I spent two weeks editing a 9-minute video showing   catching a 400ms spike on a",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-scans-your-code-real-risks-and-defenses",
+    "title": "AI scans your code: real risks and defenses",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on being used is incomplete.; I once set up a scanner that flagged every SQL string concatenation as a SQL inj; I saw a pull request where the AI suggested adding   to fix a path traversal in ",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "airflows-replacement-what-80-of-teams-moved-to-in",
+    "title": "Airflow’s replacement: what 80% of teams moved to in",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I joined a team that prided itself on \"infrastructure as co; I spent two weeks rewriting our largest pipeline in Prefect, only to discover th",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "api-abuse-2026-5-attacks-we-missed-until-costs-spiked",
+    "title": "API abuse 2026: 5 attacks we missed until costs spiked",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection-pool issue that turned out to be a sin; I had to add a 2-second timeout and a local LRU cache of the last 1000 keys to s",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-engineer-role-vanished-in-6-months",

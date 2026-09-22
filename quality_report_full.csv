@@ -437,6 +437,7 @@ spot-evictions-the-retry-logic-that-holds-up,100,2803,Spot evictions: the retry 
 stop-guessing-tech-stacks-validate-tools-in-2-hours,100,2466,Stop guessing tech stacks: validate tools in 2 hours,2026-07-12T13:28:27.249245,0,
 stop-putting-llm-keys-in-env,100,2704,Stop Putting LLM Keys in .env,2026-09-17T04:06:21.695546,0,
 survive-90s-db-failover-without-melting,100,3630,Survive 90s DB failover without melting,2026-06-27T12:51:23.066988,0,
+tool-calls-why-retries-stampede,100,2694,Tool calls: why retries stampede,2026-09-22T16:35:21.833379,0,
 two-engineer-classes-the-ai-tool-norm-trap,100,2734,Two engineer classes: the AI tool norm trap,2026-09-07T08:58:13.844829,0,
 wasm-servers-beat-containers-here,100,2485,WASM servers beat containers here,2026-08-05T13:49:01.207694,0,
 webhooks-2026-retries-idempotency-and-the-9995,100,2731,"Webhooks 2026: retries, idempotency, and the 99.95%",2026-06-19T21:43:40.060877,0,

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-11T13:13:49.802757">
-        <meta property="article:modified_time" content="2026-08-11T13:13:49.802783">
+        <meta property="article:modified_time" content="2026-09-22T16:35:41.508522+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Buy vs build AI: 3 hard rules for 2026">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/buy-vs-build-ai-3-hard-rules-for-2026/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Buy vs build AI: 3 hard rules for 2026",
       "description": "Embedding cache vs hosted LLMs: 70 % token savings and 2.3× latency cut in 2026.",
       "datePublished": "2026-08-11T13:13:49+00:00",
-      "dateModified": "2026-08-11T13:13:49+00:00",
+      "dateModified": "2026-09-22T16:35:41+00:00",
       "wordCount": 3661,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
@@ -291,7 +291,7 @@
                         18 min read
                         &nbsp;·&nbsp; 3661 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-11
+                        &nbsp;·&nbsp; Updated 2026-09-22
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -302,24 +302,17 @@
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
 <p>In 2026, every SaaS team in Lagos, Nairobi, or Accra is asking the same question: should we roll our own LLM glue or stitch APIs together? The trap isn’t “build vs buy” as a binary; it’s the 30–40 % of work that nobody budgets for—token budgeting, retry storms, and the moment your user in a matatu with 2G sees 404s from your self-hosted embedding cache. The part that trips people up is the hidden cost of keeping inference fast when the local network drops to 12 kb/s for 30 seconds, and that’s what this post actually covers.</p>
 <p>Three concrete failure patterns keep repeating:
-- Teams ship a Python 3.11 service that works locally but dies on first deploy because they forgot to set <code>PYTHONASYNCIODEBUG=1</code> and now <code>httpx</code> retries every 50 ms for 30 s, burning 800 k tokens on one failed /chat endpoint.
-- A fintech in Kenya hits 180 ms p99 on their self-hosted embedding model only to learn that their Redis 7.2 cluster running on <code>t3.small</code> nodes evicts keys at 80 % memory pressure, so every cache miss triggers a 1.2 s cold-start rebuild of the 512-dim vector.</p>
+- Teams ship a Python 3.11 service that works locally but dies on first deploy because they forgot to set <code>PYTHONASYNCIODEBUG=1</code> and now <code>httpx</code> retries every 50 ms for 30 s, burning 800 k tokens on one failed /chat endpoint. - A fintech in Kenya hits 180 ms p99 on their self-hosted embedding model only to learn that their Redis 7.2 cluster running on <code>t3.small</code> nodes evicts keys at 80 % memory pressure, so every cache miss triggers a 1.2 s cold-start rebuild of the 512-dim vector.</p>
 <ul>
 <li>A logistics dashboard in Kampala thinks their WhatsApp bot is “just a bot” until the monthly M-Pesa webhook queue backs up every time the LLM provider’s rate limit bucket leaks at 800 req/min instead of the promised 1200 req/min, costing them 4 200 KES in failed payment confirmations per incident.</li>
 </ul>
 <p>The common thread: these aren’t algorithmic failures. They’re infra and edge-case costs nobody modeled.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <p>I scored every component along four axes: 
-- <strong>Latency floor</strong> – 95th-percentile end-to-end time from user tap to first token in Kenya, Ghana, and Uganda airtime markets using 2026 network traces from the <em>African Internet Report 2026</em> dataset.
-- <strong>Token economics</strong> – cost per 1 000 tokens at 2026 spot prices for both self-hosted and hosted models, including infra amortized over one month of 100k daily users.
-- <strong>Operational blast radius</strong> – how many pager nights a single outage triggers (measured in incidents/quarter).
-- <strong>Localization debt</strong> – how much extra code you must write to support M-Pesa, mobile-money split payments, and low-bandwidth retries before the feature even talks to the LLM.</p>
+- <strong>Latency floor</strong> – 95th-percentile end-to-end time from user tap to first token in Kenya, Ghana, and Uganda airtime markets using 2026 network traces from the <em>African Internet Report 2026</em> dataset. - <strong>Token economics</strong> – cost per 1 000 tokens at 2026 spot prices for both self-hosted and hosted models, including infra amortized over one month of 100k daily users. - <strong>Operational blast radius</strong> – how many pager nights a single outage triggers (measured in incidents/quarter). - <strong>Localization debt</strong> – how much extra code you must write to support M-Pesa, mobile-money split payments, and low-bandwidth retries before the feature even talks to the LLM.</p>
 <p>I discarded frameworks that required Kubernetes 1.30 or newer unless they shipped a managed flavour that hides the cluster. Anything needing GPU sharding was automatically deprioritized; the median Lagos startup doesn’t have an NVIDIA L40S in 2026.</p>
 <p>The evaluation ran on real 2026 infra: 
-- Hosted LLMs priced at the 2026 public APIs (e.g., <code>gpt-4.1-mini</code> at $0.12 / 1k tokens in +$0.24 / 1k tokens out).
-- Self-hosted runtimes tested on AWS EC2 <code>c7i.large</code> (x86) and <code>c7g.large</code> (Graviton4) with Python 3.11 and vLLM 0.4.2.
-- Redis 7.2 with RedisJSON and RedisSearch for vector cache and metadata.
-- AWS Lambda (Python 3.12, 1 024 MB) for serverless fallback when the primary model throttles.</p>
+- Hosted LLMs priced at the 2026 public APIs (e.g., <code>gpt-4.1-mini</code> at $0.12 / 1k tokens in +$0.24 / 1k tokens out). - Self-hosted runtimes tested on AWS EC2 <code>c7i.large</code> (x86) and <code>c7g.large</code> (Graviton4) with Python 3.11 and vLLM 0.4.2. - Redis 7.2 with RedisJSON and RedisSearch for vector cache and metadata. - AWS Lambda (Python 3.12, 1 024 MB) for serverless fallback when the primary model throttles.</p>
 <p>Latency was measured with the open-source <code>africa-ping</code> tool that replays 2026 African mobile traces and logs every hop. Token costs were calculated from the provider’s public price list plus infra amortized over 30 days at 80 % average load.</p>
 <h2 id="when-to-build-vs-when-to-buy-the-ai-components-of-your-saas-in-2026-the-full-ranked-list">When to build vs when to buy the AI components of your SaaS in 2026 — the full ranked list</h2>
 <h3 id="1-embedding-cache-and-vector-search">1. Embedding cache and vector search</h3>

@@ -51,5 +51,6 @@
   "Evaluation-driven development for agents: replacing vibe testing with a real loop",
   "Designing systems that gracefully degrade when an upstream agent or model is slow or wrong",
   "Productionizing 'computer use' style agents without giving them dangerous permissions",
-  "The governance layer agent systems need after a compliance-relevant failure"
+  "The governance layer agent systems need after a compliance-relevant failure",
+  "The tool-use patterns that scaled and the ones that created thundering herd problems"
 ]

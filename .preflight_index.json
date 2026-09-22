@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-22T03:58:56.206289",
+  "built_at": "2026-09-22T16:35:25.056442",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5330,6 +5330,11 @@
       "slug": "agent-compliance-the-layer-you-build-after-failure",
       "title": "Agent compliance: the layer you build after failure",
       "summary": "The workaround gets copy-pasted forward long after the original reason is forgotten. Benchmarks for governance layer that don't mention their failure conditions aren't worth much. This post covers what comes after the happy path. The conventional wisdom (and why it's incomplete) The conventional wis"
+    },
+    {
+      "slug": "tool-calls-why-retries-stampede",
+      "title": "Tool calls: why retries stampede",
+      "summary": "The conventional advice on tooluse patterns is incomplete in one specific, costly way. The vendor docs cover the setup and go quiet on the failure modes. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs Every tool-use framework ships "
     }
   ]
 }
