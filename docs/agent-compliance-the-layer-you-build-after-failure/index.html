@@ -1,0 +1,547 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent compliance: the layer you build after failure - Kubai Kevin</title>
+        <meta name="description" content="Agent governance after a compliance failure needs decision traces, not just policy gates.">
+        <meta name="keywords" content="AgentGovernance, ComplianceFailure, AiAgentCompliance, Ai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-22T03:58:54.260462">
+        <meta property="article:modified_time" content="2026-09-22T03:58:54.260475">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent compliance: the layer you build after failure">
+        <meta property="og:description" content="Agent governance after a compliance failure needs decision traces, not just policy gates.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-compliance-the-layer-you-build-after-failure/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-compliance-the-layer-you-build-after-failure.png">
+        <meta property="og:image:alt" content="Agent compliance: the layer you build after failure">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent compliance: the layer you build after failure">
+        <meta name="twitter:description" content="Agent governance after a compliance failure needs decision traces, not just policy gates.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-compliance-the-layer-you-build-after-failure.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-compliance-the-layer-you-build-after-failure/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-compliance-the-layer-you-build-after-failure/#article",
+      "headline": "Agent compliance: the layer you build after failure",
+      "description": "Agent governance after a compliance failure needs decision traces, not just policy gates.",
+      "datePublished": "2026-09-22T03:58:54+00:00",
+      "dateModified": "2026-09-22T03:58:54+00:00",
+      "wordCount": 2931,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-compliance-the-layer-you-build-after-failure/"
+      },
+      "keywords": "AgentGovernance, ComplianceFailure, AiAgentCompliance, Ai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent compliance: the layer you build after failure",
+          "item": "https://kubaik.github.io/agent-compliance-the-layer-you-build-after-failure/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent compliance: the layer you build after failure</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent compliance: the layer you build after failure</h1>
+                
+                <p class="post-lead">Agent governance after a compliance failure needs decision traces, not just policy gates.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/agentgovernance/"
+                       style="text-decoration:none;">AgentGovernance</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ComplianceFailure</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AiAgentCompliance</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2931 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-22
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>The workaround gets copy-pasted forward long after the original reason is forgotten. Benchmarks for governance layer that don't mention their failure conditions aren't worth much. This post covers what comes after the happy path.</p>
+<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
+<p>The conventional wisdom says that agent systems need governance from day one. Put a policy engine in front of every tool call, log every decision, require human approval for anything that touches production data, and you'll never have a compliance incident. This sounds responsible. It's also the reason so many agent platforms stall at prototype stage: the governance layer becomes a tax on every iteration, and teams either abandon the project or bolt on a minimal, brittle gate that passes audits rather than prevents failures.</p>
+<p>The incomplete part is the assumption that governance is a <em>preventive</em> control. In practice, most compliance-relevant failures in agent systems are not prevented by pre-execution gates. They are discovered after the fact — by a customer complaint, a regulator inquiry, a security review, or a sudden spike in a cost dashboard. The governance layer that actually matters is the one you build <em>after</em> that failure. It's the reconstruction layer: the ability to answer, within hours, what the agent did, why it did it, what data it touched, and what should have stopped it.</p>
+<p>This post argues that the post-failure governance layer is the real deliverable. Pre-execution policy is necessary but insufficient. The teams that recover fastest from a compliance incident are not the ones with the most elaborate approval workflows — they are the ones with immutable, queryable traces that let them reconstruct the decision path and patch the specific gap. The part that trips people up is that most agent frameworks optimize for <em>action</em> (tool calls, model invocations) and treat <em>reconstruction</em> as an afterthought, which is exactly backwards when compliance is on the line.</p>
+<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
+<p>Following the standard advice means building a policy engine, a human-in-the-loop queue, and a logging pipeline. In a typical stack — say, an agent built on LangChain 0.1.x calling OpenAI's gpt-4-turbo through a FastAPI 0.110 backend — you end up with something like this:</p>
+<pre><code class="language-python"># policy_gate.py — the standard pre-execution check
+from fastapi import HTTPException
+from pydantic import BaseModel
+
+class ToolCall(BaseModel):
+    tool: str
+    args: dict
+    user_id: str
+
+POLICY = {
+    &quot;read_customer_record&quot;: {&quot;allowed_roles&quot;: [&quot;support&quot;, &quot;admin&quot;]},
+    &quot;issue_refund&quot;: {&quot;allowed_roles&quot;: [&quot;admin&quot;], &quot;max_amount&quot;: 500},
+}
+
+def check_policy(call: ToolCall, role: str):
+    rule = POLICY.get(call.tool)
+    if not rule:
+        raise HTTPException(403, f&quot;tool {call.tool} not governed&quot;)
+    if role not in rule[&quot;allowed_roles&quot;]:
+        raise HTTPException(403, &quot;role not permitted&quot;)
+    if &quot;max_amount&quot; in rule and call.args.get(&quot;amount&quot;, 0) &gt; rule[&quot;max_amount&quot;]:
+        raise HTTPException(403, &quot;amount exceeds policy&quot;)
+    return True
+</code></pre>
+<p>This works for the obvious cases. It fails for the ones that actually cause compliance incidents. A common <a href="/agent-drift-the-failure-mode-you-didnt-log/">failure mode: the agent</a> calls <code>read_customer_record</code> with a <code>user_id</code> that belongs to a different tenant because the retrieval step mixed up context from a shared vector store. The policy gate sees a permitted tool and a permitted role. It passes. The data leak is not in the tool call; it's in the <em>argument provenance</em>. Pre-execution policy almost never inspects how an argument was constructed.</p>
+<p>Another common pattern: the agent chains three permitted calls — <code>read_customer_record</code>, <code>summarize</code>, <code>send_email</code> — and the summary includes PII that the email tool then sends to an external address. Each call passes policy individually. The composite action violates data-handling rules. This is the classic confused-deputy problem, and it's well documented in agent security literature. Pre-execution gates that evaluate calls in isolation cannot catch it.</p>
+<p>What happens next is predictable. The incident surfaces weeks later. The team scrambles to reconstruct what happened. If they logged only the final tool call, they cannot. If they logged every call but not the model's reasoning or the retrieval context, they cannot explain <em>why</em> the agent chose that customer record. The governance layer that would have helped — a full decision trace — was never built, because the standard advice focused on stopping actions, not explaining them.</p>
+<h2 id="a-different-mental-model">A different mental model</h2>
+<p>Think of governance as two layers: the <em>brake</em> and the <em>flight recorder</em>. The brake is pre-execution policy. The flight recorder is post-execution reconstruction. Most teams invest 90% in the brake and 10% in the recorder. The right ratio, if compliance is a real requirement, is closer to 40/60.</p>
+<p>The flight recorder has three properties that pre-execution policy cannot provide:</p>
+<ol>
+<li>
+<p><strong>Temporal completeness.</strong> It captures the sequence, not just the final state. You can see that the agent retrieved document A, then document B, then synthesized a response that combined them. Policy gates see the synthesis call, not the retrieval chain.</p>
+</li>
+<li>
+<p><strong>Argument provenance.</strong> It records not just that <code>read_customer_record(user_id="cus_123")</code> was called, but that <code>cus_123</code> came from a vector search result with a similarity score of 0.82 against a query that included a different tenant's identifier. This is the difference between "the agent read a record" and "the agent read the wrong record because the retrieval step leaked context."</p>
+</li>
+<li>
+<p><strong>Counterfactual clarity.</strong> It lets you ask, after the fact, what would have stopped this. Was it a missing policy rule? A retrieval filter? A model prompt that should have included a tenant constraint? You can only answer that if you have the full trace.</p>
+</li>
+</ol>
+<p>The mental shift is from <em>preventing</em> to <em>reconstructing</em>. Prevention is probabilistic — you will miss something. Reconstruction is deterministic — if you logged it, you can replay it. The governance layer that matters is the one that turns an incident from a multi-week forensic mystery into a two-hour query.</p>
+<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
+<p>Consider a typical customer-support agent deployed on AWS Lambda (Python 3.11 runtime) with DynamoDB for session state and OpenSearch for retrieval. The agent has access to <code>get_order</code>, <code>issue_refund</code>, and <code>send_email</code>. A compliance-relevant failure occurs when the agent issues a refund to the wrong customer because the session ID was reused across two concurrent conversations — a race condition in the state store.</p>
+<p>With only pre-execution policy, the trace looks like this:</p>
+<pre><code class="language-json">{&quot;timestamp&quot;: &quot;2026-01-15T10:23:41Z&quot;, &quot;tool&quot;: &quot;issue_refund&quot;, &quot;args&quot;: {&quot;order_id&quot;: &quot;ord_9981&quot;, &quot;amount&quot;: 120}, &quot;result&quot;: &quot;success&quot;}
+</code></pre>
+<p>This tells you a refund happened. It does not tell you which conversation triggered it, which user was authenticated, or what the agent's reasoning was. Reconstructing the incident requires correlating Lambda request IDs, DynamoDB stream records, and CloudWatch logs — a process that typically takes 6–8 hours across two engineers.</p>
+<p>With a flight-recorder layer, the trace includes the decision context:</p>
+<pre><code class="language-json">{
+  &quot;trace_id&quot;: &quot;tr_7f3a9c&quot;,
+  &quot;span&quot;: &quot;tool_call&quot;,
+  &quot;tool&quot;: &quot;issue_refund&quot;,
+  &quot;args&quot;: {&quot;order_id&quot;: &quot;ord_9981&quot;, &quot;amount&quot;: 120},
+  &quot;provenance&quot;: {
+    &quot;order_id&quot;: {&quot;source&quot;: &quot;retrieval&quot;, &quot;doc_id&quot;: &quot;doc_4412&quot;, &quot;score&quot;: 0.91},
+    &quot;session_id&quot;: &quot;sess_abc&quot;,
+    &quot;authenticated_user&quot;: &quot;user_5521&quot;,
+    &quot;concurrent_session&quot;: &quot;sess_xyz&quot;,
+    &quot;model_reasoning&quot;: &quot;User requested refund for order mentioned in previous message.&quot;
+  },
+  &quot;policy_checks&quot;: [{&quot;rule&quot;: &quot;refund_max_500&quot;, &quot;passed&quot;: true}],
+  &quot;latency_ms&quot;: 412
+}
+</code></pre>
+<p>With this, the reconstruction is a single query: find all traces where <code>session_id</code> was shared across <code>authenticated_user</code> values. The root cause — session reuse — is visible in seconds. The fix is a session key that includes the authenticated user ID, plus a policy rule that rejects tool calls when the session's user does not match the authenticated user.</p>
+<p>The cost difference is not trivial. A post-incident forensic process that takes 8 engineer-hours at a fully loaded rate of roughly $95/hour costs about $760 per incident. A flight-recorder query that takes 15 minutes costs about $24. More importantly, the time-to-remediation drops from days to hours, which matters when a regulator is asking for a timeline.</p>
+<p>A second example: an agent that summarizes customer emails and posts them to a Slack channel. The agent uses a retrieval step that pulls from a shared index. A compliance failure occurs when a summary includes a customer's full credit card number because the retrieval step surfaced a document containing it. Pre-execution policy permitted the <code>post_to_slack</code> call. The flight recorder shows that the retrieved document had a <code>pii_flag</code> field set to <code>true</code>, but the agent's prompt did not instruct it to redact. The fix is a pre-retrieval filter on <code>pii_flag</code> and a post-retrieval redaction step. Without the trace, the team would likely have blamed the model or added a generic "do not include PII" instruction, which is unreliable.</p>
+<p>These are not exotic scenarios. They are the ordinary shape of agent failures: correct tool calls with incorrect context. The governance layer that catches them is the one that records context, not just calls.</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Catches wrong-tool calls</th>
+<th>Catches wrong-context calls</th>
+<th>Reconstruction time</th>
+<th>Typical cost per incident</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-execution policy only</td>
+<td>Yes</td>
+<td>No</td>
+<td>6–8 hours</td>
+<td>~$760</td>
+</tr>
+<tr>
+<td>Logging tool calls only</td>
+<td>Yes</td>
+<td>No</td>
+<td>4–6 hours</td>
+<td>~$570</td>
+</tr>
+<tr>
+<td>Full decision trace</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>15–30 minutes</td>
+<td>~$24–48</td>
+</tr>
+<tr>
+<td>Trace + automated replay</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>5–10 minutes</td>
+<td>~$8–16</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
+<p>Pre-execution policy is not useless. It is exactly right for a specific class of failures: those where the action itself is categorically prohibited, regardless of context. If your agent is never allowed to delete a production database, a policy gate that blocks <code>drop_table</code> is correct and sufficient. If your agent must never issue a refund above $500 without human approval, a policy gate is the right control. These are <em>action-level</em> rules, and they are cheap to enforce.</p>
+<p>The conventional wisdom is also right about human-in-the-loop for high-stakes, low-frequency actions. If your agent can wire money, a human approval step is appropriate. The mistake is extending that logic to every action. A support agent that reads customer records thousands of times a day cannot have a human approve each read. The governance layer for that agent must be the flight recorder, not the approval queue.</p>
+<p>Finally, the conventional wisdom is right that governance must be designed, not accreted. But "designed" should mean designing the trace schema and the query interface first, then adding policy rules as you discover gaps. Most teams do the reverse: they design policy rules first and treat logging as an infrastructure concern. That ordering is why post-incident reconstruction is so painful.</p>
+<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
+<p>The decision hinges on two questions: how reversible are the agent's actions, and how sensitive is the data it touches?</p>
+<p>If actions are reversible and data is low-sensitivity — for example, an agent that drafts internal documentation — pre-execution policy is probably enough. A simple allowlist of tools and a basic audit log will satisfy most reviews.</p>
+<p>If actions are irreversible or data is sensitive — refunds, emails to customers, access to PII — you need the flight recorder. The rule of thumb: if a regulator could ask "show me exactly why the agent did this," you need a trace that answers that question without human archaeology.</p>
+<p>A practical decision matrix:</p>
+<table>
+<thead>
+<tr>
+<th>Action reversibility</th>
+<th>Data sensitivity</th>
+<th>Recommended governance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reversible</td>
+<td>Low</td>
+<td>Pre-execution policy + basic audit log</td>
+</tr>
+<tr>
+<td>Reversible</td>
+<td>High</td>
+<td>Pre-execution policy + decision trace</td>
+</tr>
+<tr>
+<td>Irreversible</td>
+<td>Low</td>
+<td>Pre-execution policy + human approval for high-impact actions</td>
+</tr>
+<tr>
+<td>Irreversible</td>
+<td>High</td>
+<td>Pre-execution policy + decision trace + human approval + automated replay</td>
+</tr>
+</tbody>
+</table>
+<p>For most teams building customer-facing agents, the answer is the third row or fourth row. That means the flight recorder is not optional. It is the primary control, and policy is the secondary one.</p>
+<h2 id="common-objections-and-responses">Common objections, and responses</h2>
+<p><strong>"Decision traces are too expensive to store."</strong> A trace with full context — retrieval documents, model reasoning, tool args — might be 2–5 KB per step. An agent that executes 50 steps per conversation and handles 10,000 conversations per day generates about 1–2.5 GB per day. At S3 Standard pricing (around $0.023 per GB-month), that's under $2 per month for storage. The compute to write it is negligible. The objection is usually about schema design effort, not cost.</p>
+<p><strong>"We can't log model reasoning because it contains PII."</strong> You can. Redact at write time using a deterministic tokenizer, or store reasoning in a separate encrypted store with stricter access controls. The trace does not need to contain raw PII; it needs to contain enough to reconstruct the decision. A hash of the PII plus a pointer to the source document is often sufficient.</p>
+<p><strong>"Our agent framework doesn't support this."</strong> Most frameworks — LangChain 0.1.x, LlamaIndex 0.10.x, CrewAI 0.30.x — have callback hooks or event emitters that let you capture steps. If yours doesn't, wrap the tool-calling interface. The flight recorder is a cross-cutting concern; it should not depend on framework support.</p>
+<p><strong>"We'll add it after we have an incident."</strong> That is the definition of building governance after a failure, which is the thesis of this post. The point is that you should build the <em>reconstruction</em> layer before you need it, because the incident will not wait for you to design a schema. The brake can be minimal; the recorder should be ready.</p>
+<h2 id="what-the-alternative-approach-would-change">What the alternative approach would change</h2>
+<p>If teams treated the flight recorder as the primary governance artifact, several things would change. First, the trace schema would be a first-class design document, reviewed alongside the agent's prompt and tool definitions. Second, incident response would be a query, not a project. Third, policy rules would be derived from trace analysis — you would see which contexts lead to violations and write rules that target those contexts, rather than guessing. Fourth, compliance reviews would shift from "show us your approval workflow" to "show us a trace of a real decision," which is a much stronger answer.</p>
+<p>The cultural change is the hardest part. Pre-execution policy feels like control. The flight recorder feels like overhead until the first incident, at which point it feels like the only thing that mattered. The teams that internalize this build agents that are not just governed but <em>explainable</em>, which is increasingly the actual regulatory requirement.</p>
+<h2 id="summary">Summary</h2>
+<p>The governance layer that matters after a compliance-relevant failure is not the policy gate you built before it. It is the decision trace you built to reconstruct it. Pre-execution policy catches categorical violations; it does not catch wrong-context actions, which are the majority of agent failures. A flight recorder that captures sequence, argument provenance, and counterfactual clarity turns an 8-hour forensic project into a 15-minute query and reduces cost per incident from roughly $760 to under $50. The conventional wisdom is right about action-level rules and human approval for high-stakes actions, but wrong about treating logging as an afterthought. Build the trace schema first, derive policy from it, and treat reconstruction as the primary control.</p>
+<p>Your next step: open your agent's tool-calling wrapper and add a single structured log line that captures the provenance of one argument — for example, the document ID and similarity score that produced an <code>order_id</code>. Run one conversation, then query that log for the provenance field. If you can answer "where did this argument come from" in under a minute, you have the beginning of a flight recorder. If you cannot, you have just found the gap that a compliance incident would expose.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>What is a compliance-relevant failure in an agent system?</strong>
+It is any action or outcome that violates a legal, regulatory, or contractual obligation — for example, a data leak, an unauthorized transaction, or a failure to honor a deletion request. These failures are often not caused by a prohibited tool call but by a permitted call with incorrect context, such as the wrong customer record or an unredacted PII field. The governance layer that addresses them must capture context, not just actions.</p>
+<p><strong>How do I log agent decisions without storing PII?</strong>
+Store hashes or tokens instead of raw values, and keep a separate, access-controlled mapping if you need to resolve them. For model reasoning, redact at write time using a deterministic tokenizer or store it in an encrypted store with stricter IAM policies. The trace needs enough to reconstruct the decision path, not the raw data itself. This approach is compatible with GDPR and CCPA if the mapping store is properly governed.</p>
+<p><strong>Why isn't pre-execution policy enough for agent governance?</strong>
+Pre-execution policy evaluates each tool call in isolation, so it cannot detect composite violations (e.g., three permitted calls that together leak data) or argument-provenance errors (e.g., a permitted tool called with an argument from the wrong tenant). Those are the failure modes that most often trigger compliance incidents. Policy is necessary for categorical rules but insufficient for context-dependent ones.</p>
+<p><strong>What tools can help build a decision trace for agents?</strong>
+OpenTelemetry (spec 1.27) with custom spans is a common foundation, paired with a storage backend like ClickHouse 24.x or AWS OpenSearch. For agent-specific tracing, LangSmith and Arize Phoenix offer instrumentation, but you can also implement a lightweight wrapper around your tool-calling interface. The key is to define a schema that includes provenance, not just the call and result.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/golden-paths-become-load-bearing-walls/">
+                        <h3>Golden paths become load-bearing walls</h3>
+                        <p>Golden paths for AI features often hide the model ID and prompt version — the two things you need during a migration. Here is the failure mode and the fix.</p>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-compliance-in-african-fintech-the-cbn-gap/">
+                        <h3>Agent compliance in African fintech: the CBN gap</h3>
+                        <p>Mapping autonomous agents onto CBN, NDPA 2023, and SEC obligations — the deterministic gate and append-only audit store that survive a compliance review.</p>
+                        <span class="related-meta">16 min read · 20 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-supply-chain-attacks-what-actually-broke/">
+                        <h3>AI supply chain attacks: what actually broke</h3>
+                        <p>AI supply chain attacks hide in pickle files and trust_remote_code. Hash pinning, safetensors, and a 30-minute audit that finds the real exposure.</p>
+                        <span class="related-meta">16 min read · 19 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

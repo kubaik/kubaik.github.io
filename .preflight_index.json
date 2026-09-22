@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T18:02:38.287986",
+  "built_at": "2026-09-22T03:58:56.206289",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5325,6 +5325,11 @@
       "slug": "sandboxed-computer-use-agents-with-gvisor",
       "title": "Sandboxed computer-use agents with gVisor",
       "summary": "Inherited productionizing computer setups tend to come with no explanation, just a working system and a long reverse-engineering session. It works in the simple case and breaks in a specific way under load. Here's what actually worked, and why. The problem, in general terms Computer-use agents — mod"
+    },
+    {
+      "slug": "agent-compliance-the-layer-you-build-after-failure",
+      "title": "Agent compliance: the layer you build after failure",
+      "summary": "The workaround gets copy-pasted forward long after the original reason is forgotten. Benchmarks for governance layer that don't mention their failure conditions aren't worth much. This post covers what comes after the happy path. The conventional wisdom (and why it's incomplete) The conventional wis"
     }
   ]
 }

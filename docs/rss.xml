@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Sep 2026 18:02:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Sep 2026 03:59:09 +0000</lastBuildDate>
+    <item>
+      <title>Agent compliance: the layer you build after failure</title>
+      <link>https://kubaik.github.io/agent-compliance-the-layer-you-build-after-failure/</link>
+      <description>Agent governance after a compliance failure needs decision traces, not just policy gates.</description>
+      <pubDate>Tue, 22 Sep 2026 03:58:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-compliance-the-layer-you-build-after-failure/</guid>
+    </item>
     <item>
       <title>Sandboxed computer-use agents with gVisor</title>
       <link>https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/</link>
@@ -138,13 +145,6 @@
       <description>LLM bills hide 30-60% of real spend in retries, cache misses, and agent loops.</description>
       <pubDate>Sat, 19 Sep 2026 08:31:18 +0000</pubDate>
       <guid>https://kubaik.github.io/most-llm-cost-dashboards-lie/</guid>
-    </item>
-    <item>
-      <title>Negotiating pay when AI inflates output</title>
-      <link>https://kubaik.github.io/negotiating-pay-when-ai-inflates-output/</link>
-      <description>AI inflates output, not accountability. Learn to negotiate pay by quantifying business outcomes and the 20% of AI code you catch before it ships.</description>
-      <pubDate>Sat, 19 Sep 2026 03:48:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiating-pay-when-ai-inflates-output/</guid>
     </item>
   </channel>
 </rss>
