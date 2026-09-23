@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "css-2026-container-queries-retired-our-utility-class",
-    "title": "CSS 2026: container queries retired our utility class",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when we tried to add a new “purchase confirmation” flow for low-; I spent three days debugging a failing cache hashing issue where styles weren’t ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "cut-false-positives-85-with-this-ci-security-trick",
-    "title": "Cut false positives 85% with this CI security trick",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a junior engineer disabled the   rule in SonarQube because ; I was surprised that the biggest source of false positives wasn’t the scanners t",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "drop-checklists-ai-code-reviews-that-scale",
-    "title": "Drop checklists: AI code reviews that scale",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on code review is incomplete.; I built one last quarter that now flags 82% of our real regressions before CI — ; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "fintech-features-break-in-ghana-the-real-fix",
-    "title": "Fintech features break in Ghana: the real fix",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've hit the same building fintech mistake in more than one production codebase ; I ran into this when shipping a new mobile-money refund flow.; I spent two weeks blaming the Ghanaian telecoms provider before realising the ti",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "internal-dev-portal-that-developers-open-daily",
-    "title": "Internal Dev Portal that developers open daily",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on built idp is incomplete.; I ran into this when a client in Colombia asked for a \"Backstage replacement\" wi; I was surprised to find that most IDPs fail because they optimize for completene",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "keep-multi-model-systems-stable-6-rules-that-worked",
     "title": "Keep multi-model systems stable: 6 rules that worked",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent three weeks debugging one of those outages.; I was surprised that the oldest rule—idempotency keys—cut our retry costs 75% on; I learned this the hard way when my collector OOM’d during a load test.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "kubernetes-or-nomad-the-real-experiment-cost-split",
     "title": "Kubernetes or Nomad: the real experiment cost split",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about infrastructure patterns during a code review recently; I spent three weeks tweaking the Kubernetes Cluster Autoscaler only to realize t; I learned this the hard way when we ran a sweep of 500 hyper-parameter jobs.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "land-5k-remote-roles-what-nairobi-devs-got-right",
     "title": "Land $5k remote roles: what Nairobi devs got right",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into an early surprise when I rewrote our resume bullet points to match th; I spent three days rewriting a single project description from “built a REST API",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "llm-drift-the-silent-quality-drop-metrics-miss",
     "title": "LLM drift: the silent quality drop metrics miss",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on debugged silent is incomplete.; I ran into this when our “stable” summarization endpoint started returning 30 % ; I was surprised that none of our existing SLOs fired for the tokenizer switch.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ndpr-2026-broke-fintech-apis",
     "title": "NDPR 2026 broke fintech APIs",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when our mobile wallet team in Lagos started getting **429 Too M",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "negotiate-pay-in-2026-with-ai-proof-points",
@@ -1411,6 +1381,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "css-2026-container-queries-retired-our-utility-class",
+    "title": "CSS 2026: container queries retired our utility class",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when we tried to add a new “purchase confirmation” flow for low-; I spent three days debugging a failing cache hashing issue where styles weren’t ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "cut-false-positives-85-with-this-ci-security-trick",
+    "title": "Cut false positives 85% with this CI security trick",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a junior engineer disabled the   rule in SonarQube because ; I was surprised that the biggest source of false positives wasn’t the scanners t",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "drop-checklists-ai-code-reviews-that-scale",
+    "title": "Drop checklists: AI code reviews that scale",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on code review is incomplete.; I built one last quarter that now flags 82% of our real regressions before CI — ; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "fintech-features-break-in-ghana-the-real-fix",
+    "title": "Fintech features break in Ghana: the real fix",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've hit the same building fintech mistake in more than one production codebase ; I ran into this when shipping a new mobile-money refund flow.; I spent two weeks blaming the Ghanaian telecoms provider before realising the ti",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "internal-dev-portal-that-developers-open-daily",
+    "title": "Internal Dev Portal that developers open daily",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on built idp is incomplete.; I ran into this when a client in Colombia asked for a \"Backstage replacement\" wi; I was surprised to find that most IDPs fail because they optimize for completene",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "batteries-included-offline-mode-for-unreliable-networks",

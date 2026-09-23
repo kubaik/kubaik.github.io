@@ -53,5 +53,6 @@
   "Productionizing 'computer use' style agents without giving them dangerous permissions",
   "The governance layer agent systems need after a compliance-relevant failure",
   "The tool-use patterns that scaled and the ones that created thundering herd problems",
-  "Why most internal developer platforms fail at the adoption layer, not the technical one"
+  "Why most internal developer platforms fail at the adoption layer, not the technical one",
+  "Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes"
 ]

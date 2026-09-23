@@ -13,7 +13,7 @@
   "meta_description": "Nomad 1.7 vs Kubernetes 1.30 for AI experiments — GPU idle cost, pod startup latency, and the 70 % experiment budget split most teams miss",
   "featured_image": "/static/images/kubernetes-or-nomad-the-real-experiment-cost-split.jpg",
   "created_at": "2026-08-03T14:47:24.911552",
-  "updated_at": "2026-09-19T08:27:14.147828+00:00",
+  "updated_at": "2026-09-23T16:25:34.122164+00:00",
   "seo_keywords": [
     "NomadVsKubernetes",
     "Ai",

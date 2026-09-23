@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-23T03:57:28.504890",
+  "built_at": "2026-09-23T16:25:20.812623",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5340,6 +5340,11 @@
       "slug": "internal-developer-platform-adoption-traps",
       "title": "Internal developer platform: adoption traps",
       "summary": "The engineers who build a most internal pipeline rarely stick around long enough to document why it works the way it does. This is the version of the write-up that includes the part that broke. The dashboards look healthy right up until the incident starts. The problem this solves Most internal deve"
+    },
+    {
+      "slug": "ai-features-m-pesa-paystack-flutterwave-traps",
+      "title": "AI features: M-Pesa, Paystack, Flutterwave traps",
+      "summary": "Everyone assumes someone else already checked this. Most building features writeups assume the reader has already made the mistake they're warning about. This is the writeup with the mistakes left in, not edited out. The gap between what the docs say and what production needs Payment provider docs a"
     }
   ]
 }

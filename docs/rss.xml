@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Sep 2026 03:57:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 16:25:40 +0000</lastBuildDate>
+    <item>
+      <title>AI features: M-Pesa, Paystack, Flutterwave traps</title>
+      <link>https://kubaik.github.io/ai-features-m-pesa-paystack-flutterwave-traps/</link>
+      <description>M-Pesa, Paystack, and Flutterwave each fail differently. Normalize webhooks, handle pending states, and stop double-charging customers with idempotency.</description>
+      <pubDate>Wed, 23 Sep 2026 16:25:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-features-m-pesa-paystack-flutterwave-traps/</guid>
+    </item>
     <item>
       <title>Internal developer platform: adoption traps</title>
       <link>https://kubaik.github.io/internal-developer-platform-adoption-traps/</link>
@@ -138,13 +145,6 @@
       <description>Least-privilege for AI agents fails when permissions are static. Scope tokens per task, cut blast radius to one resource, and keep developer friction low.</description>
       <pubDate>Sat, 19 Sep 2026 09:21:55 +0000</pubDate>
       <guid>https://kubaik.github.io/scope-agent-permissions-per-task/</guid>
-    </item>
-    <item>
-      <title>Platform engineering ROI: metrics that fund teams</title>
-      <link>https://kubaik.github.io/platform-engineering-roi-metrics-that-fund-teams/</link>
-      <description>Platform engineering ROI: the metrics that convinced leadership to keep funding. Lead time, incident cost, and the number that actually mattered.</description>
-      <pubDate>Sat, 19 Sep 2026 09:13:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/platform-engineering-roi-metrics-that-fund-teams/</guid>
     </item>
   </channel>
 </rss>
