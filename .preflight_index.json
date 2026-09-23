@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-22T16:35:25.056442",
+  "built_at": "2026-09-23T03:57:28.504890",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5335,6 +5335,11 @@
       "slug": "tool-calls-why-retries-stampede",
       "title": "Tool calls: why retries stampede",
       "summary": "The conventional advice on tooluse patterns is incomplete in one specific, costly way. The vendor docs cover the setup and go quiet on the failure modes. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs Every tool-use framework ships "
+    },
+    {
+      "slug": "internal-developer-platform-adoption-traps",
+      "title": "Internal developer platform: adoption traps",
+      "summary": "The engineers who build a most internal pipeline rarely stick around long enough to document why it works the way it does. This is the version of the write-up that includes the part that broke. The dashboards look healthy right up until the incident starts. The problem this solves Most internal deve"
     }
   ]
 }

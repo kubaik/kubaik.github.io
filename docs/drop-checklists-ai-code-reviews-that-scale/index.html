@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T02:06:55.025805">
-        <meta property="article:modified_time" content="2026-09-21T12:54:54.926629">
+        <meta property="article:modified_time" content="2026-09-23T03:57:45.105050+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Drop checklists: AI code reviews that scale">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/drop-checklists-ai-code-reviews-that-scale/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Drop checklists: AI code reviews that scale",
       "description": "Cut code review time 65% by replacing static checklists with AI agents that replay production events — concrete GitHub Action + Lambda setup and real failure…",
       "datePublished": "2026-06-12T02:06:55+00:00",
-      "dateModified": "2026-09-21T12:54:54+00:00",
+      "dateModified": "2026-09-23T03:57:45+00:00",
       "wordCount": 3801,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
@@ -267,7 +267,7 @@
                         19 min read
                         &nbsp;·&nbsp; 3801 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-21
+                        &nbsp;·&nbsp; Updated 2026-09-23
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -281,8 +281,7 @@
 <p>Most developers picture AI reviewers as glorified linters: same rules, just faster. That misses the point. A real agent doesn’t just read diffs; it spins up a disposable environment, replays the last 10 CI runs, and asks itself: “Does this change break anything that wasn’t broken yesterday?”</p>
 <p>A common first attempt at a past fintech shop looks like this: crib a checklist — ‘run black, run isort, check for secrets, verify 100% coverage’. The agent dutifully reports near-total compliance and approves the PR. Hours later, a customer reports a wallet balance race condition that only shows under hundreds of concurrent users — something static rules never probe. A connection pool issue that consumes three days of debugging is usually a single misconfigured timeout underneath. This post is what many engineers wish they had found before that first attempt.</p>
 <p>The confusion comes from mixing two very different failure modes:
-1. <strong>Static violations</strong> (Pydantic schema drift, missing docstrings) that a linter can catch.
-2. <strong>Dynamic regressions</strong> (race conditions, memory leaks) that only surface under load or state.</p>
+1. <strong>Static violations</strong> (Pydantic schema drift, missing docstrings) that a linter can catch. 2. <strong>Dynamic regressions</strong> (race conditions, memory leaks) that only surface under load or state.</p>
 <p>Agents that only do static checks are glorified linters. Agents that can instantiate ephemeral environments become something closer to a chaos engineer that runs on every diff.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
 <p>Think of a code review pipeline as a <strong>three-stage filter</strong>:</p>
@@ -785,21 +784,15 @@ A common pattern uses Roo as a "second human" in the pipeline. After the agent r
 - 30%: debugging regressions caught in staging/production.
 - 10%: design and architecture.</p>
 <p>After:
-- 30%: fast-path reviews (high-score PRs).
-- 20%: deep reviews (low-score PRs).
-- 30%: debugging regressions caught pre-merge (down from 30%).
-- 20%: design and architecture (up from 10%).</p>
+- 30%: fast-path reviews (high-score PRs). - 20%: deep reviews (low-score PRs). - 30%: debugging regressions caught pre-merge (down from 30%). - 20%: design and architecture (up from 10%).</p>
 <p>In short, the agent pipeline didn’t replace humans — it freed</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

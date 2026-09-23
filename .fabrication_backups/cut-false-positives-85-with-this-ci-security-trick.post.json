@@ -11,7 +11,7 @@
   "meta_description": "Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month",
   "featured_image": "/static/images/cut-false-positives-85-with-this-ci-security-trick.jpg",
   "created_at": "2026-06-12T07:15:04.340904",
-  "updated_at": "2026-09-23T03:57:45.089775+00:00",
+  "updated_at": "2026-09-19T08:27:14.010603+00:00",
   "seo_keywords": [
     "CiSecurityScanning",
     "SonarqubeFalsePositives",

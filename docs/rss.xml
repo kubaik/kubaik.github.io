@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 22 Sep 2026 16:35:49 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 03:57:53 +0000</lastBuildDate>
+    <item>
+      <title>Internal developer platform: adoption traps</title>
+      <link>https://kubaik.github.io/internal-developer-platform-adoption-traps/</link>
+      <description>Internal developer platforms fail at adoption, not tech. Instrument Backstage 1.28 with event tracking to find the 70% of teams stuck on the golden path.</description>
+      <pubDate>Wed, 23 Sep 2026 03:57:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/internal-developer-platform-adoption-traps/</guid>
+    </item>
     <item>
       <title>Tool calls: why retries stampede</title>
       <link>https://kubaik.github.io/tool-calls-why-retries-stampede/</link>
@@ -138,13 +145,6 @@
       <description>Platform engineering ROI: the metrics that convinced leadership to keep funding. Lead time, incident cost, and the number that actually mattered.</description>
       <pubDate>Sat, 19 Sep 2026 09:13:36 +0000</pubDate>
       <guid>https://kubaik.github.io/platform-engineering-roi-metrics-that-fund-teams/</guid>
-    </item>
-    <item>
-      <title>Context windows: agents that run for days</title>
-      <link>https://kubaik.github.io/context-windows-agents-that-run-for-days/</link>
-      <description>Long-running agents forget constraints when context windows fill.</description>
-      <pubDate>Sat, 19 Sep 2026 08:48:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/context-windows-agents-that-run-for-days/</guid>
     </item>
   </channel>
 </rss>
