@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "negotiate-pay-in-2026-with-ai-proof-points",
-    "title": "Negotiate pay in 2026 with AI proof points",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I was surprised that the biggest pushback wasn’t from engineers—it was from fina; I ran this against my own repo and discovered that 32% of my 2026 commits were A",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "nextjs-15-vs-remix-vs-sveltekit-2026-choices",
-    "title": "Next.js 15 vs Remix vs SvelteKit: 2026 choices",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on nextjs remix is incomplete.; I ran into this when I inherited a Next.js 14 page that mysteriously duplicated ; I was surprised to find that even simple CRUD apps in Remix required 30 % more b",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "observe-llm-features-90-faster",
-    "title": "Observe LLM features 90% faster…",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I once forgot to strip the newline from the key file and spent an hour wondering",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "one-payment-stack-for-kenya-nigeria-ghana",
-    "title": "One payment stack for Kenya, Nigeria, Ghana",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a single Nigerian user tried to pay with both a card and a ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "orchestration-tax-kills-multi-agent-systems",
-    "title": "Orchestration tax kills multi-agent systems",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've hit the same building reliable mistake in more than one production codebase; Here's what actually worked, and why.; I ran the tests on:\n- AWS EC2 c7g.4xlarge (Graviton3, 16 vCPU, 32 GiB RAM) in eu",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "pick-niches-ai-cant-automate-by-2026",
     "title": "Pick niches AI can't automate by 2026",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days building a compliance dashboard that auto-filled Kenyan tax f; I was surprised that a $400M industry still relied on human interpretation of by",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "platform-teams-in-2026-docs-vs-production-reality",
     "title": "Platform teams in 2026: Docs vs. production reality",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when we scaled our staging cluster last year.; I was surprised that even mature teams with dedicated platform groups still rely; I once joined a seed-stage startup that skipped this and spent two weeks debuggi",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "portfolio-that-hires-show-constraints-not-code",
     "title": "Portfolio that hires: show constraints, not code",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when we tried to hire a senior backend engineer last quarter; ou; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "portfolio-that-stands-out-when-everyone-uses-ai",
     "title": "Portfolio that stands out when everyone uses AI",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I realised that the portfolio problem wasn’t about showcasing code—it was about ; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "prepare-tls-for-post-quantum-reality",
     "title": "Prepare TLS for post-quantum reality",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran a quick scan across our 47 microservices using **Let's Encrypt certificate; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "prompt-injection-got-the-hype-poison-data-ruined-us",
@@ -1351,6 +1321,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "negotiate-pay-in-2026-with-ai-proof-points",
+    "title": "Negotiate pay in 2026 with AI proof points",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I was surprised that the biggest pushback wasn’t from engineers—it was from fina; I ran this against my own repo and discovered that 32% of my 2026 commits were A",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "nextjs-15-vs-remix-vs-sveltekit-2026-choices",
+    "title": "Next.js 15 vs Remix vs SvelteKit: 2026 choices",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on nextjs remix is incomplete.; I ran into this when I inherited a Next.js 14 page that mysteriously duplicated ; I was surprised to find that even simple CRUD apps in Remix required 30 % more b",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "observe-llm-features-90-faster",
+    "title": "Observe LLM features 90% faster…",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I once forgot to strip the newline from the key file and spent an hour wondering",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "one-payment-stack-for-kenya-nigeria-ghana",
+    "title": "One payment stack for Kenya, Nigeria, Ghana",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a single Nigerian user tried to pay with both a card and a ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "orchestration-tax-kills-multi-agent-systems",
+    "title": "Orchestration tax kills multi-agent systems",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've hit the same building reliable mistake in more than one production codebase; Here's what actually worked, and why.; I ran the tests on:\n- AWS EC2 c7g.4xlarge (Graviton3, 16 vCPU, 32 GiB RAM) in eu",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "keep-multi-model-systems-stable-6-rules-that-worked",

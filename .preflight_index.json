@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-24T03:50:15.638589",
+  "built_at": "2026-09-24T16:46:41.401692",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5350,6 +5350,11 @@
       "slug": "world-models-wont-replace-your-backend",
       "title": "World models won't replace your backend",
       "summary": "Most world models incidents trace back to a default nobody remembers choosing. Here's what changed once we stopped guessing and started measuring. The gap between the demo and the incident report is where this actually lives. The conventional wisdom (and why it's incomplete) The conventional wisdom "
+    },
+    {
+      "slug": "multi-agent-systems-when-they-quietly-degrade",
+      "title": "Multi-agent systems: when they quietly degrade",
+      "summary": "The same our beautiful mistake shows up across production codebases often enough to be a pattern, not bad luck. Here's the root cause, not just the symptom. The vendor docs cover the setup and go quiet on the failure modes. The one-paragraph version (read this first) A multi-agent research system th"
     }
   ]
 }

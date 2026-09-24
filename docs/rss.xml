@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 24 Sep 2026 03:50:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 24 Sep 2026 16:46:55 +0000</lastBuildDate>
+    <item>
+      <title>Multi-agent systems: when they quietly degrade</title>
+      <link>https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/</link>
+      <description>Multi-agent research systems degrade quietly: token growth, retry loops, and missing per-node metrics. Learn what to instrument first to catch the slide.</description>
+      <pubDate>Thu, 24 Sep 2026 16:46:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/</guid>
+    </item>
     <item>
       <title>World models won&apos;t replace your backend</title>
       <link>https://kubaik.github.io/world-models-wont-replace-your-backend/</link>
@@ -138,13 +145,6 @@
       <description>Agentic AI cost management ranked: CUR 2.0, Helicone, LiteLLM, and the routing agent that backfired. Which tools give ground truth and which just guess.</description>
       <pubDate>Sat, 19 Sep 2026 11:35:45 +0000</pubDate>
       <guid>https://kubaik.github.io/agentic-ai-cost-control-7-tools-one-backfire/</guid>
-    </item>
-    <item>
-      <title>Purpose-built AI is a trap for solo founders</title>
-      <link>https://kubaik.github.io/purpose-built-ai-is-a-trap-for-solo-founders/</link>
-      <description>Purpose-built AI platforms promise speed but bury control flow. For solo founders, a thin provider-SDK pipeline is fewer dependencies and faster to debug.</description>
-      <pubDate>Sat, 19 Sep 2026 09:31:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/purpose-built-ai-is-a-trap-for-solo-founders/</guid>
     </item>
   </channel>
 </rss>

@@ -14,7 +14,7 @@
   "meta_description": "Cut TLS handshake latency 86% with hybrid certificates in 2026 — the real cost of post-quantum crypto on RSA, ECDSA, and Envoy deployments.",
   "featured_image": "/static/images/prepare-tls-for-post-quantum-reality.jpg",
   "created_at": "2026-06-26T11:02:17.069841",
-  "updated_at": "2026-09-24T16:46:51.013604+00:00",
+  "updated_at": "2026-09-19T08:27:14.393040+00:00",
   "seo_keywords": [
     "PostQuantumTls",
     "Hybrid",

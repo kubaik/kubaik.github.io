@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-16T04:33:09.954287">
-        <meta property="article:modified_time" content="2026-09-21T12:37:12.965806">
+        <meta property="article:modified_time" content="2026-09-24T16:46:51.000710+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Portfolio that hires: show constraints, not code">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/portfolio-that-hires-show-constraints-not-code/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Portfolio that hires: show constraints, not code",
       "description": "Portfolio that hires: show constraints, not code — median page load 320 ms on 3G, API p95 145 ms, $12/month. PortfolioOS template included.",
       "datePublished": "2026-06-16T04:33:09+00:00",
-      "dateModified": "2026-09-21T12:37:12+00:00",
+      "dateModified": "2026-09-24T16:46:51+00:00",
       "wordCount": 2676,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
@@ -267,7 +267,7 @@
                         13 min read
                         &nbsp;·&nbsp; 2676 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-21
+                        &nbsp;·&nbsp; Updated 2026-09-24
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -286,10 +286,7 @@
 <h2 id="the-approach-that-works">The approach that works</h2>
 <p>Scrap the template and build a portfolio that is literally a product: <strong>PortfolioOS</strong>. It’s a single-page React app (Next.js 14, App Router) that runs on a $12/month Fly.io shared-cpu-1x instance with Redis 7.2 for caching. The twist is to instrument every page load and API call and expose the raw JSON to the recruiter—no pretty graphs, just plain numbers and logs.</p>
 <p>Key constraints to lock in:
-- Mobile-first: every endpoint must respond within 200 ms p95 on a synthetic 3G profile (250 ms RTT, 1.5 Mbps, 100 ms jitter).
-- Intermittent-connection-tolerant: simulate 3G drops every 30 s for 5 s and verify the UI recovers within 2 s.
-- Cost-controlled: the whole stack runs on $12/month Fly.io with a 1 GB Redis 7.2 instance.
-- Maintainable: the codebase has a 200-line README that explains every caching strategy, database index, and retry policy.</p>
+- Mobile-first: every endpoint must respond within 200 ms p95 on a synthetic 3G profile (250 ms RTT, 1.5 Mbps, 100 ms jitter). - Intermittent-connection-tolerant: simulate 3G drops every 30 s for 5 s and verify the UI recovers within 2 s. - Cost-controlled: the whole stack runs on $12/month Fly.io with a 1 GB Redis 7.2 instance. - Maintainable: the codebase has a 200-line README that explains every caching strategy, database index, and retry policy.</p>
 <p>Also add a debenture: a 500-word “post-mortem” that explains every latency spike, cache miss, and cost spike. Recruiters consistently say this is the part they value most—it proves the candidate can reason about trade-offs instead of just shipping a green Lighthouse score.</p>
 <h2 id="implementation-details">Implementation details</h2>
 <p>Here is the stack that ends up working:</p>
@@ -612,14 +609,11 @@ export default {
 <p>Start with three cheap mechanisms: exponential backoff with jitter on every client retry, a server-side heartbeat so half-open sockets are detected within a couple of seconds, and a short-TTL cache layer (local in-memory plus Redis) so a brief drop doesn’t trigger a stampede on the origin. These three changes cover most intermittent-connection failures and add relatively little code. Only reach for a full offline-first sync layer if the product genuinely needs to accept writes while disconnected; for a portfolio, read-path resilience is usually enough.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
