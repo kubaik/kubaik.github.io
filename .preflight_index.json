@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-23T16:25:20.812623",
+  "built_at": "2026-09-24T03:50:15.638589",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5345,6 +5345,11 @@
       "slug": "ai-features-m-pesa-paystack-flutterwave-traps",
       "title": "AI features: M-Pesa, Paystack, Flutterwave traps",
       "summary": "Everyone assumes someone else already checked this. Most building features writeups assume the reader has already made the mistake they're warning about. This is the writeup with the mistakes left in, not edited out. The gap between what the docs say and what production needs Payment provider docs a"
+    },
+    {
+      "slug": "world-models-wont-replace-your-backend",
+      "title": "World models won't replace your backend",
+      "summary": "Most world models incidents trace back to a default nobody remembers choosing. Here's what changed once we stopped guessing and started measuring. The gap between the demo and the incident report is where this actually lives. The conventional wisdom (and why it's incomplete) The conventional wisdom "
     }
   ]
 }

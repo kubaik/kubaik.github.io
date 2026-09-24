@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Sep 2026 16:25:40 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 24 Sep 2026 03:50:39 +0000</lastBuildDate>
+    <item>
+      <title>World models won&apos;t replace your backend</title>
+      <link>https://kubaik.github.io/world-models-wont-replace-your-backend/</link>
+      <description>World models won&amp;#x27;t replace your backend stack. Learn the time-series and edge-sync patterns that actually matter for physical AI in 2026.</description>
+      <pubDate>Thu, 24 Sep 2026 03:50:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/world-models-wont-replace-your-backend/</guid>
+    </item>
     <item>
       <title>AI features: M-Pesa, Paystack, Flutterwave traps</title>
       <link>https://kubaik.github.io/ai-features-m-pesa-paystack-flutterwave-traps/</link>
@@ -138,13 +145,6 @@
       <description>Purpose-built AI platforms promise speed but bury control flow. For solo founders, a thin provider-SDK pipeline is fewer dependencies and faster to debug.</description>
       <pubDate>Sat, 19 Sep 2026 09:31:04 +0000</pubDate>
       <guid>https://kubaik.github.io/purpose-built-ai-is-a-trap-for-solo-founders/</guid>
-    </item>
-    <item>
-      <title>Scope agent permissions per task</title>
-      <link>https://kubaik.github.io/scope-agent-permissions-per-task/</link>
-      <description>Least-privilege for AI agents fails when permissions are static. Scope tokens per task, cut blast radius to one resource, and keep developer friction low.</description>
-      <pubDate>Sat, 19 Sep 2026 09:21:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/scope-agent-permissions-per-task/</guid>
     </item>
   </channel>
 </rss>

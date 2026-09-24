@@ -15,7 +15,7 @@
   "meta_description": "Cut LLM observability noise 93% with this wrapper — Prometheus metrics, Redis flags, and a 140-line FastAPI service that works on t3.medium.",
   "featured_image": "/static/images/observe-llm-features-90-faster.jpg",
   "created_at": "2026-07-08T14:23:50.999349",
-  "updated_at": "2026-09-24T03:50:31.854161+00:00",
+  "updated_at": "2026-09-19T08:27:14.309859+00:00",
   "seo_keywords": [
     "LlmObservability",
     "LlmMetrics",
