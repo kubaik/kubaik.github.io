@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "prompt-injection-got-the-hype-poison-data-ruined-us",
-    "title": "Prompt injection got the hype — poison data ruined us",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've hit the same owasp llm mistake in more than one production codebase over th; I spent three days debugging a connection pool issue that turned out to be a sin; I wasted six weeks building guardrails for prompt injection before realizing the",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "prompt-injections-hidden-aws-tax",
-    "title": "Prompt injection’s hidden AWS tax",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I did too, until I watched a single malformed user query drain our LLM budget by; I was surprised to discover that even well-funded teams ignore this because thei; I set this up using a 45-line GitHub Action that runs after every merge.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "rag-in-prod-what-tutorials-wont-tell-you",
-    "title": "RAG in prod: what tutorials won’t tell you",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I thought we were ready.; I spent three days debugging a connection pool issue before realising the index ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "rag-in-prod-why-demos-crumble",
-    "title": "RAG in prod: why demos crumble",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection-pool issue that turned out to be a sin; Most tutorials skip the retrieval-score gate.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
-    "title": "RAG is not enough: hybrid search + reranking in 2026",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on rag not is incomplete.; I learned this the hard way when a customer asked why our chatbot cited a 2026 p; I once shipped a RAG system that used only embeddings and an LLM.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "red-teaming-agents-without-killing-velocity",
     "title": "Red-teaming agents without killing velocity",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this redteaming internal problem while migrating a service under a ha; Here's what actually worked, and why.; I ran into this when our security team asked for a formal threat model for an in",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "regulations-forced-better-apis-the-2026-fintech",
     "title": "Regulations forced better APIs: the 2026 fintech",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we launched a new collections product in Kenya in early 202",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "regulations-killed-our-elegant-apis",
     "title": "Regulations killed our elegant APIs",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran a project in 2026 where we shipped a clean REST API built on Node 20 LTS a",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "run-apis-in-50-spots-what-breaks-first",
     "title": "Run APIs in 50 spots: what breaks first",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on edgenative backends is incomplete.; I once shipped a user profile endpoint to 10 edge locations and watched the 95th; I once tried to run a GraphQL API at 50 locations without caching and watched th",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "saas-niche-in-2026-pick-a-sliver-no-llm-can-eat",
     "title": "SaaS niche in 2026: pick a sliver no LLM can eat",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days benchmarking every open-source LLM that claimed to do spend c; I had to roll back the feature after 10 days of production smoke tests.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "scan-10k-repos-daily-without-false-positives",
@@ -1291,6 +1261,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "prompt-injection-got-the-hype-poison-data-ruined-us",
+    "title": "Prompt injection got the hype — poison data ruined us",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've hit the same owasp llm mistake in more than one production codebase over th; I spent three days debugging a connection pool issue that turned out to be a sin; I wasted six weeks building guardrails for prompt injection before realizing the",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "prompt-injections-hidden-aws-tax",
+    "title": "Prompt injection’s hidden AWS tax",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I did too, until I watched a single malformed user query drain our LLM budget by; I was surprised to discover that even well-funded teams ignore this because thei; I set this up using a 45-line GitHub Action that runs after every merge.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "rag-in-prod-what-tutorials-wont-tell-you",
+    "title": "RAG in prod: what tutorials won’t tell you",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I thought we were ready.; I spent three days debugging a connection pool issue before realising the index ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "rag-in-prod-why-demos-crumble",
+    "title": "RAG in prod: why demos crumble",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection-pool issue that turned out to be a sin; Most tutorials skip the retrieval-score gate.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
+    "title": "RAG is not enough: hybrid search + reranking in 2026",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on rag not is incomplete.; I learned this the hard way when a customer asked why our chatbot cited a 2026 p; I once shipped a RAG system that used only embeddings and an LLM.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "pick-niches-ai-cant-automate-by-2026",

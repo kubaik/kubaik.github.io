@@ -14,7 +14,7 @@
   "meta_description": "Cut security backlog 62% by embedding red-teaming in every PR — the lightweight setup that caught 12 incidents in one quarter without slowing releases.",
   "featured_image": "/static/images/red-teaming-agents-without-killing-velocity.jpg",
   "created_at": "2026-07-17T06:39:14.302913",
-  "updated_at": "2026-09-25T16:52:38.482816+00:00",
+  "updated_at": "2026-09-19T08:27:14.464387+00:00",
   "seo_keywords": [
     "RedTeamingAgents",
     "Internal",

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-19T21:55:04.362560">
-        <meta property="article:modified_time" content="2026-06-19T21:55:04.362572">
+        <meta property="article:modified_time" content="2026-09-25T16:52:38.525807+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Run APIs in 50 spots: what breaks first">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Run APIs in 50 spots: what breaks first",
       "description": "Cut API latency 60% by running in 50 edge locations — cache stampedes, clock drift, and write fan-out mistakes most teams make in 2026.",
       "datePublished": "2026-06-19T21:55:04+00:00",
-      "dateModified": "2026-06-19T21:55:04+00:00",
+      "dateModified": "2026-09-25T16:52:38+00:00",
       "wordCount": 3102,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
@@ -266,7 +266,7 @@
                         16 min read
                         &nbsp;·&nbsp; 3102 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-19
+                        &nbsp;·&nbsp; Updated 2026-09-25
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -282,7 +282,7 @@
 <p>The confusion peaks when you introduce “origin failover.” If your edge worker can’t reach the origin, what should it do? Serve stale data? Block the request? Fail open? Every choice has a cost: stale data breaks user trust, blocking breaks UX, and failing open can cascade into data loss. Teams also underestimate clock skew: at 50 locations, NTP drift can reach hundreds of milliseconds, which breaks leases, locks, and any algorithm that assumes synchronized clocks.</p>
 <p>Cost is the silent landmine. A single read-heavy endpoint replicated to 50 locations can quadruple your egress bill if you stream full responses over the wire instead of caching identifiers. And observability? Most APM tools weren’t built for 50 independent data planes. You’ll drown in partial traces that drop mid-flight when a regional outage hits.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of the edge as a <strong>cache that can also compute</strong>, not a CDN that can’t. Your API at the edge isn’t just a reversed proxy; it’s a shard of your application that must survive being disconnected from the rest of the world. </p>
+<p>Think of the edge as a <strong>cache that can also compute</strong>, not a CDN that can’t. Your API at the edge isn’t just a reversed proxy; it’s a shard of your application that must survive being disconnected from the rest of the world.</p>
 <p>Imagine a graph where the origin is the root and the 50 edge locations are leaves. Every leaf can serve reads locally, but writes must eventually converge back to the root. If a leaf is cut off, it should degrade gracefully: serve stale reads, queue writes, or return a cached error page. The hard part is defining “eventual” in a way that doesn’t create a stampede when the network heals.</p>
 <p>Analogy: a distributed database is like a swarm of ants carrying food back to the nest. Each ant (edge worker) can forage locally, but if the trail is blocked, it drops the crumb temporarily instead of starving. When the trail reopens, the crumbs (writes) flow back in bulk without trampling the nest (origin). That’s eventual consistency with bounded staleness.</p>
 <p>Concrete numbers from my last project:
@@ -422,9 +422,7 @@ export class OrderShard {
 }
 </code></pre>
 <p>Key details that bite teams:
-- Durable Objects are per-user shards, so one hot user can DOS the shard. We cap concurrency with a per-shard rate limiter (not shown).
-- The <code>setAlarm</code> call schedules a 100ms sync batch. If the origin is down, the alarm keeps firing every 100ms and can exhaust Durable Object CPU quotas (50ms per 100ms burst). We added a backoff: first retry at 100ms, then 200ms, 400ms, capped at 2s.
-- The local cache (<code>USER_CACHE</code>) is a Cloudflare KV namespace scoped to the worker, not the edge location. That means every location shares the same cache namespace—great for global hits, terrible for global misses that flood the origin. We added a per-location bloom filter to reduce origin load when the global cache is cold.</p>
+- Durable Objects are per-user shards, so one hot user can DOS the shard. We cap concurrency with a per-shard rate limiter (not shown). - The <code>setAlarm</code> call schedules a 100ms sync batch. If the origin is down, the alarm keeps firing every 100ms and can exhaust Durable Object CPU quotas (50ms per 100ms burst). We added a backoff: first retry at 100ms, then 200ms, 400ms, capped at 2s. - The local cache (<code>USER_CACHE</code>) is a Cloudflare KV namespace scoped to the worker, not the edge location. That means every location shares the same cache namespace—great for global hits, terrible for global misses that flood the origin. We added a per-location bloom filter to reduce origin load when the global cache is cold.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
 <p>If you’ve used Redis Cluster or DynamoDB Global Tables, you already know partial failure and eventual consistency. The edge just scales that model to 50 locations instead of 3–5. The difference is latency: in a single region, a 100ms commit lag is annoying; at 50 locations, it becomes part of the user experience.</p>
 <p>Connection pooling is another familiar concept that explodes in complexity. At the edge, each location runs its own pool to the origin. If you size the pool too small, you get connection starvation under load; too large, and you hit origin CPU limits. We settled on a pool of 10 connections per edge worker with a 2-second idle timeout. That gave us ~95% cache hit rate and ~150 concurrent writes per location before we saw timeouts.</p>
@@ -577,14 +575,11 @@ class PriceGrowOnlySet {
 <p>I once tried to run a GraphQL API at 50 locations without caching and watched the origin CPU hit 100% within 10 minutes because every edge worker forwarded every request. The fix was to cache the query plan and result for 5 seconds—cut origin CPU by 85% and p95 latency from 320ms to 75ms.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

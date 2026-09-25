@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 25 Sep 2026 04:06:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 25 Sep 2026 16:52:44 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio projects hiring managers skip</title>
+      <link>https://kubaik.github.io/portfolio-projects-hiring-managers-skip/</link>
+      <description>Portfolio projects get skipped when reviewers can&amp;#x27;t parse them in 90 seconds. Here&amp;#x27;s the legibility fix: problem, constraint, decision, measured result.</description>
+      <pubDate>Fri, 25 Sep 2026 16:52:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-projects-hiring-managers-skip/</guid>
+    </item>
     <item>
       <title>APM is blind to your AI agents</title>
       <link>https://kubaik.github.io/apm-is-blind-to-your-ai-agents/</link>
@@ -138,13 +145,6 @@
       <description>AI supply chain attacks hide in pickle files and trust_remote_code. Hash pinning, safetensors, and a 30-minute audit that finds the real exposure.</description>
       <pubDate>Sat, 19 Sep 2026 15:37:56 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-supply-chain-attacks-what-actually-broke/</guid>
-    </item>
-    <item>
-      <title>Computer-use agents: the permission trap</title>
-      <link>https://kubaik.github.io/computer-use-agents-the-permission-trap/</link>
-      <description>Computer-use agents inherit full user permissions and leave no audit trail.</description>
-      <pubDate>Sat, 19 Sep 2026 12:00:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/computer-use-agents-the-permission-trap/</guid>
     </item>
   </channel>
 </rss>
