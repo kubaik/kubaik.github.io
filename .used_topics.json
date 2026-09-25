@@ -56,5 +56,6 @@
   "Why most internal developer platforms fail at the adoption layer, not the technical one",
   "Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes",
   "World models and physical AI: what they mean for backend engineers in 2026",
-  "Why our beautiful multi-agent research system quietly degraded over three months"
+  "Why our beautiful multi-agent research system quietly degraded over three months",
+  "Why traditional APM missed 80%+ of our AI-related incidents"
 ]

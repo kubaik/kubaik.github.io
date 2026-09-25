@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "pick-niches-ai-cant-automate-by-2026",
-    "title": "Pick niches AI can't automate by 2026",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days building a compliance dashboard that auto-filled Kenyan tax f; I was surprised that a $400M industry still relied on human interpretation of by",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "platform-teams-in-2026-docs-vs-production-reality",
-    "title": "Platform teams in 2026: Docs vs. production reality",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when we scaled our staging cluster last year.; I was surprised that even mature teams with dedicated platform groups still rely; I once joined a seed-stage startup that skipped this and spent two weeks debuggi",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "portfolio-that-hires-show-constraints-not-code",
-    "title": "Portfolio that hires: show constraints, not code",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when we tried to hire a senior backend engineer last quarter; ou; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "portfolio-that-stands-out-when-everyone-uses-ai",
-    "title": "Portfolio that stands out when everyone uses AI",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I realised that the portfolio problem wasn’t about showcasing code—it was about ; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "prepare-tls-for-post-quantum-reality",
-    "title": "Prepare TLS for post-quantum reality",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran a quick scan across our 47 microservices using **Let's Encrypt certificate; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "prompt-injection-got-the-hype-poison-data-ruined-us",
     "title": "Prompt injection got the hype — poison data ruined us",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've hit the same owasp llm mistake in more than one production codebase over th; I spent three days debugging a connection pool issue that turned out to be a sin; I wasted six weeks building guardrails for prompt injection before realizing the",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "prompt-injections-hidden-aws-tax",
     "title": "Prompt injection’s hidden AWS tax",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I did too, until I watched a single malformed user query drain our LLM budget by; I was surprised to discover that even well-funded teams ignore this because thei; I set this up using a 45-line GitHub Action that runs after every merge.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "rag-in-prod-what-tutorials-wont-tell-you",
     "title": "RAG in prod: what tutorials won’t tell you",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I thought we were ready.; I spent three days debugging a connection pool issue before realising the index ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "rag-in-prod-why-demos-crumble",
     "title": "RAG in prod: why demos crumble",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection-pool issue that turned out to be a sin; Most tutorials skip the retrieval-score gate.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
     "title": "RAG is not enough: hybrid search + reranking in 2026",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on rag not is incomplete.; I learned this the hard way when a customer asked why our chatbot cited a 2026 p; I once shipped a RAG system that used only embeddings and an LLM.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "red-teaming-agents-without-killing-velocity",
@@ -1321,6 +1291,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "pick-niches-ai-cant-automate-by-2026",
+    "title": "Pick niches AI can't automate by 2026",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days building a compliance dashboard that auto-filled Kenyan tax f; I was surprised that a $400M industry still relied on human interpretation of by",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "platform-teams-in-2026-docs-vs-production-reality",
+    "title": "Platform teams in 2026: Docs vs. production reality",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when we scaled our staging cluster last year.; I was surprised that even mature teams with dedicated platform groups still rely; I once joined a seed-stage startup that skipped this and spent two weeks debuggi",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "portfolio-that-hires-show-constraints-not-code",
+    "title": "Portfolio that hires: show constraints, not code",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when we tried to hire a senior backend engineer last quarter; ou; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "portfolio-that-stands-out-when-everyone-uses-ai",
+    "title": "Portfolio that stands out when everyone uses AI",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I realised that the portfolio problem wasn’t about showcasing code—it was about ; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "prepare-tls-for-post-quantum-reality",
+    "title": "Prepare TLS for post-quantum reality",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran a quick scan across our 47 microservices using **Let's Encrypt certificate; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "negotiate-pay-in-2026-with-ai-proof-points",

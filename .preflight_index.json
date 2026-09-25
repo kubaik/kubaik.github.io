@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-24T16:46:41.401692",
+  "built_at": "2026-09-25T04:05:37.176620",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5355,6 +5355,11 @@
       "slug": "multi-agent-systems-when-they-quietly-degrade",
       "title": "Multi-agent systems: when they quietly degrade",
       "summary": "The same our beautiful mistake shows up across production codebases often enough to be a pattern, not bad luck. Here's the root cause, not just the symptom. The vendor docs cover the setup and go quiet on the failure modes. The one-paragraph version (read this first) A multi-agent research system th"
+    },
+    {
+      "slug": "apm-is-blind-to-your-ai-agents",
+      "title": "APM is blind to your AI agents",
+      "summary": "There's a one-line change buried in most traditional apm setups that nobody flags until it's expensive. The tutorials all show the happy path. Here's what changed once we stopped guessing and started measuring. The conventional wisdom (and why it's incomplete) Application performance monitoring was "
     }
   ]
 }

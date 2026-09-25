@@ -1,0 +1,517 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>APM is blind to your AI agents - Kubai Kevin</title>
+        <meta name="description" content="Traditional APM misses AI incidents like empty retrieval and token overruns.">
+        <meta name="keywords" content="Apm, LlmMonitoring, AiObservability, TraditionalApmGaps, Detect, Ai, Llm, Rag, Vectorsearch">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-25T04:05:33.922296">
+        <meta property="article:modified_time" content="2026-09-25T04:05:33.922322">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="APM is blind to your AI agents">
+        <meta property="og:description" content="Traditional APM misses AI incidents like empty retrieval and token overruns.">
+        <meta property="og:url" content="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/apm-is-blind-to-your-ai-agents.png">
+        <meta property="og:image:alt" content="APM is blind to your AI agents">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="APM is blind to your AI agents">
+        <meta name="twitter:description" content="Traditional APM misses AI incidents like empty retrieval and token overruns.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/apm-is-blind-to-your-ai-agents.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/apm-is-blind-to-your-ai-agents/#article",
+      "headline": "APM is blind to your AI agents",
+      "description": "Traditional APM misses AI incidents like empty retrieval and token overruns.",
+      "datePublished": "2026-09-25T04:05:33+00:00",
+      "dateModified": "2026-09-25T04:05:33+00:00",
+      "wordCount": 2318,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/apm-is-blind-to-your-ai-agents/"
+      },
+      "keywords": "Apm, LlmMonitoring, AiObservability, TraditionalApmGaps, Detect, Ai, Llm, Rag"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "APM is blind to your AI agents",
+          "item": "https://kubaik.github.io/apm-is-blind-to-your-ai-agents/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>APM is blind to your AI agents</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">APM is blind to your AI agents</h1>
+                
+                <p class="post-lead">Traditional APM misses AI incidents like empty retrieval and token overruns.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Apm</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/llmmonitoring/"
+                       style="text-decoration:none;">LlmMonitoring</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/aiobservability/"
+                       style="text-decoration:none;">AiObservability</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">TraditionalApmGaps</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2318 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-25
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>There's a one-line change buried in most traditional apm setups that nobody flags until it's expensive. The tutorials all show the happy path. Here's what changed once we stopped guessing and started measuring.</p>
+<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
+<p>Application performance monitoring was built on a simple premise: a request comes in, work happens, a response goes out. Trace it, time it, alert if it's slow or errors. That model served us well for two decades of CRUD apps. But AI systems — LLM calls, agent loops, RAG pipelines — don't behave like CRUD apps. They are non-deterministic, they spawn sub-calls, they can silently degrade, and they often fail <em>semantically</em> rather than technically. A 200 OK response from an LLM endpoint tells you nothing about whether the answer was hallucinated, whether the agent got stuck in a loop, or whether the retrieval step returned zero relevant chunks.</p>
+<p>The conventional wisdom says: instrument your HTTP calls, set up latency and error-rate alerts, and you're covered. That advice is incomplete because it assumes failure means an exception or a timeout. In AI systems, the most expensive failures are the ones that return a perfectly valid HTTP 200 with a plausible-but-wrong answer. Your APM dashboard stays green while your users get garbage. The part that trips people up is that traditional APM has no concept of semantic correctness, token economics, or agent state — and that's what this post actually covers.</p>
+<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
+<p>You deploy an AI agent that uses OpenAI's GPT-4o (version 2024-08-06) to answer customer questions. You set up Datadog APM 7.x, instrument the HTTP client, and configure alerts for p99 latency &gt; 2s and error rate &gt; 1%. Everything looks fine for weeks. Then a support manager mentions that customers are complaining about wrong answers. You check your dashboards: latency is 1.2s, error rate is 0.1%, no alerts. You dig into logs and find that 40% of responses contained hallucinated product IDs. Your APM never noticed because the API returned 200 OK with a valid JSON body.</p>
+<p>This is not a hypothetical. A common failure mode in production RAG systems is the "empty retrieval" problem: the vector search returns zero documents, the LLM is prompted with no context, and it confidently makes something up. Traditional APM sees a successful database query (0 rows returned is not an error) and a successful LLM call. No red lights. But the user gets a wrong answer, and you lose trust.</p>
+<p>Another gap: token usage and cost. A runaway agent loop can make 50 LLM calls in a single user request, burning through $0.10 in tokens per request instead of $0.002. Your APM might show a 5-second latency spike, but it won't tell you that you just spent 50x more than expected. You need token-level cost tracking, which most APM tools don't provide out of the box.</p>
+<h2 id="a-different-mental-model">A different mental model</h2>
+<p>Instead of thinking about requests and responses, think about <strong>intent, execution, and outcome</strong>. For AI systems, you need to monitor:</p>
+<ol>
+<li><strong>Intent accuracy</strong> — did the system understand what the user wanted? This often requires a separate classifier or a human-in-the-loop eval.</li>
+<li><strong>Execution traces</strong> — not just HTTP spans, but the full chain of reasoning steps, tool calls, and retrieval results. OpenTelemetry's semantic conventions for GenAI (still evolving as of 2026) attempt to standardize this, but adoption is uneven.</li>
+<li><strong>Outcome quality</strong> — was the final answer correct, relevant, and safe? This is where traditional APM completely drops the ball.</li>
+</ol>
+<p>The key shift is from <strong>infrastructure metrics</strong> to <strong>semantic metrics</strong>. You still need latency and error rates, but you also need metrics like retrieval recall@k, answer faithfulness score, and token cost per request. These are not available from your APM vendor's default dashboard. You have to build them.</p>
+<p>A practical approach: wrap your LLM calls in a custom instrumentation layer that logs the prompt, the response, token counts, and a quality score (from a small evaluator model or heuristic). Then ship those logs to a system that can alert on quality degradation. This is more work than installing a Datadog agent, but it's the only way to catch the failures that matter.</p>
+<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
+<p>Consider a typical customer support agent built with LangChain 0.2 and OpenAI. The agent has access to three tools: <code>search_knowledge_base</code>, <code>get_order_status</code>, and <code>escalate_to_human</code>. In a healthy run, the agent calls <code>search_knowledge_base</code>, gets 3 relevant chunks, and answers. In a failure mode, the retrieval returns 0 chunks (because the query was phrased oddly), and the agent either hallucinates or calls <code>escalate_to_human</code> unnecessarily.</p>
+<p>Traditional APM would show: 1 LLM call, 1 tool call, 200 OK, 800ms latency. No error. But the user experience is broken. To catch this, you need to log the retrieval result count and alert if it's 0 for more than 5% of requests. Here's a minimal Python example using OpenTelemetry to add a custom span attribute:</p>
+<pre><code class="language-python">from opentelemetry import trace
+from opentelemetry.trace import Status, StatusCode
+
+tracer = trace.get_tracer(__name__)
+
+def search_knowledge_base(query: str):
+    with tracer.start_as_current_span(&quot;retrieval.search&quot;) as span:
+        results = vector_store.similarity_search(query, k=3)
+        span.set_attribute(&quot;retrieval.num_results&quot;, len(results))
+        if len(results) == 0:
+            span.set_status(Status(StatusCode.ERROR, &quot;empty retrieval&quot;))
+        return results
+</code></pre>
+<p>This adds a custom attribute and marks the span as error when retrieval is empty. But note: this only works if your APM backend supports custom span attributes and can alert on them. Many don't, or charge extra for custom metrics.</p>
+<p>Another example: token cost tracking. A common trap is to assume that all LLM calls cost the same. In reality, GPT-4o costs $2.50 per 1M input tokens and $10.00 per 1M output tokens (as of 2026). A single agent run might use 2000 input tokens and 500 output tokens, costing $0.005 + $0.005 = $0.01. If your agent loops 10 times, that's $0.10 per request. At 10,000 requests per day, that's $1,000 per day — a 10x cost overrun compared to a well-behaved agent. Traditional APM won't show this; you need to aggregate token counts per request and alert on cost per request exceeding a threshold.</p>
+<p>Here's a JavaScript example for tracking token usage in a Node.js 20 LTS environment using the OpenAI SDK:</p>
+<pre><code class="language-javascript">import OpenAI from 'openai';
+import { metrics } from '@opentelemetry/api';
+
+const meter = metrics.getMeter('ai-agent');
+const tokenCounter = meter.createCounter('llm.tokens.total', {
+  description: 'Total tokens used by LLM calls',
+});
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+export async function callLLM(prompt, model = 'gpt-4o') {
+  const response = await openai.chat.completions.create({
+    model,
+    messages: [{ role: 'user', content: prompt }],
+  });
+  const usage = response.usage;
+  tokenCounter.add(usage.total_tokens, {
+    model,
+    prompt_tokens: usage.prompt_tokens,
+    completion_tokens: usage.completion_tokens,
+  });
+  return response.choices[0].message.content;
+}
+</code></pre>
+<p>This records token usage as a metric. You can then create alerts for when the average tokens per request exceeds a baseline (e.g., 1500 tokens). Without this, you're flying blind on cost.</p>
+<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
+<p>Traditional APM is not useless for AI systems. It still catches:</p>
+<ul>
+<li><strong>Infrastructure failures</strong>: LLM API outages (e.g., OpenAI returning 503), network timeouts, rate limit errors (429). These are real and APM handles them well.</li>
+<li><strong>Latency regressions</strong>: If your p95 latency jumps from 800ms to 3s, APM will alert you. That could indicate a model change, a cold start, or a downstream dependency issue.</li>
+<li><strong>Basic error rates</strong>: If your code throws an exception because the LLM returned malformed JSON, APM catches it.</li>
+</ul>
+<p>So the conventional wisdom is right for the <em>transport layer</em>. It's wrong for the <em>semantic layer</em>. You need both. The mistake is assuming that because APM covers the transport, it covers the whole system. It doesn't.</p>
+<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
+<p>The right level of semantic monitoring depends on your risk tolerance and the cost of a wrong answer. Use this table to decide:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Traditional APM sufficient?</th>
+<th>Additional semantic monitoring needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Internal chatbot for FAQ</td>
+<td>Yes, mostly</td>
+<td>Low priority; occasional manual review</td>
+</tr>
+<tr>
+<td>Customer-facing support agent</td>
+<td>No</td>
+<td>High: retrieval recall, hallucination detection</td>
+</tr>
+<tr>
+<td>Code generation assistant</td>
+<td>No</td>
+<td>High: compilation success rate, unit test pass rate</td>
+</tr>
+<tr>
+<td>Document summarization</td>
+<td>No</td>
+<td>Medium: factuality score, coverage of key points</td>
+</tr>
+<tr>
+<td>Real-time translation</td>
+<td>No</td>
+<td>Medium: BLEU score, human spot-checks</td>
+</tr>
+<tr>
+<td>AI-powered search</td>
+<td>No</td>
+<td>High: click-through rate, zero-result rate</td>
+</tr>
+</tbody>
+</table>
+<p>If you're in the "No" column, you need to invest in custom instrumentation. Start with the highest-risk failure mode: for support agents, that's usually empty retrieval or hallucination. For code assistants, it's syntax errors or non-compiling code. Measure that, alert on it, and iterate.</p>
+<h2 id="common-objections-and-responses">Common objections, and responses</h2>
+<p><strong>Objection: "We can't afford to build custom monitoring."</strong><br />
+You can't afford not to. A single hallucination that reaches a customer can cost more in trust and support time than the engineering hours to build a simple evaluator. Start small: log the retrieval result count and token usage. That's two metrics, maybe 50 lines of code.</p>
+<p><strong>Objection: "Our APM vendor says they support AI monitoring."</strong><br />
+Check what they actually measure. Many vendors have added "LLM observability" features that are just HTTP tracing with a fancy name. They still don't measure semantic quality. Ask them: can you alert on retrieval recall? Can you track token cost per user session? If not, you're still blind.</p>
+<p><strong>Objection: "We'll just use human evaluation."</strong><br />
+Human evaluation is great for calibration but too slow and expensive for real-time alerting. You need automated metrics to catch regressions within minutes, not days. Use humans to label a sample and train a small evaluator model, then run that evaluator on every request.</p>
+<p><strong>Objection: "This is too complex; we'll just use a better model."</strong><br />
+A better model reduces but doesn't eliminate hallucinations. Even GPT-4o can hallucinate when given no context. The monitoring gap remains.</p>
+<h2 id="what-the-alternative-approach-would-change">What the alternative approach would change</h2>
+<p>If you adopt semantic monitoring, your incident response changes. Instead of waiting for a customer complaint, you get an alert: "Retrieval recall dropped from 95% to 70% in the last 15 minutes." You check the vector database — maybe an index rebuild failed, or a new document batch has a different embedding distribution. You fix it before users notice.</p>
+<p>You also get cost visibility. A dashboard showing token cost per request, per user, per model helps you optimize prompts and choose cheaper models for simple tasks. For example, you might route 80% of queries to GPT-4o-mini ($0.15 per 1M input tokens) and only 20% to GPT-4o, cutting costs by 70% without hurting quality.</p>
+<p>Finally, you build a feedback loop. Every request logs its inputs, outputs, and quality score. You can analyze failures, improve prompts, and retrain retrieval models. This is how AI systems get better over time — not by hoping the model improves, but by systematically finding and fixing failure modes.</p>
+<h2 id="summary">Summary</h2>
+<p>Traditional APM misses the majority of AI-related incidents because it monitors transport, not semantics. To catch the failures that matter, you need to instrument retrieval quality, token cost, and answer correctness. Start by adding two metrics to your AI pipeline: retrieval result count and total tokens per request. Then set alerts for when retrieval returns zero results or token usage exceeds a baseline. This won't cover everything, but it will catch the most common and expensive failures.</p>
+<p>Your next step: open your AI service's code and add a log line that records the number of retrieved documents and the total tokens used for each request. Deploy it, then check the logs after an hour. You'll likely find at least one surprising pattern — maybe 10% of requests have zero retrieval, or your average token count is double what you expected. That's the first incident your APM missed.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I monitor LLM hallucinations in production?</strong>
+You can't directly detect hallucinations without a ground truth, but you can use proxy metrics: retrieval recall (did you retrieve relevant documents?), answer consistency (does the same question get different answers?), and factuality scores from a small evaluator model. Start by logging retrieval results and using a lightweight model like GPT-4o-mini to score answer relevance on a sample of requests. Alert if the average score drops below a threshold.</p>
+<p><strong>Why does my APM show no errors but users complain about wrong answers?</strong>
+Because APM only sees HTTP status codes and latency. A wrong answer is still a 200 OK. You need semantic monitoring to catch it. Add custom metrics for retrieval quality and token usage, and consider a periodic human evaluation to calibrate your automated scores.</p>
+<p><strong>What metrics should I track for a RAG pipeline?</strong>
+At minimum: retrieval recall@k (percentage of queries where at least one relevant document is retrieved), average number of retrieved documents, token usage per request, and answer latency. If you have ground truth, track answer accuracy. Also monitor embedding drift and index freshness.</p>
+<p><strong>How much does it cost to add semantic monitoring?</strong>
+The engineering cost is typically 20–40 hours to build a basic pipeline that logs retrieval results and token usage, plus the cost of running an evaluator model (e.g., $0.001 per request for GPT-4o-mini). For a service handling 10,000 requests per day, that's about $10 per day in evaluation costs. Compare that to the cost of a single customer-facing hallucination.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-observability-the-metrics-that-matter/">
+                        <h3>AI observability: the metrics that matter</h3>
+                        <p>AI observability cuts false alerts 8× by tracking drift vectors and confidence histograms instead of just latency and errors.</p>
+                        <span class="related-meta">19 min read · 28 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-errors-hide-in-plain-latency/">
+                        <h3>AI errors hide in plain latency</h3>
+                        <p>AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %</p>
+                        <span class="related-meta">12 min read · 21 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/">
+                        <h3>LLMOps 2026: evaluation stack that replaced RAG dashboards</h3>
+                        <p>Cut LLM evaluation drift 40% by replacing RAG dashboards with real user metrics — the updated golden dataset, prompt fixes, and Redis caching we actually use…</p>
+                        <span class="related-meta">13 min read · 5 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

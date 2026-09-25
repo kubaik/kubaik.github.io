@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-08T17:45:22.815623">
-        <meta property="article:modified_time" content="2026-09-21T12:37:52.668384">
+        <meta property="article:modified_time" content="2026-09-25T04:05:53.591610+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="RAG in prod: what tutorials won’t tell you">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/rag-in-prod-what-tutorials-wont-tell-you/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "RAG in prod: what tutorials won’t tell you",
       "description": "Cut RAG latency 78% and AWS costs 35% with a two-tier FAISS + PostgreSQL system. Learn the cache invalidation, CDC and memory traps tutorials skip.",
       "datePublished": "2026-06-08T17:45:22+00:00",
-      "dateModified": "2026-09-21T12:37:52+00:00",
+      "dateModified": "2026-09-25T04:05:53+00:00",
       "wordCount": 2576,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
@@ -267,7 +267,7 @@
                         13 min read
                         &nbsp;·&nbsp; 2576 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-21
+                        &nbsp;·&nbsp; Updated 2026-09-25
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -309,9 +309,7 @@
 <li><strong>Cold tier</strong>: PostgreSQL/pgvector for older data (queried infrequently)</li>
 </ol>
 <p>This split solves three problems:
-- <strong>Concurrency</strong>: FAISS handles concurrent writes; PostgreSQL handles bulk writes at night.
-- <strong>Latency</strong>: The hot tier serves 80% of queries in &lt;200ms.
-- <strong>Cost</strong>: Redis RAM usage drops by 60% and the FAISS load-at-startup hack goes away.</p>
+- <strong>Concurrency</strong>: FAISS handles concurrent writes; PostgreSQL handles bulk writes at night. - <strong>Latency</strong>: The hot tier serves 80% of queries in &lt;200ms. - <strong>Cost</strong>: Redis RAM usage drops by 60% and the FAISS load-at-startup hack goes away.</p>
 <h3 id="how-we-routed-queries">How we routed queries</h3>
 <p>A simple heuristic works: if a store owner's question contains a date in the last 7 days, route to FAISS; otherwise, route to PostgreSQL.</p>
 <pre><code class="language-python">from datetime import datetime, timedelta
@@ -560,14 +558,11 @@ for order_id, vector in zip([o.id for o in changed_orders], vectors):
 <p>Store owners ask questions that require <strong>joining order data with product metadata</strong>—but embeddings often only cover order text. The embedding pipeline has to be rebuilt to include product names and categories. Always validate your embedding strategy against real user queries before shipping.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
