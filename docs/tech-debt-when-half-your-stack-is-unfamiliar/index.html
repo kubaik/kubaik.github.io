@@ -1,0 +1,495 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tech debt: when half your stack is unfamiliar - Kubai Kevin</title>
+        <meta name="description" content="Now you know that a 200 ms processing time is normal and a 2-second processing time is an anomaly.">
+        <meta name="keywords" content="TechnicalDebt, SoloEngineer, UnfamiliarTools, Debugging, Tool, Tech, Technology">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-26T16:04:10.400734">
+        <meta property="article:modified_time" content="2026-09-26T16:04:10.400744">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Tech debt: when half your stack is unfamiliar">
+        <meta property="og:description" content="Now you know that a 200 ms processing time is normal and a 2-second processing time is an anomaly.">
+        <meta property="og:url" content="https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/tech-debt-when-half-your-stack-is-unfamiliar.png">
+        <meta property="og:image:alt" content="Tech debt: when half your stack is unfamiliar">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Tech debt: when half your stack is unfamiliar">
+        <meta name="twitter:description" content="Now you know that a 200 ms processing time is normal and a 2-second processing time is an anomaly.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/tech-debt-when-half-your-stack-is-unfamiliar.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/#article",
+      "headline": "Tech debt: when half your stack is unfamiliar",
+      "description": "Now you know that a 200 ms processing time is normal and a 2-second processing time is an anomaly.",
+      "datePublished": "2026-09-26T16:04:10+00:00",
+      "dateModified": "2026-09-26T16:04:10+00:00",
+      "wordCount": 3246,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/"
+      },
+      "keywords": "TechnicalDebt, SoloEngineer, UnfamiliarTools, Debugging, Tool, Tech, Technology"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tech debt: when half your stack is unfamiliar",
+          "item": "https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Tech debt: when half your stack is unfamiliar</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Tech debt: when half your stack is unfamiliar</h1>
+                
+                <p class="post-lead">Now you know that a 200 ms processing time is normal and a 2-second processing time is an anomaly.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">TechnicalDebt</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">SoloEngineer</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">UnfamiliarTools</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Debugging</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/tech/"
+                       style="text-decoration:none;">Tech</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/technology/"
+                       style="text-decoration:none;">Technology</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3246 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-26
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>webassembly server tends to expose the difference between working and being trustworthy. This post covers what comes after the happy path. It only shows up under the exact conditions nobody tests for.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>You're the solo technical lead. Your frontend is React 18, your backend is Django 4.2, and your infrastructure is a mix of AWS Lambda and ECS Fargate. Then a contractor adds a Rust service for image processing. Another contributor introduces Terraform 1.7 for a side project. A third person swaps out your Redis 7.2 cache for Valkey 7.2 because of licensing. Suddenly, half your stack is tools you've never written a line of code in. You're still the one who has to approve pull requests, debug production incidents, and explain the architecture to a non-technical co-founder. The confusion isn't just about syntax. It's about not knowing what "normal" looks like in those tools. When something breaks at 2 AM, you can't tell if the error message is a real bug or a misconfiguration. You can't tell if the proposed fix is idiomatic or a hack. This is the real cost of technical debt: not the code itself, but the decision-making overhead. The part that trips people up is that you don't need to become an expert in every tool. You need a repeatable process for evaluating, debugging, and governing tools you don't fully understand. That's what this post covers.</p>
+<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
+<p>The root cause isn't a lack of knowledge. It's a lack of <em>observability into the tool's behavior</em>. When you understand a tool, you have mental models for its failure modes. You know that a Django <code>OperationalError: FATAL: too many connections</code> means you need PgBouncer, not more RAM. You know that a Node.js <code>MaxListenersExceededWarning</code> is usually a sign of a leaked event listener, not a memory leak. With unfamiliar tools, you lose those heuristics. You're forced to rely on the tool's own documentation, which is often written for experts who already know the context. The surface symptom is "I don't know this tool." The real reason is "I don't have a way to verify whether this tool is behaving correctly or not." That's a process problem, not a knowledge problem. And it gets worse when you're the only engineer. There's no senior person to ask. There's no code review from someone who's seen the tool in production. You're making architectural decisions based on incomplete information, and the cost of a wrong decision is paid in production incidents. A common failure mode here is the "cargo cult" trap: you copy a configuration from a blog post or a GitHub issue, it works in staging, and then it fails in production because the blog post assumed a different version or a different cloud provider. You can't tell the difference because you don't know what the tool's defaults actually are.</p>
+<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
+<p><strong>Symptom pattern:</strong> You're seeing intermittent failures that don't correlate with load. The error messages are vague. The tool's logs are either too verbose or too quiet. You suspect the tool itself is buggy, but you can't prove it.</p>
+<p><strong>Cause:</strong> You're missing a baseline. You don't know what the tool's normal behavior looks like, so you can't spot anomalies. This is the most common cause of decision paralysis with unfamiliar tools. You're not sure if the tool is misbehaving or if you're misusing it.</p>
+<p><strong>Fix:</strong> Establish a baseline by running the tool in isolation with a known input. For example, if you've inherited a Rust service that processes images, write a small test harness that feeds it a 1 MB JPEG and measures the time and memory usage. Do this 10 times. You'll get a distribution. Now you know that a 200 ms processing time is normal and a 2-second processing time is an anomaly. You can also use this to compare against the tool's documentation. If the docs say it should handle 100 requests per second and you're getting 10, you know something is wrong. Here's a Python example of a baseline harness for a hypothetical image processing service:</p>
+<pre><code class="language-python">import requests
+import time
+import statistics
+
+url = &quot;http://localhost:8080/process&quot;
+with open(&quot;test.jpg&quot;, &quot;rb&quot;) as f:
+    files = {&quot;image&quot;: f}
+    times = []
+    for i in range(10):
+        start = time.perf_counter()
+        resp = requests.post(url, files=files)
+        elapsed = (time.perf_counter() - start) * 1000  # ms
+        assert resp.status_code == 200, f&quot;Request failed: {resp.text}&quot;
+        times.append(elapsed)
+
+print(f&quot;Median: {statistics.median(times):.1f} ms&quot;)
+print(f&quot;p95: {statistics.quantiles(times, n=20)[18]:.1f} ms&quot;)
+print(f&quot;Max: {max(times):.1f} ms&quot;)
+</code></pre>
+<p>Run this against your staging environment. If the median is 150 ms and the p95 is 180 ms, you have a tight baseline. If the p95 is 800 ms, you have a problem. This gives you a concrete number to compare against when someone proposes a change. It also gives you a way to verify a fix: if the p95 drops to 200 ms after a configuration change, you know it worked. Without a baseline, you're guessing. With a baseline, you're making an engineering decision.</p>
+<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
+<p><strong>Symptom pattern:</strong> The tool works fine in development but fails in production. The error messages mention environment variables, permissions, or network timeouts. You've checked the configuration and it looks correct.</p>
+<p><strong>Cause:</strong> You're missing a <em>contract</em> between the tool and the rest of your system. Unfamiliar tools often have implicit assumptions about their environment: the version of a shared library, the presence of a specific file, the latency of a network call. When those assumptions are violated, the tool fails in ways that are hard to diagnose because the error messages don't mention the assumption.</p>
+<p><strong>Fix:</strong> Document the tool's contract explicitly. Write down what the tool needs to function: environment variables, file paths, network access, CPU/memory limits. Then verify each one in your production environment. For example, a common trap with Rust services is that they're compiled with a specific glibc version. If you build on Ubuntu 22.04 and deploy to Alpine Linux, you'll get a <code>version 'GLIBC_2.34' not found</code> error at runtime. The fix is to build in a container that matches the production environment. Here's a Dockerfile snippet that does this:</p>
+<pre><code class="language-dockerfile">FROM rust:1.75-slim-bookworm AS builder
+WORKDIR /app
+COPY . .
+RUN cargo build --release
+
+FROM debian:bookworm-slim
+RUN apt-get update &amp;&amp; apt-get install -y ca-certificates
+COPY --from=builder /app/target/release/my-service /usr/local/bin/
+CMD [&quot;my-service&quot;]
+</code></pre>
+<p>This ensures the binary is built against the same glibc as the runtime. It's a small change, but it eliminates a whole class of "works on my machine" failures. The broader point is that you need to treat unfamiliar tools like any other dependency: they have a contract, and you need to test that contract in production. A common mistake is to assume that because a tool is written in a language you know, its runtime behavior will be familiar. Rust, Go, and even Python have different deployment characteristics. You need to verify them.</p>
+<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
+<p><strong>Symptom pattern:</strong> The tool works in isolation but fails when integrated with other services. The errors are inconsistent: sometimes it's a timeout, sometimes it's a 500, sometimes it's a silent failure. The behavior changes when you deploy to a different region or a different cloud provider.</p>
+<p><strong>Cause:</strong> The tool is sensitive to environmental factors that you haven't accounted for: network latency, DNS resolution, clock skew, or the behavior of a managed service. This is especially common with tools that rely on external services, like a message queue or a database. For example, a tool might assume that a Redis call will complete in under 5 ms. If your Redis instance is in a different availability zone, the latency could be 20 ms, causing timeouts.</p>
+<p><strong>Fix:</strong> Measure the environment's characteristics and compare them to the tool's assumptions. Use a simple network latency test between your services. Here's a Python script that measures the round-trip time to a Redis instance:</p>
+<pre><code class="language-python">import redis
+import time
+
+r = redis.Redis(host='my-redis.example.com', port=6379)
+times = []
+for _ in range(100):
+    start = time.perf_counter()
+    r.ping()
+    times.append((time.perf_counter() - start) * 1000)
+
+print(f&quot;Median RTT: {sorted(times)[50]:.2f} ms&quot;)
+print(f&quot;p95 RTT: {sorted(times)[95]:.2f} ms&quot;)
+</code></pre>
+<p>If the median RTT is 1 ms, you're in the same AZ. If it's 15 ms, you're crossing AZs. That 15 ms might be fine for most tools, but if your tool has a 10 ms timeout, it will fail. The fix could be to move the service closer, increase the timeout, or add a local cache. The key is to make the environment's behavior visible. Once you have numbers, you can make an informed decision. This is also where a comparison table helps. Here's a table of common environmental factors and their typical impact:</p>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Typical impact</th>
+<th>How to measure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cross-AZ latency</td>
+<td>1–2 ms added per call</td>
+<td><code>ping</code> or <code>traceroute</code></td>
+</tr>
+<tr>
+<td>Cross-region latency</td>
+<td>50–200 ms added per call</td>
+<td><code>ping</code> between regions</td>
+</tr>
+<tr>
+<td>DNS resolution</td>
+<td>5–20 ms first lookup, then cached</td>
+<td><code>dig</code> with timing</td>
+</tr>
+<tr>
+<td>Clock skew</td>
+<td>1–100 ms drift per hour</td>
+<td><code>ntpq -p</code> or <code>chronyc tracking</code></td>
+</tr>
+<tr>
+<td>Disk I/O</td>
+<td>0.1–10 ms per read</td>
+<td><code>fio</code> benchmark</td>
+</tr>
+</tbody>
+</table>
+<p>Use this table to prioritize which factors to investigate first. Cross-region latency is usually the biggest culprit, followed by disk I/O for data-intensive tools.</p>
+<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
+<p>Verification is where most solo engineers cut corners. You apply a fix, the symptom disappears, and you move on. But without verification, you don't know if the fix addressed the root cause or just masked it. The symptom might return under different conditions. To verify properly, you need to reproduce the original failure and confirm it's gone. Start by writing a test that triggers the failure. If the failure was a timeout, write a test that sends a request with a tight timeout and asserts that it succeeds. If the failure was a memory leak, write a test that runs the tool for 10 minutes and checks that memory usage stays flat. Run this test before and after the fix. The before run should fail; the after run should pass. This gives you confidence that the fix is real. It also gives you a regression test for the future. A common mistake is to verify only in development. Development environments are often more forgiving: lower latency, more memory, fewer concurrent requests. You need to verify in an environment that resembles production. If you can't reproduce production exactly, use a staging environment that mirrors it as closely as possible. Measure the key metrics before and after: latency, error rate, memory usage, CPU usage. A typical verification might show that p95 latency dropped from 800 ms to 200 ms, and error rate dropped from 5% to 0.1%. Those are the numbers you want to see. If the numbers don't improve, the fix didn't work. Don't assume it did because the symptom disappeared. Symptoms can be intermittent. Numbers are objective.</p>
+<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
+<p>Prevention is about building a system that makes unfamiliar tools less risky. The first step is to limit the number of tools you adopt. Every new tool adds a maintenance burden. A common heuristic is to adopt a new tool only when it replaces two existing tools or solves a problem you've already tried to solve with your current stack. This forces you to justify the complexity. The second step is to create a "tool card" for each tool in your stack. A tool card is a one-page document that answers: What does this tool do? What version are we on? What are its dependencies? What are its failure modes? How do we monitor it? Where is the documentation? This is especially important for tools you didn't choose yourself. When a contributor adds a new tool, require them to fill out a tool card as part of the pull request. This forces them to think about maintenance, and it gives you a reference when something breaks. The third step is to standardize your observability. If every tool emits logs in a different format, you can't correlate events. Use a structured logging library like <code>structlog</code> for Python or <code>winston</code> for Node.js. Send all logs to a central system like Grafana Loki or AWS CloudWatch. This way, when a tool fails, you can see what else was happening at the same time. A common failure mode is to have logs scattered across different services, making it impossible to trace a request. Centralized logging fixes that. Finally, schedule regular "tool audits." Once a quarter, review each tool in your stack. Is it still maintained? Are there security updates? Is there a newer version with breaking changes? This prevents the slow accumulation of outdated dependencies that become impossible to upgrade. For a solo engineer, this is 2–3 hours per quarter, but it saves days of firefighting later.</p>
+<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<p>When you're dealing with unfamiliar tools, certain errors tend to cluster. If you've just fixed a timeout issue, you might next encounter a <code>Connection refused</code> error. This often happens when a service starts before its dependency is ready. The fix is to add a health check or a retry with exponential backoff. Another related error is <code>Out of memory: Killed process</code>. This can happen when a tool has a memory leak or when its memory limit is too low. Check the tool's documentation for recommended memory settings. A third common error is <code>Permission denied</code> when accessing a file or a socket. This is often due to running the tool as a different user or in a container with a read-only filesystem. Check the user and group IDs. A fourth error is <code>SSL certificate problem: unable to get local issuer certificate</code>. This happens when a tool doesn't trust your internal CA. You need to add the CA certificate to the tool's trust store. Each of these errors has a specific cause and a specific fix. The key is to recognize the pattern and apply the right diagnostic. Don't treat every error as a new mystery. Most errors fall into a few categories: connectivity, permissions, resources, and configuration. Once you identify the category, the fix is usually straightforward.</p>
+<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
+<p>Sometimes you've tried everything and the tool still fails. You've verified the baseline, documented the contract, measured the environment, and the problem persists. At this point, you need to escalate. The first step is to isolate the tool completely. Run it in a minimal environment with no other services. If it works there, the problem is integration. If it fails there, the problem is the tool itself. The second step is to check the tool's issue tracker. Search for your exact error message. If it's a known bug, there may be a workaround or a patch. If it's not, open a new issue with a minimal reproduction. Include the version, the environment, and the exact steps to reproduce. The third step is to consider replacing the tool. This is a last resort, but sometimes it's the right call. If a tool is poorly maintained or has fundamental design flaws, you're better off with a different tool. Use the tool card to evaluate alternatives. The fourth step is to ask for help. If you're part of a community, post in a forum or a Slack channel. If you have a budget, hire a consultant for a few hours. Sometimes a fresh pair of eyes can spot the problem in minutes. The key is to not spend days on a single issue. Set a time limit: if you haven't made progress in 4 hours, escalate. Your time is better spent on other things. As a solo engineer, you're the bottleneck. You need to protect your time.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I decide which unfamiliar tool to learn first?</strong>
+Prioritize by blast radius. The tool that, if it fails, takes down your entire application is the one to learn first. For most solo engineers, that's the database, the web server, or the message queue. Tools that are used for background jobs or analytics can wait. Start by learning the tool's failure modes: what happens when it runs out of memory, when the network partitions, when the disk is full. Those are the scenarios you'll face in production. Once you know how to diagnose those, you can handle most incidents.</p>
+<p><strong>What's the best way to document a tool I don't understand?</strong>
+Use a tool card. Write down the version, the dependencies, the configuration, and the failure modes. Include a link to the official documentation and any relevant GitHub issues. Add a section for "known gotchas" where you record the things that surprised you. This document becomes your reference during incidents. It also helps when you onboard a new contributor. Keep it in your repository, next to the code, so it's easy to find. Update it whenever you learn something new.</p>
+<p><strong>How can I tell if a tool is misbehaving or if I'm misusing it?</strong>
+Compare its behavior to a baseline. Run the tool with a known input and measure the output. If the output deviates from the documentation or from your expectations, it's misbehaving. If it matches, you're probably misusing it. Another approach is to check the tool's logs. Most tools log warnings or errors when they're used incorrectly. If you see warnings, read them carefully. They often tell you exactly what's wrong. If you don't see any warnings, the tool might be silently failing, which is a different problem.</p>
+<p><strong>When should I replace a tool instead of learning it?</strong>
+Replace it when the cost of learning exceeds the cost of switching. This is a judgment call, but some signals are clear: the tool is no longer maintained, it has critical security vulnerabilities, it doesn't support your platform, or it requires more resources than you can afford. If you're spending more than 4 hours a week on maintenance, it's probably time to switch. For a solo engineer, the switching cost is usually lower than the ongoing maintenance cost, because you don't have to coordinate with a team. But be careful: switching tools also has a cost. Make sure the new tool is actually better, not just different.</p>
+<h2 id="the-one-thing-to-do-in-the-next-30-minutes">The one thing to do in the next 30 minutes</h2>
+<p>Open your repository and find the tool you understand the least. Write a <code>TOOL_CARD.md</code> file for it in the root directory. Include the version, the command to check its health, and the three most common failure modes you've seen or can imagine. Commit it. This single file will save you hours the next time that tool breaks, and it forces you to articulate what you actually know versus what you're guessing. Do it now, before the next incident.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/replace-managed-services-with-postgres-17/">
+                        <h3>Replace managed services with Postgres 17</h3>
+                        <p>Postgres 17 replaces Redis, Elasticsearch, and cron for startups in Southeast Asia — here’s the real latency, cost, and failure-mode trade-offs most…</p>
+                        <span class="related-meta">13 min read · 16 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/african-fintech-rules-broke-our-stack/">
+                        <h3>African fintech rules broke our stack</h3>
+                        <p>But the honest answer is that that checklist is only the first 5% of the work.</p>
+                        <span class="related-meta">23 min read · 2 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/hire-for-agents-not-autocomplete/">
+                        <h3>Hire for agents, not autocomplete</h3>
+                        <p>Hire engineers who can ship under 3G, not autocomplete — constraint-aware hiring and onboarding with real code, latency figures, and failure modes from a…</p>
+                        <span class="related-meta">16 min read · 2 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

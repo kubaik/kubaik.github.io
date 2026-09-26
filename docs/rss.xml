@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Sep 2026 04:10:59 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 26 Sep 2026 16:04:37 +0000</lastBuildDate>
     <item>
-      <title>Secrets rotation: the deploy window trap</title>
-      <link>https://kubaik.github.io/secrets-rotation-the-deploy-window-trap/</link>
-      <description>Rotate secrets without dropping requests: use versioned secrets, grace periods, and connection pool recycling.</description>
-      <pubDate>Sat, 26 Sep 2026 04:10:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/secrets-rotation-the-deploy-window-trap/</guid>
+      <title>Tech debt: when half your stack is unfamiliar</title>
+      <link>https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/</link>
+      <description>Now you know that a 200 ms processing time is normal and a 2-second processing time is an anomaly.</description>
+      <pubDate>Sat, 26 Sep 2026 16:04:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/</guid>
     </item>
     <item>
       <title>Portfolio projects hiring managers skip</title>

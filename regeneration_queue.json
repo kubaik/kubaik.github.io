@@ -182,63 +182,32 @@
     "status": "needs_review"
   },
   {
-    "slug": "scan-10k-repos-daily-without-false-positives",
-    "title": "Scan 10k repos daily without false positives",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a critical security patch for Log4j didn’t reach production; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "ship-1mb-pages-on-4g-starlink-africa-case-study",
-    "title": "Ship 1MB pages on 4G: Starlink Africa case study",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I had to rethink how we compress, cache, and stream assets for the new baseline.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "show-real-work-not-ai-clones",
-    "title": "Show real work, not AI clones",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a senior engineer we’d flown in from Nairobi couldn’t answe; I was surprised that even engineers with 5+ years of experience couldn’t point t",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "slsa-and-sigstore-the-2026-supply-chain-baseline",
-    "title": "SLSA and Sigstore: the 2026 supply chain baseline",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days tracing the provenance of that container image only to find a; I remember staring at the Jenkins console log at 02:47 on a Tuesday, thinking: _",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "stop-false-positives-in-ci-scanning-now",
-    "title": "Stop false positives in CI scanning now",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three weeks configuring each scanner to ignore known false positives.; I was surprised that despite spending hundreds of engineering hours on configura",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "survive-90s-db-failover-without-melting",
     "title": "Survive 90s DB failover without melting",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this building eventual problem while migrating a service under a hard; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "survive-network-drops-agentic-workflows-that-keep-running",
     "title": "Survive network drops: agentic workflows that keep running",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on agentic workflows is incomplete.; I ran into this when building a micro-lending approval system for a Tanzanian ba; I was surprised how well this worked under real conditions.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "why-progressive-web-apps-fail-on-2g-and-how-to-fix",
     "title": "Why progressive web apps fail on 2G and how to fix…",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool issue that turned out to be a sin; I also tracked what we knew about 2026 device capabilities:\n\n- Median Android de",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "why-your-ai-portfolio-bombs-in-nigeria",
     "title": "Why your AI portfolio bombs in Nigeria",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I saw 600+ pull requests for a fintech role that were 90 % boilerplate Next.js 1; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "2026-technical-screens-what-actually-works",
@@ -251,7 +220,8 @@
     "slug": "agent-code-reviews-1200-tests-per-pr",
     "title": "Agent code reviews: 1,200 tests per PR",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same test review mistake in more than one production codebase over ; I ran into this when I approved a PR that looked fine locally but broke our stag",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agent-permissions-the-mistake-that-breaks-production",
@@ -1231,6 +1201,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "scan-10k-repos-daily-without-false-positives",
+    "title": "Scan 10k repos daily without false positives",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a critical security patch for Log4j didn’t reach production; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "ship-1mb-pages-on-4g-starlink-africa-case-study",
+    "title": "Ship 1MB pages on 4G: Starlink Africa case study",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I had to rethink how we compress, cache, and stream assets for the new baseline.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "show-real-work-not-ai-clones",
+    "title": "Show real work, not AI clones",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a senior engineer we’d flown in from Nairobi couldn’t answe; I was surprised that even engineers with 5+ years of experience couldn’t point t",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "slsa-and-sigstore-the-2026-supply-chain-baseline",
+    "title": "SLSA and Sigstore: the 2026 supply chain baseline",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days tracing the provenance of that container image only to find a; I remember staring at the Jenkins console log at 02:47 on a Tuesday, thinking: _",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "stop-false-positives-in-ci-scanning-now",
+    "title": "Stop false positives in CI scanning now",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three weeks configuring each scanner to ignore known false positives.; I was surprised that despite spending hundreds of engineering hours on configura",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "red-teaming-agents-without-killing-velocity",

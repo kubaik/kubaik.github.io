@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-17T13:26:20.915553">
-        <meta property="article:modified_time" content="2026-09-21T12:39:34.398742">
+        <meta property="article:modified_time" content="2026-09-26T16:04:30.152506+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Why progressive web apps fail on 2G and how to fix…">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Why progressive web apps fail on 2G and how to fix…",
       "description": "Cut 2G page load times from 12 seconds to 2 seconds — the real architecture moves that work in 2026 for React, PWA and mobile-first sites",
       "datePublished": "2026-07-17T13:26:20+00:00",
-      "dateModified": "2026-09-21T12:39:34+00:00",
+      "dateModified": "2026-09-26T16:04:30+00:00",
       "wordCount": 2672,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
@@ -266,7 +266,7 @@
                         13 min read
                         &nbsp;·&nbsp; 2672 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-21
+                        &nbsp;·&nbsp; Updated 2026-09-26
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -425,17 +425,13 @@ export const handler = async (event: CloudFrontRequestEvent) =&gt; {
 <p><strong>HTTP/3 + QUIC</strong> (decision #5) shaves around 280 ms off first byte latency in 2G tests. The problem: some mobile networks (especially in Nigeria and Kenya) still block UDP, causing QUIC to fall back to TCP. Mitigate this by detecting QUIC support via <code>navigator.connection.effectiveType</code> and disabling HTTP/3 for users on networks that block UDP. CloudFront’s HTTP/3 setting is enabled by default in 2026.</p>
 <h2 id="the-options-that-get-tried-and-dropped-and-why">The options that get tried and dropped (and why)</h2>
 <p><strong>AMP (Accelerated Mobile Pages)</strong>
-What it does: Serves stripped-down HTML with custom components.
-Why teams drop it: AMP’s strict validation blocks React components and requires a separate codebase. Even with AMP’s performance gains (2.3 s TTI), the maintenance cost isn’t worth it. AMP-specific templates commonly add around 35% to development time.</p>
+What it does: Serves stripped-down HTML with custom components. Why teams drop it: AMP’s strict validation blocks React components and requires a separate codebase. Even with AMP’s performance gains (2.3 s TTI), the maintenance cost isn’t worth it. AMP-specific templates commonly add around 35% to development time.</p>
 <p><strong>Client-side hydration with React 18</strong>
-What it does: Renders React on the client with streaming hydration.
-Why teams drop it: On 2G, the hydration process adds 4.5 s to TTI. Even with Suspense, the user still waits for JavaScript to download, parse, and execute. Aggressive code-splitting helps, but the minimal bundle is still around 120 KB — too heavy for 2G. A Lighthouse budget that flags any PR increasing the bundle by &gt;200 KB will catch hydration as the bottleneck.</p>
+What it does: Renders React on the client with streaming hydration. Why teams drop it: On 2G, the hydration process adds 4.5 s to TTI. Even with Suspense, the user still waits for JavaScript to download, parse, and execute. Aggressive code-splitting helps, but the minimal bundle is still around 120 KB — too heavy for 2G. A Lighthouse budget that flags any PR increasing the bundle by &gt;200 KB will catch hydration as the bottleneck.</p>
 <p><strong>WebP-only images</strong>
-What it does: Serves only WebP images with fallback to JPEG.
-Why teams drop it: WebP reduces file sizes by 30% compared to JPEG, but AVIF cuts them by 50% with similar quality. On newer Android devices, AVIF’s progressive decoding improves perceived performance by 2x. WebP gets dropped because AVIF is the better long-term choice, despite the decoding cost on low-end devices.</p>
+What it does: Serves only WebP images with fallback to JPEG. Why teams drop it: WebP reduces file sizes by 30% compared to JPEG, but AVIF cuts them by 50% with similar quality. On newer Android devices, AVIF’s progressive decoding improves perceived performance by 2x. WebP gets dropped because AVIF is the better long-term choice, despite the decoding cost on low-end devices.</p>
 <p><strong>Redis for caching API responses</strong>
-What it does: Caches GraphQL responses in Redis 7.2.
-Why teams drop it: On 2G, the Redis connection setup time (300 ms) negates the cache hit benefit. Switching to CDN edge caching (CloudFront) commonly yields a 20% faster response time. A Redis cluster also adds around $240/month in AWS costs for 5 million requests/day, while CloudFront’s caching is free beyond the origin costs.</p>
+What it does: Caches GraphQL responses in Redis 7.2. Why teams drop it: On 2G, the Redis connection setup time (300 ms) negates the cache hit benefit. Switching to CDN edge caching (CloudFront) commonly yields a 20% faster response time. A Redis cluster also adds around $240/month in AWS costs for 5 million requests/day, while CloudFront’s caching is free beyond the origin costs.</p>
 <h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
 <p>Use this table to decide which decisions to prioritize. The columns represent common scenarios; check the row that matches your app:</p>
 <table>

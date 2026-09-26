@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-26T04:10:35.125799",
+  "built_at": "2026-09-26T16:04:13.621122",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5370,6 +5370,11 @@
       "slug": "secrets-rotation-the-deploy-window-trap",
       "title": "Secrets rotation: the deploy window trap",
       "summary": "It's the kind of thing that works for months, then all at once doesn't. secrets rotation is the kind of decision that looks reversible until it isn't. This is the version of the write-up that includes the part that broke. The problem, in general terms Every production system has secrets: database pa"
+    },
+    {
+      "slug": "tech-debt-when-half-your-stack-is-unfamiliar",
+      "title": "Tech debt: when half your stack is unfamiliar",
+      "summary": "webassembly server tends to expose the difference between working and being trustworthy. This post covers what comes after the happy path. It only shows up under the exact conditions nobody tests for. The error and why it's confusing You're the solo technical lead. Your frontend is React 18, your ba"
     }
   ]
 }
