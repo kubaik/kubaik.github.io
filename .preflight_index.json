@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-25T16:52:24.506811",
+  "built_at": "2026-09-26T04:10:35.125799",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5365,6 +5365,11 @@
       "slug": "portfolio-projects-hiring-managers-skip",
       "title": "Portfolio projects hiring managers skip",
       "summary": "After enough code that touches actually gets gets reviewed, the same failure pattern keeps showing up. This is the writeup with the mistakes left in, not edited out. The failure is quiet — no errors, just wrong answers. The conventional wisdom (and why it's incomplete) Ask ten developers what gets a"
+    },
+    {
+      "slug": "secrets-rotation-the-deploy-window-trap",
+      "title": "Secrets rotation: the deploy window trap",
+      "summary": "It's the kind of thing that works for months, then all at once doesn't. secrets rotation is the kind of decision that looks reversible until it isn't. This is the version of the write-up that includes the part that broke. The problem, in general terms Every production system has secrets: database pa"
     }
   ]
 }

@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "red-teaming-agents-without-killing-velocity",
-    "title": "Red-teaming agents without killing velocity",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this redteaming internal problem while migrating a service under a ha; Here's what actually worked, and why.; I ran into this when our security team asked for a formal threat model for an in",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "regulations-forced-better-apis-the-2026-fintech",
-    "title": "Regulations forced better APIs: the 2026 fintech",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we launched a new collections product in Kenya in early 202",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "regulations-killed-our-elegant-apis",
-    "title": "Regulations killed our elegant APIs",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran a project in 2026 where we shipped a clean REST API built on Node 20 LTS a",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "run-apis-in-50-spots-what-breaks-first",
-    "title": "Run APIs in 50 spots: what breaks first",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on edgenative backends is incomplete.; I once shipped a user profile endpoint to 10 edge locations and watched the 95th; I once tried to run a GraphQL API at 50 locations without caching and watched th",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "saas-niche-in-2026-pick-a-sliver-no-llm-can-eat",
-    "title": "SaaS niche in 2026: pick a sliver no LLM can eat",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days benchmarking every open-source LLM that claimed to do spend c; I had to roll back the feature after 10 days of production smoke tests.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "scan-10k-repos-daily-without-false-positives",
     "title": "Scan 10k repos daily without false positives",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a critical security patch for Log4j didn’t reach production; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ship-1mb-pages-on-4g-starlink-africa-case-study",
     "title": "Ship 1MB pages on 4G: Starlink Africa case study",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I had to rethink how we compress, cache, and stream assets for the new baseline.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "show-real-work-not-ai-clones",
     "title": "Show real work, not AI clones",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a senior engineer we’d flown in from Nairobi couldn’t answe; I was surprised that even engineers with 5+ years of experience couldn’t point t",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "slsa-and-sigstore-the-2026-supply-chain-baseline",
     "title": "SLSA and Sigstore: the 2026 supply chain baseline",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days tracing the provenance of that container image only to find a; I remember staring at the Jenkins console log at 02:47 on a Tuesday, thinking: _",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "stop-false-positives-in-ci-scanning-now",
     "title": "Stop false positives in CI scanning now",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three weeks configuring each scanner to ignore known false positives.; I was surprised that despite spending hundreds of engineering hours on configura",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "survive-90s-db-failover-without-melting",
@@ -1261,6 +1231,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "red-teaming-agents-without-killing-velocity",
+    "title": "Red-teaming agents without killing velocity",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this redteaming internal problem while migrating a service under a ha; Here's what actually worked, and why.; I ran into this when our security team asked for a formal threat model for an in",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "regulations-forced-better-apis-the-2026-fintech",
+    "title": "Regulations forced better APIs: the 2026 fintech",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we launched a new collections product in Kenya in early 202",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "regulations-killed-our-elegant-apis",
+    "title": "Regulations killed our elegant APIs",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran a project in 2026 where we shipped a clean REST API built on Node 20 LTS a",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "run-apis-in-50-spots-what-breaks-first",
+    "title": "Run APIs in 50 spots: what breaks first",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on edgenative backends is incomplete.; I once shipped a user profile endpoint to 10 edge locations and watched the 95th; I once tried to run a GraphQL API at 50 locations without caching and watched th",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "saas-niche-in-2026-pick-a-sliver-no-llm-can-eat",
+    "title": "SaaS niche in 2026: pick a sliver no LLM can eat",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days benchmarking every open-source LLM that claimed to do spend c; I had to roll back the feature after 10 days of production smoke tests.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "prompt-injection-got-the-hype-poison-data-ruined-us",

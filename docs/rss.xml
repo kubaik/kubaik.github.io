@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 25 Sep 2026 16:52:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 26 Sep 2026 04:10:59 +0000</lastBuildDate>
+    <item>
+      <title>Secrets rotation: the deploy window trap</title>
+      <link>https://kubaik.github.io/secrets-rotation-the-deploy-window-trap/</link>
+      <description>Rotate secrets without dropping requests: use versioned secrets, grace periods, and connection pool recycling.</description>
+      <pubDate>Sat, 26 Sep 2026 04:10:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/secrets-rotation-the-deploy-window-trap/</guid>
+    </item>
     <item>
       <title>Portfolio projects hiring managers skip</title>
       <link>https://kubaik.github.io/portfolio-projects-hiring-managers-skip/</link>
@@ -138,13 +145,6 @@
       <description>A typical failure mode: the application acknowledges the user request after enqueuing the audit event, but the queue consumer lags by 200–500 ms under…</description>
       <pubDate>Sun, 20 Sep 2026 04:05:00 +0000</pubDate>
       <guid>https://kubaik.github.io/audit-logs-compliance-vs-performance/</guid>
-    </item>
-    <item>
-      <title>AI supply chain attacks: what actually broke</title>
-      <link>https://kubaik.github.io/ai-supply-chain-attacks-what-actually-broke/</link>
-      <description>AI supply chain attacks hide in pickle files and trust_remote_code. Hash pinning, safetensors, and a 30-minute audit that finds the real exposure.</description>
-      <pubDate>Sat, 19 Sep 2026 15:37:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-supply-chain-attacks-what-actually-broke/</guid>
     </item>
   </channel>
 </rss>
