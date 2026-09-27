@@ -61,5 +61,6 @@
   "What actually gets a portfolio project noticed by hiring managers in 2026",
   "Secrets rotation at scale without breaking services mid-deploy",
   "WebAssembly on the server: where it actually beats containers in our production workloads",
-  "How to lead technical decisions when half your team is using tools you don't fully understand yet"
+  "How to lead technical decisions when half your team is using tools you don't fully understand yet",
+  "How the Claude 4 / GPT-5 model generation changed agent architecture decisions"
 ]

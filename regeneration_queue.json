@@ -182,34 +182,6 @@
     "status": "needs_review"
   },
   {
-    "slug": "survive-90s-db-failover-without-melting",
-    "title": "Survive 90s DB failover without melting",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this building eventual problem while migrating a service under a hard; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "survive-network-drops-agentic-workflows-that-keep-running",
-    "title": "Survive network drops: agentic workflows that keep running",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on agentic workflows is incomplete.; I ran into this when building a micro-lending approval system for a Tanzanian ba; I was surprised how well this worked under real conditions.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "why-progressive-web-apps-fail-on-2g-and-how-to-fix",
-    "title": "Why progressive web apps fail on 2G and how to fix…",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool issue that turned out to be a sin; I also tracked what we knew about 2026 device capabilities:\n\n- Median Android de",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "why-your-ai-portfolio-bombs-in-nigeria",
-    "title": "Why your AI portfolio bombs in Nigeria",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I saw 600+ pull requests for a fintech role that were 90 % boilerplate Next.js 1; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "2026-technical-screens-what-actually-works",
     "title": "2026 technical screens: what actually works",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I had to fork   and add exponential backoff capped at 1 second; that change alon",
@@ -217,41 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "agent-code-reviews-1200-tests-per-pr",
-    "title": "Agent code reviews: 1,200 tests per PR",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same test review mistake in more than one production codebase over ; I ran into this when I approved a PR that looked fine locally but broke our stag",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "agent-permissions-the-mistake-that-breaks-production",
     "title": "Agent permissions: the mistake that breaks production",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into trouble when the first prototype asked for admin rights to install Py; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-agents-eat-your-budget-3-ways",
     "title": "AI agents eat your budget 3 ways",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when a single misconfigured retry policy in a customer support a; I thought adding a retry budget would fix it.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-agents-killed-dev-tool-sales-cycles",
     "title": "AI agents killed dev tool sales cycles",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I dug into the logs and found a pattern: teams were using PyLint Pro as a linter",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-agents-why-devtools-now-sell-like-saas-in-2026",
     "title": "AI agents: why devtools now sell like SaaS in 2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three weeks building a dashboard that showed code smell counts and secur",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-benchmarking-3-mistakes-we-made-first",
     "title": "AI benchmarking: 3 mistakes we made first",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that a smaller model could have worse throughput—until we dug in",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-feature-drift-why-your-model-died-at-midnight",
@@ -1201,6 +1171,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "survive-90s-db-failover-without-melting",
+    "title": "Survive 90s DB failover without melting",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this building eventual problem while migrating a service under a hard; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "survive-network-drops-agentic-workflows-that-keep-running",
+    "title": "Survive network drops: agentic workflows that keep running",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on agentic workflows is incomplete.; I ran into this when building a micro-lending approval system for a Tanzanian ba; I was surprised how well this worked under real conditions.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "why-progressive-web-apps-fail-on-2g-and-how-to-fix",
+    "title": "Why progressive web apps fail on 2G and how to fix…",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool issue that turned out to be a sin; I also tracked what we knew about 2026 device capabilities:\n\n- Median Android de",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "why-your-ai-portfolio-bombs-in-nigeria",
+    "title": "Why your AI portfolio bombs in Nigeria",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I saw 600+ pull requests for a fintech role that were 90 % boilerplate Next.js 1; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "agent-code-reviews-1200-tests-per-pr",
+    "title": "Agent code reviews: 1,200 tests per PR",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same test review mistake in more than one production codebase over ; I ran into this when I approved a PR that looked fine locally but broke our stag",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "scan-10k-repos-daily-without-false-positives",

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-26T16:04:13.621122",
+  "built_at": "2026-09-27T04:24:48.539723",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5375,6 +5375,11 @@
       "slug": "tech-debt-when-half-your-stack-is-unfamiliar",
       "title": "Tech debt: when half your stack is unfamiliar",
       "summary": "webassembly server tends to expose the difference between working and being trustworthy. This post covers what comes after the happy path. It only shows up under the exact conditions nobody tests for. The error and why it's confusing You're the solo technical lead. Your frontend is React 18, your ba"
+    },
+    {
+      "slug": "agent-architecture-the-new-model-trap",
+      "title": "Agent architecture: the new model trap",
+      "summary": "Benchmarks for claude gpt5 that don't mention their failure conditions aren't worth much. This walks through the fix and the reasoning, not just the patch. Production gives you neither a clean environment nor a patient timeline. The conventional wisdom (and why it's incomplete) The conventional wisd"
     }
   ]
 }

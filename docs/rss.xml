@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Sep 2026 16:04:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Sep 2026 04:25:08 +0000</lastBuildDate>
+    <item>
+      <title>Agent architecture: the new model trap</title>
+      <link>https://kubaik.github.io/agent-architecture-the-new-model-trap/</link>
+      <description>Claude 4 and GPT-5 agents fail in production when teams delete the policy layer, not the prompt chaining. Here is the architecture that holds up.</description>
+      <pubDate>Sun, 27 Sep 2026 04:24:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-architecture-the-new-model-trap/</guid>
+    </item>
     <item>
       <title>Tech debt: when half your stack is unfamiliar</title>
       <link>https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/</link>
@@ -138,13 +145,6 @@
       <description>Mapping autonomous agents onto CBN, NDPA 2023, and SEC obligations — the deterministic gate and append-only audit store that survive a compliance review.</description>
       <pubDate>Sun, 20 Sep 2026 09:44:53 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-compliance-in-african-fintech-the-cbn-gap/</guid>
-    </item>
-    <item>
-      <title>Audit logs: compliance vs performance</title>
-      <link>https://kubaik.github.io/audit-logs-compliance-vs-performance/</link>
-      <description>A typical failure mode: the application acknowledges the user request after enqueuing the audit event, but the queue consumer lags by 200–500 ms under…</description>
-      <pubDate>Sun, 20 Sep 2026 04:05:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/audit-logs-compliance-vs-performance/</guid>
     </item>
   </channel>
 </rss>

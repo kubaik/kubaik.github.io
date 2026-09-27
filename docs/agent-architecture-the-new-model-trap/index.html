@@ -1,0 +1,571 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent architecture: the new model trap - Kubai Kevin</title>
+        <meta name="description" content="Claude 4 and GPT-5 agents fail in production when teams delete the policy layer, not the prompt chaining. Here is the architecture that holds up.">
+        <meta name="keywords" content="AiAgents, AgentArchitecture, Claude, GptAgentDesign, Ai, Generativeai, Chatgpt, Openai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-27T04:24:45.945383">
+        <meta property="article:modified_time" content="2026-09-27T04:24:45.945395">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent architecture: the new model trap">
+        <meta property="og:description" content="Claude 4 and GPT-5 agents fail in production when teams delete the policy layer, not the prompt chaining. Here is the architecture that holds up.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-architecture-the-new-model-trap/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-architecture-the-new-model-trap.png">
+        <meta property="og:image:alt" content="Agent architecture: the new model trap">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent architecture: the new model trap">
+        <meta name="twitter:description" content="Claude 4 and GPT-5 agents fail in production when teams delete the policy layer, not the prompt chaining. Here is the architecture that holds up.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-architecture-the-new-model-trap.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-architecture-the-new-model-trap/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-architecture-the-new-model-trap/#article",
+      "headline": "Agent architecture: the new model trap",
+      "description": "Claude 4 and GPT-5 agents fail in production when teams delete the policy layer, not the prompt chaining. Here is the architecture that holds up.",
+      "datePublished": "2026-09-27T04:24:45+00:00",
+      "dateModified": "2026-09-27T04:24:45+00:00",
+      "wordCount": 3358,
+      "timeRequired": "PT17M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-architecture-the-new-model-trap/"
+      },
+      "keywords": "AiAgents, AgentArchitecture, Claude, GptAgentDesign, Ai, Generativeai, Chatgpt, Openai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent architecture: the new model trap",
+          "item": "https://kubaik.github.io/agent-architecture-the-new-model-trap/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent architecture: the new model trap</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent architecture: the new model trap</h1>
+                
+                <p class="post-lead">Claude 4 and GPT-5 agents fail in production when teams delete the policy layer, not the prompt chaining. Here is the architecture that holds up.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AiAgents</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentArchitecture</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Claude</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">GptAgentDesign</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/generativeai/"
+                       style="text-decoration:none;">Generativeai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        17 min read
+                        &nbsp;·&nbsp; 3358 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-27
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Benchmarks for claude gpt5 that don't mention their failure conditions aren't worth much. This walks through the fix and the reasoning, not just the patch. Production gives you neither a clean environment nor a patient timeline.</p>
+<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
+<p>The conventional wisdom around the Claude 4 / GPT-5 generation of models goes something like this: models are now so capable that the old scaffolding is dead weight. Stop building state machines. Stop writing retry logic. Stop wrapping the model in five layers of validation. Just give it tools, give it memory, and let it reason its way through the task. The model <em>is</em> the agent.</p>
+<p>This advice is seductive because it is partly true. The jump from GPT-4-class models to the Claude 4 / GPT-5 generation is not incremental. Tool-calling reliability improved to the point where a single-shot tool invocation with a well-described schema succeeds the vast majority of the time, whereas earlier generations needed multiple retries and aggressive prompt engineering to get the same result. Long-context handling became genuinely usable rather than a demo trick. Instruction-following under multi-step constraints stopped collapsing after the third hop.</p>
+<p>So the reasoning goes: if the model can plan, call tools, and recover from errors on its own, then the elaborate orchestration layer that teams built in 2026 and 2026 is technical debt. Delete the DAG. Delete the hand-rolled retry loop. Delete the state machine. Ship the raw agent loop.</p>
+<p>I think this is the wrong conclusion, and it is wrong for a specific reason that has nothing to do with model capability. The models got better at <em>reasoning</em>. They did not get better at being <em>accountable</em>. And in any system that touches production data, money, or a user's account, accountability is the entire problem. The part that trips people up is that the new models make the demo so easy that teams delete the wrong layer — they remove the deterministic boundary instead of removing the redundant prompt scaffolding, and that's what this post actually covers.</p>
+<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
+<p>The standard advice produces a very predictable failure mode, and it shows up around week three of a production deployment, not on day one.</p>
+<p>Here is the typical trajectory. A team builds a customer-support agent on Claude 4 or GPT-5. They wire up five tools: <code>lookup_order</code>, <code>issue_refund</code>, <code>send_email</code>, <code>update_shipping_address</code>, and <code>escalate_to_human</code>. They write a clean agent loop, maybe 120 lines of Python. It works beautifully in staging. Latency is around 1.8 seconds for a simple lookup, 4 to 6 seconds for a multi-tool task. Great.</p>
+<p>Then it hits production. A user asks to "cancel my order and refund me." The model, reasoning correctly, calls <code>lookup_order</code>, sees the order is already shipped, and decides the right move is to issue a partial refund and send a follow-up email explaining the situation. That is a <em>reasonable</em> decision. It is also a decision that your finance team, your refund policy, and your auditor all disagree with, because partial refunds on shipped orders require manual approval above a threshold.</p>
+<p>The model did not hallucinate. It did not call a wrong tool. It made a judgment call inside a policy boundary that existed only in a PDF, not in the code. And because you deleted the orchestration layer, there is nothing between the model's decision and the <code>issue_refund</code> API call.</p>
+<p>A related failure mode is the runaway loop. With the new models, a common pattern is to give the agent a <code>search</code> tool and let it iterate. Under a malformed query, a model in the Claude 4 / GPT-5 class will sometimes retry with variations. Without a hard iteration cap enforced in code, a single user request can trigger 40 to 60 tool calls before the context window forces a stop. At typical token pricing, that is a 15x cost multiplier on an interaction that should have cost fractions of a cent. The model is not malfunctioning; it is doing what you told it to do, and you did not tell it when to stop in a way it cannot override.</p>
+<p>The third common failure is the audit gap. When a regulator or an internal auditor asks "why did this agent issue this refund on this date," the answer needs to be a reconstructable trace: which tool was called, with which arguments, under which policy version. A raw agent loop that logs the final message and the tool calls is not sufficient, because the <em>decision rationale</em> lives in the model's reasoning, which is non-deterministic and, depending on your provider configuration, may not even be retained. You cannot replay a non-deterministic model call and get the same answer. You can only replay the deterministic boundary around it.</p>
+<h2 id="a-different-mental-model">A different mental model</h2>
+<p>The mental model I would argue for is this: <strong>the model is a planner, not an executor.</strong> The new generation is genuinely excellent at deciding <em>what</em> should happen next. It is not, and should not be, the thing that decides <em>whether</em> that action is permitted, <em>how many times</em> it may be attempted, or <em>what record</em> is kept of it.</p>
+<p>Concretely, this means the orchestration layer does not disappear. It shrinks and it changes shape. In 2026, the orchestration layer was doing two jobs: (1) compensating for weak reasoning by breaking tasks into small, tightly-scoped prompts, and (2) enforcing policy, retries, and audit. The new models let you delete job (1) almost entirely. Job (2) becomes <em>more</em> important, not less, because the model is now making higher-stakes decisions more autonomously.</p>
+<p>So the architecture shifts from "many small prompts, thin policy layer" to "one capable planner, thick policy layer." The thick policy layer is deterministic code. It is the thing that says: this tool call is allowed for this user role; this refund amount exceeds the threshold and must be escalated; this loop has run 8 times and must terminate; this action must be written to an append-only audit log before it executes, not after.</p>
+<p>This is not a return to the 2026 DAG. A DAG hard-codes the sequence of steps. A policy layer does not care about sequence; it cares about <em>constraints on any sequence the planner chooses</em>. That is a genuinely different thing, and it is the thing the new models make possible. You can let the planner be creative because the policy layer is the guardrail, not the prompt.</p>
+<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
+<p>Consider how this plays out in a payments-adjacent agent. The planner is a Claude 4 or GPT-5 class model. The tools are real. The policy layer is a small Python module that wraps every tool call.</p>
+<pre><code class="language-python">from dataclasses import dataclass
+from datetime import datetime, timezone
+
+MAX_REFUND_EUR = 50.00
+MAX_TOOL_CALLS = 12
+
+@dataclass
+class PolicyDecision:
+    allowed: bool
+    reason: str
+
+def evaluate_refund(user_role: str, amount_eur: float, order_shipped: bool) -&gt; PolicyDecision:
+    if amount_eur &gt; MAX_REFUND_EUR and user_role != &quot;support_lead&quot;:
+        return PolicyDecision(False, &quot;refund_above_threshold_requires_lead&quot;)
+    if order_shipped and amount_eur &gt; 0:
+        return PolicyDecision(False, &quot;shipped_order_refund_requires_manual_review&quot;)
+    return PolicyDecision(True, &quot;ok&quot;)
+
+def guarded_tool_call(tool_name, args, state):
+    state[&quot;tool_calls&quot;] += 1
+    if state[&quot;tool_calls&quot;] &gt; MAX_TOOL_CALLS:
+        raise RuntimeError(&quot;tool_call_budget_exceeded&quot;)
+
+    if tool_name == &quot;issue_refund&quot;:
+        decision = evaluate_refund(
+            user_role=state[&quot;user_role&quot;],
+            amount_eur=args[&quot;amount_eur&quot;],
+            order_shipped=args[&quot;order_shipped&quot;],
+        )
+        if not decision.allowed:
+            audit_log.write({
+                &quot;ts&quot;: datetime.now(timezone.utc).isoformat(),
+                &quot;event&quot;: &quot;refund_blocked&quot;,
+                &quot;reason&quot;: decision.reason,
+                &quot;args&quot;: args,
+            })
+            return {&quot;error&quot;: decision.reason, &quot;escalate&quot;: True}
+
+    audit_log.write({
+        &quot;ts&quot;: datetime.now(timezone.utc).isoformat(),
+        &quot;event&quot;: &quot;tool_call&quot;,
+        &quot;tool&quot;: tool_name,
+        &quot;args&quot;: args,
+    })
+    return TOOL_REGISTRY[tool_name](**args)
+</code></pre>
+<p>This is roughly 40 lines. It is not a DAG. It does not tell the planner what to do. It tells the planner what it <em>cannot</em> do, and it writes a record before the action, not after. The planner can still be creative; it just cannot exceed a 50 EUR refund without a lead role, and it cannot issue a refund on a shipped order at all without a human in the loop.</p>
+<p>The second pattern worth naming is the budget cap. A common trap with the new models is that they are good enough to keep trying, which means a single ambiguous request can burn a surprising amount of money. A hard cap enforced outside the model is the only reliable fix.</p>
+<pre><code class="language-javascript">// Node 20 LTS, wrapping the Anthropic SDK call
+const MAX_ITERATIONS = 10;
+const MAX_WALL_CLOCK_MS = 30_000;
+
+async function runAgent(userMessage, tools, policy) {
+  const started = Date.now();
+  let iterations = 0;
+  const trace = [];
+
+  while (iterations &lt; MAX_ITERATIONS) {
+    if (Date.now() - started &gt; MAX_WALL_CLOCK_MS) {
+      return { status: &quot;timeout&quot;, trace };
+    }
+    iterations += 1;
+
+    const response = await client.messages.create({
+      model: &quot;claude-sonnet-4-5&quot;,
+      max_tokens: 1024,
+      messages: buildMessages(userMessage, trace),
+      tools,
+    });
+
+    const toolUse = response.content.find((b) =&gt; b.type === &quot;tool_use&quot;);
+    if (!toolUse) {
+      return { status: &quot;done&quot;, trace, final: response.content };
+    }
+
+    const decision = policy.check(toolUse.name, toolUse.input);
+    if (!decision.allowed) {
+      trace.push({ blocked: toolUse.name, reason: decision.reason });
+      return { status: &quot;blocked&quot;, trace, reason: decision.reason };
+    }
+
+    const result = await tools[toolUse.name](toolUse.input);
+    trace.push({ tool: toolUse.name, input: toolUse.input, result });
+  }
+
+  return { status: &quot;iteration_cap&quot;, trace };
+}
+</code></pre>
+<p>Two numbers worth internalizing here. First, a 10-iteration cap with a 30-second wall clock is a reasonable default for interactive agents; typical successful tasks complete in 2 to 4 iterations, so the cap rarely fires in normal operation. Second, without a cap, the same ambiguous request that should cost roughly 0.4 cents can cost 6 to 10 cents when the model retries 15 to 25 times. That is a 15x to 25x multiplier on a single interaction, and it compounds across thousands of daily requests.</p>
+<p>The third evidence point is audit. If you are serving EU users, GDPR Article 5(2) establishes the accountability principle, and Article 22 restricts solely automated decision-making with legal or similarly significant effects. You do not need to be a lawyer to draw the engineering conclusion: if your agent can issue a refund, suspend an account, or reject an application without human review, you need a reconstructable record of <em>why</em>, and you need a documented path to a human. A raw agent loop that logs only the final output does not give you that. A policy layer that writes a structured event before every consequential tool call does.</p>
+<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
+<p>I want to steelman the "delete the orchestration layer" position, because it is correct in more cases than the previous section implies.</p>
+<p>If your agent is read-only, the policy layer is mostly overhead. A research agent that searches a corpus and summarizes findings has no side effects. The worst outcome of a bad decision is a bad answer, which the user will notice and correct. In that case, a thin loop with a tool-call budget is genuinely sufficient, and adding a policy engine is ceremony.</p>
+<p>If your agent is internal-only and low-stakes, the same logic applies. An agent that drafts tickets, summarizes incidents, or answers questions from an internal wiki does not need a pre-execution audit log. The cost of a wrong action is low and reversible.</p>
+<p>If your agent's tools are themselves idempotent and bounded, the policy layer's job shrinks. A <code>search</code> tool that cannot mutate state does not need a pre-call permission check. A <code>fetch_document</code> tool with a fixed scope does not need a refund threshold.</p>
+<p>The conventional wisdom is also right that the <em>prompt-level</em> scaffolding should go. The old pattern of chaining six prompts with hand-written JSON parsers between them is genuinely obsolete. The new models handle multi-step reasoning in a single context window, and cutting that chaining removes a large class of parsing bugs. So when someone says "delete the orchestration layer," they are often right about the <em>prompt chaining</em> layer and wrong about the <em>policy</em> layer. Those are different layers that got conflated in 2026 because they were implemented in the same place.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>2026 role</th>
+<th>2026 role</th>
+<th>Delete it?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prompt chaining</td>
+<td>Compensate for weak reasoning</td>
+<td>Mostly unnecessary</td>
+<td>Yes, largely</td>
+</tr>
+<tr>
+<td>Tool schema design</td>
+<td>Basic function calling</td>
+<td>Critical for reliability</td>
+<td>No, more important</td>
+</tr>
+<tr>
+<td>Policy / permission checks</td>
+<td>Minimal</td>
+<td>Central</td>
+<td>No, expand</td>
+</tr>
+<tr>
+<td>Retry logic</td>
+<td>Model-level retries</td>
+<td>Budget and loop caps</td>
+<td>No, reframe</td>
+</tr>
+<tr>
+<td>Audit logging</td>
+<td>Optional</td>
+<td>Required for consequential actions</td>
+<td>No, expand</td>
+</tr>
+<tr>
+<td>State machine / DAG</td>
+<td>Enforce sequence</td>
+<td>Rarely needed</td>
+<td>Usually yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
+<p>The decision rule I would use is blunt: <strong>does any tool your agent can call have a side effect that is hard to reverse, costs money, or affects a user's rights?</strong></p>
+<p>If the answer is no across every tool, run the thin loop. Give the planner tools, cap iterations at 10, cap wall clock at 30 seconds, log the final trace, and move on. You will ship faster and the model will handle the rest.</p>
+<p>If the answer is yes for even one tool, you need a policy layer, and you need it before the tool executes, not after. The policy layer does not have to be a framework. It can be a single function per consequential tool, as in the Python example above. The point is that the check is deterministic code that the model cannot reason its way around.</p>
+<p>A useful intermediate heuristic: count the number of tools that can mutate state. If that count is zero, thin loop. If it is one or two, wrap those two tools and leave the rest unwrapped. If it is more than two, or if any tool affects money or user rights, build the policy layer as a first-class module with its own tests and its own audit sink.</p>
+<p>The other axis is regulatory exposure. If you serve EU users and your agent makes decisions with legal or similarly significant effects, GDPR Article 22 gives you a concrete obligation: either keep a human in the loop, or be able to explain the decision and offer a path to contest it. That obligation lands on the policy layer, not on the model. The model cannot be audited; the code around it can.</p>
+<h2 id="common-objections-and-responses">Common objections, and responses</h2>
+<p><strong>"The model is smart enough to follow the policy if I put it in the system prompt."</strong> Sometimes, most of the time, until it is not. Prompt-level policy is a suggestion. A model under pressure from a persuasive user, an ambiguous request, or a long context will occasionally violate a prompt instruction. A code-level check cannot be talked out of a decision. For low-stakes tools, prompt policy is fine. For refunds and account actions, it is not.</p>
+<p><strong>"A policy layer adds latency."</strong> A permission check and an audit write are sub-millisecond operations. The model call dominates latency at 800ms to 4 seconds depending on task complexity. The policy layer is noise in the latency budget. The real latency cost of the new generation is the longer reasoning traces, not the guardrails.</p>
+<p><strong>"This is just bringing back the DAG."</strong> No. A DAG dictates sequence. A policy layer constrains choices. The planner can call tools in any order it wants; it just cannot exceed a budget, violate a permission, or skip the audit write. That is a fundamentally different and much less brittle structure than a hard-coded graph.</p>
+<p><strong>"Our compliance team has not asked for any of this."</strong> They will, and the ask will arrive with a deadline. GDPR Article 5(2) already establishes accountability as a principle, and Article 22 already restricts solely automated decisions. Building the audit sink now costs a day. Retrofitting it into a live agent loop that has been issuing refunds for six months costs considerably more, because you will be reconstructing history you did not record.</p>
+<h2 id="what-the-alternative-approach-would-change">What the alternative approach would change</h2>
+<p>If teams adopted the planner-plus-policy model instead of the raw-loop model, three things would change in practice.</p>
+<p>First, incident response would get faster. When an agent does something wrong, the question "what did it decide and why" has a deterministic answer in the audit log, not a probabilistic one in a re-run. You would stop trying to reproduce non-deterministic model behavior and start reading structured events.</p>
+<p>Second, cost predictability would improve. A hard iteration and wall-clock cap turns a variable-cost agent into a bounded-cost one. Teams running high-volume agents would stop seeing the long tail of expensive interactions that comes from a model that keeps trying.</p>
+<p>Third, the compliance conversation would move from "we think it is fine" to "here is the trace." That is a materially different posture when a regulator or an enterprise customer asks how the system behaves.</p>
+<p>The tradeoff is real: the policy layer is code you have to write, test, and maintain. It is not free. But it is a bounded, well-understood cost, and it replaces an unbounded, poorly-understood risk. For any agent with consequential tools, that trade is worth making.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I stop an AI agent from calling tools in an infinite loop?</strong>
+Enforce an iteration cap and a wall-clock cap in the code that runs the agent loop, not in the prompt. A typical default is 10 iterations and 30 seconds per user request. The model cannot override a counter that lives in your runtime. Log every iteration so you can see when the cap fires and tune it.</p>
+<p><strong>Why does my agent ignore the policy in the system prompt?</strong>
+Because a system prompt is an instruction, not a constraint. Under ambiguous input, long context, or adversarial user pressure, models occasionally deviate from prompt-level rules. Move any rule that protects money, user rights, or irreversible state into deterministic code that runs before the tool executes.</p>
+<p><strong>What does GDPR Article 22 require for AI agents?</strong>
+Article 22 restricts solely automated decisions that produce legal or similarly significant effects, and gives data subjects rights around those decisions. In practice that means either keeping a human in the loop for consequential actions or being able to explain the decision and offer a path to contest it. Both require a structured audit trail, which is a code-level concern.</p>
+<p><strong>When is a raw agent loop actually fine?</strong>
+When every tool the agent can call is read-only or trivially reversible. Research agents, internal Q&amp;A agents, and summarization agents fit this pattern. If no tool mutates state, costs money, or affects a user's rights, a thin loop with a tool-call budget is sufficient and a policy engine is overhead.</p>
+<h2 id="summary">Summary</h2>
+<p>The Claude 4 / GPT-5 generation did not make orchestration obsolete. It made one kind of orchestration obsolete — the prompt-chaining that existed to compensate for weak reasoning — and made another kind more important: the deterministic policy layer that decides what the planner is allowed to do. The teams that delete the wrong layer ship fast and then discover the failure mode in production, usually around week three, usually in the form of an action the model was never authorized to take.</p>
+<p>The correct architecture for any agent with consequential tools is a capable planner wrapped in a thin, deterministic policy layer that enforces permissions, caps iterations, and writes an audit record before each action. That layer is 40 to 80 lines of code, not a framework. It is the difference between an agent you can explain to an auditor and one you cannot.</p>
+<p>Here is the specific next step: open the module where your agent's tool calls are dispatched, and add a single counter that increments on every call and raises an exception past a fixed limit — start with 10. That one change bounds your worst-case cost and gives you a place to put the rest of the policy layer.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/llm-agents-why-monoliths-win/">
+                        <h3>LLM agents: why monoliths win</h3>
+                        <p>LLM agent architecture – avoid hidden latency spikes; learn how monolithic designs cut p99 by 45 ms and keep GDPR audit trails intact.</p>
+                        <span class="related-meta">13 min read · 10 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/two-engineer-classes-the-ai-tool-norm-trap/">
+                        <h3>Two engineer classes: the AI tool norm trap</h3>
+                        <p>AI tool norms that prevent a two-class engineering team: PR template disclosure, intent comments on generated code, and a review-load dashboard that…</p>
+                        <span class="related-meta">14 min read · 7 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-code-review-gap-nobody-admits/">
+                        <h3>agent code review gap nobody admits</h3>
+                        <p>Catch agent-generated code failures before merge — chaos testing, shadow traffic, and invariant checks that stop the $17k rollbacks most teams ignore</p>
+                        <span class="related-meta">17 min read · 27 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
