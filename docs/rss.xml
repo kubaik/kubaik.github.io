@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Sep 2026 04:25:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Sep 2026 16:41:38 +0000</lastBuildDate>
+    <item>
+      <title>Prompt injection: what breaks first in prod</title>
+      <link>https://kubaik.github.io/prompt-injection-what-breaks-first-in-prod/</link>
+      <description>Prompt and tool injection in LLM apps: schema validation, tool allowlists, SSRF blocks, and the write-confirmation step that actually stops exfiltration.</description>
+      <pubDate>Sun, 27 Sep 2026 16:41:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/prompt-injection-what-breaks-first-in-prod/</guid>
+    </item>
     <item>
       <title>Agent architecture: the new model trap</title>
       <link>https://kubaik.github.io/agent-architecture-the-new-model-trap/</link>
@@ -138,13 +145,6 @@
       <description>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</description>
       <pubDate>Mon, 21 Sep 2026 04:01:53 +0000</pubDate>
       <guid>https://kubaik.github.io/dead-letter-queues-stop-poison-messages/</guid>
-    </item>
-    <item>
-      <title>Agent compliance in African fintech: the CBN gap</title>
-      <link>https://kubaik.github.io/agent-compliance-in-african-fintech-the-cbn-gap/</link>
-      <description>Mapping autonomous agents onto CBN, NDPA 2023, and SEC obligations — the deterministic gate and append-only audit store that survive a compliance review.</description>
-      <pubDate>Sun, 20 Sep 2026 09:44:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-compliance-in-african-fintech-the-cbn-gap/</guid>
     </item>
   </channel>
 </rss>

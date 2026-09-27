@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-27T04:24:48.539723",
+  "built_at": "2026-09-27T16:41:12.933700",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5380,6 +5380,11 @@
       "slug": "agent-architecture-the-new-model-trap",
       "title": "Agent architecture: the new model trap",
       "summary": "Benchmarks for claude gpt5 that don't mention their failure conditions aren't worth much. This walks through the fix and the reasoning, not just the patch. Production gives you neither a clean environment nor a patient timeline. The conventional wisdom (and why it's incomplete) The conventional wisd"
+    },
+    {
+      "slug": "prompt-injection-what-breaks-first-in-prod",
+      "title": "Prompt injection: what breaks first in prod",
+      "summary": "The first time production incident fails in production, it rarely fails in the way any postmortem template expects. It's the kind of problem that's easy to reproduce and hard to explain. This is what I put together after working through it properly. The problem this solves Prompt injection and tool "
     }
   ]
 }

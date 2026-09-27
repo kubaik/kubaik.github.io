@@ -1,4 +1,4 @@
-❌ Internal link audit: 2 broken link(s) found across 463 posts checked.
+❌ Internal link audit: 2 broken link(s) found across 464 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------

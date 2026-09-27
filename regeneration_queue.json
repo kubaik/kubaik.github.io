@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "agent-permissions-the-mistake-that-breaks-production",
-    "title": "Agent permissions: the mistake that breaks production",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into trouble when the first prototype asked for admin rights to install Py; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-agents-eat-your-budget-3-ways",
-    "title": "AI agents eat your budget 3 ways",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when a single misconfigured retry policy in a customer support a; I thought adding a retry budget would fix it.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-agents-killed-dev-tool-sales-cycles",
-    "title": "AI agents killed dev tool sales cycles",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I dug into the logs and found a pattern: teams were using PyLint Pro as a linter",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-agents-why-devtools-now-sell-like-saas-in-2026",
-    "title": "AI agents: why devtools now sell like SaaS in 2026",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three weeks building a dashboard that showed code smell counts and secur",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-benchmarking-3-mistakes-we-made-first",
-    "title": "AI benchmarking: 3 mistakes we made first",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that a smaller model could have worse throughput—until we dug in",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ai-feature-drift-why-your-model-died-at-midnight",
     "title": "AI feature drift: why your model died at midnight",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when we moved our loan-default predictor from a simple logistic-; I was surprised that the model’s memory footprint in production (measured with  ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-features-rot-faster-than-you-build-them",
     "title": "AI features rot faster than you build them",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same building golden mistake in more than one production codebase o; Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-interviews-broke-system-design-3-patterns-that",
     "title": "AI interviews broke system design: 3 patterns that",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when a client in Colombia asked me to review a system design doc; I saw this with a client in Mexico building a real-time payment reconciliation s",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-pair-coding-who-owns-the-diff-now",
     "title": "AI pair coding: who owns the diff now?",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection-pool timeout that turned out to be a s",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-rollouts-feature-flags-in-2026",
     "title": "AI rollouts: feature flags in 2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ai-rollouts-live-or-die-by-flags",
@@ -1171,6 +1141,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "agent-permissions-the-mistake-that-breaks-production",
+    "title": "Agent permissions: the mistake that breaks production",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into trouble when the first prototype asked for admin rights to install Py; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-agents-eat-your-budget-3-ways",
+    "title": "AI agents eat your budget 3 ways",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when a single misconfigured retry policy in a customer support a; I thought adding a retry budget would fix it.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-agents-killed-dev-tool-sales-cycles",
+    "title": "AI agents killed dev tool sales cycles",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I dug into the logs and found a pattern: teams were using PyLint Pro as a linter",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-agents-why-devtools-now-sell-like-saas-in-2026",
+    "title": "AI agents: why devtools now sell like SaaS in 2026",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three weeks building a dashboard that showed code smell counts and secur",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-benchmarking-3-mistakes-we-made-first",
+    "title": "AI benchmarking: 3 mistakes we made first",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that a smaller model could have worse throughput—until we dug in",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "survive-90s-db-failover-without-melting",

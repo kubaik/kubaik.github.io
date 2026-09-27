@@ -11,7 +11,7 @@
   "meta_description": "Latency spiked to 850ms on a 500ms SLA, and the Terraform script it wrote referenced AWS services that don’t exist in us-east-2.",
   "featured_image": "/static/images/ai-interviews-broke-system-design-3-patterns-that.jpg",
   "created_at": "2026-06-11T18:10:36.807589",
-  "updated_at": "2026-09-27T16:41:30.168726+00:00",
+  "updated_at": "2026-09-19T08:27:13.635483+00:00",
   "seo_keywords": [
     "Ai",
     "Artificialintelligence",
