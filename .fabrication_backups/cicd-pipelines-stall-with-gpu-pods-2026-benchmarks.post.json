@@ -10,7 +10,7 @@
   "meta_description": "Cut CI/CD pipeline stalls 80% with GPU quotas and scheduler fixes — 2026 benchmarks, cost trade-offs, and rollout playbooks for AI workloads.",
   "featured_image": "/static/images/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks.jpg",
   "created_at": "2026-06-28T11:45:59.811643",
-  "updated_at": "2026-09-28T19:27:04.591455+00:00",
+  "updated_at": "2026-09-21T12:34:20.318317",
   "seo_keywords": [
     "Kubernetes",
     "Ai",

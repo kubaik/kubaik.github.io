@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T09:02:58.290964">
-        <meta property="article:modified_time" content="2026-09-21T12:34:05.575941">
+        <meta property="article:modified_time" content="2026-09-28T19:27:04.571264+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Build dev platform for $2k/month">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/build-dev-platform-for-2kmonth/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Build dev platform for $2k/month",
       "description": "Cut dev platform costs 77% to $412/month with ephemeral environments, Pulumi, and Next.js ISR — connection-first design for mobile networks in Africa",
       "datePublished": "2026-06-09T09:02:58+00:00",
-      "dateModified": "2026-09-21T12:34:05+00:00",
+      "dateModified": "2026-09-28T19:27:04+00:00",
       "wordCount": 3121,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
@@ -268,7 +268,7 @@
                         16 min read
                         &nbsp;·&nbsp; 3121 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-21
+                        &nbsp;·&nbsp; Updated 2026-09-28
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -582,9 +582,7 @@ container_definitions=pulumi.Output.all(
 <h2 id="the-broader-lesson">The broader lesson</h2>
 <p>The hard constraint in most African startups isn't lack of talent or budget — it's unreliable mobile connections and the tyranny of distance. A "good enough for Chrome on fibre" IDP fails on a bus in Mombasa. The winning pattern is <strong>connection-first design</strong>: treat every API call, portal page, and environment spin-up as a mobile-first experience with intermittent tolerance baked in.</p>
 <p>Three principles follow:
-1. <strong>Static-first over dynamic.</strong> Serve the developer portal as static HTML with ISR; cache secrets in a Service Worker; prefer static exports over SSR.
-2. <strong>Ephemeral over persistent.</strong> Delete environments after 30 minutes; rebuild images once per SHA; use stateless services (Lambda, Fargate) instead of persistent VMs.
-3. <strong>Secrets-as-code over secrets-in-files.</strong> Rotate secrets automatically; inject them at runtime; never commit them to Git.</p>
+1. <strong>Static-first over dynamic.</strong> Serve the developer portal as static HTML with ISR; cache secrets in a Service Worker; prefer static exports over SSR. 2. <strong>Ephemeral over persistent.</strong> Delete environments after 30 minutes; rebuild images once per SHA; use stateless services (Lambda, Fargate) instead of persistent VMs. 3. <strong>Secrets-as-code over secrets-in-files.</strong> Rotate secrets automatically; inject them at runtime; never commit them to Git.</p>
 <p>This pattern isn't specific to Africa — it's the same pattern that works for startups in Indonesia, Brazil, or Vietnam where engineers are on 3G and AWS is 120 ms away. The budget constraint forces a rediscovery of what the big platforms already know: static-first, ephemeral, secrets-as-code is the cheapest and most reliable way to ship.</p>
 <h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
 <p>Start by measuring your current pain. Pick one pain metric you can improve in 30 days: staging spin-up time, API latency from your farthest office, or secrets leaks. A common starting point is staging spin-up time. Run a quick experiment: build a minimal Pulumi stack that spins up a single ECS Fargate service with a Next.js app and a RDS Postgres. The entire stack is 300 lines of Python and costs $45/month. Measure spin-up time at 3 minutes and API p95 latency at 220 ms from a phone on 3G. That's usually enough to justify scaling it to every branch.</p>
@@ -618,14 +616,11 @@ code .
 <p>Edit <code>Pulumi.yaml</code> to set <code>runtime: python</code> and <code>template: aws-python</code>. Then create a single ECS Fargate service that deploys a static "Hello World" container (<code>public.ecr.aws/amazonlinux/amazonlinux:2023</code>). Run <code>pulumi up</code> and note the URL. Measure the latency from your phone on mobile data. If it's under 300 ms, you've proven the pattern works. If not, check your nearest AWS region and your mobile carrier's latency to that region.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

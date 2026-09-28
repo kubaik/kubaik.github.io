@@ -1,0 +1,531 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent versioning: the contract you forgot - Kubai Kevin</title>
+        <meta name="description" content="Agent versioning: version tools and output schemas to avoid silent breakage. Learn the contract, the routing pattern, and the deprecation policy.">
+        <meta name="keywords" content="AgentVersioning, ApiVersioning, ToolSchemaVersioning, Backward, Apis">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-28T19:26:44.647523">
+        <meta property="article:modified_time" content="2026-09-28T19:26:44.647533">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent versioning: the contract you forgot">
+        <meta property="og:description" content="Agent versioning: version tools and output schemas to avoid silent breakage. Learn the contract, the routing pattern, and the deprecation policy.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-versioning-the-contract-you-forgot/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-versioning-the-contract-you-forgot.png">
+        <meta property="og:image:alt" content="Agent versioning: the contract you forgot">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent versioning: the contract you forgot">
+        <meta name="twitter:description" content="Agent versioning: version tools and output schemas to avoid silent breakage. Learn the contract, the routing pattern, and the deprecation policy.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-versioning-the-contract-you-forgot.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-versioning-the-contract-you-forgot/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-versioning-the-contract-you-forgot/#article",
+      "headline": "Agent versioning: the contract you forgot",
+      "description": "Agent versioning: version tools and output schemas to avoid silent breakage. Learn the contract, the routing pattern, and the deprecation policy.",
+      "datePublished": "2026-09-28T19:26:44+00:00",
+      "dateModified": "2026-09-28T19:26:44+00:00",
+      "wordCount": 2516,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-versioning-the-contract-you-forgot/"
+      },
+      "keywords": "AgentVersioning, ApiVersioning, ToolSchemaVersioning, Backward, Apis"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent versioning: the contract you forgot",
+          "item": "https://kubaik.github.io/agent-versioning-the-contract-you-forgot/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent versioning: the contract you forgot</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent versioning: the contract you forgot</h1>
+                
+                <p class="post-lead">Agent versioning: version tools and output schemas to avoid silent breakage. Learn the contract, the routing pattern, and the deprecation policy.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/agentversioning/"
+                       style="text-decoration:none;">AgentVersioning</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ApiVersioning</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ToolSchemaVersioning</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Backward</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/apis/"
+                       style="text-decoration:none;">Apis</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2516 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-28
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>The gap between the demo and the incident report is where this actually lives. After enough code that touches version evolve gets reviewed, the same failure pattern keeps showing up. Here's what actually worked, and why.</p>
+<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
+<p>When you ship an agent (a system that calls tools, chains LLM outputs, and acts on external state), changing its capabilities feels like changing code. It is not. It is changing a public API that other teams, scripts, and sometimes other agents depend on. Versioning an agent means treating its tool schemas, output contracts, and side effects as a stable interface — even though the underlying model or prompt might change weekly. The simplest accurate explanation: an agent is a function with side effects, and its signature is the set of tools it exposes plus the shape of what it returns. If you change that signature without a version boundary, every caller breaks silently. The part that trips people up is that the LLM layer makes it look like there is no interface at all — so teams skip versioning until an integration fails at 2am.</p>
+<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
+<p>Most software versioning is about code artifacts: you tag a release, you publish a package, you bump a major version when you break backward compatibility. Agents break that mental model in three ways.</p>
+<p>First, the agent's behavior is not fully determined by its code. A prompt change, a model upgrade from <code>gpt-4o</code> to <code>gpt-4.1</code>, or a temperature tweak can alter tool-call sequences without any code diff. Your CI passes, your unit tests pass, and yet the <a href="/rogue-agent-api-calls-stop-the-bleeding/">agent now calls</a> <code>search_flights</code> before <code>get_user_profile</code> instead of after — and a downstream service that expected the profile ID in the first call fails.</p>
+<p>Second, tool schemas are often generated dynamically. A common pattern is to introspect Python functions with <code>inspect.signature()</code> and build the JSON schema at runtime. That means adding an optional parameter to a function silently changes the agent's public contract. No version bump, no changelog.</p>
+<p>Third, the consumers of an agent are not always humans. They are other agents, cron jobs, webhook handlers, or a Zapier-style integration that a customer built. Those consumers do not read your release notes. They read the tool schema once, cache it, and assume it will not change.</p>
+<p>A typical failure mode: a team adds a <code>priority</code> field to a <code>create_ticket</code> tool, defaulting to <code>"normal"</code>. The agent starts sending <code>"high"</code> for urgent issues. A downstream integration that only accepts <code>"low"</code>, <code>"medium"</code>, <code>"high"</code> rejects the new value with a 422. The agent retries three times, then gives up. The user sees "ticket creation failed" with no explanation. The fix is not in the agent code — it is in the version boundary that was never drawn.</p>
+<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+<p>Think of an agent like a REST API that happens to be implemented with an LLM. The LLM is the business logic. The tools are the endpoints. The output schema is the response body.</p>
+<p>Once you accept that analogy, versioning rules from API design apply directly:</p>
+<ul>
+<li><strong>Additive changes are safe.</strong> Adding a new optional tool parameter, a new tool, or a new field in the output is backward compatible.</li>
+<li><strong>Removals and renames are breaking.</strong> Removing a tool, renaming a parameter, or changing a type (string to integer) requires a new major version.</li>
+<li><strong>Behavioral changes are breaking even if the schema is identical.</strong> If <code>search</code> used to return 10 results and now returns 5, that is a breaking change for any caller that paginates.</li>
+</ul>
+<p>But there is a twist: agents are stateful in ways APIs are not. An agent might remember a conversation across turns. Changing the memory format — say from a list of messages to a summary string — breaks replay and debugging. That is why agent versioning needs two axes: the <strong>interface version</strong> (tools + output schema) and the <strong>state version</strong> (memory layout, checkpoint format).</p>
+<p>A useful analogy: an agent is like a database with a schema and a migration history. You would not <code>ALTER TABLE</code> in production without a migration. You would not change a stored procedure's signature without versioning it. Agents deserve the same discipline.</p>
+<h2 id="a-concrete-worked-example">A concrete worked example</h2>
+<p>Consider a customer-support agent that exposes three tools: <code>get_order</code>, <code>issue_refund</code>, and <code>send_email</code>. It runs on a serverless platform (AWS Lambda with arm64, Python 3.11, <code>pydantic</code> 2.7 for schema validation). The agent's output is a JSON object with <code>action_taken</code>, <code>confidence</code>, and <code>next_steps</code>.</p>
+<p>Version 1 of the agent is deployed. A partner integration calls it via HTTP and expects <code>action_taken</code> to be one of <code>"refunded"</code>, <code>"escalated"</code>, or <code>"no_action"</code>.</p>
+<p>The team decides to improve refund logic. They add a new tool <code>check_refund_eligibility</code> and change <code>issue_refund</code> to require an <code>eligibility_token</code> parameter. They also change <code>action_taken</code> to include <code>"pending_review"</code> for cases needing manual approval.</p>
+<p>They deploy. The partner integration receives <code>"pending_review"</code> and crashes because its enum does not include it. The agent's retry logic kicks in, but the partner's webhook returns a 400, so the agent marks the task as failed. Within an hour, 12% of refund requests are stuck.</p>
+<p>The fix is to version the agent. Here is a minimal versioning scheme in Python using a version header and a schema registry:</p>
+<pre><code class="language-python"># agent_v2.py
+from pydantic import BaseModel, Field
+from typing import Literal, Optional
+
+class AgentV2Output(BaseModel):
+    action_taken: Literal[&quot;refunded&quot;, &quot;escalated&quot;, &quot;no_action&quot;, &quot;pending_review&quot;]
+    confidence: float = Field(ge=0.0, le=1.0)
+    next_steps: list[str]
+    version: Literal[&quot;2.0&quot;] = &quot;2.0&quot;
+
+class AgentV1Output(BaseModel):
+    action_taken: Literal[&quot;refunded&quot;, &quot;escalated&quot;, &quot;no_action&quot;]
+    confidence: float
+    next_steps: list[str]
+    version: Literal[&quot;1.0&quot;] = &quot;1.0&quot;
+
+# In the request handler, route based on the client's Accept-Version header
+def handle_request(request):
+    version = request.headers.get(&quot;Accept-Version&quot;, &quot;1.0&quot;)
+    if version == &quot;1.0&quot;:
+        return run_agent_v1(request)
+    elif version == &quot;2.0&quot;:
+        return run_agent_v2(request)
+    else:
+        raise ValueError(f&quot;Unsupported version: {version}&quot;)
+</code></pre>
+<p>The key point: both versions run side by side. New callers use <code>2.0</code>. Existing callers stay on <code>1.0</code> until they migrate. You can run both for months if needed.</p>
+<p>On the tool side, you version the schema by including a version field in the tool definition and rejecting calls that do not match:</p>
+<pre><code class="language-javascript">// tool_schema.js — Node 20 LTS, using zod for validation
+import { z } from 'zod';
+
+const issueRefundV1 = z.object({
+  orderId: z.string(),
+  amount: z.number().positive(),
+  reason: z.string().optional(),
+});
+
+const issueRefundV2 = z.object({
+  orderId: z.string(),
+  amount: z.number().positive(),
+  reason: z.string().optional(),
+  eligibilityToken: z.string().uuid(), // new required field
+});
+
+export function getToolSchema(version) {
+  if (version === '1.0') return issueRefundV1;
+  if (version === '2.0') return issueRefundV2;
+  throw new Error(`Unknown tool version: ${version}`);
+}
+</code></pre>
+<p>This pattern lets you add <code>eligibilityToken</code> without breaking v1 callers. The agent decides which tool version to use based on the interface version negotiated at request time.</p>
+<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
+<p>If you have ever worked with gRPC or protobuf, this will feel familiar. Protobuf enforces backward compatibility rules: you can add fields, but you cannot change field numbers or types. Agents need the same discipline, but without a compiler to enforce it. You have to build the enforcement yourself.</p>
+<p>If you have worked with database migrations, the state version axis will make sense. Just as you would not change a column type without a migration, you should not change the agent's memory format without a migration path. In practice, that means storing a <code>state_version</code> alongside the memory blob and writing a transformer that upgrades old states when they are loaded.</p>
+<p>If you have worked with API gateways, the routing-by-version pattern is identical. You can use AWS API Gateway with a custom header, or a simple reverse proxy that inspects <code>Accept-Version</code>. The infrastructure is not the hard part; the hard part is remembering to bump the version when the agent's behavior changes.</p>
+<p>A common trap here is assuming that because the LLM is stochastic, versioning does not matter. The opposite is true: stochastic behavior makes versioning more important, because you cannot rely on tests to catch every regression. A version boundary gives you a stable reference point — you can always say "v1 did not call <code>check_refund_eligibility</code>" and reason about the delta.</p>
+<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<p><strong>Misconception 1: "The model is the version."</strong> No. Changing from <code>gpt-4o</code> to <code>gpt-4.1</code> is a dependency upgrade, not an interface change. Your interface version should remain stable unless the tool schemas or output shape change. However, you should pin the model version in your deployment (e.g., <code>gpt-4.1-2025-04-14</code>) so that a silent model update does not alter behavior. If you must upgrade the model, treat it as a new minor version and run A/B tests.</p>
+<p><strong>Misconception 2: "We can just tell users to update."</strong> In practice, integrations are built by other teams or customers who have their own release cycles. A typical enterprise integration might take 3–6 months to update. If you break them, you lose trust. Versioning buys you time.</p>
+<p><strong>Misconception 3: "Versioning is too much overhead for a prototype."</strong> Start with a single version string in your output and a routing header. That is 10 lines of code. It costs almost nothing and saves you from a rewrite later. The overhead is in the discipline, not the code.</p>
+<p><strong>Misconception 4: "Tools are internal, so they don't need versions."</strong> Tools are the agent's public API. If another agent or a script calls your agent, it sees the tools. Even if tools are only used internally, other services in your own stack may depend on them. Version them.</p>
+<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
+<p>Once you have basic versioning, you can add more sophisticated controls.</p>
+<p><strong>Capability flags.</strong> Instead of versioning the entire agent, you can version individual capabilities. For example, <code>refund_v2</code> is a capability flag that enables the new refund flow. Callers opt in by passing <code>capabilities: ["refund_v2"]</code>. This is more granular and lets you roll out features gradually. It also makes it easier to deprecate: you can turn off <code>refund_v1</code> for 90% of traffic, monitor, then turn it off entirely.</p>
+<p><strong>Schema registry with compatibility checks.</strong> Tools like Buf Schema Registry (for protobuf) or Confluent Schema Registry (for Avro) enforce compatibility rules. You can build a lightweight version for agents: a JSON file that maps tool names to versions and a CI check that fails if you remove a field or change a type without bumping the major version. This is a 50-line script in Python using <code>jsonschema</code>.</p>
+<p><strong>State migration.</strong> If you store agent memory in Redis 7.2 or a Postgres table, include a <code>state_version</code> column. When loading state, check the version and run a migration function if needed. For example, if you changed from storing a list of messages to a summary string, write a function that converts old states on the fly. This avoids a big-bang migration.</p>
+<p><strong>Deprecation policy.</strong> Define a clear timeline: when you release v2, v1 is supported for at least 6 months. After that, you can return a 410 Gone with a link to migration docs. Publish this policy so consumers can plan.</p>
+<p><strong>Observability.</strong> Tag every request with the interface version. In your logs (e.g., AWS CloudWatch), you can then see which versions are still in use. A common metric is <code>agent_requests_by_version</code>. If v1 traffic drops to 0.1% after 3 months, you can safely deprecate.</p>
+<p>A comparison of versioning strategies:</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Granularity</th>
+<th>Overhead</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full agent version (v1, v2)</td>
+<td>Coarse</td>
+<td>Low</td>
+<td>Small teams, few integrations</td>
+</tr>
+<tr>
+<td>Capability flags</td>
+<td>Fine</td>
+<td>Medium</td>
+<td>Gradual rollouts, A/B tests</td>
+</tr>
+<tr>
+<td>Schema registry + CI checks</td>
+<td>Tool-level</td>
+<td>High</td>
+<td>Large orgs, many consumers</td>
+</tr>
+<tr>
+<td>Model pinning only</td>
+<td>None</td>
+<td>Very low</td>
+<td>Prototypes, internal tools</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-reference">Quick reference</h2>
+<ul>
+<li><strong>Interface version</strong>: tools + output schema + side effects. Bump major when breaking.</li>
+<li><strong>State version</strong>: memory format, checkpoint layout. Bump when changing storage.</li>
+<li><strong>Model version</strong>: pin to a dated release (e.g., <code>gpt-4.1-2025-04-14</code>). Treat upgrades as minor versions.</li>
+<li><strong>Routing</strong>: use <code>Accept-Version</code> header or a query param. Default to latest stable.</li>
+<li><strong>Deprecation</strong>: support old versions for at least 6 months. Announce via changelog and email.</li>
+<li><strong>Enforcement</strong>: CI check that compares tool schemas against a baseline. Fail on breaking changes without a version bump.</li>
+<li><strong>Observability</strong>: log <code>version</code> with every request. Track adoption.</li>
+</ul>
+<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
+<ul>
+<li>The protobuf language guide on backward compatibility rules (historical, still relevant): https://protobuf.dev/programming-guides/proto3/#updating</li>
+<li>AWS Lambda versioning and aliases documentation: https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html</li>
+<li>Pydantic 2.7 docs on schema generation: https://docs.pydantic.dev/2.7/concepts/json_schema/</li>
+<li>The Twelve-Factor App, especially the "Backing services" factor for state management: https://12factor.net/backing-services</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I version an agent's tools without breaking existing callers?</strong>
+Use a version header or capability flag. Run both tool versions side by side. The agent selects the tool version based on the negotiated interface version. Add new required parameters only in a new major version. Keep old versions for at least 6 months.</p>
+<p><strong>Why does my agent's output schema change break integrations?</strong>
+Because integrations often validate against a fixed schema. Adding a new enum value like <code>pending_review</code> can cause a 422 if the consumer's validator rejects unknown values. Always treat output schema changes as breaking unless you are only adding optional fields that consumers ignore.</p>
+<p><strong>What is the difference between agent versioning and model versioning?</strong>
+Model versioning is about pinning the LLM to a specific release (e.g., <code>gpt-4.1-2025-04-14</code>). Agent versioning is about the interface: tools, output shape, and state format. You can upgrade the model without changing the agent version if the interface remains compatible. But you should test model upgrades carefully because behavior can shift.</p>
+<p><strong>When should I bump the major version of an agent?</strong>
+Bump major when you remove or rename a tool, change a parameter type, change the output schema in a non-additive way, or alter side effects (e.g., now sends an email when it did not before). If you are only adding optional fields or new tools, a minor version is enough.</p>
+<h2 id="the-one-thing-to-do-in-the-next-30-minutes">The one thing to do in the next 30 minutes</h2>
+<p>Open your agent's main handler file (e.g., <code>handler.py</code> or <code>agent.js</code>) and add a <code>version</code> field to the output schema. Then add a routing check at the top of the handler that reads an <code>Accept-Version</code> header and defaults to <code>"1.0"</code>. This is a 15-line change. Commit it. It will not fix everything, but it establishes the boundary. The next time you change a tool or output shape, you will have a place to put the new version — and a way to keep your existing users working.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/idempotency-keys-what-they-fix-what-they-dont/">
+                        <h3>Idempotency keys: what they fix, what they don&#39;t</h3>
+                        <p>Idempotency keys prevent double charges on retry, but not concurrency, key reuse, or partial failures.</p>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/mobile-money-agents-when-m-pesa-api-fails/">
+                        <h3>Mobile money agents: when M-Pesa API fails</h3>
+                        <p>Mobile money agents fail when callbacks are missed or duplicated. Fix pending transactions, idempotency, and provider timeouts before users lose trust.</p>
+                        <span class="related-meta">15 min read · 18 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/why-does-my-agent-version-break-clients/">
+                        <h3>Why does my agent version break clients?</h3>
+                        <p>Agent versioning pitfalls cause silent breakages; avoid contract drift and mutable tags to keep integrations stable, or risk 15% more incidents.</p>
+                        <span class="related-meta">13 min read · 14 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

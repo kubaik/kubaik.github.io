@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-27T01:31:04.936569">
-        <meta property="article:modified_time" content="2026-06-27T01:31:04.936577">
+        <meta property="article:modified_time" content="2026-09-28T19:27:04.552573+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Block API replay attacks in 2026">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/block-api-replay-attacks-in-2026/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Block API replay attacks in 2026",
       "description": "Cut API abuse 85% in 2026 with token behavior tracking — the attacks most teams miss and why Redis Streams blocks them while rate limiting fails.",
       "datePublished": "2026-06-27T01:31:04+00:00",
-      "dateModified": "2026-06-27T01:31:04+00:00",
+      "dateModified": "2026-09-28T19:27:04+00:00",
       "wordCount": 2471,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
@@ -263,7 +263,7 @@
                         12 min read
                         &nbsp;·&nbsp; 2471 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-27
+                        &nbsp;·&nbsp; Updated 2026-09-28
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,8 +277,7 @@
 <p>We needed to distinguish between legitimate user behavior and automated abuse without adding latency or breaking the developer experience. Our budget was tight: we couldn’t spin up new services without approval, and our auth stack was already running on Node 20 LTS with Express 4.19 and Redis 7.2 as the cache. Any solution had to plug into that stack with zero downtime.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>First, we tried rate limiting with Kong’s <code>rate-limiting</code> plugin. We set a ceiling of 100 requests per minute per IP, with a 10-second window. Within 24 hours, we hit two walls:
-1. Legitimate mobile clients behind carrier-grade NATs (common in Nairobi and Manila) got throttled because multiple users shared the same egress IP.
-2. Attackers bypassed the limit by cycling through proxies every 8 seconds—faster than Kong could sync its counters across nodes in our multi-region setup.</p>
+1. Legitimate mobile clients behind carrier-grade NATs (common in Nairobi and Manila) got throttled because multiple users shared the same egress IP. 2. Attackers bypassed the limit by cycling through proxies every 8 seconds—faster than Kong could sync its counters across nodes in our multi-region setup.</p>
 <p>Then we tried fail2ban-style IP bans with a custom Lua script running in OpenResty 1.21.1.1. We parsed Redis logs in real time and banned IPs after 3 failed auth attempts. The script worked—until attackers started using stolen tokens instead of brute-forcing passwords. Those tokens bypassed the auth check entirely, so our bans never triggered. Meanwhile, our Redis CPU usage spiked to 85% under 10k QPS because we were storing every failed attempt indefinitely.</p>
 <p>Finally, we tried a commercial WAF (Cloudflare Enterprise, $3k/month). It blocked 90% of the obvious bots, but it missed refined attacks: attackers would send 1 token per second for 30 minutes, slowly probing for side-channel leaks in our response times. Our 95th-percentile API latency jumped from 45ms to 180ms because Cloudflare’s rules added 135ms of processing per request. We turned it off after a week.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
@@ -515,14 +514,11 @@ We widened our anomaly window to 15 minutes and added a grace period for tokens 
 <p>Look at the <code>path</code> and <code>ua</code> fields. If you see repeated calls to <code>/v1/transfer</code> with the same user-agent across 5 events, you’ve found a replay attack. Block it at the gateway with Kong’s ACL plugin or your WAF. Do this for every token with &gt;5 events. You’ll cut your attack surface in half today.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

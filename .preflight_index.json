@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-28T04:25:58.644680",
+  "built_at": "2026-09-28T19:26:47.824702",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5390,6 +5390,11 @@
       "slug": "settlement-vs-clearing-backend-engineers-guide",
       "title": "Settlement vs clearing: backend engineer's guide",
       "summary": "The first time settlement clearing fails in production, it rarely fails in the way any postmortem template expects. This is the version of the write-up that includes the part that broke. The answers online were either wrong or skipped the part that mattered. The one-paragraph version (read this firs"
+    },
+    {
+      "slug": "agent-versioning-the-contract-you-forgot",
+      "title": "Agent versioning: the contract you forgot",
+      "summary": "The gap between the demo and the incident report is where this actually lives. After enough code that touches version evolve gets reviewed, the same failure pattern keeps showing up. Here's what actually worked, and why. The one-paragraph version (read this first) When you ship an agent (a system th"
     }
   ]
 }

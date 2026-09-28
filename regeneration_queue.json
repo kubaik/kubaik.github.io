@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-rollouts-live-or-die-by-flags",
-    "title": "AI rollouts live or die by flags",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-wrote-the-docs-humans-wrote-the-gaps",
-    "title": "AI wrote the docs — humans wrote the gaps",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a failed M-Pesa payment that turned out to be a mis",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "api-abuse-patterns-rising-in-2026",
-    "title": "API abuse patterns rising in 2026",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "api-security-the-attacks-rising-in-2026",
-    "title": "API security: the attacks rising in 2026",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days tracking down why our WAF wasn’t blocking it — only to realiz",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "aws-local-zones-vs-localstack-ai-microservices-in",
-    "title": "AWS Local Zones vs LocalStack: AI microservices in",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when a Nigerian healthtech client asked why their real-time ECG ; I tested both AWS Local Zones (using   in Johannesburg) and LocalStack cloud emu",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "block-api-abuse-in-2026-before-it-blocks",
     "title": "Block API abuse in 2026 before it blocks…",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "block-api-replay-attacks-in-2026",
     "title": "Block API replay attacks in 2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I expected to see brute-force login attempts or credential stuffing.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "build-dev-platform-for-2kmonth",
     "title": "Build dev platform for $2k/month",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a staging outage that turned out to be a single mis",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "cicd-pipelines-stall-with-gpu-pods-2026-benchmarks",
     "title": "CI/CD pipelines stall with GPU pods: 2026 benchmarks",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when a 20-node GPU cluster in us-west-2 sat idle for 4 hours whi; I spent two weeks on this before realising the toleration was left over from a C",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "claude-code-after-a-year-daily-wins",
     "title": "Claude Code after a year: daily wins",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks integrating it into our CI pipeline before I realized the ma",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "cut-cold-starts-70-lambda-cost-hack",
@@ -1111,6 +1081,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "ai-rollouts-live-or-die-by-flags",
+    "title": "AI rollouts live or die by flags",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-wrote-the-docs-humans-wrote-the-gaps",
+    "title": "AI wrote the docs — humans wrote the gaps",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a failed M-Pesa payment that turned out to be a mis",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "api-abuse-patterns-rising-in-2026",
+    "title": "API abuse patterns rising in 2026",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "api-security-the-attacks-rising-in-2026",
+    "title": "API security: the attacks rising in 2026",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days tracking down why our WAF wasn’t blocking it — only to realiz",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "aws-local-zones-vs-localstack-ai-microservices-in",
+    "title": "AWS Local Zones vs LocalStack: AI microservices in",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when a Nigerian healthtech client asked why their real-time ECG ; I tested both AWS Local Zones (using   in Johannesburg) and LocalStack cloud emu",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-feature-drift-why-your-model-died-at-midnight",
