@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Sep 2026 16:41:38 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 28 Sep 2026 04:26:18 +0000</lastBuildDate>
+    <item>
+      <title>Settlement vs clearing: backend engineer&apos;s guide</title>
+      <link>https://kubaik.github.io/settlement-vs-clearing-backend-engineers-guide/</link>
+      <description>Clearing vs settlement: why your ledger doesn&amp;#x27;t balance. A backend engineer&amp;#x27;s guide to obligations, netting, and settlement finality.</description>
+      <pubDate>Mon, 28 Sep 2026 04:25:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/settlement-vs-clearing-backend-engineers-guide/</guid>
+    </item>
     <item>
       <title>Prompt injection: what breaks first in prod</title>
       <link>https://kubaik.github.io/prompt-injection-what-breaks-first-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>Offline-capable agent workflows need durable local writes, UUIDv7 dedup, and backoff sync. The failure mode most teams ship: losing scans on process kill.</description>
       <pubDate>Mon, 21 Sep 2026 07:32:16 +0000</pubDate>
       <guid>https://kubaik.github.io/offline-agent-workflows-for-last-mile-ops/</guid>
-    </item>
-    <item>
-      <title>Dead-letter queues: stop poison messages</title>
-      <link>https://kubaik.github.io/dead-letter-queues-stop-poison-messages/</link>
-      <description>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</description>
-      <pubDate>Mon, 21 Sep 2026 04:01:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/dead-letter-queues-stop-poison-messages/</guid>
     </item>
   </channel>
 </rss>

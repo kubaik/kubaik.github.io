@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-27T16:41:12.933700",
+  "built_at": "2026-09-28T04:25:58.644680",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5385,6 +5385,11 @@
       "slug": "prompt-injection-what-breaks-first-in-prod",
       "title": "Prompt injection: what breaks first in prod",
       "summary": "The first time production incident fails in production, it rarely fails in the way any postmortem template expects. It's the kind of problem that's easy to reproduce and hard to explain. This is what I put together after working through it properly. The problem this solves Prompt injection and tool "
+    },
+    {
+      "slug": "settlement-vs-clearing-backend-engineers-guide",
+      "title": "Settlement vs clearing: backend engineer's guide",
+      "summary": "The first time settlement clearing fails in production, it rarely fails in the way any postmortem template expects. This is the version of the write-up that includes the part that broke. The answers online were either wrong or skipped the part that mattered. The one-paragraph version (read this firs"
     }
   ]
 }
