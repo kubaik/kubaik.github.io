@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-28T19:26:47.824702",
+  "built_at": "2026-09-29T04:56:22.646794",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5395,6 +5395,11 @@
       "slug": "agent-versioning-the-contract-you-forgot",
       "title": "Agent versioning: the contract you forgot",
       "summary": "The gap between the demo and the incident report is where this actually lives. After enough code that touches version evolve gets reviewed, the same failure pattern keeps showing up. Here's what actually worked, and why. The one-paragraph version (read this first) When you ship an agent (a system th"
+    },
+    {
+      "slug": "route-fine-tune-or-scale-pick-right",
+      "title": "Route, fine-tune, or scale: pick right",
+      "summary": "Most finetune route incidents trace back to a default nobody remembers choosing. The tutorials all show the happy path. This post covers what comes after the happy path. The problem this solves You have a production LLM feature. It works, mostly. But latency is creeping up, costs are climbing, and a"
     }
   ]
 }

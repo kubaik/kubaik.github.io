@@ -67,5 +67,6 @@
   "pgvector at 100k+ QPS: what broke and what we had to change",
   "The prompt and tool injection attacks we actually saw in production (and how we blocked them)",
   "Settlement and clearing systems explained for backend engineers who've never touched them",
-  "How we version and evolve agent capabilities without breaking existing users and integrations"
+  "How we version and evolve agent capabilities without breaking existing users and integrations",
+  "When to fine-tune, when to route, and when to just use a bigger model \u2014 2026 decision framework"
 ]

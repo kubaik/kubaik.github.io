@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Sep 2026 19:27:13 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 29 Sep 2026 04:56:48 +0000</lastBuildDate>
+    <item>
+      <title>Route, fine-tune, or scale: pick right</title>
+      <link>https://kubaik.github.io/route-fine-tune-or-scale-pick-right/</link>
+      <description>Fine-tune, route, or use a bigger model? Build an eval set first, then a routing layer.</description>
+      <pubDate>Tue, 29 Sep 2026 04:56:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/route-fine-tune-or-scale-pick-right/</guid>
+    </item>
     <item>
       <title>Agent versioning: the contract you forgot</title>
       <link>https://kubaik.github.io/agent-versioning-the-contract-you-forgot/</link>
@@ -138,13 +145,6 @@
       <description>Golden paths that stay evolvable: version the interface, not the artifact.</description>
       <pubDate>Mon, 21 Sep 2026 08:28:08 +0000</pubDate>
       <guid>https://kubaik.github.io/golden-paths-that-dont-handcuff/</guid>
-    </item>
-    <item>
-      <title>Golden paths become load-bearing walls</title>
-      <link>https://kubaik.github.io/golden-paths-become-load-bearing-walls/</link>
-      <description>Golden paths for AI features often hide the model ID and prompt version — the two things you need during a migration. Here is the failure mode and the fix.</description>
-      <pubDate>Mon, 21 Sep 2026 08:13:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/golden-paths-become-load-bearing-walls/</guid>
     </item>
   </channel>
 </rss>

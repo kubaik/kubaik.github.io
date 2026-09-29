@@ -12,7 +12,7 @@
   "meta_description": "Cut GPU costs 42% with spot instances + retry logic — real AWS numbers, Python retry manager, and when to switch from reserved capacity in 2026.",
   "featured_image": "/static/images/gpu-spot-instances-reserved-for-ai-costs.jpg",
   "created_at": "2026-07-13T14:42:32.284086",
-  "updated_at": "2026-09-29T04:56:39.769567+00:00",
+  "updated_at": "2026-09-19T08:27:14.086984+00:00",
   "seo_keywords": [
     "GpuSpotInstances",
     "AiInferenceCosts",

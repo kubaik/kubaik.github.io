@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "block-api-abuse-in-2026-before-it-blocks",
-    "title": "Block API abuse in 2026 before it blocks…",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "block-api-replay-attacks-in-2026",
-    "title": "Block API replay attacks in 2026",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I expected to see brute-force login attempts or credential stuffing.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "build-dev-platform-for-2kmonth",
-    "title": "Build dev platform for $2k/month",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a staging outage that turned out to be a single mis",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "cicd-pipelines-stall-with-gpu-pods-2026-benchmarks",
-    "title": "CI/CD pipelines stall with GPU pods: 2026 benchmarks",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when a 20-node GPU cluster in us-west-2 sat idle for 4 hours whi; I spent two weeks on this before realising the toleration was left over from a C",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "claude-code-after-a-year-daily-wins",
-    "title": "Claude Code after a year: daily wins",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks integrating it into our CI pipeline before I realized the ma",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "cut-cold-starts-70-lambda-cost-hack",
     "title": "Cut cold starts 70%: Lambda cost hack",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when a Singapore marketing campaign S3-triggered 100k Lambda inv; I spent two weeks tweaking memory sizes and timeout values, only to realize the ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "flag-your-ai-rollouts-in-2026",
     "title": "Flag your AI rollouts in 2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent two weeks debugging why our AI feature flags kept flipping to 0% rollout",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "flip-your-dev-tool-sales-cycle-in-2026",
     "title": "Flip your dev-tool sales cycle in 2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "gpu-spot-instances-reserved-for-ai-costs",
     "title": "GPU spot instances > reserved for AI costs",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): A colleague asked me about gpu spot during a code review recently, and my first ; I ran into this when we tried to trim a $12k/month bill on a 7B-parameter model ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "hire-for-agents-not-autocomplete",
     "title": "Hire for agents, not autocomplete",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same african engineering mistake in more than one production codeba; I spent three days debugging a CI failure that turned out to be a single misconf",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "json-modes-hidden-costs-revealed",
@@ -1081,6 +1051,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "block-api-abuse-in-2026-before-it-blocks",
+    "title": "Block API abuse in 2026 before it blocks…",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "block-api-replay-attacks-in-2026",
+    "title": "Block API replay attacks in 2026",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I expected to see brute-force login attempts or credential stuffing.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "build-dev-platform-for-2kmonth",
+    "title": "Build dev platform for $2k/month",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a staging outage that turned out to be a single mis",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "cicd-pipelines-stall-with-gpu-pods-2026-benchmarks",
+    "title": "CI/CD pipelines stall with GPU pods: 2026 benchmarks",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when a 20-node GPU cluster in us-west-2 sat idle for 4 hours whi; I spent two weeks on this before realising the toleration was left over from a C",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "claude-code-after-a-year-daily-wins",
+    "title": "Claude Code after a year: daily wins",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks integrating it into our CI pipeline before I realized the ma",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-rollouts-live-or-die-by-flags",
