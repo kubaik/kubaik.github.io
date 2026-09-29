@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-29T04:56:22.646794",
+  "built_at": "2026-09-29T17:53:29.299198",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5400,6 +5400,11 @@
       "slug": "route-fine-tune-or-scale-pick-right",
       "title": "Route, fine-tune, or scale: pick right",
       "summary": "Most finetune route incidents trace back to a default nobody remembers choosing. The tutorials all show the happy path. This post covers what comes after the happy path. The problem this solves You have a production LLM feature. It works, mostly. But latency is creeping up, costs are climbing, and a"
+    },
+    {
+      "slug": "multi-agent-handoffs-the-latency-tax-nobody-measures",
+      "title": "Multi-agent handoffs: the latency tax nobody measures",
+      "summary": "Teams often end up shipping hidden latency twice — the second time because the first version failed quietly. This walks through the fix and the reasoning, not just the patch. Most write-ups stop exactly where the interesting part starts. The conventional wisdom (and why it's incomplete) Multi-agent "
     }
   ]
 }

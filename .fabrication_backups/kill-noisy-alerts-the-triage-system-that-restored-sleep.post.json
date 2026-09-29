@@ -14,7 +14,7 @@
   "meta_description": "Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13…",
   "featured_image": "/static/images/kill-noisy-alerts-the-triage-system-that-restored-sleep.jpg",
   "created_at": "2026-07-11T13:28:35.352118",
-  "updated_at": "2026-09-29T17:53:46.336756+00:00",
+  "updated_at": "2026-09-19T08:27:14.142015+00:00",
   "seo_keywords": [
     "AlertFatigue",
     "AlertTriageSystem",
