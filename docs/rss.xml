@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 29 Sep 2026 17:53:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 30 Sep 2026 04:44:45 +0000</lastBuildDate>
+    <item>
+      <title>Chaos engineering without an SRE team</title>
+      <link>https://kubaik.github.io/chaos-engineering-without-an-sre-team/</link>
+      <description>Chaos engineering for teams without SREs: lightweight fault injection with FastAPI, Redis 7.2, and AWS FIS.</description>
+      <pubDate>Wed, 30 Sep 2026 04:44:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/chaos-engineering-without-an-sre-team/</guid>
+    </item>
     <item>
       <title>Multi-agent handoffs: the latency tax nobody measures</title>
       <link>https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/</link>
@@ -138,13 +145,6 @@
       <description>Rust backend rewrites pay off for CPU-bound work, not I/O.</description>
       <pubDate>Mon, 21 Sep 2026 10:01:49 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-rewrites-where-they-pay-off-where-they-dont/</guid>
-    </item>
-    <item>
-      <title>Idempotency keys: what they fix, what they don&apos;t</title>
-      <link>https://kubaik.github.io/idempotency-keys-what-they-fix-what-they-dont/</link>
-      <description>Idempotency keys prevent double charges on retry, but not concurrency, key reuse, or partial failures.</description>
-      <pubDate>Mon, 21 Sep 2026 09:17:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/idempotency-keys-what-they-fix-what-they-dont/</guid>
     </item>
   </channel>
 </rss>

@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "json-modes-hidden-costs-revealed",
-    "title": "JSON mode's hidden costs revealed",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "kill-noisy-alerts-the-triage-system-that-restored-sleep",
-    "title": "Kill noisy alerts: the triage system that restored sleep",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same alert triage mistake in more than one production codebase over; I ran into this when a single upstream outage in Jakarta triggered 47 separate a",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "llm-evals-the-3-metrics-that-pay-off",
-    "title": "LLM evals: the 3 metrics that pay off",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I initially used a simple exact-match of the user’s final question against the p",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "llm-metrics-that-stop-wasting-time",
-    "title": "LLM metrics that stop wasting time",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when we shipped a customer-support chatbot built on a 7B paramet; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "llm-outputs-break-workflows-unless-you-do-this",
-    "title": "LLM outputs break workflows unless you do this",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into the first surprise when we pushed the first batch of LLM-extracted da",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "llm-quality-metrics-that-cut-hallucinations-40",
     "title": "LLM quality: metrics that cut hallucinations 40%",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when we launched our AI support assistant last year: we scored 9; I once wasted a sprint hard-coding product catalogs into the prompt because the ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "llm-security-mistakes-in-2026-owasp-top-10-fixes",
     "title": "LLM security mistakes in 2026: OWASP Top 10 fixes",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days chasing a prompt-injection bug that only surfaced when we ena",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "llm-structured-output-json-mode-fails-at-scale",
     "title": "LLM structured output: JSON mode fails at scale",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a pipeline that broke because a single field named ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "mobile-first-ai-fails-you-didnt-plan",
     "title": "Mobile-first AI fails you didn’t plan…",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on prompt tool before understanding what was a; Here's what actually worked, and why.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "model-router-keep-it-simple-keep-it-local",
     "title": "Model router: keep it simple, keep it local",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I learned this the hard way when we tried to roll out a new embedding model for ; I use a two-tier system.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "move-images-50-faster-in-2026-with-starlink-cdn",
@@ -1021,6 +991,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "json-modes-hidden-costs-revealed",
+    "title": "JSON mode's hidden costs revealed",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "kill-noisy-alerts-the-triage-system-that-restored-sleep",
+    "title": "Kill noisy alerts: the triage system that restored sleep",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same alert triage mistake in more than one production codebase over; I ran into this when a single upstream outage in Jakarta triggered 47 separate a",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "llm-evals-the-3-metrics-that-pay-off",
+    "title": "LLM evals: the 3 metrics that pay off",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I initially used a simple exact-match of the user’s final question against the p",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "llm-metrics-that-stop-wasting-time",
+    "title": "LLM metrics that stop wasting time",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when we shipped a customer-support chatbot built on a 7B paramet; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "llm-outputs-break-workflows-unless-you-do-this",
+    "title": "LLM outputs break workflows unless you do this",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into the first surprise when we pushed the first batch of LLM-extracted da",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "cut-cold-starts-70-lambda-cost-hack",

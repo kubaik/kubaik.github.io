@@ -69,5 +69,9 @@
   "Settlement and clearing systems explained for backend engineers who've never touched them",
   "How we version and evolve agent capabilities without breaking existing users and integrations",
   "When to fine-tune, when to route, and when to just use a bigger model \u2014 2026 decision framework",
-  "The hidden latency tax of multi-agent handoffs and how we reduced it by 60%"
+  "The hidden latency tax of multi-agent handoffs and how we reduced it by 60%",
+  "How I measure and control token spend at 50k+ daily LLM calls without killing UX",
+  "Passkeys and WebAuthn adoption: the rollout mistakes that locked users out",
+  "Why we moved some vector workloads back to dedicated ANN after trying everything in Postgres",
+  "Chaos engineering practices that fit a team without a dedicated SRE function"
 ]

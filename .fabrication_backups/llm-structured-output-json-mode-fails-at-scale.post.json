@@ -11,7 +11,7 @@
   "meta_description": "Cut API latency 93% and token waste 62% by enforcing strict JSON schemas with vLLM — the real way to get reliable structured outputs from LLMs",
   "featured_image": "/static/images/llm-structured-output-json-mode-fails-at-scale.jpg",
   "created_at": "2026-06-26T19:01:09.938359",
-  "updated_at": "2026-09-30T04:44:38.248433+00:00",
+  "updated_at": "2026-09-19T08:27:14.214348+00:00",
   "seo_keywords": [
     "StructuredOutputLlm",
     "VllmJsonMode",

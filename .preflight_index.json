@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-29T17:53:29.299198",
+  "built_at": "2026-09-30T04:44:23.805828",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5405,6 +5405,11 @@
       "slug": "multi-agent-handoffs-the-latency-tax-nobody-measures",
       "title": "Multi-agent handoffs: the latency tax nobody measures",
       "summary": "Teams often end up shipping hidden latency twice — the second time because the first version failed quietly. This walks through the fix and the reasoning, not just the patch. Most write-ups stop exactly where the interesting part starts. The conventional wisdom (and why it's incomplete) Multi-agent "
+    },
+    {
+      "slug": "chaos-engineering-without-an-sre-team",
+      "title": "Chaos engineering without an SRE team",
+      "summary": "measure control is the kind of decision that looks reversible until it isn't. Most write-ups stop exactly where the interesting part starts. Here's what changed once we stopped guessing and started measuring. The gap between what the docs say and what production needs Most chaos engineering content "
     }
   ]
 }
