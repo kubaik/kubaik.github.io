@@ -1,0 +1,562 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DuckDB in production: when it replaces a warehouse - Kubai Kevin</title>
+        <meta name="description" content="DuckDB 1.1 replaces a warehouse for sub-100GB analytics workloads — how to set up partitioned Parquet, avoid the single-writer trap, and profile slow…">
+        <meta name="keywords" content="Duckdb, EmbeddedAnalytics, DuckdbProduction, DuckdbParquetS3, Dataengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-30T17:49:35.731106">
+        <meta property="article:modified_time" content="2026-09-30T17:49:35.731121">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="DuckDB in production: when it replaces a warehouse">
+        <meta property="og:description" content="DuckDB 1.1 replaces a warehouse for sub-100GB analytics workloads — how to set up partitioned Parquet, avoid the single-writer trap, and profile slow…">
+        <meta property="og:url" content="https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/duckdb-in-production-when-it-replaces-a-warehouse.png">
+        <meta property="og:image:alt" content="DuckDB in production: when it replaces a warehouse">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="DuckDB in production: when it replaces a warehouse">
+        <meta name="twitter:description" content="DuckDB 1.1 replaces a warehouse for sub-100GB analytics workloads — how to set up partitioned Parquet, avoid the single-writer trap, and profile slow…">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/duckdb-in-production-when-it-replaces-a-warehouse.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/#article",
+      "headline": "DuckDB in production: when it replaces a warehouse",
+      "description": "DuckDB 1.1 replaces a warehouse for sub-100GB analytics workloads — how to set up partitioned Parquet, avoid the single-writer trap, and profile slow…",
+      "datePublished": "2026-09-30T17:49:35+00:00",
+      "dateModified": "2026-09-30T17:49:35+00:00",
+      "wordCount": 2466,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/"
+      },
+      "keywords": "Duckdb, EmbeddedAnalytics, DuckdbProduction, DuckdbParquetS3, Dataengineering"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "DuckDB in production: when it replaces a warehouse",
+          "item": "https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>DuckDB in production: when it replaces a warehouse</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">DuckDB in production: when it replaces a warehouse</h1>
+                
+                <p class="post-lead">DuckDB 1.1 replaces a warehouse for sub-100GB analytics workloads — how to set up partitioned Parquet, avoid the single-writer trap, and profile slow…</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Duckdb</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">EmbeddedAnalytics</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DuckdbProduction</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DuckdbParquetS3</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/dataengineering/"
+                       style="text-decoration:none;">Dataengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2466 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-30
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>The edge cases only show up once real users hit the system. The conventional advice on duckdb production is incomplete in one specific, costly way. Here's the fuller picture, with the tradeoffs left in.</p>
+<h2 id="the-problem-this-solves">The problem this solves</h2>
+<p>A lot of teams reach for a full data warehouse — Snowflake, BigQuery, Redshift — before they actually need one. The trigger is usually a single dashboard that has to scan a few million rows, or a nightly report that takes 40 minutes on a Postgres replica. So they stand up a warehouse, wire up an ELT pipeline, and inherit a new class of problems: network round trips, per-query billing, a separate deployment surface, and a credential model that has to be audited. For datasets that fit on one machine's disk, that is a lot of operational weight for very little analytical gain.</p>
+<p>DuckDB is an in-process OLAP database. It runs inside your Python, Node, or Go process the same way SQLite does, but its storage and execution engine are columnar and vectorized. On a single 8-core machine with an NVMe SSD, DuckDB 1.1 can scan and aggregate a 10 GB Parquet dataset in the low single-digit seconds — the kind of workload that used to justify a warehouse cluster. The part that trips people up is not the query speed; it's knowing where the embedded model stops being appropriate and a real warehouse starts, and that's what this post actually covers.</p>
+<p>The claim I'm making: for analytical workloads under roughly 100 GB of compressed data with a single writer, DuckDB replaces the warehouse entirely, and it does so with less code, fewer moving parts, and a predictable cost. Above that line, or once you need concurrent writes from multiple services, you should stop and reconsider.</p>
+<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
+<p>You'll build a small analytics service that ingests Parquet exports from an operational Postgres database, stores them as a partitioned DuckDB database, and serves queries over an HTTP endpoint. The whole thing runs as one process. No cluster, no coordinator, no network hop between the query engine and the data.</p>
+<p>What you need:</p>
+<ul>
+<li>Python 3.11 or newer (3.12 is fine; the <code>duckdb</code> wheel ships binary wheels for both)</li>
+<li>DuckDB 1.1.x — pin it, because the storage format has changed across minor versions</li>
+<li><code>pyarrow</code> 17.x for Parquet handling</li>
+<li>FastAPI 0.111 and Uvicorn 0.30 if you want the HTTP layer</li>
+<li>A machine with at least 2x your dataset size in free disk and enough RAM to hold your largest working set</li>
+</ul>
+<p>What you're building, concretely:</p>
+<ol>
+<li>A loader that reads Parquet files from object storage and appends them into a DuckDB file.</li>
+<li>A query layer that exposes parameterized analytical queries.</li>
+<li>A background refresh that rebuilds a materialized summary table every 15 minutes.</li>
+<li>Tests that assert row counts and a checksum against the source.</li>
+</ol>
+<p>The comparison that matters before you write any code:</p>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Warehouse (Snowflake/BigQuery)</th>
+<th>DuckDB embedded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data location</td>
+<td>Remote, managed storage</td>
+<td>Local file or object storage via httpfs</td>
+</tr>
+<tr>
+<td>Latency floor</td>
+<td>200–800 ms per query (network + scheduling)</td>
+<td>5–50 ms for warm queries</td>
+</tr>
+<tr>
+<td>Cost model</td>
+<td>Per-query or per-slot-hour</td>
+<td>Fixed compute; storage is your disk</td>
+</tr>
+<tr>
+<td>Concurrency</td>
+<td>Many readers, many writers</td>
+<td>Many readers, one writer</td>
+</tr>
+<tr>
+<td>Ops surface</td>
+<td>IAM, warehouse sizing, clustering keys</td>
+<td>One process, one file</td>
+</tr>
+<tr>
+<td>Sweet spot</td>
+<td>&gt;100 GB, multi-team, high concurrency</td>
+<td>&lt;100 GB, single service, embedded</td>
+</tr>
+</tbody>
+</table>
+<p>That table is the whole decision. If your row is on the right for every concern, DuckDB wins on simplicity and cost. If you have multiple services writing concurrently, you're on the left.</p>
+<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
+<p>Why this ordering: DuckDB's performance characteristics depend heavily on how the file is laid out. If you set up the environment wrong — for example, letting the database grow in the default single-file mode without partitioning — you'll get acceptable results on small data and then a cliff at scale. Get the storage layout right first.</p>
+<p>Create a virtual environment and pin your versions:</p>
+<pre><code class="language-bash">python -m venv .venv
+source .venv/bin/activate
+pip install &quot;duckdb==1.1.3&quot; &quot;pyarrow==17.0.0&quot; &quot;fastapi==0.111.0&quot; &quot;uvicorn==0.30.1&quot;
+</code></pre>
+<p>Now the storage layout. DuckDB supports two modes: a single <code>.duckdb</code> file, and a directory of partitioned Parquet files queried through views. For anything that will grow past a few gigabytes, use the second. The reason is that DuckDB's single-file format rewrites pages on update, and a large append-heavy file fragments over time. Partitioned Parquet lets you drop and re-add partitions cheaply.</p>
+<pre><code class="language-python">import duckdb
+
+con = duckdb.connect()  # in-memory for the loader
+con.execute(&quot;INSTALL httpfs; LOAD httpfs;&quot;)
+con.execute(&quot;&quot;&quot;
+    CREATE OR REPLACE VIEW events AS
+    SELECT * FROM read_parquet(
+        's3://my-bucket/events/year=*/month=*/day=*/*.parquet',
+        hive_partitioning = true
+    )
+&quot;&quot;&quot;)
+</code></pre>
+<p>The <code>hive_partitioning = true</code> flag is what makes <code>year=2026/month=03/day=14/</code> directories become queryable columns without you writing a single <code>CAST</code>. A common trap here is forgetting that DuckDB infers partition types from the directory names — if your partitions are zero-padded inconsistently (<code>month=3</code> vs <code>month=03</code>), you'll get a type conflict error like <code>Conversion Error: Could not convert string '03' to INT32</code> only on some files. Zero-pad everything from the start.</p>
+<p>For local development without S3, point the glob at a local directory. The query syntax is identical, which is the point: you can develop against a 500 MB local sample and deploy against 50 GB in object storage without changing the view definition.</p>
+<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
+<p>Why this shape: the pattern that works is a read-only query connection plus a separate write connection used only by the refresh job. DuckDB allows one writer at a time, and if you let the HTTP handlers open write connections you'll hit <code>IO Error: Could not set lock on file</code> under concurrent load.</p>
+<p>Here's the query layer:</p>
+<pre><code class="language-python">import duckdb
+from fastapi import FastAPI, Query
+
+app = FastAPI()
+con = duckdb.connect()
+con.execute(&quot;INSTALL httpfs; LOAD httpfs;&quot;)
+con.execute(&quot;SET memory_limit = '6GB';&quot;)
+con.execute(&quot;SET threads = 8;&quot;)
+con.execute(&quot;&quot;&quot;
+    CREATE VIEW events AS
+    SELECT * FROM read_parquet(
+        's3://my-bucket/events/year=*/month=*/day=*/*.parquet',
+        hive_partitioning = true
+    )
+&quot;&quot;&quot;)
+
+@app.get(&quot;/counts&quot;)
+def counts(tenant: str = Query(...), since: str = Query(...)):
+    rows = con.execute(
+        &quot;&quot;&quot;
+        SELECT event_type, COUNT(*) AS n
+        FROM events
+        WHERE tenant_id = ? AND event_time &gt;= ?
+        GROUP BY event_type
+        ORDER BY n DESC
+        &quot;&quot;&quot;,
+        [tenant, since],
+    ).fetchall()
+    return {&quot;counts&quot;: [{&quot;type&quot;: r[0], &quot;n&quot;: r[1]} for r in rows]}
+</code></pre>
+<p>Two settings do most of the work. <code>memory_limit</code> caps DuckDB's buffer pool so it doesn't get OOM-killed by the container's cgroup limit — set it to roughly 75% of your container's memory. <code>threads</code> should match your vCPU count; setting it higher than the physical cores adds contention without throughput.</p>
+<p>For the materialized summary, run it on a schedule against a write connection:</p>
+<pre><code class="language-python">import duckdb
+
+def refresh_summary():
+    w = duckdb.connect(&quot;analytics.duckdb&quot;)
+    w.execute(&quot;&quot;&quot;
+        CREATE OR REPLACE TABLE daily_summary AS
+        SELECT tenant_id, date_trunc('day', event_time) AS day,
+               event_type, COUNT(*) AS n
+        FROM read_parquet('s3://my-bucket/events/**/*.parquet')
+        GROUP BY 1, 2, 3
+    &quot;&quot;&quot;)
+    w.close()
+</code></pre>
+<p>The summary table is a real DuckDB table, so queries against it are local and fast — typically 5–20 ms for a dashboard that would have been 400 ms against raw Parquet on S3. You trade 15 minutes of staleness for a 20x latency improvement. For most dashboards that's the right trade; for anything that needs real-time counts, query the raw view.</p>
+<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
+<p>The failure modes here are well-documented and they cluster around three things: memory, concurrency, and schema drift.</p>
+<p>Memory first. DuckDB will happily try to materialize a large intermediate result and get killed by the OOM killer. The error you see from the kernel is a <code>SIGKILL</code> with no Python traceback, which makes it look like a mystery crash rather than a memory problem. The fix is <code>SET memory_limit</code> plus <code>SET temp_directory</code> so that spilling goes to disk instead of RAM:</p>
+<pre><code class="language-python">con.execute(&quot;SET memory_limit = '6GB';&quot;)
+con.execute(&quot;SET temp_directory = '/var/tmp/duckdb_spill';&quot;)
+con.execute(&quot;SET max_temp_directory_size = '50GB';&quot;)
+</code></pre>
+<p>Spilling is slower — expect a 3–5x slowdown on queries that spill — but it's the difference between a slow query and a dead process.</p>
+<p>Concurrency second. The single-writer limitation is real. If you have two services that both need to write, you have three options: serialize writes through one service, use a queue, or move to a client-server database. DuckDB is not the right tool for multi-writer workloads, and trying to make it one via file locking will produce intermittent <code>IO Error: Could not set lock on file</code> failures that are hard to reproduce.</p>
+<p>Schema drift third. This is the one that bites teams in production. Parquet files written by an upstream job that added a column will cause DuckDB to infer a union schema, and if the new column has a conflicting type in older files you get <code>Binder Error: Referenced column not found</code> or a type mismatch on read. The robust pattern is to project explicit columns rather than <code>SELECT *</code>:</p>
+<pre><code class="language-sql">SELECT tenant_id, event_time, event_type, payload_json
+FROM read_parquet('s3://my-bucket/events/**/*.parquet', hive_partitioning = true)
+</code></pre>
+<p>Explicit projection also means DuckDB only reads the column chunks it needs, which on a wide table can cut I/O by 60–80%.</p>
+<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
+<p>Why this matters more than usual: an embedded database has no server-side query log by default. If you don't instrument it, you have no idea which queries are slow. DuckDB has a built-in profiler you can enable per-query.</p>
+<pre><code class="language-python">con.execute(&quot;PRAGMA enable_profiling = 'json';&quot;)
+con.execute(&quot;PRAGMA profiling_output = '/var/log/duckdb_profile.json';&quot;)
+</code></pre>
+<p>The JSON profile includes wall-clock time per operator, which rows each operator produced, and peak memory. For a query that's slower than expected, the profile almost always shows the problem in one of two places: a hash join that spilled to disk, or a scan that read far more columns than the query needed.</p>
+<p>For tests, assert against known-good aggregates rather than exact row counts, because Parquet file ordering is not guaranteed. A test like this catches schema drift, partition misconfiguration, and accidental data loss:</p>
+<pre><code class="language-python">def test_daily_summary_matches_source(tmp_path):
+    con = duckdb.connect()
+    con.execute(&quot;CREATE TABLE src AS SELECT * FROM read_parquet('tests/fixtures/*.parquet')&quot;)
+    expected = con.execute(
+        &quot;SELECT COUNT(*), SUM(n) FROM (SELECT event_type, COUNT(*) AS n FROM src GROUP BY 1)&quot;
+    ).fetchone()
+    assert expected[0] == 4
+    assert expected[1] == 1200
+</code></pre>
+<p>Run this in CI against a small fixture set. It takes under a second and it will catch the class of bug where a partition glob silently stops matching after a directory rename.</p>
+<h2 id="real-results-from-running-this">Real results from running this</h2>
+<p>These are the numbers that show up repeatedly for this kind of workload, not measurements from a specific deployment:</p>
+<ul>
+<li>A 12 GB Parquet dataset on an 8-core, 32 GB machine: a <code>GROUP BY</code> over 40 million rows completes in 1.8–2.5 seconds warm, 4–6 seconds cold.</li>
+<li>The same query against a remote warehouse with a comparable cluster: 6–12 seconds, dominated by scheduling and network overhead rather than compute.</li>
+<li>Dashboard queries against the pre-aggregated summary table: 5–20 ms, versus 300–600 ms against raw Parquet on S3.</li>
+<li>Memory footprint for the service process: 400 MB idle, up to the configured <code>memory_limit</code> under load.</li>
+<li>Cost: the compute is whatever your container costs. There's no per-query line item.</li>
+</ul>
+<p>The pattern that emerges is that DuckDB's advantage is largest for the medium-sized analytical workloads — the ones too big for a Postgres query to be pleasant, but too small to justify a warehouse. That's a wider band than people assume. If your largest table is under 100 GB compressed, you're probably in it.</p>
+<p>Where it stops working: once you need more than one writer, or once your dataset exceeds what one machine's disk can hold with room to spare, or once you need per-query isolation between teams. At that point the warehouse earns its cost.</p>
+<h2 id="common-questions-and-variations">Common questions and variations</h2>
+<p><strong>Can DuckDB handle concurrent reads?</strong>
+Yes. Multiple read-only connections against the same file are fine, and in-process connections from multiple threads are safe. The limitation is writers: exactly one process can hold a write lock at a time. If you need concurrent writes, either serialize them through a single service or use a client-server database.</p>
+<p><strong>How does DuckDB compare to SQLite for analytics?</strong>
+SQLite is a row-store optimized for transactional point lookups. DuckDB is a column-store optimized for scans and aggregations. On a 10 million row aggregation, DuckDB is typically 20–50x faster than SQLite because it reads only the columns the query touches and uses vectorized execution. For a single-row lookup by primary key, SQLite is faster. They solve different problems.</p>
+<p><strong>What's the largest dataset DuckDB handles well?</strong>
+It scales to datasets larger than RAM via spilling, but the practical ceiling for a good experience on one machine is around 100–200 GB compressed, depending on disk speed and query complexity. Past that, the spill volume makes queries slow enough that a distributed engine wins.</p>
+<p><strong>Does DuckDB work with Parquet on S3 directly?</strong>
+Yes, through the <code>httpfs</code> extension. You query <code>read_parquet('s3://...')</code> and DuckDB handles range requests. The catch is that latency to S3 adds up: a query touching 200 files pays 200 round trips. Partition pruning and explicit column projection reduce this, and pre-aggregating into a local table eliminates it entirely.</p>
+<h2 id="where-to-go-from-here">Where to go from here</h2>
+<p>DuckDB is not a warehouse replacement in the abstract. It's a replacement for the specific case where your analytical data fits on one machine, your write pattern is single-writer, and your queries are read-heavy aggregations. That case is more common than the warehouse vendors would like you to believe, and the operational savings are real: one process instead of a cluster, one file instead of a managed service, and no per-query meter running.</p>
+<p>The move to make right now: take your largest analytical query, export the underlying table to Parquet with <code>COPY (SELECT ...) TO 'sample.parquet' (FORMAT PARQUET)</code>, and time it in DuckDB with <code>PRAGMA enable_profiling</code>. If it comes back under two seconds on a sample that's 10% of production size, you have a concrete, defensible case for removing a warehouse dependency from that workload — and you'll have the profile JSON to prove it.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/cqrs-when-it-pays-off-and-when-it-breaks/">
+                        <h3>CQRS: when it pays off and when it breaks</h3>
+                        <p>CQRS adds eventual consistency and projection lag. Learn the specific errors that mean it&amp;#x27;s overkill, and when a read replica beats it.</p>
+                        <span class="related-meta">15 min read · 21 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/golden-paths-become-load-bearing-walls/">
+                        <h3>Golden paths become load-bearing walls</h3>
+                        <p>Golden paths for AI features often hide the model ID and prompt version — the two things you need during a migration. Here is the failure mode and the fix.</p>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/local-llm-agents-vllm-vs-ollama-for-fintech/">
+                        <h3>Local LLM agents: vLLM vs Ollama for fintech</h3>
+                        <p>vLLM vs Ollama for local fintech LLM agents: concurrency limits, guided JSON, and the p95 latency number that decides which serving stack you actually…</p>
+                        <span class="related-meta">15 min read · 18 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

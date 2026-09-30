@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 30 Sep 2026 04:44:45 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 30 Sep 2026 17:50:02 +0000</lastBuildDate>
+    <item>
+      <title>DuckDB in production: when it replaces a warehouse</title>
+      <link>https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/</link>
+      <description>DuckDB 1.1 replaces a warehouse for sub-100GB analytics workloads — how to set up partitioned Parquet, avoid the single-writer trap, and profile slow…</description>
+      <pubDate>Wed, 30 Sep 2026 17:49:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/</guid>
+    </item>
     <item>
       <title>Chaos engineering without an SRE team</title>
       <link>https://kubaik.github.io/chaos-engineering-without-an-sre-team/</link>
@@ -138,13 +145,6 @@
       <description>CQRS adds eventual consistency and projection lag. Learn the specific errors that mean it&amp;#x27;s overkill, and when a read replica beats it.</description>
       <pubDate>Mon, 21 Sep 2026 11:34:04 +0000</pubDate>
       <guid>https://kubaik.github.io/cqrs-when-it-pays-off-and-when-it-breaks/</guid>
-    </item>
-    <item>
-      <title>Rust rewrites: where they pay off, where they don&apos;t</title>
-      <link>https://kubaik.github.io/rust-rewrites-where-they-pay-off-where-they-dont/</link>
-      <description>Rust backend rewrites pay off for CPU-bound work, not I/O.</description>
-      <pubDate>Mon, 21 Sep 2026 10:01:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-rewrites-where-they-pay-off-where-they-dont/</guid>
     </item>
   </channel>
 </rss>

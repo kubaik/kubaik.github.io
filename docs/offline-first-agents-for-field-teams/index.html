@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-16T02:51:18.981017">
-        <meta property="article:modified_time" content="2026-09-21T12:36:27.301552">
+        <meta property="article:modified_time" content="2026-09-30T17:49:54.671970+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Offline-first agents for field teams">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/offline-first-agents-for-field-teams/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Offline-first agents for field teams",
       "description": "Offline-first agents cut last-mile failures 12% in Lagos pilots — SQLite encryption, conflict UI, and AWS AppSync for riders on 2G",
       "datePublished": "2026-07-16T02:51:18+00:00",
-      "dateModified": "2026-09-21T12:36:27+00:00",
+      "dateModified": "2026-09-30T17:49:54+00:00",
       "wordCount": 2530,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
@@ -266,7 +266,7 @@
                         13 min read
                         &nbsp;·&nbsp; 2530 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-21
+                        &nbsp;·&nbsp; Updated 2026-09-30
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,9 +278,7 @@
 <p>Last-mile logistics in Africa die by 4G. A common scenario: a client wants to roll out real-time tracking for a fleet of dispatch riders using a US-hosted SaaS. The first pilot day—a typical rainy-season afternoon—knocks a large share of devices offline for the better part of an hour. The central server has no idea whether the riders are stuck or just on a bad network. Deliveries get frozen for the afternoon while the team rebuilds the queue from WhatsApp messages and paper logs. A connection-pool issue that consumes three days of debugging is usually a single misconfigured timeout in the WebSocket reconnect loop—this post is what a team would want to have found before starting.</p>
 <p>Offline-capable agents break most tutorials because they assume constant connectivity. Field teams in Nairobi, Accra or Kampala move between areas with no signal, roaming towers, or deliberate network throttling. The real requirement isn’t just local caching; it’s a state machine that can survive hours of disconnection, merge upstream changes when backhaul returns, and still give the agent a usable UI. Anything less and you’re shipping yesterday’s failed deliveries today.</p>
 <p>Teams commonly try three wrong paths:
-- Push everything to the edge device and call it a day: devices fill up, battery drains, and drivers eventually uninstall the app when it eats a large share of their phone storage.
-- Assume the rider will remember to press ‘sync’: human error erases a meaningful fraction of the day’s transactions when the app finally reconnects.
-- Use a global SaaS with eventual consistency: GDPR and data-residency rules mean a rider’s biometric data can’t be stored in Virginia, so it has to stay on-device or in-country.</p>
+- Push everything to the edge device and call it a day: devices fill up, battery drains, and drivers eventually uninstall the app when it eats a large share of their phone storage. - Assume the rider will remember to press ‘sync’: human error erases a meaningful fraction of the day’s transactions when the app finally reconnects. - Use a global SaaS with eventual consistency: GDPR and data-residency rules mean a rider’s biometric data can’t be stored in Virginia, so it has to stay on-device or in-country.</p>
 <p>The solution is an offline-first agent that:
 - runs a local state machine (no full database)
 - syncs in the background when connectivity returns

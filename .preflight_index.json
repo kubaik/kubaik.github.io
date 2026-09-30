@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-30T04:44:23.805828",
+  "built_at": "2026-09-30T17:49:38.736066",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5410,6 +5410,11 @@
       "slug": "chaos-engineering-without-an-sre-team",
       "title": "Chaos engineering without an SRE team",
       "summary": "measure control is the kind of decision that looks reversible until it isn't. Most write-ups stop exactly where the interesting part starts. Here's what changed once we stopped guessing and started measuring. The gap between what the docs say and what production needs Most chaos engineering content "
+    },
+    {
+      "slug": "duckdb-in-production-when-it-replaces-a-warehouse",
+      "title": "DuckDB in production: when it replaces a warehouse",
+      "summary": "The edge cases only show up once real users hit the system. The conventional advice on duckdb production is incomplete in one specific, costly way. Here's the fuller picture, with the tradeoffs left in. The problem this solves A lot of teams reach for a full data warehouse — Snowflake, BigQuery, Red"
     }
   ]
 }
