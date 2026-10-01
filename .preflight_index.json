@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-30T17:49:38.736066",
+  "built_at": "2026-10-01T04:54:34.879047",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5415,6 +5415,11 @@
       "slug": "duckdb-in-production-when-it-replaces-a-warehouse",
       "title": "DuckDB in production: when it replaces a warehouse",
       "summary": "The edge cases only show up once real users hit the system. The conventional advice on duckdb production is incomplete in one specific, costly way. Here's the fuller picture, with the tradeoffs left in. The problem this solves A lot of teams reach for a full data warehouse — Snowflake, BigQuery, Red"
+    },
+    {
+      "slug": "agentic-workflows-surviving-network-partitions",
+      "title": "Agentic workflows: surviving network partitions",
+      "summary": "Most agentic workflows incidents trace back to a default nobody remembers choosing. Here's what actually worked, and why. The workaround gets copy-pasted forward long after the original reason is forgotten. The one-paragraph version (read this first) Network partitions are not a rare edge case in Af"
     }
   ]
 }

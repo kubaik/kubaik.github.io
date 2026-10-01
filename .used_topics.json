@@ -75,5 +75,6 @@
   "Why we moved some vector workloads back to dedicated ANN after trying everything in Postgres",
   "Chaos engineering practices that fit a team without a dedicated SRE function",
   "Data residency and sovereign AI constraints for African fintech using global models",
-  "DuckDB in production: where an embedded analytics engine replaces a whole data warehouse"
+  "DuckDB in production: where an embedded analytics engine replaces a whole data warehouse",
+  "Agentic workflows that survive network partitions: the patterns that actually work in Africa"
 ]

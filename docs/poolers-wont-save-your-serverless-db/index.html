@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-19T02:59:58.647198">
-        <meta property="article:modified_time" content="2026-09-21T12:36:57.625459">
+        <meta property="article:modified_time" content="2026-10-01T04:54:51.662628+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Poolers won’t save your serverless DB">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/poolers-wont-save-your-serverless-db/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Poolers won’t save your serverless DB",
       "description": "Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.",
       "datePublished": "2026-07-19T02:59:58+00:00",
-      "dateModified": "2026-09-21T12:36:57+00:00",
+      "dateModified": "2026-10-01T04:54:51+00:00",
       "wordCount": 3001,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
@@ -267,7 +267,7 @@
                         15 min read
                         &nbsp;·&nbsp; 3001 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-21
+                        &nbsp;·&nbsp; Updated 2026-10-01
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -386,9 +386,7 @@ Run two PgCat pods in different AZs. API Gateway uses latency-based routing. Und
 </tbody>
 </table>
 <p>Notes:
-- RDS Proxy adds 12 ms of extra hop and charges $0.024 per million proxy connections.
-- PgBouncer's transaction mode drops idle-connection tax but still routes every Lambda through TLS.
-- PgCat's multiplexer cuts physical connections to 8 million (one per shard) and lets logical clients reuse them without TLS renegotiation.</p>
+- RDS Proxy adds 12 ms of extra hop and charges $0.024 per million proxy connections. - PgBouncer's transaction mode drops idle-connection tax but still routes every Lambda through TLS. - PgCat's multiplexer cuts physical connections to 8 million (one per shard) and lets logical clients reuse them without TLS renegotiation.</p>
 <p>Cost breakdown:
 - PgCat ECS Fargate: $189/month
 - Aurora Serverless v2: $235/month (unchanged)

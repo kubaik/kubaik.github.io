@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "move-images-50-faster-in-2026-with-starlink-cdn",
-    "title": "Move images 50% faster in 2026 with Starlink CDN",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks chasing CloudFront logs before realizing the CDN’s Lambda@Ed",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "observability-2026-ditch-the-three-pillars",
-    "title": "Observability 2026: ditch the three pillars",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): The short version: the conventional advice on observability 2026 is incomplete.; I ran into this when we moved a checkout service from Node 18 to Go 1.21 and sud",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "offline-first-agents-for-field-teams",
-    "title": "Offline-first agents for field teams",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I was on a project in Lagos in 2026 where the client wanted to roll out real-tim; I spent three days debugging a connection-pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "offline-first-apps-what-3g-markets-taught-us",
-    "title": "Offline-first apps: what 3G markets taught us",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent two weeks debugging a connection pool issue that turned out to be a sing",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "one-misconfigured-pool-drained-4kmonth",
-    "title": "One misconfigured pool drained $4k/month",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when I SSH’d into a pod and saw 720 Postgres connections open to; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ownership-drift-after-velocity-spikes",
     "title": "Ownership drift after velocity spikes",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.; I spent three weeks debugging a connection pool issue that turned out to be a si",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "pick-niches-ai-wont-eat-in-2026",
     "title": "Pick niches AI won’t eat in 2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was shocked to see 60% of our beta users stop paying within 30 days.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "pick-saas-niches-ai-cant-erode",
     "title": "Pick SaaS niches AI can't erode",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when our product lead tried to raise Series A in June 2026.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "poolers-wont-save-your-serverless-db",
     "title": "Poolers won’t save your serverless DB",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I also learned the hard way that pooler vendors rarely publish the cost model.; I spent two weeks rewriting shard keys after the first production outage.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "portfolio-projects-that-beat-ai-clones-4-signals",
     "title": "Portfolio projects that beat AI clones: 4 signals",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days manually reviewing 1,200 pull requests as a hiring reviewer f",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "pr-checklists-are-dead-ai-agents-do-reviews-now",
@@ -961,6 +931,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "move-images-50-faster-in-2026-with-starlink-cdn",
+    "title": "Move images 50% faster in 2026 with Starlink CDN",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks chasing CloudFront logs before realizing the CDN’s Lambda@Ed",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "observability-2026-ditch-the-three-pillars",
+    "title": "Observability 2026: ditch the three pillars",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): The short version: the conventional advice on observability 2026 is incomplete.; I ran into this when we moved a checkout service from Node 18 to Go 1.21 and sud",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "offline-first-agents-for-field-teams",
+    "title": "Offline-first agents for field teams",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I was on a project in Lagos in 2026 where the client wanted to roll out real-tim; I spent three days debugging a connection-pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "offline-first-apps-what-3g-markets-taught-us",
+    "title": "Offline-first apps: what 3G markets taught us",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent two weeks debugging a connection pool issue that turned out to be a sing",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "one-misconfigured-pool-drained-4kmonth",
+    "title": "One misconfigured pool drained $4k/month",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when I SSH’d into a pod and saw 720 Postgres connections open to; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "llm-quality-metrics-that-cut-hallucinations-40",
