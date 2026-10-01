@@ -406,6 +406,7 @@ context-windows-agents-that-run-for-days,100,3018,Context windows: agents that r
 context-windows-live-longer-than-you-think,100,2681,Context windows live longer than you think,2026-07-25T13:43:38.060125,0,
 cost-tools-fail-when-agents-scale-autonomously,100,2730,Cost tools fail when agents scale autonomously,2026-09-09T12:51:51.860483,0,
 currency-switch-fails-in-ghana-one-config-file-to-rule,100,3207,Currency switch fails in Ghana: one config file to rule…,2026-08-13T08:44:44.433311,0,
+double-entry-ledger-concurrent-write-errors,100,3033,Double-entry ledger: concurrent write errors,2026-10-01T18:15:25.356366,0,
 event-driven-beats-agent-driven-910-times,100,3706,Event-driven beats agent-driven 9/10 times,2026-07-30T02:38:09.602424,0,
 feature-flags-became-ai-rollout-platforms,100,3229,Feature flags became AI rollout platforms,2026-09-18T03:52:01.902652,0,
 global-state-is-the-wrong-tool-for-ai-features,100,2635,Global state is the wrong tool for AI features,2026-07-28T02:46:18.174343,0,

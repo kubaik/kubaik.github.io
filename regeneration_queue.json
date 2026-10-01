@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ownership-drift-after-velocity-spikes",
-    "title": "Ownership drift after velocity spikes",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.; I spent three weeks debugging a connection pool issue that turned out to be a si",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "pick-niches-ai-wont-eat-in-2026",
-    "title": "Pick niches AI won’t eat in 2026",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was shocked to see 60% of our beta users stop paying within 30 days.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "pick-saas-niches-ai-cant-erode",
-    "title": "Pick SaaS niches AI can't erode",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when our product lead tried to raise Series A in June 2026.",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "poolers-wont-save-your-serverless-db",
-    "title": "Poolers won’t save your serverless DB",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I also learned the hard way that pooler vendors rarely publish the cost model.; I spent two weeks rewriting shard keys after the first production outage.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "portfolio-projects-that-beat-ai-clones-4-signals",
-    "title": "Portfolio projects that beat AI clones: 4 signals",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days manually reviewing 1,200 pull requests as a hiring reviewer f",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "pr-checklists-are-dead-ai-agents-do-reviews-now",
     "title": "PR checklists are dead: AI agents do reviews now",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): The short version: the conventional advice on code review is incomplete.; I ran into the checklist trap when I inherited a repo that ran 18 GitHub Actions",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "reconcile-mobile-money-in-3-days-edge-cases-paystack",
     "title": "Reconcile mobile money in 3 days — edge cases Paystack",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a customer in Yaba, Lagos, called to say their float showed",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "row-level-security-for-saas-in-2026-the-surprise-cost",
     "title": "Row-level security for SaaS in 2026: the surprise cost",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "self-service-is-broken-without-ai-ops",
     "title": "Self-service is broken without AI ops",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this changed selfservice problem while migrating a service under a ha; Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "senior-devs-flee-when-systems-rot",
     "title": "Senior devs flee when systems rot",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I ran into this when I tried to add a simple Prometheus alert for cache hit rati",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "serve-4g-as-baseline-apps-in-2026",
@@ -931,6 +901,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "ownership-drift-after-velocity-spikes",
+    "title": "Ownership drift after velocity spikes",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.; I spent three weeks debugging a connection pool issue that turned out to be a si",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "pick-niches-ai-wont-eat-in-2026",
+    "title": "Pick niches AI won’t eat in 2026",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was shocked to see 60% of our beta users stop paying within 30 days.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "pick-saas-niches-ai-cant-erode",
+    "title": "Pick SaaS niches AI can't erode",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when our product lead tried to raise Series A in June 2026.",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "poolers-wont-save-your-serverless-db",
+    "title": "Poolers won’t save your serverless DB",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I also learned the hard way that pooler vendors rarely publish the cost model.; I spent two weeks rewriting shard keys after the first production outage.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "portfolio-projects-that-beat-ai-clones-4-signals",
+    "title": "Portfolio projects that beat AI clones: 4 signals",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days manually reviewing 1,200 pull requests as a hiring reviewer f",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "move-images-50-faster-in-2026-with-starlink-cdn",

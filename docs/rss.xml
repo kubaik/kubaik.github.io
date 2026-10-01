@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Oct 2026 04:54:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Oct 2026 18:15:53 +0000</lastBuildDate>
+    <item>
+      <title>Double-entry ledger: concurrent write errors</title>
+      <link>https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/</link>
+      <description>Fix ledger inconsistency under concurrent writes: SERIALIZABLE isolation, deferred triggers, and retry logic to stop serialization failures and drift.</description>
+      <pubDate>Thu, 01 Oct 2026 18:15:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/</guid>
+    </item>
     <item>
       <title>Agentic workflows: surviving network partitions</title>
       <link>https://kubaik.github.io/agentic-workflows-surviving-network-partitions/</link>
@@ -138,13 +145,6 @@
       <description>Sandbox computer-use agents with gVisor, egress allowlists, and short-lived STS tokens — the credential-lifetime mistake that turns one session into a…</description>
       <pubDate>Mon, 21 Sep 2026 18:02:36 +0000</pubDate>
       <guid>https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/</guid>
-    </item>
-    <item>
-      <title>When your agent goes silent: degrade gracefully</title>
-      <link>https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/</link>
-      <description>Model calls that are slow or confidently wrong break most systems. Deadlines, fallbacks, and output validation that keep your p99 under 2s.</description>
-      <pubDate>Mon, 21 Sep 2026 11:42:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-01T04:54:34.879047",
+  "built_at": "2026-10-01T18:15:28.568124",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5420,6 +5420,11 @@
       "slug": "agentic-workflows-surviving-network-partitions",
       "title": "Agentic workflows: surviving network partitions",
       "summary": "Most agentic workflows incidents trace back to a default nobody remembers choosing. Here's what actually worked, and why. The workaround gets copy-pasted forward long after the original reason is forgotten. The one-paragraph version (read this first) Network partitions are not a rare edge case in Af"
+    },
+    {
+      "slug": "double-entry-ledger-concurrent-write-errors",
+      "title": "Double-entry ledger: concurrent write errors",
+      "summary": "Production gives you neither a clean environment nor a patient timeline. currency conversion tends to expose the difference between working and being trustworthy. This covers the fix, the cost of not knowing sooner, and what we monitor now. The error and why it's confusing You've built a double-entr"
     }
   ]
 }
