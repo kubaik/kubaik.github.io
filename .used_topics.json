@@ -78,5 +78,7 @@
   "DuckDB in production: where an embedded analytics engine replaces a whole data warehouse",
   "Agentic workflows that survive network partitions: the patterns that actually work in Africa",
   "Currency conversion edge cases that quietly corrupt financial reports",
-  "Building a double-entry ledger that stays consistent under concurrent writes"
+  "Building a double-entry ledger that stays consistent under concurrent writes",
+  "What traditional observability missed when we introduced our first production agents",
+  "How we run AI-augmented teams without destroying code ownership and accountability"
 ]

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-31T04:32:07.615642">
-        <meta property="article:modified_time" content="2026-08-31T04:32:07.615649">
+        <meta property="article:modified_time" content="2026-10-02T04:46:16.406884+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Ship evals before your agent ships">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ship-evals-before-your-agent-ships/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Ship evals before your agent ships",
       "description": "Replace vibe testing with agent evals — the loop that catches downstream 502s, prompt drift, and idempotency failures before users do.",
       "datePublished": "2026-08-31T04:32:07+00:00",
-      "dateModified": "2026-08-31T04:32:07+00:00",
+      "dateModified": "2026-10-02T04:46:16+00:00",
       "wordCount": 3377,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
@@ -266,7 +266,7 @@
                         17 min read
                         &nbsp;·&nbsp; 3377 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-31
+                        &nbsp;·&nbsp; Updated 2026-10-02
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -293,43 +293,27 @@ print(response)
 </code></pre>
 <p>That prints something that looks good. Then the docs say: “Now run your agent in production.”</p>
 <p>What they don’t say is what happens when:
-- The agent retries the same failing API 50 times because the retry policy never checked for idempotency.
-- The prompt works for “fix this API” but explodes when the ticket says “fix this API with the order_id that has a space in it”.
-- The cost estimator in the prompt uses price from 2026, but the live catalog doubled in January 2026.</p>
+- The agent retries the same failing API 50 times because the retry policy never checked for idempotency. - The prompt works for “fix this API” but explodes when the ticket says “fix this API with the order_id that has a space in it”. - The cost estimator in the prompt uses price from 2026, but the live catalog doubled in January 2026.</p>
 <p>Teams hit these walls and call it “agent drift.”</p>
 <p>The real problem is <em>evaluation drift</em>: the agent still passes the demo tests, but the demo tests stopped matching reality.</p>
 <p>Typical failure timeline:
-- Week 0: Demo runs, prompt feels good, the team ships it.
-- Week 1: First spike in “still running” tickets. The agent is stuck in retry loops on 4% of tickets.
-- Week 2: Someone notices the prompt cost token count jumped from 420 to 1,240 because the LLM started adding debugging commentary.
-- Week 3: The team writes a quick eval that checks “does the agent close the ticket?” It passes because 96% of tickets are simple, but misses the 4% that are now costing $1.80 per ticket in retries.</p>
+- Week 0: Demo runs, prompt feels good, the team ships it. - Week 1: First spike in “still running” tickets. The agent is stuck in retry loops on 4% of tickets. - Week 2: Someone notices the prompt cost token count jumped from 420 to 1,240 because the LLM started adding debugging commentary. - Week 3: The team writes a quick eval that checks “does the agent close the ticket?” It passes because 96% of tickets are simple, but misses the 4% that are now costing $1.80 per ticket in retries.</p>
 <p>The demo tests never covered the 4% tail. The new eval only checks the 96% head. That’s the gap.</p>
 <p>What’s missing is a <em>production-grade eval</em> that:
-1. Runs against <em>live data</em> (not curated examples).
-2. Measures <em>end-to-end outcomes</em> (ticket closed, cost saved, latency), not just prompt accuracy.
-3. Fails the build when the agent regresses, not when the oncall page arrives.</p>
+1. Runs against <em>live data</em> (not curated examples). 2. Measures <em>end-to-end outcomes</em> (ticket closed, cost saved, latency), not just prompt accuracy. 3. Fails the build when the agent regresses, not when the oncall page arrives.</p>
 <p>That loop replaces “vibe testing” with a mechanical process.</p>
 <h2 id="how-evaluation-driven-development-for-agents-the-loop-that-replaced-vibe-testing-actually-works-under-the-hood">How Evaluation-driven development for agents: the loop that replaced vibe testing actually works under the hood</h2>
 <p>The loop has four parts. Each part has a sharp edge where teams usually cut corners.</p>
 <h3 id="1-instrument-everything-that-matters">1. Instrument everything that matters</h3>
 <p>Most teams instrument the agent call, but skip the downstream systems. That misses the failure mode where the agent succeeds but the ticket system doesn’t update.</p>
 <p>What to instrument:
-- Agent input/output (prompt tokens, completion tokens, latency).
-- Downstream API calls (success, rate limit, idempotency key, retry count).
-- State changes in the ticket system (open → in_progress → resolved).
-- Cost per ticket (LLM tokens + API calls + downstream retries).</p>
+- Agent input/output (prompt tokens, completion tokens, latency). - Downstream API calls (success, rate limit, idempotency key, retry count). - State changes in the ticket system (open → in_progress → resolved). - Cost per ticket (LLM tokens + API calls + downstream retries).</p>
 <p>Typical instrumentation stack in 2026:
-- OpenTelemetry 1.30 for traces and metrics.
-- Prometheus 2.50 as the scrape endpoint.
-- Grafana Cloud for dashboards.
-- LangSmith 0.18 for agent-specific spans (it adds ~3ms per span, which is acceptable for most systems).</p>
+- OpenTelemetry 1.30 for traces and metrics. - Prometheus 2.50 as the scrape endpoint. - Grafana Cloud for dashboards. - LangSmith 0.18 for agent-specific spans (it adds ~3ms per span, which is acceptable for most systems).</p>
 <h3 id="2-build-a-golden-dataset-from-production-traffic">2. Build a golden dataset from production traffic</h3>
 <p>Golden datasets are not curated examples. They are a snapshot of the last N tickets that met a quality bar. The quality bar is usually: closed within 5 minutes and no downstream error.</p>
 <p>How to build it without polluting your prod DB:
-- Use feature flags to duplicate a percentage of traffic to a shadow agent.
-- Write the shadow agent’s outputs to a sidecar table with a flag <code>is_shadow: true</code>.
-- After 24–48 hours, run a query to promote tickets where <code>is_shadow: true</code> and <code>status = resolved</code> and <code>downstream_errors = 0</code>.
-- Export that set as your golden dataset.</p>
+- Use feature flags to duplicate a percentage of traffic to a shadow agent. - Write the shadow agent’s outputs to a sidecar table with a flag <code>is_shadow: true</code>. - After 24–48 hours, run a query to promote tickets where <code>is_shadow: true</code> and <code>status = resolved</code> and <code>downstream_errors = 0</code>. - Export that set as your golden dataset.</p>
 <p>Typical size: 300–1,200 tickets. Enough to catch 95% of regressions, small enough to label manually in a day.</p>
 <h3 id="3-write-evals-that-fail-the-build">3. Write evals that fail the build</h3>
 <p>A common trap here is writing evals that are too narrow. Example:</p>
@@ -341,18 +325,12 @@ def check_prompt_accuracy(run, example):
 </code></pre>
 <p>This passes if the word “fix” appears, but misses the case where the agent returns a 500-word essay that includes “fix” 12 times but never calls the API.</p>
 <p>A production-grade eval must check:
-- End-to-end outcome (ticket closed in ≤ 5 minutes).
-- Downstream success (API call succeeded within 3 retries).
-- Idempotency (second run with same ticket returns immediately).
-- Cost delta (LLM tokens + API calls ≤ budget).</p>
+- End-to-end outcome (ticket closed in ≤ 5 minutes). - Downstream success (API call succeeded within 3 retries). - Idempotency (second run with same ticket returns immediately). - Cost delta (LLM tokens + API calls ≤ budget).</p>
 <p>The eval should return a score between 0 and 1, and the CI pipeline should fail the build if the score drops below 0.95.</p>
 <h3 id="4-run-evals-in-ci-not-just-nightly">4. Run evals in CI, not just nightly</h3>
 <p>Most teams run evals nightly. That means a regression introduced at 3 PM ships at 8 PM. The fix arrives at 2 AM.</p>
 <p>The loop that replaces vibe testing runs evals on every PR:
-- GitHub Actions (or GitLab CI) triggers on every push.
-- The eval job pulls the golden dataset and the PR’s agent code.
-- It runs the eval against a local LangSmith runner (it spins up a throwaway agent instance).
-- If the score &lt; 0.95, the job fails the build.</p>
+- GitHub Actions (or GitLab CI) triggers on every push. - The eval job pulls the golden dataset and the PR’s agent code. - It runs the eval against a local LangSmith runner (it spins up a throwaway agent instance). - If the score &lt; 0.95, the job fails the build.</p>
 <p>Typical runtime: 2–6 minutes for 1,200 tickets. Acceptable for most PRs.</p>
 <p>The sharp edge is cost. A naive eval that runs 1,200 agent calls on every PR costs ~$0.12 in 2026 prices (assuming gpt-4o at $5/million tokens and 200 tokens per call). For a team with 10 PRs/day, that’s $1.20/day. Still cheaper than a 2 AM page.</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
@@ -685,9 +663,7 @@ def downstream_health_eval(run: Dict[str, Any], example: Dict[str, Any]) -&gt; E
 </tbody>
 </table>
 <p>Alternatives worth considering:
-- <strong>Agenta</strong> (0.4): Open-source eval orchestrator, good if you want to avoid LangSmith’s SaaS.
-- <strong>Phoenix by Arize</strong> (3.1): More ML-focused evals, but heavier and more expensive ($0.25 per 1k runs).
-- <strong>Arize Trace</strong> (2.8): Good for LLM-specific metrics, but less agent-focused.</p>
+- <strong>Agenta</strong> (0.4): Open-source eval orchestrator, good if you want to avoid LangSmith’s SaaS. - <strong>Phoenix by Arize</strong> (3.1): More ML-focused evals, but heavier and more expensive ($0.25 per 1k runs). - <strong>Arize Trace</strong> (2.8): Good for LLM-specific metrics, but less agent-focused.</p>
 <p>The sharp edge is lock-in. LangSmith’s eval format is proprietary. If you want to switch later, plan to rewrite evals.</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <h3 id="1-the-agent-has-no-measurable-outcome">1. The agent has no measurable outcome</h3>
@@ -709,8 +685,7 @@ def downstream_health_eval(run: Dict[str, Any], example: Dict[str, Any]) -&gt; E
 <pre><code class="language-bash">grep -r &quot;def your_agent&quot; src/ | head -1
 </code></pre>
 <p>If you find an agent function, check two things:
-1. Does it have OpenTelemetry tracing? If not, add the instrumentation shown above.
-2. Does your CI run evals on every PR? If not, create a minimal eval using LangSmith 0.18 that checks “ticket closed in ≤ 5 minutes.”</p>
+1. Does it have OpenTelemetry tracing? If not, add the instrumentation shown above. 2. Does your CI run evals on every PR? If not, create a minimal eval using LangSmith 0.18 that checks “ticket closed in ≤ 5 minutes.”</p>
 <p>If either is missing, schedule a 30-minute spike today to add tracing or a failing eval. The goal isn’t to ship perfect evals in one day. The goal is to turn one vague failure (“agent feels slow today”) into a mechanical process (“eval failed at 3:42 PM, here’s the trace”).</p>
 <p>Do that, and you’ll replace vibe testing with a loop that actually works at 3 AM.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>

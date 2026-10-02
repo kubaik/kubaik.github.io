@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "pr-checklists-are-dead-ai-agents-do-reviews-now",
-    "title": "PR checklists are dead: AI agents do reviews now",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): The short version: the conventional advice on code review is incomplete.; I ran into the checklist trap when I inherited a repo that ran 18 GitHub Actions",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "reconcile-mobile-money-in-3-days-edge-cases-paystack",
-    "title": "Reconcile mobile money in 3 days — edge cases Paystack",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a customer in Yaba, Lagos, called to say their float showed",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "row-level-security-for-saas-in-2026-the-surprise-cost",
-    "title": "Row-level security for SaaS in 2026: the surprise cost",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "self-service-is-broken-without-ai-ops",
-    "title": "Self-service is broken without AI ops",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this changed selfservice problem while migrating a service under a ha; Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "senior-devs-flee-when-systems-rot",
-    "title": "Senior devs flee when systems rot",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I ran into this when I tried to add a simple Prometheus alert for cache hit rati",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "serve-4g-as-baseline-apps-in-2026",
     "title": "Serve 4G-as-baseline apps in 2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ship-evals-before-your-agent-ships",
     "title": "Ship evals before your agent ships",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same evaluationdriven development mistake in more than one producti; Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "soft-deletes-fail-what-breaks-first",
     "title": "Soft deletes fail: what breaks first",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): The short version: the conventional advice on soft deletes is incomplete.; I ran into this when a client in São Paulo moved from an in-house Postgres 15 cl",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "survive-ai-swipes-with-niche-picks",
     "title": "Survive AI swipes with niche picks",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that M-Pesa’s till API (launched 2026) still returned raw JSON t",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "survived-12000-agents-with-redis",
     "title": "Survived 12,000 agents with Redis",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I once wasted 20 minutes debugging a connection error because I didn’t wait for ; I set   second to avoid overwhelming PostgreSQL, but your mileage may vary.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "tls-13-post-quantum-what-breaks-at-scale",
@@ -901,6 +871,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "pr-checklists-are-dead-ai-agents-do-reviews-now",
+    "title": "PR checklists are dead: AI agents do reviews now",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): The short version: the conventional advice on code review is incomplete.; I ran into the checklist trap when I inherited a repo that ran 18 GitHub Actions",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "reconcile-mobile-money-in-3-days-edge-cases-paystack",
+    "title": "Reconcile mobile money in 3 days — edge cases Paystack",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a customer in Yaba, Lagos, called to say their float showed",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "row-level-security-for-saas-in-2026-the-surprise-cost",
+    "title": "Row-level security for SaaS in 2026: the surprise cost",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "self-service-is-broken-without-ai-ops",
+    "title": "Self-service is broken without AI ops",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this changed selfservice problem while migrating a service under a ha; Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "senior-devs-flee-when-systems-rot",
+    "title": "Senior devs flee when systems rot",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I ran into this when I tried to add a simple Prometheus alert for cache hit rati",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ownership-drift-after-velocity-spikes",

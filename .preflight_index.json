@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-01T18:15:28.568124",
+  "built_at": "2026-10-02T04:45:59.129124",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5425,6 +5425,11 @@
       "slug": "double-entry-ledger-concurrent-write-errors",
       "title": "Double-entry ledger: concurrent write errors",
       "summary": "Production gives you neither a clean environment nor a patient timeline. currency conversion tends to expose the difference between working and being trustworthy. This covers the fix, the cost of not knowing sooner, and what we monitor now. The error and why it's confusing You've built a double-entr"
+    },
+    {
+      "slug": "who-signs-off-on-ai-code",
+      "title": "Who signs off on AI code?",
+      "summary": "The dashboards look healthy right up until the incident starts. Somewhere between the traditional observability tutorial and the incident channel, a step goes missing. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs Every AI coding a"
     }
   ]
 }

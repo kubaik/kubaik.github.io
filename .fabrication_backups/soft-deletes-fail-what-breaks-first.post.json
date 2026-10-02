@@ -16,7 +16,7 @@
   "meta_description": "Cut API response time 75% by ditching soft deletes — index bloat, 1.8s queries, and $18k/month storage bills exposed",
   "featured_image": "/static/images/soft-deletes-fail-what-breaks-first.jpg",
   "created_at": "2026-06-09T23:03:28.443649",
-  "updated_at": "2026-10-02T04:46:16.422253+00:00",
+  "updated_at": "2026-09-19T08:27:14.624591+00:00",
   "seo_keywords": [
     "SoftDeletes",
     "SoftDeletePattern",

@@ -307,6 +307,7 @@ vibe-coding-mvp-gem-prod-albatross,80,3495,"Vibe coding: MVP gem, prod albatross
 wasm-ml-models-keep-dev-speed-at-the-edge,80,2659,WASM ML models: keep dev speed at the edge,2026-07-03T14:23:46.740944,1,first-person incident: '**We lost two weeks trying to run a 120MB PyTorch model on a 512MB ARM device un'
 when-astro-islands-shine-in-2026,80,3430,When Astro islands shine in 2026,2026-06-25T22:16:03.233106,1,"first-person incident: 'The tooling around TypeScript support was still immature, and our team spent two'"
 which-ai-wrappers-made-money-in-2026,80,2329,Which AI wrappers made money in 2026,2026-06-12T01:48:30.604884,1,first-person incident: 'That’s why I built this list: to separate the wrappers that sold themselves from'
+who-signs-off-on-ai-code,80,2730,Who signs off on AI code?,2026-10-02T04:45:55.762278,1,first-person incident: 'A single production outage from an unreviewed AI change can cost 4 hours of engi'
 why-do-production-agents-still-need-humans,80,3640,Why do production agents still need humans?,2026-09-09T08:21:05.275755,1,"first-person incident: 'Below are three concrete edge cases I ran into on production, each with a name y'"
 why-scaling-agents-kills-plain-logs,80,2735,Why scaling agents kills plain logs,2026-09-11T03:43:37.520207,1,"first-person incident: ""Here's what I'd tell a colleague hitting this for the first time."""
 7-graceful-degradation-traps-ive-hit-in-production,85,2977,7 graceful degradation traps I’ve hit in production,2026-07-09T03:37:10.879272,1,narrative number claim: 'cost us $2800'
