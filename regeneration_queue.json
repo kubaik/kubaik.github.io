@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "serve-4g-as-baseline-apps-in-2026",
-    "title": "Serve 4G-as-baseline apps in 2026",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ship-evals-before-your-agent-ships",
-    "title": "Ship evals before your agent ships",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same evaluationdriven development mistake in more than one producti; Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "soft-deletes-fail-what-breaks-first",
-    "title": "Soft deletes fail: what breaks first",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): The short version: the conventional advice on soft deletes is incomplete.; I ran into this when a client in São Paulo moved from an in-house Postgres 15 cl",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "survive-ai-swipes-with-niche-picks",
-    "title": "Survive AI swipes with niche picks",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that M-Pesa’s till API (launched 2026) still returned raw JSON t",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "survived-12000-agents-with-redis",
-    "title": "Survived 12,000 agents with Redis",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I once wasted 20 minutes debugging a connection error because I didn’t wait for ; I set   second to avoid overwhelming PostgreSQL, but your mileage may vary.",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "tls-13-post-quantum-what-breaks-at-scale",
     "title": "TLS 1.3 + post-quantum: what breaks at scale",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "trim-llm-bills-3-finops-moves-that-work",
     "title": "Trim LLM bills: 3 FinOps moves that work",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I learned this the hard way when our monthly AI bill jumped from $7,200 to $18,4; I spent three weeks tuning our rate limits and buffer pools, only to realize we ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "use-feature-flags-to-deploy-ai-models-safely",
     "title": "Use feature flags to deploy AI models safely",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "webhooks-2026-retries-idempotency-and-the-9995",
     "title": "Webhooks 2026: retries, idempotency, and the 99.95%",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "when-astro-islands-shine-in-2026",
     "title": "When Astro islands shine in 2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days profiling the site with Lighthouse and discovered that 78% of",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "zero-downtime-postgres-schema-changes-in-2026",
@@ -871,6 +841,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "serve-4g-as-baseline-apps-in-2026",
+    "title": "Serve 4G-as-baseline apps in 2026",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ship-evals-before-your-agent-ships",
+    "title": "Ship evals before your agent ships",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same evaluationdriven development mistake in more than one producti; Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "soft-deletes-fail-what-breaks-first",
+    "title": "Soft deletes fail: what breaks first",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): The short version: the conventional advice on soft deletes is incomplete.; I ran into this when a client in São Paulo moved from an in-house Postgres 15 cl",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "survive-ai-swipes-with-niche-picks",
+    "title": "Survive AI swipes with niche picks",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that M-Pesa’s till API (launched 2026) still returned raw JSON t",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "survived-12000-agents-with-redis",
+    "title": "Survived 12,000 agents with Redis",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I once wasted 20 minutes debugging a connection error because I didn’t wait for ; I set   second to avoid overwhelming PostgreSQL, but your mileage may vary.",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "pr-checklists-are-dead-ai-agents-do-reviews-now",

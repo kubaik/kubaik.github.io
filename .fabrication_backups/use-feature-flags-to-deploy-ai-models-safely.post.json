@@ -15,7 +15,7 @@
   "meta_description": "Deploy AI models 80% faster with feature flags — canary splits, instant kill switches, and 5-minute rollbacks in 2026. FastAPI, Flagsmith 3.18, Prometheus 2.48.",
   "featured_image": "/static/images/use-feature-flags-to-deploy-ai-models-safely.jpg",
   "created_at": "2026-06-20T20:49:06.113698",
-  "updated_at": "2026-10-02T17:40:32.902455+00:00",
+  "updated_at": "2026-09-19T08:27:14.754068+00:00",
   "seo_keywords": [
     "FeatureFlags",
     "AiDeployment",

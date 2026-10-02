@@ -9,7 +9,7 @@
   "meta_description": "P99 TLS latency drops 37% when post-quantum crypto targets only session tickets — not full handshakes.",
   "featured_image": "/static/images/tls-13-post-quantum-what-breaks-at-scale.jpg",
   "created_at": "2026-06-21T16:00:52.359876",
-  "updated_at": "2026-10-02T17:40:32.867275+00:00",
+  "updated_at": "2026-09-19T08:27:14.711749+00:00",
   "seo_keywords": [
     "Kyber768Latency",
     "Nginx1.25.3Quantum",

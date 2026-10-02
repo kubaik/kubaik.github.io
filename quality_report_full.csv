@@ -457,6 +457,7 @@ tech-debt-when-half-your-stack-is-unfamiliar,100,3246,Tech debt: when half your 
 tool-calls-why-retries-stampede,100,2694,Tool calls: why retries stampede,2026-09-22T16:35:21.833379,0,
 two-engineer-classes-the-ai-tool-norm-trap,100,2734,Two engineer classes: the AI tool norm trap,2026-09-07T08:58:13.844829,0,
 wasm-servers-beat-containers-here,100,2485,WASM servers beat containers here,2026-08-05T13:49:01.207694,0,
+webhook-delivery-that-survives-outages,100,2956,Webhook delivery that survives outages,2026-10-02T17:40:12.720490,0,
 webhooks-2026-retries-idempotency-and-the-9995,100,2731,"Webhooks 2026: retries, idempotency, and the 99.95%",2026-06-19T21:43:40.060877,0,
 when-your-agent-goes-silent-degrade-gracefully,100,2348,When your agent goes silent: degrade gracefully,2026-09-21T11:42:38.476648,0,
 which-agent-stack-survives-3g,100,2723,Which agent stack survives 3G?,2026-09-16T11:26:58.836815,0,

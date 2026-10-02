@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-02T04:45:59.129124",
+  "built_at": "2026-10-02T17:40:16.008141",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5430,6 +5430,11 @@
       "slug": "who-signs-off-on-ai-code",
       "title": "Who signs off on AI code?",
       "summary": "The dashboards look healthy right up until the incident starts. Somewhere between the traditional observability tutorial and the incident channel, a step goes missing. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs Every AI coding a"
+    },
+    {
+      "slug": "webhook-delivery-that-survives-outages",
+      "title": "Webhook delivery that survives outages",
+      "summary": "It's easy to spend longer than expected on webhook delivery before the actual failure mode becomes clear. This is the writeup with the mistakes left in, not edited out. It's the kind of problem that's easy to reproduce and hard to explain. The problem, in general terms A webhook is a promise you mak"
     }
   ]
 }
