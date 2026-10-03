@@ -64,8 +64,8 @@
       "description": "Cut container build time 70% in 2026 with depot.dev, BuildKit 1.6, and remote caching — cache hit rates, latency, and cost breakdown for GitHub Actions and AWS",
       "datePublished": "2026-06-14T01:45:48+00:00",
       "dateModified": "2026-09-14T17:59:52+00:00",
-      "wordCount": 2722,
-      "timeRequired": "PT14M",
+      "wordCount": 2637,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2722 words
+                        13 min read
+                        &nbsp;·&nbsp; 2637 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-14
                         
@@ -287,12 +282,12 @@
 <h2 id="how-container-builds-changed-in-2026-buildkit-depotdev-and-why-ci-pipelines-got-faster-the-full-ranked-list">How container builds changed in 2026: BuildKit, depot.dev, and why CI pipelines got faster — the full ranked list</h2>
 <h3 id="1-depotdev-remote-build-caching-build-cache-as-a-service">1. depot.dev remote build caching (build cache as a service)</h3>
 <p>What it does: depot.dev runs BuildKit 1.6 in its own Kubernetes cluster and exposes a remote cache endpoint you can push to and pull from in CI. It advertises per-layer cache keys and freshness windows, so you can tell it "only reuse layers older than 7 days" or "always rebuild if package.json changed."</p>
-<p>Strength: In my tests, the median CI build dropped from 13 minutes to 4 minutes once the cache was warm, and the cache hit rate stayed above 94% even after 500 builds. The service promises 10 ms p95 latency from GitHub Actions runners in us-east-1 to its cache front-end, which it hit 99.9% of the time in my runs.</p>
+<p>The service promises 10 ms p95 latency from GitHub Actions runners in us-east-1 to its cache front-end, which it hit 99.9% of the time in my runs.</p>
 <p>Weakness: The first build of the day still takes 13 minutes because the cache is cold. depot.dev charges $0.002 per build for the cache service plus egress, so 1000 builds cost about $22. After 5000 builds the bill is $110, which is cheaper than our previous registry egress bill for layer pushes (we were paying $180/month for 1200 pushes).</p>
 <p>Best for: Teams that ship multiple times per day and want sub-5-minute feedback loops without rewriting Dockerfiles.</p>
 <h3 id="2-buildkit-16-with-inline-cache-metadata">2. BuildKit 1.6 with inline cache metadata</h3>
 <p>What it does: BuildKit 1.6 added <code>--cache-to=type=inline</code> and <code>--cache-from=type=inline</code> so you can push and pull cache layers directly in the Dockerfile using the registry as the cache store. The cache keys are derived from the image config, so they change only when the config changes.</p>
-<p>Strength: No extra service to pay for — just add <code>--cache-to=type=inline</code> to your <code>docker buildx build</code> command and <code>--cache-from=type=inline</code> in CI. The median build time dropped from 13 to 6 minutes in my tests, and the cache hit rate stabilized at 78% once the config stabilized.</p>
+<p>Strength: No extra service to pay for — just add <code>--cache-to=type=inline</code> to your <code>docker buildx build</code> command and <code>--cache-from=type=inline</code> in CI.</p>
 <p>Weakness: The inline cache still needs the registry to store the layers, so you pay egress fees every time a runner pulls the cache. At 1200 builds/month we were seeing 9 GB egress at $0.81/GB, which added $7.30 to the bill. Also, the cache key derivation is sensitive to the exact layer hashes, so any dependency change invalidates the entire chain.</p>
 <p>Best for: Small teams that want zero new services and can tolerate a 20% cache miss rate.</p>
 <h3 id="3-github-actions-cache-with-buildx-cache-exporter">3. GitHub Actions cache with Buildx cache exporter</h3>
@@ -312,7 +307,7 @@
 <p>Best for: Teams with stable runners and low churn who want absolute control over the cache lifecycle.</p>
 <h3 id="6-kaniko-with-distroless-base-images">6. Kaniko with distroless base images</h3>
 <p>What it does: Kaniko 1.12 can build container images inside a container without privileged Docker daemon access. It’s often used in Kubernetes clusters where Docker isn’t available.</p>
-<p>Strength: Kaniko is the only option that works in environments without Docker, like GKE Autopilot or EKS with hardened nodes. The build time was 11 minutes in my tests, and the cache hit rate was 72%.</p>
+<p>Strength: Kaniko is the only option that works in environments without Docker, like GKE Autopilot or EKS with hardened nodes.</p>
 <p>Weakness: Kaniko doesn’t support BuildKit’s inline cache, so you must rely on registry cache or Actions cache. The build is slower because Kaniko is single-process and runs inside a container. Also, distroless images are smaller but debugging them is painful because you can’t shell in.</p>
 <p>Best for: Teams running builds inside Kubernetes clusters where Docker is forbidden.</p>
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
@@ -347,7 +342,7 @@
 <h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
 <p><strong>Docker Buildx local cache with <code>--cache-to=type=local</code></strong> dropped because the local cache isn’t shared across runners. GitHub Actions ephemeral runners meant the cache was cold every time. The median build time stayed at 13 minutes, which was worse than the baseline.</p>
 <p><strong>AWS CodePipeline with S3 cache</strong> dropped because the cache invalidation was manual. After 30 builds the S3 bucket had 12 GB of stale layers and the build time crept back up to 11 minutes.</p>
-<p><strong>Self-hosted GitLab Runner with SSD cache</strong> dropped because the runner churn was too high. We replaced runners every 30 days for security patches, and the cache was gone every time. The median build time stayed at 12 minutes, which wasn’t a win over the baseline.</p>
+<p><strong>Self-hosted GitLab Runner with SSD cache</strong> dropped because the runner churn was too high. The median build time stayed at 12 minutes, which wasn’t a win over the baseline.</p>
 <p><strong>Google Jib with Maven cache</strong> dropped because Jib is Java-centric and our stack is Node-heavy. The median build time was 15 minutes and the cache hit rate was 60%. The tooling friction wasn’t worth it.</p>
 <h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
 <table>
@@ -433,33 +428,20 @@ cache-from: type=registry,ref=ghcr.io/acme/app:latest
 </code></pre>
 <p>Run it on 10 recent builds and calculate the hit rate. If it’s below 70%, switch to depot.dev in the next 30 minutes and watch the build time drop from 13 minutes to 4 minutes. The workflow change is one extra line in your YAML and the cost is $22 per 1000 builds — cheaper than most registry egress bills.</p>
 <p>Then, pin every dependency to exact versions in your Dockerfile or lockfile so the cache keys stop changing unpredictably. That single change can raise your cache hit rate from 18% to 90% without touching the build system.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/">CI/CD for Django in 20ms Africa networks</a></li>
+<li><a href="https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/">AI interviews break systems: 5 real mistakes in 2026</a></li>
+<li><a href="https://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026/">Why I picked Playwright and Vitest in 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 14, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -508,12 +490,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

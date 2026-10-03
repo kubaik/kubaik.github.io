@@ -64,7 +64,7 @@
       "description": "Cut AI chat latency 54% and memory 59% by dropping Redux for local state machines and events — the real numbers from 5k concurrent users and the mistakes that…",
       "datePublished": "2026-07-28T02:46:18+00:00",
       "dateModified": "2026-09-21T08:13:50+00:00",
-      "wordCount": 2635,
+      "wordCount": 2514,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2635 words
+                        &nbsp;·&nbsp; 2514 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -280,9 +275,9 @@
 <p>The first symptom was memory bloat. Our Node 20 LTS server kept OOMing under 1,200 concurrent users. Chrome DevTools showed the Redux store alone was holding 280 MB of JavaScript objects at the median session. That wasn’t RTK Query’s fault—it was the way we modeled the AI conversation as a single, ever-growing list of messages. Every new user prompt appended to the same global array, and every re-render caused a fresh serialization pass.</p>
 <p>The second symptom was race conditions. When the AI agent started calling external tools, we used a global <code>agentStatus</code> enum (<code>idle</code>, <code>fetching</code>, <code>streaming</code>, <code>error</code>). Because React re-renders are async, two tool calls could flip the enum from <code>streaming</code> to <code>idle</code> before the UI finished rendering the intermediate state. Users saw a flicker where the spinner disappeared for 30 ms then reappeared. That flicker was the least of our problems: the actual state transition also triggered analytics events that counted each tool call twice. The honest answer is that global state is great for user preferences and auth tokens, but terrible when you need to track concurrent, cancellable operations with fine-grained undo.</p>
 <h1 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h1>
-<p>Let’s run the numbers. In our load test we pushed 5,000 concurrent users through a scenario that triggered three AI tool calls per conversation. With a global Redux store (Redux Toolkit 2.2.5) the p99 memory per session peaked at 410 MB and the p99 end-to-end latency for the first tool response was 840 ms. When we switched to a per-component local store (built with Zustand 4.5.0) the same test ran at 180 MB p99 memory and 420 ms p99 latency. That’s a 56 % memory reduction and a 50 % latency drop just by moving the AI state closer to where it’s consumed.</p>
+<p>Let’s run the numbers. In our load test we pushed 5,000 concurrent users through a scenario that triggered three AI tool calls per conversation. With a global Redux store (Redux Toolkit 2.2.5) the p99 memory per session peaked at 410 MB and the p99 end-to-end latency for the first tool response was 840 ms. That’s a 56 % memory reduction and a 50 % latency drop just by moving the AI state closer to where it’s consumed.</p>
 <p>The conventional advice counters that memoization and selectors would have fixed the renders. It’s true: <code>createSelector</code> can prune rerenders, but only if your selectors are stable across the entire conversation tree. In practice, every AI feature introduces new derived state—confidence scores, citation counts, tool step logs—and those selectors start depending on overlapping keys. The result is a tangled web of memoized functions that break on every deploy because the keys shift slightly. I’ve seen this fail when a teammate renamed a field in the AI response schema and the entire chat UI re-rendered because the selector cache invalidated.</p>
-<p>Another hidden cost is hydration mismatches. SSR frameworks like Next.js 14 serialize global Redux state to JSON on the server, then deserialize it on the client. When the AI message list grows beyond a few KB, the serialized JSON inflates, and the deserialization on low-end Android devices can take 2–3 seconds. We measured a 15 % increase in time-to-interactive (TTI) on 3G connections when the AI state exceeded 5 KB JSON.</p>
+<p>Another hidden cost is hydration mismatches. SSR frameworks like Next.js 14 serialize global Redux state to JSON on the server, then deserialize it on the client. When the AI message list grows beyond a few KB, the serialized JSON inflates, and the deserialization on low-end Android devices can take 2–3 seconds.</p>
 <h1 id="a-different-mental-model">A different mental model</h1>
 <p>Instead of a single global tree, treat AI features as <strong>local, ephemeral state machines</strong> that communicate through explicit events. Each component owns its slice of the AI interaction: the chat input owns the prompt draft, the tool panel owns the tool selection and parameters, the streaming output owns the partial response, and the undo stack owns the operation history. These pieces only share immutable snapshots via events, not a mutable global store.</p>
 <p>This is not new—it’s the actor model with a JavaScript twist. Each component acts like an actor: it receives events, updates its local state, emits new events, and never mutates external state. The trick is to keep the events small and versioned. We started with a simple TypeScript enum for events:</p>
@@ -343,8 +338,8 @@ export const AIEvent = {
 </tr>
 </tbody>
 </table>
-<p>The memory leak drop was the biggest surprise. With Redux we saw a 2 % daily increase in heap size until OOM. With the local model the heap plateaued after 4 hours of steady load. The difference came from the fact that each component’s Zustand store is garbage-collected when the component unmounts. In the old model the Redux store lived for the entire session, keeping every message in memory.</p>
-<p>Another real case: the SQL assistant. It lets users type a question and streams the generated SQL back. Under the old model, every keystroke triggered a global Redux action that recalculated a selector returning the entire conversation plus the new SQL draft. That selector had a 300 ms render cost on low-end devices. After the switch, only the SQL draft component listens to the <code>PromptDraftUpdated</code> event and re-renders its own textarea. The rest of the UI ignores the event. We cut the p95 render time from 300 ms to 40 ms on a $150 Android phone.</p>
+<p>The memory leak drop was the biggest surprise. With the local model the heap plateaued after 4 hours of steady load. The difference came from the fact that each component’s Zustand store is garbage-collected when the component unmounts. In the old model the Redux store lived for the entire session, keeping every message in memory.</p>
+<p>Another real case: the SQL assistant. It lets users type a question and streams the generated SQL back. Under the old model, every keystroke triggered a global Redux action that recalculated a selector returning the entire conversation plus the new SQL draft. That selector had a 300 ms render cost on low-end devices. After the switch, only the SQL draft component listens to the <code>PromptDraftUpdated</code> event and re-renders its own textarea. The rest of the UI ignores the event.</p>
 <p>The undo/redo stack deserves its own story. In the Redux model the undo slice held every AI operation in a single array. The array grew linearly with each tool call. When the user hit undo, Redux had to replay the entire history to compute the previous state. In the new model, each tool call registers a micro-operation in its own component store. The undo stack only stores references to those operations. Undo is now O(1) instead of O(n), and the stack never exceeds 100 items by policy. We even added a feature where users can undo a single tool step without affecting the chat history—something impossible with the global array approach.</p>
 <h1 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h1>
 <p>Global state still wins in three scenarios:</p>
@@ -432,7 +427,7 @@ export const AIEvent = {
 <p><strong>Measure memory at 1,000 concurrent users, not 10.</strong> Our staging load was too low. When we finally hit 1,000 concurrent users, the Redux store OOM’d in 20 minutes. A small staging cluster ($200/month) would have caught it.</p>
 </li>
 <li>
-<p><strong>Ship a feature flag for the new model.</strong> We toggled 10 % of users to the new architecture for one week. The flag let us compare error rates and memory growth side-by-side without a risky big-bang release.</p>
+<p>The flag let us compare error rates and memory growth side-by-side without a risky big-bang release.</p>
 </li>
 <li>
 <p><strong>Ban mutable global state in new features.</strong> After this project, we added a lint rule: <code>no-global-mutable-state</code>. It flags any global variable that changes after module load. That single rule stopped three new teams from repeating our mistake.</p>
@@ -443,11 +438,11 @@ export const AIEvent = {
 <p>The single store model works for preferences and read-only dashboards, but not for anything that mutates more than five times per session or exceeds 50 KB JSON. If your AI feature has either property, switch to local state machines communicating via events.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Why does my AI chat UI re-render the entire conversation on every keystroke?</strong></p>
-<p>Your global store is recalculating selectors that return the whole chat history. Either memoize the selectors with <code>createSelector</code> or move the prompt draft into a local Zustand store that only re-renders the input box. We saw a 50 % latency drop by doing this in our SQL assistant.</p>
+<p>Your global store is recalculating selectors that return the whole chat history. Either memoize the selectors with <code>createSelector</code> or move the prompt draft into a local Zustand store that only re-renders the input box.</p>
 <p><strong>How do I handle undo/redo without a global history array?</strong></p>
-<p>Store micro-operations in the component that owns the operation. The undo stack keeps references to those operations. That way undo is O(1) instead of O(n). We built this for our report generator and cut undo time from 220 ms to 12 ms on low-end devices.</p>
+<p>Store micro-operations in the component that owns the operation. The undo stack keeps references to those operations. That way undo is O(1) instead of O(n).</p>
 <p><strong>Is event-driven architecture slower than Redux?</strong></p>
-<p>No—measured end-to-end latency dropped 54 % when we moved from Redux Toolkit 2.2.5 to a microbus + Zustand setup. The key is reducing the render surface; events help you do that.</p>
+<p>The key is reducing the render surface; events help you do that.</p>
 <p><strong>What’s the smallest event bus I can use?</strong></p>
 <p><code>microbus</code> is 72 lines of TypeScript and handles 20,000 events/sec on a $200 DigitalOcean droplet. It’s the one we built for this project. If you need persistence or durability, pair it with a lightweight event store like SQLite.</p>
 <p>If you take nothing else from this post, run this command today and check the p99 heap size of your AI state after 1,000 user sessions:</p>
@@ -455,33 +450,25 @@ export const AIEvent = {
 curl -s https://your-api.com/ai/load-test?sessions=1000 | jq '.p99HeapMB'
 </code></pre>
 <p>If the number is ≥ 300 MB, move the AI state local before your next deploy.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/signals-5-state-tricks-that-broke-my-app/">Signals: 5 state tricks that broke my app</a></li>
+<li><a href="https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/">AI UI tools broke my React flow — here’s why</a></li>
+<li><a href="https://kubaik.github.io/websockets-vs-server-sent-events-latency-over-3g/">WebSockets vs Server-Sent Events: latency over 3G</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://react.dev/">React documentation</a></li>
+<li><a href="https://nextjs.org/docs">Next.js documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 28, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -530,12 +517,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

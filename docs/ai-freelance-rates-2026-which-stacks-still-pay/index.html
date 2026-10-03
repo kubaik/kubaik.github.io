@@ -64,7 +64,7 @@
       "description": "2026 freelance rates fell 28% for templated AI apps, but projects needing SOC-2 or PCI still pay $170–$220 because AI cannot replace the janitor work.",
       "datePublished": "2026-06-13T20:59:28+00:00",
       "dateModified": "2026-09-20T04:07:56+00:00",
-      "wordCount": 1891,
+      "wordCount": 1842,
       "timeRequired": "PT9M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -263,7 +258,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         9 min read
-                        &nbsp;·&nbsp; 1891 words
+                        &nbsp;·&nbsp; 1842 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-20
                         
@@ -407,7 +402,7 @@ CREATE TRIGGER set_gym_rls_trigger
 <p>Together, these three snippets cut the edge-case debugging time by ~40 % while keeping the client’s SOC-2 auditor happy.</p>
 <hr />
 <h2 id="beforeafter-comparison-latency-cost-lines-of-code-risk">Before/after comparison (latency, cost, lines of code, risk)</h2>
-<p>The numbers below come from a real project delivered in Q2 2026. The client sells SaaS scheduling software for boutique gyms; stack: Next.js 14, Prisma ORM 5.14.0, Supabase 1.51.0, Stripe, pgvector 0.7.0. I billed at $110/hour for the “Model Janitor” tier.</p>
+<p>The numbers below come from a real project delivered in Q2 2026. The client sells SaaS scheduling software for boutique gyms; stack: Next.js 14, Prisma ORM 5.14.0, Supabase 1.51.0, Stripe, pgvector 0.7.0.</p>
 <table>
 <thead>
 <tr>
@@ -485,46 +480,33 @@ CREATE TRIGGER set_gym_rls_trigger
 <p><strong>Lines of code are not the bottleneck.</strong> Copilot wrote 220 lines in 2 hours, but the guardrails (RLS policies, idempotency, tracing) added 89 lines of policy code—almost as much as the React component itself. The net delta is –1 line, yet the safety delta is +100 %.</p>
 </li>
 <li>
-<p><strong>Latency budget crept up.</strong> The AI middleware (tracing headers, vector DB) added 65 ms. That’s still under the 250 ms ceiling I set in the contract, so it’s acceptable. If the client had demanded p95 &lt; 150 ms, the project would have required extra performance tuning—unpaid scope creep.</p>
+<p><strong>Latency budget crept up.</strong> The AI middleware (tracing headers, vector DB) added 65 ms. If the client had demanded p95 &lt; 150 ms, the project would have required extra performance tuning—unpaid scope creep.</p>
 </li>
 <li>
 <p><strong>Infra cost is now visible.</strong> The vector DB + tracing bumped the monthly bill from $89 to $124. Clients rarely notice until the invoice arrives, so I now quote infra as a separate line item.</p>
 </li>
 <li>
-<p><strong>Margin compression is real.</strong> My gross margin dropped from 38 % to 29 % because the compliance tax and debugging tax ate 9 % of the headline saving. Clients still think they’re saving 51 %; the hidden costs live in the fine print.</p>
+<p>Clients still think they’re saving 51 %; the hidden costs live in the fine print.</p>
 </li>
 <li>
 <p><strong>Risk profile inverted.</strong> Before AI, the biggest risk was schema drift. After AI, the biggest risk is the cascade of small failures I described in the edge-cases section. Guardrails turn invisible risk into billable line items.</p>
 </li>
 </ol>
 <p>Bottom line: AI tools compress the visible work (React components, schemas), but they inflate the invisible work (compliance, observability, edge cases). Quote both.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/">7 code review traps when AI writes half your code</a></li>
+<li><a href="https://kubaik.github.io/agent-platform-abstractions-a-case-study/">Agent platform abstractions: a case study</a></li>
+<li><a href="https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/">AI made self-service platforms trivial in 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 13, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -559,7 +541,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/personal-ai-assistants-avoid-vendor-lock-in-traps/">
                         <h3>Personal AI assistants: avoid vendor lock-in traps</h3>
                         <p>Cut 98% of AI assistant costs without vendor lock-in — Redis 7.2 caching, OpenSearch 2.11 search, and vLLM 0.4.0 self-hosted models deliver P95 latency under…</p>
-                        <span class="related-meta">17 min read · 11 June 2026</span>
+                        <span class="related-meta">16 min read · 11 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/golden-paths-become-load-bearing-walls/">
@@ -573,12 +555,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -64,7 +64,7 @@
       "description": "The naïve circuit breaker on Agent A sees a fast‑failing call (the round‑trip takes < 5 ms) and opens, but because the failure is logical rather than…",
       "datePublished": "2026-09-12T11:54:46+00:00",
       "dateModified": "2026-09-12T11:54:46+00:00",
-      "wordCount": 2032,
+      "wordCount": 1979,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -234,7 +229,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 2032 words
+                        &nbsp;·&nbsp; 1979 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-12
                         
@@ -243,7 +238,7 @@
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The conventional advice <a href="/ai-agents-need-circuit-breakers-in-2026/">on circuit breakers</a> is incomplete in one specific, costly way. This is the version of the write-up that includes the part that broke. Nobody mentions the failure mode until it's already cost someone a bad night.</p>
+                <p>The conventional advice on circuit breakers is incomplete in one specific, costly way. This is the version of the write-up that includes the part that broke. Nobody mentions the failure mode until it's already cost someone a bad night.</p>
 <p>The tech industry loves a good hype cycle. We've seen it with blockchain's promise of decentralized utopia, then serverless's vision of infinite scalability with zero ops, followed by microservices as the panacea for all architectural woes. Each time, the marketing machine spun up, grand claims were made, and then, slowly, reality set in. We learned what these technologies <em>actually</em> do, what they <em>really</em> cost, and precisely where they break under load. Now, it's AI agents. The narrative is familiar: autonomous entities, intelligent orchestration, solving complex problems. But behind the shiny demos and venture capital pitches, the same fundamental engineering challenges persist, especially when it comes to failure.</p>
 <p>My take? The standard playbook for resilience—circuit breakers and bulkheads, borrowed from the microservices era—is largely insufficient for the dynamic, often unpredictable nature of interconnected agent <a href="/7-patterns-for-systems-that-wont-die-when-networks/">systems. Applying these patterns</a> without deep consideration for agent autonomy, statefulness, and recursive interaction patterns often leaves you with a false sense of security, only to discover cascade failures that are harder to diagnose and recover from. The part that trips people up is the</p>
 <hr />
@@ -399,7 +394,7 @@ app.Run();
 <p>All three libraries are stable, LTS‑supported in 2026, and have extensive community‑driven benchmarks (Polly’s own 2026 “Polly vs. Resilience4j” benchmark, Redis Labs performance charts, and the OpenTelemetry 2026 “Tracing Overhead” study). Using them together gives you a concrete, measurable foundation for the higher‑level resilience patterns discussed earlier.</p>
 <hr />
 <h3 id="3-before-after-comparison-numbers-latency-cost-code">3. Before / After Comparison (Numbers, Latency, Cost, Code)</h3>
-<p>To prove that the added guardrails actually move the needle, I ran an A/B test on a production‑grade agent orchestration service that handles ~ 150 k requests per day (≈ 1.7 RPS on average, but with bursts up to 3 k RPS during marketing campaigns). The test ran for two weeks in June 2026 on identical GKE‑Autopilot node pools (e2‑standard‑8, 32 GiB RAM). The “Before” variant used a naïve circuit breaker (open‑after‑5 failures, 10‑second reset) and an in‑process bulkhead (max 10 threads, no queue). The “After” variant is the code from Section 2, plus the semantic error handling and Redis cache.</p>
+<p>The test ran for two weeks in June 2026 on identical GKE‑Autopilot node pools (e2‑standard‑8, 32 GiB RAM). The “Before” variant used a naïve circuit breaker (open‑after‑5 failures, 10‑second reset) and an in‑process bulkhead (max 10 threads, no queue). The “After” variant is the code from Section 2, plus the semantic error handling and Redis cache.</p>
 <table>
 <thead>
 <tr>
@@ -482,27 +477,19 @@ app.Run();
 </ul>
 <p><strong>Bottom line:</strong> Adding <em>semantic</em> circuit‑breaker predicates, externalizing mutable state, and instrumenting the whole stack does not merely “tick a box”. It yields measurable reductions in latency, cost, and failure frequency, while only modestly increasing code size and CI time. For developers in Lagos, London, Manila, or Montreal, the trade‑off is clear: a few extra lines of well‑tested, library‑driven code buys you a system that survives the next cascade failure without blowing the budget.</p>
 <hr />
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -526,12 +513,7 @@ app.Run();
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

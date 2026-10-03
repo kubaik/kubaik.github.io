@@ -64,7 +64,7 @@
       "description": "Cut audit log storage 70% and query latency 90% with a dual-stream stack—Kafka 3.7, ClickHouse 23.11, S3 Parquet—while satisfying GDPR and SOC2 integrity…",
       "datePublished": "2026-08-17T12:51:36+00:00",
       "dateModified": "2026-08-17T12:51:36+00:00",
-      "wordCount": 2624,
+      "wordCount": 2638,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2624 words
+                        &nbsp;·&nbsp; 2638 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-17
                         
@@ -457,27 +452,20 @@ FORMAT JSONEachRow
 <p>Use a hash chain. Each event carries a SHA-256 hash of its payload plus the previous event’s hash. Store the <code>prev_hash</code> in ClickHouse alongside the event. Nightly, compute the hash of the entire batch for the last 24 hours and compare it to the stored <code>final_hash</code>. A mismatch indicates corruption or deletion. The entire verification script is under 100 lines of Python.</p>
 <p><strong>what kafka retention settings work for audit logs</strong></p>
 <p>Set <code>retention.ms</code> to 86400000 (24 hours) for the audit topic. This keeps only the last day’s events in Kafka; everything older moves to S3 Parquet via the cold pipeline. Do not set <code>retention.bytes</code>—it interacts poorly with partition splits. If you need to replay, use the S3 Parquet files as the source of truth instead of Kafka retention.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/audit-logs-ship-them-fast-keep-them-forever/">Audit logs: ship them fast, keep them forever</a></li>
+<li><a href="https://kubaik.github.io/audit-logs-compliance-vs-performance/">Audit logs: compliance vs performance</a></li>
+<li><a href="https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/">15 agents blew up our logs: why we pinned models + logs</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -526,12 +514,7 @@ FORMAT JSONEachRow
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

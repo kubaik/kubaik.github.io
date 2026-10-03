@@ -64,7 +64,7 @@
       "description": "AWS CloudWatch Synthetics journey tests slash 3am pager alerts 70% by testing the full user flow including M-Pesa and Flutterwave — with Terraform 1.5…",
       "datePublished": "2026-08-10T13:16:49+00:00",
       "dateModified": "2026-08-10T13:16:49+00:00",
-      "wordCount": 2265,
+      "wordCount": 2256,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2265 words
+                        &nbsp;·&nbsp; 2256 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-10
                         
@@ -532,7 +527,7 @@ terraform apply -auto-approve
 </tr>
 </tbody>
 </table>
-<p>Gotcha: the default CloudWatch Synthetics Node runtime includes a headless browser. That browser can hang for 30 s on a 4G-only connection if a third-party API times out. We set the canary timeout to 900 s and added a 10 s timeout on the M-Pesa call specifically:</p>
+<p>Gotcha: the default CloudWatch Synthetics Node runtime includes a headless browser. That browser can hang for 30 s on a 4G-only connection if a third-party API times out.</p>
 <pre><code class="language-javascript">const paymentOptions = {
   url: 'https://api.sandbox.m-pesa.com/v1/payment',
   headers: { 'Authorization': `Bearer ${process.env.MPESA_TOKEN}` },
@@ -582,7 +577,7 @@ npx jest journey.test.js
 </code></pre>
 <p>Expect all tests to pass before you push to S3.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>We deployed this canary on 2026-04-12 to a pipeline serving 12 k weekly users in Nigeria and Kenya. The table below shows the before/after impact over six weeks:</p>
+<p>The table below shows the before/after impact over six weeks:</p>
 <table>
 <thead>
 <tr>
@@ -685,27 +680,27 @@ Python runtimes (<code>syn-python-selenium-3.11</code>) exist, but they add ~2 s
 <li>Click “Create canary” and watch the first run in ~5 minutes</li>
 </ol>
 <p>If the canary fails immediately, check the “Screenshots” tab in the run details; it will show exactly which step timed out or returned 503. Fix that step first, redeploy the canary, and you’ve eliminated one class of 3am pages already.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
+<li><a href="https://kubaik.github.io/agents-create-incidents-at-2am/">Agents create incidents at 2am</a></li>
+<li><a href="https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/">Starlink in production: what changed in our stack</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+<li><a href="https://developer.flutterwave.com/docs">Flutterwave documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -754,12 +749,7 @@ Python runtimes (<code>syn-python-selenium-3.11</code>) exist, but they add ~2 s
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

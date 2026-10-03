@@ -64,7 +64,7 @@
       "description": "Literal cron job retries: why Python 3.11 agents hang on blocked sockets — add per-request timeouts, DNS timeouts, and async retries to cut agent hangs…",
       "datePublished": "2026-08-11T08:43:33+00:00",
       "dateModified": "2026-08-11T08:43:33+00:00",
-      "wordCount": 2628,
+      "wordCount": 2660,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2628 words
+                        &nbsp;·&nbsp; 2660 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-11
                         
@@ -442,27 +437,28 @@ No. Use different timeouts based on the endpoint’s SLA. For example, <code>/he
 A common default is 10 seconds total, split into 2 seconds connect and 8 seconds read. This covers 95% of internal service latencies in 2026, based on the Berlin cluster’s 2026 incident review. Adjust per service based on observed p95 latency.</p>
 <h2 id="action-step">Action step</h2>
 <p>Open your agent’s top-level HTTP client wrapper file (usually <code>clients/http.py</code> or <code>utils/network.py</code>) and check every method that calls <code>requests.get</code>, <code>aiohttp.get</code>, or Node’s <code>http.request</code>. For each call, add a concrete timeout value using the table in the Fix 3 section as a reference. Commit the change, push to the main branch, and run the synthetic load test with <code>toxiproxy</code> to confirm the agent aborts hangs within 10 seconds. This takes 15 minutes if your codebase already has the wrapper layer; if not, create the wrapper first and then apply the timeout.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-tracing-when-logs-lie-and-metrics-mislead/">Agent tracing: when logs lie and metrics mislead</a></li>
+<li><a href="https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
+<li><a href="https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/">Agent flooded our API with bad calls overnight</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -497,7 +493,7 @@ A common default is 10 seconds total, split into 2 seconds connect and 8 seconds
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
@@ -511,12 +507,7 @@ A common default is 10 seconds total, split into 2 seconds connect and 8 seconds
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

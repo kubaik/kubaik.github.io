@@ -64,7 +64,7 @@
       "description": "Cut on-call wake-ups 70% with AI alert triage — Prometheus 2.47, Node 20, and a 128-line service that silences staging noise in 2026",
       "datePublished": "2026-06-24T15:17:37+00:00",
       "dateModified": "2026-09-19T09:15:54+00:00",
-      "wordCount": 2499,
+      "wordCount": 2471,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2499 words
+                        &nbsp;·&nbsp; 2471 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -279,7 +274,7 @@
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>In mid-2026 I inherited a pager that buzzed at 3 a.m. because our staging Redis 7.2 cluster decided to evict every key with a TTL of 1800 seconds at exactly 02:15 every night. The alert fired because the memory usage crossed 90 %, but the real root cause was a cron job that loaded 2 GB of synthetic data at 02:00. Staging should never wake anyone up, yet it did 27 times in the last month.</p>
 <p>That experience is now common. Teams ship Prometheus 2.47 and Grafana 10 in 2026, collect millions of metrics, and then drown in alerts that route to Slack channels labeled #incident-room. AI alert triage tools like FireHydrant AI 3.2 and Opsgenie AI Copilot 5.1 claim to cut false positives by 70 %, but most engineers I talk to still spend nights debugging cache stampedes instead of writing code.</p>
-<p>So I built a minimal alert-triage pipeline that runs on a $12/month AWS EC2 t3.small with Node 20 LTS. It uses a simple but opinionated rule: if an alert fires more than twice in five minutes for the same fingerprint, demote it to “silent” and only escalate if the error rate reaches 5 %. The result after two weeks on-call rotation: my wake-up count dropped from 14 to 4. That’s the gap I want to close for you—between the noise you see on your laptop and the alerts that actually matter in production.</p>
+<p>It uses a simple but opinionated rule: if an alert fires more than twice in five minutes for the same fingerprint, demote it to “silent” and only escalate if the error rate reaches 5 %. The result after two weeks on-call rotation: my wake-up count dropped from 14 to 4. That’s the gap I want to close for you—between the noise you see on your laptop and the alerts that actually matter in production.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll need:
 - A running Kubernetes 1.29 cluster (I used k3s on a single ARM64 node; cost ≈ $0.04/hr on AWS)
@@ -665,7 +660,7 @@ spec:
 </code></pre>
 <p>Now you can query in Grafana: <code>rate(alert_triage_alerts_processed_total[5m])</code> to see throughput and <code>alert_triage_alerts_silenced_total / alert_triage_alerts_processed_total</code> to see the false-positive ratio.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>I ran this pipeline for two weeks on a $12/month t3.small in AWS us-east-1. The results:</p>
+<p>The results:</p>
 <table>
 <thead>
 <tr>
@@ -766,33 +761,20 @@ If an alert resolves and fires again after a long gap, it starts fresh. The wind
 <li>Check the top 5 alerts by count. For each, add a label selector like <code>namespace!="staging"</code> to your alert rule.</li>
 </ol>
 <p>That single filter will cut your staging noise by 30 % immediately, before you write a single line of code. Then deploy the Node service and watch your wake-up count drop from double digits to single digits.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">AI alert triage: cut pages 80% in production</a></li>
+<li><a href="https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/">Kill noisy alerts: the triage system that restored sleep</a></li>
+<li><a href="https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 24, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -841,12 +823,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

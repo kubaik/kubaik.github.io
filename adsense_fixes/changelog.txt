@@ -1,0 +1,86 @@
+CHANGELOG — AdSense quality cleanup, round 2
+Date: 2026-10-03   Scope: kubaik/kubaik.github.io pipeline + corpus (473 posts audited)
+
+WHAT CHANGED SINCE ROUND 1
+  * Final DELETE count is 86 (not 88): the entity allow-list now knows real tools (PyTorch, SageMaker, LangSmith,
+    Pinecone, ...), so 2 posts that were only flagged for "unverifiable products" moved to IMPROVE.
+  * 387 IMPROVE. Lists: triage_report/delete.txt (path + reason), improve.txt, verdicts.csv.
+
+NEW FILES (copy to repo root)
+  delete_posts.py     Deletes every DELETE-verdict post. Dry run by default; --confirm to act; --max N per run;
+                      --slug X for one post. Backs up to .triage_backups/, removes docs/<slug>/ and its OG images,
+                      records docs/_removed_posts.json, REPAIRS links in remaining posts that pointed at deleted
+                      posts, and writes blocked_topics.json so the topic can never be regenerated. Idempotent.
+  improve_posts.py    LLM rewrite of IMPROVE posts using the pipeline's existing provider chain (no new secrets).
+                      Rewrites to remove first-person/invented evidence/unverifiable products, keeps correct code.
+                      Output is VALIDATED (fabrication density, entity gate, min length, code retained, balanced
+                      fences, no H1, no links, title/meta sanity); failures are retried with the reasons fed back;
+                      if still failing the ORIGINAL IS KEPT and logged to improve_report.json. Backs up
+                      post.json.pre_llm, stamps llm_improved_at (resume-safe), rewrites index.md, then runs
+                      post_enhancer.py. Bounded: --limit N (default 10), worst offenders first.
+  quality_gate.py     Single source of truth used by generation, delete and improve: blocklist (blocked_topics.json),
+                      topic gate (first-person, numeric-outcome and incident-narrative topics), post gate
+                      (fabrication density + deleted-title match).
+  entity_gate.py      Flags versioned products that cannot be verified (offline allow-list; PyPI/npm online check).
+  triage.py           Report-only verdicts. (--apply-delete removed: it did not write the blocklist.)
+  post_enhancer.py    Code-only IMPROVE pass: strips invented claims, replaces the false legacy footer, adds
+                      related-reading + official-docs links, repairs dead internal links. Idempotent.
+
+CHANGED FILES (full files supplied)
+  blog_system.py
+    - ROOT CAUSE FIXED: the generation prompt demanded "at least 3 concrete numbers (benchmarks, cost savings,
+      error rates, salary ranges)", version-pinned tools, a table, an FAQ and EXACT headings in every post, so the
+      model had to invent evidence. Replaced with grounding rules: no invented products/benchmarks/surveys, numbers
+      only if documented, shown from assumptions, or labelled illustrative; no first-hand claims; structure follows
+      the topic; headings are a SUGGESTED outline; FAQ/table/code only where they help.
+    - Removed template headings that forced fake evidence ("Performance numbers from a live system", "Real results
+      from running this", "Evidence and examples from real systems", "Resources that helped", ...).
+    - Title-shape examples that modelled fabricated outcomes ("3 days lost to one missing depends_on", "Cut AWS costs
+      40%") replaced with mechanism-first examples.
+    - New post gates inside generate_blog_post(): unverifiable-product gate, fabrication-density gate, title-matches-
+      deleted-post gate. A failing draft triggers a topic switch / retry exactly like the existing citation gate.
+    - Blocklist: filter_safe_topics() now also drops claim-style topics and anything matching blocked_topics.json;
+      PreFlightIndex indexes deleted posts so TF-IDF pre-flight blocks them; LLM topic-rescue output is validated.
+    - Topic recycling fixed: when every topic duplicates an existing post the run now exits cleanly
+      (TopicExhaustedError) instead of resetting to the UNFILTERED topic list.
+    - New: `python blog_system.py topics expand [N]` asks the LLM for fresh topics, filters them through every gate
+      (claim-style, blocklist, policy, duplicate), and appends them to config.yaml — supply for thousands of posts.
+    - Footer template and intro lines no longer claim production experience or editorial review; "Last reviewed"
+      refresh replaced by "Last generated".
+  config.yaml          301 -> 170 topics: removed 93 first-person/numeric-claim topics, 29 near-duplicates and 9
+                       incident-narrative topics. Added adsense_ads_enabled: false, adsense_loader_page_types,
+                       ads_min_words, duplicate_similarity_threshold.
+  seo_optimizer.py     AdSense loader only on home/article pages; manual ad units only on 1,200+ word articles and
+                       only when adsense_ads_enabled is true; social links no longer doubled (full URL handling).
+  static_site_generator.py  Passes page_type/word_count to the ad/meta helpers; deletes orphan sitemap-N.xml files
+                       (listed ~1,200 dead URLs).
+  velocity_controller.py  Caps restored to 1/2/2/2 per day with a hard ceiling of 3 and a clamped env override
+                       (repo main had drifted to mature=25 / scaled=4).
+  .github/workflows/blog-automation.yml  New bounded steps: triage -> delete_posts -> improve_posts -> post_enhancer
+                       before the rebuild; new dispatch inputs triage_max_deletions (10) and improve_limit (5).
+
+HOW TO RUN (one-time cleanup)
+  python triage.py --docs docs --out triage_report
+  python delete_posts.py                       # review the dry run
+  python delete_posts.py --confirm
+  python improve_posts.py --confirm --limit 10 # repeat (resume-safe) until "0 post(s)"; needs one LLM key
+  python post_enhancer.py --docs docs --verdicts triage_report/verdicts.csv --confirm
+  python blog_system.py build && git add -A && git commit -m "quality cleanup"
+  Or run the workflow manually with triage_max_deletions=100 and improve_limit=0..N.
+
+VERIFIED (on a copy of the repo, offline)
+  - Triage -> delete -> triage -> enhance -> build: 0 broken internal links, sitemap has no dead URLs.
+  - delete_posts.py is idempotent; blocklist of 86 entries blocks matching topics in the real picker.
+  - Generation loop with a stubbed LLM: a fabricated draft was rejected by the new gate and a clean draft accepted.
+  - improve_posts.py with a stubbed LLM: bad-format output rejected and retried, valid output written, footer and
+    related links appended, resume skips already-improved posts.
+
+NOT VERIFIED / LIMITS
+  - improve_posts.py was NOT run against a real LLM (no API keys in the test environment). Expect some rejections;
+    those posts stay untouched and are listed in improve_report.json — re-triage and delete them with
+    delete_posts.py --slug <slug>.
+  - Online product verification (PyPI/npm), link checks and the GitHub Actions run itself were not exercised.
+  - The delete rule is a heuristic. Read triage_report/delete.txt before --confirm; deletions are backed up.
+  - monetization_manager.py, adsense_compliance_audit.py and adsense_credibility_cleanup.py were not provided and
+    were not reviewed. AdSense's own policy-violation reason (Policy center) was not visible in the screenshots.
+  - Posts per day: at 2/day the site reaches ~730 posts/year; publishing faster is itself a spam signal.

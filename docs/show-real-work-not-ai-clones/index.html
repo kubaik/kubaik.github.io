@@ -64,8 +64,8 @@
       "description": "Build a portfolio that beats AI clones — show constraints, resilience code, and failure metrics.",
       "datePublished": "2026-06-29T19:28:14+00:00",
       "dateModified": "2026-09-26T04:10:51+00:00",
-      "wordCount": 3178,
-      "timeRequired": "PT16M",
+      "wordCount": 3086,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3178 words
+                        15 min read
+                        &nbsp;·&nbsp; 3086 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-26
                         
@@ -277,7 +272,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
-<p>In early 2026, our Lagos team hired 12 engineers for our fintech product used by 3 million users across Nigeria and Ghana. Resumes showed glossy AI-generated projects: a "M-Pesa clone with sentiment analysis", a "Flutterwave dashboard using LangChain", a "Stripe-for-Africa API with AI fraud detection". Every candidate claimed to ship AI features, but none could explain how their "AI-powered payment routing" actually worked under real network conditions.</p>
+<p>Resumes showed glossy AI-generated projects: a "M-Pesa clone with sentiment analysis", a "Flutterwave dashboard using LangChain", a "Stripe-for-Africa API with AI fraud detection". Every candidate claimed to ship AI features, but none could explain how their "AI-powered payment routing" actually worked under real network conditions.</p>
 <p>Our real problem wasn’t finding AI skills — it was finding engineers who could build reliable systems on unreliable networks. We needed proof they could ship under constraints like:</p>
 <ul>
 <li>2G/3G connections with 500ms–2s latency spikes</li>
@@ -300,8 +295,9 @@
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>We pivoted from “show me your AI project” to “show me a system you built that works when things break”. We focused on three artifacts:</p>
 <ol>
-<li><strong>A concrete problem statement with real constraints</strong></li>
-<li>Not “I built a chatbot”, but “I built a USSD menu for farmers in rural Kenya that works on 2G with 1.5s latency”</li>
+<li>
+<p><strong>A concrete problem statement with real constraints</strong></p>
+</li>
 <li>
 <p>Must include network conditions, payment methods, or device specs</p>
 </li>
@@ -476,9 +472,9 @@ def disburse(amount: int, recipient: str):
 <p>Example from a real portfolio (with metrics redacted for privacy):</p>
 <blockquote>
 <p><strong>Post-mortem: M-Pesa STK Push Avalanche on Safaricom, Feb 14 2026</strong></p>
-<p>Problem: During Valentine’s Day promotions, our USSD-to-M-Pesa flow received 4x normal traffic. Safaricom’s API started returning 503s at 90 requests/minute. Our system had no circuit breaker and used a fixed 2s timeout. &gt;
+<p>Problem: During Valentine’s Day promotions, our USSD-to-M-Pesa flow received 4x normal traffic. Safaricom’s API started returning 503s at 90 requests/minute. &gt;
 Detection: Prometheus alert fired at 14:37: <code>mpesa_stk_push_latency_seconds{quantile="0.95"} &gt; 3</code>. Within 60s, user reports flooded Slack: “M-Pesa not sending.”</p>
-<p>Root cause: We assumed Safaricom’s SLA of 2s response time was reliable. It wasn’t. Their 503s cascaded: our retry logic (3 attempts, 200ms delay) hammered them into oblivion. &gt;
+<p>It wasn’t. Their 503s cascaded: our retry logic (3 attempts, 200ms delay) hammered them into oblivion. &gt;
 Fix: Deployed gobreaker v0.6 with 5 failures/30s window, 15s timeout. Added exponential backoff with jitter (base 500ms, max 8s). Queued failed STK pushes for SMS fallback. &gt;
 Result:
 - Error rate dropped from 18% to 2.3% within 10 minutes
@@ -493,7 +489,7 @@ Result:
 <ol>
 <li>
 <p><strong>“The MTN DNS Black Hole”</strong>
-   In September 2026, MTN Nigeria’s DNS resolvers in Lagos and Port Harcourt started intermittently resolving <code>api.mtn.ng</code> to <code>192.168.1.1</code> during handovers between 2G and 3G. Not all users were affected — only those on specific towers during network merges. Our retry logic with fixed timeouts failed because the DNS error resolved in 1.2s, but the actual API call timed out at 2s. We fixed it by adding a DNS health check (dig +short +time=1 +tries=1) before every critical API call and falling back to Google’s DNS (8.8.8.8) when <code>192.168.1.1</code> appeared. This added 150ms to cold starts but saved 40% of failed transactions.</p>
+   In September 2026, MTN Nigeria’s DNS resolvers in Lagos and Port Harcourt started intermittently resolving <code>api.mtn.ng</code> to <code>192.168.1.1</code> during handovers between 2G and 3G. Not all users were affected — only those on specific towers during network merges. We fixed it by adding a DNS health check (dig +short +time=1 +tries=1) before every critical API call and falling back to Google’s DNS (8.8.8.8) when <code>192.168.1.1</code> appeared. This added 150ms to cold starts but saved 40% of failed transactions.</p>
 </li>
 <li>
 <p><strong>“The Airtel 404 Loop”</strong>
@@ -817,33 +813,20 @@ def route_payment(amount, recipient):
 <hr />
 <h3 id="candidate-b-reliable-m-pesa-disbursement-for-rural-cooperatives">Candidate B: “Reliable M-Pesa Disbursement for Rural Cooperatives”</h3>
 <p><strong>Portfolio claim:</strong> “Built a system that disburses 12,000 M-Pesa payments/day to dairy farmers in rural Kenya,</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/hire-for-agents-not-autocomplete/">Hire for agents, not autocomplete</a></li>
+<li><a href="https://kubaik.github.io/portfolio-that-hires-show-constraints-not-code/">Portfolio that hires: show constraints, not code</a></li>
+<li><a href="https://kubaik.github.io/ai-sales-cycles-why-dev-tools-now-need-3-demos/">AI sales cycles: why dev tools now need 3 demos</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 29, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -892,12 +875,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -64,7 +64,7 @@
       "description": "Price your remote salary in 4 steps using Numbeo COL and volatility buffers — exact formulas, Google Sheets template, and Python 3.11 script included.",
       "datePublished": "2026-06-08T07:28:13+00:00",
       "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2674,
+      "wordCount": 2571,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -261,7 +256,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2674 words
+                        &nbsp;·&nbsp; 2571 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -272,8 +267,8 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>Three years ago I took my first fully-remote job from Bogotá to a U.S. fintech in Austin. My monthly budget in Colombia was $1,200; their offer was $1,900 gross. I said yes. Six months later I was onboarding to the U.S. 401(k) and realized I had just priced myself 8 % below the local market for mid-level engineers in Texas. I had no idea how to translate cost-of-living or local salary bands into a number that felt fair to both sides.</p>
-<p>The worst part was that every public source I found either quoted U.S. numbers in isolation or lumped Latin America into a single bucket. I needed a repeatable way to turn “I live in X city with Y expenses” into “I need Z USD to cover my costs and still save 20 %”.</p>
+<p>Three years ago I took my first fully-remote job from Bogotá to a U.S. fintech in Austin. My monthly budget in Colombia was $1,200; their offer was $1,900 gross. I said yes. Six months later I was onboarding to the U.S. I had no idea how to translate cost-of-living or local salary bands into a number that felt fair to both sides.</p>
+<p>The worst part was that every public source I found either quoted U.S. numbers in isolation or lumped Latin America into a single bucket.</p>
 <p>Most articles stop at “use cost-of-living multipliers” without giving you the raw data or the exact math so you can defend your number in Slack.</p>
 <p>This post is the calculator I wish existed. It combines:
 - Local salary bands for 12 Latin American cities (median + 75th percentile)
@@ -453,7 +448,7 @@ pip install -r requirements.txt
 </table>
 <p>All USD numbers assume a 4,200 COP/USD spot. Volatility buffer already baked in.</p>
 <h3 id="exchange-rate-buffer-sanity-check">Exchange-rate buffer sanity check</h3>
-<p>I once accepted a $14,000 offer from a U.S. company while the spot was 3,800 COP/USD. By the time I onboarded three months later, the rate was 4,350. My real purchasing power dropped 12 %. The buffer of 12 % I baked into the ask covered it exactly. If I hadn’t added the buffer, I would have been short $1,300 annually.</p>
+<p>company while the spot was 3,800 COP/USD. By the time I onboarded three months later, the rate was 4,350. If I hadn’t added the buffer, I would have been short $1,300 annually.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <h3 id="edge-case-1-1099-vs-w2-vs-pe">Edge case 1: 1099 vs W2 vs PE</h3>
 <p>If the client wants to pay you as a 1099 contractor instead of a W2 employee, you need to gross-up for self-employment tax (15.3 % in the U.S. in 2026) plus any local VAT or IVA. In the sheet, add a column:</p>
@@ -533,31 +528,12 @@ Clone the repo, run <code>pip install -r requirements.txt</code>, and execute <c
 <p>Do the math today, export the number, and attach it to your next counter-offer. The single most effective move is to send a hard USD ask instead of a vague “market rate” reply.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 08, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -592,7 +568,7 @@ every article before it goes live.</p>
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">
@@ -606,12 +582,7 @@ every article before it goes live.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

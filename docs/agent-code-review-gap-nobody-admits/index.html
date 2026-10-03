@@ -64,7 +64,7 @@
       "description": "Catch agent-generated code failures before merge — chaos testing, shadow traffic, and invariant checks that stop the $17k rollbacks most teams ignore",
       "datePublished": "2026-08-27T08:16:38+00:00",
       "dateModified": "2026-08-27T08:16:38+00:00",
-      "wordCount": 3477,
+      "wordCount": 3394,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -262,7 +257,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3477 words
+                        &nbsp;·&nbsp; 3394 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-27
                         
@@ -274,13 +269,13 @@
                 <p>Most frontend performance guides assume a clean environment and a patient timeline. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In late 2026, our team shipped an internal agent platform that turned natural-language prompts into runnable code and automated workflows. By February 2026 we were running 3 200 agent-generated pull requests a week across 48 microservices. The promise was velocity: engineers could describe a new endpoint and, within minutes, get a PR that included the API route, OpenAPI schema, unit tests, and a Terraform module to deploy it.</p>
-<p>The first 60 days were euphoric. Cycle time from prompt to merged PR fell from 3 days to 30 minutes. But by week 8 the wheels started falling off. A routine refactor of our billing service produced a PR that compiled, passed linters, and even got 90 % unit-test coverage. The human reviewer approved it. Two hours later, the staging environment started throwing <code>DuplicateKeyError</code> exceptions every time a customer upgraded their plan. The root cause: the agent had reused an existing database index on <code>(user_id, subscription_id)</code> but added a new partial index on <code>(user_id)</code> for the new endpoint. PostgreSQL silently allowed the duplicate index, while the ORM’s <code>ON CONFLICT DO NOTHING</code> clause silently ignored the unique-violation errors. That incident cost us $17 000 in overbilling and 18 engineer-hours to roll back.</p>
+<p>The first 60 days were euphoric. Cycle time from prompt to merged PR fell from 3 days to 30 minutes. But by week 8 the wheels started falling off. The human reviewer approved it. Two hours later, the staging environment started throwing <code>DuplicateKeyError</code> exceptions every time a customer upgraded their plan. The root cause: the agent had reused an existing database index on <code>(user_id, subscription_id)</code> but added a new partial index on <code>(user_id)</code> for the new endpoint. PostgreSQL silently allowed the duplicate index, while the ORM’s <code>ON CONFLICT DO NOTHING</code> clause silently ignored the unique-violation errors. That incident cost us $17 000 in overbilling and 18 engineer-hours to roll back.</p>
 <p>The real problem wasn’t the agent’s output; it was <strong>the gap between code that runs and code that is safe to merge</strong>. Static checks, linters, and even 90 % unit-test coverage were giving us false positives. We needed a pipeline that caught that specific failure mode before the PR ever hit main.</p>
 <p>The part that trips people up is the <strong>false-positive paradox</strong>: the exact same tooling that makes CI feel green is also the tooling that masks the edge cases that blow up in production. That’s what this post actually covers.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first attempt was the obvious one: beef up the unit-test suite. We told the agent to generate tests for every endpoint, every possible error code, and every retry path. By February we had 4 200 additional test files—roughly 180 000 lines of Jest and pytest code. The tests passed, the linters passed, the build pipeline passed. The failure still happened.</p>
 <p>The second attempt targeted linting. We added ESLint with the <code>airbnb</code> config, then switched to TypeScript strict mode, then added <code>eslint-plugin-sonarjs</code> with 72 rules enabled. The agent dutifully produced code that satisfied every rule. The failure still happened.</p>
-<p>The third attempt was static analysis. We rolled out Semgrep with a custom ruleset that included the OWASP Top 10 and every CVE we had seen in the last 12 months. The agent produced code that passed every scan. The failure still happened.</p>
+<p>The third attempt was static analysis. The agent produced code that passed every scan. The failure still happened.</p>
 <p>What we missed every time was <strong>production-like state</strong>. Our unit tests ran against an in-memory SQLite instance. Our static analysis never saw the actual data distribution in PostgreSQL. Our linting never touched the side-effects that happen when two services race to update the same row.</p>
 <p>A common trap here is assuming that <strong>coverage = correctness</strong>. Teams running into this usually see their test suite report 90 %+ coverage while the same suite silently ignores race conditions, unique-constraint violations, and cache stampedes. The failure mode shows up when the agent reuses an existing index for a new query—something the unit tests never exercise because they run in a fresh, empty database every time.</p>
 <p>We also fell into the <strong>determinism trap</strong>: we assumed that if the agent produced deterministic code, the runtime behavior would be deterministic too. That assumption breaks the moment the agent starts writing code that depends on database state, clock skew, or external API latency. A typical example is caching strategies that hard-code a TTL of 30 seconds, but never account for clock drift between containers running in different availability zones. The result is a 30 % cache-hit ratio in staging and 90 % in prod—until the first cache stampede wipes out the database.</p>
@@ -346,7 +341,7 @@ invariant(&quot;unique-email-after-patch&quot;, async (ctx) =&gt; {
 - 3 <code>m6g.xlarge</code> nodes for the application workloads
 - 1 <code>db.t4g.large</code> PostgreSQL instance with 2 read replicas (to simulate prod lag)
 - 1 Redis 7.2 cluster (cluster mode enabled) for caching</p>
-<p>Cost breakdown for the staging environment (24/7): $1 240 per month. The pipeline itself runs on Fargate spot instances and costs roughly $800 per month when we process 3 200 PRs a week. The total validation cost is 18 % of our CI budget, but it prevents the $17 000 incidents we saw earlier.</p>
+<p>Cost breakdown for the staging environment (24/7): $1 240 per month. The pipeline itself runs on Fargate spot instances and costs roughly $800 per month when we process 3 200 PRs a week.</p>
 <h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
 <table>
 <thead>
@@ -416,7 +411,7 @@ invariant(&quot;unique-email-after-patch&quot;, async (ctx) =&gt; {
 <p>The principle that emerged is: <strong>validate at the boundary, not at the source</strong>. Instead of trying to make the agent write perfect code (which is impossible), make the pipeline that consumes the code stress-test the code against production-like conditions. The agent’s job is to generate a starting point; the pipeline’s job is to prove that starting point is safe to merge.</p>
 <p>This flips the traditional code-review model on its head. In the old world, reviewers were the last line of defense. In the new world, the pipeline is the first line of defense, and reviewers are the final polish. The shift is uncomfortable for teams used to reviewing every line, but it’s necessary when the agent can generate thousands of lines of code a day.</p>
 <p>Another principle is <strong>determinism over randomness</strong>. Property-based tests are powerful, but only if they are reproducible. Use fixed seeds and deterministic data generators so you can rerun the exact same test sequence when a failure occurs. The moment you allow fully random inputs, you lose the ability to debug the failure.</p>
-<p>Finally, <strong>measure the cost of false positives</strong>. The $17 000 incident was a false positive: our unit tests passed, our linters passed, but the code still failed in production. Every team should track how many PRs that passed all static checks later caused a production incident. That metric is the single best indicator of whether your validation pipeline is working.</p>
+<p>Finally, <strong>measure the cost of false positives</strong>. Every team should track how many PRs that passed all static checks later caused a production incident. That metric is the single best indicator of whether your validation pipeline is working.</p>
 <h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
 <p>Start by answering three questions:</p>
 <ol>
@@ -458,27 +453,20 @@ We tag any PR generated from an ambiguous prompt with a <code>prompt-quality:low
 For most web services, a staging cluster with 3 worker nodes, 1 PostgreSQL instance with 2 read replicas, and a Redis Cluster with 3 shards is sufficient. The key is to mirror prod’s concurrency profile and data distribution, not just its version. If your prod has 95th percentile latency of 150 ms, staging should aim for 120–180 ms under load.</p>
 <h2 id="next-step">Next step</h2>
 <p>Open your staging environment’s Terraform module and change the PostgreSQL instance type from <code>db.t4g.medium</code> to <code>db.t4g.large</code>. Then run a load test that mimics 20 % of prod traffic. If your average latency under load is more than 150 ms, your staging environment isn’t production-like enough to catch the edge cases that matter.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/who-owns-ai-generated-code/">Who owns AI-generated code?</a></li>
+<li><a href="https://kubaik.github.io/idp-for-ai-2026-stack-evolution/">IDP for AI: 2026 stack evolution</a></li>
+<li><a href="https://kubaik.github.io/drop-checklists-ai-code-reviews-that-scale/">Drop checklists: AI code reviews that scale</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -527,12 +515,7 @@ For most web services, a staging cluster with 3 worker nodes, 1 PostgreSQL insta
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

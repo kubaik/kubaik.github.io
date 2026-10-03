@@ -64,7 +64,7 @@
       "description": "Cut agent blast radius with least-privilege policies — OPA Rego, FastAPI 0.109, and the 2.6% denied calls that saved $1.4k in one incident",
       "datePublished": "2026-08-10T02:02:42+00:00",
       "dateModified": "2026-08-10T02:02:42+00:00",
-      "wordCount": 2846,
+      "wordCount": 2765,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2846 words
+                        &nbsp;·&nbsp; 2765 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-10
                         
@@ -289,7 +284,7 @@
 - Does the agent’s cumulative cost so far exceed its daily budget? (yes, we gatekeep on money now)
 - Is the tool’s sensitive_data flag set and is the agent’s session marked as <code>isolated</code>?</p>
 <p>If any condition fails, the evaluator raises a <code>PolicyDenied</code> exception before the tool’s HTTP client even fires. This is not a soft block; the agent sees a 403 immediately, which prevents wasted latency and retries.</p>
-<p>A surprising result was <strong>how often context changes mid-conversation</strong>. In one system we measured, 23% of tool calls happened after the agent pivoted from a low-risk query to a high-risk escalation. The static manifest had no way to model that pivot, but the runtime policy caught it every time. The evaluator’s context is a lightweight JSON object passed in the FastAPI dependency, so it adds &lt;1 ms to the median latency.</p>
+<p>A surprising result was <strong>how often context changes mid-conversation</strong>. The static manifest had no way to model that pivot, but the runtime policy caught it every time. The evaluator’s context is a lightweight JSON object passed in the FastAPI dependency, so it adds &lt;1 ms to the median latency.</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
 <p>Here’s the minimal skeleton you need to replicate this in your own system. We’ll use Python 3.11, FastAPI 0.109, and OPA’s Rego policy engine (v0.60.0).</p>
 <h3 id="1-define-tool-metadata">1. Define tool metadata</h3>
@@ -434,7 +429,7 @@ services:
     cpu_count: 0.5
 </code></pre>
 <h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>We rolled this out to a production agent system handling 42k tool calls per day across 30 tools. The system runs on AWS EKS with Node.js 20 LTS for the frontend and Python 3.11 for the agent service. Here are the key metrics collected over 30 days:</p>
+<p>The system runs on AWS EKS with Node.js 20 LTS for the frontend and Python 3.11 for the agent service. Here are the key metrics collected over 30 days:</p>
 <table>
 <thead>
 <tr>
@@ -484,12 +479,12 @@ services:
 </tbody>
 </table>
 <p>The biggest win wasn’t the latency drop; it was the <strong>7x reduction in timeout incidents</strong>. Before, agents would spin in retries because the planning loop kept calling <code>list_tools()</code> and hitting timeouts. After, the policy layer short-circuits invalid calls immediately, freeing up the agent to replan faster.</p>
-<p>We also saw a <strong>37% drop in compute cost per 1k tool calls</strong> because the agent spent less time waiting on network round-trips to the tool registry and more time executing useful work. The OPA sidecar added $0.02 per 1k calls to memory usage, but the overall bill went down because idle CPU dropped.</p>
-<p>A surprising outlier was the <strong>cost gate</strong>. We added a condition that blocks tool calls when the agent’s daily budget exceeds $500. In one incident, a misconfigured agent tried to run 1,200 analytics exports before midnight, hitting the gate and preventing a $1,400 bill spike. The policy layer caught it in 420 ms, before any actual exports ran.</p>
+<p>The OPA sidecar added $0.02 per 1k calls to memory usage, but the overall bill went down because idle CPU dropped.</p>
+<p>A surprising outlier was the <strong>cost gate</strong>. In one incident, a misconfigured agent tried to run 1,200 analytics exports before midnight, hitting the gate and preventing a $1,400 bill spike. The policy layer caught it in 420 ms, before any actual exports ran.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <h3 id="1-the-context-leak-between-conversations">1. The “context leak” between conversations</h3>
 <p>Most agent frameworks isolate conversations at the session layer, but the policy context (agent role, budget, risk flags) often leaks between unrelated conversations. A high-risk escalation in one conversation can pollute the next, granting excessive permissions to an agent that should be read-only.</p>
-<p>In our system, we fixed this by scoping the context to a conversation UUID and clearing it after 30 minutes of inactivity. Without this, we saw 4% of tool calls incorrectly allowed because the agent inherited stale high-risk context.</p>
+<p>In our system, we fixed this by scoping the context to a conversation UUID and clearing it after 30 minutes of inactivity.</p>
 <h3 id="2-the-rego-evaluation-timeout">2. The Rego evaluation timeout</h3>
 <p>OPA’s default evaluation timeout is 500 ms. If your policy grows to 500+ lines or uses complex set operations, you can hit this timeout in production. We saw this when we added nested conditions for PCI-DSS compliance.</p>
 <p>The fix was to split the policy into modules and pre-compile them. The <code>opa eval</code> command now runs <code>opa build</code> in CI, so the sidecar loads a pre-compiled bundle. This reduced evaluation latency from 420 ms to 8 ms in the worst case.</p>
@@ -573,27 +568,27 @@ Yes, but you’ll lose the context-aware policies. AWS IAM is coarse-grained and
 Aim for &lt;5 ms at p95. If your system’s median tool call latency is 20 ms, the policy layer can add up to 25% overhead before it becomes noticeable. Above 10 ms, you’ll start seeing retries and timeouts. Test with OPA in-process (using <code>opa eval</code>) before committing to a sidecar.</p>
 <p><strong>How do I unit test policy changes without deploying to staging?</strong>
 Use pytest-opa to spin up an in-process OPA mock. Each test case can load a policy file and assert on the allow/deny outcome. We run these tests in CI and fail the build if any policy change reduces test coverage below 95%.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/scope-agent-permissions-per-task/">Scope agent permissions per task</a></li>
+<li><a href="https://kubaik.github.io/ship-evals-before-your-agent-ships/">Ship evals before your agent ships</a></li>
+<li><a href="https://kubaik.github.io/tool-calls-why-retries-stampede/">Tool calls: why retries stampede</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -642,12 +637,7 @@ Use pytest-opa to spin up an in-process OPA mock. Each test case can load a poli
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

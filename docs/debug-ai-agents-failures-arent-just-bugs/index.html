@@ -64,8 +64,8 @@
       "description": "Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.",
       "datePublished": "2026-07-01T12:23:14+00:00",
       "dateModified": "2026-09-17T04:09:37+00:00",
-      "wordCount": 2926,
-      "timeRequired": "PT15M",
+      "wordCount": 2855,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -261,8 +256,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2926 words
+                        14 min read
+                        &nbsp;·&nbsp; 2855 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-17
                         
@@ -311,7 +306,7 @@ lessons:
 </code></pre>
 <p>The format shines when:
 - Your team already uses structured incident formats (e.g., Google’s CRE or Atlassian’s incident templates). - You need sign-off from legal or compliance teams that demand deterministic evidence. - You’re debugging prompt drift in multi-turn conversations where the failure only appears after 3–4 exchanges.</p>
-<p>We use this for customer-facing agents in Brazil where legal exposure is high. The YAML becomes a living artifact: every new incident adds a regression test, and we’ve reduced repeat incidents by 42% in 6 months.</p>
+<p>We use this for customer-facing agents in Brazil where legal exposure is high.</p>
 <p>Downsides are real:
 - Writing the narrative takes time—often 3–4 hours for a medium incident. - It assumes you can reproduce the failure context, which isn’t always possible with stochastic models. - Tool-use side effects (e.g., a payment API call) aren’t always captured unless you explicitly instrument them.</p>
 <p>I once missed a critical tool-use failure because the agent’s API call went to a staging endpoint in production—no alert fired because the staging key had a wildcard policy. The structured format forced me to add endpoint-level telemetry, but it took me a week to realize the gap existed.</p>
@@ -388,7 +383,7 @@ lessons:
 </tr>
 </tbody>
 </table>
-<p>I ran a 6-month pilot across two agent teams (Brazil and Colombia) with 14 incidents total. The LLM graph approach consistently delivered faster resolution, but the structured narratives were more reproducible—meaning we could rerun the investigation weeks later and get the same result.</p>
+<p>The LLM graph approach consistently delivered faster resolution, but the structured narratives were more reproducible—meaning we could rerun the investigation weeks later and get the same result.</p>
 <p>The real bottleneck for narratives is the writing step. Engineers resist documenting every assumption, especially when the failure involves stochastic model behavior. The LLM graphs bypass that resistance by automating the synthesis, but they introduce new risks: overconfidence in hallucinated edges and underconfidence in real but subtle changes (e.g., a 0.02 drop in embedding similarity).</p>
 <p>Surprisingly, both approaches struggled with tool-use side effects. In one case, an agent’s API call to <code>/payment/refund</code> succeeded but the refund wasn’t actually issued—our observability stack didn’t capture the idempotency key, so the postmortem missed the root cause entirely. That incident led us to add schema validation for tool outputs using <strong>Pydantic 2.7</strong> and enforce idempotency keys in all tool calls.</p>
 <hr />
@@ -442,7 +437,7 @@ lessons:
 </table>
 <p>We run about 2 incidents per month across our agent fleet. The LLM graphs cost us an extra $11/month in compute, but saved us ~3.4 engineering hours per incident. The structured narratives cost nothing in compute but ate more human time.</p>
 <p>The hidden cost is regression tests. Option A’s tests are simple: pin embedding models, validate tool schemas. Option B requires maintaining golden datasets for embedding drift detection and schema validation, which adds complexity.</p>
-<p>Each graph JSON is ~3KB, but with 14 incidents and 30-day retention, that’s 42KB/month—trivial, but multiplied by 5 teams it adds up. We archived old graphs to S3 Glacier after 90 days, cutting storage by 78%.</p>
+<p>Each graph JSON is ~3KB, but with 14 incidents and 30-day retention, that’s 42KB/month—trivial, but multiplied by 5 teams it adds up.</p>
 <hr />
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
 <p>I pick the approach based on three questions:</p>
@@ -507,7 +502,7 @@ lessons:
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p><strong>Use Option B (LLM-assisted root cause graphs) when:</strong>
 - Your agent uses tools with side effects (payments, refunds, inventory updates). - You have OpenTelemetry tracing (1.32+) and conversation snapshots available. - Your team includes ML engineers who can debug LLM outputs and confidence scores.</p>
-<p>We cut our mean time to resolution by 61% after switching from Option A to Option B for tool-use-heavy agents. The graphs aren’t perfect, but they’re better than manual narrative writing for complex chains.</p>
+<p>The graphs aren’t perfect, but they’re better than manual narrative writing for complex chains.</p>
 <p><strong>Use Option A (structured failure narratives) when:</strong>
 - Legal or compliance teams must sign off on the postmortem. - Your agent is simple (no tools, short conversations). - You lack OpenTelemetry instrumentation or conversation snapshots.</p>
 <p>We still use Option A for our simplest agent (a FAQ bot in Mexico) because the setup friction for Option B isn’t worth the marginal gain.</p>
@@ -535,33 +530,20 @@ Open your agent’s OpenTelemetry traces and look for the last incident. If you 
 <p><strong>What’s the biggest blind spot in both approaches?</strong></p>
 <p>Tool-use side effects outside your instrumentation. In one incident, an agent called a staging endpoint in production because the staging API key had a wildcard policy. Our traces showed the call succeeded, but the staging endpoint didn’t issue the refund—it just returned a 200 OK. We missed the failure until a user complained. The fix was adding endpoint-level telemetry and enforcing environment-specific API keys. Neither Option A nor B can catch this if your instrumentation doesn’t cover the endpoint.</p>
 <hr />
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-the-three-surprises/">AI agent postmortems: the three surprises</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/">AI agent postmortem: human loop vs blind replay</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 01, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -590,7 +572,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-agent-postmortems-the-three-surprises/">
                         <h3>AI agent postmortems: the three surprises</h3>
                         <p>Catch AI agent failures 60 % faster with shadowing vs logging — real QPS, cost, and alert-latency numbers from Brazilian, Colombian, and Mexican production…</p>
-                        <span class="related-meta">14 min read · 24 June 2026</span>
+                        <span class="related-meta">13 min read · 24 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/fix-ai-agent-failures-postmortem-guide/">
@@ -610,12 +592,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

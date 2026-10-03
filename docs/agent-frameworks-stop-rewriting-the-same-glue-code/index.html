@@ -64,7 +64,7 @@
       "description": "Agent frameworks: stop rewriting the same glue code – cut boilerplate 70% with a job queue, credentials service, and DAG compiler in 2026",
       "datePublished": "2026-08-10T11:51:32+00:00",
       "dateModified": "2026-08-10T11:51:32+00:00",
-      "wordCount": 3845,
+      "wordCount": 3850,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -261,7 +256,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3845 words
+                        &nbsp;·&nbsp; 3850 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-10
                         
@@ -654,27 +649,20 @@ The queue adapter includes a mock provider mode. You can point your DAG at the m
 - <strong>Network partitions</strong>: During a 4-hour AWS outage in <em>us-east-1</em>, agents running on EC2 instances in São Paulo failed silently because the Redis instance was unreachable. The fix was to add a local SQLite fallback for the queue adapter, which increased complexity but ensured resilience.
 - <strong>Provider SLA changes</strong>: When Anthropic reduced their rate limit from 60 to 30 requests/minute overnight, the DAG schema had to be updated to reflect the new budget. This was a one-line change, but teams that hardcoded the old limit had to scramble.
 - <strong>WASM compilation edge cases</strong>: Compiling the DAG to WASM worked for 90% of agents, but agents that relied on Python-specific libraries (e.g., <code>pandas</code> for data processing) had to fall back to Lambda. The compiler now emits a warning for such cases.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-platform-abstractions-a-case-study/">Agent platform abstractions: a case study</a></li>
+<li><a href="https://kubaik.github.io/most-llm-cost-dashboards-lie/">Most LLM cost dashboards lie…</a></li>
+<li><a href="https://kubaik.github.io/agentic-finops-is-a-trap/">Agentic FinOps is a trap</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -723,12 +711,7 @@ The queue adapter includes a mock provider mode. You can point your DAG at the m
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

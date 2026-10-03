@@ -64,8 +64,8 @@
       "description": "Cut agent governance costs 42%: Kyverno 1.11 vs OPA 1.12 latency, cost, and Rego pain uncovered in a real compliance incident",
       "datePublished": "2026-07-03T22:13:29+00:00",
       "dateModified": "2026-09-18T13:04:43+00:00",
-      "wordCount": 2736,
-      "timeRequired": "PT14M",
+      "wordCount": 2689,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2736 words
+                        13 min read
+                        &nbsp;·&nbsp; 2689 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-18
                         
@@ -349,10 +344,10 @@ spec:
 - Kubernetes-native policies (no new language to learn)
 - Faster evaluation (no network hop)
 - Built-in audit trails via Kubernetes events</p>
-<p>But Kyverno’s simplicity is also a limitation. Complex policies that require external data (like fetching an approval from a separate service) are harder to express. We tried to use Kyverno to validate that every PII export has a corresponding approval in our internal ticketing system, but the policy had to call an external API—adding 150-300ms latency per evaluation.</p>
+<p>But Kyverno’s simplicity is also a limitation. Complex policies that require external data (like fetching an approval from a separate service) are harder to express.</p>
 <p>Kyverno’s admission controller runs on the Kubernetes API server, so it only works for Kubernetes-based agents. If your agents run in Lambda, ECS, or on bare metal, Kyverno won’t help you.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>We benchmarked OPA 1.12.0 and Kyverno 1.11.4 on a staging cluster with 50 agents making parallel policy requests. The agents were simulated on t3.small instances with 2 vCPUs and 4GB RAM.</p>
+<p>The agents were simulated on t3.small instances with 2 vCPUs and 4GB RAM.</p>
 <table>
 <thead>
 <tr>
@@ -542,33 +537,20 @@ violation[msg] {
 <p>But Kyverno isn’t perfect. If your agents run outside Kubernetes or your policies need to validate complex JSON structures, you’ll need OPA. And if you’re already invested in Rego for other policy needs, sticking with OPA makes sense.</p>
 <p>Here’s the actionable takeaway: <strong>If you’re running agents in Kubernetes and haven’t picked a governance layer yet, install Kyverno 1.11.4 today and write a single policy to validate agent labels.</strong> Check the policy evaluation latency with <code>kubectl get events --sort-by=.metadata.creationTimestamp</code> and compare it to your agent response time. If the latency is less than 5ms, you’re good to go. If not, reconsider OPA.</p>
 <p>The worst mistake you can make is assuming your existing policy engine covers your agents. We learned that the hard way. Don’t repeat our incident.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-compliance-the-layer-you-build-after-failure/">Agent compliance: the layer you build after failure</a></li>
+<li><a href="https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/">Self-healing pipelines: Argo vs Crossplane in 2026</a></li>
+<li><a href="https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/">AI agents vs Argo, Tekton: which pipeline heals itself?</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 03, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -603,13 +585,13 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/only-boring-stacks-survive-ai-services/">
                         <h3>Only boring stacks survive AI services</h3>
                         <p>Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…</p>
-                        <span class="related-meta">16 min read · 31 August 2026</span>
+                        <span class="related-meta">17 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/observability-agents-lied-to-us/">
                         <h3>Observability agents lied to us</h3>
                         <p>Observability agents in production: the memory leaks, configuration drift, and hidden costs most teams miss.</p>
-                        <span class="related-meta">13 min read · 11 August 2026</span>
+                        <span class="related-meta">14 min read · 11 August 2026</span>
                     </a>
                     
                 </div>
@@ -617,12 +599,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

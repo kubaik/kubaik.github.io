@@ -64,8 +64,8 @@
       "description": "Cut LLM observability noise 93% with this wrapper — Prometheus metrics, Redis flags, and a 140-line FastAPI service that works on t3.medium.",
       "datePublished": "2026-07-08T14:23:50+00:00",
       "dateModified": "2026-09-24T03:50:31+00:00",
-      "wordCount": 3314,
-      "timeRequired": "PT17M",
+      "wordCount": 3213,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -263,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        17 min read
-                        &nbsp;·&nbsp; 3314 words
+                        16 min read
+                        &nbsp;·&nbsp; 3213 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-24
                         
@@ -603,7 +598,7 @@ scrape_configs:
 </tr>
 </tbody>
 </table>
-<p>The single biggest win wasn’t the metrics—it was the confidence to kill features. One “rephrase for clarity” button cost $1,240 over two weeks and had a user feedback score of 2.1/5. We disabled it via Redis flag in five minutes and saved the compute for the summariser, which scored 4.7/5 and cost $890.</p>
+<p>The single biggest win wasn’t the metrics—it was the confidence to kill features. One “rephrase for clarity” button cost $1,240 over two weeks and had a user feedback score of 2.1/5.</p>
 <p>The wrapper also let us A/B test summarisation models without touching the frontend. We ran <code>llama3-8b-v1</code> vs. <code>mistral-7b-instruct-v0.3</code> on the same prompts; the Mistral model cut latency 28 % and cost 19 % less while keeping the same user score.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>Frequently Asked Questions</strong></p>
@@ -619,7 +614,7 @@ scrape_configs:
 <h3 id="1-advanced-edge-cases-i-personally-encountered">1. Advanced Edge Cases I Personally Encountered</h3>
 <p>After three months running this wrapper in production across Nigeria, Kenya, and Uganda, three edge cases stood out because they didn’t surface during local testing and required creative workarounds with minimal infrastructure.</p>
 <p><strong>Case 1: The “Silent Token Leak” on Low-End A100 Instances</strong></p>
-<p>We started with on-demand A100 GPUs priced at $2.50 per hour in 2026. The wrapper’s cost calculation was based on the response JSON returning <code>usage.total_tokens</code>, but on cheaper instances (especially those spun up by spot requests) the provider sometimes truncated the token count in the response payload to save bandwidth. The API returned a 200 OK, but <code>total_tokens</code> was missing.</p>
+<p>The wrapper’s cost calculation was based on the response JSON returning <code>usage.total_tokens</code>, but on cheaper instances (especially those spun up by spot requests) the provider sometimes truncated the token count in the response payload to save bandwidth. The API returned a 200 OK, but <code>total_tokens</code> was missing.</p>
 <p>The fix: Add a fallback that counts tokens client-side. We used the <code>tiktoken</code> tokenizer for Llama 3 (model name <code>llama3-8b-v1</code>) and calculated cost based on the client-side count when the server didn’t return usage. The client-side tokenizer added 4 ms per request—still under our SLA of 500 ms P95. We wrapped it in a simple cache keyed by model name to avoid re-initializing the tokenizer on every request:</p>
 <pre><code class="language-python">from functools import lru_cache
 import tiktoken
@@ -632,7 +627,7 @@ def safe_token_count(text: str, model_name: str) -&gt; int:
     encoding = get_tokenizer(model_name)
     return len(encoding.encode(text))
 </code></pre>
-<p>We logged both counts and alerted when the gap exceeded 10 %. Over two weeks, this caught 14 silent token leaks totaling $87 in unbilled compute.</p>
+<p>Over two weeks, this caught 14 silent token leaks totaling $87 in unbilled compute.</p>
 <hr />
 <p><strong>Case 2: The SMS Gateway That Replays Messages on 502 Errors</strong></p>
 <p>In northern Nigeria, users access the land-title chatbot via SMS through a carrier-grade gateway that retries requests when it gets a 502 from our wrapper. Since the wrapper doesn’t idempotently cache responses, the user would receive duplicate answers to the same query—sometimes three times in a row—if the LLM endpoint was slow or Redis timed out.</p>
@@ -655,7 +650,7 @@ if cached:
 <hr />
 <p><strong>Case 3: The Power Outage That Corrupted Redis on a Bare-Metal VPS</strong></p>
 <p>During a rainy season in Nairobi, a power cut caused the bare-metal VPS hosting Redis to reboot uncleanly. The AOF file was partially written, and Redis failed to start. Our wrapper, which relied on Redis for feature flags and circuit breakers, became unresponsive—returning 502s to every user.</p>
-<p>The fix: We switched to Redis with persistence enabled (<code>appendonly yes</code>) and added a 30-second health check endpoint (<code>/health</code>) that pinged Redis and returned 503 if Redis was down or unreachable. We also embedded a fallback feature flag policy in the wrapper itself: if Redis is unavailable, default to enabling all features for 90 % of users and disable for 10 % (a simple round-robin based on user_id hash). This let the chatbot limp along during outages without manual intervention.</p>
+<p>The fix: We switched to Redis with persistence enabled (<code>appendonly yes</code>) and added a 30-second health check endpoint (<code>/health</code>) that pinged Redis and returned 503 if Redis was down or unreachable. This let the chatbot limp along during outages without manual intervention.</p>
 <pre><code class="language-python">@app.get(&quot;/health&quot;)
 async def health():
     try:
@@ -671,7 +666,6 @@ async def health():
 <p>Below are three real integrations we shipped in 2026, each adding observability without vendor lock-in.</p>
 <hr />
 <p><strong>Integration 1: Grafana Cloud with Prometheus &amp; Loki (Free Tier)</strong></p>
-<p>We used Grafana Cloud’s free tier (10 k series, 50 GB logs) to visualize metrics and correlate them with logs.</p>
 <ol>
 <li>Update <code>prometheus.yml</code> to scrape <code>/metrics</code> from the wrapper every 15 s. 2. Add Loki scrape config for JSON logs from the wrapper (FastAPI’s default JSON logging):</li>
 </ol>
@@ -830,33 +824,20 @@ trace.get_tracer_provider().add_span_processor(span_processor)
 <li>Traces: <code>resource.name="feature:summarise"</code></li>
 <li>Service map showing latency between the wrapper, Redis, and LLM endpoint</li>
 </ol>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/">Use feature flags to deploy AI models safely</a></li>
+<li><a href="https://kubaik.github.io/7-ways-to-measure-prompt-platform-roi-in-2026/">7 ways to measure prompt platform ROI in 2026</a></li>
+<li><a href="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 08, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -905,12 +886,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

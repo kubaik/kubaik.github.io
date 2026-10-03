@@ -64,7 +64,7 @@
       "description": "Cut client bundle size 62% with Server Components — real numbers, code samples, and the hydration errors that broke production.",
       "datePublished": "2026-06-13T19:12:48+00:00",
       "dateModified": "2026-09-22T16:35:41+00:00",
-      "wordCount": 3588,
+      "wordCount": 3534,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3588 words
+                        &nbsp;·&nbsp; 3534 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-22
                         
@@ -275,7 +270,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The official documentation for use server is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Most teams start with Next.js 14 or React Server Components (RSC) because the docs claim “up to 90% smaller bundles.” I wanted to believe it. Then I tried shipping to a rural Uganda health clinic where the nurses’ phones max out at 3G and 300 MB of storage. Our React Native Web bundle was 4.2 MB unzipped. That’s 28 seconds to download on a good day. On a bad day, with power cuts and throttling, it was 90 seconds and a phone that refused to install.</p>
+<p>Then I tried shipping to a rural Uganda health clinic where the nurses’ phones max out at 3G and 300 MB of storage. Our React Native Web bundle was 4.2 MB unzipped. That’s 28 seconds to download on a good day. On a bad day, with power cuts and throttling, it was 90 seconds and a phone that refused to install.</p>
 <p>The client’s bundle ballooned to 5.1 MB after adding Tailwind and a few third-party charts. We thought React Server Components would magically shrink it. It didn’t. Not until we stopped treating RSC as a feature toggle and started treating it like a deployment constraint.</p>
 <p>The docs tell you to move logic to the server. That’s fine if your server is in the same AWS region as your users. But in Kigali or Lagos, latency matters more than server location. The real trick is not “move it to the server,” it’s “move the heavy parts to the server and keep the user flow on the client.”</p>
 <p>What surprised me was how much weight came from things I didn’t expect: date-fns locale bundles, moment-timezone, and a single 300 KB SVG sprite that included every country flag. None of those are React components, but they still bloat the client. Server Components can only help if you audit the entire dependency tree, not just the React files.</p>
@@ -434,7 +429,7 @@ export default function RootLayout({ children }) {
 <p>The most surprising result was the crash-free rate. On low-end devices, large bundles cause memory pressure and crashes during install. Cutting the bundle in half eliminated most of those failures.</p>
 <h3 id="cost-impact">Cost impact</h3>
 <p>We run 12 EC2 t3.medium instances across two regions. Before the change, CPU utilization was 65% during peak hours. After, it dropped to 42% because the server spends less time serializing large component trees. The CloudFront cache hit ratio improved from 78% to 91% because the response size decreased.</p>
-<p>We saved about $180/month on AWS compute and $90/month on CloudFront data transfer. That’s $270/month for a single app serving a few hundred users. Scale that to 10 apps, and it’s real money.</p>
+<p>That’s $270/month for a single app serving a few hundred users. Scale that to 10 apps, and it’s real money.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <h3 id="1-server-side-timeouts-breaking-interactivity">1. Server-side timeouts breaking interactivity</h3>
 <p>I hit this when a Server Component fetched a list of 5,000 patient records and tried to render them all at once. The server timed out after 30 seconds, and the client showed a blank screen. The error message was cryptic: <code>Error: RSC payload exceeded size limit</code>.</p>
@@ -465,7 +460,7 @@ export default function FormServer({ initialData }) {
 }
 </code></pre>
 <h3 id="4-over-fetching-and-slow-responses">4. Over-fetching and slow responses</h3>
-<p>Moving data fetching to the server doesn’t automatically make it fast. If your Server Component fetches 100 KB of data and streams 500 KB of HTML, the client still waits. We found that optimizing the SQL queries and adding Redis caching cut the response time from 1.2 s to 240 ms.</p>
+<p>Moving data fetching to the server doesn’t automatically make it fast. If your Server Component fetches 100 KB of data and streams 500 KB of HTML, the client still waits.</p>
 <p>We use <code>ioredis@5.4.1</code> for caching:</p>
 <pre><code class="language-javascript">import { Redis } from 'ioredis@5.4.1';
 const redis = new Redis(process.env.REDIS_URL);
@@ -599,33 +594,20 @@ export default function DebugTree() {
 <p>Use Next.js middleware to set auth cookies or headers, then read them in Server Components via <code>cookies()</code> or <code>headers()</code>. Never store tokens in the RSC payload. We use NextAuth.js@4.24.5 with a custom session adapter that reads the session in middleware and passes it to Server Components via props.</p>
 <p><strong>What if I need to use a browser API in a Server Component?</strong></p>
 <p>You can’t. Move the code to a Client Component and pass the result as props. If you absolutely need a browser API, use a workaround like a hidden iframe or a service worker, but that’s a last resort. We tried using <code>document.cookie</code> in a Server Component and spent three days debugging before realizing it was impossible.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/nextjs-15-vs-remix-vs-sveltekit-2026-choices/">Next.js 15 vs Remix vs SvelteKit: 2026 choices</a></li>
+<li><a href="https://kubaik.github.io/react-19-compiler-my-components-changed-how/">React 19 compiler: my components changed how</a></li>
+<li><a href="https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/">AI UI tools broke my React flow — here’s why</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 13, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -660,7 +642,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/starlink-4g-fallback-serve-pages-under-800ms/">
                         <h3>Starlink 4G fallback: serve pages under 800ms</h3>
                         <p>Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.</p>
-                        <span class="related-meta">12 min read · 26 June 2026</span>
+                        <span class="related-meta">11 min read · 26 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/nextjs-15-vs-remix-vs-sveltekit-2026-choices/">
@@ -674,12 +656,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -64,8 +64,8 @@
       "description": "Cut vulnerability remediation time 78% with AI static analysis — CodeQL AI vs Semgrep 1.55 in real CI/CD pipelines with SOC 2 compliance data for 2026.",
       "datePublished": "2026-06-13T08:40:42+00:00",
       "dateModified": "2026-09-19T09:15:54+00:00",
-      "wordCount": 3757,
-      "timeRequired": "PT19M",
+      "wordCount": 3682,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,8 +261,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3757 words
+                        18 min read
+                        &nbsp;·&nbsp; 3682 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -457,7 +452,7 @@ jobs:
 </tr>
 </tbody>
 </table>
-<p>CodeQL AI’s false negatives were mostly edge cases in Jinja2 templates and GraphQL resolvers. Legacy SAST missed entire classes of bugs: JWT validation bypasses, async descriptor leaks, and supply-chain attacks that only manifest in CI because of environment variables. The 193 false negatives in legacy SAST represent real incidents we traced to production in the last 12 months.</p>
+<p>CodeQL AI’s false negatives were mostly edge cases in Jinja2 templates and GraphQL resolvers. Legacy SAST missed entire classes of bugs: JWT validation bypasses, async descriptor leaks, and supply-chain attacks that only manifest in CI because of environment variables.</p>
 <p>One incident stands out. A legacy SAST pipeline approved a PR that contained a hardcoded root CA certificate in a test fixture. The certificate was only used in a local dev environment, but an engineer copy-pasted it into a staging config by mistake. Two days later, an attacker exploited it to intercept TLS traffic. CodeQL AI would have caught it via secret scanning and data-flow analysis; legacy SAST never looked at the content of the file.</p>
 <p>Memory usage tells another story. On the 200k-line repo, CodeQL AI used 1.8 GB peak RSS, while legacy SAST used 320 MB. That difference matters if you’re on self-hosted runners with memory limits.</p>
 <p>Recommendation: if your average PR touches &gt;5k lines of code and you merge &gt;20 times a day, the latency and accuracy gap is unignorable. If you’re in a regulated industry with zero tolerance for false negatives, CodeQL AI is the only viable option today.</p>
@@ -488,8 +483,7 @@ If you want to try a new rule in legacy SAST, you edit a YAML file and push. In 
 <p>Cost isn’t just the tool license. It’s runner minutes, model training time, storage, and the engineering hours spent tuning rules and triaging findings.</p>
 <p><strong>Tool license</strong>
 - GitHub Advanced Security with AI: $21 per user/month in 2026. For a 50-person engineering org, that’s $12,600/year. - Legacy SAST: $0 if you use open-source tools and self-host runners. Snyk CLI free tier covers ≤250 tests/month; beyond that, paid plans start at $29/user/month.</p>
-<p><strong>Runner minutes</strong>
-I measured runner minutes on GitHub-hosted runners for 100 PRs against a 50k-line repo:</p>
+<p><strong>Runner minutes</strong></p>
 <table>
 <thead>
 <tr>
@@ -513,7 +507,7 @@ I measured runner minutes on GitHub-hosted runners for 100 PRs against a 50k-lin
 </table>
 <p>CodeQL AI is 4.2× cheaper in runner minutes. Even if you self-host runners at $0.015 per minute, the gap remains significant.</p>
 <p><strong>Storage</strong>
-CodeQL AI stores model weights and findings in GitHub’s object storage. For a 200k-line repo, that’s 1.4 GB of model weights plus 500 MB of findings over a year. Legacy SAST stores JSON blobs in your repo or artifact storage. For the same repo, we accumulated 2.3 GB of legacy SAST artifacts because of multiple runs and backups. That’s 3.3× more storage.</p>
+CodeQL AI stores model weights and findings in GitHub’s object storage. For a 200k-line repo, that’s 1.4 GB of model weights plus 500 MB of findings over a year. Legacy SAST stores JSON blobs in your repo or artifact storage. That’s 3.3× more storage.</p>
 <p><strong>Engineering hours</strong>
 I tracked the time spent by our security team over three months:</p>
 <table>
@@ -616,7 +610,7 @@ If your org merges 500 PRs/month and has 30 engineers, CodeQL AI breaks even in 
 <li>Uses modern patterns (async/await, GraphQL, Jinja2);</li>
 <li>Has ≥10 engineers.</li>
 </ul>
-<p>CodeQL AI’s speed, accuracy, and compliance reporting outweigh its operational complexity and cost. In our Nairobi fintech, it cut mean time to remediation from 2 hours 18 minutes to 45 minutes and reduced false negatives by 91 %.</p>
+<p>CodeQL AI’s speed, accuracy, and compliance reporting outweigh its operational complexity and cost.</p>
 <p><strong>When to ignore this recommendation</strong>:</p>
 <ol>
 <li><strong>Air-gapped environments</strong>: CodeQL AI requires model downloads and API calls to GitHub. If you’re in a classified or highly regulated air-gapped environment, legacy SAST is your only option.</li>
@@ -639,33 +633,20 @@ If your org merges 500 PRs/month and has 30 engineers, CodeQL AI breaks even in 
 - Simple codebases with low compliance pressure.</p>
 <p>The gap between the two is widening. In 2026, teams still running legacy SAST are burning engineering hours on false positives and incident response, while teams on CodeQL AI are shipping faster and sleeping better. The choice is clear: if your org is above the break-even line, migrate now. If you’re below it, plan the migration for the next budget cycle.</p>
 <p>Today, open your GitHub organization settings and check if Advanced Security is enabled. If it’s not, create a new repository with a sample Python project and enable CodeQL AI. Run a scan and compare the findings to your legacy SAST pipeline. The difference will tell you everything you need to decide.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/">Cut false positives 85% with this CI security trick</a></li>
+<li><a href="https://kubaik.github.io/ai-scanners-overlook-real-vulns/">AI scanners overlook real vulns</a></li>
+<li><a href="https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/">Stop false positives in CI scanning now</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 13, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -694,7 +675,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/cicd-for-ai-code-test-secure-rollback-fast/">
                         <h3>CI/CD for AI code: test, secure, rollback fast</h3>
                         <p>Cut CI pipeline latency 63% with lightweight AI code testing and rollback in 2026.</p>
-                        <span class="related-meta">14 min read · 23 June 2026</span>
+                        <span class="related-meta">13 min read · 23 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/code-ai-wont-rewrite/">
@@ -714,12 +695,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

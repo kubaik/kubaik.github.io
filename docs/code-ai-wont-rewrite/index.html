@@ -64,7 +64,7 @@
       "description": "Cut PR review time 65% with AI and semgrep on legacy Java/Python monoliths — $38/month for 200k tx/day, concrete prompts, and the race condition AI caught…",
       "datePublished": "2026-06-18T17:53:30+00:00",
       "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 2954,
+      "wordCount": 2915,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2954 words
+                        &nbsp;·&nbsp; 2915 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -278,7 +273,7 @@
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Legacy codebases aren’t just old code — they’re codebases that have outlived their original engineers. The business still depends on them, but no one is left who remembers why the <code>PaymentProcessor.retryFailedTransactions()</code> method retries exactly 3 times, or why the cron job at <code>0 3 * * *</code> runs at 3 AM Bogotá time even though nobody is awake to monitor it.</p>
 <p>Documentation is either missing, wrong, or written for a different stack. Pull requests rot for weeks because reviewers assume the legacy system is a black box they can’t touch. I’ve seen teams rewrite entire modules only to discover the new version broke something subtle — like the nightly batch job that relied on a side effect in the old code.</p>
-<p>The logs said nothing. The metrics dashboard showed nothing. Only when I dumped the pool state with VisualVM did I see 200 threads stuck holding connections, each waiting on a timeout that never fired. When I fixed the <code>maxWaitMillis</code> from <code>-1</code> (infinite wait) to <code>5000</code>, the latency dropped from 8.2s to 2.1s on p95. That taught me: legacy code doesn’t just break — it hides.</p>
+<p>The logs said nothing. The metrics dashboard showed nothing. Only when I dumped the pool state with VisualVM did I see 200 threads stuck holding connections, each waiting on a timeout that never fired. That taught me: legacy code doesn’t just break — it hides.</p>
 <p>Most teams try to solve this with more meetings, more documentation, more code reviews. But meetings don’t run the batch job at 3 AM. Documentation doesn’t catch the typo in <code>endpoit</code> that’s been there since 2018. And code reviews can’t prevent the next engineer from copy-pasting a 2016 Stack Overflow snippet into a critical path.</p>
 <p>AI changes the equation. Not because it’s smart — but because it’s fast and repeatable. It won’t replace the engineer, but it can help them navigate the unknown faster than they can on their own.</p>
 <h2 id="how-how-i-use-ai-to-maintain-legacy-codebases-nobody-wants-to-touch-actually-works-under-the-hood">How How I use AI to maintain legacy codebases nobody wants to touch actually works under the hood</h2>
@@ -379,7 +374,7 @@ public void testEmailSanitization() {
 <p>After applying the fix, the vulnerability was eliminated. The p95 query latency increased from 45ms to 52ms due to parameter binding — a 15% overhead, but acceptable for security.</p>
 <hr />
 <h2 id="integration-with-real-tools-versions-code-and-workflow">Integration with real tools (versions, code, and workflow)</h2>
-<p>Here’s how I glue AI into my actual toolchain in 2026. I don’t use SaaS-only solutions — I need tools that run on a $5/month VPS in Bogotá with intermittent power.</p>
+<p>Here’s how I glue AI into my actual toolchain in 2026.</p>
 <h3 id="1-tree-sitter-local-llm-fast-local-parsing-and-refactoring">1. <strong>Tree-sitter + Local LLM: Fast local parsing and refactoring</strong></h3>
 <ul>
 <li><strong>Tool</strong>: <code>tree-sitter 0.21.0</code> + <code>llama3:8b-instruct</code> via <code>llama.cpp</code> (v46)</li>
@@ -657,33 +652,20 @@ public void testEmailSanitization() {
 </ul>
 <h3 id="the-real-roi">The real ROI</h3>
 <p>The AI didn’t replace me — but it made me 4–5x more effective on legacy systems. In 2026, the best engineers aren’t the ones who write the cleanest new code. They’re the ones who can <strong>navigate the mess</strong> without burning out. And that, finally, is something AI can help with.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/legacy-codebases-let-ai-own-the-boring-parts/">Legacy codebases? Let AI own the boring parts</a></li>
+<li><a href="https://kubaik.github.io/ai-revives-unloved-legacy-codebases/">AI revives unloved legacy codebases</a></li>
+<li><a href="https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/">Map legacy code with AI before it breaks</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 18, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -718,7 +700,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-static-analysis-vs-legacy-sast-5x-faster-scans/">
                         <h3>AI static analysis vs legacy SAST: 5x faster scans</h3>
                         <p>Cut vulnerability remediation time 78% with AI static analysis — CodeQL AI vs Semgrep 1.55 in real CI/CD pipelines with SOC 2 compliance data for 2026.</p>
-                        <span class="related-meta">19 min read · 13 June 2026</span>
+                        <span class="related-meta">18 min read · 13 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-sales-cycles-3x-faster-40-less-talk/">
@@ -732,12 +714,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

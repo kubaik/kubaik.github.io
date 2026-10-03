@@ -64,8 +64,8 @@
       "description": "Cut EC2 costs 70% with one sysctl tweak — TCP BBR, zswap, gp3 IOPS, and the exact commands for Amazon Linux 2023 and Ubuntu 22.04 LTS.",
       "datePublished": "2026-06-09T04:57:04+00:00",
       "dateModified": "2026-09-19T11:54:35+00:00",
-      "wordCount": 3141,
-      "timeRequired": "PT16M",
+      "wordCount": 3050,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -259,8 +254,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3141 words
+                        15 min read
+                        &nbsp;·&nbsp; 3050 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -542,7 +537,7 @@ export default function () {
 </tbody>
 </table>
 <p>I applied these changes to four other clients—two Django 4.2 backends and one Go 1.22 service—all running on m6i.large in us-east-1. The smallest bill was a 62% cut; the largest was 73%. The Go service had the biggest latency drop (140 ms → 60 ms) because it was doing long-lived HTTP/2 connections that BBR optimizes best.</p>
-<p>One client had a custom AMI based on Ubuntu 20.04 (kernel 5.4). BBR was not available, so we fell back to <code>cubic</code> and still saved 45% on CPU, but the retransmit ratio only fell 12%. Lesson: kernel version matters more than instance size.</p>
+<p>One client had a custom AMI based on Ubuntu 20.04 (kernel 5.4). Lesson: kernel version matters more than instance size.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>How do I apply these changes if I use Terraform?</strong>
 Add two <code>user_data</code> scripts: one for the sysctl tweaks and one for the zswap setup. Use the <code>templatefile</code> function to render the <code>/etc/sysctl.d/10-bbr.conf</code> content.</p>
@@ -572,8 +567,8 @@ sudo bash -c 'echo &quot;net.core.default_qdisc=bbr&quot; &gt;&gt; /etc/sysctl.d
 <h3 id="advanced-edge-cases-i-personally-encountered">Advanced Edge Cases I Personally Encountered</h3>
 <h4 id="1-the-cloudwatch-metric-streams-firehose-trap-that-cost-me-1200-in-48-hours">1. The “CloudWatch Metric Streams + Firehose” Trap That Cost Me $1,200 in 48 Hours</h4>
 <p>In late 2026 I onboarded a Colombian client running a high-traffic Django 4.2 API on <code>m6i.2xlarge</code> in us-east-1. They needed real-time metrics for their SRE team in Bogotá, so I set up CloudWatch Metric Streams pointing to a Kinesis Firehose delivery stream with Amazon OpenSearch as the destination. On paper, it was perfect: no polling, no Lambda invocations, just direct streaming.</p>
-<p>The first bill shock came after two days. The Firehose stream was configured with <strong>5-minute buffer intervals</strong> and <strong>1 MiB batch sizes</strong> — standard defaults, right? Wrong. The Django app’s metrics included custom <code>django.request</code> counters with labels like <code>view=api_v3_orders</code> and <code>status=429</code>. Each label added ~200 bytes to the payload, and with 15,000 requests per minute, the raw metric volume exploded to <strong>4.2 GiB/hour</strong> once serialized into the OpenSearch bulk format. At $0.029 per GiB for Firehose ingestion, that’s <strong>$3.02/hour</strong> — over <strong>$1,200 in two days</strong> before I noticed the spike in the Cost Explorer.</p>
-<p><strong>The fix</strong>: I switched to <strong>CloudWatch Embedded Metric Format (EMF)</strong> which compresses labels into a single JSON object and reduces payload size by 60–70%. I also set the buffer interval to <strong>60 seconds</strong> and capped the batch size at <strong>5 MiB</strong>. The ingestion cost dropped to <strong>$0.48/hour</strong>, a <strong>75% cut</strong>, and the latency for metric availability went from 300 ms to 150 ms because fewer, larger batches meant less HTTP overhead.</p>
+<p>The first bill shock came after two days. The Firehose stream was configured with <strong>5-minute buffer intervals</strong> and <strong>1 MiB batch sizes</strong> — standard defaults, right? Wrong. The Django app’s metrics included custom <code>django.request</code> counters with labels like <code>view=api_v3_orders</code> and <code>status=429</code>. Each label added ~200 bytes to the payload, and with 15,000 requests per minute, the raw metric volume exploded to <strong>4.2 GiB/hour</strong> once serialized into the OpenSearch bulk format.</p>
+<p>I also set the buffer interval to <strong>60 seconds</strong> and capped the batch size at <strong>5 MiB</strong>. The ingestion cost dropped to <strong>$0.48/hour</strong>, a <strong>75% cut</strong>, and the latency for metric availability went from 300 ms to 150 ms because fewer, larger batches meant less HTTP overhead.</p>
 <blockquote>
 <p>Lesson: Firehose is not free. When you’re in a lower-cost country, every extra byte in your observability pipeline gets multiplied by your client’s cloud bill — and they <em>will</em> notice.</p>
 </blockquote>
@@ -585,7 +580,7 @@ sudo bash -c 'echo &quot;net.core.default_qdisc=bbr&quot; &gt;&gt; /etc/sysctl.d
 <p>Lesson: IPv6-only is still a second-class citizen in many AWS services. If you’re forced to use it (e.g., because your client’s ISP in Latin America only supports IPv6), you <em>must</em> validate every networking component — NLBs, ALBs, ECS, and even RDS — for dual-stack support.</p>
 </blockquote>
 <h4 id="3-the-spot-instance-gp3-volume-termination-notice-data-loss-incident">3. The “Spot Instance + GP3 Volume + Termination Notice = Data Loss” Incident</h4>
-<p>In Q4 2025, I migrated a Go 1.22 microservice from <code>m6i.large</code> to a spot instance (<code>m6g.large</code>) to save another 65% on the bill. The instance was configured with a <strong>gp3 volume at 3,000 IOPS</strong>, and I had set <code>instance_interruption_behavior = "stop"</code> so the EBS volume would persist. Everything looked green.</p>
+<p>The instance was configured with a <strong>gp3 volume at 3,000 IOPS</strong>, and I had set <code>instance_interruption_behavior = "stop"</code> so the EBS volume would persist. Everything looked green.</p>
 <p>Then, during a peak traffic spike at 2 AM (when I was asleep), AWS sent a <strong>2-minute spot termination notice</strong>. The Go service was handling a long-running gRPC stream, and the OS started flushing dirty pages to disk. But because the gp3 volume was already at 3,000 IOPS — near its burstable limit — the I/O latency spiked to <strong>800 ms</strong>, causing the Go runtime to hit its <code>http.Server</code>'s <code>ReadTimeout</code> and close the connection prematurely. The client lost data.</p>
 <p><strong>The fix</strong>: I added a <strong>pre-stop hook</strong> in the systemd service that gracefully shuts down the Go process before the spot instance is stopped:</p>
 <pre><code class="language-ini">[Service]
@@ -710,33 +705,20 @@ def modify_volume(volume_id, iops, region):
 <hr />
 <h3 id="beforeafter-comparison-with-real-numbers">Before/After Comparison with Real Numbers</h3>
 <p>I applied these tools and tweaks to a **Node</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/unlock-python-313s-free-threaded-gil-for-web-apps/">Unlock Python 3.13's free-threaded GIL for web apps</a></li>
+<li><a href="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
+<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 09, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -785,12 +767,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

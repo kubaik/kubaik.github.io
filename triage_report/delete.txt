@@ -1,0 +1,86 @@
+docs/ai-benchmarking-3-mistakes-we-made-first/index.md	Invented first-hand evidence/benchmarks (51 experience claims, 4 unverifiable products)
+docs/core-web-vitals-2026-inp-is-now-stable/index.md	Invented first-hand evidence/benchmarks (48 experience claims, 8 unverifiable products)
+docs/llm-structured-output-json-mode-fails-at-scale/index.md	Invented first-hand evidence/benchmarks (56 experience claims, 4 unverifiable products)
+docs/land-5k-roles-from-nairobi-lagos-in-2026/index.md	Near-duplicate of land-5k-remote-roles-what-nairobi-devs-got-right | Invented first-hand evidence/benchmarks (71 experience claims, 1 unverifiable products)
+docs/3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that/index.md	Invented first-hand evidence/benchmarks (36 experience claims, 1 unverifiable products)
+docs/ai-sales-cycle-what-changed-for-devtool-founders/index.md	Invented first-hand evidence/benchmarks (37 experience claims, 0 unverifiable products)
+docs/wasm-ml-models-keep-dev-speed-at-the-edge/index.md	Invented first-hand evidence/benchmarks (47 experience claims, 5 unverifiable products)
+docs/block-api-replay-attacks-in-2026/index.md	Invented first-hand evidence/benchmarks (41 experience claims, 2 unverifiable products)
+docs/pulumi-vs-terraform-vs-opentofu-in-2026/index.md	Invented first-hand evidence/benchmarks (32 experience claims, 7 unverifiable products)
+docs/ai-wrote-40-of-our-code-heres-what-broke-our-on-call/index.md	Invented first-hand evidence/benchmarks (56 experience claims, 7 unverifiable products)
+docs/one-misconfigured-pool-drained-4kmonth/index.md	Invented first-hand evidence/benchmarks (42 experience claims, 1 unverifiable products)
+docs/9-ai-wrapper-apis-that-paid-off-in-2026/index.md	Invented first-hand evidence/benchmarks (21 experience claims, 9 unverifiable products)
+docs/build-a-nairobi-saas-stack-for-32kmonth/index.md	Invented first-hand evidence/benchmarks (21 experience claims, 4 unverifiable products)
+docs/llm-apps-owasp-risks-you-missed/index.md	Invented first-hand evidence/benchmarks (21 experience claims, 5 unverifiable products)
+docs/saas-niche-in-2026-pick-a-sliver-no-llm-can-eat/index.md	Invented first-hand evidence/benchmarks (52 experience claims, 1 unverifiable products) | Incoherent invented timeline
+docs/agent-decisions-cost-us-three-days-of-logs/index.md	Invented first-hand evidence/benchmarks (52 experience claims, 2 unverifiable products)
+docs/pick-niches-ai-wont-eat-in-2026/index.md	Invented first-hand evidence/benchmarks (49 experience claims, 3 unverifiable products)
+docs/css-2026-container-queries-retired-our-utility-class/index.md	Invented first-hand evidence/benchmarks (33 experience claims, 3 unverifiable products)
+docs/orm-2026-prisma-vs-drizzle-vs-sqlalchemy/index.md	Invented first-hand evidence/benchmarks (46 experience claims, 5 unverifiable products)
+docs/api-security-the-attacks-rising-in-2026/index.md	Invented first-hand evidence/benchmarks (58 experience claims, 0 unverifiable products)
+docs/ai-observability-real-time-dashboards-without-the/index.md	Invented first-hand evidence/benchmarks (40 experience claims, 3 unverifiable products)
+docs/flip-your-dev-tool-sales-cycle-in-2026/index.md	Invented first-hand evidence/benchmarks (43 experience claims, 3 unverifiable products)
+docs/row-level-security-for-saas-in-2026-the-surprise-cost/index.md	Invented first-hand evidence/benchmarks (45 experience claims, 2 unverifiable products)
+docs/tls-13-post-quantum-what-breaks-at-scale/index.md	Invented first-hand evidence/benchmarks (47 experience claims, 2 unverifiable products)
+docs/land-5k-remote-roles-what-nairobi-devs-got-right/index.md	Invented first-hand evidence/benchmarks (46 experience claims, 2 unverifiable products)
+docs/ai-features-break-your-stack-every-6-months/index.md	Invented first-hand evidence/benchmarks (36 experience claims, 3 unverifiable products)
+docs/prepare-tls-for-post-quantum-reality/index.md	Invented first-hand evidence/benchmarks (49 experience claims, 2 unverifiable products)
+docs/portfolio-projects-that-beat-ai-clones-4-signals/index.md	Invented first-hand evidence/benchmarks (40 experience claims, 0 unverifiable products)
+docs/7-graceful-degradation-traps-ive-hit-in-production/index.md	Invented first-hand evidence/benchmarks (45 experience claims, 2 unverifiable products) | Title promises first-hand results the author cannot substantiate
+docs/ai-apps-break-your-stack-heres-the-fix/index.md	Invented first-hand evidence/benchmarks (19 experience claims, 5 unverifiable products)
+docs/ai-latency-cut-28s-to-380ms-without-retraining/index.md	Invented first-hand evidence/benchmarks (53 experience claims, 3 unverifiable products)
+docs/llm-outputs-break-workflows-unless-you-do-this/index.md	Invented first-hand evidence/benchmarks (42 experience claims, 3 unverifiable products)
+docs/7-patterns-for-systems-that-stay-up-when-everything/index.md	Invented first-hand evidence/benchmarks (28 experience claims, 2 unverifiable products) | Incoherent invented timeline
+docs/ai-pair-coding-who-owns-the-diff-now/index.md	Invented first-hand evidence/benchmarks (30 experience claims, 4 unverifiable products)
+docs/rag-in-prod-why-demos-crumble/index.md	Invented first-hand evidence/benchmarks (40 experience claims, 0 unverifiable products)
+docs/ai-agents-why-devtools-now-sell-like-saas-in-2026/index.md	Invented first-hand evidence/benchmarks (41 experience claims, 0 unverifiable products)
+docs/ai-hiring-what-actually-moves-the-bar/index.md	Invented first-hand evidence/benchmarks (36 experience claims, 3 unverifiable products)
+docs/sell-dev-tools-in-the-ai-sales-cycle/index.md	Invented first-hand evidence/benchmarks (51 experience claims, 1 unverifiable products)
+docs/flag-your-ai-rollouts-in-2026/index.md	Invented first-hand evidence/benchmarks (25 experience claims, 1 unverifiable products)
+docs/ship-faster-with-a-paved-road-4-weeks-to-80-less-toil/index.md	Invented first-hand evidence/benchmarks (43 experience claims, 0 unverifiable products)
+docs/biometrics-beat-passwords-passkey-2026-shift/index.md	Invented first-hand evidence/benchmarks (55 experience claims, 1 unverifiable products)
+docs/llm-quality-metrics-that-cut-hallucinations-40/index.md	Invented first-hand evidence/benchmarks (35 experience claims, 2 unverifiable products)
+docs/pydantic-2-redis-stop-the-3am-ai-pages/index.md	Invented first-hand evidence/benchmarks (20 experience claims, 1 unverifiable products)
+docs/serverless-ai-costs-explode-past-10kmo/index.md	Invented first-hand evidence/benchmarks (32 experience claims, 0 unverifiable products)
+docs/ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya/index.md	Invented first-hand evidence/benchmarks (35 experience claims, 4 unverifiable products)
+docs/typescript-53-changed-how-we-model-domains/index.md	Invented first-hand evidence/benchmarks (24 experience claims, 3 unverifiable products)
+docs/backstage-plugins-for-ai-3-hidden-costs-fixed-in-2026/index.md	Invented first-hand evidence/benchmarks (29 experience claims, 1 unverifiable products)
+docs/why-your-ai-portfolio-bombs-in-nigeria/index.md	Invented first-hand evidence/benchmarks (32 experience claims, 1 unverifiable products)
+docs/replaced-celery-in-2026-what-actually-worked/index.md	Invented first-hand evidence/benchmarks (27 experience claims, 0 unverifiable products)
+docs/ai-pair-programming-stole-my-code-review-job/index.md	Invented first-hand evidence/benchmarks (42 experience claims, 0 unverifiable products) | Title promises first-hand results the author cannot substantiate
+docs/build-a-serverless-backend-in-africa-with-pocketbase/index.md	Invented first-hand evidence/benchmarks (20 experience claims, 3 unverifiable products)
+docs/platform-teams-in-2026-why-your-devs-hate-your-golden-path/index.md	Invented first-hand evidence/benchmarks (38 experience claims, 0 unverifiable products)
+docs/when-astro-islands-shine-in-2026/index.md	Invented first-hand evidence/benchmarks (46 experience claims, 2 unverifiable products)
+docs/build-a-static-analyzer-in-14-days-with-tree-sitter/index.md	Invented first-hand evidence/benchmarks (29 experience claims, 3 unverifiable products)
+docs/ai-on-lambda-when-the-bill-explodes/index.md	Invented first-hand evidence/benchmarks (29 experience claims, 0 unverifiable products)
+docs/ai-engineer-role-vanished-in-6-months/index.md	Invented first-hand evidence/benchmarks (28 experience claims, 1 unverifiable products)
+docs/portfolio-that-stands-out-when-everyone-uses-ai/index.md	Invented first-hand evidence/benchmarks (25 experience claims, 2 unverifiable products)
+docs/survive-90s-db-failover-without-melting/index.md	Invented first-hand evidence/benchmarks (49 experience claims, 4 unverifiable products)
+docs/10-ai-wrappers-that-shipped-in-2026-8-died-fast/index.md	Invented first-hand evidence/benchmarks (20 experience claims, 3 unverifiable products)
+docs/regulations-killed-our-elegant-apis/index.md	Invented first-hand evidence/benchmarks (39 experience claims, 0 unverifiable products) | Title promises first-hand results the author cannot substantiate
+docs/ai-pair-coding-killed-pull-request-reviews/index.md	Invented first-hand evidence/benchmarks (31 experience claims, 1 unverifiable products)
+docs/airflows-replacement-what-80-of-teams-moved-to-in/index.md	Invented first-hand evidence/benchmarks (44 experience claims, 1 unverifiable products)
+docs/optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache/index.md	Invented first-hand evidence/benchmarks (26 experience claims, 0 unverifiable products)
+docs/ai-codebase-guardrails-over-guardrails/index.md	Invented first-hand evidence/benchmarks (30 experience claims, 3 unverifiable products)
+docs/slsa-and-sigstore-the-2026-supply-chain-baseline/index.md	Invented first-hand evidence/benchmarks (40 experience claims, 5 unverifiable products)
+docs/reconcile-mobile-money-in-3-days-edge-cases-paystack/index.md	Invented first-hand evidence/benchmarks (29 experience claims, 3 unverifiable products)
+docs/agent-code-reviews-1200-tests-per-pr/index.md	Invented first-hand evidence/benchmarks (30 experience claims, 0 unverifiable products)
+docs/build-a-portfolio-that-beats-the-ai-clone-pile/index.md	Invented first-hand evidence/benchmarks (36 experience claims, 3 unverifiable products)
+docs/gpu-spot-instances-reserved-for-ai-costs/index.md	Invented first-hand evidence/benchmarks (27 experience claims, 2 unverifiable products)
+docs/ai-infra-capacity-planning-vs-runbooks-what-id/index.md	Invented first-hand evidence/benchmarks (33 experience claims, 1 unverifiable products) | Title promises first-hand results the author cannot substantiate
+docs/cut-ai-inference-bill-68-without-model-changes/index.md	Invented first-hand evidence/benchmarks (36 experience claims, 1 unverifiable products)
+docs/local-llms-on-macbook-pro-the-4-models-that-run/index.md	Invented first-hand evidence/benchmarks (37 experience claims, 4 unverifiable products)
+docs/2026-gitops-showdown-argocd-vs-flux-after-two-years/index.md	Invented first-hand evidence/benchmarks (19 experience claims, 4 unverifiable products)
+docs/replace-vibe-testing-with-agent-evals-now/index.md	Near-duplicate of ship-evals-before-your-agent-ships
+docs/lessons-from-3-saas-price-pivots-in-2026/index.md	Incoherent invented timeline
+docs/8-ways-we-measure-agent-reliability-in-2026/index.md	Title promises first-hand results the author cannot substantiate
+docs/zero-downtime-postgres-schema-changes-in-2026/index.md	Incoherent invented timeline
+docs/failed-ai-wrappers-vs-the-3-that-worked-in-2026/index.md	Near-duplicate of 10-ai-wrappers-that-shipped-in-2026-8-died-fast
+docs/regulators-broke-our-api-design/index.md	Title promises first-hand results the author cannot substantiate
+docs/ai-ops-pagerduty-vs-firehydrant-for-oncall/index.md	Near-duplicate of ai-ops-pagerduty-vs-opsgenie-which-burns-your-team
+docs/aws-finops-levers-what-mid-size-teams-ignore-in-2026/index.md	Near-duplicate of aws-cost-levers-2026-the-3-that-cut-bills-30
+docs/africa-devs-ship-production-code-not-crud/index.md	Incoherent invented timeline
+docs/agents-roll-back-without-breaking-anything/index.md	Incoherent invented timeline
+docs/ai-ui-generation-what-it-fixed-and-what-still-breaks/index.md	Near-duplicate of ai-ui-tools-broke-my-react-flow-heres-why
+docs/ai-solo-saas-2026-build-vs-buy/index.md	Incoherent invented timeline
+docs/spot-instances-the-retry-logic-trap-90-miss/index.md	Incoherent invented timeline

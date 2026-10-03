@@ -64,8 +64,8 @@
       "description": "Cut search latency 50 % in 5 minutes — PostgreSQL 16, pgvector 0.7, and Redis 7.2 walkthrough with real 2026 benchmarks and cost breakdowns",
       "datePublished": "2026-06-10T21:36:55+00:00",
       "dateModified": "2026-09-21T07:36:10+00:00",
-      "wordCount": 2517,
-      "timeRequired": "PT13M",
+      "wordCount": 2334,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2517 words
+                        12 min read
+                        &nbsp;·&nbsp; 2334 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -277,8 +272,8 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026 I built a keyword search endpoint for a SaaS that would return results in under 500 ms at the 95th percentile. It worked great on the staging index with 10 k rows. When we cut the prod table to 2 M rows, every query that joined three tables jumped to 3–4 s. That’s when I realized: production search isn’t about writing the query, it’s about how the pieces fit together under load.</p>
-<p>What I missed initially was the difference between “it works on my laptop” and “it works on the box that actually has 500 concurrent users.” Semantic search looked promising, but at 2 M documents the nearest neighbor index ballooned to 4 GB of RAM, which triggered OOM kills on our 8 GB boxes. Keyword search was fast, but recall dropped 18 % on non-English queries. Hybrid seemed like the answer, but the first implementation added 250 ms latency because we naïvely ran both searches in series.</p>
+<p>It worked great on the staging index with 10 k rows. That’s when I realized: production search isn’t about writing the query, it’s about how the pieces fit together under load.</p>
+<p>Keyword search was fast, but recall dropped 18 % on non-English queries.</p>
 <p>This post distills what I learned the hard way and gives you a repeatable path to ship a search system in 2026 that handles real traffic without burning your AWS bill.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll need a Unix-like shell, Docker 25.0, Python 3.11, Node 20 LTS, Redis 7.2, and PostgreSQL 16 with the pgvector extension. If you don’t already have them, run:</p>
@@ -534,11 +529,11 @@ with open('so_questions_2026.jsonl') as f:
         conn.commit()
 &quot;
 </code></pre>
-<p>On my M1 MacBook this took 12 minutes for 50 k rows and used &lt; 1 GB RAM. The embedding table grew to 740 MB on disk.</p>
+<p>The embedding table grew to 740 MB on disk.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <ol>
 <li>Cache miss storms
-   After the first semantic query I noticed Redis CPU spiked to 90 % when 100 users hit <code>/semantic?q=docker</code> simultaneously. The problem: we weren’t caching the raw query embedding, only the JSON result. Fix: cache the bytes of the embedding under <code>semantic:emb:{q}</code> with a 5-minute TTL.</li>
+The problem: we weren’t caching the raw query embedding, only the JSON result. Fix: cache the bytes of the embedding under <code>semantic:emb:{q}</code> with a 5-minute TTL.</li>
 </ol>
 <p><code>python
    @app.get("/semantic")
@@ -649,20 +644,17 @@ def reset_db():
             cur.execute(&quot;TRUNCATE documents&quot;)
             conn.commit()
 
-
 def test_keyword():
     client.post(&quot;/ingest&quot;, json={&quot;title&quot;: &quot;Hello&quot;, &quot;body&quot;: &quot;World&quot;, &quot;tags&quot;: [&quot;a&quot;]})
     r = client.get(&quot;/keyword?q=hello&quot;)
     assert r.status_code == 200
     assert len(r.json()) == 1
 
-
 def test_semantic():
     client.post(&quot;/ingest&quot;, json={&quot;title&quot;: &quot;Docker&quot;, &quot;body&quot;: &quot;Containers&quot;, &quot;tags&quot;: [&quot;b&quot;]})
     r = client.get(&quot;/semantic?q=docker+containers&quot;)
     assert r.status_code == 200
     assert r.json()[0][&quot;score&quot;] &gt; 0.8
-
 
 def test_hybrid():
     client.post(&quot;/ingest&quot;, json={&quot;title&quot;: &quot;FastAPI&quot;, &quot;body&quot;: &quot;Async&quot;, &quot;tags&quot;: [&quot;c&quot;]})
@@ -746,7 +738,7 @@ def test_hybrid():
 </tbody>
 </table>
 <p>Hybrid wins by 3 % recall over semantic alone because the keyword filter narrows to relevant rows before reranking. The extra 20 ms latency is acceptable for most SaaS use cases.</p>
-<p>I also tried a pure vector index without the keyword filter to see if we could drop the full-text index entirely. Recall dropped 12 % on non-English queries — so we kept the hybrid.</p>
+<p>I also tried a pure vector index without the keyword filter to see if we could drop the full-text index entirely.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>How do I add multi-language support without doubling the index?</strong>
 Pin the model to <code>paraphrase-multilingual-MiniLM-L12-v2</code> (384 dim) and add a language column. Create a partial index per language:</p>
@@ -755,7 +747,7 @@ WHERE language = 'es';
 </code></pre>
 <p>At query time, filter by language first, then rerank. This keeps RAM usage constant while covering 100 languages.</p>
 <p><strong>Can I skip PostgreSQL and use Meilisearch 1.5 or Typesense 0.25 instead?</strong>
-Yes, but you lose the ability to join with other tables. I benchmarked Meilisearch 1.5 on the same 50 k set: P95 latency 85 ms and recall 0.68, which is close to keyword. However, Meilisearch doesn’t support custom reranking pipelines, so hybrid becomes impossible. If you only need keyword + semantic rerank, Typesense 0.25 with its vector extension can replace PostgreSQL entirely and cut your AWS bill 35 %.</p>
+Yes, but you lose the ability to join with other tables. However, Meilisearch doesn’t support custom reranking pipelines, so hybrid becomes impossible. If you only need keyword + semantic rerank, Typesense 0.25 with its vector extension can replace PostgreSQL entirely and cut your AWS bill 35 %.</p>
 <p><strong>What happens when the index grows to 10 M rows?</strong>
 At 10 M rows the pgvector IVF index is still fast for top-20 queries (P95 250 ms on t4g.large), but the embedding table balloons to 14 GB on disk. Two tricks:</p>
 <ol>
@@ -779,33 +771,20 @@ Use logical decoding with pgoutput and stream changes to a Redis Streams queue. 
 </ol>
 <p>If the latency drops below 250 ms, you’ve proved that a small configuration change can outperform vertical scaling. If it doesn’t, increase <code>lists</code> to 300 and repeat — but stop when you hit your SLO or RAM limit. This single file change takes 5 minutes and costs nothing.</p>
 <p>Do it before you spin up another instance.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/">RAG is not enough: hybrid search + reranking in 2026</a></li>
+<li><a href="https://kubaik.github.io/rag-in-prod-what-tutorials-wont-tell-you/">RAG in prod: what tutorials won’t tell you</a></li>
+<li><a href="https://kubaik.github.io/one-misconfigured-vector-db-killed-our-rag-pipeline/">One misconfigured vector DB killed our RAG pipeline</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 10, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -846,7 +825,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/rag-on-legacy-systems-vector-db-vs-full-text-sql/">
                         <h3>RAG on legacy systems: vector DB vs. full-text SQL</h3>
                         <p>Cut RAG hosting cost 78% with PostgreSQL 16 + pgvector 0.7 vs Weaviate 1.22. Real latency and cost data from a 12-month enterprise rollout.</p>
-                        <span class="related-meta">15 min read · 30 June 2026</span>
+                        <span class="related-meta">14 min read · 30 June 2026</span>
                     </a>
                     
                 </div>
@@ -854,12 +833,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

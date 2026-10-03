@@ -64,7 +64,7 @@
       "description": "Build a reliable multi-agent research system without LangGraph — latency, cost, and the poison-queue mistake most founders miss.",
       "datePublished": "2026-07-27T14:44:13+00:00",
       "dateModified": "2026-09-18T16:07:43+00:00",
-      "wordCount": 2434,
+      "wordCount": 2407,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -267,7 +262,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2434 words
+                        &nbsp;·&nbsp; 2407 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-18
                         
@@ -281,8 +276,8 @@
 <p>In late 2026 I shipped a multi-agent research system for a client who needed daily market reports. The system ran 8 LLM calls in parallel, fetched data from 3 external APIs, and wrote a 400-word summary every hour. It worked. For a week. Then one agent started returning 504s from an upstream API and the system froze—no retries, no graceful degradation, just a silent halt.</p>
 <p>The original plan was to use LangGraph because the docs called it “the production-grade orchestrator for multi-agent workflows.” After two weeks of wiring agents, tools, and checkpointers, I hit three blockers:</p>
 <ol>
-<li>Version 0.1.8’s checkpointing API changed twice in three months; our code broke on every upgrade.</li>
-<li>The TypeScript SDK added 16 MB to the Lambda bundle—our cold starts jumped from 240 ms to 680 ms.</li>
+<li>Version 0.1.8’s checkpointing API changed twice in three months; our code broke on every upgrade.
+2.</li>
 <li>Debugging a deadlock required reading the internal message queue state, which isn’t exposed in the public API.</li>
 </ol>
 <p>So I ripped it all out and rebuilt the orchestration layer from scratch using Python 3.11, Redis 7.2 queues, and AWS Step Functions for retries. The system now handles the same workload with 30 % lower p99 latency and zero surprise failures. This post is the playbook I wish existed that winter.</p>
@@ -662,9 +657,9 @@ async def worker(name: str, stream: str, consumer: str):
 </tr>
 </tbody>
 </table>
-<p>The single biggest win was removing the TypeScript SDK’s 16 MB bundle. Our Lambda image size dropped from 72 MB to 32 MB, which cut cold starts by 65 %.</p>
+<p>The single biggest win was removing the TypeScript SDK’s 16 MB bundle.</p>
 <p>I also discovered that the LangGraph checkpoint store was writing 4 KB of metadata to S3 on every step. At 10 000 runs/day that’s 40 MB/day—$1.20/month just for checkpoints. Redis streams cost $0.18/month for the same throughput.</p>
-<p>We still hit one surprise: AWS Step Functions occasionally throttles our 300 requests/minute burst. The fix was to use a reserved concurrency of 50 on the Lambda and to add a 1-second jitter to the enqueue_job calls. Without the jitter we saw 429 errors 12 % of the time.</p>
+<p>The fix was to use a reserved concurrency of 50 on the Lambda and to add a 1-second jitter to the enqueue_job calls.</p>
 <p>If I had to do it again, I would still choose this path for a solo founder, but I would start with a single Python async file instead of splitting into Lambda handlers. The cognitive overhead of wiring Lambda to Step Functions outweighed the benefits once the system stabilized.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>How do I scale this beyond one EC2 instance?</strong></p>
@@ -683,33 +678,28 @@ async def worker(name: str, stream: str, consumer: str):
 </code></pre>
 <p>If the median is above 1 second or your error rate is above 5 %, the fastest win is to add Redis streams and Step Functions retries. Do that today—don’t wait for a “perfect” design.</p>
 <p>Next, create a single file <code>agents.py</code> with the three agent classes and a tiny FastAPI endpoint that enqueues a job. You’ll have a working prototype in under 30 minutes and a real system you can iterate on without rewriting half the architecture later.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/">Supervisor vs swarm vs debate vs pipeline</a></li>
+<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Keep multi-model systems stable: 6 rules that worked</a></li>
+<li><a href="https://kubaik.github.io/orchestration-tax-kills-multi-agent-systems/">Orchestration tax kills multi-agent systems</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 27, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -744,7 +734,7 @@ please contact me and I'll review and correct it.</p>
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">
@@ -758,12 +748,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

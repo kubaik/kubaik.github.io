@@ -64,7 +64,7 @@
       "description": "Cut real-time pipeline latency 60% with Redis 7.2 — COBOL copybook ingestion, EBCDIC-to-JSON conversion, and 130 ms median latency without Kafka or Flink.",
       "datePublished": "2026-07-03T15:56:03+00:00",
       "dateModified": "2026-09-21T12:35:37+00:00",
-      "wordCount": 2872,
+      "wordCount": 2875,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2872 words
+                        &nbsp;·&nbsp; 2875 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -470,36 +465,20 @@ COPY fraud_model.lua /data/fraud_model.lua
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>If you’re on a single legacy VM, run Redis 7.2 with RedisJSON, RedisTimeSeries, and RedisGears modules. Pin the Dockerfile to Redis 7.2-alpine and the exact module versions (redis-redisjson=2.6.0-r0, redis-redistimeseries=1.8.0-r0, redis-redisgears=0.3.1-r0). Deploy a Lua script that converts raw COBOL copybook bytes to JSON paths every 100 ms, then stream the JSON events to your fraud model. You’ll hit sub-150 ms latency, stay under 600 MB RSS, and avoid schema drift pain without adding Kafka brokers or Flink workers.</p>
 <p>For the next 30 minutes, open <code>redis.conf</code>, uncomment <code>loadmodule</code> for each module, and set <code>save ""</code> to disable RDB snapshots during the initial load. Then run the Redis latency benchmark on your target VM to confirm the numbers match the lab results.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/mcp-servers-the-3-hidden-costs-nobody-quotes/">MCP servers: the 3 hidden costs nobody quotes</a></li>
+<li><a href="https://kubaik.github.io/ai-fixes-legacy-code-nobody-owns/">AI fixes legacy code nobody owns</a></li>
+<li><a href="https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 03, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -528,7 +507,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/agentic-workflows-how-we-kept-the-lights/">
                         <h3>Agentic workflows: how we kept the lights…</h3>
                         <p>Agentic workflow observability with millisecond timestamps, queue depth alerts, and OpenSearch Serverless — the stack that cut our MTTR 93% and p99 latency 74%</p>
-                        <span class="related-meta">15 min read · 17 July 2026</span>
+                        <span class="related-meta">14 min read · 17 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-feature-drift-why-your-model-died-at-midnight/">
@@ -548,12 +527,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

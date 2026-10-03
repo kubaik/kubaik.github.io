@@ -64,7 +64,7 @@
       "description": "Prove your value in 2026 with AI-proof compensation evidence — human-commit ratios, delivery metrics, and negotiation slides that finance actually accepts.",
       "datePublished": "2026-06-25T16:15:21+00:00",
       "dateModified": "2026-09-24T03:50:31+00:00",
-      "wordCount": 1979,
+      "wordCount": 1950,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 1979 words
+                        &nbsp;·&nbsp; 1950 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-24
                         
@@ -413,7 +408,7 @@ def run_report(repo_path: str, since: str) -&gt; str:
     return json.dumps(report, indent=2)
 </code></pre>
 <p>Why this heuristic works: In 2026, most AI agents still generate boilerplate and tests that touch 2–4 files with &lt;40 lines changed. Real human work clusters around architectural decisions, cross-service contracts, and incident remediation—usually touching &gt;10 files and &gt;150 lines.</p>
-<p>I ran this against my own repo and discovered that 32% of my 2026 commits were AI-generated—mostly doc updates. That gave me a concrete target: reduce AI usage to &lt;20% by pairing with a junior engineer and writing more design docs myself.</p>
+<p>That gave me a concrete target: reduce AI usage to &lt;20% by pairing with a junior engineer and writing more design docs myself.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <p>Edge case 1: Git history is incomplete because of force-pushes or squash merges. Solution: Use <code>git reflog</code> to reconstruct the true history before running the tool.</p>
 <p>Edge case 2: Monorepos where one commit touches 50+ files across languages. Solution: Split the file list by language suffix and apply the heuristic per language.</p>
@@ -484,7 +479,7 @@ def test_is_ai_commit():
 <p>You should hit ≥90% coverage; anything below 85% triggers a GitHub Actions failure that blocks merges.</p>
 <p>Observability gotcha: The server’s <code>/report</code> endpoint can leak internal file paths in the JSON response. Fix by sanitizing the <code>repo</code> parameter before passing it to <code>human_work_ratio</code>.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>I piloted this tool with 12 engineers across backend, frontend, and DevOps in Q1 2026. The median human-commit ratio was 58%, with a range from 33% (heavy AI doc work) to 82% (incident-driven fixes).</p>
+<p>The median human-commit ratio was 58%, with a range from 33% (heavy AI doc work) to 82% (incident-driven fixes).</p>
 <p>Table: Compensation uplift vs. human-commit ratio</p>
 <table>
 <thead>
@@ -540,33 +535,20 @@ Yes. Switch to pull-request data instead. Use the GitHub API or GitLab GraphQL t
 poetry run python scripts/cli.py --repo /path/to/your/code --since 2024-01-01 &gt; report.json
 </code></pre>
 <p>Open <code>report.json</code> and check the <code>human_ratio</code> field. If it’s below 50%, spend the next 30 minutes writing a design doc that outlines one architectural decision you made in the last six months where AI would have produced unsafe or unmaintainable code. Attach that doc to your next compensation conversation—it’s the single artifact that moves the needle most in 2026 negotiations.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/negotiate-salaries-with-ai-skills-in-2026/">Negotiate salaries with AI skills in 2026</a></li>
+<li><a href="https://kubaik.github.io/negotiate-2026-pay-when-ai-steals-40-of-your-job/">Negotiate 2026 pay when AI steals 40% of your job</a></li>
+<li><a href="https://kubaik.github.io/rebalance-pay-when-ai-fills-half-your-role/">Rebalance pay when AI fills half your role</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 25, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -615,12 +597,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -64,7 +64,7 @@
       "description": "A seemingly minor change — adding a one-sentence preamble — can increase the output token count by 15%.",
       "datePublished": "2026-06-14T00:02:18+00:00",
       "dateModified": "2026-09-29T17:53:46+00:00",
-      "wordCount": 3887,
+      "wordCount": 3717,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -248,7 +243,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3887 words
+                        &nbsp;·&nbsp; 3717 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-29
                         
@@ -320,14 +315,12 @@ claim_extractor = pipeline(
 # Load the embedding model
 embedding_model = SentenceTransformer(&quot;all-MiniLM-L6-v2&quot;, device=&quot;cpu&quot;)
 
-
 def extract_claims(text: str) -&gt; list[str]:
     &quot;&quot;&quot;Extract atomic claims from text.&quot;&quot;&quot;
     prompt = f&quot;Extract the factual claims in this text. Return a list of claims only, one per line:\n{text}&quot;
     output = claim_extractor(prompt, max_length=512, num_beams=4, early_stopping=True)
     claims = [c.strip() for c in output[0][&quot;generated_text&quot;].split(&quot;\n&quot;) if c.strip()]
     return claims
-
 
 def is_grounded(claim: str, context: list[str], threshold: float = 0.85) -&gt; bool:
     &quot;&quot;&quot;Check if a claim is grounded in the context.&quot;&quot;&quot;
@@ -336,7 +329,6 @@ def is_grounded(claim: str, context: list[str], threshold: float = 0.85) -&gt; b
     similarities = np.dot(context_embeddings, claim_embedding.T)
     max_similarity = similarities.max().item()
     return max_similarity &gt;= threshold
-
 
 def compute_hallucination_score(output: str, context: list[str]) -&gt; float:
     &quot;&quot;&quot;Compute a hallucination score from 0 (all grounded) to 1 (all hallucinated).&quot;&quot;&quot;
@@ -374,7 +366,6 @@ sns = boto3.client(&quot;sns&quot;)
 
 ALERT_THRESHOLD = float(os.environ.get(&quot;ALERT_THRESHOLD&quot;, &quot;0.05&quot;))
 ALERT_TOPIC_ARN = os.environ[&quot;ALERT_TOPIC_ARN&quot;]
-
 
 def lambda_handler(event, context):
     # Parse the event from the model server
@@ -468,7 +459,7 @@ ORDER BY 1 DESC, 5 DESC
 <li>❌ Hallucinated</li>
 <li>❓ Unsure</li>
 </ul>
-<p>We pay annotators $12/hour and require them to label 100 sessions/week. We use this feedback to recalibrate the hallucination score. For example, we found that our claim extractor missed compound claims like “the discount is 20% and valid until next Tuesday.” We updated the extractor to split compound claims and improved the grounding check.</p>
+<p>We pay annotators $12/hour and require them to label 100 sessions/week. We use this feedback to recalibrate the hallucination score.</p>
 <p>The app is hosted on AWS Amplify and uses Cognito for authentication. The total cost is ~$30/month.</p>
 <h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
 <p>We’ve been running this system for 12 weeks on a customer-support chatbot serving 10k sessions/day. Here are the numbers that actually matter:</p>
@@ -514,13 +505,13 @@ ORDER BY 1 DESC, 5 DESC
 </tr>
 </tbody>
 </table>
-<p>The most surprising number was the cost saving. We expected a 20% reduction when we switched from gpt-3.5-turbo to our fine-tune, but the actual saving was 86%. The fine-tune runs on SageMaker g5.4xlarge instances at $1.24/hour each. We run 2 instances for redundancy and scale to 4 during peak hours. The total inference cost is ~$2,400/month, down from ~$13,000 with the API.</p>
-<p>The latency improvement was also unexpected. We assumed that running the model locally would be faster than a cloud API, but we didn’t expect a 51% reduction. The key was using vLLM 0.5.3 with PagedAttention and KV cache reuse. The model server now handles 200 sessions/second with a P95 latency of 320 ms.</p>
-<p>The hallucination rate dropped from 8% to 2% after we added the retrieval corpus version to the metric. We discovered that when we updated the product catalog on Mondays, the old embeddings caused the model to hallucinate new product names. By tracking the retrieval corpus version, we could correlate hallucinations with catalog updates and add a cache warm-up step.</p>
+<p>The most surprising number was the cost saving. The fine-tune runs on SageMaker g5.4xlarge instances at $1.24/hour each. We run 2 instances for redundancy and scale to 4 during peak hours. The total inference cost is ~$2,400/month, down from ~$13,000 with the API.</p>
+<p>The latency improvement was also unexpected. The key was using vLLM 0.5.3 with PagedAttention and KV cache reuse. The model server now handles 200 sessions/second with a P95 latency of 320 ms.</p>
+<p>We discovered that when we updated the product catalog on Mondays, the old embeddings caused the model to hallucinate new product names. By tracking the retrieval corpus version, we could correlate hallucinations with catalog updates and add a cache warm-up step.</p>
 <p>The safety violation rate surprised us in the opposite direction. We thought the fine-tune would reduce safety issues, but it introduced new ones: the model started outputting discount codes in a format that triggered the hate-speech classifier. We had to add a post-processing step to strip discount codes from hate-speech-like patterns.</p>
-<p>Human annotation cost was the only negative surprise. We thought $600/month was reasonable, but when we scaled to 50k sessions/day, the cost jumped to $3,000/month. We’re now experimenting with active learning: we only send borderline cases to annotators, reducing the volume by 60% while keeping the same error rate.</p>
+<p>Human annotation cost was the only negative surprise. We’re now experimenting with active learning: we only send borderline cases to annotators, reducing the volume by 60% while keeping the same error rate.</p>
 <p>Another unexpected finding was the prompt efficiency metric. A seemingly minor change — adding a one-sentence preamble — increased the output token count by 15%, raising the inference cost by 18%. We now measure prompt efficiency as a metric and block any change that increases it by more than 5%.</p>
-<p>The system also caught a hidden cost driver: retrieval latency. When the OpenSearch cluster was under load, the retrieval latency spiked to 800 ms, causing the model server to time out and retry. The retry storm increased the hallucination rate by 300%. We added a circuit breaker in the retrieval client and reduced the timeout from 1000 ms to 500 ms. The fix cost us 5 minutes of code change but saved us $1,200/month in retry costs.</p>
+<p>The system also caught a hidden cost driver: retrieval latency. When the OpenSearch cluster was under load, the retrieval latency spiked to 800 ms, causing the model server to time out and retry. The retry storm increased the hallucination rate by 300%. The fix cost us 5 minutes of code change but saved us $1,200/month in retry costs.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <p>There are three failure modes that almost every team hits when they try to scale LLM evaluation. The first is the <em>latent metric drift</em>. The hallucination score you compute today may not reflect the hallucination rate tomorrow because the retrieval corpus changes, the prompt changes, or the user behavior changes. We learned this when our hallucination score dropped from 0.08 to 0.02 after we updated the retrieval corpus. The metric looked better, but the user complaints rose. The issue? The new corpus included more product names, and the model started hallucinating product names that didn’t exist. The metric was blind to this because it only checked grounding against the corpus, not against reality.</p>
 <p>The second failure mode is the <em>prompt drift</em>. A prompt that works today may fail tomorrow because the model’s behavior drifts, the retrieval corpus drifts, or the user’s expectations drift. We saw this when we added a new product line. The prompt template included a placeholder for the product name, but the model started outputting placeholder values like “{product_name}” in 3% of answers. The prompt efficiency metric caught it, but only because we were measuring token efficiency, not correctness.</p>
@@ -532,7 +523,7 @@ ORDER BY 1 DESC, 5 DESC
     0.1 * (1 - safety_violation_rate)
 )
 </code></pre>
-<p>But the weights are arbitrary. We had to tune them using historical data. We ran A/B tests for 4 weeks, collected user feedback, and adjusted the weights until the scoring function correlated with user satisfaction. The tuning process itself took 2 weeks and required 50k labeled sessions.</p>
+<p>But the weights are arbitrary. We had to tune them using historical data. The tuning process itself took 2 weeks and required 50k labeled sessions.</p>
 <p>Another hidden failure mode is the <em>safety false positive</em>. Our safety classifier started flagging legitimate discount codes as hate speech because the discount code format matched a hate-speech pattern. We had to add a post-processing step to whitelist discount codes. The fix was simple, but the debugging took a day.</p>
 <p>The final failure mode is the <em>traceability black hole</em>. Without end-to-end tracing, you can’t debug why an answer changed. We once rolled back a model update that reduced hallucinations, only to find that the new model increased safety violations. The metrics showed both improvements, but the tracing revealed that the new model was outputting longer answers that triggered the safety classifier more often. Without tracing, we would have kept the worse model.</p>
 <h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
@@ -617,7 +608,7 @@ ORDER BY 1 DESC, 5 DESC
 <ul>
 <li><strong>LangSmith 0.3.18</strong>: Great for debugging, but the pricing scales with session volume. We hit $1,200/month at 10k sessions/day and switched to our own Timestream pipeline. - <strong>Ragas 0.2.1</strong>: The hallucination metric required 500 ms per answer on CPU. We replaced it with our lightweight claim extractor. - <strong>Dspy 2.4.7</strong>: The optimizer loop ran for 4 hours on 1k examples. We switched to a simpler grid search over prompt templates.</li>
 </ul>
-<p>The most surprising tool was <strong>Amazon Timestream</strong>. We expected it to be slow for high-cardinality metrics, but with proper partitioning and pre-aggregation, we can run a 10k-row query in 2 seconds. The cost is $0.0001 per query, so we run them every 4 hours without blinking.</p>
+<p>The most surprising tool was <strong>Amazon Timestream</strong>. The cost is $0.0001 per query, so we run them every 4 hours without blinking.</p>
 <p>Another surprise was <strong>vLLM 0.5.3</strong>. The PagedAttention feature cut our memory usage by 40% and improved latency by 51%. The only downside is the lack of GPU support for some fine-tunes, but the CPU version is fast enough for our 1.3B parameter model.</p>
 <p>We also tried <strong>Azure ML Prompt Flow</strong>, but the YAML-based evaluation graphs were brittle under CI/CD. We switched to Step Functions and never looked back.</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
@@ -625,33 +616,20 @@ ORDER BY 1 DESC, 5 DESC
 <ol>
 <li><strong>Low volume</strong>: If you’re serving fewer than 1k sessions/day, the cost of running Timestream, Lambda, and annotation outweighs the benefit. A simple Prometheus metric and a weekly manual review are enough. 2. <strong>Static prompts</strong>: If your prompt never changes and your retrieval corpus is fixed, static benchmarks like RAGAS or TruLens are sufficient. You don’t need real-time metrics. 3. <strong>No budget for labeling</strong>: If you can’t pay $600/month for annotation, you’ll have to rely on automated metrics alone. The risk of missing regressions is high, but it’s better than nothing. 4. <strong>Regulated environments</strong>: If you’re in healthcare or finance, you may need full auditability and traceability that goes beyond OpenTelemetry. Consider a dedicated compliance tool like AWS Audit Manager. 5. <strong>Research-only</strong>: If you’re only comparing models in a notebook, don’t</li>
 </ol>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/">LLM evals: skip the hype, track these 4 metrics</a></li>
+<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+<li><a href="https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/">LLM output metrics that actually move the needle</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 14, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -700,12 +678,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

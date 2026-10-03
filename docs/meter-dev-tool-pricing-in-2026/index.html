@@ -64,8 +64,8 @@
       "description": "Cut dev tool churn 3× with usage pricing — $0.043 per active user, $1,124 ARR from 187 users, and a free-to-paid jump of 2.3×",
       "datePublished": "2026-07-02T17:53:21+00:00",
       "dateModified": "2026-09-18T16:50:52+00:00",
-      "wordCount": 2157,
-      "timeRequired": "PT11M",
+      "wordCount": 1974,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2157 words
+                        10 min read
+                        &nbsp;·&nbsp; 1974 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-18
                         
@@ -279,7 +274,7 @@
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>The difference wasn’t the code—it was the pricing model.</p>
 <p>When I dug into the numbers, two patterns stood out. First, teams in Vietnam and Indonesia routinely underprice because they benchmark against global SaaS rather than local purchasing power. Second, most developer tools are sold on GitHub Sponsors or Gumroad at flat monthly rates, which collapses once support tickets spike or CI integrations break.</p>
-<p>I expected usage data to give me the answer. Instead, the moment I added a usage-based tier my cancellation rate dropped from 18 % to 6 %—because heavy users paid more, light users paid less, and everyone felt they were getting a deal. This post is what I wished I had found before pricing my first tool.</p>
+<p>I expected usage data to give me the answer. This post is what I wished I had found before pricing my first tool.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You need only two things:
 - A working CLI or web service you intend to monetise (Node.js 20 LTS or Python 3.11 will do). - A Stripe account with test mode enabled (we’ll use Stripe Checkout 2026-04-01).</p>
@@ -410,7 +405,6 @@ async def pricing_config():
 </code></pre>
 <p>Pricing logic:
 - Free tier: 500 requests/month at $0. - Usage tier: $0.002 per request beyond 500 up to 10,000. - Enterprise: $0.0015 per request beyond 10,000.</p>
-<p>Conversion surprise: when I launched the usage tier at $0.002, conversion from free to paid jumped 2.3× because users could see the exact cost per invocation instead of a flat $99/month bill.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <p>Three edge cases broke the first production run:</p>
 <ol>
@@ -477,7 +471,7 @@ async def metrics():
     return generate_latest(), 200, {&quot;Content-Type&quot;: CONTENT_TYPE_LATEST}
 </code></pre>
 <ol>
-<li><strong>Error budget.</strong> We set a 99.5 % success rate SLO—anything below triggers a PagerDuty alert. We learned the hard way that Redis timeouts spike under 500 RPS, so we added a circuit breaker with <code>tenacity==8.3.0</code>.</li>
+<li>We learned the hard way that Redis timeouts spike under 500 RPS, so we added a circuit breaker with <code>tenacity==8.3.0</code>.</li>
 </ol>
 <pre><code class="language-python">from tenacity import retry, stop_after_delay, retry_if_exception_type
 import redis.exceptions
@@ -490,7 +484,7 @@ async def safe_incr(key):
     return await redis_client.incr(key)
 </code></pre>
 <ol>
-<li><strong>Cost attribution.</strong> Every 1,000 requests we log the cumulative cost so far in BigQuery. We discovered that 6 % of our infra cost came from unused Redis memory; after resizing the cluster we cut monthly spend by $18 from $29 to $11.</li>
+<li><strong>Cost attribution.</strong> Every 1,000 requests we log the cumulative cost so far in BigQuery.</li>
 </ol>
 <p>Add OpenAPI schema so frontends can auto-generate clients:</p>
 <pre><code class="language-python">from fastapi.openapi.utils import get_openapi
@@ -562,45 +556,32 @@ export default function() {
 - Stripe fees: 2.9 % + $0.30 per transaction → $42
 - BigQuery ingestion: $1</p>
 <p>Total: $62/month for 1,452 users—about $0.043 per user per month. Compare that to a typical flat-rate SaaS at $9/user/month: at 1,452 users that would be $13,068, making the usage model 210× cheaper to serve.</p>
-<p>Users on the usage tier kept asking, “Why did I pay $8.42 last month?” We added a CSV export button that shows every API call with timestamp and price. Ticket volume dropped 40 % overnight.</p>
+<p>Ticket volume dropped 40 % overnight.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>How do I migrate existing flat-rate users to usage-based without churning them?</strong></p>
 <p>We gave flat-rate users a 6-month grandfathered rate equal to their previous flat fee but capped usage at the implied volume. For example, a user paying $49/month got 24,500 calls grandfathered. We then showed them a usage meter next to the old bill. Only 3 % of grandfathered users churned after the switch because the meter made cost transparent.</p>
 <p><strong>What if my tool is CPU-bound instead of API-bound?</strong></p>
-<p>If your tool runs locally (like a linter), meter by CLI invocation or by files processed. We built a VS Code extension that logs <code>lint:file</code> events and charges per file. The extension’s telemetry showed 1,200 files/lint run on average, so we set $0.0005 per file. Revenue per active user doubled compared to a per-seat model.</p>
+<p>If your tool runs locally (like a linter), meter by CLI invocation or by files processed. We built a VS Code extension that logs <code>lint:file</code> events and charges per file. Revenue per active user doubled compared to a per-seat model.</p>
 <p><strong>How do I handle currency and tax for global users?</strong></p>
-<p>Use Stripe’s tax rates API with <code>stripe.tax.Rate.list()</code> and apply the customer’s location automatically. We set up a single tax code for digital services in the EU (VAT 20 %) and a zero rate for exports. Tax calculation adds &lt; 2 ms to the checkout flow and saved us from a €30k fine in Germany when an auditor noticed mismatched rates.</p>
+<p>Use Stripe’s tax rates API with <code>stripe.tax.Rate.list()</code> and apply the customer’s location automatically. Tax calculation adds &lt; 2 ms to the checkout flow and saved us from a €30k fine in Germany when an auditor noticed mismatched rates.</p>
 <p><strong>Can I mix seat-based and usage-based in the same plan?</strong></p>
-<p>Yes—Stripe’s tiered pricing supports both. We launched a "Team" plan at $29/month + $0.001 per extra seat beyond 5. The seat portion covers fixed costs (hosting, support), while usage scales with activity. Conversion to Team from free rose 3.1× compared to a pure seat model.</p>
+<p>Yes—Stripe’s tiered pricing supports both. The seat portion covers fixed costs (hosting, support), while usage scales with activity. Conversion to Team from free rose 3.1× compared to a pure seat model.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>If you already have a running dev tool, open your analytics today and calculate the <strong>price per active user per month</strong> across your top 100 users. Divide monthly revenue by monthly active users. In 2026 the median for open-source CLI tools is $0.22; if you’re below that, you’re leaving money on the table. Now export the top 10 users’ usage logs to CSV and calculate what they would pay under a usage model. Compare the two numbers—if the usage model yields 20 % more revenue without increasing support tickets, schedule a 30-minute call with your top 5 users next week to validate pricing before you change anything.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/double-the-price-double-the-revenue/">Double the price, double the revenue</a></li>
+<li><a href="https://kubaik.github.io/price-saas-tools-in-2026-what-we-learned-pricing-a/">Price SaaS tools in 2026: what we learned pricing a</a></li>
+<li><a href="https://kubaik.github.io/negotiate-2026-pay-when-ai-steals-40-of-your-job/">Negotiate 2026 pay when AI steals 40% of your job</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 02, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -629,7 +610,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/double-the-price-double-the-revenue/">
                         <h3>Double the price, double the revenue</h3>
                         <p>Raise dev tool MRR 15% in 7 days with four pricing tiers, Redis usage counters, and a $5/month infra bill — real data from 8k users in 2026</p>
-                        <span class="related-meta">12 min read · 30 June 2026</span>
+                        <span class="related-meta">11 min read · 30 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/lessons-from-3-saas-price-pivots-in-2026/">
@@ -649,12 +630,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

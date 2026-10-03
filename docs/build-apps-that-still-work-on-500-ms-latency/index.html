@@ -64,7 +64,7 @@
       "description": "Cut TTI 70% by moving to ECDSA TLS and Redis 7.2 edge cache — the exact changes teams made when Starlink beams lit up East Africa in 2026.",
       "datePublished": "2026-06-14T07:17:21+00:00",
       "dateModified": "2026-09-21T12:33:49+00:00",
-      "wordCount": 3748,
+      "wordCount": 3754,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3748 words
+                        &nbsp;·&nbsp; 3754 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -794,33 +789,20 @@ ECDSA (P-256) is the better default in 2026 because it produces smaller keys and
 Redis (including managed options like Upstash) is the right choice when you need to cache full page payloads, JSON documents, or anything requiring sub-10 ms p99 reads and structured data types. Workers KV is eventually consistent and lacks RedisJSON-style operations, so it’s better suited to small, immutable values or simple key lookups. If your payload is under 1 MB and you can tolerate eventual consistency, KV is simpler; for larger dashboards with read-heavy traffic, Redis usually wins on TTI.</p>
 <p><strong>How do I test performance for users on high-latency connections without being in the region?</strong>
 Use Lighthouse’s simulated throttling (RTT 300 ms, 1.6 Mbps) for a quick baseline, then add Playwright tests that emulate 500 ms latency and run them from a CI runner in a nearby region such as <code>af-south-1</code>. Combine that with synthetic monitoring from a real POP and alert on TLS handshake duration and p99 cache latency. The combination catches both regressions in your code and regressions in the network path, which is where most of the surprises live.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/">Move images 50% faster in 2026 with Starlink CDN</a></li>
+<li><a href="https://kubaik.github.io/ship-1mb-pages-on-4g-starlink-africa-case-study/">Ship 1MB pages on 4G: Starlink Africa case study</a></li>
+<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 14, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -869,12 +851,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

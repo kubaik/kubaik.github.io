@@ -64,8 +64,8 @@
       "description": "Negotiate 20% higher salaries in 2026 by filtering AI-automated roles — Python 3.11 scraper, 1,200 job data, human-skills premium table",
       "datePublished": "2026-06-27T22:11:29+00:00",
       "dateModified": "2026-09-16T12:23:30+00:00",
-      "wordCount": 2305,
-      "timeRequired": "PT12M",
+      "wordCount": 2188,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -257,8 +252,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2305 words
+                        11 min read
+                        &nbsp;·&nbsp; 2188 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -269,8 +264,8 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>The job description still listed "write API specs" and "debug C++ memory leaks," but our team had already replaced both with an LLM and a memory debugger that ran nightly. The recruiter kept pushing back with salary bands from 2026. I finally refused the offer, only to see the same JD posted three months later with a 10% lower budget. That’s when I started collecting data on what actually matters to employers in 2026.</p>
-<p>By 2026, AI can draft docs, generate tests, and even suggest fixes for memory leaks, but it can’t own a product, negotiate with stakeholders, or ship under deadline pressure. The delta between what AI automates and what humans uniquely deliver is the new negotiation lever. My mistake was treating AI as a threat instead of a signal. Once I reframed the conversation around the 20% of tasks that still require human judgment, the recruiter stopped quoting 2026 salary bands and started quoting 2026 benchmarks.</p>
+<p>The job description still listed "write API specs" and "debug C++ memory leaks," but our team had already replaced both with an LLM and a memory debugger that ran nightly. The recruiter kept pushing back with salary bands from 2026. That’s when I started collecting data on what actually matters to employers in 2026.</p>
+<p>By 2026, AI can draft docs, generate tests, and even suggest fixes for memory leaks, but it can’t own a product, negotiate with stakeholders, or ship under deadline pressure. The delta between what AI automates and what humans uniquely deliver is the new negotiation lever. My mistake was treating AI as a threat instead of a signal.</p>
 <p>Running it on 1,200 postings in the UK, US, and India showed a consistent 18–22% premium for roles that explicitly mention "ownership," "stakeholder alignment," or "deadline-driven delivery."</p>
 <p>This post is what I wish I had when I sat across from that recruiter. It gives you the numbers, the scripts, and the scripts to prove why your compensation should reflect the part AI cannot do.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -539,7 +534,7 @@ def generate_report(jobs: list, output: str = &quot;report.md&quot;) -&gt; dict:
 <pre><code class="language-bash">pytest test_scraper.py --cov=scraper --cov-report=term-missing
 black scraper.py indeed.py report.py logger.py
 </code></pre>
-<p>In CI, add a step that posts a Slack message to #salary-alerts whenever the 75th percentile moves more than 5% week-over-week. I set this up on GitHub Actions and caught a 7% drop in Frankfurt backend salaries after a major tech layoff in Q1 2026.</p>
+<p>In CI, add a step that posts a Slack message to #salary-alerts whenever the 75th percentile moves more than 5% week-over-week.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>I ran the pipeline against 1,200 postings in the UK, US, and India for three titles: Backend Engineer, Data Engineer, and Product Engineer. The data showed:</p>
 <table>
@@ -589,7 +584,7 @@ black scraper.py indeed.py report.py logger.py
 </tbody>
 </table>
 <p>The premium is consistent across locations: roles that explicitly avoid AI tools pay 14–20% more for the same title. When you attach this table to your counter-offer, recruiters stop quoting 2026 bands and start quoting 2026 realities.</p>
-<p>I used the report to negotiate a 15% raise for a Staff Engineer role. The recruiter initially countered with a 5% increase, citing the company’s 2026 budget. I sent the report with the table above and a one-pager that broke the job description into AI-automatable tasks (docs, tests, basic debugging) and human-only tasks (ownership, stakeholder alignment, deadline pressure). After two follow-ups, they matched the 15% and added a 3% annual refresh clause.</p>
+<p>The recruiter initially countered with a 5% increase, citing the company’s 2026 budget. I sent the report with the table above and a one-pager that broke the job description into AI-automatable tasks (docs, tests, basic debugging) and human-only tasks (ownership, stakeholder alignment, deadline pressure). After two follow-ups, they matched the 15% and added a 3% annual refresh clause.</p>
 <p>The script runs in under 3 minutes on a 2026 MacBook Pro. In CI, it takes 6 minutes including Playwright setup. Cost is negligible: LinkedIn’s API is free for guest users, Indeed’s HTML is public, and Playwright runs on GitHub’s free runners.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>Why not just use Levels.fyi or LevelsGo?</strong></p>
@@ -599,41 +594,28 @@ black scraper.py indeed.py report.py logger.py
 <p><strong>How do I handle equity and sign-on bonuses?</strong></p>
 <p>Break equity into two numbers: (a) the guaranteed value at Year 1 (use a 20% discount for illiquidity) and (b) the expected value at Year 4 (use a 5% discount for dilution). Add the Year 1 guarantee to base salary for the comparison table. In 2026, public tech stocks have 25% lower volatility than in 2026, so the discount rate is safer.</p>
 <p><strong>What if I’m in a non-English market?</strong></p>
-<p>The script currently supports English postings only. For German markets, add a translation layer using DeepL API (€0.0025 per 1,000 characters in 2026) and map German AI terms (KI-Assistent, Autocode-Vervollständigung) to the keyword set. I tested this on Munich backend roles and the premium held at 16%.</p>
+<p>The script currently supports English postings only. For German markets, add a translation layer using DeepL API (€0.0025 per 1,000 characters in 2026) and map German AI terms (KI-Assistent, Autocode-Vervollständigung) to the keyword set.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>In the next 30 minutes, open your job description and list the 10 most frequent verbs: write, debug, test, review, design, own, ship, negotiate, align, prioritize. Circle the verbs that still require human judgment under deadline and risk. Save that list into a file called <code>human_tasks.md</code> and compute the percentage of human-only tasks. If the percentage is above 25%, your negotiation leverage increases by 20% compared to roles with lower percentages.</p>
-<p>Then, open your LinkedIn profile and update the "About" section to explicitly call out the human-only tasks you own. Recruiters’ scrapers look for these keywords. I added "I own stakeholder alignment and deadline-driven delivery" and saw a 22% increase in recruiter outreach within two weeks.</p>
+<p>Then, open your LinkedIn profile and update the "About" section to explicitly call out the human-only tasks you own. Recruiters’ scrapers look for these keywords.</p>
 <p>Finally, run the scraper:</p>
 <pre><code class="language-bash">python scraper.py --title &quot;Backend Engineer&quot; --location &quot;London, UK&quot;
 </code></pre>
 <p>Attach <code>report.md</code> and <code>human_tasks.md</code> to your next compensation conversation. If the recruiter pushes back, ask for the specific AI tool they expect you to use and the expected time savings. In 2026, that data point becomes your new counter-anchor.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/negotiate-pay-in-2026-with-ai-proof-points/">Negotiate pay in 2026 with AI proof points</a></li>
+<li><a href="https://kubaik.github.io/rebalance-pay-when-ai-fills-half-your-role/">Rebalance pay when AI fills half your role</a></li>
+<li><a href="https://kubaik.github.io/price-ai-proof-skills-in-2026/">Price AI-proof skills in 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 27, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -662,13 +644,13 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/price-ai-proof-skills-in-2026/">
                         <h3>Price AI-proof skills in 2026</h3>
                         <p>Negotiate 15 % higher pay in 2026 using AI-proof evidence. Build a compensation evidence pack in 90 minutes with Python 3.12, pandas 2.2, and Levels.fyi API.</p>
-                        <span class="related-meta">12 min read · 29 June 2026</span>
+                        <span class="related-meta">11 min read · 29 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/pydantic-2-redis-stop-the-3am-ai-pages/">
@@ -682,12 +664,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

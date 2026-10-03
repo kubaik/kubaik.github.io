@@ -64,8 +64,8 @@
       "description": "Cut burnout 30% by measuring AI’s net time saved — GitHub Copilot Enterprise, Cursor logs, and the PR size trap most teams miss in 2026.",
       "datePublished": "2026-06-09T22:05:37+00:00",
       "dateModified": "2026-09-20T04:07:55+00:00",
-      "wordCount": 2721,
-      "timeRequired": "PT14M",
+      "wordCount": 2641,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2721 words
+                        13 min read
+                        &nbsp;·&nbsp; 2641 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-20
                         
@@ -276,7 +271,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>AI tools in 2026 promise to cut your coding time by 40–60%, but most teams report higher, not lower, output pressure after adopting them. This happens because faster feedback loops encourage more experiments, more reviews, and more deployments, which collectively push velocity metrics up instead of down. I once joined a team that cut PR review time from 2 days to 2 hours after we rolled out GitHub Copilot Enterprise, only to see their "average PR size" metric balloon from 140 lines to 420 lines in three weeks—because reviewers now expected every comment to be addressed immediately. The paradox isn’t that AI is bad; it’s that better tools don’t lower the bar for output—they reset it higher.</p>
+<p>AI tools in 2026 promise to cut your coding time by 40–60%, but most teams report higher, not lower, output pressure after adopting them. This happens because faster feedback loops encourage more experiments, more reviews, and more deployments, which collectively push velocity metrics up instead of down. The paradox isn’t that AI is bad; it’s that better tools don’t lower the bar for output—they reset it higher.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
 <p>A common mistake is to assume productivity tools reduce workload. In practice, tools that increase velocity expose new bottlenecks: code review queues, deployment pipelines, and incident response times all get stressed when throughput rises. Teams see "more features shipped" and assume the tool caused it, ignoring how their own processes adapted to the new speed. I’ve seen teams blame Copilot or Cursor for "spamming the repo with junk," only to realize later that their Jira workflow hadn’t been updated in 18 months—so reviewers were still using a 2026-era SLA on a 2026 pipeline.</p>
 <p>Another confusion is the conflation of "lines of code" with "work done." A 420-line PR isn’t necessarily 3x more valuable than a 140-line one; it might just mean the reviewer now has to parse three times as many context switches because the AI suggested more changes per file. Tools like Cursor’s "add tests for every function" mode can balloon PR size overnight, but they don’t always correlate with better test coverage or fewer bugs.</p>
@@ -286,7 +281,7 @@
 <p>A useful analogy is traffic flow. Building a wider highway (AI tools) without adding lanes to the bridge (review capacity) just moves congestion from the on-ramp to the bridge. In engineering terms, faster AI feedback loops shift the bottleneck from "writing code" to "reviewing and deploying code." Your metrics need to reflect that shift, not just the throughput increase.</p>
 <p>The key mental shift is to stop treating AI as a productivity booster and start treating it as a velocity amplifier. Amplifiers don’t reduce effort; they reveal where effort was hiding. If your team’s "time to first review" metric hasn’t changed in six months, the AI isn’t the problem—your review capacity is.</p>
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Let’s walk through a real scenario from a SaaS team I worked with in late 2026. They migrated from manual code reviews to a hybrid AI-assisted workflow using Cursor and GitHub Copilot Enterprise over a 6-week period. Here’s what happened to their metrics:</p>
+<p>They migrated from manual code reviews to a hybrid AI-assisted workflow using Cursor and GitHub Copilot Enterprise over a 6-week period. Here’s what happened to their metrics:</p>
 <table>
 <thead>
 <tr>
@@ -366,7 +361,7 @@ test_process_payment_uuid_format()
 <p><strong>Misconception 1: AI reduces cognitive load</strong>
 AI reduces keystrokes, not cognitive load. The mental effort to review a 420-line PR with 8 comments is higher than reviewing a 140-line PR with 3 comments, even if the AI wrote most of the code. I’ve seen developers spend more time validating AI-generated code than writing it from scratch because the unknowns pile up: hidden dependencies, edge cases the AI missed, and the subtle bugs that only appear after merge.</p>
 <p><strong>Misconception 2: Bigger PRs mean better code</strong>
-Bigger PRs often mean more hidden complexity. A 420-line PR with 400 lines of AI-generated scaffolding (tests, docs, boilerplate) is not necessarily better than a 140-line PR written by a human. The scaffolding can obscure the actual logic changes, making reviews harder and increasing the chance of merge mistakes. The team I worked with found that 60% of their post-merge bugs were in the AI-generated scaffolding, not the core logic.</p>
+Bigger PRs often mean more hidden complexity. A 420-line PR with 400 lines of AI-generated scaffolding (tests, docs, boilerplate) is not necessarily better than a 140-line PR written by a human. The scaffolding can obscure the actual logic changes, making reviews harder and increasing the chance of merge mistakes.</p>
 <p><strong>Misconception 3: Faster feedback loops reduce stress</strong>
 Faster feedback loops can increase stress if the downstream capacity hasn’t scaled. A 200ms autocomplete response feels instant, but if that response triggers a 5-minute context switch to review and merge, the real cost is in attention fragmentation. Studies in 2026 (e.g., Microsoft’s "Attention Economy" report) show that developers experience higher stress levels when task switching exceeds 3 times per hour, regardless of how fast individual tasks complete.</p>
 <p><strong>Misconception 4: Blaming the tool is productive</strong>
@@ -533,33 +528,20 @@ Aim for a tiered SLA: 2 hours for human-written PRs, 24 hours for AI-generated P
 Not necessarily. Instead, route large AI-generated PRs to a dedicated review queue with a slower SLA and add automation to auto-approve scaffolding (tests, docs) if they pass CI. The goal isn’t to remove AI suggestions; it’s to avoid overwhelming reviewers with low-value changes.</p>
 <h2 id="what-to-do-today">What to do today</h2>
 <p>Open your GitHub repository’s settings and add a CODEOWNERS file that routes PRs with more than 200 lines to a dedicated review team with a 24-hour SLA. This takes 5 minutes and will immediately reduce review fatigue for AI-generated PRs.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/pr-checklists-are-dead-ai-agents-do-reviews-now/">PR checklists are dead: AI agents do reviews now</a></li>
+<li><a href="https://kubaik.github.io/claude-code-review-wins-and-blind-spots/">Claude code review: wins and blind spots</a></li>
+<li><a href="https://kubaik.github.io/ai-ui-tools-6-months-in-what-i-gained-and-lost/">AI UI tools: 6 months in, what I gained and lost</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 09, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -588,7 +570,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-code-traps-copilot-vs-cursor-smackdown/">
                         <h3>AI code traps: Copilot vs Cursor smackdown</h3>
                         <p>Cut AI code crashes 40% by picking the right sidekick. Compare GitHub Copilot Enterprise 2026 vs Cursor v0.32 on latency, edge cases, and offline survival.</p>
-                        <span class="related-meta">14 min read · 9 June 2026</span>
+                        <span class="related-meta">13 min read · 9 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-ui-tools-promise-vs-production/">
@@ -608,12 +590,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

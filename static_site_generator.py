@@ -24,19 +24,31 @@ from adsense_fixes.ads_txt_sync import AdsTxtError, sync_ads_txt
 import html as _html_stdlib
 
 
-def _safe_excerpt(meta_description: str, content: str, title: str = "",
-                  max_len: int = 155) -> str:
+def _safe_excerpt(
+    meta_description: str, content: str, title: str = "", max_len: int = 155
+) -> str:
     """Return a plain-text excerpt, HTML-escaped, safe for use in attributes."""
     import re
 
     desc = (meta_description or "").strip()
 
     _WEAK_OPENERS = (
-        "this post", "in this article", "a guide to", "learn about",
-        "an overview", "this tutorial", "this article", "we will",
-        "you will learn", "i wrote this", "a colleague asked",
-        "this took me", "i've seen this", "the short version",
-        "i ran into this", "i've answered",
+        "this post",
+        "in this article",
+        "a guide to",
+        "learn about",
+        "an overview",
+        "this tutorial",
+        "this article",
+        "we will",
+        "you will learn",
+        "i wrote this",
+        "a colleague asked",
+        "this took me",
+        "i've seen this",
+        "the short version",
+        "i ran into this",
+        "i've answered",
     )
     if desc and not any(desc.lower().startswith(w) for w in _WEAK_OPENERS):
         # Escape quotes/ampersands so the value is safe inside HTML attributes
@@ -48,11 +60,11 @@ def _safe_excerpt(meta_description: str, content: str, title: str = "",
     text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
     text = re.sub(r"[*_]{1,3}", "", text)
     text = re.sub(r"\s+", " ", text).strip()
-    sentences = re.split(r'(?<=[.!?])\s+', text)
+    sentences = re.split(r"(?<=[.!?])\s+", text)
     _INTRO_PATTERNS = re.compile(
-        r'^(I |A colleague|This took me|I\'ve|The short version|I ran|'
-        r'I spent|I have|Here\'s what|Writing this|This is a topic)',
-        re.IGNORECASE
+        r"^(I |A colleague|This took me|I\'ve|The short version|I ran|"
+        r"I spent|I have|Here\'s what|Writing this|This is a topic)",
+        re.IGNORECASE,
     )
     for sentence in sentences:
         sentence = sentence.strip()
@@ -61,25 +73,94 @@ def _safe_excerpt(meta_description: str, content: str, title: str = "",
         if _INTRO_PATTERNS.match(sentence):
             continue
         if len(sentence) > max_len:
-            sentence = sentence[:max_len].rsplit(
-                " ", 1)[0].rstrip(".,;:") + "…"
+            sentence = sentence[:max_len].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
         return _html_stdlib.escape(sentence, quote=True)
 
     fallback = f"Practical guide to {title}." if title else text[:max_len]
     return _html_stdlib.escape(fallback, quote=True)
 
 
-_RELATED_STOP_WORDS = frozenset({
-    "the", "a", "an", "and", "or", "but", "in", "on", "at", "to",
-    "for", "of", "with", "by", "from", "is", "are", "was", "were",
-    "be", "been", "being", "have", "has", "had", "do", "does", "did",
-    "will", "would", "could", "should", "may", "might", "can", "that",
-    "this", "these", "those", "it", "its", "we", "you", "your", "our",
-    "they", "their", "what", "which", "who", "when", "where", "how",
-    "not", "no", "so", "if", "as", "than", "then", "about", "up",
-    "out", "into", "more", "also", "just", "after", "before", "over",
-    "some", "any", "all", "each", "both", "between", "through",
-})
+_RELATED_STOP_WORDS = frozenset(
+    {
+        "the",
+        "a",
+        "an",
+        "and",
+        "or",
+        "but",
+        "in",
+        "on",
+        "at",
+        "to",
+        "for",
+        "of",
+        "with",
+        "by",
+        "from",
+        "is",
+        "are",
+        "was",
+        "were",
+        "be",
+        "been",
+        "being",
+        "have",
+        "has",
+        "had",
+        "do",
+        "does",
+        "did",
+        "will",
+        "would",
+        "could",
+        "should",
+        "may",
+        "might",
+        "can",
+        "that",
+        "this",
+        "these",
+        "those",
+        "it",
+        "its",
+        "we",
+        "you",
+        "your",
+        "our",
+        "they",
+        "their",
+        "what",
+        "which",
+        "who",
+        "when",
+        "where",
+        "how",
+        "not",
+        "no",
+        "so",
+        "if",
+        "as",
+        "than",
+        "then",
+        "about",
+        "up",
+        "out",
+        "into",
+        "more",
+        "also",
+        "just",
+        "after",
+        "before",
+        "over",
+        "some",
+        "any",
+        "all",
+        "each",
+        "both",
+        "between",
+        "through",
+    }
+)
 
 
 def _tokenize_for_similarity(text: str) -> List[str]:
@@ -101,8 +182,7 @@ def _build_tfidf_corpus(posts: List[BlogPost]) -> Dict[str, Dict[str, float]]:
     for p in posts:
         title_tokens = _tokenize_for_similarity(p.title) * 3
         body_tokens = _tokenize_for_similarity(p.content)
-        tokens = [t for t in title_tokens + body_tokens
-                  if t not in _RELATED_STOP_WORDS]
+        tokens = [t for t in title_tokens + body_tokens if t not in _RELATED_STOP_WORDS]
         doc_tokens[p.slug] = tokens
 
     doc_freq: Counter = Counter()
@@ -111,8 +191,7 @@ def _build_tfidf_corpus(posts: List[BlogPost]) -> Dict[str, Dict[str, float]]:
 
     n_docs = max(len(doc_tokens), 1)
     idf = {
-        term: math.log((n_docs + 1) / (freq + 1)) + 1
-        for term, freq in doc_freq.items()
+        term: math.log((n_docs + 1) / (freq + 1)) + 1 for term, freq in doc_freq.items()
     }
 
     vectors: Dict[str, Dict[str, float]] = {}
@@ -149,30 +228,30 @@ def _tag_definition(tag: str) -> str:
     aren't in the curated list, so every tag still gets a real definition
     rather than a placeholder."""
     definitions = {
-        'ai': 'artificial intelligence, machine learning, and applied AI engineering',
-        'machine learning': 'machine learning concepts, tools, and real-world model building',
-        'python': 'the Python programming language, its libraries, and best practices',
-        'javascript': 'JavaScript development, from core language features to modern frameworks',
-        'typescript': 'TypeScript typing patterns and their use in real-world codebases',
-        'backend': 'server-side architecture, APIs, and backend engineering practices',
-        'frontend': 'frontend development, UI engineering, and client-side architecture',
-        'devops': 'deployment pipelines, infrastructure automation, and DevOps practices',
-        'docker': 'containerization with Docker and container-based workflows',
-        'kubernetes': 'container orchestration and Kubernetes cluster management',
-        'api': 'API design, integration, and best practices for building web services',
-        'database': 'database design, optimization, and data management',
-        'sql': 'SQL query design, database performance, and data modeling',
-        'security': 'application security, secure coding, and vulnerability prevention',
-        'testing': 'software testing strategies, tools, and quality assurance',
-        'career': 'career growth, job hunting, and professional development for developers',
-        'productivity': 'developer productivity, tools, and workflow optimization',
-        'cloud': 'cloud computing platforms, architecture, and best practices',
-        'aws': 'building and running systems on Amazon Web Services',
-        'react': 'building applications with React and the modern JavaScript ecosystem',
-        'git': 'version control workflows and best practices with Git',
-        'linux': 'Linux systems administration, tooling, and command-line workflows',
-        'recovered': 'a range of practical software development topics',
-        'blog': 'general software development topics and practical guides',
+        "ai": "artificial intelligence, machine learning, and applied AI engineering",
+        "machine learning": "machine learning concepts, tools, and real-world model building",
+        "python": "the Python programming language, its libraries, and best practices",
+        "javascript": "JavaScript development, from core language features to modern frameworks",
+        "typescript": "TypeScript typing patterns and their use in real-world codebases",
+        "backend": "server-side architecture, APIs, and backend engineering practices",
+        "frontend": "frontend development, UI engineering, and client-side architecture",
+        "devops": "deployment pipelines, infrastructure automation, and DevOps practices",
+        "docker": "containerization with Docker and container-based workflows",
+        "kubernetes": "container orchestration and Kubernetes cluster management",
+        "api": "API design, integration, and best practices for building web services",
+        "database": "database design, optimization, and data management",
+        "sql": "SQL query design, database performance, and data modeling",
+        "security": "application security, secure coding, and vulnerability prevention",
+        "testing": "software testing strategies, tools, and quality assurance",
+        "career": "career growth, job hunting, and professional development for developers",
+        "productivity": "developer productivity, tools, and workflow optimization",
+        "cloud": "cloud computing platforms, architecture, and best practices",
+        "aws": "building and running systems on Amazon Web Services",
+        "react": "building applications with React and the modern JavaScript ecosystem",
+        "git": "version control workflows and best practices with Git",
+        "linux": "Linux systems administration, tooling, and command-line workflows",
+        "recovered": "a range of practical software development topics",
+        "blog": "general software development topics and practical guides",
     }
     key = tag.strip().lower()
     if key in definitions:
@@ -180,15 +259,15 @@ def _tag_definition(tag: str) -> str:
     return f"practical, hands-on approaches to {key} for software developers"
 
 
-def _generate_tag_meta_description(tag_title: str, top_titles: List[str],
-                                   definition: str, max_len: int = 300) -> str:
+def _generate_tag_meta_description(
+    tag_title: str, top_titles: List[str], definition: str, max_len: int = 300
+) -> str:
     """Build a richer tag-page meta description from the tag's definition
     plus its top article titles, instead of a generic boilerplate line."""
     top_titles = [t for t in top_titles if t][:3]
     if len(top_titles) >= 3:
         titles_part = (
-            f'including "{top_titles[0]}," "{top_titles[1]}," '
-            f'and "{top_titles[2]}"'
+            f'including "{top_titles[0]}," "{top_titles[1]}," ' f'and "{top_titles[2]}"'
         )
     elif len(top_titles) == 2:
         titles_part = f'including "{top_titles[0]}" and "{top_titles[1]}"'
@@ -210,7 +289,8 @@ def _generate_tag_meta_description(tag_title: str, top_titles: List[str],
 def _clean_url(url: str) -> str:
     """Remove Markdown link-formatting artifacts like [text](url) -> url."""
     import re
-    cleaned = re.sub(r'\[([^\]]*)\]\(([^)]+)\)', r'\2', url)
+
+    cleaned = re.sub(r"\[([^\]]*)\]\(([^)]+)\)", r"\2", url)
     return cleaned.strip()
 
 
@@ -226,18 +306,18 @@ def _normalize_iso_date(dt_str: str) -> str:
     if not dt_str:
         return dt_str
     try:
-        dt = datetime.fromisoformat(dt_str.replace('Z', '+00:00'))
-        return dt.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+        dt = datetime.fromisoformat(dt_str.replace("Z", "+00:00"))
+        return dt.strftime("%Y-%m-%dT%H:%M:%S+00:00")
     except Exception:
         # Fallback: manually strip microseconds, preserve any trailing tz offset
-        if '.' in dt_str:
-            base, frac = dt_str.split('.', 1)
-            tz = ''
-            for sep in ('+', '-'):
+        if "." in dt_str:
+            base, frac = dt_str.split(".", 1)
+            tz = ""
+            for sep in ("+", "-"):
                 if sep in frac:
                     tz = sep + frac.split(sep, 1)[1]
                     break
-            return base + (tz or '+00:00')
+            return base + (tz or "+00:00")
         return dt_str
 
 
@@ -294,7 +374,8 @@ class StaticSiteGenerator:
         # and the sitemap stay in sync with the same source of truth.
         stub_slugs = {p.slug for p in posts if is_merge_stub(p)}
         fabrication_quarantine_slugs = get_quarantined_slugs(
-            Path("./regeneration_queue.json"))
+            Path("./regeneration_queue.json")
+        )
         self._noindex_slugs = stub_slugs | fabrication_quarantine_slugs
         self._stub_redirect_targets = {
             p.slug: get_redirect_target(p) for p in posts if is_merge_stub(p)
@@ -337,10 +418,11 @@ class StaticSiteGenerator:
         """
         try:
             from generate_default_og import generate_default_og
+
             config = self.blog_system.config
             generate_default_og(
-                site_name=config.get('site_name', 'Tech Blog'),
-                tagline=config.get('site_description', '')[:60],
+                site_name=config.get("site_name", "Tech Blog"),
+                tagline=config.get("site_description", "")[:60],
             )
         except Exception as e:
             print(f"Warning: could not generate default OG image: {e}")
@@ -348,21 +430,19 @@ class StaticSiteGenerator:
     def _generate_ads_txt(self):
         """Write ads.txt to repo root AND docs/ so Pages and raw GitHub match."""
         config = self.blog_system.config
-        adsense_id = config.get('google_adsense_id', '')
+        adsense_id = config.get("google_adsense_id", "")
         try:
-            written = sync_ads_txt(adsense_id, repo_root=Path('.'))
+            written = sync_ads_txt(adsense_id, repo_root=Path("."))
             for path in written:
                 print(f"Generated ads.txt → {path}")
         except AdsTxtError as exc:
             # Fail the build rather than ship a site AdSense cannot verify.
-            raise RuntimeError(
-                f"ads.txt generation failed: {exc}"
-            ) from exc
+            raise RuntimeError(f"ads.txt generation failed: {exc}") from exc
 
     def _generate_robots_txt(self):
         """Generate a clean and effective robots.txt file."""
         config = self.blog_system.config
-        base_url = config.get('base_url', '').rstrip('/')
+        base_url = config.get("base_url", "").rstrip("/")
 
         content = f"""# robots.txt for {base_url}
 # Generated automatically - Do not edit manually
@@ -407,7 +487,7 @@ Allow: /
 Sitemap: {base_url}/sitemap.xml
 """
 
-        with open("./docs/robots.txt", 'w', encoding='utf-8') as f:
+        with open("./docs/robots.txt", "w", encoding="utf-8") as f:
             f.write(content)
 
         print("Generated robots.txt")
@@ -449,7 +529,7 @@ Sitemap: {base_url}/sitemap.xml
                 continue
 
             try:
-                with open(post_json, 'r', encoding='utf-8') as f:
+                with open(post_json, "r", encoding="utf-8") as f:
                     data = json.load(f)
             except Exception as e:
                 print(f"Error loading post from {post_dir.name}: {e}")
@@ -458,7 +538,8 @@ Sitemap: {base_url}/sitemap.xml
 
             if not data.get("title", "").strip() or not data.get("content", "").strip():
                 print(
-                    f"  ⚠️  Skipping {post_dir.name}: post.json missing title/content.")
+                    f"  ⚠️  Skipping {post_dir.name}: post.json missing title/content."
+                )
                 invalid_skipped += 1
                 continue
 
@@ -501,7 +582,7 @@ Sitemap: {base_url}/sitemap.xml
         """Single source of truth for tag -> URL slug, used everywhere a
         tag is turned into a /tag/{slug}/ link or a directory name, so the
         link-side and the page-generation-side can never drift apart."""
-        return tag.strip().lower().replace(' ', '-')
+        return tag.strip().lower().replace(" ", "-")
 
     def _compute_qualifying_tag_slugs(self, posts: List[BlogPost]) -> set:
         """Tags that will actually get a generated /tag/{slug}/ page (i.e.
@@ -523,11 +604,13 @@ Sitemap: {base_url}/sitemap.xml
         out = []
         for tag in tags[:limit]:
             slug = self._tag_slug(tag)
-            out.append({
-                'name': tag,
-                'slug': slug,
-                'linkable': slug in self._qualifying_tag_slugs,
-            })
+            out.append(
+                {
+                    "name": tag,
+                    "slug": slug,
+                    "linkable": slug in self._qualifying_tag_slugs,
+                }
+            )
         return out
 
     def _reading_time_minutes(self, content: str) -> int:
@@ -549,11 +632,12 @@ Sitemap: {base_url}/sitemap.xml
         http(s) URLs only, so unconfigured platforms are silently omitted
         until the user provides a real link.
         """
-        raw = config.get('social_accounts', {}) or {}
+        raw = config.get("social_accounts", {}) or {}
         return {
             platform: url
             for platform, url in raw.items()
-            if isinstance(url, str) and url.strip().lower().startswith(('http://', 'https://'))
+            if isinstance(url, str)
+            and url.strip().lower().startswith(("http://", "https://"))
         }
 
     def _generate_homepage(self, posts: List[BlogPost]):
@@ -568,32 +652,35 @@ Sitemap: {base_url}/sitemap.xml
         posts_data = []
         for p in posts:
             post_dict = p.to_dict()
-            post_dict['display_date'] = self._format_display_date(p.created_at)
-            post_dict['short_tags'] = sorted(p.tags, key=len)[:3]
-            post_dict['tag_links'] = self._linkable_tags(post_dict['short_tags'], limit=3)
-            post_dict['reading_time'] = self._reading_time_minutes(p.content)
-            post_dict['meta_description'] = _safe_excerpt(
-                p.meta_description, p.content, p.title)
+            post_dict["display_date"] = self._format_display_date(p.created_at)
+            post_dict["short_tags"] = sorted(p.tags, key=len)[:3]
+            post_dict["tag_links"] = self._linkable_tags(
+                post_dict["short_tags"], limit=3
+            )
+            post_dict["reading_time"] = self._reading_time_minutes(p.content)
+            post_dict["meta_description"] = _safe_excerpt(
+                p.meta_description, p.content, p.title
+            )
             # Strip the full content from the homepage payload — it is only
             # needed on individual post pages.
-            post_dict.pop('content', None)
+            post_dict.pop("content", None)
             posts_data.append(post_dict)
 
         context = {
-            'site_name': config.get('site_name', 'Kubai Kevin'),
-            'site_description': config.get('site_description', 'An AI-powered blog'),
-            'base_path': config.get('base_path', ''),
-            'base_url': config.get('base_url', ''),
-            'posts': posts_data[:HOMEPAGE_SSR_LIMIT],
-            'posts_per_page': HOMEPAGE_SSR_LIMIT,
-            'total_posts': len(posts_data),
-            'qualifying_tag_slugs': sorted(self._qualifying_tag_slugs),
-            'current_year': datetime.now().year,
-            'social_links': self._valid_social_links(config),
-            'global_meta_tags': self.seo.generate_global_meta_tags(),
-            'homepage_meta_tags': self.seo.generate_homepage_meta_tags(),
-            'organization_schema': self.seo.generate_organization_schema(),
-            'website_schema': self.seo.generate_website_schema(),
+            "site_name": config.get("site_name", "Kubai Kevin"),
+            "site_description": config.get("site_description", "An AI-powered blog"),
+            "base_path": config.get("base_path", ""),
+            "base_url": config.get("base_url", ""),
+            "posts": posts_data[:HOMEPAGE_SSR_LIMIT],
+            "posts_per_page": HOMEPAGE_SSR_LIMIT,
+            "total_posts": len(posts_data),
+            "qualifying_tag_slugs": sorted(self._qualifying_tag_slugs),
+            "current_year": datetime.now().year,
+            "social_links": self._valid_social_links(config),
+            "global_meta_tags": self.seo.generate_global_meta_tags(page_type="home"),
+            "homepage_meta_tags": self.seo.generate_homepage_meta_tags(),
+            "organization_schema": self.seo.generate_organization_schema(),
+            "website_schema": self.seo.generate_website_schema(),
             # FIX BUG-14: the homepage (the page AdSense reviews first) never
             # rendered any actual <ins class="adsbygoogle"> ad units — only
             # post pages did. The google-adsense-account meta tag and the
@@ -601,13 +688,15 @@ Sitemap: {base_url}/sitemap.xml
             # are present on every page, but a verification meta tag is not
             # an ad placement. Wire up real ad units here so the homepage
             # has actual inventory, matching what POST_TMPL already does.
-            'header_ad': self.seo.generate_adsense_ad('header'),
-            'middle_ad': self.seo.generate_adsense_ad('middle'),
-            'footer_ad': self.seo.generate_adsense_ad('footer'),
+            # Listing page: no manual ad units (navigation page, little
+            # publisher content of its own). See SEOOptimizer.generate_adsense_ad.
+            "header_ad": self.seo.generate_adsense_ad("header", page_type="home"),
+            "middle_ad": self.seo.generate_adsense_ad("middle", page_type="home"),
+            "footer_ad": self.seo.generate_adsense_ad("footer", page_type="home"),
         }
-        html = self.templates['index'].render(**context)
+        html = self.templates["index"].render(**context)
         output_file = Path("./docs/index.html")
-        with open(output_file, 'w', encoding='utf-8') as f:
+        with open(output_file, "w", encoding="utf-8") as f:
             f.write(html)
         print(
             f"Generated homepage: {HOMEPAGE_SSR_LIMIT} SSR posts "
@@ -635,9 +724,9 @@ Sitemap: {base_url}/sitemap.xml
         links on them crawled.
         """
         config = self.blog_system.config
-        base_url = config.get('base_url', '')
-        base_path = config.get('base_path', '')
-        site_name = config.get('site_name', 'Tech Blog')
+        base_url = config.get("base_url", "")
+        base_path = config.get("base_path", "")
+        site_name = config.get("site_name", "Tech Blog")
         current_year = datetime.now().year
 
         # BUG FOUND IN AUDIT (Aug 2026): this loop only ever writes/
@@ -662,31 +751,33 @@ Sitemap: {base_url}/sitemap.xml
 
         for page_num in range(2, total_pages + 1):
             start = (page_num - 1) * per_page
-            page_posts = posts[start:start + per_page]
+            page_posts = posts[start : start + per_page]
             page_dir = Path("./docs/page") / str(page_num)
             page_dir.mkdir(parents=True, exist_ok=True)
 
             cards = "".join(
                 f'<a class="post-card" href="{base_path}/{p.slug}/">'
-                f'<h3>{p.title}</h3>'
+                f"<h3>{p.title}</h3>"
                 f'<p class="post-excerpt">'
-                f'{_safe_excerpt(p.meta_description, p.content, p.title)}</p>'
+                f"{_safe_excerpt(p.meta_description, p.content, p.title)}</p>"
                 f'<p class="post-reading-time">'
-                f'{self._reading_time_minutes(p.content)} min read · '
-                f'{self._format_display_date(p.created_at)}</p></a>'
+                f"{self._reading_time_minutes(p.content)} min read · "
+                f"{self._format_display_date(p.created_at)}</p></a>"
                 for p in page_posts
             )
 
             prev_link = (
-                f'<a href="{base_path}/">← Newest</a>' if page_num == 2
+                f'<a href="{base_path}/">← Newest</a>'
+                if page_num == 2
                 else f'<a href="{base_path}/page/{page_num - 1}/">← Newer</a>'
             )
             next_link = (
                 f'<a href="{base_path}/page/{page_num + 1}/">Older →</a>'
-                if page_num < total_pages else ''
+                if page_num < total_pages
+                else ""
             )
 
-            html = f'''<!DOCTYPE html>
+            html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -718,34 +809,35 @@ Sitemap: {base_url}/sitemap.xml
 <p>&copy; {current_year} {site_name}</p>
 </div></footer>
 </body>
-</html>'''
-            with open(page_dir / "index.html", 'w', encoding='utf-8') as f:
+</html>"""
+            with open(page_dir / "index.html", "w", encoding="utf-8") as f:
                 f.write(html)
 
         print(
-            f"Generated {total_pages - 1} paginated archive pages (/page/2/ .. /page/{total_pages}/)")
+            f"Generated {total_pages - 1} paginated archive pages (/page/2/ .. /page/{total_pages}/)"
+        )
 
     def _format_display_date(self, iso_date: str) -> str:
         try:
-            dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
-            return dt.strftime('%-d %B %Y')
+            dt = datetime.fromisoformat(iso_date.replace("Z", "+00:00"))
+            return dt.strftime("%-d %B %Y")
         except:
             try:
-                dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
-                return dt.strftime('%d %B %Y').lstrip('0')
+                dt = datetime.fromisoformat(iso_date.replace("Z", "+00:00"))
+                return dt.strftime("%d %B %Y").lstrip("0")
             except:
-                return iso_date.split('T')[0]
+                return iso_date.split("T")[0]
 
     def _generate_404_page(self):
         config = self.blog_system.config
         context = {
-            'site_name': config.get('site_name', 'Tech Blog'),
-            'base_path': config.get('base_path', ''),
-            'current_year': datetime.now().year,
-            'global_meta_tags': self.seo.generate_global_meta_tags(),
+            "site_name": config.get("site_name", "Tech Blog"),
+            "base_path": config.get("base_path", ""),
+            "current_year": datetime.now().year,
+            "global_meta_tags": self.seo.generate_global_meta_tags(page_type="utility"),
         }
-        html = self.templates['not_found'].render(**context)
-        with open("./docs/404.html", 'w', encoding='utf-8') as f:
+        html = self.templates["not_found"].render(**context)
+        with open("./docs/404.html", "w", encoding="utf-8") as f:
             f.write(html)
         print("Generated 404.html")
 
@@ -755,15 +847,15 @@ Sitemap: {base_url}/sitemap.xml
         page_dir = Path("./docs/dmca")
         page_dir.mkdir(exist_ok=True)
         context = {
-            'site_name': config.get('site_name', 'Tech Blog'),
-            'base_path': config.get('base_path', ''),
-            'base_url': config.get('base_url', ''),
-            'current_year': datetime.now().year,
-            'current_date': datetime.now().strftime('%B %d, %Y'),
-            'global_meta_tags': self.seo.generate_global_meta_tags(),
+            "site_name": config.get("site_name", "Tech Blog"),
+            "base_path": config.get("base_path", ""),
+            "base_url": config.get("base_url", ""),
+            "current_year": datetime.now().year,
+            "current_date": datetime.now().strftime("%B %d, %Y"),
+            "global_meta_tags": self.seo.generate_global_meta_tags(page_type="utility"),
         }
-        html = self.templates['dmca'].render(**context)
-        with open(page_dir / "index.html", 'w', encoding='utf-8') as f:
+        html = self.templates["dmca"].render(**context)
+        with open(page_dir / "index.html", "w", encoding="utf-8") as f:
             f.write(html)
         print("Generated /dmca/ page")
 
@@ -773,15 +865,15 @@ Sitemap: {base_url}/sitemap.xml
         page_dir = Path("./docs/ai-content-policy")
         page_dir.mkdir(exist_ok=True)
         context = {
-            'site_name': config.get('site_name', 'Tech Blog'),
-            'base_path': config.get('base_path', ''),
-            'base_url': config.get('base_url', ''),
-            'current_year': datetime.now().year,
-            'current_date': datetime.now().strftime('%B %d, %Y'),
-            'global_meta_tags': self.seo.generate_global_meta_tags(),
+            "site_name": config.get("site_name", "Tech Blog"),
+            "base_path": config.get("base_path", ""),
+            "base_url": config.get("base_url", ""),
+            "current_year": datetime.now().year,
+            "current_date": datetime.now().strftime("%B %d, %Y"),
+            "global_meta_tags": self.seo.generate_global_meta_tags(page_type="utility"),
         }
-        html = self.templates['ai_disclosure'].render(**context)
-        with open(page_dir / "index.html", 'w', encoding='utf-8') as f:
+        html = self.templates["ai_disclosure"].render(**context)
+        with open(page_dir / "index.html", "w", encoding="utf-8") as f:
             f.write(html)
         print("Generated /ai-content-policy/ page")
 
@@ -807,18 +899,22 @@ Sitemap: {base_url}/sitemap.xml
                 )
             if n == 0:
                 print(
-                    "Warning: could not find a cache version string in sw.js — SW cache may be stale")
+                    "Warning: could not find a cache version string in sw.js — SW cache may be stale"
+                )
                 patched = sw_text
             Path("./docs/sw.js").write_text(patched, encoding="utf-8")
             print(f"Generated docs/sw.js with cache version {new_version}")
         else:
             print("Warning: sw.js not found — skipping")
 
-        for src, dst in [("offline.html", "./docs/offline.html"),
-                         ("manifest.json", "./docs/manifest.json")]:
+        for src, dst in [
+            ("offline.html", "./docs/offline.html"),
+            ("manifest.json", "./docs/manifest.json"),
+        ]:
             src_path = Path(src)
             if src_path.exists():
                 import shutil as _shutil
+
                 _shutil.copy2(src_path, dst)
                 print(f"Copied {src} → {dst}")
             else:
@@ -829,12 +925,15 @@ Sitemap: {base_url}/sitemap.xml
         if pwa_js_src:
             if str(pwa_js_src) != "docs/static/pwa.js":
                 import shutil as _shutil
+
                 _shutil.copy2(pwa_js_src, "./docs/static/pwa.js")
                 print(f"Copied {pwa_js_src} → docs/static/pwa.js")
         else:
             print("Warning: pwa.js not found — skipping")
 
-    def _generate_article_schema(self, post, base_url: str, site_name: str = None) -> str:
+    def _generate_article_schema(
+        self, post, base_url: str, site_name: str = None
+    ) -> str:
         import json as _json
         from adsense_fixes.schema_validator import validate_article_schema
 
@@ -869,24 +968,31 @@ Sitemap: {base_url}/sitemap.xml
                     "sameAs": [
                         "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
                         "https://twitter.com/KubaiKevin",
-                        "https://github.com/kubaik"
+                        "https://github.com/kubaik",
                     ],
                     "knowsAbout": [
-                        "Python", "Node.js", "TypeScript", "AWS",
-                        "Backend Systems", "AI", "Machine Learning"
-                    ]
+                        "Python",
+                        "Node.js",
+                        "TypeScript",
+                        "AWS",
+                        "Backend Systems",
+                        "AI",
+                        "Machine Learning",
+                    ],
                 },
                 "publisher": {
                     "@type": "Organization",
                     "@id": f"{base_url}/#organization",
                     "name": site_name or "Tech Blog",
-                    "url": base_url
+                    "url": base_url,
                 },
                 "mainEntityOfPage": {
                     "@type": "WebPage",
-                    "@id": f"{base_url}/{post.slug}/"
+                    "@id": f"{base_url}/{post.slug}/",
                 },
-                "keywords": ", ".join(post.seo_keywords[:8]) if post.seo_keywords else "",
+                "keywords": (
+                    ", ".join(post.seo_keywords[:8]) if post.seo_keywords else ""
+                ),
                 # FIX (found in review, 2026): the previous fix here pointed
                 # at image_optimizer.generate_og_card()'s .svg output because
                 # that's what existed on disk at the time. Since then,
@@ -902,22 +1008,36 @@ Sitemap: {base_url}/sitemap.xml
                 # at all if that file actually exists on disk, so a future
                 # OG-generation failure fails loud (schema_issues warning
                 # below) instead of silently citing a broken/unsupported URL.
-                **({"image": {
-                    "@type": "ImageObject",
-                    "url": f"{base_url}/static/og/{post.slug}.png",
-                    "width": 1200,
-                    "height": 630,
-                }} if (Path("./docs") / "static" / "og" / f"{post.slug}.png").exists() else {}),
+                **(
+                    {
+                        "image": {
+                            "@type": "ImageObject",
+                            "url": f"{base_url}/static/og/{post.slug}.png",
+                            "width": 1200,
+                            "height": 630,
+                        }
+                    }
+                    if (Path("./docs") / "static" / "og" / f"{post.slug}.png").exists()
+                    else {}
+                ),
             },
             {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
-                    {"@type": "ListItem", "position": 1,
-                     "name": "Home", "item": f"{base_url}/"},
-                    {"@type": "ListItem", "position": 2,
-                     "name": post.title, "item": f"{base_url}/{post.slug}/"}
-                ]
-            }
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": f"{base_url}/",
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": post.title,
+                        "item": f"{base_url}/{post.slug}/",
+                    },
+                ],
+            },
         ]
 
         # FIX: schema_validator.py's validate_article_schema() was written
@@ -926,25 +1046,26 @@ Sitemap: {base_url}/sitemap.xml
         # this function accidentally drops a required property again.
         schema_issues = validate_article_schema(schemas)
         if schema_issues:
-            print(
-                f"  ⚠️  Schema issues for {post.slug}: {'; '.join(schema_issues)}")
+            print(f"  ⚠️  Schema issues for {post.slug}: {'; '.join(schema_issues)}")
 
-        output_blocks = [f'''<script type="application/ld+json">
+        output_blocks = [f"""<script type="application/ld+json">
 {_json.dumps({"@context": "https://schema.org", "@graph": schemas},
              indent=2, ensure_ascii=False)}
-</script>''']
+</script>"""]
 
-        faq_schema = (post.monetization_data or {}).get('faq_schema', '')
+        faq_schema = (post.monetization_data or {}).get("faq_schema", "")
         if faq_schema:
             output_blocks.append(
-                f'<script type="application/ld+json">\n{faq_schema}\n</script>')
+                f'<script type="application/ld+json">\n{faq_schema}\n</script>'
+            )
 
-        howto_schema = (post.monetization_data or {}).get('howto_schema', '')
+        howto_schema = (post.monetization_data or {}).get("howto_schema", "")
         if howto_schema:
             output_blocks.append(
-                f'<script type="application/ld+json">\n{howto_schema}\n</script>')
+                f'<script type="application/ld+json">\n{howto_schema}\n</script>'
+            )
 
-        return '\n'.join(output_blocks)
+        return "\n".join(output_blocks)
 
     def _generate_security_headers(self):
         headers_content = """\
@@ -986,7 +1107,9 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         with open("./docs/.htaccess", "w", encoding="utf-8") as f:
             f.write(htaccess_content)
 
-        print("Generated docs/_headers (Netlify/Cloudflare) and docs/.htaccess (Apache)")
+        print(
+            "Generated docs/_headers (Netlify/Cloudflare) and docs/.htaccess (Apache)"
+        )
 
     def _generate_privacy_consent_banner(self):
         consent_js = r"""/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support
@@ -1236,57 +1359,60 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         for i, post in enumerate(posts):
             post_dir = Path("./docs") / post.slug
             post_dir.mkdir(exist_ok=True)
-            markdown_converter = md.Markdown(
-                extensions=['extra', 'fenced_code', 'toc'])
+            markdown_converter = md.Markdown(extensions=["extra", "fenced_code", "toc"])
             content_html = markdown_converter.convert(post.content)
 
             related = self._find_related_posts(post, posts, max_count=3)
 
             post_dict = post.to_dict()
-            post_dict['content_html'] = content_html
-            post_dict['display_date'] = self._format_display_date(
-                post.created_at)
-            post_dict['updated_date'] = self._format_display_date(
-                post.updated_at)
-            post_dict['reading_time'] = self._reading_time_minutes(
-                post.content)
-            post_dict['word_count'] = len(post.content.split())
-            post_dict['meta_description'] = _safe_excerpt(
-                post.meta_description, post.content, post.title)
-            post_dict['review_date'] = datetime.now().strftime('%B %Y')
+            post_dict["content_html"] = content_html
+            post_dict["display_date"] = self._format_display_date(post.created_at)
+            post_dict["updated_date"] = self._format_display_date(post.updated_at)
+            post_dict["reading_time"] = self._reading_time_minutes(post.content)
+            post_dict["word_count"] = len(post.content.split())
+            post_dict["meta_description"] = _safe_excerpt(
+                post.meta_description, post.content, post.title
+            )
+            post_dict["review_date"] = datetime.now().strftime("%B %Y")
             # Only tags with a real /tag/{slug}/ page get rendered as a
             # link (see _compute_qualifying_tag_slugs) — singleton tags
             # still show as text so the info isn't lost, they just aren't
             # a dead <a href>.
-            post_dict['tag_links'] = self._linkable_tags(post.tags, limit=6)
+            post_dict["tag_links"] = self._linkable_tags(post.tags, limit=6)
 
             # FIX BUG-13: normalize before splitting so we handle ISO strings
             # that lack a 'T' separator (e.g. recovered posts from
             # from_markdown_file() which use datetime.now().isoformat() and
             # always have 'T', but belt-and-suspenders is correct here).
             updated_normalized = _normalize_iso_date(post.updated_at)
-            post_dict['last_updated_iso'] = (
-                updated_normalized.split('T')[0]
-                if 'T' in updated_normalized
+            post_dict["last_updated_iso"] = (
+                updated_normalized.split("T")[0]
+                if "T" in updated_normalized
                 else updated_normalized
             )
 
-            post_dict['has_code'] = '```' in post.content
+            post_dict["has_code"] = "```" in post.content
             # FIX (critical, E-E-A-T/AdSense risk): this used to hardcode
             # 'Reviewed by author before publishing' on every post regardless
             # of whether that happened, contradicting the site's own AI
             # content policy disclosure. Now derived from an explicit,
             # per-post flag. Default is the honest, unflattering answer —
             # never claim a review that didn't occur.
-            review_status = post.monetization_data.get('review_status') \
-                if isinstance(post.monetization_data, dict) else None
-            post_dict['estimated_accuracy'] = {
-                'human_reviewed': 'Reviewed by the author before publishing',
-                'automated_qc_only': 'Passed automated accuracy/quality checks; '
-                'not individually reviewed by a human before publishing',
-            }.get(review_status, 'Drafted with AI assistance and automated quality '
-                  'checks; not individually reviewed by a human before publishing')
-            post_dict['affiliate_links'] = post.affiliate_links or []
+            review_status = (
+                post.monetization_data.get("review_status")
+                if isinstance(post.monetization_data, dict)
+                else None
+            )
+            post_dict["estimated_accuracy"] = {
+                "human_reviewed": "Reviewed by the author before publishing",
+                "automated_qc_only": "Passed automated accuracy/quality checks; "
+                "not individually reviewed by a human before publishing",
+            }.get(
+                review_status,
+                "Drafted with AI assistance and automated quality "
+                "checks; not individually reviewed by a human before publishing",
+            )
+            post_dict["affiliate_links"] = post.affiliate_links or []
 
             # FIX (audit, 2026-09-15): canonical previously always pointed
             # at the post's own URL, even for auto_retire_duplicates.py
@@ -1300,14 +1426,15 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             # anecdotes/citations) now get noindex,follow instead of
             # silently staying indexable while known-compromised.
             redirect_target = self._stub_redirect_targets.get(post.slug)
-            base_url_cfg = config.get('base_url', '').rstrip('/')
+            base_url_cfg = config.get("base_url", "").rstrip("/")
             if redirect_target:
-                post_dict['canonical_url'] = f"{base_url_cfg}/{redirect_target}/"
+                post_dict["canonical_url"] = f"{base_url_cfg}/{redirect_target}/"
             else:
-                post_dict['canonical_url'] = f"{base_url_cfg}/{post.slug}/"
+                post_dict["canonical_url"] = f"{base_url_cfg}/{post.slug}/"
 
-            post_dict['robots_directive'] = (
-                "noindex, follow" if post.slug in self._noindex_slugs
+            post_dict["robots_directive"] = (
+                "noindex, follow"
+                if post.slug in self._noindex_slugs
                 else "index, follow"
             )
 
@@ -1332,24 +1459,27 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             og_card_png = og_card_dir / f"{post.slug}.png"
             og_card_svg = og_card_dir / f"{post.slug}.svg"
             if og_card_png.exists():
-                post_dict['has_og_image'] = True
-                post_dict['og_image_ext'] = 'png'
+                post_dict["has_og_image"] = True
+                post_dict["og_image_ext"] = "png"
             elif og_card_svg.exists():
-                post_dict['has_og_image'] = True
-                post_dict['og_image_ext'] = 'svg'
+                post_dict["has_og_image"] = True
+                post_dict["og_image_ext"] = "svg"
             else:
-                post_dict['has_og_image'] = False
-                post_dict['og_image_ext'] = 'png'
+                post_dict["has_og_image"] = False
+                post_dict["og_image_ext"] = "png"
 
+            _wc = len(post.content.split())
             context = {
-                'site_name': config.get('site_name', 'Tech Blog'),
-                'base_path': config.get('base_path', ''),
-                'base_url': config.get('base_url', ''),
-                'post': post_dict,
-                'related_posts': related,
-                'current_year': datetime.now().year,
-                'global_meta_tags': self.seo.generate_global_meta_tags(),
-                'meta_tags': self.seo.generate_meta_tags(post),
+                "site_name": config.get("site_name", "Tech Blog"),
+                "base_path": config.get("base_path", ""),
+                "base_url": config.get("base_url", ""),
+                "post": post_dict,
+                "related_posts": related,
+                "current_year": datetime.now().year,
+                "global_meta_tags": self.seo.generate_global_meta_tags(
+                    page_type="article"
+                ),
+                "meta_tags": self.seo.generate_meta_tags(post),
                 # NOTE: seo.generate_structured_data() (BlogPosting) used to be
                 # emitted here alongside _generate_article_schema() (Article +
                 # BreadcrumbList). Both described the same URL with different
@@ -1359,21 +1489,33 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
                 # cause a page's markup to be ignored entirely. Keeping only the
                 # richer Article graph; site_name is now passed through so the
                 # publisher name is correct instead of a hardcoded placeholder.
-                'structured_data': '',
-                'article_schema': self._generate_article_schema(
-                    post, config.get('base_url', ''), config.get('site_name', 'Tech Blog')),
-                'header_ad': self.seo.generate_adsense_ad('header'),
-                'middle_ad': self.seo.generate_adsense_ad('middle'),
-                'footer_ad': self.seo.generate_adsense_ad('footer'),
-                'inline_ad': self.seo.generate_adsense_ad('inline'),
+                "structured_data": "",
+                "article_schema": self._generate_article_schema(
+                    post,
+                    config.get("base_url", ""),
+                    config.get("site_name", "Tech Blog"),
+                ),
+                "header_ad": self.seo.generate_adsense_ad(
+                    "header", page_type="article", word_count=_wc
+                ),
+                "middle_ad": self.seo.generate_adsense_ad(
+                    "middle", page_type="article", word_count=_wc
+                ),
+                "footer_ad": self.seo.generate_adsense_ad(
+                    "footer", page_type="article", word_count=_wc
+                ),
+                "inline_ad": self.seo.generate_adsense_ad(
+                    "inline", page_type="article", word_count=_wc
+                ),
             }
-            html = self.templates['post'].render(**context)
+            html = self.templates["post"].render(**context)
             output_file = post_dir / "index.html"
-            with open(output_file, 'w', encoding='utf-8') as f:
+            with open(output_file, "w", encoding="utf-8") as f:
                 f.write(html)
 
-    def _find_related_posts(self, current: BlogPost, all_posts: List[BlogPost],
-                            max_count: int = 3) -> List[Dict]:
+    def _find_related_posts(
+        self, current: BlogPost, all_posts: List[BlogPost], max_count: int = 3
+    ) -> List[Dict]:
         current_tags = set(t.lower() for t in current.tags)
         scored = []
         for p in all_posts:
@@ -1385,45 +1527,55 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         scored.sort(key=lambda x: x[0], reverse=True)
         result = []
         for _, p in scored[:max_count]:
-            excerpt = _safe_excerpt(
-                p.meta_description, p.content, p.title, max_len=120)
-            result.append({
-                'title': p.title,
-                'slug': p.slug,
-                'meta_description': excerpt,
-                'reading_time': self._reading_time_minutes(p.content),
-                'display_date': self._format_display_date(p.created_at),
-                'short_tags': sorted(p.tags, key=len)[:2],
-            })
+            excerpt = _safe_excerpt(p.meta_description, p.content, p.title, max_len=120)
+            result.append(
+                {
+                    "title": p.title,
+                    "slug": p.slug,
+                    "meta_description": excerpt,
+                    "reading_time": self._reading_time_minutes(p.content),
+                    "display_date": self._format_display_date(p.created_at),
+                    "short_tags": sorted(p.tags, key=len)[:2],
+                }
+            )
         return result
 
     def _generate_static_pages(self, posts: List[BlogPost] = None):
         config = self.blog_system.config
         pages = {
-            'about': ('about', {
-                'topics': config.get('content_topics', [][:]),
-                'posts': posts or [],
-            }),
-            'contact': ('contact', {}),
-            'privacy-policy': ('privacy_policy', {
-                'current_date': datetime.now().strftime('%B %d, %Y')}),
-            'terms-of-service': ('terms_of_service', {
-                'current_date': datetime.now().strftime('%B %d, %Y')}),
+            "about": (
+                "about",
+                {
+                    "topics": config.get("content_topics", [][:]),
+                    "posts": posts or [],
+                },
+            ),
+            "contact": ("contact", {}),
+            "privacy-policy": (
+                "privacy_policy",
+                {"current_date": datetime.now().strftime("%B %d, %Y")},
+            ),
+            "terms-of-service": (
+                "terms_of_service",
+                {"current_date": datetime.now().strftime("%B %d, %Y")},
+            ),
         }
         for dir_name, (template_name, extra_context) in pages.items():
             page_dir = Path("./docs") / dir_name
             page_dir.mkdir(exist_ok=True)
             context = {
-                'site_name': config.get('site_name', 'Tech Blog'),
-                'base_path': config.get('base_path', ''),
-                'base_url': config.get('base_url', ''),
-                'current_year': datetime.now().year,
-                'global_meta_tags': self.seo.generate_global_meta_tags(),
-                **extra_context
+                "site_name": config.get("site_name", "Tech Blog"),
+                "base_path": config.get("base_path", ""),
+                "base_url": config.get("base_url", ""),
+                "current_year": datetime.now().year,
+                "global_meta_tags": self.seo.generate_global_meta_tags(
+                    page_type="utility"
+                ),
+                **extra_context,
             }
             html = self.templates[template_name].render(**context)
             output_file = page_dir / "index.html"
-            with open(output_file, 'w', encoding='utf-8') as f:
+            with open(output_file, "w", encoding="utf-8") as f:
                 f.write(html)
         print("Generated static pages: about, contact, privacy, terms")
 
@@ -1447,6 +1599,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         stays unchanged.
         """
         from adsense_fixes.author_page import generate_author_page
+
         generate_author_page(
             posts=posts,
             docs_dir=Path("./docs"),
@@ -1455,9 +1608,9 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
 
     def _generate_tag_pages(self, posts: List[BlogPost]):
         config = self.blog_system.config
-        base_url = config.get('base_url', '')
-        base_path = config.get('base_path', '')
-        site_name = config.get('site_name', 'Tech Blog')
+        base_url = config.get("base_url", "")
+        base_path = config.get("base_path", "")
+        site_name = config.get("site_name", "Tech Blog")
         current_year = datetime.now().year
 
         tag_map: Dict[str, List[BlogPost]] = {}
@@ -1485,28 +1638,31 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         # recomputes every qualifying tag from the live post set each time.
         if tags_dir.exists():
             import shutil
+
             shutil.rmtree(tags_dir)
         tags_dir.mkdir(exist_ok=True, parents=True)
 
         for tag, tag_posts in qualifying.items():
-            tag_slug = tag.replace(' ', '-')
+            tag_slug = tag.replace(" ", "-")
             tag_dir = tags_dir / tag_slug
             tag_dir.mkdir(exist_ok=True)
 
             # Raised threshold from 5 → 8 for AdSense thin-content protection.
             # Tags with fewer than 8 posts receive noindex, follow and should
             # be excluded from the sitemap by the sitemap generator.
-            robots_directive = "index, follow" if len(
-                tag_posts) >= 8 else "noindex, follow"
+            robots_directive = (
+                "index, follow" if len(tag_posts) >= 8 else "noindex, follow"
+            )
 
             posts_data = []
             for p in sorted(tag_posts, key=lambda x: x.created_at, reverse=True):
                 d = p.to_dict()
-                d['display_date'] = self._format_display_date(p.created_at)
-                d['short_tags'] = sorted(p.tags, key=len)[:3]
-                d['reading_time'] = self._reading_time_minutes(p.content)
-                d['meta_description'] = _safe_excerpt(
-                    p.meta_description, p.content, p.title)
+                d["display_date"] = self._format_display_date(p.created_at)
+                d["short_tags"] = sorted(p.tags, key=len)[:3]
+                d["reading_time"] = self._reading_time_minutes(p.content)
+                d["meta_description"] = _safe_excerpt(
+                    p.meta_description, p.content, p.title
+                )
                 posts_data.append(d)
 
             tag_title = tag.title()
@@ -1518,12 +1674,14 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             # no SEO or user-orientation value. We now build a description
             # from a real topic definition plus the tag's top 3 article
             # titles, so each tag page has unique, descriptive content.
-            top_titles = [p['title'] for p in posts_data[:3]]
+            top_titles = [p["title"] for p in posts_data[:3]]
             tag_definition = _tag_definition(tag)
             tag_meta_description_plain = _generate_tag_meta_description(
-                tag_title, top_titles, tag_definition)
+                tag_title, top_titles, tag_definition
+            )
             tag_meta_description = _html_stdlib.escape(
-                tag_meta_description_plain, quote=True)
+                tag_meta_description_plain, quote=True
+            )
             tag_jsonld_description = json.dumps(tag_meta_description_plain)
 
             # FIX BUG-10: consent.js was loaded with `defer` at the bottom of
@@ -1531,7 +1689,8 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             # in <head>. Consent Mode v2 requires the default state to be pushed
             # to dataLayer BEFORE any Google tag loads.
             # Moved to a synchronous <script> as the first element of <head>.
-            html = f'''<!DOCTYPE html>
+            html = (
+                f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -1579,25 +1738,29 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
     </nav>
     <h2>{len(tag_posts)} article{"s" if len(tag_posts) != 1 else ""} tagged <em>{tag_title}</em></h2>
     <div class="post-grid">
-''' + ''.join(f'''
+"""
+                + "".join(f"""
       <a class="post-card" href="{base_path}/{p["slug"]}/">
         <h3>{p["title"]}</h3>
         <p class="post-excerpt">{p["meta_description"]}</p>
         <p class="post-reading-time">{p["reading_time"]} min read · {p["display_date"]}</p>
-      </a>''' for p in posts_data) + f'''
+      </a>""" for p in posts_data)
+                + f"""
     </div>
   </main>
   <footer><div class="container">
     <p>&copy; {current_year} {site_name}</p>
   </div></footer>
 </body>
-</html>'''
+</html>"""
+            )
 
-            with open(tag_dir / "index.html", 'w', encoding='utf-8') as f:
+            with open(tag_dir / "index.html", "w", encoding="utf-8") as f:
                 f.write(html)
 
         # FIX BUG-10 (cont.): same fix applied to the /tag/ index page.
-        all_tags_html = f'''<!DOCTYPE html>
+        all_tags_html = (
+            f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -1628,22 +1791,25 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
     <h2>All Topics</h2>
     <p>{len(qualifying)} topics across {len(posts)} articles</p>
     <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem;">
-''' + ''.join(
-            f'<a href="{base_path}/tag/{t.replace(" ", "-")}/" '
-            f'style="background:#f0f4ff;border:1px solid #6366f1;border-radius:20px;'
-            f'padding:0.4rem 1rem;text-decoration:none;color:#333;font-size:0.9rem;">'
-            f'{t.title()} ({len(ps)})</a>'
-            for t, ps in sorted(qualifying.items(), key=lambda x: -len(x[1]))
-        ) + f'''
+"""
+            + "".join(
+                f'<a href="{base_path}/tag/{t.replace(" ", "-")}/" '
+                f'style="background:#f0f4ff;border:1px solid #6366f1;border-radius:20px;'
+                f'padding:0.4rem 1rem;text-decoration:none;color:#333;font-size:0.9rem;">'
+                f"{t.title()} ({len(ps)})</a>"
+                for t, ps in sorted(qualifying.items(), key=lambda x: -len(x[1]))
+            )
+            + f"""
     </div>
   </main>
   <footer><div class="container">
     <p>&copy; {current_year} {site_name}</p>
   </div></footer>
 </body>
-</html>'''
+</html>"""
+        )
 
-        with open(tags_dir / "index.html", 'w', encoding='utf-8') as f:
+        with open(tags_dir / "index.html", "w", encoding="utf-8") as f:
             f.write(all_tags_html)
 
         indexed_count = sum(1 for ps in qualifying.values() if len(ps) >= 8)
@@ -1655,11 +1821,10 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
 
     def _generate_rss_feed(self, posts: List[BlogPost]):
         config = self.blog_system.config
-        base_url = config.get('base_url', '')
+        base_url = config.get("base_url", "")
         rss_items = []
         for post in posts[:20]:
-            desc = _safe_excerpt(post.meta_description,
-                                 post.content, post.title)
+            desc = _safe_excerpt(post.meta_description, post.content, post.title)
             item = f"""    <item>
       <title>{self._escape_xml(post.title)}</title>
       <link>{base_url}/{post.slug}/</link>
@@ -1679,14 +1844,14 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
 {chr(10).join(rss_items)}
   </channel>
 </rss>"""
-        with open("./docs/rss.xml", 'w', encoding='utf-8') as f:
+        with open("./docs/rss.xml", "w", encoding="utf-8") as f:
             f.write(rss_content)
         print("Generated RSS feed")
 
     def _generate_sitemap(self, posts: List[BlogPost]):
         config = self.blog_system.config
-        base_url = config.get('base_url', '')
-        today = datetime.now().strftime('%Y-%m-%d')
+        base_url = config.get("base_url", "")
+        today = datetime.now().strftime("%Y-%m-%d")
 
         # Google's image sitemap extension only lists jpeg/png/gif/webp —
         # SVG isn't in the supported set, so unlike the has_og_image check
@@ -1699,21 +1864,21 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         def image_block(slug: str) -> str:
             if (og_card_dir / f"{slug}.png").exists():
                 return (
-                    f'<image:image><image:loc>{base_url}/static/og/{slug}.png'
-                    f'</image:loc></image:image>'
+                    f"<image:image><image:loc>{base_url}/static/og/{slug}.png"
+                    f"</image:loc></image:image>"
                 )
-            return ''
+            return ""
 
         urls = [
-            f'<url><loc>{base_url}/</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority>'
-            f'<image:image><image:loc>{base_url}/static/og-default.png</image:loc></image:image></url>',
-            f'<url><loc>{base_url}/about/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>',
-            f'<url><loc>{base_url}/contact/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>',
-            f'<url><loc>{base_url}/privacy-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>',
-            f'<url><loc>{base_url}/terms-of-service/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>',
-            f'<url><loc>{base_url}/tag/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>',
-            f'<url><loc>{base_url}/dmca/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>',
-            f'<url><loc>{base_url}/ai-content-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>',
+            f"<url><loc>{base_url}/</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority>"
+            f"<image:image><image:loc>{base_url}/static/og-default.png</image:loc></image:image></url>",
+            f"<url><loc>{base_url}/about/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>",
+            f"<url><loc>{base_url}/contact/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>",
+            f"<url><loc>{base_url}/privacy-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>",
+            f"<url><loc>{base_url}/terms-of-service/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>",
+            f"<url><loc>{base_url}/tag/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>",
+            f"<url><loc>{base_url}/dmca/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>",
+            f"<url><loc>{base_url}/ai-content-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>",
         ]
         # FIX (audit, 2026-09-15): this loop previously added every post
         # unconditionally — the reason 2 of 13 merge-redirect stubs were
@@ -1721,39 +1886,56 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         # anything generate_site() marked noindex (merge stubs and
         # fabrication-quarantined posts), matching what the per-post
         # <meta name="robots"> tag in _generate_post_pages() now says.
-        noindex_slugs = getattr(self, '_noindex_slugs', set())
+        noindex_slugs = getattr(self, "_noindex_slugs", set())
         skipped = 0
         for post in posts:
             if post.slug in noindex_slugs:
                 skipped += 1
                 continue
-            last_mod = post.updated_at.split(
-                'T')[0] if 'T' in post.updated_at else post.updated_at
+            last_mod = (
+                post.updated_at.split("T")[0]
+                if "T" in post.updated_at
+                else post.updated_at
+            )
             try:
-                age_days = (datetime.now() - datetime.fromisoformat(
-                    post.created_at.replace('Z', '+00:00').split('+')[0])).days
+                age_days = (
+                    datetime.now()
+                    - datetime.fromisoformat(
+                        post.created_at.replace("Z", "+00:00").split("+")[0]
+                    )
+                ).days
                 priority = "0.9" if age_days < 30 else "0.8" if age_days < 90 else "0.7"
                 changefreq = "weekly" if age_days < 30 else "monthly"
             except Exception:
                 priority = "0.8"
                 changefreq = "monthly"
             urls.append(
-                f'<url><loc>{base_url}/{post.slug}/</loc>'
-                f'<lastmod>{last_mod}</lastmod>'
-                f'<changefreq>{changefreq}</changefreq>'
-                f'<priority>{priority}</priority>'
-                f'{image_block(post.slug)}</url>'
+                f"<url><loc>{base_url}/{post.slug}/</loc>"
+                f"<lastmod>{last_mod}</lastmod>"
+                f"<changefreq>{changefreq}</changefreq>"
+                f"<priority>{priority}</priority>"
+                f"{image_block(post.slug)}</url>"
             )
 
         sitemap = (
             '<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
             'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n  '
-            + '\n  '.join(urls)
-            + '\n</urlset>'
+            + "\n  ".join(urls)
+            + "\n</urlset>"
         )
-        with open("./docs/sitemap.xml", 'w', encoding='utf-8') as f:
+        with open("./docs/sitemap.xml", "w", encoding="utf-8") as f:
             f.write(sitemap)
+        # sitemap.xml is the ONLY sitemap this site publishes. Orphan
+        # sitemap-N.xml files left behind by an older generator listed
+        # ~1,200 URLs that no longer exist (404s) and were still deployed;
+        # delete them so a stale submission can never advertise dead URLs.
+        for _stale in Path("./docs").glob("sitemap-*.xml"):
+            try:
+                _stale.unlink()
+                print(f"Removed stale sitemap file: {_stale.name}")
+            except OSError:
+                pass
         if skipped:
             print(f"Generated sitemap ({skipped} noindexed post(s) excluded)")
         else:
@@ -1769,33 +1951,39 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         """
         posts_data = []
         for p in posts:
-            posts_data.append({
-                'slug': p.slug,
-                'title': p.title,
-                'meta_description': _safe_excerpt(p.meta_description, p.content, p.title),
-                'tags': p.tags,
-                'short_tags': sorted(p.tags, key=len)[:3],
-                'reading_time': self._reading_time_minutes(p.content),
-                'display_date': self._format_display_date(p.created_at),
-                'created_at': p.created_at,
-            })
-        with open("./docs/posts.json", 'w', encoding='utf-8') as f:
-            json.dump(posts_data, f, separators=(',', ':'))
+            posts_data.append(
+                {
+                    "slug": p.slug,
+                    "title": p.title,
+                    "meta_description": _safe_excerpt(
+                        p.meta_description, p.content, p.title
+                    ),
+                    "tags": p.tags,
+                    "short_tags": sorted(p.tags, key=len)[:3],
+                    "reading_time": self._reading_time_minutes(p.content),
+                    "display_date": self._format_display_date(p.created_at),
+                    "created_at": p.created_at,
+                }
+            )
+        with open("./docs/posts.json", "w", encoding="utf-8") as f:
+            json.dump(posts_data, f, separators=(",", ":"))
         print(f"Generated posts.json ({len(posts_data)} posts)")
 
     def _escape_xml(self, text: str) -> str:
-        return (text.replace('&', '&amp;')
-                .replace('<', '&lt;')
-                .replace('>', '&gt;')
-                .replace('"', '&quot;')
-                .replace("'", '&apos;'))
+        return (
+            text.replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace('"', "&quot;")
+            .replace("'", "&apos;")
+        )
 
     def _format_rss_date(self, iso_date: str) -> str:
         try:
-            dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
-            return dt.strftime('%a, %d %b %Y %H:%M:%S +0000')
+            dt = datetime.fromisoformat(iso_date.replace("Z", "+00:00"))
+            return dt.strftime("%a, %d %b %Y %H:%M:%S +0000")
         except:
-            return datetime.now().strftime('%a, %d %b %Y %H:%M:%S +0000')
+            return datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")
 
     def _load_templates(self) -> Dict[str, Template]:
         return _build_templates()
@@ -3776,14 +3964,14 @@ def _build_templates() -> dict:
 
     env = Environment(loader=BaseLoader(), autoescape=True)
     return {
-        'post':             env.from_string(POST_TMPL),
-        'index':            env.from_string(INDEX_TMPL),
-        'about':            env.from_string(ABOUT_TMPL),
-        'privacy_policy':   env.from_string(PRIVACY_TMPL),
-        'terms_of_service': env.from_string(TERMS_TMPL),
-        'contact':          env.from_string(CONTACT_TMPL),
-        'not_found':        env.from_string(NOT_FOUND_TMPL),
-        'tombstone':        env.from_string(TOMBSTONE_TMPL),
-        'dmca':             env.from_string(DMCA_TMPL),
-        'ai_disclosure':    env.from_string(AI_DISCLOSURE_TMPL),
+        "post": env.from_string(POST_TMPL),
+        "index": env.from_string(INDEX_TMPL),
+        "about": env.from_string(ABOUT_TMPL),
+        "privacy_policy": env.from_string(PRIVACY_TMPL),
+        "terms_of_service": env.from_string(TERMS_TMPL),
+        "contact": env.from_string(CONTACT_TMPL),
+        "not_found": env.from_string(NOT_FOUND_TMPL),
+        "tombstone": env.from_string(TOMBSTONE_TMPL),
+        "dmca": env.from_string(DMCA_TMPL),
+        "ai_disclosure": env.from_string(AI_DISCLOSURE_TMPL),
     }

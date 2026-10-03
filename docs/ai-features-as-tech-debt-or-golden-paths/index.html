@@ -64,7 +64,7 @@
       "description": "AI features built with standard wrappers often become maintenance nightmares in Africa.",
       "datePublished": "2026-07-17T02:53:25+00:00",
       "dateModified": "2026-09-19T11:42:21+00:00",
-      "wordCount": 2638,
+      "wordCount": 2629,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2638 words
+                        &nbsp;·&nbsp; 2629 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -403,7 +398,7 @@
 <p><strong>"Feature flags are necessary for safe rollouts."</strong></p>
 <p>Only if you can’t roll back in 5 minutes. In our Rust system, we replaced feature flags with build-time routing. If the build fails, the old version stays live. We use canary builds with Cloudflare Workers — a single config change rolls back in 30 seconds. Feature flags add latency and complexity. For AI features, they’re often unnecessary.</p>
 <p><strong>"Caching is always good."</strong></p>
-<p>Caching is a trade-off. In System A, we cached raw responses and paid $180/day for over-fetch. In System B, we cached only semantically unique prompts and used Lua scripts to deduplicate in-flight requests. The result: 78% less cache traffic and 42% lower costs. Cache only what you need to survive the next network drop.</p>
+<p>Caching is a trade-off. In System B, we cached only semantically unique prompts and used Lua scripts to deduplicate in-flight requests. The result: 78% less cache traffic and 42% lower costs. Cache only what you need to survive the next network drop.</p>
 <h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
 <p>If I were building an AI feature today for a consumer app in East or West Africa, I’d start with this stack:</p>
 <ul>
@@ -426,38 +421,33 @@
 <p><strong>how to handle model drift in production without rebuilding clients</strong></p>
 <p>Model drift is inevitable. The key is to version your responses, not your model. Cache the response with a version tag (e.g. <code>v1</code>, <code>v2</code>). When the model drifts, bump the version and let the cache expire naturally. Clients never rebuild — they just get the new version when they refetch. I used this in a Kenyan fintech: we bumped the version weekly and saw zero client-side changes.</p>
 <p><strong>what tools can replace LaunchDarkly for AI feature flags</strong></p>
-<p>Use build-time routing or config files that are part of your deployment artifact. For Rust, use <code>config 0.14</code> with TOML. For Go, use <code>viper 1.20</code>. For Node, use <code>convict 6.2</code>. These tools are smaller, faster, and don’t require a remote flag service. I replaced LaunchDarkly with <code>config</code> in a Rust system and cut latency from 50ms to 2ms.</p>
+<p>Use build-time routing or config files that are part of your deployment artifact. For Rust, use <code>config 0.14</code> with TOML. For Go, use <code>viper 1.20</code>. For Node, use <code>convict 6.2</code>. These tools are smaller, faster, and don’t require a remote flag service.</p>
 <p><strong>why do most AI caching strategies fail in Africa</strong></p>
-<p>Most strategies assume exact prompt matching and stable TTLs. In Africa, prompts vary by dialect, spelling, and context. A prompt in Lagos might be "summarise my M-Pesa statement" while in Accra it’s "give me my mobile money summary". Exact matching fails. Sliding TTLs and semantic caching work better. I saw a 40% drop in support tickets when we switched from exact to semantic caching in a Ghanaian app.</p>
+<p>Most strategies assume exact prompt matching and stable TTLs. In Africa, prompts vary by dialect, spelling, and context. A prompt in Lagos might be "summarise my M-Pesa statement" while in Accra it’s "give me my mobile money summary". Exact matching fails. Sliding TTLs and semantic caching work better.</p>
 <p><strong>how to measure if my AI feature is ready for production</strong></p>
 <p>Measure three things: cache miss rate, P99 latency, and fallback rate. If cache miss rate &gt;30%, your TTLs are wrong. If P99 latency &gt;800ms, your edge routing is wrong. If fallback rate &gt;10%, your circuit breaker is wrong. Set up Prometheus metrics for these three values. If any exceed the threshold, redesign before shipping.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
+<li><a href="https://kubaik.github.io/failed-ai-wrappers-2026-what-the-survivors-did-right/">Failed AI wrappers 2026: what the survivors did right</a></li>
+<li><a href="https://kubaik.github.io/golden-paths-become-load-bearing-walls/">Golden paths become load-bearing walls</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 17, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -498,7 +488,7 @@ please contact me and I'll review and correct it.</p>
                     <a class="related-card" href="/5-ai-tools-that-let-us-ship-faster-than-sf-teams/">
                         <h3>5 AI tools that let us ship faster than SF teams</h3>
                         <p>Cut dev cost 35% with AI — Amazon Q, Copilot Chat, Cursor, Codeium, GitLab Duo ranked by Nairobi benchmarks. Real latency and rollback stats inside.</p>
-                        <span class="related-meta">15 min read · 23 June 2026</span>
+                        <span class="related-meta">14 min read · 23 June 2026</span>
                     </a>
                     
                 </div>
@@ -506,12 +496,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

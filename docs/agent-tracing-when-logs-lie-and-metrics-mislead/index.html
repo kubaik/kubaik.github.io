@@ -64,7 +64,7 @@
       "description": "Agent tracing: when logs lie and metrics mislead — cut incident debug time 40% by fixing Jaeger traces that show zero-duration gaps for async workers…",
       "datePublished": "2026-08-28T10:18:37+00:00",
       "dateModified": "2026-08-28T10:18:37+00:00",
-      "wordCount": 2199,
+      "wordCount": 2210,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -263,7 +258,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2199 words
+                        &nbsp;·&nbsp; 2210 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-28
                         
@@ -458,27 +453,20 @@ async def task_postrun_handler(task_id, task, retval, state, *args, **kwargs):
 <p>Yes. Use the Kafka client instrumentation to create spans for produce and consume, and propagate context via the record headers. The consumer span should start when the poll returns a record, not when the record is processed.</p>
 <h2 id="one-thing-you-can-do-in-the-next-30-minutes">One thing you can do in the next 30 minutes</h2>
 <p>Open your Jaeger UI, find a trace that contains an async agent (Celery, SQS, Vertex AI, etc.), and check whether there is an explicit span between the parent’s end and the agent’s start. If there isn’t, create a custom span that wraps the enqueue call and propagate the context. Then reload Jaeger and confirm the gap is gone. That’s the first step to agent-specific tracing that actually helps during incidents.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/observability-2026-ditch-the-three-pillars/">Observability 2026: ditch the three pillars</a></li>
+<li><a href="https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/">Agent followed instructions too literally: the cron job trap</a></li>
+<li><a href="https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/">Agent SLOs: measure what agents actually do</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -507,7 +495,7 @@ async def task_postrun_handler(task_id, task, retval, state, *args, **kwargs):
                     <a class="related-card" href="/observability-agents-lied-to-us/">
                         <h3>Observability agents lied to us</h3>
                         <p>Observability agents in production: the memory leaks, configuration drift, and hidden costs most teams miss.</p>
-                        <span class="related-meta">13 min read · 11 August 2026</span>
+                        <span class="related-meta">14 min read · 11 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-cost-attribution-without-the-spreadsheet-hell/">
@@ -519,7 +507,7 @@ async def task_postrun_handler(task_id, task, retval, state, *args, **kwargs):
                     <a class="related-card" href="/7-ways-to-measure-prompt-platform-roi-in-2026/">
                         <h3>7 ways to measure prompt platform ROI in 2026</h3>
                         <p>Cut prompt spend 30% with 7 real ways to measure agent platform ROI in 2026 — token logging, Redis caching, and the one metric that actually matters.</p>
-                        <span class="related-meta">13 min read · 8 July 2026</span>
+                        <span class="related-meta">12 min read · 8 July 2026</span>
                     </a>
                     
                 </div>
@@ -527,12 +515,7 @@ async def task_postrun_handler(task_id, task, retval, state, *args, **kwargs):
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

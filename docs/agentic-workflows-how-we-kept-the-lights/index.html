@@ -64,8 +64,8 @@
       "description": "Agentic workflow observability with millisecond timestamps, queue depth alerts, and OpenSearch Serverless — the stack that cut our MTTR 93% and p99 latency 74%",
       "datePublished": "2026-07-17T13:40:10+00:00",
       "dateModified": "2026-09-19T15:39:46+00:00",
-      "wordCount": 2938,
-      "timeRequired": "PT15M",
+      "wordCount": 2812,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2938 words
+                        14 min read
+                        &nbsp;·&nbsp; 2812 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -276,9 +271,9 @@
             <div class="post-content" itemprop="articleBody">
                 <p>observability stack looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In late 2026 our agentic workflow service grew from 400 to 4,800 parallel LLM agents in a single region. One Tuesday at 03:17 the p99 latency climbed from 420 ms to 12.4 s and stayed there for 11 minutes. When the alert fired I ran <code>kubectl logs</code> on every pod and hit the same wall: logs were buffered for 30 s before they flushed, so all timestamps were off by exactly that window. That made every correlation query return nonsense.</p>
+<p>In late 2026 our agentic workflow service grew from 400 to 4,800 parallel LLM agents in a single region. One Tuesday at 03:17 the p99 latency climbed from 420 ms to 12.4 s and stayed there for 11 minutes. That made every correlation query return nonsense.</p>
 <p>We were already shipping Prometheus + Grafana dashboards built for traditional request/response traffic. Those dashboards gave us CPU, memory, and 5xx rates; they told us nothing about agent state, tool calls, or retries. The agentic layer started dropping messages because the underlying Redis queue had grown to 320 k messages and the blocking pop timeout was still the default 0 ms. With no visibility into queue depth, the system simply queued forever and agents timed out.</p>
-<p>The turning point came when we noticed the same symptom in Manila and Cape Town: every agent that ran longer than 90 s disappeared from the dashboard because its heartbeat fell into a 5-minute scrape interval. That 5-minute scrape cadence was the default in our Helm chart; it had been fine for cron jobs but was death for stateful agents. By the time we lowered it to 30 s the queue depth had already grown to 480 k. We burned 1.3 request-seconds per agent per 30-second scrape window just on scraping overhead. That’s 21 % of our CPU budget on a cluster that was already at 89 % utilization.</p>
+<p>That 5-minute scrape cadence was the default in our Helm chart; it had been fine for cron jobs but was death for stateful agents. That’s 21 % of our CPU budget on a cluster that was already at 89 % utilization.</p>
 <p>I settled on three non-negotiables for any observability stack in agentic workloads:</p>
 <ol>
 <li>millisecond-level event timestamps that survive log buffering</li>
@@ -729,7 +724,7 @@
        description: "Queue depth is {{ $value }}; agents may time out."
    ```</li>
 </ol>
-<p>Gotcha: the Prometheus client in Python 0.21 leaks file descriptors on every scrape. We pinned <code>prometheus-client==0.21.0</code> and limited <code>/metrics</code> to 15 s scrape cadence; anything shorter causes the sidecar to crash with “too many open files”. I only caught that after Grafana started returning 502 errors.</p>
+<p>Gotcha: the Prometheus client in Python 0.21 leaks file descriptors on every scrape. I only caught that after Grafana started returning 502 errors.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>We rolled this stack out to Manila, Cape Town, and Tallinn in January 2026. Here are the numbers that mattered:</p>
 <table>
@@ -773,7 +768,7 @@
 <li>The Grafana dashboard’s “Stuck agents” panel now correlates <code>trace_id</code> across 4,800 agents in &lt;1 s; previously it required a custom script and 6 minutes of manual parsing.</li>
 <li>Cost: $18 / month for OpenSearch Serverless plus $3 / month for the t3.large instance running Prometheus + Grafana + metrics service = $21 / month total. That’s 0.4 % of our previous ELK cluster spend.</li>
 </ul>
-<p>I also learned that humans ignore alerts that fire more than twice a week. After we tuned the alert threshold to p99 latency &gt; 1.5 s the team stopped muting Slack notifications.</p>
+<p>I also learned that humans ignore alerts that fire more than twice a week.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>How do I run this on Kubernetes instead of Docker Compose?</strong></p>
 <p>You can lift the entire stack into Kubernetes by creating three Deployments: <code>agent</code>, <code>sidecar</code>, and <code>metrics</code>. Use a sidecar container in the agent pod that tails <code>/proc/1/fd/1</code> so you keep the same zero-copy log transfer. The Prometheus scrape config becomes a ServiceMonitor. The only hard-to-reverse decision is storage class in OpenSearch Serverless; once you choose <code>trace-analytics</code> you cannot shrink the index later without re-indexing.</p>
@@ -782,7 +777,7 @@
 <p><strong>What happens if Data Prepper 2.7 drops ARM64 support?</strong></p>
 <p>We pinned the arm64 image explicitly (<code>opensearchproject/data-prepper:2.7.0-arm64</code>). If the maintainers drop it we will switch to a custom build based on the open-source repo. The pipeline configuration is versioned in Git, so the migration is a one-line image tag change.</p>
 <p><strong>Can I sample events to reduce cost?</strong></p>
-<p>Yes. In Data Prepper set <code>sampleRate: 0.1</code> for events over 1 s duration. You will lose 10 % of high-latency events but save 45 % on ingest. We validated that the p99 latency signal remains within 3 % error when sampling 10 % of events.</p>
+<p>Yes. In Data Prepper set <code>sampleRate: 0.1</code> for events over 1 s duration. You will lose 10 % of high-latency events but save 45 % on ingest.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Shut down the Manila cluster tomorrow and run this stack on a single <code>t4g.nano</code> instance in Cape Town. The only changes you need are:</p>
 <ul>
@@ -792,33 +787,28 @@
 </ul>
 <p>After 24 hours compare the p99 latency and queue depth graphs in Grafana. If the p99 is still under 1.5 s and the queue depth never peaks above 1,000 your stack is ready for prime time.</p>
 <p>Immediately open Grafana, go to Dashboard 19465, and click the “Stuck agents” panel. If it shows zero agents you are done. If it shows any agents, run <code>docker compose logs sidecar | grep -i error</code> and fix the first error line you see.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/dead-letter-queues-stop-poison-messages/">Dead-letter queues: stop poison messages</a></li>
+<li><a href="https://kubaik.github.io/always-on-agents-cost-more-than-you-think/">Always-on agents cost more than you think</a></li>
+<li><a href="https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/">Agent followed instructions too literally: the cron job trap</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 17, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -867,12 +857,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

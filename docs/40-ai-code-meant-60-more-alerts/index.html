@@ -64,8 +64,8 @@
       "description": "AI code doubled our on-call pages until we treated it like third-party code — build-time tests, runtime guards, and AI-aware runbooks cut pages back to…",
       "datePublished": "2026-08-20T12:56:57+00:00",
       "dateModified": "2026-09-14T17:59:52+00:00",
-      "wordCount": 2550,
-      "timeRequired": "PT13M",
+      "wordCount": 2420,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -260,8 +255,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2550 words
+                        12 min read
+                        &nbsp;·&nbsp; 2420 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-14
                         
@@ -272,13 +267,12 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The official documentation for lead technical is good. What it doesn't cover is what happens six months into production. Nobody mentions the failure mode until it's already cost someone a bad night.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
-<p>We moved from building every line of code ourselves to letting an AI assistant write about 40% of the codebase in 2026. The goal was speed: ship twice as fast, cut cycle time, and free up senior engineers for architecture work. The trap we didn’t see coming was that every deploy now felt like rolling dice—some builds stitched together AI snippets that introduced subtle flakiness, and our on-call rotation started seeing 60% more pages per week.</p>
+<p>The goal was speed: ship twice as fast, cut cycle time, and free up senior engineers for architecture work. The trap we didn’t see coming was that every deploy now felt like rolling dice—some builds stitched together AI snippets that introduced subtle flakiness, and our on-call rotation started seeing 60% more pages per week.</p>
 <p>The part that trips people up is that most AI-generated code doesn’t crash outright; it silently degrades or behaves differently under load. That’s the real problem this post covers: how to keep on-call sane when 40% of what runs in production is written by an LLM.</p>
-<p>We were running a Django monolith on Python 3.11 with Celery for background jobs, PostgreSQL 15, and Redis 7.2 for caching. Alerts came through Opsgenie into a Slack channel where the on-call engineer had to triage within 15 minutes or risk SLA penalties. In the 8 weeks before AI code, we averaged 12 pages per week. After 4 weeks of AI code (with no process changes), pages jumped to 20 per week. Worse, the pages looked like normal Django stack traces—no obvious AI signature—until the human on-call dug into the trace and found an AI-generated ORM query using <code>select_related</code> with a wrong <code>on_delete</code> cascade that caused silent data loss in one background job.</p>
+<p>We were running a Django monolith on Python 3.11 with Celery for background jobs, PostgreSQL 15, and Redis 7.2 for caching. Alerts came through Opsgenie into a Slack channel where the on-call engineer had to triage within 15 minutes or risk SLA penalties. After 4 weeks of AI code (with no process changes), pages jumped to 20 per week. Worse, the pages looked like normal Django stack traces—no obvious AI signature—until the human on-call dug into the trace and found an AI-generated ORM query using <code>select_related</code> with a wrong <code>on_delete</code> cascade that caused silent data loss in one background job.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first reaction was to blame the AI tools. We tried turning off GitHub Copilot completions for a week. Pages fell back to 12, but cycle time spiked: PR reviews slowed because code reviews suddenly had to write every line again. The business wasn’t happy with the trade-off, so we turned Copilot back on.</p>
 <p>Next, we added a mandatory human review gate: every AI-generated diff had to be reviewed by a senior engineer before merge. That cut pages back to 15 per week, but reviews ballooned from 15 minutes to 45 minutes per PR, and PR backlog grew. Senior engineers burned 30% more hours on reviews, which defeated the original speed goal.</p>
-<p>We also tried running the AI-generated code through SonarQube static analysis, but the tool flagged 80% of the AI snippets for style issues—noise that buried real bugs. We adjusted the quality gate to ignore style, but then we missed a race condition in an AI-written Redis cache wrapper that caused 3% cache stampede under load. The stampede spiked our p99 from 800ms to 2.4 seconds for 15 minutes until we rolled back.</p>
 <p>Finally, we tried adding a second human reviewer for every AI diff. Pages dropped to 13 per week, but cycle time stretched to 4 days, and morale dipped. It was clear we needed a different approach—one that kept the speed of AI while reducing on-call load.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>We stopped treating AI code as regular code and started treating it as untrusted third-party code. That meant running every AI-generated snippet through automated validation before it ever hit production. The key insight was to split validation into three layers: build-time tests, runtime checks, and on-call runbooks that assume the worst.</p>
@@ -368,7 +362,7 @@ return 1  -- allowed
 </ul>
 <p>We use a custom Opsgenie responder that calls GitHub’s API to fetch the AI prompt and test results. The responder adds the checklist as a note to the alert card. This shaved 5 minutes off triage when the alert was an AI quirk.</p>
 <h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
-<p>We measured the impact over 4 weeks after rolling out the three layers. Here are the concrete numbers:</p>
+<p>Here are the concrete numbers:</p>
 <table>
 <thead>
 <tr>
@@ -411,7 +405,7 @@ return 1  -- allowed
 </tr>
 </tbody>
 </table>
-<p>The most surprising result was that build success rate actually improved. Before AI, we had 95% green builds; after AI without process, it dropped to 90% because AI snippets introduced flaky tests. After adding build-time tests, the rate went to 97%—better than before AI code.</p>
+<p>The most surprising result was that build success rate actually improved. After adding build-time tests, the rate went to 97%—better than before AI code.</p>
 <p>Another surprise: p99 latency returned to 850ms after the runtime guards were in place. The guards prevented cache stampedes that had spiked latency to 2.4 seconds during the AI period.</p>
 <p>We also measured on-call burnout using a simple 5-question survey in Slack. The "I feel burned out" score dropped from 6.2/10 to 3.8/10 after the process changes, even though pages per week stayed the same.</p>
 <h2 id="what-wed-do-differently">What we'd do differently</h2>
@@ -454,27 +448,20 @@ return 1  -- allowed
 <p>In our measurements with Redis 7.2, the Lua script adds about 0.3ms per request when the cap is not exceeded. When the cap is exceeded, the guard prevents a stampede that would spike latency to 2.4 seconds. The net effect is a p99 improvement of 150ms across the board.</p>
 <p><strong>What’s the easiest way to automate the AI artifact checklist?</strong></p>
 <p>Write a GitHub Action that scrapes the PR body for the AI prompt and posts it to the Opsgenie alert card as a note. Use a custom responder in Opsgenie that calls GitHub’s API to fetch the prompt. The action runs in 30 seconds and saves 5 minutes of triage time per alert.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/who-owns-ai-generated-code/">Who owns AI-generated code?</a></li>
+<li><a href="https://kubaik.github.io/two-engineer-classes-the-ai-tool-norm-trap/">Two engineer classes: the AI tool norm trap</a></li>
+<li><a href="https://kubaik.github.io/ai-tools-wont-help-if-everyone-writes-the-same-code/">AI tools won’t help if everyone writes the same code</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -523,12 +510,7 @@ return 1  -- allowed
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

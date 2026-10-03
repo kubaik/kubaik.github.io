@@ -64,8 +64,8 @@
       "description": "Cut AWS costs 56% by replacing Redis, Kafka, and TimescaleDB with Postgres 17 — connection pooling, pgmq benchmarks, and the schema mistake that cost us 3 days.",
       "datePublished": "2026-07-02T17:01:10+00:00",
       "dateModified": "2026-09-19T03:52:02+00:00",
-      "wordCount": 3048,
-      "timeRequired": "PT15M",
+      "wordCount": 2880,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3048 words
+                        14 min read
+                        &nbsp;·&nbsp; 2880 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -277,7 +272,7 @@
                 <p>I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
 <p>In 2026, Postgres 17 with the <code>pgvector</code>, <code>pg_cron</code>, <code>pg_partman</code>, and <code>pgmq</code> extensions is quietly replacing three separate tools in many stacks: Redis for ephemeral caches, Kafka for simple event streaming, and TimescaleDB for time-series data. The reason isn’t just Postgres getting faster — it’s that the ecosystem finally caught up with the workloads teams actually run.</p>
-<p>We started with Redis 7.2 for rate limiting, Kafka 3.7 for async ledger events, and TimescaleDB 2.13 for metrics. Our AWS bill for these three boxes hit $14k/month while the Postgres RDS instance sat at $8k. After a 48-hour migration weekend, we cut the monthly bill to $6k and shaved 450ms off our p99 API response time. The scary part? We didn’t change a single line of application code — just pointed our services at a single Postgres endpoint and enabled the right extensions.</p>
+<p>We started with Redis 7.2 for rate limiting, Kafka 3.7 for async ledger events, and TimescaleDB 2.13 for metrics. The scary part? We didn’t change a single line of application code — just pointed our services at a single Postgres endpoint and enabled the right extensions.</p>
 <p>The shift isn’t just about cost. It’s about cognitive load. Instead of juggling three separate query languages (Lua for Redis, SQL + Kafka Streams for events, SQL with Timescale hypertables), we now run everything through a single PostgreSQL 17.1 connection. The operational blast radius shrinks from three systems to one, and the mental model for debugging goes from "Why is Kafka lagging?" to "Why is this query plan doing a seq scan?"</p>
 <p>But don’t take my word for it. This comparison is built on three months of load testing on a 200GB dataset split across 12 r7g.4xlarge instances in us-east-1, with 50k writes/sec and 300k reads/sec during peak. We measured everything: connection churn, cache hit ratios, replication lag, and the hidden cost of cross-service debugging. The results surprised even the Postgres core team — not because the features are new, but because the combination finally works at scale.</p>
 <p>That’s faster than Kafka 3.7 in our tests, and it didn’t require ZooKeeper, KRaft, or any tuning beyond <code>shared_preload_libraries = 'pgmq'</code>.</p>
@@ -320,7 +315,7 @@ SELECT cron.schedule('cleanup-rate-limits', '*/5 * * * *', $$
   DELETE FROM rate_limits WHERE last_updated &lt; now() - interval '1 hour'
 $$);
 </code></pre>
-<p>This cache lives entirely in the Postgres buffer pool. On an r7g.4xlarge with 128GB RAM, our buffer cache hit ratio for rate limits was 98.7% during peak load. That’s not because we configured anything special — it’s because Postgres already caches hot blocks in shared_buffers by default.</p>
+<p>This cache lives entirely in the Postgres buffer pool. That’s not because we configured anything special — it’s because Postgres already caches hot blocks in shared_buffers by default.</p>
 <p>The downside? Temporary tables disappear on transaction end, so you need to use <code>ON COMMIT PRESERVE ROWS</code> or schedule refresh jobs. In our case, we used <code>pg_cron</code> to rebuild a materialized view every minute instead of using temp tables directly.</p>
 <h3 id="the-event-bus-pgmq">The event bus: <code>pgmq</code></h3>
 <p><code>pgmq</code> implements a simple message queue inside Postgres using two tables: one for messages and one for receipts. It’s not Kafka — you can’t replay partitions or shard by topic — but for asynchronous workflows like sending receipts or updating search indexes, it’s more than enough.</p>
@@ -351,7 +346,7 @@ with pool.connection() as conn:
             # Acknowledge after processing
             cur.execute(&quot;SELECT pgmq.archive('receipts', %s)&quot;, (msg_id,))
 </code></pre>
-<p>In our load tests, <code>pgmq</code> handled 120k messages/sec with 0.8ms median latency and 2.3ms p99. That’s faster than Redis Streams in our benchmarks and 3x cheaper than running Kafka 3.7 on three m6i.large brokers. The catch is that <code>pgmq</code> doesn’t persist messages forever — you need to archive or delete them, or the queue grows unbounded.</p>
+<p>That’s faster than Redis Streams in our benchmarks and 3x cheaper than running Kafka 3.7 on three m6i.large brokers. The catch is that <code>pgmq</code> doesn’t persist messages forever — you need to archive or delete them, or the queue grows unbounded.</p>
 <h3 id="the-time-series-layer-pg_partman-timescaledb-compatibility-mode">The time-series layer: <code>pg_partman</code> + <code>timescaledb</code> compatibility mode</h3>
 <p>For metrics and telemetry, we combined <code>pg_partman</code> for automatic table partitioning with TimescaleDB’s compression in "compatibility mode." The trick is to create hypertables implicitly by enabling Timescale’s extension and letting <code>pg_partman</code> handle the partition pruning.</p>
 <pre><code class="language-sql">-- Enable TimescaleDB in compatibility mode
@@ -376,12 +371,12 @@ SELECT partman.create_parent('api_metrics', 'timestamp', 'daily', 'pg_partman');
 - Lua scripts for rate limiting
 - Separate connection pools in each service
 - A custom exporter for Prometheus metrics</p>
-<p>The total cost: $900/month. After switching to Postgres’s buffer cache, we cut that to $8/month (the extra RAM on the Postgres instance) while improving hit ratios from 92% to 98.7%.</p>
+<p>The total cost: $900/month.</p>
 <p>The real killer is debugging. When a key disappears, is it:
 - An eviction policy issue? - A Lua script bug? - A network partition? - A failover in progress?</p>
 <p>With Postgres, the answer is always "a query plan issue."</p>
 <h3 id="kafka-37-the-event-backbone">Kafka 3.7 — the event backbone</h3>
-<p>Kafka 3.7 with KRaft mode removed ZooKeeper, but it didn’t remove the complexity. Our Kafka cluster ran on 3 <code>kafka.r6g.2xlarge</code> brokers ($450/month each) with 3-day retention and replication factor 3. Total cost: $1,350/month.</p>
+<p>Kafka 3.7 with KRaft mode removed ZooKeeper, but it didn’t remove the complexity. Total cost: $1,350/month.</p>
 <p>We used Kafka for:
 - Ledger events (order created, payment processed)
 - Audit logs
@@ -393,7 +388,7 @@ SELECT partman.create_parent('api_metrics', 'timestamp', 'daily', 'pg_partman');
 - Exactly-once semantics tuning
 - Schema registry schema evolution
 - MirrorMaker for cross-region replication</p>
-<p>In our Postgres migration, we replaced Kafka with <code>pgmq</code> for everything except the highest-throughput topics. The tipping point was when we measured 120k messages/sec through <code>pgmq</code> with 0.8ms median latency — faster than Kafka’s 3.2ms median in our tests.</p>
+<p>In our Postgres migration, we replaced Kafka with <code>pgmq</code> for everything except the highest-throughput topics.</p>
 <p>The catch is that <code>pgmq</code> doesn’t guarantee ordering per partition like Kafka does. If your workflow requires strict ordering (e.g., financial transactions), you’re better off keeping Kafka. But for 90% of async workflows, <code>pgmq</code> is enough.</p>
 <h3 id="timescaledb-213-the-metrics-engine">TimescaleDB 2.13 — the metrics engine</h3>
 <p>TimescaleDB 2.13 is still the gold standard for time-series data. It compresses 100GB of metrics into 13GB using columnar storage and provides SQL extensions like <code>time_bucket</code> and <code>last</code>. The problem is that it’s a separate database, which means:
@@ -401,8 +396,8 @@ SELECT partman.create_parent('api_metrics', 'timestamp', 'daily', 'pg_partman');
 - Another backup strategy
 - Another replication lag metric to watch
 - Another place for schema drift</p>
-<p>We ran TimescaleDB on a <code>db.r6g.2xlarge</code> instance ($540/month) with 30 days retention and compression enabled. The storage savings were real — 87% reduction for old data — but the operational cost of running a second database was higher than the storage savings.</p>
-<p>With Postgres 17 and <code>pg_partman</code>, we replicated 90% of the compression benefits without installing TimescaleDB. The remaining 10% (advanced compression algorithms) wasn’t worth the operational overhead.</p>
+<p>The storage savings were real — 87% reduction for old data — but the operational cost of running a second database was higher than the storage savings.</p>
+<p>The remaining 10% (advanced compression algorithms) wasn’t worth the operational overhead.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
 <p>We ran a synthetic load test for 72 hours on both stacks. The goal was to simulate a Jakarta-based payments service with 50k writes/sec and 300k reads/sec during peak. Here’s what we measured:</p>
 <table>
@@ -593,33 +588,20 @@ SELECT partman.create_parent('api_metrics', 'timestamp', 'daily', 'pg_partman');
 <p>TimescaleDB 2.13 compresses 100GB of metrics to 13GB using columnar storage. Postgres 17 with <code>pg_partman</code> + Timescale compatibility mode achieves 87% reduction for old data, but not the full 93% of TimescaleDB. The trade-off is worth it for 80% of metrics workloads — the remaining 20% that need extreme compression should stay on TimescaleDB.</p>
 <p><strong>What’s the biggest mistake teams make when consolidating?</strong></p>
 <p>They try to replicate every Kafka feature in <code>pgmq</code>. Kafka has partitions, replication, and consumer groups — <code>pgmq</code> has none of that. Teams that try to build a Kafka clone on top of Postgres tables end up with worse performance than using Kafka. Use <code>pgmq</code> only for simple queues where ordering isn’t critical.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/postgres-17-buried-redis-s3-cron/">Postgres 17 buried Redis, S3, cron</a></li>
+<li><a href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+<li><a href="https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 02, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -654,7 +636,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/postgres-17-buried-redis-s3-cron/">
                         <h3>Postgres 17 buried Redis, S3, cron</h3>
                         <p>Cut stack costs 88% with Postgres 17 caching, cron jobs, and blob storage — latency benchmarks, migration steps, and the 1 mistake we made</p>
-                        <span class="related-meta">15 min read · 26 June 2026</span>
+                        <span class="related-meta">14 min read · 26 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/log-audit-costs-without-breaking-compliance/">
@@ -668,12 +650,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -64,7 +64,7 @@
       "description": "Migrate M-Pesa Daraja to 2.0 in 2026 and cut failed payments 82% — new headers, idempotency keys, and callback changes you must ship before March 31",
       "datePublished": "2026-07-02T16:41:45+00:00",
       "dateModified": "2026-09-19T09:34:02+00:00",
-      "wordCount": 2264,
+      "wordCount": 2241,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -247,7 +242,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2264 words
+                        &nbsp;·&nbsp; 2241 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -258,7 +253,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>Our sandbox tests passed because we mocked the new <code>X-Daraja-Version: 2.0</code> header, but the live endpoint rejected the call with <code>412 Precondition Failed</code> when we pushed to production. The official docs said the header was optional, but the gateway silently upgraded us on March 1, 2026 and started enforcing it. That night, 14% of our M-Pesa payments failed before we rolled back. This post is the checklist I wish I had kept on my desk that weekend.</p>
+<p>Our sandbox tests passed because we mocked the new <code>X-Daraja-Version: 2.0</code> header, but the live endpoint rejected the call with <code>412 Precondition Failed</code> when we pushed to production. The official docs said the header was optional, but the gateway silently upgraded us on March 1, 2026 and started enforcing it. This post is the checklist I wish I had kept on my desk that weekend.</p>
 <p>Daraja 2.0 isn’t just a version bump; it’s a breaking change that rewrites authentication, adds idempotency keys, and tightens TLS requirements. The old <code>stkpush</code> endpoint is gone, replaced by a new <code>v2/mpesa/stkpush</code> path that expects a <code>Timestamp</code> field instead of <code>TimeStamp</code>. If your code still uses the 2026 SDK, you will break in production after March 31, 2026, when Safaricom retires the legacy endpoints permanently. I’ve seen teams wait until the last week and scramble through weekend war rooms; don’t be one of them.</p>
 <p>This guide assumes you already integrate M-Pesa via Daraja, know what a Lipa Na M-Pesa Online API call looks like, and have a sandbox account. If you’re starting from scratch, open the <a href="https://developer.safaricom.co.ke/">Safaricom Developer Portal</a> first and create an account. Grab your Consumer Key and Consumer Secret before continuing.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -639,35 +634,22 @@ GlobalPay endpoints (<code>https://globalpay.safaricom.co.ke</code>) are still o
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>If you’re on a team that still uses the 2026 SDK, clone the repository above, run <code>pip install -r requirements.txt</code>, and execute <code>python mpesa.py</code>. Confirm the first STK push returns a <code>ResponseCode</code> of <code>0</code> and the callback arrives at your webhook with the new nesting.</p>
 <p>Next, update your deployment pipeline to validate the <code>X-Daraja-Version: 2.0</code> header in staging. Add a canary rule in your API gateway to route 5% of traffic to the new endpoints and monitor 412 rates. Once the error rate stays below 0.5% for 48 hours, roll out to 100%.</p>
-<p>Finally, measure your current callback processing time. If it exceeds 500 ms, add Redis caching to the access token fetch. I’ve seen teams cut 600 ms off each request by doing exactly that.</p>
+<p>Finally, measure your current callback processing time. If it exceeds 500 ms, add Redis caching to the access token fetch.</p>
 <p><strong>Action for the next 30 minutes:</strong> Open your integration’s environment file and add the <code>X-Daraja-Version: 2.0</code> header to every outbound M-Pesa request. Run a test STK push from staging and verify the response code is <code>0</code> before continuing with the rest of the migration.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-payments-break-in-m-pesa-first/">AI payments break in M-Pesa first</a></li>
+<li><a href="https://kubaik.github.io/ai-wrote-the-docs-humans-wrote-the-gaps/">AI wrote the docs — humans wrote the gaps</a></li>
+<li><a href="https://kubaik.github.io/claude-code-after-a-year-daily-wins/">Claude Code after a year: daily wins</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 02, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -716,12 +698,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

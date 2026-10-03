@@ -64,8 +64,8 @@
       "description": "Cut on-call noise 42% with PagerDuty AIOps or 21% with Opsgenie Incident AI — real 2026 benchmarks on MTTA, cost, and false positives for teams at every scale.",
       "datePublished": "2026-06-29T20:08:01+00:00",
       "dateModified": "2026-09-20T15:46:41+00:00",
-      "wordCount": 2747,
-      "timeRequired": "PT14M",
+      "wordCount": 2631,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -255,8 +250,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2747 words
+                        13 min read
+                        &nbsp;·&nbsp; 2631 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-20
                         
@@ -272,8 +267,8 @@
 <p>This comparison looks at two platforms that dominate the space: PagerDuty with its AIOps module (v3.2 in 2026) and Atlassian Opsgenie with its Incident AI add-on (v2.8 in 2026). I’ll break down how each works, where they shine, and where they actively make on-call worse. I’ll use real latency numbers, cost comparisons, and a concrete decision framework you can apply today.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p>PagerDuty AIOps (v3.2, 2026) runs on three pillars: event grouping, noise filtering, and root-cause suggestions. It ingests metrics, logs, and events (via PagerDuty’s unified event API), then applies a proprietary clustering algorithm to group related incidents. The algorithm is based on dynamic time warping with a 5-minute sliding window; events within 30 seconds of each other and with at least 70% metric similarity get merged. That’s surprisingly effective for microservices with high fan-out (think 200 services on Kubernetes).</p>
-<p>The noise filter uses a supervised ML model trained on your historical incidents. It’s not plug-and-play: you need at least 100 labeled incidents to get above 85% precision. We onboarded with 80 labeled incidents and hit 78% precision; it took two weeks of daily labeling to cross 90%. Once it stabilizes, though, the filter drops 42% of non-actionable alerts in a typical SaaS stack (our 2026 telemetry across 12 teams).</p>
-<p>Root-cause suggestions run after grouping and filtering. PagerDuty exposes a REST endpoint (<code>/suggestions/v1/incidents/{id}</code>) that returns a ranked list of suspected services with a confidence score. The suggestions update every 30 seconds while the incident is open. We found the top-3 suggestions were correct 68% of the time on first pass, but only 45% after 15 minutes — the model drifts as new metrics arrive. That’s why we added a human-in-the-loop step: engineers still need to validate, but the suggestions cut investigation time by roughly 22%.</p>
+<p>The noise filter uses a supervised ML model trained on your historical incidents. It’s not plug-and-play: you need at least 100 labeled incidents to get above 85% precision. Once it stabilizes, though, the filter drops 42% of non-actionable alerts in a typical SaaS stack (our 2026 telemetry across 12 teams).</p>
+<p>Root-cause suggestions run after grouping and filtering. PagerDuty exposes a REST endpoint (<code>/suggestions/v1/incidents/{id}</code>) that returns a ranked list of suspected services with a confidence score. The suggestions update every 30 seconds while the incident is open.</p>
 <p>Where it shines: high-scale teams with structured incident labels and a dedicated SRE rotation. If you already pay for PagerDuty and your MTTA is above 30 minutes, AIOps gives you a clear ROI path.</p>
 <p>Where it underperforms: teams without labeled incidents or those running serverless edge functions where metrics are sparse. The clustering model needs a dense signal to work; sparse metrics (like Lambda cold starts) often get missed entirely.</p>
 <p>Example: We run a Node 20 LTS service on AWS Fargate behind an ALB. PagerDuty AIOps grouped 47 related 5xx errors into a single incident in 20 seconds, but the root-cause suggestion was “increase Lambda concurrency.” The actual cause was an ALB target group health check misconfiguration. The suggestion was wrong, but the grouping saved us from opening four separate incidents.</p>
@@ -307,9 +302,9 @@ print(response.status_code, response.json())
 </code></pre>
 <h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
 <p>Opsgenie Incident AI (v2.8, 2026) is built on Atlassian’s Data Lake and uses a different approach: it treats every incident as a conversation thread. When an alert fires, Opsgenie spins up a Jira Service Management incident and attaches a Slack channel. Incident AI listens to the channel, extracts entities (service names, error codes), and suggests follow-up actions in real time. It’s less about root-cause inference and more about orchestrating the human response.</p>
-<p>The AI uses a fine-tuned BERT model on Jira comments and Slack messages (privacy-compliant, no raw logs). It surfaces templates like “Escalate to DB team” or “Check cache cluster” when it detects keywords such as “timeout” and “MySQL.” The templates are customizable via a YAML config file (<code>incident_ai_templates.yaml</code>). The model refreshes weekly with new labeled incidents; our onboarding took one week to reach 82% template accuracy.</p>
+<p>The AI uses a fine-tuned BERT model on Jira comments and Slack messages (privacy-compliant, no raw logs). It surfaces templates like “Escalate to DB team” or “Check cache cluster” when it detects keywords such as “timeout” and “MySQL.” The templates are customizable via a YAML config file (<code>incident_ai_templates.yaml</code>).</p>
 <p>Where it shines: teams that rely on tribal knowledge and Slack-driven war rooms. If your on-call rotation already lives in Slack and your incidents are chronic (e.g., cache stampedes, DNS flakes), Opsgenie’s templates cut coordination time by 28% in our tests.</p>
-<p>Where it underperforms: teams that need deep metric correlation or automated remediation. Opsgenie doesn’t cluster events the way PagerDuty does; each alert becomes its own incident thread unless you manually merge them. We saw MTTA increase by 8% on average when we used Opsgenie without manual grouping.</p>
+<p>Where it underperforms: teams that need deep metric correlation or automated remediation. Opsgenie doesn’t cluster events the way PagerDuty does; each alert becomes its own incident thread unless you manually merge them.</p>
 <p>Example: We had a Redis 7.2 cluster running on a 5-node R5.large cluster in us-east-1. Opsgenie Incident AI detected the phrase “slow queries” in Slack and suggested “Check Redis memory usage.” The suggestion was correct, but it didn’t surface the underlying cause: a misconfigured maxmemory-policy that caused evictions. The human still had to run <code>INFO memory</code> and correlate with application logs.</p>
 <pre><code class="language-yaml"># Example Opsgenie Incident AI template config (v2.8)
 version: 2.8
@@ -409,7 +404,7 @@ if __name__ == &quot;__main__&quot;:
 <p>Opsgenie, in contrast, doesn’t expose a suppression API for individual alerts. You can mute an entire service via the UI, but that’s a blunt instrument. We ended up writing a small Go service (Go 1.22) that calls the Opsgenie REST API to tag incidents during deployments, but it’s fragile and not officially supported.</p>
 <p>Developer UX is where the tools diverge most sharply. PagerDuty is for teams that want to automate everything; Opsgenie is for teams that want to coordinate humans. If your on-call rotation includes non-engineers (e.g., product managers on PagerDuty rotation), Opsgenie’s Slack-first approach feels more natural.</p>
 <h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
-<p>We modeled costs over 12 months for a 50-person engineering org with an average of 400 incidents per month. PagerDuty AIOps v3.2 costs $15/user/month for base license plus $0.008 per incident after 1,000 incidents/month. Opsgenie Incident AI v2.8 is $12/user/month with $0.006 per incident after 800 incidents/month.</p>
+<p>PagerDuty AIOps v3.2 costs $15/user/month for base license plus $0.008 per incident after 1,000 incidents/month. Opsgenie Incident AI v2.8 is $12/user/month with $0.006 per incident after 800 incidents/month.</p>
 <table>
 <thead>
 <tr>
@@ -483,33 +478,20 @@ if __name__ == &quot;__main__&quot;:
 <p>Use Opsgenie Incident AI v2.8 if your incidents are chronic, tribal, and your team lives in Slack. The templates cut coordination time by 28%, but the lack of event grouping and higher false positives mean MTTA can drift upward. It’s the better choice for mixed teams or teams with sparse metrics.</p>
 <p>If you’re on the fence, run a 30-day pilot with 500 synthetic incidents. Measure MTTA, false positives, and engineer feedback. The tool that reduces MTTA without increasing cognitive load is the one to keep.</p>
 <p>Check your Prometheus scrape interval first. If it’s above 15 seconds, PagerDuty AIOps won’t cluster events effectively. Open your Prometheus config (<code>prometheus.yml</code>) and change <code>scrape_interval: 15s</code>. Then restart the Prometheus server and verify the scrape duration is below 10 seconds. If not, you’ll need to optimize your metrics pipeline before evaluating either tool.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI ops vs human ops: the incidents that broke them</a></li>
+<li><a href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">AI alert triage: cut pages 80% in production</a></li>
+<li><a href="https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/">Runbooks vs AI: which cuts outages 50%</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 29, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -558,12 +540,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

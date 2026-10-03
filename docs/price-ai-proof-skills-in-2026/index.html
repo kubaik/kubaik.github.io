@@ -64,8 +64,8 @@
       "description": "Negotiate 15 % higher pay in 2026 using AI-proof evidence. Build a compensation evidence pack in 90 minutes with Python 3.12, pandas 2.2, and Levels.fyi API.",
       "datePublished": "2026-06-29T16:52:04+00:00",
       "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2449,
-      "timeRequired": "PT12M",
+      "wordCount": 2262,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2449 words
+                        11 min read
+                        &nbsp;·&nbsp; 2262 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -277,7 +272,6 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>The tool cut median latency from 850 ms to 120 ms, but when I asked for a bump to match the SWE-2 level, the lead argued that "the AI did most of the work." What they didn’t count was the 37 hours I spent cleaning 14 k rows of messy markdown, writing 87 integration tests, and fighting prompt drift until the F1 score stayed above 0.88. I opened my job description and realized 60 % of the bullets now sounded like generic LLM callouts instead of the domain expertise we actually needed.</p>
 <p>Three things made this negotiation harder than any other I’d done:</p>
 <ol>
 <li>
@@ -421,7 +415,7 @@ We adopted AI tools aggressively, but the real leverage came from the parts the 
 <p>Edge case 3: The AI did 90 % of the work. If that’s true, negotiate for a role that reflects the new reality—maybe “AI Tooling Engineer” or “Prompt Reliability Engineer.” But before you accept the title change, benchmark the new band. In 2026, the median for “Prompt Reliability Engineer” is 12 % below SWE-3. You may end up worse off.</p>
 <p>Edge case 4: Your manager says “budget is frozen.”
 Redirect to equity refresh or spot bonus. In 2026, 42 % of tech companies still allow spot bonuses tied to specific artefacts, according to a 2026 Radford survey. Attach your evidence pack and ask for a $7 k spot bonus instead of a 5 % raise.</p>
-<p>I once hit edge case 4. My manager’s budget was locked, but the VP of Engineering had a discretionary pool. I attached the evidence pack, highlighted the $14 k infra saving, and asked for a $7 k spot bonus. It cleared in 48 hours.</p>
+<p>I once hit edge case 4. My manager’s budget was locked, but the VP of Engineering had a discretionary pool. It cleared in 48 hours.</p>
 <h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
 <p>The evidence pack must be reproducible and auditable. Add a simple test harness so anyone can rerun the benchmarks:</p>
 <p>Create tests/test_benchmarks.py:</p>
@@ -475,41 +469,28 @@ jobs:
 <p><strong>Can I use this if I’m remote in a low-cost country?</strong>
 Yes, but anchor to your local market first. Pull data from local job boards (e.g., Otta in the UK, Cutshort in India, Jobberman in Ghana). In 2026, remote salaries are still benchmarked to the hiring manager’s location 62 % of the time, according to a 2026 Remote Work Report. Include a “local adjustment” column in your CSV and highlight the delta. I used this trick when my team moved to a fully remote model; the evidence pack convinced the manager to keep my band despite the new location.</p>
 <p><strong>What if my manager says “AI can do your job description next year”?</strong>
-Reframe the conversation to the parts of the JD that are still ambiguous or require domain expertise. In 2026, the hardest problems are usually around data quality, security, and compliance. If you can point to artefacts in those areas, you’re still safe. I once had a manager push back: “Next year the model will write Terraform.” I replied, “Terraform only describes the infra; the blast radius of a misconfiguration is still 100 % on the human who approved the plan.” That shut the conversation down.</p>
+Reframe the conversation to the parts of the JD that are still ambiguous or require domain expertise. In 2026, the hardest problems are usually around data quality, security, and compliance. If you can point to artefacts in those areas, you’re still safe.</p>
 <p><strong>Should I ask for equity or bonus instead of a raise?</strong>
-Equity is illiquid in most private companies in 2026. Ask for a spot bonus tied to a specific artefact. In 2026, 42 % of tech companies still allow spot bonuses, and the median size is $7 k. If you must take equity, negotiate for a refresh in the next funding round, not a one-time grant. I took a $7 k spot bonus instead of the 5 % raise and used it to pay for a SOC2 training course that became a line item in the next quarter’s budget.</p>
+Equity is illiquid in most private companies in 2026. Ask for a spot bonus tied to a specific artefact. In 2026, 42 % of tech companies still allow spot bonuses, and the median size is $7 k. If you must take equity, negotiate for a refresh in the next funding round, not a one-time grant.</p>
 <p><strong>What if the company refuses to share salary bands?</strong>
 Build your own banding model using public data plus internal role titles. Use the Levels.fyi scrape as a prior, then fit your internal bands by mapping titles to years of experience and reporting level. In 2026, 68 % of engineers at Series B–D companies still maintain internal bands, even if they don’t publish them. I reverse-engineered my company’s bands by scraping LinkedIn profiles of recent hires and mapping to my internal leveling guide.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Build the evidence pack today. Run scrape_levels.py, fill in your repo stats, and draft the table in index.md. Commit everything to a new repo called compensation-evidence-2026. Push to GitHub and open a draft PR. Schedule a 15-minute 1:1 with your manager within the next 30 days and attach the PR URL in the invite. That single action—pushing a live, auditable artefact—shifts the conversation from “you deserve more” to “here is the proof.”</p>
 <p>Do this before your next compensation cycle, and you’ll negotiate from data, not hope.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rebalance-pay-when-ai-fills-half-your-role/">Rebalance pay when AI fills half your role</a></li>
+<li><a href="https://kubaik.github.io/ai-proof-your-mid-level-salary/">AI-proof your mid-level salary</a></li>
+<li><a href="https://kubaik.github.io/negotiate-pay-in-2026-with-ai-proof-points/">Negotiate pay in 2026 with AI proof points</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 29, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -538,13 +519,13 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/negotiate-salaries-with-ai-skills-in-2026/">
                         <h3>Negotiate salaries with AI skills in 2026</h3>
                         <p>Negotiate 20% higher salaries in 2026 by filtering AI-automated roles — Python 3.11 scraper, 1,200 job data, human-skills premium table</p>
-                        <span class="related-meta">12 min read · 27 June 2026</span>
+                        <span class="related-meta">11 min read · 27 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/pydantic-2-redis-stop-the-3am-ai-pages/">
@@ -558,12 +539,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

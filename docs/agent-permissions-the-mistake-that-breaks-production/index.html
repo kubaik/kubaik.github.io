@@ -64,7 +64,7 @@
       "description": "Agent permissions: the mistake that breaks production — how we built a desktop agent without admin rights on Windows 7, using COM automation and per-user…",
       "datePublished": "2026-07-30T14:11:31+00:00",
       "dateModified": "2026-09-27T04:25:01+00:00",
-      "wordCount": 4129,
+      "wordCount": 4118,
       "timeRequired": "PT21M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -247,7 +242,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         21 min read
-                        &nbsp;·&nbsp; 4129 words
+                        &nbsp;·&nbsp; 4118 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-27
                         
@@ -275,7 +270,7 @@
 <p><strong>Permissions and session access</strong>: The script failed with <code>pywinauto.findwindows.ElementNotFoundError: {'best_match': 'Acrobat Reader', 'backend': 'uia', 'process': 0}</code> when run as a scheduled task under SYSTEM. When run as a logged-in user via a batch file in the Startup folder, it worked initially but crashed after the user locked the screen. The agent needed the desktop session to be active and unlocked.</p>
 </li>
 <li>
-<p><strong>OCR accuracy and layout</strong>: Tesseract 5.3 struggled with rotated scans and low-resolution PDFs. We got 65% accuracy on clean scans but only 30% on skewed or blurry ones. The health program staff often scanned forms at 150 DPI with a cheap scanner, so the OCR output was messy. We tried preprocessing with OpenCV 4.9, but the machines didn’t have the RAM to run it reliably.</p>
+<p><strong>OCR accuracy and layout</strong>: Tesseract 5.3 struggled with rotated scans and low-resolution PDFs. The health program staff often scanned forms at 150 DPI with a cheap scanner, so the OCR output was messy. We tried preprocessing with OpenCV 4.9, but the machines didn’t have the RAM to run it reliably.</p>
 </li>
 <li>
 <p><strong>Reliability under real usage</strong>: The first version assumed the PDF would always be in the same location and named consistently. In practice, staff renamed files, moved them, or left them open in Adobe Reader. The agent would error out with <code>FileNotFoundError</code> or hang because Adobe Reader was already open.</p>
@@ -454,7 +449,7 @@ End Sub
 <p><strong>Add a retry queue with exponential backoff</strong>. The current design moves failed files to Errors, but staff had to manually move them back. We would add a retry queue in SQLite with a max retry count. If a file fails 3 times, it goes to Errors; otherwise, it retries after 1, 4, and 16 minutes. This would reduce staff intervention by 70%.</p>
 </li>
 </ol>
-<p>We also underestimated the need for a user-facing dashboard. Staff wanted to see which forms were processed and which failed. We built a simple HTML dashboard that reads the SQLite state and displays it in the user’s browser via a local HTTP server (Python 3.11’s http.server). The dashboard updates every 30 seconds via JavaScript fetch. We measured a 15% reduction in support tickets after adding it.</p>
+<p>We also underestimated the need for a user-facing dashboard. Staff wanted to see which forms were processed and which failed. We built a simple HTML dashboard that reads the SQLite state and displays it in the user’s browser via a local HTTP server (Python 3.11’s http.server). The dashboard updates every 30 seconds via JavaScript fetch.</p>
 <p>Another surprise was how much staff relied on the radio while using the computers. Background noise disrupted voice recognition in some OCR tools, but since we avoided voice and used COM automation, noise wasn’t an issue. However, the monitor script’s popup message sometimes got buried under other windows. We fixed this by using <code>WScript.Shell.Popup</code> with a topmost flag.</p>
 <p>Finally, we would add a self-update mechanism. The current MSI requires manual updates. We would use a GitHub release with a PowerShell script that downloads the new MSI, verifies the checksum, and runs it. The script would be triggered by a scheduled task once per week. This would reduce update time per machine from 10 minutes to 2 minutes.</p>
 <h2 id="the-broader-lesson">The broader lesson</h2>
@@ -559,33 +554,20 @@ app.Documents.Add
 app.Quit
 </code></pre>
 <p>Save it as <code>test.vbs</code>, run it, and verify Word opens. If this works, you’re ready to build a COM-based agent for your legacy app. If not, your environment has deeper restrictions — adjust your design accordingly.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/computer-use-agents-the-permission-trap/">Computer-use agents: the permission trap</a></li>
+<li><a href="https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/">Sandboxed computer-use agents with gVisor</a></li>
+<li><a href="https://kubaik.github.io/found-niche-in-2026-saas-that-ai-cant-copy/">Found niche in 2026: SaaS that AI can’t copy</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 30, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -634,12 +616,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

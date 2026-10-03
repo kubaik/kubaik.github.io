@@ -64,7 +64,7 @@
       "description": "Choose no-code vs custom code in 2026 with this decision framework: latency SLOs, export limits, GDPR, and real cost data. Save weeks of rewrite pain.",
       "datePublished": "2026-06-09T04:30:23+00:00",
       "dateModified": "2026-09-19T11:42:21+00:00",
-      "wordCount": 1981,
+      "wordCount": 1929,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -243,7 +238,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 1981 words
+                        &nbsp;·&nbsp; 1929 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -263,7 +258,7 @@
 <li>Risk of vendor lock-in or compliance failure</li>
 </ol>
 <p>In 2026, no-code platforms have matured: Airtable now offers a 100-row free tier with SSO, Softr supports custom React components, and Zapier has 6k+ integrations. Yet teams still lose weeks migrating off a no-code stack after hitting a hidden wall—like a 2-second API timeout that can’t be tuned or a 10 MB CSV export limit that blocks analytics.</p>
-<p>The marketing team built it in two days; we loved the live filtering. Six weeks later, our data team asked for a nightly export so they could run cohort analysis in Python. Softr’s export was capped at 500 rows per file, and the JSON schema changed every week. Rebuilding the dashboard in Next.js 14 with a PostgreSQL 16 read-replica took us 18 days—longer than if we had started with code.</p>
+<p>The marketing team built it in two days; we loved the live filtering. Six weeks later, our data team asked for a nightly export so they could run cohort analysis in Python. Softr’s export was capped at 500 rows per file, and the JSON schema changed every week.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
 <p>Think of the decision as a product lifetime curve:</p>
 <ul>
@@ -438,40 +433,27 @@
 <p>how do i know if my project is disposable</p>
 <p>A disposable project has a clear expiry date you can point to on a calendar. Examples: a conference RSVP page that disappears after the event, a temporary leaderboard for a hackathon, or a one-off marketing splash page for a product drop. If the feature’s only purpose is to exist for 30–90 days and then vanish without trace, it’s disposable. Ask your product manager: “If we delete this next quarter, will anyone notice?” If the answer is no, it’s disposable.</p>
 <p>what happens when no-code hits its row limit</p>
-<p>The moment you hit a no-code platform’s row or API limit, you face one of three paths: pay for an expensive tier, build a custom scraper to pull data out, or rewrite the whole page. In 2026, most platforms cap exports at 10k rows per file; anything larger breaks analytics pipelines. I saw a team hit Airtable’s 50k row limit and spend two weeks writing a Python scraper that still broke when Airtable’s schema drifted—proving it’s cheaper to switch before you hit the wall.</p>
+<p>The moment you hit a no-code platform’s row or API limit, you face one of three paths: pay for an expensive tier, build a custom scraper to pull data out, or rewrite the whole page. In 2026, most platforms cap exports at 10k rows per file; anything larger breaks analytics pipelines.</p>
 <p>can i start no-code and migrate cleanly later</p>
 <p>Only if the platform gives you raw JSON exports with consistent field names and no truncation. Airtable and Retool are the only two in 2026 that meet this bar. Everything else—Softr, Webflow, Glide—will force you to parse CSV, rename fields, or deal with missing data. If you can’t get a clean export today, assume you’ll rewrite the app when you scale. Treat no-code as a temporary sprint, not a long-term bet.</p>
 <p>how do compliance rules like GDPR change the decision</p>
 <p>If your feature touches any personally identifiable information and you need to pin the database to eu-central-1, you must choose a vendor that offers EU data residency or write the code yourself and deploy to a compliant cloud (AWS Frankfurt, GCP europe-west1). No-code platforms like Softr and Webflow default to US data centers; even their “EU” tiers sometimes store metadata in the US. Check the vendor’s DPA and sub-processor list—if it includes AWS US-East, skip it. Switching to Supabase EU and wiring up a custom consent screen took 10 days.</p>
 <h2 id="one-thing-you-can-do-in-the-next-30-minutes">One thing you can do in the next 30 minutes</h2>
 <p>Open your project’s README or Notion page and add a single bullet: “export format: CSV / JSON / none”. If it’s not JSON or none, open the vendor’s docs and check their row limit and schema stability. If either is a red flag, draft a 20-minute spike to estimate the rewrite cost before you build further.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/red-teaming-agents-without-killing-velocity/">Red-teaming agents without killing velocity</a></li>
+<li><a href="https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/">AI UI tools broke my React flow — here’s why</a></li>
+<li><a href="https://kubaik.github.io/nextjs-15-vs-remix-vs-sveltekit-2026-choices/">Next.js 15 vs Remix vs SvelteKit: 2026 choices</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 09, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -520,12 +502,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

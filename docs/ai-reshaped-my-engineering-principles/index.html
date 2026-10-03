@@ -64,7 +64,7 @@
       "description": "Cut AI regression rates 90% with 3 constraints — connection pools, timeouts, tests.",
       "datePublished": "2026-07-03T17:17:29+00:00",
       "dateModified": "2026-09-19T08:51:09+00:00",
-      "wordCount": 2398,
+      "wordCount": 2364,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -253,7 +248,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2398 words
+                        &nbsp;·&nbsp; 2364 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -266,7 +261,7 @@
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>The standard line is that AI tools are just faster versions of the tools we already have—like a turbocharged linter or a pair programmer that never sleeps. They’ll write boilerplate, fix typos, and maybe suggest a unit test. The advice is usually framed around “productivity gains,” “time saved,” and “consistency.” Tools like GitHub Copilot, Cursor, and Amazon Q Developer are sold as supplements to human review, not replacements. The message is soft: use AI to reduce cognitive load, not to replace judgment.</p>
 <p>I bought into this story for a while. I even wrote a post last year saying AI would help small teams ship faster without adding headcount. But the honest answer is that it’s wrong for anything beyond trivial tasks. The tools don’t stop at “suggesting.” They write logic. They refactor modules. They change interfaces. And when they do, they break assumptions that were baked into your system’s design.</p>
-<p>The prompt was simple: “Refactor this handler to use async/await and reduce latency.” Copilot produced code that looked correct—at first. It used <code>asyncio.gather</code> to parallelize two I/O calls, which in theory should have cut response time. But it ignored the database connection pool size of 10. The result? Connection pool exhaustion after 30 seconds. We lost 42% of requests during peak traffic before we even noticed.</p>
+<p>The prompt was simple: “Refactor this handler to use async/await and reduce latency.” Copilot produced code that looked correct—at first. It used <code>asyncio.gather</code> to parallelize two I/O calls, which in theory should have cut response time. But it ignored the database connection pool size of 10. The result? Connection pool exhaustion after 30 seconds.</p>
 <p>The conventional wisdom misses that AI doesn’t just speed up what you do—it changes what you <em>can</em> do. It lowers the activation energy for architectural changes, but it doesn’t lower the risk. When AI can refactor your entire module in 10 seconds, you’re no longer reviewing code—you’re reviewing <em>intent</em>, and intent is fragile.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
 <p>Most teams start with the safe path: use AI for menial work. Generate unit tests. Fill in TODOs. Clean up dead code. Autocomplete boilerplate. This is the “augmentation” narrative—AI as a junior intern that never complains.</p>
@@ -303,7 +298,7 @@ def get_user(user_id: int):
     query = text(&quot;SELECT * FROM users WHERE id = :id&quot;)
     return db.execute(query, {&quot;id&quot;: user_id}).fetchone()
 </code></pre>
-<p>This looks safe, but the <code>text()</code> constructor bypasses SQLAlchemy’s built-in escaping for identifiers. A client in Medellín used this to inject a table name via a query parameter, resulting in a full table scan on the <code>users</code> table during peak hours. The latency jumped from 45ms to 2.3s, and we lost 14% of requests. The fix required rewriting the query to use SQLAlchemy’s <code>select()</code> API, which the AI didn’t suggest.</p>
+<p>This looks safe, but the <code>text()</code> constructor bypasses SQLAlchemy’s built-in escaping for identifiers. A client in Medellín used this to inject a table name via a query parameter, resulting in a full table scan on the <code>users</code> table during peak hours. The fix required rewriting the query to use SQLAlchemy’s <code>select()</code> API, which the AI didn’t suggest.</p>
 <p><strong>Case 4: The timezone that broke in production</strong></p>
 <p>We used Cursor 0.33.1 with Copilot 1.114.0 to add timezone support to a scheduling system for a client in Mexico City. The prompt: “Add timezone-aware datetime handling for appointments.” Copilot generated:</p>
 <pre><code class="language-python">from datetime import datetime, timezone
@@ -451,7 +446,7 @@ async def ai_review_endpoint(request: Request):
     await review_code(code[&quot;content&quot;], context)
     return {&quot;status&quot;: &quot;reviewed&quot;}
 </code></pre>
-<p>This caught a critical race condition in a payment handler within 90 seconds of deployment. The anomaly was a 3x latency spike that correlated with a Copilot-generated change. Without this, we would have lost $8K in transaction fees.</p>
+<p>This caught a critical race condition in a payment handler within 90 seconds of deployment. The anomaly was a 3x latency spike that correlated with a Copilot-generated change.</p>
 <hr />
 <h3 id="beforeafter-comparison-real-numbers">Before/after comparison: real numbers</h3>
 <p>Here’s a breakdown of a real project where we went from manual code review to AI-assisted review with multi-agent validation. The project: a Python 3.11 microservice handling 15K requests/sec, deployed in AWS EC2 (m6i.2xlarge instances).</p>
@@ -556,33 +551,20 @@ If you’re using AI for anything beyond boilerplate, pair it with:
 - Automated risk thresholds in CI (GitHub Actions + Copilot CLI)
 - Domain-specific documentation in prompts</p>
 <p>The tools are powerful, but they’re not magic. They amplify both your strengths and your blind spots. Use them to scale your judgment, not replace it.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-tools-rewrote-my-engineering-rules/">AI tools rewrote my engineering rules</a></li>
+<li><a href="https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/">AI-native apps break when you copy old rules</a></li>
+<li><a href="https://kubaik.github.io/stop-the-writes-zero-downtime-db-migrations/">Stop the writes — zero-downtime DB migrations</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 03, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -631,12 +613,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

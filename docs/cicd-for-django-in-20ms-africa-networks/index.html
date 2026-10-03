@@ -64,8 +64,8 @@
       "description": "Cut Django CI/CD build time 88% in African clouds — 90s builds, 78% egress savings, and the registry mirror trick most tutorials miss.",
       "datePublished": "2026-07-03T14:11:10+00:00",
       "dateModified": "2026-09-16T08:56:55+00:00",
-      "wordCount": 2141,
-      "timeRequired": "PT11M",
+      "wordCount": 1944,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -260,8 +255,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2141 words
+                        10 min read
+                        &nbsp;·&nbsp; 1944 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -272,9 +267,9 @@
             <div class="post-content" itemprop="articleBody">
                 <p>After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026 I joined a team building a Django e-commerce platform for a retailer in Lagos with 200+ concurrent users and a 2 Mbps microwave link to the ISP. We went live on a Tanzanian cloud provider running OpenStack 2026.11 and immediately hit two walls: builds took 8–12 minutes because the CI runner was single-core and Docker layer caching was disabled (no <code>overlay2</code> on their kernel), and the first CD push to the staging fleet failed because the 2026 Ubuntu 24.04 image pulled 1.2 GB of dependencies over a 1.8 Mbps link, saturating the uplink for 45 minutes and timing out the entire build pipeline.</p>
-<p>Most guides assume a fat pipe and multi-core runners. Africa’s cloud reality is the opposite: VMs with 1–2 vCPUs, 2–4 GB RAM, 1–2 Gbps burstable bandwidth, and egress charges up to $0.12/GB. GDPR-style audit trails are rare, so we also had to bolt on commit-signed builds and artifact verification without adding 400 ms of latency to every API call.</p>
-<p>By early 2026 we had trimmed build time to 90 seconds, cut egress by 78 %, and kept the same security posture. This is how we did it, warts and all.</p>
+<p>In 2026 I joined a team building a Django e-commerce platform for a retailer in Lagos with 200+ concurrent users and a 2 Mbps microwave link to the ISP.</p>
+<p>Most guides assume a fat pipe and multi-core runners. Africa’s cloud reality is the opposite: VMs with 1–2 vCPUs, 2–4 GB RAM, 1–2 Gbps burstable bandwidth, and egress charges up to $0.12/GB.</p>
+<p>This is how we did it, warts and all.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You will need:</p>
 <ul>
@@ -314,7 +309,6 @@ NODE_OPTIONS=&quot;--max-old-space-size=512&quot;
 <pre><code class="language-bash">sudo systemctl restart docker
 docker pull python:3.11-slim-bookworm@sha256:...  # exact digest to avoid mutable tags
 </code></pre>
-<p>For the CD stage, I initially tried a managed Kubernetes service in <code>af-south-1</code>, but the default node image weighed 1.8 GB and the cluster autoscaler pulled it every time a new pod spawned. We switched to a single 2 vCPU/4 GB VM running <code>podman</code> 4.9 with <code>--storage-driver=vfs</code> (yes, vfs is slower but uses 50 % less memory on 2 GB VMs) and a systemd service:</p>
 <pre><code class="language-ini"># /etc/containers/containers.conf
 [engine]
 cgroup_manager = &quot;cgroupfs&quot;
@@ -490,7 +484,7 @@ def test_health_endpoint_live(client):
 </code></pre>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>We shipped version 1.4.2 on 2026-01-15. Build time dropped from 8–12 minutes to 90 seconds (p95). Egress fell from 180 MB per build to 38 MB (78 % reduction). CD rollout success rate climbed from 72 % to 98 % after adding the 30-second health check. Memory usage on the CD VM stayed under 1.6 GB RSS with 2 gunicorn workers.</p>
-<p>Latency from Lagos to the Tanzanian cloud: 210 ms RTT. After moving the registry mirror to the same region, image pull time dropped from 45 s to 8 s. We also saved $180/month in egress charges compared to pulling from Docker Hub.</p>
+<p>Latency from Lagos to the Tanzanian cloud: 210 ms RTT. After moving the registry mirror to the same region, image pull time dropped from 45 s to 8 s.</p>
 <p>Comparison table of runner types we tested:</p>
 <table>
 <thead>
@@ -556,33 +550,20 @@ Use Mozilla SOPS 3.9.0 with age keys stored in Hashicorp Vault running in the sa
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Add database backups before every deploy. Use <code>pg_dump</code> to a local file, encrypt with SOPS, and push to an Object Storage bucket in the same region. Schedule it as a cron job on the runner VM.</p>
 <p>Action for the next 30 minutes: open <code>settings.py</code> and set <code>DATABASES['default']['OPTIONS']['connect_timeout']</code> to 3 seconds. Save the file and push a commit. Measure the build time and egress bytes in your new dashboard. If the build takes more than 120 seconds or egress exceeds 50 MB, you’ve hit the same traps I did — now you can fix them.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/">CI/CD for AI code: test, secure, rollback fast</a></li>
+<li><a href="https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/">AI interviews break systems: 5 real mistakes in 2026</a></li>
+<li><a href="https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/">3 ways container builds got 3x faster in 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 03, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -617,7 +598,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/commit-ownership-in-ai-pair-coding/">
                         <h3>Commit ownership in AI pair coding</h3>
                         <p>AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.</p>
-                        <span class="related-meta">16 min read · 31 August 2026</span>
+                        <span class="related-meta">17 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/wasm-servers-beat-containers-here/">
@@ -631,12 +612,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

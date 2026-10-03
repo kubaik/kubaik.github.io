@@ -64,7 +64,7 @@
       "description": "AI code review with Claude saves 150 hours/month but misses race conditions and logic bugs. Setup, costs, and where it fails in 2026.",
       "datePublished": "2026-06-08T23:14:01+00:00",
       "dateModified": "2026-09-16T12:11:57+00:00",
-      "wordCount": 2254,
+      "wordCount": 2189,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -263,7 +258,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2254 words
+                        &nbsp;·&nbsp; 2189 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -281,7 +276,7 @@
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
 <p>Think of Claude as a probabilistic grep plus a junior dev who’s read every Stack Overflow thread since 2018. It doesn’t understand context the way a human does, but it excels at surface-level correctness: type hints, import paths, argument counts, docstring presence, and basic style. That’s useful, but it’s only 10–15% of what a code review actually needs.</p>
 <p>The key insight: treat it like a spell-checker, not a proofreader. Run it on the diff, not the whole file. Ask it specific questions like “flag any new async function without an explicit timeout” or “check that every new endpoint has OpenAPI tags.” Give it a narrow scope and you’ll get useful answers; give it the whole PR and you’ll drown in noise.</p>
-<p>I wasted a week trying to make it review entire files. After measuring its false-positive rate on 200 PRs, I narrowed it to diff-only and cut the noise by 70%. That’s when the real wins started.</p>
+<p>I wasted a week trying to make it review entire files. That’s when the real wins started.</p>
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
 <p>Let’s walk through a real PR in our codebase. The change adds a new endpoint <code>/api/v2/users/{id}/orders</code> to return paginated orders for a user. Here’s the diff summary:</p>
 <ul>
@@ -402,10 +397,10 @@ if __name__ == &quot;__main__&quot;:
 <p><strong>Benchmark against your team</strong>: Run a blind test on 50 PRs. Have Claude review them, then have two senior devs review the same PRs without seeing Claude’s output. Measure the overlap. In our test, Claude caught 40% of the issues the devs caught, but only 15% of the issues the devs missed. The remaining 85% were subtle logic errors that require understanding the domain.</p>
 </li>
 <li>
-<p><strong>Cost guardrails</strong>: At scale, API costs can spiral. We set a budget alert at $20/month and switch to a cheaper model (<code>claude-3-haiku-20260219</code>) for non-critical reviews. The cheaper model is 3x slower but 5x cheaper per token.</p>
+<p><strong>Cost guardrails</strong>: At scale, API costs can spiral. The cheaper model is 3x slower but 5x cheaper per token.</p>
 </li>
 </ol>
-<p>I once forgot to set the budget alert and got a $180 bill in one day from a misconfigured loop. Now I have a Slack bot that pings me if the daily spend exceeds $2.</p>
+<p>Now I have a Slack bot that pings me if the daily spend exceeds $2.</p>
 <h2 id="quick-reference">Quick reference</h2>
 <table>
 <thead>
@@ -476,7 +471,7 @@ Return a JSON array with keys: issue_type, line, message, severity (low/medium/h
 <p><strong>Does Claude catch SQL injection risks?</strong></p>
 <p>Almost never. It flagged one hardcoded password in a config file, but missed a raw SQL query built with string concatenation. For security, keep using SQL parameterization and human review.</p>
 <p><strong>How do I avoid false positives from Claude?</strong></p>
-<p>Narrow the scope to diff-only, pin the model version, and use a custom prompt that mirrors your team’s worst past bugs. We cut false positives from 45% to 12% by doing this.</p>
+<p>Narrow the scope to diff-only, pin the model version, and use a custom prompt that mirrors your team’s worst past bugs.</p>
 <p><strong>What’s the ROI of using Claude for code review?</strong></p>
 <p>At 100 PRs/month with 260k lines, we save 1.5 hours of review time per PR, or ~150 hours/month. The API cost is ~$6/month. Net gain: ~144 hours/month. That’s a 2400% return on time investment.</p>
 <h2 id="where-it-fails-and-what-to-do-instead">Where it fails (and what to do instead)</h2>
@@ -493,33 +488,20 @@ Return a JSON array with keys: issue_type, line, message, severity (low/medium/h
 <pre><code class="language-bash">git diff --cached | claude --model claude-3-5-sonnet-20260219 --prompt &quot;review diff for async timeouts and docstrings only&quot; --format json &gt; claude-review.json
 </code></pre>
 <p>If <code>claude-review.json</code> has issues, exit non-zero. Do this today and you’ll cut your review fatigue by next week.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-scanners-overlook-real-vulns/">AI scanners overlook real vulns</a></li>
+<li><a href="https://kubaik.github.io/ai-burnout-why-output-pressure-rose-even-as-tools-got/">AI burnout: why output pressure rose even as tools got</a></li>
+<li><a href="https://kubaik.github.io/drop-checklists-ai-code-reviews-that-scale/">Drop checklists: AI code reviews that scale</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 08, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -554,7 +536,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/3-ai-coders-ranked-cursor-windsurf-claude-code-in/">
                         <h3>3 AI coders ranked: Cursor, Windsurf, Claude Code in</h3>
                         <p>Cut edit latency 40% with Windsurf 2026.3.1 — real latency, cost, and PII audit numbers for Cursor, Windsurf, and Claude Code in daily use.</p>
-                        <span class="related-meta">16 min read · 12 June 2026</span>
+                        <span class="related-meta">15 min read · 12 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/drop-checklists-ai-code-reviews-that-scale/">
@@ -568,12 +550,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

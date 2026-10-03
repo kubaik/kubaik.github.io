@@ -64,7 +64,7 @@
       "description": "Cut AWS costs 71% with Spot Instances + smart retry logic — retry storms, downstream melts, and the Redis Stream trick most teams miss.",
       "datePublished": "2026-08-12T12:52:38+00:00",
       "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2803,
+      "wordCount": 2828,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2803 words
+                        &nbsp;·&nbsp; 2828 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -599,27 +594,27 @@ Yes, but swap the controller for a custom Kubernetes operator that watches Spot 
 Start with 8 seconds and increase by 200% on downstream errors. A 2-second delay is too short; it will still cause coordinated retries. If your downstream API has strict rate limits (&lt;100 RPM), start with 32 seconds and tune from there.</p>
 <p><strong>How do I test this in staging without burning real jobs?</strong>
 Use a mock downstream API that returns 429 or 503 based on a query parameter. In your controller, set <code>downstream_errors</code> to a fixed value (e.g., 5) for jobs with <code>job_id</code> starting with <code>test-</code>. Then, simulate evictions by publishing fake events to the Redis Stream and verify the backoff delays. You can also use AWS Step Functions to orchestrate a chaos scenario.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/">Agent SLOs: measure what agents actually do</a></li>
+<li><a href="https://kubaik.github.io/tool-calls-why-retries-stampede/">Tool calls: why retries stampede</a></li>
+<li><a href="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">M-Pesa failures cost us 40 hours</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -648,13 +643,13 @@ Use a mock downstream API that returns 429 or 503 based on a query parameter. In
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/event-driven-beats-agent-driven-910-times/">
                         <h3>Event-driven beats agent-driven 9/10 times</h3>
                         <p>Choose event-driven over agent-driven 9/10 times — latency spikes, locking, and retry storms explained with concrete fixes and 2026 tools like EventBridge…</p>
-                        <span class="related-meta">19 min read · 30 July 2026</span>
+                        <span class="related-meta">18 min read · 30 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-stole-system-design/">
@@ -668,12 +663,7 @@ Use a mock downstream API that returns 429 or 503 based on a query parameter. In
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

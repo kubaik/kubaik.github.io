@@ -64,7 +64,7 @@
       "description": "Cut tool validation time 70% with load tests, tracing, and ADRs — avoid connection leaks, cache stampedes, and cold starts in staging before they hit…",
       "datePublished": "2026-07-12T13:28:27+00:00",
       "dateModified": "2026-09-16T12:40:07+00:00",
-      "wordCount": 2466,
+      "wordCount": 2391,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -257,7 +252,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2466 words
+                        &nbsp;·&nbsp; 2391 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -414,7 +409,7 @@ jobs:
           filename: tests/load.js
           flags: &quot;--vus 50 --duration 5m&quot;
 </code></pre>
-<p>This caught a regression in our new caching layer last month—it failed the load test when the cache hit rate dropped below 85%. Without automation, we would have merged it and learned the hard way.</p>
+<p>Without automation, we would have merged it and learned the hard way.</p>
 <h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
 <ul>
 <li><strong>Cache stampede</strong>: When a cached value expires and 100 requests rebuild it at once, causing latency spikes. Common with tools like DragonflyDB or Redis when TTLs are misaligned.</li>
@@ -434,45 +429,32 @@ jobs:
 <p>If the tool is closed-source or hosted, file a support ticket with the same details. In 2026, most hosted tools (like PlanetScale or Supabase) have a 4-hour SLA for critical issues. Attach Prometheus metrics and Grafana screenshots to speed up triage.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Why does my new ORM add 200ms to every query?</strong>
-Most ORMs generate SQL at runtime and use connection pooling inefficiently. In Prisma 5, the default batch size is 1, which means N+1 queries for a list of items. The fix is to enable batching and set a connection pool size of at least 20 for 1000 RPS. I saw this with a team using Prisma on a high-traffic checkout flow—disabling batching added 220ms per request.</p>
+Most ORMs generate SQL at runtime and use connection pooling inefficiently. In Prisma 5, the default batch size is 1, which means N+1 queries for a list of items. The fix is to enable batching and set a connection pool size of at least 20 for 1000 RPS.</p>
 <p><strong>How do I stop my team from bringing in random tools?</strong>
-Enforce a tool review process: any new tool must be proposed in an ADR, load tested, and approved by the engineering lead. I added a GitHub issue template that forces the proposer to fill in trade-offs, alternatives, and rollback plans. Since adopting it, we’ve rejected 6 tools in 9 months, saving an estimated $18k in avoided tool sprawl.</p>
+Enforce a tool review process: any new tool must be proposed in an ADR, load tested, and approved by the engineering lead. I added a GitHub issue template that forces the proposer to fill in trade-offs, alternatives, and rollback plans.</p>
 <p><strong>What’s the fastest way to audit a tool’s behavior?</strong>
-Use OpenTelemetry to trace a single user journey and overlay the tool’s metrics. For example, trace a checkout flow and check for duplicate cache hits, slow queries, or connection churn. I once used this to catch a new caching layer that was invalidating the CDN cache every 2 minutes—it added 400ms latency for repeat visitors.</p>
+Use OpenTelemetry to trace a single user journey and overlay the tool’s metrics. For example, trace a checkout flow and check for duplicate cache hits, slow queries, or connection churn.</p>
 <p><strong>Can I trust a tool’s README benchmarks?</strong>
-No. READMEs often use synthetic datasets or unrealistic workloads. For example, the Redis 7.2 README claims 1M ops/sec, but that’s with 1KB values and no network latency. In production, we measured 450K ops/sec with 10KB values and 50ms network latency. Always benchmark with your own data and traffic patterns.</p>
+No. READMEs often use synthetic datasets or unrealistic workloads. For example, the Redis 7.2 README claims 1M ops/sec, but that’s with 1KB values and no network latency. Always benchmark with your own data and traffic patterns.</p>
 <h2 id="decision-checklist-next-step-in-the-next-30-minutes">Decision checklist: next step in the next 30 minutes</h2>
 <p>Open your staging environment and run this command to check connection pool metrics:</p>
 <pre><code class="language-bash">docker exec -it postgres-container bash -c &quot;psql -U postgres -c 'SELECT count(*) FROM pg_stat_activity WHERE state = '&quot;'active'&quot;''&quot;
 </code></pre>
 <p>If the result is over 80% of your pool size, increase the pool and rerun your load test. If not, open your ADR template and write one paragraph on why the new tool won’t cause connection churn. This single action will either surface a hidden issue or give you a defensible reason to approve the change.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/">Tech debt: when half your stack is unfamiliar</a></li>
+<li><a href="https://kubaik.github.io/ai-steals-junior-tasks-3-skills-that-protect-pay/">AI steals junior tasks: 3 skills that protect pay</a></li>
+<li><a href="https://kubaik.github.io/cqrs-when-it-pays-off-and-when-it-breaks/">CQRS: when it pays off and when it breaks</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 12, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -513,7 +495,7 @@ please contact me and I'll review and correct it.</p>
                     <a class="related-card" href="/african-fintech-rules-broke-our-stack/">
                         <h3>African fintech rules broke our stack</h3>
                         <p>But the honest answer is that that checklist is only the first 5% of the work.</p>
-                        <span class="related-meta">23 min read · 2 August 2026</span>
+                        <span class="related-meta">22 min read · 2 August 2026</span>
                     </a>
                     
                 </div>
@@ -521,12 +503,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

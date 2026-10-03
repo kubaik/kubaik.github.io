@@ -64,8 +64,8 @@
       "description": "Platform engineering ROI: the metrics that convinced leadership to keep funding. Lead time, incident cost, and the number that actually mattered.",
       "datePublished": "2026-09-19T09:13:36+00:00",
       "dateModified": "2026-09-19T09:13:36+00:00",
-      "wordCount": 2973,
-      "timeRequired": "PT15M",
+      "wordCount": 2847,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -259,8 +254,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2973 words
+                        14 min read
+                        &nbsp;·&nbsp; 2847 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -273,7 +268,7 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>Platform engineering teams live or die by a budget line item that most executives don't understand. The team ships internal developer platforms, CI/CD pipelines, observability stacks, and golden paths. The output is not a customer-facing feature. It's a reduction in friction for other engineers. That makes the ROI conversation hard. A common failure mode here is <a href="/platform-teams-agentic-world-struggle/">that platform teams</a> present activity metrics — number of pipelines migrated, tickets closed, dashboards built — and leadership nods politely while sharpening the axe. Activity is not outcome. The finance director does not care that you migrated 47 services to a new CI system. They care that the migration reduced the cost of a deploy or the time a product team spends waiting on infrastructure.</p>
 <p>The problem this post addresses is not whether platform engineering is valuable. It's how to prove it with numbers that survive a budget review. The part that trips people up is choosing metrics that connect platform work to business outcomes, and that's what this post actually covers.</p>
-<p>We were a platform team of six engineers supporting roughly 120 developers across 14 product teams. Our mandate was broad: own the CI/CD stack, the Kubernetes clusters, the internal service catalog, and the observability pipeline. We had been funded for 18 months on the strength of a migration story — moving from Jenkins to GitHub Actions and from self-managed Prometheus to a managed observability vendor. That story had a natural end. When the migration finished, leadership asked the obvious question: what now? The answer could not be "keep the lights on." We needed to show that the platform was compounding value, not just maintaining it.</p>
+<p>We were a platform team of six engineers supporting roughly 120 developers across 14 product teams. Our mandate was broad: own the CI/CD stack, the Kubernetes clusters, the internal service catalog, and the observability pipeline. That story had a natural end. When the migration finished, leadership asked the obvious question: what now? The answer could not be "keep the lights on." We needed to show that the platform was compounding value, not just maintaining it.</p>
 <p>We started with a hypothesis: if we could reduce the time from code commit to production deploy, and reduce the percentage of deploys that required manual intervention, we would see a measurable drop in cycle time across product teams. Cycle time, in turn, correlates with the ability to respond to customer issues and ship revenue-generating features. That chain — platform metric to developer metric to business metric — was the only one we thought could survive scrutiny.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
 <p>Our first attempt was a dashboard. We built a Grafana board with 22 panels: pipeline duration, queue wait time, cache hit rate, runner utilization, deploy frequency, change failure rate, mean time to recovery, and a dozen more. We presented it in a quarterly business review. The feedback was brutal but fair: "This shows me that things are happening. It does not show me that things are better."</p>
@@ -315,7 +310,7 @@ print(f&quot;Lead time for {commit_sha[:7]}: {lead_time:.1f} minutes&quot;)
 </code></pre>
 <p>We also instrumented the CI pipeline itself to capture queue time and execution time separately. That distinction mattered because queue time was often 30–40% of total pipeline duration during peak hours, and it pointed to a runner capacity problem rather than a slow test problem.</p>
 <p>On the observability side, we used OpenTelemetry 1.20 with a managed backend. We added a custom span for "deploy" that recorded the deployment ID, the service name, and the environment. That let us correlate deploy events with error rate spikes and latency changes. The correlation was not perfect, but it was good enough to answer questions like "did the last deploy cause the p99 latency increase?"</p>
-<p>We stored metrics in a table with columns: <code>timestamp</code>, <code>team</code>, <code>service</code>, <code>metric_name</code>, <code>value</code>, <code>unit</code>. That schema was simple enough to query with plain SQL and flexible enough to add new metrics without migrations. We used a materialized view to pre-aggregate daily and weekly rollups, which kept dashboard queries under 200 ms even with 6 months of data.</p>
+<p>We stored metrics in a table with columns: <code>timestamp</code>, <code>team</code>, <code>service</code>, <code>metric_name</code>, <code>value</code>, <code>unit</code>. That schema was simple enough to query with plain SQL and flexible enough to add new metrics without migrations.</p>
 <p>We presented the data in two places: a Grafana dashboard for the platform team and a weekly email digest for leadership. The email digest had exactly three numbers: median lead time for changes, deploy success rate, and number of customer-impacting incidents. Each number had a trend arrow and a one-sentence explanation of what changed. That format forced us to be concise and outcome-focused.</p>
 <h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
 <p>We ran this system for two quarters. The table below compares the baseline (the quarter before we started) with the most recent quarter. These are realistic figures for a mid-sized organization; your mileage will vary.</p>
@@ -373,7 +368,7 @@ print(f&quot;Lead time for {commit_sha[:7]}: {lead_time:.1f} minutes&quot;)
 </tr>
 </tbody>
 </table>
-<p>The most persuasive number for leadership was not lead time. It was the reduction in customer-impacting incidents. That number connected directly to revenue risk. When we showed that incidents dropped from an average of 3.1 per month to 1.4 per month, and that each incident had an estimated cost of $18,000 in engineering time and customer credits, the math was simple: saving roughly $30,000 per month. The platform team's fully loaded cost was higher than that, but the point was that the platform was paying for a meaningful fraction of itself through incident reduction alone.</p>
+<p>The most persuasive number for leadership was not lead time. It was the reduction in customer-impacting incidents. That number connected directly to revenue risk. The platform team's fully loaded cost was higher than that, but the point was that the platform was paying for a meaningful fraction of itself through incident reduction alone.</p>
 <p>We also tracked a less obvious metric: the number of manual interventions required during deploys. A manual intervention was any step where a human had to approve, retry, or fix something. Baseline was 22% of deploys. After two quarters, it was 6%. That reduction freed up an estimated 40 engineer-hours per month that had been spent babysitting deploys. At a fully loaded rate of $90 per hour, that was $3,600 per month in recovered time — not huge, but it added up and it was easy to explain.</p>
 <p>The pipeline queue time improvement came from a specific change: we moved from a shared runner pool to autoscaling runners with a warm pool of 10 instances. That change alone cost an extra $800 per month in compute but reduced median queue time from 6.5 minutes to 1.2 minutes. The payback was immediate in developer time saved waiting for CI.</p>
 <h2 id="what-wed-do-differently">What we'd do differently</h2>
@@ -381,7 +376,7 @@ print(f&quot;Lead time for {commit_sha[:7]}: {lead_time:.1f} minutes&quot;)
 <p>First, we would define the metrics before building any tooling. We spent the first month building a pipeline and a dashboard, then realized we were measuring the wrong things. A one-week exercise to align on metrics with leadership would have saved three weeks of rework.</p>
 <p>Second, we would include product teams in the metric definition from day one. Our initial lead time definition counted time from commit to deploy, but product teams cared about time from ticket start to customer availability. Those are different. We ended up adding a second metric, "idea to production," which was harder to measure but more relevant to the business. If we had asked first, we would have known.</p>
 <p>Third, we would automate the leadership digest from the start. Our first digest was a manually written email with screenshots. It took 2 hours per week to produce. When we automated it with a Python script that generated HTML and sent it via SendGrid, we got that time back and the digest became more consistent. Consistency matters more than polish in a recurring report.</p>
-<p>We also learned that it's better to under-promise and over-deliver on metric improvements. We initially claimed we could cut lead time by 80% in one quarter. We achieved 57%. That gap gave leadership a reason to question our credibility. A more conservative target — 40% — would have been exceeded and would have built trust.</p>
+<p>We also learned that it's better to under-promise and over-deliver on metric improvements. We achieved 57%. That gap gave leadership a reason to question our credibility. A more conservative target — 40% — would have been exceeded and would have built trust.</p>
 <h2 id="the-broader-lesson">The broader lesson</h2>
 <p>Platform engineering ROI is not a math problem. It's a trust problem. The numbers matter, but only if leadership believes they are honest, relevant, and not cherry-picked. The broader lesson is that platform teams should operate like a product team: define your customer (developers), define your value proposition (faster, safer delivery), and measure outcomes that your customer and your funder both care about.</p>
 <p>The most common mistake is to measure platform activity instead of platform outcomes. Activity metrics — pipelines built, clusters managed, dashboards created — are inputs. They don't tell anyone whether the platform is working. Outcome metrics — lead time, deploy success rate, incident frequency — are what justify continued investment.</p>
@@ -409,25 +404,12 @@ print(f&quot;Lead time for {commit_sha[:7]}: {lead_time:.1f} minutes&quot;)
 <p>Finally, our internal runbook for the metrics pipeline is something you can replicate. Start by writing a single Python script that queries your CI system for the last 100 workflow runs and calculates the median time from commit to deploy. Run it today, and you'll have a baseline before the end of the day. That baseline is the first step toward a credible ROI story.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -476,12 +458,7 @@ print(f&quot;Lead time for {commit_sha[:7]}: {lead_time:.1f} minutes&quot;)
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -1,42 +1,41 @@
 # Serve 4G-as-baseline apps in 2026
 
-The tutorials all showed the happy path. This post shows what comes after.
+Most performance tutorials assume a fast, stable network. That assumption increasingly fails. In many regions the realistic baseline for a mobile user is 4G-class connectivity: a few hundred milliseconds of round-trip time, intermittent loss, and a metered data plan. Satellite links add a second pattern: excellent median latency and throughput off-peak, with congestion, jitter and rain fade during peak hours. An app that feels instant on fibre can feel broken under those conditions, and the difference is rarely the server's raw speed. It is payload size, cache behavior, retry policy and how much work the client does before it can render.
 
-## Why I wrote this (the problem I kept hitting)
+This article covers how to design and adapt a React front end, a Go API and a PostgreSQL backend for that baseline. The techniques are ordinary: budget the payload, cache aggressively at the right layer, compress on the fly, bound concurrency, and measure with a network profile that matches your users. None of them require new infrastructure.
 
-In late 2026 Starlink dishes landed in Nairobi, Kampala, and Dar es Salaam. Within four weeks our traffic from East Africa tripled. The first surprise: average 4G latency jumped from 80 ms to 320 ms, and packet loss spiked to 6 % during the 7–9 pm window when everyone streamed.
+## Define the baseline before you optimise
 
-The bigger realisation: most engineering guides still optimise for 3G or assume 100 ms fibre. In 2026 the baseline is 4G with 300 ms median RTT, frequent micro-outages, and data caps that make payload size matter. If your app ships a 1.2 MB bundle, users on 2 Mbps capped plans will abandon it after 4.8 s — that’s 78 % higher bounce rate than on fibre.
+Write down the network conditions you are designing for. Without that, every performance decision is guesswork. A useful starting template:
 
-What actually changed when Starlink reached East Africa wasn’t speed; it was consistency. Starlink dishes in Kenya now provide 50–100 Mbps down and 20–40 Mbps up with 35 ms median latency, but only during off-peak hours. During peak (8–11 pm) congestion on the local IXPs pushes latency to 400–600 ms and jitter above 100 ms. Teams building for “good enough” connectivity before 2026 are now dealing with a new class of users who expect the same UX as fibre but on a 4G budget.
+| Parameter | 4G-class baseline | Congested satellite peak |
+| --- | --- | --- |
+| Median RTT | 150–300 ms | 400–600 ms |
+| Jitter | 30–80 ms | over 100 ms |
+| Packet loss | 1–5 % | 5–15 % |
+| Downlink | 2–10 Mbps | highly variable |
+| Uplink | 0.5–2 Mbps | 128 kbps–1 Mbps |
+| Data | metered | metered |
 
-This guide shows how we adapted a React front-end, Go API, and PostgreSQL backend to stay under 500 ms p99 response time while cutting payload size 63 % and database load 38 % — all without adding extra infrastructure.
+These are illustrative ranges, not measurements. Replace them with numbers from your own users: server-side timing by region, client-side `PerformanceNavigationTiming`, or a synthetic monitor placed near your audience. The point is to have a written budget you can test against.
 
-## Prerequisites and what you'll build
+From that budget you can derive a payload target with arithmetic rather than intuition. Suppose a user has 2 Mbps effective throughput, which is 2,000,000 bits per second, or 250,000 bytes per second. A 1,200,000-byte bundle takes 1,200,000 / 250,000 = 4.8 seconds just to transfer, before parsing or rendering. Cut the bundle to 300,000 bytes and the same transfer takes 1.2 seconds. That is the whole argument for aggressive payload reduction: on a constrained link, bytes are time.
 
-You’ll need:
+Set explicit budgets and enforce them in CI:
 
-- Node 20 LTS (with pnpm 9.5)
-- Go 1.22.4
-- PostgreSQL 16 with pg_stat_statements and auto_explain
-- Redis 7.4 (cluster mode not required)
-- A Starlink dish or a synthetic 4G simulator like Clumsy 0.3 on Windows or Network Link Conditioner on macOS
-- An AWS t4g.small (Graviton2) for the backend in us-east-1
-
-What we build:
-
-1. A React 18 front-end with Vite that lazy-loads components and bundles only 140 kB gzipped. 2. A Go 1.22.4 HTTP server that uses HTTP/2, compresses with Brotli (level 6), and implements cache-aware stale-while-revalidate. 3. A PostgreSQL 16 read-replica group that routes reads based on response-time budget. 4. A Redis 7.4 cache layer with 500 ms minimum TTL and a 3 % probabilistic early refresh to avoid thundering-herd on cache misses.
-
-You don’t need Kubernetes or CloudFront to follow along; everything runs on a single t4g.small instance for under $23 / month in 2026 pricing.
+- Initial JS transferred, compressed: pick a number and fail the build above it.
+- Total bytes for the first meaningful render: same.
+- API response size for the hot endpoint: same.
+- p99 server response time and p99 client-observed latency: alert thresholds.
 
 ## Step 1 — set up the environment
 
-Spin up the base stack with Docker Compose:
+A local stack that mirrors production shape is enough to develop against:
 
 ```yaml
 services:
   postgres:
-    image: postgres:16.2-alpine3.19
+    image: postgres:16-alpine
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -56,7 +55,7 @@ services:
       retries: 5
 
   redis:
-    image: redis:7.4-alpine3.19
+    image: redis:7-alpine
     ports:
       - "6379:6379"
     command: redis-server --save 30 1 --loglevel warning
@@ -92,12 +91,14 @@ volumes:
   pg_data:
 ```
 
-In the backend Dockerfile we use multi-stage to keep the final image at 22 MB:
+Pin exact image tags in real deployments. Floating tags such as `postgres:16-alpine` will silently change under you.
+
+A multi-stage build keeps the Go image small, which matters when you pull it over a slow link in CI or on a constrained host:
 
 ```dockerfile
-FROM golang:1.22.4-alpine AS builder
+FROM golang:1.22-alpine AS builder
 WORKDIR /app
-COPY go.mod go.sum .
+COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -o /server main.go
@@ -110,12 +111,11 @@ USER 1000
 CMD ["server"]
 ```
 
-For the front-end we use Vite 5.3 with these settings in `vite.config.ts`:
+For the front end, split vendor code into stable chunks so that a deploy does not invalidate the whole cache, and keep the compression target honest:
 
 ```typescript
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig({
   plugins: [react()],
@@ -140,163 +140,128 @@ export default defineConfig({
 })
 ```
 
-Gotcha: Vite’s default Brotli plugin only compresses assets at build time. We ship a 140 kB gzipped bundle but the raw JS is 486 kB. In production we compress on the fly with Go’s `compress/brotli` writer to get 63 % size reduction at runtime.
+A recurring gotcha: build-time compression only covers static assets. Dynamic API responses are compressed at request time, if at all. Check what your server actually sends with `curl -H 'Accept-Encoding: br,gzip' -s -o /dev/null -w '%{size_download} %{content_type}\n' https://your-api/v1/data` and compare it with the uncompressed size. If the ratio is close to 1, nothing is compressing.
 
-## Step 2 — core implementation
+## Step 2 — cache with stale-while-revalidate
 
-The Go server implements three key behaviours: HTTP/2 with TLS 1.3, Brotli compression for responses over 1 kB, and a cache-aware stale-while-revalidate policy.
+On a high-latency link, the fastest request is the one you do not make. A short-TTL cache in front of a hot read endpoint absorbs bursts and smooths database load. The classic failure mode is a thundering herd: many clients miss at the same instant and all hit the database. Two mitigations are standard.
+
+First, add jitter to the TTL so entries do not expire in lockstep. Second, use probabilistic early refresh: before an entry expires, each request has a small chance of triggering a background refresh, so the entry is usually refreshed before it goes cold. The refresh probability should rise as the entry ages.
 
 ```go
 package main
 
 import (
-  "compress/brotli"
-  "crypto/tls"
-  "errors"
-  "fmt"
-  "log/slog"
-  "net/http"
-  "os"
-  "strconv"
-  "time"
+	"context"
+	"math/rand"
+	"time"
 
-  "github.com/justinas/alice/v3"
-  "github.com/redis/go-redis/v9"
-  "github.com/valyala/fasthttp/v2"
-  "github.com/valyala/fasthttp/fasthttpadaptor"
-  "github.com/valyala/fasthttp/prefork"
+	"github.com/redis/go-redis/v9"
 )
 
-type App struct {
-  db     *sql.DB
-  redis  *redis.Client
-  logger *slog.Logger
+const (
+	baseTTL      = 500 * time.Millisecond
+	refreshAfter = 300 * time.Millisecond
+	refreshProb  = 0.03
+)
+
+// shouldRefresh returns true with a probability that grows as the entry ages
+// past refreshAfter. Callers trigger a background refresh when it returns true.
+func shouldRefresh(age time.Duration) bool {
+	if age < refreshAfter {
+		return false
+	}
+	if age >= baseTTL {
+		return true
+	}
+	// Linear ramp from 0 at refreshAfter to refreshProb at baseTTL.
+	frac := float64(age-refreshAfter) / float64(baseTTL-refreshAfter)
+	return rand.Float64() < refreshProb*frac
 }
 
-func main() {
-  redisHost := os.Getenv("REDIS_HOST")
-  dbHost := os.Getenv("DB_HOST")
-  port := os.Getenv("PORT")
+type Cache struct {
+	rdb *redis.Client
+}
 
-  redisCli := redis.NewClient(&redis.Options{Addr: redisHost + ":6379"})
-  // Redis 7.4 supports connection reuse; set pool size to 50 per CPU
-  redisCli.SetConnPoolSize(50)
+func (c *Cache) Get(ctx context.Context, key string) ([]byte, error) {
+	return c.rdb.Get(ctx, key).Bytes()
+}
 
-  app := &App{redis: redisCli}
-
-  chain := alice.New(
-    loggingMiddleware(app.logger),
-    cacheMiddleware(app),
-    compressMiddleware,
-  )
-
-  srv := &fasthttp.Server{
-    Name:               "go-api-1.22",
-    Handler:            chain.ThenFunc(app.handler),
-    ReadTimeout:        500 * time.Millisecond,
-    WriteTimeout:       1500 * time.Millisecond,
-    IdleTimeout:        60 * time.Second,
-    MaxRequestsPerConn: 1000,
-    Concurrency:        256 * 1024,
-  }
-
-  // TLS 1.3 only
-  tlsConfig := &tls.Config{MinVersion: tls.VersionTLS13}
-  ln := prefork.New("tcp4", ":"+port)
-  if err := ln.ListenAndServeTLS(srv, tlsConfig); err != nil {
-    app.logger.Error("server failed", "err", err)
-    os.Exit(1)
-  }
+func (c *Cache) Set(ctx context.Context, key string, val []byte, ttl time.Duration) error {
+	// Jitter the TTL by +/-10% so entries do not expire together.
+	jitter := time.Duration(rand.Int63n(int64(ttl / 5)))
+	return c.rdb.Set(ctx, key, val, ttl-ttl/10+jitter).Err()
 }
 ```
 
-The `cacheMiddleware` implements stale-while-revalidate with probabilistic early refresh. We set TTL to 500 ms but refresh the cache 3 % of the time when it’s older than 300 ms. This avoids thundering-herd on cache misses while keeping memory usage low.
+The documented behavior of `Set` with a duration is that the key is removed after that duration; a zero duration means no expiry. Jittering the TTL is what prevents synchronized expiry, and the ramp is what keeps a hot key warm without every request paying for a refresh.
+
+Two things to be careful about:
+
+- **Stampedes on cold start.** When a key does not exist at all, the probabilistic path does not help. Either accept the first-request cost or add a single-flight lock so only one request populates the key while others wait briefly or serve a stale copy.
+- **Cache key shape.** Include the parts of the request that change the response (path, normalized query parameters, tenant, locale). A key that ignores a variant will serve the wrong body, which is worse than a miss.
+
+If you want to know whether this is working, instrument it. Export a cache hit ratio gauge and a counter of background refreshes, and alert when the hit ratio drops or the refresh rate spikes. A hit ratio in the low 70s percent usually means the TTL is too short relative to request rate, or the key space is too fragmented.
+
+## Step 3 — compress and bound concurrency
+
+Compression is the cheapest payload win available. Brotli generally beats gzip on text, but at higher levels it costs meaningful CPU. A practical policy:
+
+1. Compress only responses above a threshold (around 1 kB); below that, the framing overhead can exceed the savings.
+2. Use a moderate Brotli level by default and reserve the highest level for precompressed static assets.
+3. Negotiate from `Accept-Encoding`. If a client sends only `gzip`, serve gzip rather than nothing.
+4. Cap concurrent compression work. Compression that saturates the CPU raises latency for everyone, which is the opposite of the goal.
 
 ```go
-func cacheMiddleware(app *App) func(next fasthttp.RequestHandler) fasthttp.RequestHandler {
-  return func(next fasthttp.RequestHandler) fasthttp.RequestHandler {
-    return func(ctx *fasthttp.RequestCtx) {
-      key := string(ctx.Path())
-      var val []byte
-      var hit bool
-      var ttl time.Duration
-
-      // Try cache
-      if val, err := app.redis.Get(ctx, key).Bytes(); err == nil {
-        hit = true
-        val = val
-        ttl = 500 * time.Millisecond
-      }
-
-      // Probabilistic early refresh: 3 % chance to refresh before TTL expiry
-      if hit && ctx.Request.Header.Timestamp().After(time.Now().Add(-300*time.Millisecond)) {
-        if rand.Float32() < 0.03 {
-          go func() {
-            resp := fasthttp.AcquireResponse()
-            defer fasthttp.ReleaseResponse(resp)
-            if err := fasthttp.DoRequest(&ctx.Request, resp); err == nil {
-              app.redis.Set(ctx, key, resp.Body(), ttl)
-            }
-          }()
-        }
-      }
-
-      if hit {
-        ctx.Response.SetBody(val)
-        return
-      }
-
-      // Cache miss: run handler, cache with 500 ms TTL
-      next(ctx)
-      app.redis.Set(ctx, key, ctx.Response.Body(), 500*time.Millisecond)
-    }
-  }
+// compressIfWorthwhile compresses body with Brotli when it is large enough
+// and the client accepts it. Returns the body unchanged otherwise.
+func compressIfWorthwhile(acceptEncoding string, body []byte, minSize int) ([]byte, string) {
+	if len(body) < minSize {
+		return body, ""
+	}
+	if !strings.Contains(acceptEncoding, "br") {
+		return body, ""
+	}
+	var buf bytes.Buffer
+	w := brotli.NewWriterLevel(&buf, 6)
+	if _, err := w.Write(body); err != nil {
+		return body, ""
+	}
+	if err := w.Close(); err != nil {
+		return body, ""
+	}
+	// Only use the compressed form if it actually helped.
+	if buf.Len() >= len(body) {
+		return body, ""
+	}
+	return buf.Bytes(), "br"
 }
 ```
 
-The `compressMiddleware` only compresses responses over 1 kB and uses Brotli level 6. On a 4G baseline this reduces median response size from 7.8 kB to 2.9 kB — a 63 % reduction.
+Note the final check: if compression did not shrink the body, send the original. This happens more often than people expect with already-compressed formats such as JPEG or with very small JSON.
+
+Concurrency limits are the other half. A slow client on a lossy link can hold a connection and a worker for a long time. Bound inflight requests per client and set read/write timeouts so a stalled connection is reclaimed rather than accumulating:
 
 ```go
-func compressMiddleware(next fasthttp.RequestHandler) fasthttp.RequestHandler {
-  return func(ctx *fasthttp.RequestCtx) {
-    next(ctx)
-    if ctx.Response.Header.ContentLength() > 1024 {
-      var buf bytes.Buffer
-      brotliWriter := brotli.NewWriterLevel(&buf, brotli.BestCompression)
-      brotliWriter.Write(ctx.Response.Body())
-      brotliWriter.Close()
-      ctx.Response.SetBody(buf.Bytes())
-      ctx.Response.Header.SetContentEncoding("br")
-    }
-  }
+srv := &http.Server{
+	ReadTimeout:       5 * time.Second,
+	ReadHeaderTimeout: 2 * time.Second,
+	WriteTimeout:      15 * time.Second,
+	IdleTimeout:       60 * time.Second,
 }
 ```
 
-Gotcha: Brotli level 6 is CPU-heavy on Graviton2; we limit concurrency to 128 requests per second. Beyond that we fall back to gzip, which is 3.2× faster on this CPU.
+Choose timeouts from your latency budget, not from habit. If p99 target latency is 500 ms, a 15-second write timeout is a safety net against pathological clients, not a normal operating parameter.
 
-## Step 3 — handle edge cases and errors
+## Step 4 — handle loss, retries and connection pooling
 
-4G users drop to 2G during rain fade on Starlink dishes. We simulate that with Clumsy 0.3 throttling upload to 128 kbps and latency to 800 ms with 15 % packet loss. The first mistake I made was not accounting for head-of-line blocking in HTTP/1.1. With HTTP/2 we still saw 200 ms spikes when a single stream was dropped. The fix: use `fasthttp`’s per-connection concurrency of 1000, but limit inflight requests per client IP to 16 to prevent one slow client from starving others.
+Packet loss changes the shape of the problem. The failure mode to avoid is a retry storm: a client times out, retries immediately, and multiplies load on a server that is already struggling. Three rules help.
 
-```go
-func limiterMiddleware(app *App) func(next fasthttp.RequestHandler) fasthttp.RequestHandler {
-  limiter := tollbooth.NewLimiter(16, nil)
-  limiter.SetOnLimitReached(func(w http.ResponseWriter, r *http.Request) {
-    http.Error(w, "429 Too Many Requests", http.StatusTooManyRequests)
-  })
-  return func(next fasthttp.RequestHandler) fasthttp.RequestHandler {
-    return func(ctx *fasthttp.RequestCtx) {
-      if err := limiter.LimitExceeded(ctx); err != nil {
-        ctx.Error("429 Too Many Requests", http.StatusTooManyRequests)
-        return
-      }
-      next(ctx)
-    }
-  }
-}
-```
+- **Retry only idempotent requests**, and only on connection errors or timeouts, not on every 5xx.
+- **Use exponential backoff with jitter.** Without jitter, retries from many clients align.
+- **Give the client a deadline** and surface a fast, useful failure rather than a spinner that never resolves.
 
-Connection drops also break PostgreSQL idle in transaction. We use `pgbouncer` 1.21 with `pool_mode = transaction` and `server_idle_timeout = 30`. This keeps the pool at 20 connections under load but drops to 3 idle connections during traffic lulls, saving 18 % memory.
+For PostgreSQL, connection pooling matters more when latency is high because each connection setup is expensive. Transaction-mode pooling keeps the server-side connection count low, but it has a well-known constraint: prepared statements are not preserved across transactions. If your driver or ORM relies on them, use session mode or disable server-side prepared statements for pooled connections.
 
 ```ini
 [databases]
@@ -307,34 +272,19 @@ pool_mode = transaction
 max_client_conn = 100
 default_pool_size = 20
 server_idle_timeout = 30
-logfile = /var/log/pgbouncer.log
 ```
 
-Gotcha: `pgbouncer` 1.21 does not support prepared statements in transaction pool mode. If your ORM uses them, switch to `pool_mode = session` and set `server_reset_query = DISCARD ALL` to reclaim memory.
+The trade-off is explicit: transaction mode gives you many client connections over few server connections, at the cost of session state. Session mode preserves state at the cost of more server connections. Pick based on whether your queries depend on session state.
 
-## Step 4 — add observability and tests
+## Step 5 — measure with a realistic profile
 
-We added three metrics that matter for 4G baselines: p99 latency, payload size, and cache hit ratio. The Go server exports them via Prometheus on `/metrics`.
+Numbers from a fast local network tell you almost nothing about a 4G user. Instrument both sides:
 
-```go
-import "github.com/prometheus/client_golang/prometheus"
+**Server side.** Export request duration as a histogram with path labels, response size as a histogram with a compression label, and a cache hit ratio gauge. Use `pg_stat_statements` and `auto_explain` (with `log_min_duration` set to something meaningful for your budget) to find slow queries.
 
-var (
-  respLatency = prometheus.NewHistogramVec(
-    prometheus.HistogramOpts{Name: "http_response_latency_ms", Buckets: prometheus.ExponentialBuckets(10, 2, 8)},
-    []string{"path"},
-  )
-  respSize = prometheus.NewHistogramVec(
-    prometheus.HistogramOpts{Name: "http_response_size_bytes", Buckets: prometheus.ExponentialBuckets(100, 2, 8)},
-    []string{"path", "compression"},
-  )
-  cacheHitRatio = prometheus.NewGauge(
-    prometheus.GaugeOpts{Name: "cache_hit_ratio"},
-  )
-)
-```
+**Client side.** Use the browser's `PerformanceNavigationTiming` and `PerformanceResourceTiming` entries to get real transfer times, and send them to your backend in batches. Aggregate by connection type and region.
 
-We run synthetic tests with k6 0.52 every 5 minutes from a t4g.nano in each AWS region. The test simulates 200 virtual users on a 3G profile (latency 300 ms, throughput 768 kbps) and a 4G profile (latency 150 ms, throughput 5 Mbps).
+**Synthetic testing.** Run a load test under a throttled profile. The important part is the profile, not the tool: set latency, jitter, loss and bandwidth to your baseline. Assert on the percentiles you care about.
 
 ```javascript
 import http from 'k6/http'
@@ -365,64 +315,32 @@ export default function () {
 }
 ```
 
-Gotcha: k6 0.52 does not support HTTP/2 by default. We use the `k6-experimental` binary with `--vus 200 --duration 10m` and `--no-summary` to keep memory under 256 MB.
+The thresholds are the point. A load test without thresholds is a graph; a load test with thresholds is a regression gate. Note that the default HTTP transport in most load tools does not negotiate HTTP/2 unless you enable it, so verify what protocol you are actually testing with a packet capture or the tool's own reporting.
 
-## Real results from running this
+To measure the cache specifically, run `MONITOR` in the Redis CLI for a couple of minutes while you drive traffic at the endpoint. Count the `GET` and `SET` commands. If you see far more `SET` commands than expected, your TTL or refresh probability is too aggressive. If you see a burst of `GET` misses at the same instant, your jitter is not working.
 
-We deployed the stack on 2026-02-14 and measured for 14 days. Here are the numbers:
+## Failure modes to design for
 
-| Metric | Before | After | Change |
-| --- | --- | --- | --- |
-| Median response time | 182 ms | 148 ms | -19 % |
-| p99 response time | 480 ms | 380 ms | -21 % |
-| Payload size (gzipped) | 7.8 kB | 2.9 kB | -63 % |
-| Cache hit ratio | 72 % | 89 % | +17 pp |
-| API error rate (5xx) | 1.2 % | 0.4 % | -67 % |
-| Monthly AWS cost | $378 | $294 | -22 % |
+- **Synchronized expiry.** All keys written at deploy time expire together. Mitigation: jittered TTLs.
+- **Cold cache after deploy.** A new version changes the key prefix and every request misses. Mitigation: keep the key prefix stable across deploys, or warm the cache before shifting traffic.
+- **Retry amplification.** A brief outage triggers client retries that outlast the outage. Mitigation: backoff with jitter and a retry budget.
+- **Compression CPU saturation.** High compression levels under load push CPU to 100 % and latency up. Mitigation: moderate levels, a concurrency cap, and a gzip fallback.
+- **Slow-client starvation.** A few very slow clients consume all workers. Mitigation: per-client inflight limits and short read timeouts.
+- **Stale reads after writes.** A short-TTL cache serves data that is seconds out of date. Mitigation: invalidate explicitly on write, or bypass the cache for the writer's own reads.
+- **Metrics that lie.** Averages hide the tail. Mitigation: always alert on p99, never on mean.
 
-The biggest surprise: reducing payload size from 7.8 kB to 2.9 kB cut our data-transfer bill by $42 / month even though we added Brotli compression. The reason is CloudFront’s per-request pricing: fewer bytes in transit means fewer requests billed at $0.085 per 10 kB in the Africa (Cape Town) region.
+## Common questions
 
-Cache hit ratio jumped from 72 % to 89 % because we switched from 60-second TTL to 500 ms TTL with probabilistic refresh. The 3 % early refresh rate kept the cache warm during traffic spikes without increasing memory pressure.
+**Why not just put a CDN in front of everything?** Edge caches are excellent for static assets and cacheable GETs. Dynamic, per-user responses usually miss at the edge, so the cache has to sit closer to the data, in the same availability zone as the API and database. Use the CDN for what it is good at and a short-TTL application cache for the rest.
 
-Database load dropped 38 % because the Go server now serves 89 % of requests from Redis. PostgreSQL CPU utilisation on the primary dropped from 45 % to 28 %, allowing us to downsize from an m6g.large to an m6g.medium without impacting p99 latency.
+**Do service workers help?** They can, for offline and repeat visits, but registration and activation cost time on first load. Register them after the page is interactive, and cache a small, explicit set of assets rather than everything.
 
-Observability paid off: during a 4G degradation event on 2026-02-19 (packet loss 12 %, latency 600 ms) the alert fired at 20:04 UTC. We rolled out a hot patch within 6 minutes by increasing Redis TTL to 800 ms and dropping the probabilistic refresh to 1 % — preventing a 404 cascade.
+**Should I move to HTTP/3?** It reduces head-of-line blocking on lossy networks, which is exactly the 4G failure mode. The trade-offs are CPU cost, operational complexity and library maturity. Measure it against your baseline before committing; the benefit depends on your loss rate.
 
-## Common questions and variations
+**Can this be done outside Go?** Yes. The patterns are language-independent: compress on the fly, cache with jittered TTLs, bound concurrency, retry with backoff. Runtime differences show up in memory per request and CPU cost of compression, not in whether the approach works.
 
-### Why not just use CloudFront or Cloudflare?
-CloudFront and Cloudflare edge caches are great for static assets, but dynamic API responses usually miss the edge. In our tests a CloudFront distribution in Cape Town still served 78 % dynamic misses, so we pushed caching into Redis 7.4 on the same availability zone. Latency from client to Redis in Nairobi is now 12 ms vs 28 ms to the origin API.
+**How do I handle variable satellite bandwidth?** Detect slow first requests on the client and downgrade subsequent requests: request a smaller payload variant, prefer a compressed encoding, and defer non-critical data. This is a client-side policy, not a server feature.
 
-### What about offline-first with service workers?
-We added a service worker that caches 200 kB of critical assets and serves them when the network is down. The gotcha: service workers themselves add 200 ms to first meaningful paint on 4G because the browser must register and activate them. We mitigated this by inlining a tiny script that registers the worker after the page loads.
+## Action for the next 30 minutes
 
-### How did you handle Starlink’s variable bandwidth?
-Starlink dishes in East Africa still congest during peak hours. We implemented client-side adaptive fetch: if the first request to `/v1/data` takes > 400 ms, the next request uses a compressed variant (`Accept-Encoding: br+gzip`) and a smaller payload. On 4G this shaved another 80 ms off median response time during peak.
-
-### Should I move to HTTP/3?
-HTTP/3 reduces head-of-line blocking on lossy networks, but in our 2026 tests the benefit was marginal: 8 % lower p99 latency under 10 % packet loss. The trade-off is 2.3× higher CPU usage on the load balancer (ALB 2026) and no native support in Go’s standard library. We stayed on HTTP/2 until Go 1.24 ships quic-go bindings.
-
-### Can I do this without Go?
-Yes. The same patterns work in Node 20 LTS with Express 4.19 and ioredis 5.4. The critical parts are: Brotli compression on the fly, connection pooling with `ioredis.Cluster`, and a cache layer with 500 ms TTL. The Node version used 28 % more memory per request but latency stayed within 50 ms of Go.
-
-## Where to go from here
-
-Take your slowest API endpoint — the one users complain about on 4G in Nairobi at 8 pm. Run `curl -w "%{time_total}\n"` against it 10 times and record the p99. Then open your Redis 7.4 CLI and run `MONITOR` for 2 minutes while the endpoint is hit. If you see more than 5 cache misses in that window, set TTL to 500 ms and enable probabilistic refresh at 3 %. Measure again tomorrow. If p99 falls below 400 ms, you’ve proven the pattern works.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 03, 2026
+Pick your slowest endpoint and measure it under a realistic profile. Run `curl -w '%{time_total}\n' -o /dev/null -s https://your-api/v1/your-endpoint` ten times and note the spread, not just the average. Then run `MONITOR` in the Redis CLI for two minutes while you drive traffic at that endpoint, and count the `GET` misses and `SET` commands. If misses cluster, add jitter to your TTL and a small probabilistic early refresh, then repeat the measurement. You will have a before-and-after you can trust, and a baseline you can defend.

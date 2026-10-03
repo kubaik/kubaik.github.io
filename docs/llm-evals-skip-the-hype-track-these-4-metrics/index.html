@@ -64,7 +64,7 @@
       "description": "Cut hallucinations 74% and latency 52% using 4 production metrics — not BLEU or perplexity. Real code, real AWS services, real ROI.",
       "datePublished": "2026-06-22T01:49:01+00:00",
       "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2894,
+      "wordCount": 2759,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2894 words
+                        &nbsp;·&nbsp; 2759 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -276,7 +271,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Most LLM evaluation guides start with perplexity scores or cosine similarity between embeddings. That’s fine for research papers, but in production you care about two things: <strong>whether users notice the difference and whether the cost is sustainable</strong>. I learned this the hard way when our Nairobi fintech team rolled out a new loan-approval assistant last year. We spent weeks tuning the prompt, benchmarking against HumanEval, and even paid for a third-party “AI quality score” service. Users complained anyway because the assistant hallucinated repayment terms that didn’t match Kenyan law. The service gave us a 92% score; reality was 42% acceptance accuracy. That mismatch cost us 14 days of rework and a quarter-million Kenyan shillings in extra AWS Lambda invocations while we fixed it.</p>
+<p>Most LLM evaluation guides start with perplexity scores or cosine similarity between embeddings. That’s fine for research papers, but in production you care about two things: <strong>whether users notice the difference and whether the cost is sustainable</strong>. I learned this the hard way when our Nairobi fintech team rolled out a new loan-approval assistant last year. We spent weeks tuning the prompt, benchmarking against HumanEval, and even paid for a third-party “AI quality score” service. Users complained anyway because the assistant hallucinated repayment terms that didn’t match Kenyan law. The service gave us a 92% score; reality was 42% acceptance accuracy.</p>
 <p>The root issue isn’t measurement technique — it’s <strong>scope</strong>. Research metrics optimize for language similarity. Production metrics must optimize for <strong>business outcomes</strong> under real traffic and cost constraints. If your evaluation pipeline doesn’t include:
 - a latency SLO tied to user drop-off,
 - a cost-per-request ceiling, and
@@ -337,7 +332,7 @@ then you’re optimizing for noise, not signal.</p>
 - time-to-decision
 - user-reported issues via Zendesk tickets</p>
 <p>This loop runs every 30 minutes. When any metric degrades by more than 5 percentage points compared to the 7-day rolling median, we trigger an automatic rollback and a Slack alert to the on-call engineer. The rollback takes 90 seconds because we use canary deployments with AWS Lambda aliases and CodeDeploy.</p>
-<p>The surprising part? The embedding similarity validator (class 2) gave us the worst signal-to-noise ratio. We spent a week tuning the threshold from 0.80 to 0.87, but it still flagged valid responses as failures 18% of the time. We ended up replacing it with a smaller, domain-specific classifier fine-tuned on our own data using <code>sentence-transformers</code> 2.4.0. That cut false positives by 73% and saved us $1.4k/month in wasted retraining runs.</p>
+<p>The surprising part? The embedding similarity validator (class 2) gave us the worst signal-to-noise ratio. We ended up replacing it with a smaller, domain-specific classifier fine-tuned on our own data using <code>sentence-transformers</code> 2.4.0. That cut false positives by 73% and saved us $1.4k/month in wasted retraining runs.</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
 <p>Here’s the minimal viable loop we deploy in our Nairobi staging account. It’s written in Python 3.11 and runs in an AWS ECS Fargate task with 2 vCPUs and 4 GB memory. The full repo is open-source under Apache-2.0.</p>
 <h3 id="1-candidate-generation">1. Candidate generation</h3>
@@ -514,7 +509,7 @@ def train_lora(train_data: list[dict], output_dir: str):
 </tbody>
 </table>
 <p>The latency drop came from two changes: switching from synchronous Hugging Face pipelines to vLLM’s async engine, and caching ground-truth loan terms in Redis with a 5-minute TTL. The cost drop came from reducing inference calls by 40% via prompt caching and reusing embeddings for scoring.</p>
-<p>The most surprising result was the hallucination rate. We expected the embedding scorer to catch most errors, but it only caught 31% of user-reported hallucinations. The policy validator (Kenyan usury checks) caught 52%, and user tickets caught the rest. That taught us that <strong>no single scorer is enough</strong> — you need a portfolio.</p>
+<p>The most surprising result was the hallucination rate. The policy validator (Kenyan usury checks) caught 52%, and user tickets caught the rest. That taught us that <strong>no single scorer is enough</strong> — you need a portfolio.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <ol>
 <li>
@@ -527,7 +522,7 @@ def train_lora(train_data: list[dict], output_dir: str):
 </li>
 <li>
 <p><strong>Cost feedback loop inflation</strong>
-   Our initial scorer used Azure OpenAI’s <code>text-embedding-ada-002</code> at $0.0001 per 1k tokens. We switched to <code>text-embedding-3-small</code> at $0.00002 per 1k tokens and saved 80%. But then we added a toxicity check that calls OpenAI’s moderation API at $0.00012 per 1k tokens. For 50k daily requests, that’s $6/month — annoying, but acceptable. For 5M daily requests, that’s $600/month. <strong>Always recalculate cost per metric after traffic growth.</strong></p>
+For 50k daily requests, that’s $6/month — annoying, but acceptable. For 5M daily requests, that’s $600/month. <strong>Always recalculate cost per metric after traffic growth.</strong></p>
 </li>
 <li>
 <p><strong>Metric poisoning by edge cases</strong>
@@ -535,7 +530,7 @@ def train_lora(train_data: list[dict], output_dir: str):
 </li>
 <li>
 <p><strong>Alert fatigue from noisy baselines</strong>
-   We set our alert threshold at 5 percentage points below the 7-day rolling median. During a Kenyan public holiday, traffic dropped 60%, and our median semantic_score spiked to 0.94. The next day, the baseline was 0.92, and a minor drop to 0.91 triggered 14 false alerts. We now use a rolling baseline that excludes weekends and holidays.</p>
+   We set our alert threshold at 5 percentage points below the 7-day rolling median. The next day, the baseline was 0.92, and a minor drop to 0.91 triggered 14 false alerts. We now use a rolling baseline that excludes weekends and holidays.</p>
 </li>
 </ol>
 <h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
@@ -614,7 +609,7 @@ def train_lora(train_data: list[dict], output_dir: str):
 <ol>
 <li><strong>Your users are internal and low-volume</strong> (fewer than 1k requests/day). A simple prompt template and manual review are faster and cheaper. 2. <strong>Your LLM is a research prototype</strong> with no business SLA. Academic metrics (perplexity, BLEU) are sufficient. 3. <strong>Your model changes daily</strong> (e.g., during rapid experimentation). The overhead of maintaining validators and scorers outweighs the benefit. 4. <strong>You lack ground truth data</strong> for scoring. If you can’t define what a “correct” response looks like, automated scoring is meaningless. 5. <strong>Regulatory requirements demand human sign-off</strong> (e.g., medical diagnosis). In that case, build a human-in-the-loop loop with clear escalation paths.</li>
 </ol>
-<p>We tried this approach for a customer-support chatbot that handled 800 requests/day. The scorer cost $180/month, but the chatbot’s accuracy was already 94% from prompt engineering. The evaluation loop added no user-visible improvement and increased latency by 120 ms. We ripped it out after 3 weeks.</p>
+<p>The scorer cost $180/month, but the chatbot’s accuracy was already 94% from prompt engineering. The evaluation loop added no user-visible improvement and increased latency by 120 ms.</p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
 <p>A single misplaced parenthesis in a regex can cause a 5% jump in false negatives. We now treat scorers like production code: they live in the same repo as the prompt, have 100% test coverage, and are reviewed in pull requests. The second surprise: <strong>users don’t care about your metrics</strong>. They care about their task completion time and accuracy. Our highest user-satisfaction scores came from reducing the average loan-approval time from 3.2 minutes to 1.1 minutes — not from improving semantic_score from 0.89 to 0.93.</p>
 <p>The biggest win wasn’t technical — it was <strong>process</strong>. Before this loop, our prompt changes went through a 2-week manual review by three people. Now, we merge a prompt change, run the canary for 15 minutes, and ship if the metrics are green. That cut our prompt iteration cycle from 14 days to 2 hours. The cost? We had to hire one extra engineer to maintain the scorer infrastructure. Worth it.</p>
@@ -635,33 +630,20 @@ Human evaluation is expensive and slow. In our system, a single human label cost
 Aim for p95 &lt; 500 ms for interactive use cases. If your scorer adds &gt; 200 ms, you’ll start seeing user drop-off. In our Nairobi system, we target 300 ms p95 for the scorer layer. Anything over 500 ms triggers a rollback.</p>
 <p><strong>How do I handle model updates without breaking validators?</strong>
 Pin your scorer model versions and run semantic diffing between old and new scorers. We use LangSmith’s <code>compare_traces</code> feature. If the semantic_score delta exceeds 0.1, we pause the canary and trigger a human review. This caught a prompt change that would have doubled hallucination rates last quarter.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/">LLM output metrics that actually move the needle</a></li>
+<li><a href="https://kubaik.github.io/llm-metrics-that-stop-wasting-time/">LLM metrics that stop wasting time</a></li>
+<li><a href="https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/">LLM drift before users complain: catch it early</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 22, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -710,12 +692,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

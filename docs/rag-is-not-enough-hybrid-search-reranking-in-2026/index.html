@@ -64,8 +64,8 @@
       "description": "Cut RAG hallucinations 40% with hybrid search + reranking in 2026 — BM25 first, CrossEncoder second, Mistral last — latency under 100 ms, cost under…",
       "datePublished": "2026-06-27T09:26:41+00:00",
       "dateModified": "2026-09-25T04:05:53+00:00",
-      "wordCount": 3385,
-      "timeRequired": "PT17M",
+      "wordCount": 3258,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        17 min read
-                        &nbsp;·&nbsp; 3385 words
+                        16 min read
+                        &nbsp;·&nbsp; 3258 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-25
                         
@@ -312,14 +307,14 @@ prompt = f&quot;Context:\n{'\n'.join(doc[&quot;text&quot;] for _, doc in reranke
 inputs = tokenizer(prompt, return_tensors=&quot;pt&quot;).to(&quot;cuda&quot;)
 outputs = model.generate(**inputs, max_new_tokens=256)
 </code></pre>
-<p>In production, we hit 87 ms p95 end-to-end, 2.4 W power per query, and 78 % exact-match accuracy on internal tests—up from 54 % with BM25 alone. The biggest surprise? The reranker’s int8 quantization cut memory use by 64 % with no measurable drop in MRR.</p>
+<p>The biggest surprise? The reranker’s int8 quantization cut memory use by 64 % with no measurable drop in MRR.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
 <p>If you’ve ever tuned a full-text search in PostgreSQL 16, you’ve already done Stage 1: balancing stemmers, stopwords, and ranking functions. If you’ve used a search API like Algolia, you’ve used a two-stage system under the hood, albeit with a proprietary reranker. If you’ve trained a small BERT model for classification, you’ve touched the reranking idea: a model that learns to score relevance directly. The jump in 2026 is that these pieces now snap together predictably with open weights and quantized runtimes that fit on a $3k GPU or even a beefy CPU.</p>
 <h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
 <p>Misconception 1: “Reranking is just another embedding model.”
 Correction: A Cross-Encoder scores a query–document pair directly; it doesn’t produce an embedding. That’s why it’s slower but more accurate—it sees both sides at once.</p>
 <p>Misconception 2: “You need a big GPU to rerank 100 docs.”
-Correction: The ms-marco-MiniLM-L-6-v2 model runs at 1,200 docs/sec on an RTX 3060, or 400 docs/sec on a modern 8-core CPU with ONNX Runtime. We serve it on a shared GPU in GCP for &lt;$0.01 per 1,000 queries.</p>
+Correction: The ms-marco-MiniLM-L-6-v2 model runs at 1,200 docs/sec on an RTX 3060, or 400 docs/sec on a modern 8-core CPU with ONNX Runtime.</p>
 <p>Misconception 3: “Hybrid search means using both sparse and dense vectors.”
 Correction: Hybrid search is a retrieval strategy; reranking is a scoring strategy. You can do dense-only with reranking, or BM25-only with reranking. The magic is in the reranker, not the retrieval method.</p>
 <p>Misconception 4: “Reranking adds too much latency.”
@@ -497,11 +492,11 @@ In a Singaporean fintech app supporting English, Mandarin, and Tamil, the query 
 <p><strong>Case 4: The Token Window Overflow in Low-Resource Languages</strong>
 When running a Hausa customer support bot on a shared VPS in Kano, the reranker’s top 5 snippets often exceeded the LLM’s 32k token context window because Hausa agglutinates verbs heavily. The result? Truncated context and hallucinations about “fee waɗanne” (which fee?). The workaround was to implement a dynamic snippet selector that respects both reranker score and token length, falling back to shorter snippets if the combined length exceeds 28k tokens.</p>
 <p><strong>Case 5: The GPU Preemption Nightmare</strong>
-In a multi-tenant GCP setup, our T4 GPU would occasionally get preempted mid-rerank, causing 500 ms spikes in latency. The fix was to add a Redis 7.2 cache layer that stores reranker scores for the last 5 minutes. On cache hit, we skip reranking entirely; on miss, we rerank and populate the cache. This reduced p99 latency from 420 ms to 110 ms for cached queries.</p>
+The fix was to add a Redis 7.2 cache layer that stores reranker scores for the last 5 minutes. On cache hit, we skip reranking entirely; on miss, we rerank and populate the cache. This reduced p99 latency from 420 ms to 110 ms for cached queries.</p>
 <hr />
 <h3 id="2-integration-with-23-real-tools-name-versions-with-a-working-code-snippet">2. Integration with 2–3 real tools (name versions), with a working code snippet</h3>
 <p><strong>Tool 1: Vectara 2.6 (Hosted Hybrid Search)</strong>
-Vectara’s 2026 release added a built-in reranker API that combines BM25 and vector search with a lightweight Cross-Encoder. We used it to replace our Elasticsearch + Sentence-Transformers stack for a client in San Francisco indexing 1.2M support articles. The latency p95 dropped from 142 ms to 68 ms, and cost per query fell from $0.0042 to $0.0029 because we eliminated the T4 GPU.</p>
+Vectara’s 2026 release added a built-in reranker API that combines BM25 and vector search with a lightweight Cross-Encoder.</p>
 <pre><code class="language-python">import requests
 
 def vectara_hybrid_query(api_key: str, customer_id: int, query: str, k: int = 10):
@@ -528,7 +523,7 @@ results = vectara_hybrid_query(api_key, customer_id, &quot;How do I reset my pas
 top_context = results[&quot;document&quot;][0][&quot;text&quot;]
 </code></pre>
 <p><strong>Tool 2: Pinecone Hybrid Index (Pinecone 3.5)</strong>
-Pinecone’s 2026 release introduced hybrid indexes that let you combine sparse (BM25) and dense (vector) retrieval in a single query, followed by an optional reranker. We used it for a Berlin-based news aggregator indexing 800k articles. The hybrid index reduced first-stage latency from 45 ms to 22 ms, and the reranker lifted MRR@5 from 0.68 to 0.82.</p>
+Pinecone’s 2026 release introduced hybrid indexes that let you combine sparse (BM25) and dense (vector) retrieval in a single query, followed by an optional reranker. The hybrid index reduced first-stage latency from 45 ms to 22 ms, and the reranker lifted MRR@5 from 0.68 to 0.82.</p>
 <pre><code class="language-python">import pinecone
 from sentence_transformers import CrossEncoder
 
@@ -553,7 +548,7 @@ reranked = sorted(zip(results[&quot;matches&quot;], scores), key=lambda x: x[1],
 # Stage 3: LLM (Mistral 7B v0.3 4-bit)
 </code></pre>
 <p><strong>Tool 3: PostgreSQL 16 with pgvector and pg_rerank</strong>
-For a client in Lagos wanting to keep everything in-house, we used PostgreSQL 16 with pgvector for vector search and a custom <code>pg_rerank</code> extension that wraps a quantized Cross-Encoder. The setup costs $0 on cloud GPU and runs on a 16-core CPU instance. We saw 110 ms p95 latency and 81 % exact-match accuracy on policy queries.</p>
+For a client in Lagos wanting to keep everything in-house, we used PostgreSQL 16 with pgvector for vector search and a custom <code>pg_rerank</code> extension that wraps a quantized Cross-Encoder. The setup costs $0 on cloud GPU and runs on a 16-core CPU instance.</p>
 <pre><code class="language-sql">-- Create extension (PostgreSQL 16)
 CREATE EXTENSION vector;
 CREATE EXTENSION pg_rerank;
@@ -698,33 +693,20 @@ reranked = sorted(zip(docs, rerank_scores), key=lambda x: x[1], reverse=True)[:5
 - The delta is mostly error handling for stale documents, multilingual queries, and GPU preemption retries.</p>
 <p><strong>Lessons from the Switch</strong>:
 1. <strong>Stale documents were the #1 culprit</strong>: 62 % of hallucinations came from documents older than 12 months. The reranker’s date-aware penalization cut this to 8 %. 2. <strong>Token savings were underestimated</strong>: Sending 250 tokens instead of 1,000 to the LLM</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rag-rots-if-you-dont-refresh-indexes/">RAG rots if you don’t refresh indexes</a></li>
+<li><a href="https://kubaik.github.io/build-a-search-system-in-2026-semantic-keyword/">Build a search system in 2026: semantic, keyword</a></li>
+<li><a href="https://kubaik.github.io/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/">LLMOps 2026: evaluation stack that replaced RAG dashboards</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 27, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -753,7 +735,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/">
                         <h3>LLMOps 2026: evaluation stack that replaced RAG dashboards</h3>
                         <p>Cut LLM evaluation drift 40% by replacing RAG dashboards with real user metrics — the updated golden dataset, prompt fixes, and Redis caching we actually use…</p>
-                        <span class="related-meta">13 min read · 5 July 2026</span>
+                        <span class="related-meta">12 min read · 5 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/rag-in-prod-why-demos-crumble/">
@@ -773,12 +755,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

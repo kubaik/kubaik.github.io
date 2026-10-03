@@ -64,7 +64,7 @@
       "description": "Cut irrelevant AI answers 80% by fixing prompt drift, adapter decay, and cold starts — concrete costs, Lambda code, and rollback commands for Nairobi startups…",
       "datePublished": "2026-06-20T21:00:17+00:00",
       "dateModified": "2026-09-21T18:02:49+00:00",
-      "wordCount": 3147,
+      "wordCount": 3151,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -260,7 +255,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3147 words
+                        &nbsp;·&nbsp; 3151 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -415,33 +410,20 @@ Platform status: All systems operational
 <p>Pin the tokenizer version in your adapter config and run a nightly tokenization benchmark against a fixed set of 100 sample queries. Use the <code>tokenizers</code> library’s <code>encode</code> and <code>decode</code> methods to compute the average token length and variance. If the average token length changes by more than 15 % from the baseline, flag it as tokenization drift. A tokenizer update in <code>sentencepiece</code> 0.2.0 that increases token length by 22 % is a typical cause of a 15 % drop in F1-score. Pinning the tokenizer to 0.1.9 fixes the issue without retraining the adapter.</p>
 <h2 id="the-bottom-line">The bottom line</h2>
 <p>Low-code AI platforms are a productivity win, but they don’t absolve you of operational responsibility. The three silent killers—prompt drift, adapter decay, and cold starts—will bite you if you treat the platform dashboard as your only source of truth. A model that keeps returning 78 % confidence answers that are 42 % wrong is a common story, and the platform is usually working fine; the prompt template has silently diverged from production queries. The fixes are mechanical: log user queries, benchmark weekly, and pre-warm model instances. Embed these into your CI/CD pipeline so they run automatically, not as afterthoughts. Treat drift and decay as first-class failure modes, and your low-code AI stack will stay reliable without reinventing the wheel.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-drift-why-prod-breaks-without-human-checkpoints/">Agent drift: why prod breaks without human checkpoints</a></li>
+<li><a href="https://kubaik.github.io/why-ai-interviewers-failed-68-of-us-in-2026/">Why AI interviewers failed 68% of us in 2026</a></li>
+<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 20, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -490,12 +472,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

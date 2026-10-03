@@ -64,7 +64,7 @@
       "description": "After switching to Fargate with 0.25 vCPU and 512MB RAM ephemeral containers, we cut costs by 78%.",
       "datePublished": "2026-06-08T04:25:12+00:00",
       "dateModified": "2026-09-21T08:28:27+00:00",
-      "wordCount": 3476,
+      "wordCount": 3399,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -243,7 +238,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3476 words
+                        &nbsp;·&nbsp; 3399 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -256,7 +251,7 @@
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>In reality, the first time you deploy a system that relies on autonomous agents making decisions, you’ll hit a wall: <strong>agents don’t fail like functions do.</strong> A function either returns a result or throws an exception. An agent can return a partial result, a hallucinated answer, or loop forever waiting for a message that never arrives. The logs showed no trace of the failure, just a cascade of downstream timeouts.</p>
 <p>The documentation rarely mentions that agents introduce <strong>non-determinism by design.</strong> Your tests might pass 100 times in staging, but the first time you roll to production under real load, an agent might make a decision based on stale data or misinterpret a prompt. Worse, many frameworks (like LangGraph 0.4.3) don’t expose instrumentation for agent state transitions by default. You’ll need to manually patch in logging for every agent’s internal state if you want to debug why your router agent keeps sending traffic to a dead endpoint. Production-grade observability isn’t optional here—it’s survival.</p>
-<p>Cost is another hidden trap. A single agent might spin up a 4-core CPU instance in AWS ECS (t3.xlarge) just to run a lightweight decision loop. Multiply that by 50 concurrent agents and you’re looking at ~$120/month per agent at 2026 spot pricing—before you even account for API calls, message queue fees, or storage for agent memory. I once inherited a system where the agent orchestrator was running on EC2 instances sized for peak load 24/7. The bill hit $8k in one month. After switching to Fargate with 0.25 vCPU and 512MB RAM ephemeral containers, we cut costs by 78%. The agents still worked—just slower, and we had to tune the concurrency limits.</p>
+<p>Cost is another hidden trap. A single agent might spin up a 4-core CPU instance in AWS ECS (t3.xlarge) just to run a lightweight decision loop. Multiply that by 50 concurrent agents and you’re looking at ~$120/month per agent at 2026 spot pricing—before you even account for API calls, message queue fees, or storage for agent memory. I once inherited a system where the agent orchestrator was running on EC2 instances sized for peak load 24/7. The bill hit $8k in one month. The agents still worked—just slower, and we had to tune the concurrency limits.</p>
 <p>Finally, <strong>most systems assume agents are stateless.</strong> They’re not. Every agent that maintains conversation history, tool usage records, or external API responses is effectively a stateful service. If you’re using Redis 7.2 as your message broker and agent state store, you’ll need to plan for persistence, failover, and TTL policies. A single agent flushing 10KB of state every 30 seconds can fill up your Redis instance in a few hours if you haven’t set <code>maxmemory-policy allkeys-lru</code>. I learned this the hard way when our staging Redis cluster OOM’d and took down the entire agent cluster—because the agent orchestrator didn’t honor the <code>TTL</code> on state keys.</p>
 <p>If you’re coming from monolithic or microservice architectures, multi-agent systems feel like a regression to the days of distributed spaghetti. But they’re useful exactly when you need loose coupling, high autonomy, and emergent behavior. Just don’t expect the documentation to prepare you for the chaos.</p>
 <h2 id="how-multi-agent-systems-in-production-what-nobody-tells-you-upfront-actually-works-under-the-hood">How Multi-agent systems in production: what nobody tells you upfront actually works under the hood</h2>
@@ -311,7 +306,6 @@ class AgentMessage:
     content: Dict[str, Any]
     timestamp: float
     metadata: Optional[Dict[str, Any]] = None
-
 
 class BaseAgent:
     def __init__(self, agent_id: str, input_queue: str, output_queue: str):
@@ -425,7 +419,6 @@ class OrderRouter(BaseAgent):
             'assigned_at': time.time()
         }
 
-
 if __name__ == '__main__':
     router = OrderRouter()
     router.start()
@@ -479,7 +472,6 @@ class OrderHandler(BaseAgent):
             'notified': True
         }
 
-
 if __name__ == '__main__':
     for region in ['us', 'eu', 'asia']:
         handler = OrderHandler(agent_id=f'handler_{region}')
@@ -514,7 +506,6 @@ class EscalationAgent(BaseAgent):
                     'assigned_handler': content['handler']
                 }
         return None
-
 
 if __name__ == '__main__':
     escalation = EscalationAgent()
@@ -608,13 +599,13 @@ connection.close()
 </tbody>
 </table>
 <p>The biggest surprise was <strong>latency spikes during agent timeouts.</strong> The initial system had a naive timeout of 5 seconds for tool calls. When an external API (e.g., payment gateway) took 6 seconds, the agent would wait, then retry, causing a cascade. We added a circuit breaker using <code>pybreaker 2.1.1</code> and a 3-second timeout with exponential backoff. This cut timeout-related failures by 71% and reduced P99 latency by 38%.</p>
-<p>Another surprise was <strong>Redis memory bloat.</strong> Each agent was storing full conversation history with no TTL. After 48 hours, Redis memory usage spiked to 15GB, causing evictions and agent state corruption. We implemented a sliding window TTL (24 hours) and switched to <code>allkeys-lru</code> eviction policy. Memory usage dropped to 7.1GB, and we saw a 14% improvement in agent throughput due to reduced GC pressure.</p>
+<p>Another surprise was <strong>Redis memory bloat.</strong> Each agent was storing full conversation history with no TTL. After 48 hours, Redis memory usage spiked to 15GB, causing evictions and agent state corruption. We implemented a sliding window TTL (24 hours) and switched to <code>allkeys-lru</code> eviction policy.</p>
 <p>Cost was the real shock. The first version used EC2 instances for Redis and RabbitMQ, plus 20 Fargate tasks. The monthly bill was $3,200. After migrating Redis to ElastiCache (cache.r6g.large, $500/month), RabbitMQ to Amazon MQ (m5.large, $350/month), and optimizing Fargate task size (0.25 vCPU, 512MB RAM), the bill dropped to $1,800/month. The agents themselves accounted for only 12% of the cost—the rest was infrastructure.</p>
 <p>Finally, <strong>agent CPU usage was highly uneven.</strong> The routing agent was mostly idle, while the inventory agent was constantly busy. We implemented dynamic scaling using AWS Application Auto Scaling on the inventory agent’s ECS service. It scaled from 1 to 5 tasks based on CPU &gt;70%. This reduced average CPU usage from 65% to 42% and cut costs by 18%.</p>
 <p>The lesson? Performance isn’t just about agent logic—it’s about <strong>infrastructure, observability, and state management.</strong> You can write the most elegant agent, but if your message broker is a bottleneck or your state store is OOMing, the system will fail under load.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <h3 id="1-the-silent-data-loss">1. The silent data loss</h3>
-<p>Agents don’t throw exceptions—they return empty results, malformed JSON, or <code>null</code>. If your system assumes every agent response is valid, you’ll lose data silently. In our logistics system, the customer communication agent would sometimes return <code>{}</code> when the email API timed out. The downstream agent would try to parse it as a valid response, fail, and retry—until the message was dead-lettered after 10 attempts. We lost 3% of customer notifications before we added schema validation and mandatory error fields.</p>
+<p>Agents don’t throw exceptions—they return empty results, malformed JSON, or <code>null</code>. If your system assumes every agent response is valid, you’ll lose data silently. In our logistics system, the customer communication agent would sometimes return <code>{}</code> when the email API timed out. The downstream agent would try to parse it as a valid response, fail, and retry—until the message was dead-lettered after 10 attempts.</p>
 <p><strong>Fix:</strong> Use JSON Schema validation on every agent output. Reject malformed messages immediately with a clear error code.</p>
 <h3 id="2-the-memory-leak-in-state">2. The memory leak in state</h3>
 <p>Agents that maintain conversation history, tool outputs, or external API responses will leak memory if you don’t set TTLs. We had an agent that stored every tool call result in Redis with no expiration. After 7 days, Redis memory usage tripled. The eviction policy (<code>noeviction</code>) caused the agent to crash when it tried to allocate more memory. We had to rebuild the agent state from scratch to recover.</p>
@@ -635,31 +626,12 @@ connection.close()
 <p>Agent frameworks like LangGraph or CrewAI don’t expose agent state or transitions by default. You’ll need to instrument every agent to log its internal state, tool calls, and</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 08, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -708,12 +680,7 @@ every article before it goes live.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

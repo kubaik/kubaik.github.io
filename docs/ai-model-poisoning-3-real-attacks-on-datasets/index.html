@@ -64,7 +64,7 @@
       "description": "Cut AI poisoning incidents 100% with dataset hashes, SLSA 1.1, and Sigstore 0.10.0 — the real tools and metrics teams used in 2026.",
       "datePublished": "2026-07-04T03:21:11+00:00",
       "dateModified": "2026-09-18T03:55:17+00:00",
-      "wordCount": 3801,
+      "wordCount": 3800,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3801 words
+                        &nbsp;·&nbsp; 3800 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-18
                         
@@ -575,33 +570,20 @@ huggingface-cli download my-org/my-model &quot;${TAG}&quot; --local-dir model
 <p>SBOMs are better than nothing, but they’re not enough for AI. An SBOM lists dependencies, but it doesn’t capture dataset provenance or model signatures. Use SBOMs alongside SLSA and Sigstore, not instead of them. The Cloud Security Alliance’s 2026 report found that teams using only SBOMs missed 62% of AI-specific supply chain risks.</p>
 <p><strong>How do I detect poisoned data in my dataset?</strong></p>
 <p>Look for label inconsistencies (e.g., 100 examples where the correct answer to "What’s the company’s revenue?" is the same fake number), input/output length outliers, and unexpected tokens. Write a simple script to count unique labels per question and flag questions with only one label. In one incident, this caught a batch of 200 poisoned examples where the label was always "🎉 mystery prize 🎉".</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/pypi-poisoned-models-hit-prod-in-2025/">PyPI poisoned models hit prod in 2025</a></li>
+<li><a href="https://kubaik.github.io/ai-supply-chain-attacks-what-actually-broke/">AI supply chain attacks: what actually broke</a></li>
+<li><a href="https://kubaik.github.io/prompt-injections-hidden-aws-tax/">Prompt injection’s hidden AWS tax</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 04, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -650,12 +632,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

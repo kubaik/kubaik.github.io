@@ -1,238 +1,216 @@
-# Prompt injection got the hype — poison data ruined us
+# Prompt Injection Is Not Your Biggest LLM Data Risk
 
-I've hit the same owasp llm mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. Here's the fuller picture, with the tradeoffs left in.
+## The conventional wisdom, and where it stops
 
-## The conventional wisdom (and why it's incomplete)
+The OWASP Top 10 for LLM Applications places prompt injection at the top of its list, with insecure output handling and sensitive information disclosure close behind. That ordering is defensible. It is also a list of risks that show up at inference time, in a request/response path that most web engineers already know how to reason about.
 
-If you read the OWASP LLM Top 10 from 2026-2026, prompt injection sits at #1, with data exfiltration and insecure output handling close behind. We followed the guidance: sanitize inputs, add runtime guards, log everything. By late 2026, we’d rolled out guardrails, content filters, and runtime isolation. Prompt injection attempts dropped to zero in our logs. Mission accomplished.
+Teams commonly follow that guidance to the letter: sanitize inputs, add a runtime guard, log every prompt and response. The logs then show injection attempts dropping, and the work is declared finished. The failure mode is that the same team has a fine-tuning pipeline, a retrieval store, and a labeling process that nobody threat-modeled, because none of those appear at #1 on the list.
 
-Then, in January 2026, our staging database was wiped. Not by an injection attack—by a poisoned training dataset. Someone had uploaded 37,000 customer records labeled as benign, but the labels were crafted to mislead our fine-tuning pipeline. The model learned to suppress warnings about PII, and within a week, the model started returning sanitized summaries that omitted SSNs and addresses. By the time we caught it, 8,200 queries had returned incomplete data to customer support. Our incident response focused on prompt injection. The real problem was data poisoning, and we missed it because we were optimizing for the wrong risk.
+The useful reframing is to stop treating an LLM system as a chatbot with extra injection risk and start treating it as a data processor with a supply chain. That supply chain has three stages:
 
-The honest answer is that OWASP’s LLM Top 10 is a useful checklist, but it’s optimized for web application risks, not AI-native risks. Prompt injection is real, but it’s not the biggest threat in most production environments. The bigger risk is poisoned data, model drift, and supply chain attacks on the training pipeline. In my experience, teams that treat LLM risks as just another injection problem end up with half-baked defenses that fail when the attacker skips the prompt and goes straight for the data.
+1. **Data ingestion** — raw inputs that train, fine-tune, or populate retrieval. Poisoned here at the source: malicious uploads, compromised third-party datasets, mislabeled internal logs.
+2. **Training and indexing** — the learning or embedding step. Biased or poisoned inputs cause behavior drift; a modified checkpoint imports someone else's behavior wholesale.
+3. **Inference and feedback** — how the model is used and how its outputs are consumed. Prompt injection lives here, and it is the last stage, not the first.
 
-## What actually happens when you follow the standard advice
+Most engineering effort lands on stage 3 because it is the most visible and the easiest to instrument with existing web tooling. The rest of this article is about stages 1 and 2: what goes wrong, how to detect it, and how to decide whether it deserves your budget.
 
-We built a content filtering layer using Azure Content Safety 3.0 and Llama Guard 2. This blocked 99.4% of prompt injection attempts in our synthetic tests, but it added 140ms of latency per request and required tuning thresholds that varied wildly by user segment. In production, we saw 3.2% of requests blocked as "unsafe," even when users were asking legitimate questions. After three weeks, we disabled the filter for 30% of our power users because it was breaking workflows. The filter wasn’t wrong—it was just too rigid.
+## What the standard advice actually costs
 
-Next, we added runtime isolation using AWS Bedrock with guardrails, isolating each user session in a separate container. This stopped lateral movement if an injection succeeded, but it tripled our costs and introduced a new failure mode: session state corruption. In one incident, a memory leak in the guardrail container caused a cascade of timeouts, and our p99 latency spiked from 420ms to 2.1s for 45 minutes. We rolled back the isolation and switched to a lighter-weight sandboxing approach with gVisor and seccomp profiles.
+Runtime guardrails are not free, and the costs are easy to underestimate because they are spread across latency, false positives, and operational complexity.
 
-The standard advice also pushes for extensive logging: every prompt, every response, every filter decision. We implemented this using OpenSearch 2.12 with a 30-day retention policy. By March 2026, our logs grew to 2.4TB/day, and querying for anomalies became prohibitively slow. We had to downsample logs and lose granularity, which meant we missed subtle poisoning patterns until it was too late.
+**Latency and false positives.** A content-classification model placed in front of your LLM adds a fixed per-request cost. The exact number depends on model size, hardware, and whether you batch, so measure it rather than trusting a figure: instrument the guardrail call separately from the generation call, and compare p50 and p99 latency with the guardrail enabled and disabled on the same traffic. The more important metric is the false-positive rate — the share of legitimate requests the guardrail blocks or rewrites. Sample a few hundred blocked requests, label them by hand, and compute the precision of the block decision. A guardrail with high recall and low precision will break real workflows, and the usual response is an allowlist for the users who complain loudest. That allowlist is itself a security hole, and it is rarely documented.
 
-The real lesson wasn’t about the filter or the sandbox. It was that we optimized for the wrong threat model.
+**Isolation costs.** Running each session in its own sandbox limits lateral movement if an injection succeeds. It also multiplies infrastructure cost and introduces a new class of failure: state and lifecycle bugs in the sandbox layer itself. Container memory leaks, connection pool exhaustion, and orphaned sessions all become your problem. A lighter-weight option is process-level sandboxing — a seccomp profile plus a user namespace, or gVisor for stronger isolation — which trades some isolation strength for far less operational surface.
 
-## A different mental model
+**Logging volume.** Logging every prompt, response, and filter decision produces enormous volumes. Full-fidelity retention is usually affordable for days, not months. The practical pattern is tiered retention: keep full records for a short window, then retain a sampled subset plus all records that triggered a filter or a drift alert. Downsampling everything uniformly destroys exactly the signal you need, because poisoning and drift show up in the tail, not the average.
 
-Instead of treating LLMs as glorified chatbots with extra injection risks, treat them as data processors with their own supply chains. The pipeline has three critical stages:
+None of this argues against guardrails. It argues that guardrails are a stage-3 control with a measurable cost, and that spending the entire security budget there leaves stages 1 and 2 unprotected.
 
-1. **Data ingestion**: The raw inputs that train or fine-tune models. These can be poisoned at the source—malicious users, compromised third-party datasets, or mislabeled internal logs. 2. **Model training**: The actual learning process. If the training data is biased or poisoned, the model’s behavior drifts. 3. **Inference and feedback**: How the model is used and how its outputs are consumed. This is where prompt injection lives, but it’s the last stage, not the first.
+## Why data-side failures are harder to see
 
-Most teams focus on stage 3 because it’s the most visible. But in our environment, stage 1 was the weak link. A single mislabeled dataset in our fine-tuning pipeline caused the model to suppress PII warnings across 8,200 queries. The prompt never changed—the data did.
+Prompt injection is loud. It arrives as a request, it can be blocked at a boundary, and it produces a log line. Data poisoning is quiet for three structural reasons.
 
-We also realized that LLMs have a memory problem. Unlike traditional apps, models retain context across sessions, and that context can be poisoned by previous users. We saw one incident where a user uploaded a malicious document, and the model’s next 120 responses included subtle misinformation seeded by that document. The user never interacted with the model directly—their data poisoned the shared memory.
+**The signal is diluted.** A small fraction of malicious or mislabeled examples can shift behavior if they are consistent and concentrated on one output pattern. There is no universal threshold — the effect depends on dataset size, label consistency, and how strongly the target behavior is represented. The consequence is that a spot-check of the dataset will not find them, because the malicious examples are crafted to look like ordinary ones.
 
-The shift from a security model to a data integrity model changes everything. Instead of asking, "How do we stop prompt injection?" we ask, "How do we verify the data that trains our models? How do we detect drift before it affects users? How do we isolate poisoned data without breaking legitimate workflows?"
+**The feedback loop is delayed.** A poisoned model produces plausible outputs. Nothing crashes. The damage surfaces downstream, in a support queue or a conversion metric, weeks after the training run that caused it. By then the causal link is not obvious.
 
-## Evidence and examples from real systems
+**Rollback is impossible without versioning.** If you cannot reconstruct the exact dataset that produced a given model, you cannot diff a good model against a bad one, and you cannot prove which examples caused the shift. Debugging becomes archaeology. This is the single highest-leverage control on the data side, and it is cheap.
 
-### 1. Poisoned fine-tuning datasets
+## Failure modes worth designing against
 
-In Q4 2026, a contractor uploaded a dataset of 15,000 customer support tickets labeled as "benign" but containing crafted responses designed to suppress PII warnings. The model learned to omit SSNs and addresses from summaries. The poisoning was subtle: only 1.2% of the dataset was malicious, but the model’s behavior shifted enough to affect 8,200 queries before we caught it. The incident cost us $180,000 in support escalations and a 3.4-point drop in NPS for affected users.
+### Weak supervision treated as ground truth
 
-We traced the issue to a misconfigured labeling pipeline. The contractor used a semi-supervised approach with a weak model, and the weak model’s predictions were accepted as ground truth for 37% of the labels. Once we fixed the pipeline and re-trained with human-verified labels, the issue resolved. But the damage was done.
+A labeling pipeline that uses a heuristic or a small model to generate labels, then feeds those labels into training without review, will amplify that model's errors. The characteristic failure is a silent shift in label distribution: the weak labeler drifts as input distribution changes, the trained model inherits the drift, and the only symptom is a gradual decline in a downstream metric.
 
-### 2. Memory poisoning via shared context
+**Detection.** Track label agreement between the weak labeler and a human-labeled audit sample over time. Plot the agreement rate per week. A downward trend is the alarm, and it appears well before the downstream metric moves. Also track the per-class label distribution; a class whose share changes by more than a few points week over week deserves inspection.
 
-We built a multi-tenant chat interface where each user’s conversation was stored in a shared vector store. In November 2025, a user uploaded a document containing a prompt injection payload disguised as a legitimate FAQ. The next 120 responses from the model included subtly altered recommendations that steered users toward a competitor’s product. The poisoning persisted for 7 days until we rotated the vector store and purged the malicious document.
+### Shared retrieval memory across tenants
 
-The attack vector wasn’t prompt injection in the traditional sense—it was memory poisoning via shared context. The model’s retrieval step pulled the malicious document into the conversation history, and the generation step incorporated it into responses.
+A multi-tenant system with one vector store and no tenant filter lets one user's uploaded document appear in another user's retrieved context. If that document contains instructions or claims, the model may incorporate them. This is not prompt injection in the classic sense — no attacker is talking to the model. The attacker is writing to a store that the model reads from later.
 
-### 3. Supply chain attacks on model weights
+**Detection and prevention.** Enforce a tenant identifier as a mandatory metadata filter on every write and every query, and assert in tests that a query issued as tenant A never returns a document written by tenant B. A namespace-per-tenant feature in a managed vector database is the cheapest version of this. If you build it yourself, make the filter non-optional in the store's API rather than a convention callers must remember.
 
-We fine-tuned a model using a community checkpoint from Hugging Face. The checkpoint had been modified by an unknown actor to suppress certain topics. Within two weeks, our model started refusing to answer questions about pricing, leading to a 12% drop in conversions on our pricing page. We traced the issue to a poisoned checkpoint that had been downloaded 4,200 times before we noticed the anomaly.
+### Untrusted model checkpoints
 
-This wasn’t a supply chain attack in the traditional sense—no one had hacked Hugging Face. The checkpoint had been modified by a malicious contributor and uploaded as a legitimate update. The lesson: even community models can be poisoned, and fine-tuning doesn’t inoculate you.
+Fine-tuning from a community checkpoint means importing whatever behavior that checkpoint encodes. A modified checkpoint can suppress topics, alter tone, or bias outputs in a specific direction, and fine-tuning on your own clean data does not necessarily undo it.
 
-### 4. Label drift in training data
+**Detection.** Before adopting a checkpoint, run a fixed evaluation suite against it and compare the results to the base model and to your current production model. Keep the suite small but stable — a few dozen prompts with known-good expected properties — and version it alongside your code. A checkpoint that fails any baseline check should not be promoted, regardless of its download count or its reputation.
 
-We relied on a weakly supervised labeling pipeline for a customer intent classifier. The pipeline used a heuristic to label user queries, but the heuristic drifted over time. By the time we noticed, the model had learned to misclassify 18% of support tickets, leading to incorrect routing and longer resolution times. The drift was gradual—0.3% per week—and went unnoticed until we audited the data.
+### Heuristic and threshold drift
 
-### Comparison table: Risks we overrated vs. risks we underrated
+Any pipeline that applies a rule to incoming data drifts when the incoming data changes. A keyword list, a length threshold, a confidence cutoff — each was tuned against a distribution that no longer exists. The model trained on the output inherits the mismatch.
 
-| Risk category               | OWASP rank | Our experience | Detection difficulty | Blast radius |
-|-----------------------------|------------|----------------|----------------------|--------------|
-| Prompt injection            | #1         | Medium         | Low                  | High         |
-| Data poisoning              | #5         | High           | High                 | Critical     |
-| Model drift                 | #6         | High           | Medium               | Critical     |
-| Supply chain attacks        | #8         | High           | High                 | Critical     |
-| Insecure output handling    | #2         | Low            | Low                  | Medium       |
-| Sensitive data disclosure   | #3         | Medium         | Medium               | High         |
+**Detection.** Log the rule's trigger rate and the distribution of the values it thresholds on. A trigger rate that moves steadily in one direction over weeks is drift, not noise. Set an alert on the rate of change, not on an absolute value.
 
-We initially rated prompt injection as the highest risk, but in practice, data poisoning and model drift caused the most damage. The blast radius for data poisoning was critical because it affected every user exposed to the poisoned model.
+## Deciding where to spend: a triage checklist
 
-## The cases where the conventional wisdom IS right
+Answer these before allocating security budget. The answers, not the OWASP ranking, should drive the plan.
 
-Despite the contrarian take, prompt injection is still a real risk in specific scenarios:
+**1. Who can write data that reaches training or retrieval?**
+If external users or third-party datasets can, data poisoning is a live risk and you need ingestion controls. If every input is internal and reviewed, the risk is lower and inference-time controls deserve more weight.
 
-- **Public-facing chatbots**: If your LLM is exposed to the internet with no authentication, prompt injection is a genuine threat. I’ve seen attackers use indirect prompts to exfiltrate data by crafting questions that force the model to reveal sensitive information. - **Multi-tenant systems with weak isolation**: If you’re running a shared inference service without user-level sandboxing, prompt injection can lead to lateral movement. We saw this in a prototype where a single malicious user could disrupt other users’ sessions. - **Legacy integrations**: If your LLM is plugged into older APIs with weak authentication, prompt injection can be used to trigger unintended actions. This is rare in 2026, but it still happens in enterprise environments.
+**2. Do you fine-tune, or only prompt a hosted model?**
+Fine-tuning adds drift and checkpoint-provenance risk. Prompting a hosted model removes those but keeps retrieval-store risk if you use RAG.
 
-In these cases, the standard advice—sanitize inputs, add runtime guards, isolate sessions—is valuable. But for most teams, these scenarios are edge cases. The bigger threat is poisoned data, and the conventional wisdom doesn’t prepare you for that.
+**3. Can you reconstruct the exact dataset behind any deployed model?**
+If not, fix this first. It is a prerequisite for every other data-side control, and it is the cheapest one to implement.
 
-## How to decide which approach fits your situation
+**4. What is the blast radius of a wrong output?**
+A model serving an internal tool used by twenty people is a different risk profile from one serving a public pricing page. Blast radius, not attack sophistication, should set your urgency.
 
-Ask three questions:
+**5. What is your current detection latency?**
+How long between a behavior change appearing and someone noticing? If the answer is "the next time a customer complains," you have a monitoring gap that no guardrail will close.
 
-1. **Who controls the data pipeline?**
-   - If users or third parties upload data that trains or fine-tunes your models, you’re at risk of data poisoning. This is the most common scenario in 2026. - If your data pipeline is internal and tightly controlled, prompt injection is a bigger risk.
+A rough prioritization follows from these: if external data reaches training or retrieval and you cannot reconstruct your datasets, start with ingestion validation and versioning. If your pipeline is closed and versioned, the marginal return on more inference-time filtering is higher.
 
-2. **How much do you rely on fine-tuning?**
-   - If you fine-tune models regularly, you’re exposed to model drift and supply chain attacks. These risks compound over time. - If you only use pre-trained models, you’re exposed to supply chain attacks (poisoned checkpoints) but not fine-tuning risks.
+## A worked example: tracing a behavior shift
 
-3. **What’s your blast radius?**
-   - If your model serves a small, trusted user base, prompt injection is the only real risk. If your model serves thousands of users, data poisoning is the bigger threat.
+Suppose a support-summarization model starts omitting account identifiers from summaries. No prompt changed. Here is a reasoning sequence that localizes the cause without guessing.
 
-We built a simple scoring matrix to decide which risks to prioritize:
+**Step 1 — Confirm the change is real and bounded.** Pull a sample of recent summaries and a sample from two weeks earlier. Count the rate of identifier omission in each. If the recent rate is materially higher, you have a behavior change. If it is not, you are looking at a reporting artifact.
 
-| Factor                     | Score (1-5) | Notes                                  |
-|----------------------------|-------------|----------------------------------------|
-| User-generated training data | 5           | High exposure to poisoning             |
-| Frequent fine-tuning       | 4           | High exposure to drift                 |
-| Large user base            | 5           | High blast radius                      |
-| Public-facing chatbot      | 3           | Moderate exposure to prompt injection  |
+**Step 2 — Check the inference path first, because it is cheapest.** Diff the deployed prompt template, the retrieval configuration, and the model version against the last known-good deployment. If a prompt or retrieval change coincides with the behavior shift, stop here.
 
-If your total score is 12+, prioritize data integrity and model drift. If it’s below 8, prompt injection is likely your biggest risk.
+**Step 3 — If the inference path is unchanged, check the retrieval corpus.** Query the store for documents added in the window. Look for documents whose content asserts that identifiers should be omitted, or that model the omission in examples. If the store is shared across tenants, check whether any recent document could be retrieved by the affected queries.
 
-## Objections I've heard and my responses
+**Step 4 — If retrieval is clean, check the training data.** This requires versioning. Diff the dataset used for the current model against the previous one. Look at the label distribution per class and at the examples added in the window. If a labeling pipeline used weak supervision, compute agreement against a human-audited sample for both versions.
 
-### "Prompt injection is the most visible risk—it’s what attackers will try first."
+**Step 5 — Fix forward and prevent recurrence.** Whatever the cause, the fix is a pipeline change plus a detector. If the cause was retrieval, add a tenant filter assertion and a test that a known-bad document is not retrievable. If the cause was training data, add a label-quality gate and a versioned audit sample.
 
-True, but visibility doesn’t equal impact. In our environment, prompt injection attempts were rare and easy to block. Data poisoning, on the other hand, was subtle and caused outsized damage. Attackers go where the leverage is. In 2026, the leverage is in the data pipeline.
+The point of the sequence is the ordering: cheapest and most reversible checks first, and the expensive dataset diff only after the inference path is ruled out. Teams that skip to retraining without versioning are guessing.
 
-### "We already audit our training data—it’s not a problem for us."
+## Building the data-side controls
 
-Great, but auditing is not enough. In our poisoning incident, the dataset passed our audits because the malicious examples were crafted to look benign. We needed automated anomaly detection, not just manual review. Label drift in weakly supervised pipelines is especially hard to catch with audits alone.
+### Version everything, including the boring parts
 
-### "Fine-tuning is a solved problem—we use retrieval-augmented generation (RAG) to mitigate risks."
+Dataset versioning means more than hashing the training file. Version the labels, the preprocessing scripts, the labeling model and its version, the random seeds, and the evaluation suite. A dataset version that cannot be reproduced from its inputs is not a version, it is a snapshot.
 
-RAG helps, but it’s not a silver bullet. In our memory poisoning incident, RAG pulled the malicious document into the conversation history, and the model incorporated it into responses. RAG adds complexity and new attack surfaces. It’s not a replacement for data integrity controls.
+The mechanism does not matter much — object storage with content-addressed paths and a manifest file is sufficient, and a dedicated data-versioning tool is a convenience rather than a requirement. What matters is that given a deployed model, you can name the exact dataset manifest that produced it and retrieve it.
 
-### "The OWASP Top 10 is just a checklist—it’s up to us to prioritize."
+### Gate ingestion on label quality
 
-True, but the checklist is biased toward web risks. OWASP’s LLM Top 10 focuses on injection, output handling, and data exfiltration—all Stage 3 risks. It doesn’t cover Stage 1 (data ingestion) or Stage 2 (model training) risks in depth. The checklist is useful, but it’s incomplete.
+Before a dataset enters training, score it. Two cheap checks catch most problems:
 
-## What I'd do differently if starting over
+- **Agreement on an audit sample.** Hold out a random sample, label it by hand, and compare to the pipeline's labels. Track this rate per dataset version. A drop between versions is a signal.
+- **Per-class distribution shift.** Compare the class distribution of the new dataset to the previous version. Flag any class whose share moves beyond a threshold you set from historical variance.
 
-### 1. Build a data integrity pipeline before the model pipeline
+A confidence-based label-error detector can rank examples by likelihood of being mislabeled and let reviewers focus on the top of the list. This is more efficient than uniform sampling, but it is not a substitute for a human-audited sample, because a systematic poisoning attack is designed to look confident.
 
-We started with the model and added data controls later. That was backwards. Today, I’d build a data integrity pipeline first:
+### Isolate retrieval per tenant
 
-- **Input validation**: Reject or quarantine user-uploaded data that doesn’t meet strict schema and label quality requirements. Use tools like Amazon SageMaker Ground Truth Plus 3.0 for labeling. - **Label quality scoring**: Score labels for consistency and detect drift using tools like cleanlab 2.6.0. Flag low-quality labels for review. - **Dataset versioning**: Use tools like DVC 3.0 or Weights & Biases Artifacts to version datasets and track changes. This makes it easier to roll back poisoned datasets.
-
-We lost 18 days debugging our poisoning incident because we didn’t have dataset versioning. Today, I’d refuse to train on any dataset without versioning.
-
-### 2. Isolate model memory per user or tenant
-
-We shared a vector store across all users, and that led to memory poisoning. Today, I’d isolate memory per user or tenant:
+The core requirement is that a query issued in one tenant's context can never retrieve another tenant's documents. Enforce it in the store's interface, not in calling code:
 
 ```python
-from langchain.vectorstores import FAISS
-from langchain_core.embeddings import FakeEmbeddings
+from typing import Sequence
 
-# Isolate memory per user
-class TenantAwareVectorStore:
-    def __init__(self, tenant_id: str):
-        self.tenant_id = tenant_id
-        self.store = FAISS.from_texts(
-            texts=[],
-            embedding=FakeEmbeddings(size=128),
-            metadatas=[{"tenant": tenant_id}]
+class TenantScopedStore:
+    """Wraps a vector store and makes the tenant filter non-optional."""
+
+    def __init__(self, store, tenant_id: str):
+        if not tenant_id:
+            raise ValueError("tenant_id is required")
+        self._store = store
+        self._tenant_id = tenant_id
+
+    def add(self, texts: Sequence[str], metadatas: Sequence[dict] | None = None):
+        metas = []
+        for i, _ in enumerate(texts):
+            base = dict(metadatas[i]) if metadatas else {}
+            base["tenant"] = self._tenant_id
+            metas.append(base)
+        self._store.add_texts(texts=list(texts), metadatas=metas)
+
+    def search(self, query: str, k: int = 4):
+        return self._store.similarity_search(
+            query, k=k, filter={"tenant": self._tenant_id}
         )
-    
-    def add_texts(self, texts: list[str]):
-        self.store.add_texts(
-            texts=texts,
-            metadatas=[{"tenant": self.tenant_id}] * len(texts)
-        )
-    
-    def similarity_search(self, query: str, k: int = 4):
-        return self.store.similarity_search(query, k=k)
 ```
 
-This adds complexity, but it prevents memory poisoning. We implemented this in March 2026, and it resolved our memory poisoning incidents.
+The important property is that `search` cannot be called without the filter, because the filter is baked into the wrapper rather than passed by the caller. The corresponding test asserts that a document written under tenant A is absent from results returned under tenant B.
 
-### 3. Monitor model drift in real time
+### Monitor drift on inputs, outputs, and labels
 
-We added drift detection using Evidently 0.5.0. It tracks:
-- Prediction drift (KL divergence between recent and baseline predictions)
-- Feature drift (distribution shifts in inputs)
-- Label drift (changes in ground truth labels)
+Drift monitoring needs three streams, and they answer different questions:
 
-We set up alerts for drift scores above 0.15 (KL divergence) or 0.2 (feature drift). This caught our label drift incident before it affected users.
+- **Input drift** — has the distribution of incoming requests changed? Measured on features you extract from the request, or on embedding-space distance from a reference sample.
+- **Output drift** — has the distribution of model outputs changed? Measured on output length, refusal rate, and any structured field you can extract.
+- **Label or outcome drift** — has the ground truth moved? Measured against whatever downstream signal you have: human corrections, escalation rates, click-through.
 
-### 4. Sandbox fine-tuning environments
+Set thresholds from your own historical variance, not from a blog post. The practical method: compute the drift metric daily for a period when you know the system was healthy, then set the alert at a level that would have fired on the incidents you know about and not on the normal variation. Re-derive the threshold when the system changes.
 
-We fine-tuned models in shared staging environments. Today, I’d sandbox fine-tuning:
+### Sandbox training and pin provenance
 
-- Use AWS SageMaker with VPC endpoints and no internet access during training. - Enforce least-privilege IAM roles for training jobs. - Rotate model weights and checkpoints after each training run.
+Training jobs should run with no outbound internet access, least-privilege credentials, and a pinned base model identified by a content hash rather than a mutable tag. After each run, record the base model hash, the dataset manifest, the code commit, and the resulting artifact hash. This is the record you will need when a behavior change appears six weeks later.
 
-This prevents supply chain attacks and accidental poisoning.
+### Red-team the data pipeline, not just the prompt
 
-### 5. Run red team exercises on the data pipeline
+Inference red-teaming is well understood. The data-side equivalent is less common and more valuable:
 
-We red-teamed our inference pipeline but not our data pipeline. Today, I’d run exercises like:
+- Inject a small set of consistently labeled examples that assert a false claim, and verify that your label-quality gate flags the dataset.
+- Write a document into tenant A's store and assert it is not retrievable from tenant B.
+- Substitute a checkpoint with altered behavior and verify that your evaluation suite rejects it.
+- Perturb the input distribution and verify that your drift monitor fires before the downstream metric moves.
 
-- Poison a small percentage of the training data and see if the model learns the bias. - Craft labels that suppress certain topics and check if the model adopts the suppression. - Inject malicious documents into the vector store and verify that retrieval doesn’t pull them into responses.
+Each of these is a test you can run in CI against a staging pipeline. The value is not the individual test but the fact that the control is exercised regularly, so it does not rot.
 
-This is the only way to catch subtle poisoning.
+## Where the conventional wisdom is still right
 
-## Summary
+Prompt injection deserves attention in specific configurations, and dismissing it wholesale is as wrong as treating it as the only risk:
 
-The OWASP LLM Top 10 is a useful starting point, but it’s not enough. In 2026, the biggest risks are data poisoning, model drift, and supply chain attacks—not prompt injection. Teams that optimize for prompt injection are solving the wrong problem.
+- **Unauthenticated public endpoints.** If anyone on the internet can send a prompt, injection is a live threat and input handling is the first line of defense.
+- **Shared inference without per-user isolation.** If users share a session context or a retrieval namespace, one user's input can affect another's output.
+- **Tool-using agents with weak authorization.** If the model can call APIs, injection becomes an authorization problem: the model's tool calls must be constrained by the calling user's permissions, independently of what the prompt says.
+- **Outputs consumed by other systems.** If model output is parsed, executed, or rendered, insecure output handling is a real risk regardless of how the input was controlled.
 
-I wasted six weeks building guardrails for prompt injection before realizing the real issue was poisoned data. Today, I’d flip the priorities: build a data integrity pipeline, isolate model memory, monitor drift, and sandbox fine-tuning. Prompt injection is still a risk, but it’s not the biggest one.
+The argument is about proportion, not about which risks exist. In a closed pipeline with internal data, injection is a narrow risk and data integrity is broad. In an open pipeline with untrusted input, both matter and the ordering flips.
 
-The shift from a security model to a data integrity model changes everything. If you take one thing from this post, stop treating your LLM as a chatbot with extra risks. Treat it as a data processor with its own supply chain—and secure the supply chain first.
+## Common questions
 
+**How do I know if my training data is poisoned?**
 
-## Frequently Asked Questions
+You usually cannot know directly. You can build detectors that make it likely you would notice: a human-audited sample with tracked agreement per dataset version, a per-class distribution check between versions, and a confidence-based label-error ranking to prioritize review. The key property is that these run on every dataset version, so you have a baseline to compare against. A single audit of a single dataset tells you very little.
 
-### How do I know if my training data is poisoned?
+**What is the simplest way to isolate retrieval per tenant?**
 
-Start by auditing your labels for consistency. Use tools like cleanlab 2.6.0 to score label quality and flag low-confidence labels. Look for sudden drops in label agreement or increases in disagreement—these can indicate drift or poisoning. Also, check for anomalous patterns in your data, like an unusual number of examples with the same label or text. If you fine-tune regularly, set up drift detection using Evidently 0.5.0 to monitor prediction and feature drift in real time. In our poisoning incident, the malicious examples were crafted to look benign, so manual review wasn’t enough—we needed automated anomaly detection.
+A wrapper that makes the tenant filter mandatory, as shown above, backed by a namespace or metadata filter in the underlying store. If your vector database supports namespaces, use them — they are enforced at the storage layer rather than in application code. The test that matters is a negative test: a query under one tenant must not return another tenant's document.
 
+**Does RAG reduce data poisoning risk?**
 
-### What’s the simplest way to isolate model memory per user?
+It changes the risk rather than removing it. RAG means the model's behavior depends on what is in the store at query time, so the store becomes an attack surface that is writable by anyone who can upload. The controls are tenant isolation, provenance metadata on every document, and the ability to purge a document and verify it is gone from future retrievals.
 
-The simplest approach is to use a separate vector store per user or tenant, as shown in the code example above. If you’re using LangChain, you can subclass the vector store to enforce tenant isolation. Alternatively, add a tenant_id filter to your similarity search queries. This adds minimal overhead and prevents memory poisoning. We implemented this in March 2026, and it resolved our memory poisoning incidents without significant performance impact. If you’re using a managed service like Pinecone or Weaviate, check if they support multi-tenant isolation or namespace isolation out of the box.
+**How often should models be retrained?**
 
+There is no universal cadence. The trigger should be a drift metric crossing a threshold you derived from your own healthy-period variance, plus any pipeline change or incident. A fixed weekly or monthly schedule is a reasonable default for planning compute, but it is not a detection mechanism — a model can drift between scheduled runs.
 
-### Is RAG enough to mitigate data poisoning risks?
+**What is the cheapest useful step toward dataset versioning?**
 
-RAG helps, but it’s not a replacement for data integrity controls. In our memory poisoning incident, RAG pulled the malicious document into the conversation history, and the model incorporated it into responses. RAG adds complexity and new attack surfaces—it doesn’t solve the underlying problem of poisoned data. Use RAG as a retrieval layer, but pair it with input validation, label quality scoring, and drift detection. RAG is a tool, not a silver bullet.
+Write a manifest for every training run that records the dataset location, a content hash, the code commit, the base model hash, and the labeling pipeline version. Store it next to the model artifact. This costs almost nothing and gives you the ability to diff two runs. A dedicated data-versioning tool adds convenience on top of this, but the manifest is the part that makes debugging possible.
 
+**How do I set drift thresholds without historical data?**
 
-### How often should I re-train my models to avoid drift?
+You cannot, reliably. Collect a few weeks of metrics during normal operation first, then set thresholds from the observed distribution. Until then, alert on rate of change rather than absolute value, and treat alerts as investigation prompts rather than pages.
 
-The frequency depends on your data velocity and model sensitivity. In our environment, we re-train weekly for high-velocity datasets and monthly for stable ones. We use Evidently 0.5.0 to monitor drift, and we trigger re-training when the drift score exceeds 0.15 (KL divergence) or 0.2 (feature drift). We also re-train after any major data pipeline changes or incidents. The goal isn’t to re-train constantly—it’s to re-train when drift impacts users. Start with a monthly cadence and adjust based on your drift metrics.
+## Take action in the next 30 minutes
 
-
-### What’s the cheapest way to add dataset versioning?
-
-The cheapest way is to use DVC 3.0 with a remote storage backend like S3 or GCS. DVC tracks dataset versions, diffs changes, and integrates with Git. It’s open source and adds minimal overhead. We use DVC 3.0 with S3 storage, and it costs us less than $5/month for our 2TB dataset. The key is to version not just the dataset files but also the metadata, labels, and preprocessing scripts. Without versioning, debugging poisoning incidents is painful—versioning makes it manageable.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** August 03, 2026
+Pick one deployed model and write its provenance manifest: the dataset location and content hash, the code commit, the base model identifier and hash, and the labeling pipeline version. Save it alongside the model artifact. If you cannot fill in a field, you have just found your highest-priority gap — and you have found it before an incident forced you to.
+===END===

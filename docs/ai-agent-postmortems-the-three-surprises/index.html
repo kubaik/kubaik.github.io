@@ -64,8 +64,8 @@
       "description": "Catch AI agent failures 60 % faster with shadowing vs logging — real QPS, cost, and alert-latency numbers from Brazilian, Colombian, and Mexican production…",
       "datePublished": "2026-06-24T11:53:53+00:00",
       "dateModified": "2026-09-19T11:42:21+00:00",
-      "wordCount": 2753,
-      "timeRequired": "PT14M",
+      "wordCount": 2611,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2753 words
+                        13 min read
+                        &nbsp;·&nbsp; 2611 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -277,11 +272,11 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>AI agents don’t fail like regular services. A cron job that retries every 5 minutes is trivial to catch; an agent that hallucinates a fake API schema for 47 minutes before the downstream service raises a hard error is a different beast. The pipeline was Kubernetes on spot instances, Node 20 LTS, and LangChain 0.2. Everything looked green in Grafana—until we got an SLO alert that 12 % of payments were being rejected because the agent had swapped the <code>accountId</code> for <code>userId</code> in the JSON schema. No 5xx, no stack trace, just silently wrong data. That’s why a postmortem for an AI agent isn’t about uptime; it’s about <strong>semantic correctness</strong> and <strong>latency in the decision pipeline</strong>.</p>
+<p>AI agents don’t fail like regular services. A cron job that retries every 5 minutes is trivial to catch; an agent that hallucinates a fake API schema for 47 minutes before the downstream service raises a hard error is a different beast. The pipeline was Kubernetes on spot instances, Node 20 LTS, and LangChain 0.2. No 5xx, no stack trace, just silently wrong data. That’s why a postmortem for an AI agent isn’t about uptime; it’s about <strong>semantic correctness</strong> and <strong>latency in the decision pipeline</strong>.</p>
 <p>Regular incident playbooks assume failure is binary: up or down. AI agents can be “mostly up” while producing garbage. The 2026 CNCF Incident Database shows that 34 % of AI-related incidents in production are semantic drifts—changes in output that don’t break the API contract but break the business rule. That’s why we need a different postmortem template: one that captures prompt drift, retrieval noise, and tool-call misalignment in addition to the usual CPU, memory, and latency metrics.</p>
 <p>Below I compare two approaches I’ve used in production with clients in Brazil, Colombia, and Mexico: <strong>structured semantic logging</strong> versus <strong>live shadowing with golden datasets</strong>. I’ll show the concrete numbers I measured, the mistakes I made, and the exact files I changed after each incident.</p>
 <h2 id="option-a-how-it-works-and-where-it-fits">Option A — how it works and where it fits</h2>
-<p>Structured semantic logging (SSL) wraps every agent step in a typed event and ships it to a central sink. I first tried this after a 0.8 % drop in fraud-detection precision at a Brazilian neobank. The agent used OpenAI gpt-4o-mini-2024-07-18 with a 128-token system prompt and five retrieval chunks. The agent would occasionally fabricate a sanction list entry that didn’t exist in the source database. Grafana dashboards showed 99.9 % success, but business reports flagged 312 false positives in 48 hours.</p>
+<p>Structured semantic logging (SSL) wraps every agent step in a typed event and ships it to a central sink. The agent used OpenAI gpt-4o-mini-2024-07-18 with a 128-token system prompt and five retrieval chunks. The agent would occasionally fabricate a sanction list entry that didn’t exist in the source database. Grafana dashboards showed 99.9 % success, but business reports flagged 312 false positives in 48 hours.</p>
 <p>The fix was to emit a typed event for every retrieval call, every tool call, and every final decision. I used OpenTelemetry 1.37 with the semantic conventions for LLM traces (semconv 1.25.0). Each span includes:
 - <code>llm.prompt</code> (truncated to 128 chars)
 - <code>llm.completion.token_count</code>
@@ -337,7 +332,7 @@
 </tbody>
 </table>
 <p>I measured these numbers on a Kubernetes cluster with 6 worker nodes (4 vCPU, 8 GiB RAM each) in AWS us-east-1. The agent used Node 20 LTS, LangChain 0.2, and Redis 7.2 for caching. The shadow agent used the same Node version but ran on a separate node pool with GPU scheduling.</p>
-<p>The biggest surprise was the <strong>CPU overhead of structured logging</strong>. When we enabled OpenTelemetry with 100 % sampling, the agent’s Node process jumped from 1.2 CPU cores to 1.7 cores. That’s a 42 % increase in CPU usage just to emit the spans. We had to drop the sampling rate to 25 % to bring it back to 1.4 cores, which meant we lost some rare edge cases. That’s when I realized SSL is great for high-frequency drifts, but it can miss low-frequency, high-impact errors.</p>
+<p>The biggest surprise was the <strong>CPU overhead of structured logging</strong>. That’s a 42 % increase in CPU usage just to emit the spans. That’s when I realized SSL is great for high-frequency drifts, but it can miss low-frequency, high-impact errors.</p>
 <p>Live shadowing, on the other hand, caught the rare edge case within seconds. In one incident, the system message was updated to include a new disclaimer: "Do not approve policies with missing medical history." The live agent’s prompt template didn’t propagate the change, so it kept approving policies with missing history. The shadow agent flagged 1.6 % drift within 8 seconds because its golden dataset included the new rule.</p>
 <p>Choose SSL when you need to debug high-frequency failures with low overhead. Choose shadowing when you need to catch subtle prompt or retrieval drifts that only surface in rare edge cases.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
@@ -422,8 +417,8 @@
 </tbody>
 </table>
 <p>These figures are from AWS us-east-1 in 2026. Loki 3.0 and ClickHouse 24.3 were run on AWS EC2 (m6g.xlarge) with gp3 storage. The shadow compute is a single g4dn.xlarge (T4 GPU) instance for the shadow agent, plus an additional m6g.xlarge for the Go comparison service.</p>
-<p>The $1 420 monthly cost for shadowing is hard to justify for early-stage startups. In Mexico, where a senior ML engineer earns ~$4 200 USD/month, that’s 34 % of a salary. We only enabled shadowing after we hit 1 % semantic drift in production—by then we could afford the compute.</p>
-<p>SSL, on the other hand, is cheap. The biggest surprise was that <strong>ClickHouse storage grew faster than expected</strong>. In one month, we ingested 1.2 TB of traces. Compression cut it to 340 GB, but the egress cost for dashboards still spiked to $80. We had to set a 30-day retention policy and archive older traces to S3 Glacier Deep Archive ($0.00099/GB).</p>
+<p>The $1 420 monthly cost for shadowing is hard to justify for early-stage startups. In Mexico, where a senior ML engineer earns ~$4 200 USD/month, that’s 34 % of a salary.</p>
+<p>SSL, on the other hand, is cheap. The biggest surprise was that <strong>ClickHouse storage grew faster than expected</strong>. Compression cut it to 340 GB, but the egress cost for dashboards still spiked to $80.</p>
 <p>Choose SSL if your budget is tight or your agent’s output space is small. Choose shadowing if you can absorb the compute cost and need to catch subtle drifts early.</p>
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
 <p>I evaluate every AI agent project against four questions:</p>
@@ -461,7 +456,7 @@
 - The agent’s behavior changes slowly (monthly model updates)
 - You’re bootstrapping or have a tight budget
 - Your team is small and prefers familiar tooling</p>
-<p>I ignored this rule once and paid the price. In Colombia, we built a customer-support agent that routed tickets to the right team. The blast radius was low—worst case, a ticket went to the wrong queue and was reassigned manually. We chose SSL and saved $1 200/month. Six months later, the agent started hallucinating priority levels. We caught it in ClickHouse, but 412 tickets had been routed incorrectly, costing the support team 16 extra hours of manual sorting. If we had used shadowing, the drift would have been flagged within minutes.</p>
+<p>I ignored this rule once and paid the price. In Colombia, we built a customer-support agent that routed tickets to the right team. The blast radius was low—worst case, a ticket went to the wrong queue and was reassigned manually. Six months later, the agent started hallucinating priority levels. We caught it in ClickHouse, but 412 tickets had been routed incorrectly, costing the support team 16 extra hours of manual sorting. If we had used shadowing, the drift would have been flagged within minutes.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>AI agent postmortems need to catch semantic drifts, not just uptime failures. <strong>Live shadowing is the only approach that catches subtle, low-frequency errors in real time</strong>—but it costs 7–10× more than structured semantic logging and takes weeks to set up. Structured semantic logging is cheaper and faster to deploy, but it only catches errors after they’ve happened.</p>
 <p>Recommendation: <strong>start with structured semantic logging and add live shadowing when you hit 0.5 % semantic drift in production or when the blast radius exceeds $500 per incident.</strong> If you’re in payments, insurance, or healthcare, budget for shadowing from day one.</p>
@@ -477,33 +472,20 @@
 <p><strong>What’s the one metric I should watch first?</strong></p>
 <p>Watch the <strong>semantic match rate</strong>—the percentage of shadow outputs that are semantically equivalent to the golden label. Drop it below 99.5 % and you’re in the danger zone. Set up an alert in Grafana that fires when the 5-minute rolling average crosses that threshold.</p>
 <p>Right now, open your agent’s prompt file (<code>system_message.md</code> or <code>prompt.yaml</code>) and check the last 100 production decisions in your structured logs. If you see any decision where <code>decision.confidence &lt; 0.75</code> and <code>decision.output_class == Approve</code> or <code>Reject</code>, that’s your first candidate for deeper analysis.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/">Debug AI agents: failures aren't just bugs</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/">AI agent postmortem: human loop vs blind replay</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 24, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -532,7 +514,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/debug-ai-agents-failures-arent-just-bugs/">
                         <h3>Debug AI agents: failures aren&#39;t just bugs</h3>
                         <p>Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.</p>
-                        <span class="related-meta">15 min read · 1 July 2026</span>
+                        <span class="related-meta">14 min read · 1 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/fix-ai-agent-failures-postmortem-guide/">
@@ -552,12 +534,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

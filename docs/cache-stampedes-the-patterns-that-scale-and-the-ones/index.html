@@ -64,8 +64,8 @@
       "description": "The API handles 400–600 requests per second during peak hours, and our first deployment looked fine in staging with 10% of that load.",
       "datePublished": "2026-07-21T02:56:30+00:00",
       "dateModified": "2026-09-18T08:45:13+00:00",
-      "wordCount": 4127,
-      "timeRequired": "PT21M",
+      "wordCount": 3924,
+      "timeRequired": "PT20M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -233,8 +228,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        21 min read
-                        &nbsp;·&nbsp; 4127 words
+                        20 min read
+                        &nbsp;·&nbsp; 3924 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-18
                         
@@ -246,8 +241,8 @@
                 <p>Most write-ups stop exactly where the interesting part starts. Here's the root cause, not just the symptom.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>They show a simple <code>get(key)</code> and <code>set(key, value)</code> pair, maybe with a TTL, and declare victory. In reality, caching is a distributed systems problem wrapped in a key-value interface. The examples work fine in isolation, but break when you add real traffic, real databases, and real users who don’t read the README.</p>
-<p>The API handles 400–600 requests per second during peak hours, and our first deployment looked fine in staging with 10% of that load. We rolled it out at 2 a.m. local time, confident the cache would absorb the load. By 3 a.m., the database CPU had spiked to 98%, p99 latency went from 80 ms to 1.2 seconds, and we were waking up the on-call rotation.</p>
-<p>The root cause? A thundering herd problem we didn’t plan for. Our cache keys were based on a user session ID plus a timestamp window. When a user session timed out, every client that held that session would race to refresh the cache at the same time. With 400 clients sharing a single user session, we hit Redis with 400 <code>GET</code> misses within 100 ms. That triggered 400 database queries, all at once. Our cache hit rate dropped from 92% to 43% in under a minute, and the database couldn’t keep up.</p>
+<p>We rolled it out at 2 a.m. local time, confident the cache would absorb the load. By 3 a.m., the database CPU had spiked to 98%, p99 latency went from 80 ms to 1.2 seconds, and we were waking up the on-call rotation.</p>
+<p>The root cause? A thundering herd problem we didn’t plan for. Our cache keys were based on a user session ID plus a timestamp window. When a user session timed out, every client that held that session would race to refresh the cache at the same time. That triggered 400 database queries, all at once.</p>
 <p>This wasn’t a Redis problem. It was a tool-use pattern problem. We used the cache like a local variable: set it once, forget it. Production needed a cache that could handle cache misses gracefully, distribute refresh load, and not collapse under a stampede. The docs never mention that.</p>
 <p>Most teams hit this wall because they treat caching as a performance trick, not a resilience mechanism. They optimize for the happy path and ignore the failure modes. That works until it doesn’t. When it breaks, it breaks hard — and it breaks at scale.</p>
 <p>The gap between docs and production is wider than most engineers expect. The docs assume you’ll handle concurrency, retries, and cache invalidation yourself. They don’t warn you that a single misconfigured TTL can turn a 100 ms API call into a 5-second database query when the cache expires.</p>
@@ -264,7 +259,7 @@
 </ol>
 <p>Most teams default to lazy invalidation because it’s the simplest. They set a TTL and hope for the best. In low-traffic systems, this works fine. In systems with traffic spikes or shared sessions, it fails spectacularly. The moment a popular key expires, every client that needs it races to refresh it. The database becomes a bottleneck, and latency spikes.</p>
 <p>The surprising part is how small the trigger can be. In our case, the key was a user session token that expired after 30 minutes of inactivity. Users would log out, but their browser tabs would still hold the token. When the token expired, 400 tabs would race to refresh it at once. The trigger wasn’t a traffic spike — it was a silent session expiry.</p>
-<p>Another hidden factor is the cache eviction policy. Redis uses an allkeys-lru policy by default in ElastiCache. When memory pressure hits, Redis evicts keys aggressively. If your cache keys are large or your memory limit is tight, Redis can evict keys before they expire, forcing more cache misses. In one incident, we saw eviction rates jump to 15% per minute during a traffic spike, which turned 92% cache hits into 68%. That small drop triggered a 3x increase in database load.</p>
+<p>Another hidden factor is the cache eviction policy. Redis uses an allkeys-lru policy by default in ElastiCache. When memory pressure hits, Redis evicts keys aggressively. If your cache keys are large or your memory limit is tight, Redis can evict keys before they expire, forcing more cache misses. That small drop triggered a 3x increase in database load.</p>
 <p>The patterns that scale are the ones that reduce coordination overhead and distribute refresh load. The patterns that fail are the ones that assume clients will refresh keys independently and luckily avoid a stampede.</p>
 <p>If you’re using Redis 7.2 with a cluster mode disabled, you’re still subject to single-instance bottlenecks. Redis Cluster mode helps with horizontal scaling, but it doesn’t solve the stampede problem. The coordination still happens on a single shard.</p>
 <p>The real fix isn’t just a better cache — it’s a better tool-use pattern. You need to decide how to handle cache misses before you deploy to production. Otherwise, you’ll learn the hard way that caching isn’t free.</p>
@@ -398,12 +393,12 @@ async def get_session(session_id: str, request: Request):
 <li><code>cache_lock_wait_seconds</code></li>
 <li><code>cache_stale_usage_total</code></li>
 </ul>
-<p>We also added a SLO for cache hit rate: 95% during peak hours, 90% otherwise. If we drop below that, we investigate immediately.</p>
+<p>If we drop below that, we investigate immediately.</p>
 <h3 id="what-surprised-me">What surprised me</h3>
 <p>In one incident, a background job failed to refresh a key, and the lock expired. Instead of serving a 500 error, clients fell back to stale data for 10 seconds, and the system stayed up. The stale data wasn’t perfect, but it was better than a crash.</p>
 <p>The key lesson is that caching isn’t just about speed — it’s about resilience. The patterns that scale are the ones that handle failure gracefully, not the ones that assume everything will work.</p>
 <h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>We deployed the coordinated refresh pattern to our Brazilian payments API in January 2026. Here’s what we saw over the next 8 weeks:</p>
+<p>We deployed the coordinated refresh pattern to our Brazilian payments API in January 2026.</p>
 <table>
 <thead>
 <tr>
@@ -447,10 +442,10 @@ async def get_session(session_id: str, request: Request):
 </tbody>
 </table>
 <p>The numbers speak for themselves. Cache hit rate jumped from 68% to 94%, which meant we were serving 94% of requests from cache. The p99 latency dropped from 1.2 seconds to 85 ms, which is a 93% improvement. Database load dropped by 77%, which meant we could handle more traffic without scaling up.</p>
-<p>We also saw a 54% reduction in peak database CPU, which meant our primary database could stay in the lower cost tier. Before, we were on db.r6g.large (2 vCPU, 16 GB RAM). After, we downgraded to db.r6g.medium (2 vCPU, 8 GB RAM) and saved $800/month in AWS costs.</p>
+<p>Before, we were on db.r6g.large (2 vCPU, 16 GB RAM).</p>
 <p>The most surprising number was the cache misses per second. Before, we were seeing 580 cache misses per second at peak, which meant 580 database queries per second. After, it dropped to 30, which is a 95% reduction. That’s the power of coordinated refresh: we turned a stampede into a trickle.</p>
 <p>We also tracked lock wait times. The 95th percentile lock wait time was 120 ms, and the 99th was 450 ms. That’s acceptable for a system that needs to handle 600 requests per second. The lock contention was minimal because the background refresher kept keys fresh, so clients rarely had to refresh.</p>
-<p>We used Redis 7.2 with <code>allkeys-lru</code> eviction policy and 4 GB memory limit. The memory usage stayed around 2.8 GB during peak, which left plenty of headroom for spikes. We didn’t hit eviction pressure even during the largest traffic spikes.</p>
+<p>The memory usage stayed around 2.8 GB during peak, which left plenty of headroom for spikes. We didn’t hit eviction pressure even during the largest traffic spikes.</p>
 <p>The coordinated refresh pattern didn’t just improve performance — it made the system more predictable. Before, we had unpredictable latency spikes during cache expiry. After, latency was consistent and low.</p>
 <p>The only downside was the added complexity. We had to maintain the background refresher, monitor lock contention, and tune TTLs. But the tradeoff was worth it: a system that scales and stays up.</p>
 <p>Before, clients were racing to refresh keys. After, the refresher did the work, so clients rarely had to.</p>
@@ -458,7 +453,7 @@ async def get_session(session_id: str, request: Request):
 <p>Even with a well-designed cache layer, there are failure modes that sneak up on you. Here are the ones we hit, and how we fixed them:</p>
 <h3 id="1-lock-contention-under-extreme-load">1. Lock contention under extreme load</h3>
 <p>The coordinated refresh pattern uses a lock per key. Under extreme load, if thousands of clients miss the same key at once, they’ll all try to acquire the same lock. The lock acquisition time can spike, and some clients may time out.</p>
-<p>In our system, we saw lock wait times spike to 2 seconds during a DDoS-like traffic surge (6x normal peak). Clients that timed out (lock blocking_timeout=2.0) would fall back to stale data or retry. That worked, but it added latency.</p>
+<p>Clients that timed out (lock blocking_timeout=2.0) would fall back to stale data or retry. That worked, but it added latency.</p>
 <p><strong>Fix:</strong> Use a lock sharding strategy. Instead of one lock per key, use a hash of the key to select a lock from a pool of locks. For example, use <code>hash(key) % 100</code> to select a lock from 100 locks. This reduces contention and spreads the load.</p>
 <pre><code class="language-python">import hashlib
 
@@ -476,9 +471,8 @@ lock = Lock(redis, get_lock_name(key), timeout=lock_timeout)
     await redis.setex(key + ':stale', self.stale_ttl, value)
 </code></pre>
 <h3 id="3-memory-bloat-from-stale-copies">3. Memory bloat from stale copies</h3>
-<p>Each key has a stale copy with a shorter TTL. If you have millions of keys, the stale copies can add up. In our case, we had 2.5 million keys, and the stale copies added 1.2 GB of memory. That’s 30% of our cache memory.</p>
+<p>Each key has a stale copy with a shorter TTL. If you have millions of keys, the stale copies can add up. That’s 30% of our cache memory.</p>
 <p><strong>Fix:</strong> Use a different eviction policy for stale copies. For example, use <code>volatile-lru</code> for stale copies, and set a lower memory limit for them. Or, don’t store stale copies at all — just let clients fall back to the database temporarily.</p>
-<p>We switched to storing stale copies only for hot keys (top 10% by access frequency), which reduced memory usage by 80%.</p>
 <h3 id="4-clock-skew-across-clients">4. Clock skew across clients</h3>
 <p>If your clients are in different timezones or have skewed clocks, cache TTLs may not expire at the same time. This can cause thundering herds at odd hours.</p>
 <p>In our system, we had clients in São Paulo, Bogotá, and Mexico City. During daylight saving time changes, some clients would see TTLs expire at 2 a.m. local time, while others would see them expire at 3 a.m. This caused scattered cache misses.</p>
@@ -494,7 +488,7 @@ ttl = get_ttl_with_jitter(1800)  # 30 minutes ± 180 seconds
 <p>This reduced scattered cache misses by 40%.</p>
 <h3 id="5-redis-failover-during-cache-stampede">5. Redis failover during cache stampede</h3>
 <p>If Redis fails over to a replica during a stampede, the new primary may not have the latest data. Clients that miss the cache will fetch from the database, but the failover can add latency and cause timeouts.</p>
-<p>In our system, we saw failover times spike from 300 ms to 1.8 seconds during a stampede. Some clients timed out, and the API started returning 500 errors.</p>
+<p>Some clients timed out, and the API started returning 500 errors.</p>
 <p><strong>Fix:</strong> Use Redis Cluster mode with enough replicas to handle failover without performance degradation. Also, add client-side retries with exponential backoff for cache misses during failover.</p>
 <p>We moved to a Redis Cluster with 3 replicas per shard, and added a 2-second retry window for cache misses during failover. This reduced timeout errors by 90%.</p>
 <h3 id="the-hidden-cost-of-complexity">The hidden cost of complexity</h3>
@@ -607,33 +601,27 @@ ttl = get_ttl_with_jitter(1800)  # 30 minutes ± 180 seconds
 <li><strong>You have the operational maturity.</strong> If you don’t have time to monitor lock contention or tune TTLs, don’t add this complexity.</li>
 <li><strong>You’re not using a distributed cache.</strong> If you’re using a single Redis instance, the coordinated pattern still helps, but the gains are</li>
 </ol>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tool-calls-why-retries-stampede/">Tool calls: why retries stampede</a></li>
+<li><a href="https://kubaik.github.io/ai-errors-hide-in-plain-latency/">AI errors hide in plain latency</a></li>
+<li><a href="https://kubaik.github.io/ai-on-slow-networks-nairobi-teams-2026-playbook/">AI on slow networks: Nairobi teams' 2026 playbook</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.locust.io/">Locust documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 21, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -657,12 +645,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -64,7 +64,7 @@
       "description": "Build outcome-based SLOs for agentic systems that actually measure delivery, not just latency — includes FastAPI 0.111, WeasyPrint 64.1, Prometheus 2.53…",
       "datePublished": "2026-08-11T11:04:33+00:00",
       "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 2575,
+      "wordCount": 2574,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2575 words
+                        &nbsp;·&nbsp; 2574 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -501,7 +496,7 @@ def test_run_report_success(db_session):
 <hr />
 <h3 id="advanced-edge-cases-i-personally-encountered">Advanced edge cases I personally encountered</h3>
 <p><strong>1. The “Silent Crash” in a Kubernetes-free budget</strong>
-In a recent project for a fintech client in Mexico City, I built a PDF report agent on a $12/month Vultr VM (2 vCPU, 4 GB RAM) using systemd. The agent ran fine for three weeks until WeasyPrint 64.1’s memory leak pushed the VM into swap. The process didn’t crash—it just got <em>slow</em>. The Prometheus histogram still showed sub-second p99s because the metrics exporter was in the same process. The only symptom was a spike in <code>system_cpu_seconds_total</code> and an elevated <code>report_job_duration_seconds</code> bucket at 60+ seconds. The fix: split the metrics exporter into a separate <code>node_exporter</code> process and set <code>prometheus-node-exporter</code> to scrape every 15 seconds. The agent’s own process now stays under 200 MB RAM. The cost of the exporter? $0.005/day.</p>
+The agent ran fine for three weeks until WeasyPrint 64.1’s memory leak pushed the VM into swap. The process didn’t crash—it just got <em>slow</em>. The Prometheus histogram still showed sub-second p99s because the metrics exporter was in the same process. The only symptom was a spike in <code>system_cpu_seconds_total</code> and an elevated <code>report_job_duration_seconds</code> bucket at 60+ seconds. The fix: split the metrics exporter into a separate <code>node_exporter</code> process and set <code>prometheus-node-exporter</code> to scrape every 15 seconds. The agent’s own process now stays under 200 MB RAM. The cost of the exporter? $0.005/day.</p>
 <p><strong>2. The “Timezone-Split Queue” in Colombia</strong>
 For a Bogotá-based client, the cron job ran at 02:00 local time (07:00 UTC). During daylight saving time changes, the job would either run twice or not at all because the systemd timer’s <code>OnCalendar</code> directive didn’t account for the 1-hour shift. The SLO window of 6 hours caught the anomaly, but the alert fired at 08:00 UTC—midnight in Bogotá—waking me up unnecessarily. The fix: use <code>OnCalendar=02:00</code> <em>and</em> <code>Persistent=true</code> in the systemd unit, plus a <code>max_queue_age_minutes=25</code> so jobs from the previous day’s missed run get failed after 25 minutes. The client’s finance team now gets their reports at 02:00 sharp, year-round.</p>
 <p><strong>3. The “Payment Processor Drop” in Brazil</strong>
@@ -621,27 +616,28 @@ provider = TracerProvider(sampler=OutcomeSampler())
 </table>
 <p><strong>Key takeaways from the numbers:</strong>
 1. The outcome SLO <em>correlates</em> with business impact (reports delivered), not just technical signals. In the before state, the team would have ignored the WeasyPrint memory leak for hours because the latency histogram looked fine. 2. The cost delta ($1.54/day) comes from dropping Datadog’s APM tier (replaced with OpenTelemetry + Grafana Cloud) and consolidating metrics into a single Prometheus instance. The savings paid for the extra 60 lines of outcome-tracking code in &lt;3 weeks. 3. The queue depth drop from 5,200 to 42 isn’t just a metric—it’s a <em>behavioral change</em>. When jobs explicitly fail (with <code>status='failed'</code>), the team <em>sees</em> the problem and fixes the root cause (e.g., circuit breaker) instead of assuming “it’ll retry.”</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/">Spot evictions: the retry logic that holds up</a></li>
+<li><a href="https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/">Agent flooded our API with bad calls overnight</a></li>
+<li><a href="https://kubaik.github.io/dead-letter-queues-stop-poison-messages/">Dead-letter queues: stop poison messages</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -690,12 +686,7 @@ provider = TracerProvider(sampler=OutcomeSampler())
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

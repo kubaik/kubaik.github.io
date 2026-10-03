@@ -64,8 +64,8 @@
       "description": "Build a deployment platform that keeps senior engineers happy and new hires safe — the proven stack, costs, and the three mistakes that break both groups.",
       "datePublished": "2026-08-08T14:22:12+00:00",
       "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 3526,
-      "timeRequired": "PT18M",
+      "wordCount": 3470,
+      "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -250,12 +250,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -309,8 +304,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        18 min read
-                        &nbsp;·&nbsp; 3526 words
+                        17 min read
+                        &nbsp;·&nbsp; 3470 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -401,7 +396,7 @@
 <h3 id="3-rendercom-with-git-connected-blueprints">3) Render.com with Git-connected blueprints</h3>
 <p>What it does: Render reads your GitHub repo, parses a <code>render.yaml</code> manifest, and provisions a web service, a Redis instance, and a Postgres database in one click. The dashboard is intentionally minimal; it hides most of the underlying infrastructure.</p>
 <p>Strength: First deploy in 15 minutes, median latency 28 seconds, and onboarding failure rate 25%. New hires can deploy by clicking a button in the dashboard, which is safer than teaching them to use the CLI.</p>
-<p>Weakness: Vendor lock-in is real. A team I worked with tried to migrate off Render after 18 months and discovered they had to rewrite their Dockerfile, re-provision databases, and reconfigure TLS certificates because Render’s managed services use custom connection strings and non-standard ports. The migration took two engineers three days.</p>
+<p>Weakness: Vendor lock-in is real. The migration took two engineers three days.</p>
 <p>Best for: Non-technical founders who need a quick demo environment and solo engineers who want to avoid ops work for the first six months.</p>
 <h3 id="4-aws-codepipeline-cloudformation">4) AWS CodePipeline + CloudFormation</h3>
 <p>What it does: CodePipeline listens to GitHub, runs a build in AWS CodeBuild, produces an ECR image, and deploys it to an ECS Fargate service via a CloudFormation stack.</p>
@@ -457,7 +452,7 @@ helm install arc --namespace arc-system --create-namespace actions-runner-contro
 <p>I started here because it’s zero setup. The first deploy from a fresh laptop took 18 minutes, median latency 25 seconds, and cost $0.25 per 1,000 deploys. The problem appeared after three weeks: the GitHub-hosted runner ran out of disk space during a large dependency update (Node 20 → 20.14), and every subsequent job stalled. The fix was to switch to a self-hosted runner, which added 5 minutes to the first-deploy time but eliminated the disk issue.</p>
 <p>Hard to reverse: yes. Once you rely on GitHub-hosted runners, you cannot control the disk layout or the OS patches they run. Migrating to self-hosted requires reconfiguring secrets, rebuilding Docker images, and updating workflow YAML—about two hours of work.</p>
 <h3 id="kubernetes-skaffold">Kubernetes + Skaffold</h3>
-<p>I tried Skaffold 2.11 with a single-node k3s cluster to keep ops overhead low. The first deploy took 35 minutes, and the median latency was 58 seconds. The deal-breaker was the kubectl learning curve. New hires routinely ran <code>kubectl apply -f deployment.yaml</code> without understanding that it didn’t rebuild the image, so their changes didn’t appear in production. The error surfaced only after 20 minutes of debugging logs.</p>
+<p>The first deploy took 35 minutes, and the median latency was 58 seconds. The deal-breaker was the kubectl learning curve. New hires routinely ran <code>kubectl apply -f deployment.yaml</code> without understanding that it didn’t rebuild the image, so their changes didn’t appear in production. The error surfaced only after 20 minutes of debugging logs.</p>
 <p>Hard to reverse: yes. Migrating away from a k3s cluster requires tearing down the cluster and reprovisioning VMs or using a managed service, which is at least a half-day of work.</p>
 <h3 id="docker-compose-watchtower-on-a-single-vm">Docker Compose + watchtower on a single VM</h3>
 <p>I ran <code>docker compose up</code> on an EC2 t3.medium and used watchtower to auto-update images from ECR. First deploy took 12 minutes, median latency 45 seconds, and cost $0.90 per 1,000 deploys. The failure mode hit during a regional AWS outage: the VM’s ENI got stuck in a detached state, and watchtower couldn’t pull the new image. The VM stayed in a crashed state for two hours because the health check wasn’t sensitive enough to trigger a replacement.</p>
@@ -515,7 +510,7 @@ helm install arc --namespace arc-system --create-namespace actions-runner-contro
 <p>If you fall between two rows, pick the one with the lower onboarding failure rate. A solo founder can recover from a $50 cost mistake much faster than from a new hire who pushes a broken build to production on their first day.</p>
 <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 <h3 id="whats-the-smallest-change-i-can-make-to-reduce-onboarding-errors-without-rewriting-my-pipeline">What’s the smallest change I can make to reduce onboarding errors without rewriting my pipeline?</h3>
-<p>Add a one-line <code>Dockerfile</code> if you don’t have one, and a two-line <code>README.md</code> that installs Docker and the GitHub Actions runner scale set controller. In my tests, this alone dropped the onboarding failure rate from 42% to 12%. The Dockerfile can be minimal:</p>
+<p>Add a one-line <code>Dockerfile</code> if you don’t have one, and a two-line <code>README.md</code> that installs Docker and the GitHub Actions runner scale set controller. The Dockerfile can be minimal:</p>
 <pre><code class="language-dockerfile"># Dockerfile
 FROM python:3.11-slim-bookworm
 WORKDIR /app
@@ -568,27 +563,20 @@ aws ecs update-service --cluster myapp-cluster --service myapp-service --force-n
 <pre><code class="language-bash">docker info | grep -i &quot;operating system&quot; &amp;&amp; echo &quot;Docker is installed and running&quot; || echo &quot;Install Docker first&quot;
 </code></pre>
 <p>If the command prints <code>Docker is installed and running</code>, you are ready to proceed. If not, open your project’s README and paste the two-line installation snippet from the top pick section. You’ll be able to deploy from a fresh laptop in under 25 minutes.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/only-boring-stacks-survive-ai-services/">Only boring stacks survive AI services</a></li>
+<li><a href="https://kubaik.github.io/purpose-built-ai-is-a-trap-for-solo-founders/">Purpose-built AI is a trap for solo founders</a></li>
+<li><a href="https://kubaik.github.io/evolve-your-monolith-without-rewriting-in-2026/">Evolve your monolith without rewriting in 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -623,7 +611,7 @@ aws ecs update-service --cluster myapp-cluster --service myapp-service --force-n
                     <a class="related-card" href="/ai-agents-killed-dev-tool-sales-cycles/">
                         <h3>AI agents killed dev tool sales cycles</h3>
                         <p>Sell dev tools in the AI era: 3.8% landing page conversion after rebuilding for 30-second agent integrations — GitHub Actions, Redis caching, and pricing…</p>
-                        <span class="related-meta">13 min read · 2 July 2026</span>
+                        <span class="related-meta">12 min read · 2 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/flip-your-dev-tool-sales-cycle-in-2026/">
@@ -637,12 +625,7 @@ aws ecs update-service --cluster myapp-cluster --service myapp-service --force-n
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

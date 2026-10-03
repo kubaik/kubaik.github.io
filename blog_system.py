@@ -19,6 +19,7 @@ from typing import Dict, List, Tuple, Optional
 
 try:
     from PIL import Image, ImageDraw, ImageFont
+
     PILLOW_AVAILABLE = True
 except ImportError:
     PILLOW_AVAILABLE = False
@@ -34,15 +35,29 @@ from utils import dedup_similarity
 from adsense_fixes.internal_linker import build_posts_index, inject_internal_links
 
 from velocity_controller import VelocityController
+import entity_gate
+import quality_gate
 from adsense_fixes.link_validator import validate_post_links
 from adsense_fixes.similarity_guard import SimilarityGuard
 from adsense_fixes.image_optimizer import inject_alt_text, generate_og_card
 from adsense_fixes.canonical_guard import validate_canonical, audit_duplicate_slugs
 from adsense_fixes.schema_validator import extract_and_build_faq_schema
-from adsense_fixes.content_freshness import inject_freshness_footer, get_publishing_schedule_status
+from adsense_fixes.content_freshness import (
+    inject_freshness_footer,
+    get_publishing_schedule_status,
+)
 from adsense_fixes.claim_gate import check_claims, ClaimGateError
 from adsense_fixes.topic_dedup import check_topic_duplicate
-from adsense_fixes.policy_risk import filter_safe_topics, topic_policy_violation
+from adsense_fixes.policy_risk import (
+    filter_safe_topics as _policy_filter_safe_topics,
+    topic_policy_violation,
+)
+
+
+def filter_safe_topics(topics):
+    """policy_risk filter + first-person/numeric-claim topics + topics matching deleted posts (blocked_topics.json)."""
+    return quality_gate.filter_topics(_policy_filter_safe_topics(topics))
+
 
 try:
     from title_validator import (
@@ -66,17 +81,73 @@ except ImportError:
 # ─────────────────────────────────────────────────────────────────
 
 _STOP_WORDS = {
-    "a", "an", "the", "to", "in", "of", "for", "and", "or", "is",
-    "are", "with", "how", "your", "my", "our", "its", "on", "at",
-    "by", "from", "this", "that", "best", "using", "guide", "complete",
-    "introduction", "overview", "tutorial", "tips", "top", "ways",
-    "ways", "tricks", "steps", "things", "methods", "approach",
-    "ace", "pass", "nail", "master", "learn", "know",
-    "add", "build", "get", "make", "use", "do",
-    "without", "beyond", "instead", "heres", "here",
-    "real", "actually", "truly", "really",
-    "quick", "fast", "simple", "easy", "practical",
-    "vs", "versus",
+    "a",
+    "an",
+    "the",
+    "to",
+    "in",
+    "of",
+    "for",
+    "and",
+    "or",
+    "is",
+    "are",
+    "with",
+    "how",
+    "your",
+    "my",
+    "our",
+    "its",
+    "on",
+    "at",
+    "by",
+    "from",
+    "this",
+    "that",
+    "best",
+    "using",
+    "guide",
+    "complete",
+    "introduction",
+    "overview",
+    "tutorial",
+    "tips",
+    "top",
+    "ways",
+    "ways",
+    "tricks",
+    "steps",
+    "things",
+    "methods",
+    "approach",
+    "ace",
+    "pass",
+    "nail",
+    "master",
+    "learn",
+    "know",
+    "add",
+    "build",
+    "get",
+    "make",
+    "use",
+    "do",
+    "without",
+    "beyond",
+    "instead",
+    "heres",
+    "here",
+    "real",
+    "actually",
+    "truly",
+    "really",
+    "quick",
+    "fast",
+    "simple",
+    "easy",
+    "practical",
+    "vs",
+    "versus",
 }
 
 DUPLICATE_TITLE_THRESHOLD = 0.35
@@ -97,8 +168,22 @@ _HASHTAG_MAX_CHARS = 20
 STALE_THRESHOLD_DAYS = 90
 
 _QUESTION_STARTERS = {
-    "how", "what", "why", "when", "where", "which", "who", "is", "are",
-    "does", "do", "can", "should", "will", "would", "could",
+    "how",
+    "what",
+    "why",
+    "when",
+    "where",
+    "which",
+    "who",
+    "is",
+    "are",
+    "does",
+    "do",
+    "can",
+    "should",
+    "will",
+    "would",
+    "could",
 }
 
 
@@ -106,14 +191,14 @@ def _to_single_word_tags(tags: List[str]) -> List[str]:
     result = []
     seen: set = set()
 
-    _VERSION_TOKEN_RE = re.compile(r'^v?\d+(\.\d+)*$', re.IGNORECASE)
+    _VERSION_TOKEN_RE = re.compile(r"^v?\d+(\.\d+)*$", re.IGNORECASE)
 
     for tag in tags:
-        tag = tag.lstrip('#').strip()
+        tag = tag.lstrip("#").strip()
         if not tag:
             continue
 
-        words = [w for w in re.split(r'[\s\-_/.]+', tag) if w]
+        words = [w for w in re.split(r"[\s\-_/.]+", tag) if w]
         words = [w for w in words if not _VERSION_TOKEN_RE.match(w)]
         if not words:
             continue
@@ -124,10 +209,10 @@ def _to_single_word_tags(tags: List[str]) -> List[str]:
         if len(words) > _HASHTAG_MAX_SOURCE_WORDS:
             continue
 
-        camel = ''.join(w.capitalize() for w in words if w)
+        camel = "".join(w.capitalize() for w in words if w)
 
         if len(camel) > _HASHTAG_MAX_CHARS:
-            camel = words[0].capitalize() if words else ''
+            camel = words[0].capitalize() if words else ""
 
         if not camel or len(camel) > _HASHTAG_MAX_CHARS or len(camel) < 2:
             continue
@@ -143,20 +228,20 @@ def _to_single_word_tags(tags: List[str]) -> List[str]:
 def _normalise_title(text: str) -> str:
     text = text.lower()
     _VARIANTS = [
-        (r'\bpostgresql\b', 'postgres'),
-        (r'\bpostgres\b',   'postgres'),
-        (r'\bmysql\b',      'sql'),
-        (r'\bwebsockets?\b', 'websocket'),
-        (r'\breal[\-\s]time\b', 'realtime'),
-        (r'\bcs\s*degree\b', 'csdegree'),
-        (r'\bno[\-\s]code\b', 'nocode'),
-        (r'\bai[\-\s]generated\b', 'aigenerated'),
-        (r'\bfull[\-\s]stack\b', 'fullstack'),
-        (r'\bback[\-\s]end\b', 'backend'),
-        (r'\bfront[\-\s]end\b', 'frontend'),
-        (r'\bopen[\-\s]source\b', 'opensource'),
-        (r'\b\d+x\b', 'Nx'),
-        (r'\b\d+%\b', 'PCT'),
+        (r"\bpostgresql\b", "postgres"),
+        (r"\bpostgres\b", "postgres"),
+        (r"\bmysql\b", "sql"),
+        (r"\bwebsockets?\b", "websocket"),
+        (r"\breal[\-\s]time\b", "realtime"),
+        (r"\bcs\s*degree\b", "csdegree"),
+        (r"\bno[\-\s]code\b", "nocode"),
+        (r"\bai[\-\s]generated\b", "aigenerated"),
+        (r"\bfull[\-\s]stack\b", "fullstack"),
+        (r"\bback[\-\s]end\b", "backend"),
+        (r"\bfront[\-\s]end\b", "frontend"),
+        (r"\bopen[\-\s]source\b", "opensource"),
+        (r"\b\d+x\b", "Nx"),
+        (r"\b\d+%\b", "PCT"),
     ]
     for pattern, replacement in _VARIANTS:
         text = re.sub(pattern, replacement, text)
@@ -186,8 +271,11 @@ def _jaccard(a: set, b: set) -> float:
     return max(base_score, overlap_vs_shorter * 0.7)
 
 
-def _is_duplicate_title(new_title: str, existing_titles: List[str],
-                        threshold: float = DUPLICATE_TITLE_THRESHOLD) -> tuple:
+def _is_duplicate_title(
+    new_title: str,
+    existing_titles: List[str],
+    threshold: float = DUPLICATE_TITLE_THRESHOLD,
+) -> tuple:
     new_tokens = _tokenise(new_title)
     best_score = 0.0
     best_match = ""
@@ -259,13 +347,13 @@ def _twitter_posting_enabled() -> bool:
 
 def _extract_numbers(text: str) -> str:
     patterns = [
-        r'\d+\s*%',
-        r'\d+x\s+(?:faster|cheaper|more|improvement)',
-        r'(?:cut|reduce|save|improve)\w*\s+(?:by\s+)?\d+',
-        r'\d+\s*ms',
-        r'\d+\s*(?:seconds?|minutes?)\s+(?:faster|saved)',
-        r'under\s+\d+\s*ms',
-        r'\d+\s*(?:req|requests?)(?:/|\s+per\s+)(?:s|sec|second|min|minute)',
+        r"\d+\s*%",
+        r"\d+x\s+(?:faster|cheaper|more|improvement)",
+        r"(?:cut|reduce|save|improve)\w*\s+(?:by\s+)?\d+",
+        r"\d+\s*ms",
+        r"\d+\s*(?:seconds?|minutes?)\s+(?:faster|saved)",
+        r"under\s+\d+\s*ms",
+        r"\d+\s*(?:req|requests?)(?:/|\s+per\s+)(?:s|sec|second|min|minute)",
     ]
     for pattern in patterns:
         m = re.search(pattern, text, re.IGNORECASE)
@@ -273,8 +361,8 @@ def _extract_numbers(text: str) -> str:
             start = max(0, m.start() - 10)
             end = min(len(text), m.end() + 30)
             snippet = text[start:end].strip()
-            snippet = re.sub(r'\s+', ' ', snippet)
-            snippet = re.sub(r'[,;:\s]+$', '', snippet)
+            snippet = re.sub(r"\s+", " ", snippet)
+            snippet = re.sub(r"[,;:\s]+$", "", snippet)
             return snippet
     return ""
 
@@ -308,24 +396,24 @@ def _extract_numbers(text: str) -> str:
 # ─────────────────────────────────────────────────────────────────
 
 _INCIDENT_OPENERS_RE = re.compile(
-    r'^('
-    r'A colleague\b|This took me\b|Writing this\b|'
-    r'This is a topic\b|'
+    r"^("
+    r"A colleague\b|This took me\b|Writing this\b|"
+    r"This is a topic\b|"
     r"I(?:'ve|'m|\s+have)?\s+(?:spent|built|shipped|deployed|migrated|"
     r"worked\s+(?:on|with|at)|ran\s+into|debugged|broke|fixed|caught|"
     r"hit\s+a|dealt\s+with|went\s+through|had\s+to|ended\s+up|"
     r"kept\s+seeing|was\s+surprised|watched|witnessed|saw\s+firsthand)\b"
-    r'|'
+    r"|"
     r"(?:cost|saved|burned|wasted|lost|survived|spent|dropped|cut)\s+"
     r"(?:us|me|our|my|the\s+team)?\s*"
     r"(?:three|two|four|five|six|seven|eight|nine|ten|\d+)\s+"
     r"(?:hours?|days?|weeks?|months?|years?)\b"
-    r'|'
+    r"|"
     r"(?:burned|saved|cost|spent|dropped|cut)\s+\$\d+(?:k|K|,\d+)?\b"
-    r'|'
+    r"|"
     r"survived\s+(?:[\d,]+|\d+k|\d+\s+thousand)\s+\w+"
-    r')',
-    re.IGNORECASE
+    r")",
+    re.IGNORECASE,
 )
 
 # TIER 2 — only an incident when the sentence also has a first-person
@@ -333,7 +421,7 @@ _INCIDENT_OPENERS_RE = re.compile(
 # pronouns ("you", "your") are excluded — those are direct address, not
 # an incident claim.
 _AMBIGUOUS_OPENERS_RE = re.compile(
-    r'^(?:The short version|Most of the answers|Most tutorials)\b',
+    r"^(?:The short version|Most of the answers|Most tutorials)\b",
     re.IGNORECASE,
 )
 
@@ -374,7 +462,7 @@ def _flag_fabricated_anecdotes(content: str) -> List[str]:
     text = re.sub(r"```[\s\S]*?```", " ", content)
     text = re.sub(r"`[^`]+`", " ", text)
     hits = []
-    for sent in re.split(r'(?<=[.!?])\s+', text):
+    for sent in re.split(r"(?<=[.!?])\s+", text):
         sent = sent.strip()
         if len(sent) < 15:
             continue
@@ -385,18 +473,18 @@ def _flag_fabricated_anecdotes(content: str) -> List[str]:
 
 def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     text = re.sub(r"```[\s\S]*?```", " ", content)
-    text = re.sub(r"`[^`]+`",        " ", text)
-    text = re.sub(r"#{1,6}\s+",      " ", text)
+    text = re.sub(r"`[^`]+`", " ", text)
+    text = re.sub(r"#{1,6}\s+", " ", text)
     text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
-    text = re.sub(r"[*_]{1,3}",      "",  text)
-    text = re.sub(r"\s+",            " ", text).strip()
+    text = re.sub(r"[*_]{1,3}", "", text)
+    text = re.sub(r"\s+", " ", text).strip()
 
-    sentences = re.split(r'(?<=[.!?])\s+', text)
+    sentences = re.split(r"(?<=[.!?])\s+", text)
 
     _NUMBER_RE = re.compile(
-        r'\b(\d+\s*%|\d+x\b|\$\d|\d+\s*ms|\d+\s*req|p\d{2}|'
-        r'\d+,\d{3}|\d+\s*min\b|\d+\s*sec\b|cut\s+\w+\s+by)',
-        re.IGNORECASE
+        r"\b(\d+\s*%|\d+x\b|\$\d|\d+\s*ms|\d+\s*req|p\d{2}|"
+        r"\d+,\d{3}|\d+\s*min\b|\d+\s*sec\b|cut\s+\w+\s+by)",
+        re.IGNORECASE,
     )
     for sent in sentences:
         sent = sent.strip()
@@ -410,9 +498,9 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
             return sent
 
     _TOOL_RE = re.compile(
-        r'\b(Python|Node\.js|TypeScript|PostgreSQL|Redis|AWS|Lambda|Docker|'
-        r'FastAPI|Django|React|Next\.js|Kubernetes|Kafka|MongoDB|MySQL|'
-        r'SQLite|Terraform|GitHub|M-Pesa|Paystack|Flutterwave|LLM|GPT|Claude)\b'
+        r"\b(Python|Node\.js|TypeScript|PostgreSQL|Redis|AWS|Lambda|Docker|"
+        r"FastAPI|Django|React|Next\.js|Kubernetes|Kafka|MongoDB|MySQL|"
+        r"SQLite|Terraform|GitHub|M-Pesa|Paystack|Flutterwave|LLM|GPT|Claude)\b"
     )
     for sent in sentences:
         sent = sent.strip()
@@ -436,7 +524,9 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
         return sent
 
     keyword = title.replace(":", " —").replace(" vs ", " versus ")
-    fallback = f"Practical guide to {keyword} — with code examples and production notes."
+    fallback = (
+        f"Practical guide to {keyword} — with code examples and production notes."
+    )
     return fallback[:max_len]
 
 
@@ -445,7 +535,7 @@ def _truncate_description(desc: str, max_len: int = 155) -> str:
     if len(desc) <= max_len:
         return desc
 
-    sentences = re.split(r'(?<=[.!?])\s+', desc)
+    sentences = re.split(r"(?<=[.!?])\s+", desc)
     built = ""
     for sentence in sentences:
         candidate = (built + " " + sentence).strip() if built else sentence
@@ -489,10 +579,9 @@ def audit_posts(docs_dir: Path) -> Dict:
                 data = json.load(f)
             content = data.get("content", "")
             wc = _count_words(content)
-            is_fallback = (
-                data.get("monetization_data", {}).get("used_fallback", False)
-                or any(marker in content for marker in BOILERPLATE_FALLBACK_MARKERS)
-            )
+            is_fallback = data.get("monetization_data", {}).get(
+                "used_fallback", False
+            ) or any(marker in content for marker in BOILERPLATE_FALLBACK_MARKERS)
             if is_fallback:
                 results["fallback"].append(post_dir.name)
             elif wc < MIN_WORD_PURGE:
@@ -546,17 +635,61 @@ def _validate_content_quality(content: str, title: str):
             hard_failures.append(f"Critical AI-filler phrase: '{phrase}'")
 
     _VERSION_DENYLIST = (
-        "top", "step", "part", "chapter", "figure", "table", "section",
-        "hour", "hours", "minute", "minutes", "day", "days", "week", "weeks",
-        "month", "months", "year", "years", "point", "points", "item", "items",
-        "for", "with", "and", "or", "in", "on", "at", "is", "are", "a", "an",
-        "the", "of", "to", "by", "over", "under", "about", "than", "after",
-        "before", "around", "roughly", "nearly", "almost", "up", "down",
+        "top",
+        "step",
+        "part",
+        "chapter",
+        "figure",
+        "table",
+        "section",
+        "hour",
+        "hours",
+        "minute",
+        "minutes",
+        "day",
+        "days",
+        "week",
+        "weeks",
+        "month",
+        "months",
+        "year",
+        "years",
+        "point",
+        "points",
+        "item",
+        "items",
+        "for",
+        "with",
+        "and",
+        "or",
+        "in",
+        "on",
+        "at",
+        "is",
+        "are",
+        "a",
+        "an",
+        "the",
+        "of",
+        "to",
+        "by",
+        "over",
+        "under",
+        "about",
+        "than",
+        "after",
+        "before",
+        "around",
+        "roughly",
+        "nearly",
+        "almost",
+        "up",
+        "down",
     )
     has_versioned_tool = False
     for m in re.finditer(
-        r'\b([A-Za-z][A-Za-z0-9+.#_-]{1,24})\s+v?(\d{1,3}(?:\.\d{1,3}){0,2})'
-        r'(?:\s*(?:LTS|lts))?\b',
+        r"\b([A-Za-z][A-Za-z0-9+.#_-]{1,24})\s+v?(\d{1,3}(?:\.\d{1,3}){0,2})"
+        r"(?:\s*(?:LTS|lts))?\b",
         content,
     ):
         name = m.group(1).lower()
@@ -564,12 +697,15 @@ def _validate_content_quality(content: str, title: str):
             continue
         has_versioned_tool = True
         break
-    has_metric = bool(re.search(
-        r'\b(\d+%|\d+\s*ms|\d+\s*rps|\d+[kKmM]?\s*(?:req|request|call|token)s?\b|'
-        r'\$\d+|\d+\s*(?:hour|day|week)s?\s*(?:of|to)\s*(?:downtime|latency|cost)|'
-        r'p\d{2}|\d+,\d{3})\b',
-        content))
-    has_code = content.count('```') >= 2
+    has_metric = bool(
+        re.search(
+            r"\b(\d+%|\d+\s*ms|\d+\s*rps|\d+[kKmM]?\s*(?:req|request|call|token)s?\b|"
+            r"\$\d+|\d+\s*(?:hour|day|week)s?\s*(?:of|to)\s*(?:downtime|latency|cost)|"
+            r"p\d{2}|\d+,\d{3})\b",
+            content,
+        )
+    )
+    has_code = content.count("```") >= 2
 
     if not has_versioned_tool:
         hard_failures.append(
@@ -598,17 +734,13 @@ def _validate_content_quality(content: str, title: str):
             hard_failures.append(f"Claim gate: {reason}")
 
     if word_count < 2200:
-        warnings.append(
-            f"Word count low: {word_count} (preferred target ≥ 2200)")
+        warnings.append(f"Word count low: {word_count} (preferred target ≥ 2200)")
 
-    title_words = set(re.sub(r'[^\w\s]', '', title.lower()).split())
-    title_words -= {'the', 'a', 'an'}
+    title_words = set(re.sub(r"[^\w\s]", "", title.lower()).split())
+    title_words -= {"the", "a", "an"}
     if title_words and word_count < 2000:
-        first_para_words = set(
-            re.sub(r'[^\w\s]', '', content[:500].lower()).split()
-        )
-        title_overlap = len(title_words & first_para_words) / \
-            max(len(title_words), 1)
+        first_para_words = set(re.sub(r"[^\w\s]", "", content[:500].lower()).split())
+        title_overlap = len(title_words & first_para_words) / max(len(title_words), 1)
         if title_overlap > 0.95:
             warnings.append(
                 f"Opening section may be a near-verbatim restatement of the title "
@@ -643,10 +775,19 @@ def _validate_content_quality(content: str, title: str):
         )
 
     milder_filler = [
-        "dive into", "delve into", "it's important to note", "needless to say",
-        "comprehensive guide", "this article will", "we will explore",
-        "in conclusion", "let's explore", "let's dive", "look no further",
-        "in this blog post", "stay tuned",
+        "dive into",
+        "delve into",
+        "it's important to note",
+        "needless to say",
+        "comprehensive guide",
+        "this article will",
+        "we will explore",
+        "in conclusion",
+        "let's explore",
+        "let's dive",
+        "look no further",
+        "in this blog post",
+        "stay tuned",
     ]
     detected = [p for p in milder_filler if p in lower]
     if detected:
@@ -669,9 +810,15 @@ def _validate_content_quality(content: str, title: str):
 
     first_200 = content[:200].lower()
     generic_openers = [
-        "in this", "today we", "welcome to", "this guide covers",
-        "if you're looking", "are you looking", "have you ever",
-        "whether you're a beginner", "this post will",
+        "in this",
+        "today we",
+        "welcome to",
+        "this guide covers",
+        "if you're looking",
+        "are you looking",
+        "have you ever",
+        "whether you're a beginner",
+        "this post will",
     ]
     for opener in generic_openers:
         if first_200.startswith(opener) or f"\n{opener}" in first_200:
@@ -685,95 +832,235 @@ def _validate_content_quality(content: str, title: str):
 
 
 _HOOK_STOP_WORDS = {
-    "a", "an", "the", "to", "in", "of", "for", "and", "or", "is", "are",
-    "with", "how", "your", "my", "our", "its", "on", "at", "by", "from",
-    "this", "that", "best", "using", "guide", "complete", "introduction",
-    "overview", "tutorial", "tips", "top", "ways", "actually", "really",
-    "without", "beyond", "vs", "why", "when", "where", "which", "who",
-    "most", "every", "what", "will", "does", "behind", "inside", "between",
-    "about", "after", "before", "during", "through", "across",
-    "big", "new", "old", "bad", "good", "great", "real", "true", "key",
-    "main", "full", "last", "next", "part", "each", "both", "many", "much",
-    "more", "less", "few", "own", "same", "other", "another", "such",
-    "sure", "just", "also", "even", "still", "yet", "well", "back",
-    "dark", "side", "deep", "fast", "slow", "hard", "easy", "smart",
-    "hidden", "ultimate", "simple", "practical", "essential", "advanced",
-    "modern", "wrong", "right", "never", "always", "common",
-    "say", "says", "fail", "fails", "work", "works", "make", "makes",
-    "get", "gets", "know", "use", "need", "want", "find", "give", "take",
-    "show", "tell", "look", "come", "keep", "let", "put", "think", "help",
-    "earn", "wins", "win", "lose", "beat", "buy", "sell", "run", "start",
-    "people", "person", "developer", "developers", "engineer", "engineers",
-    "company", "companies", "team", "teams", "user", "users", "way",
+    "a",
+    "an",
+    "the",
+    "to",
+    "in",
+    "of",
+    "for",
+    "and",
+    "or",
+    "is",
+    "are",
+    "with",
+    "how",
+    "your",
+    "my",
+    "our",
+    "its",
+    "on",
+    "at",
+    "by",
+    "from",
+    "this",
+    "that",
+    "best",
+    "using",
+    "guide",
+    "complete",
+    "introduction",
+    "overview",
+    "tutorial",
+    "tips",
+    "top",
+    "ways",
+    "actually",
+    "really",
+    "without",
+    "beyond",
+    "vs",
+    "why",
+    "when",
+    "where",
+    "which",
+    "who",
+    "most",
+    "every",
+    "what",
+    "will",
+    "does",
+    "behind",
+    "inside",
+    "between",
+    "about",
+    "after",
+    "before",
+    "during",
+    "through",
+    "across",
+    "big",
+    "new",
+    "old",
+    "bad",
+    "good",
+    "great",
+    "real",
+    "true",
+    "key",
+    "main",
+    "full",
+    "last",
+    "next",
+    "part",
+    "each",
+    "both",
+    "many",
+    "much",
+    "more",
+    "less",
+    "few",
+    "own",
+    "same",
+    "other",
+    "another",
+    "such",
+    "sure",
+    "just",
+    "also",
+    "even",
+    "still",
+    "yet",
+    "well",
+    "back",
+    "dark",
+    "side",
+    "deep",
+    "fast",
+    "slow",
+    "hard",
+    "easy",
+    "smart",
+    "hidden",
+    "ultimate",
+    "simple",
+    "practical",
+    "essential",
+    "advanced",
+    "modern",
+    "wrong",
+    "right",
+    "never",
+    "always",
+    "common",
+    "say",
+    "says",
+    "fail",
+    "fails",
+    "work",
+    "works",
+    "make",
+    "makes",
+    "get",
+    "gets",
+    "know",
+    "use",
+    "need",
+    "want",
+    "find",
+    "give",
+    "take",
+    "show",
+    "tell",
+    "look",
+    "come",
+    "keep",
+    "let",
+    "put",
+    "think",
+    "help",
+    "earn",
+    "wins",
+    "win",
+    "lose",
+    "beat",
+    "buy",
+    "sell",
+    "run",
+    "start",
+    "people",
+    "person",
+    "developer",
+    "developers",
+    "engineer",
+    "engineers",
+    "company",
+    "companies",
+    "team",
+    "teams",
+    "user",
+    "users",
+    "way",
 }
 
 _TOPIC_OVERRIDES = {
-    "database index":   "Database Indexing",
-    "indexing":         "Database Indexing",
-    "query optimiz":    "Query Optimization",
-    "sql ":             "SQL Optimization",
-    "redis":            "Redis",
-    "kafka":            "Apache Kafka",
-    "postgres":         "PostgreSQL",
-    "kubernetes":       "Kubernetes",
-    "docker":           "Docker",
-    "system design":    "System Design",
+    "database index": "Database Indexing",
+    "indexing": "Database Indexing",
+    "query optimiz": "Query Optimization",
+    "sql ": "SQL Optimization",
+    "redis": "Redis",
+    "kafka": "Apache Kafka",
+    "postgres": "PostgreSQL",
+    "kubernetes": "Kubernetes",
+    "docker": "Docker",
+    "system design": "System Design",
     "machine learning": "Machine Learning",
-    "deep learning":    "Deep Learning",
-    "neural network":   "Neural Networks",
-    "large language":   "LLMs",
-    "llm":              "LLMs",
-    "generative ai":    "Generative AI",
-    "prompt engineer":  "Prompt Engineering",
-    "rag ":             "RAG",
-    "vector db":        "Vector Databases",
-    "microservice":     "Microservices",
-    "serverless":       "Serverless",
-    "ci/cd":            "CI/CD",
-    "devops":           "DevOps",
-    "terraform":        "Terraform",
-    "passive income":   "Passive Income",
-    "side hustle":      "Side Hustle",
-    "side project":     "Side Projects",
-    "indie hacker":     "Indie Hacking",
-    "saas":             "SaaS",
-    "web performance":  "Web Performance",
-    "core web vital":   "Core Web Vitals",
-    "websocket":        "WebSockets",
-    "graphql":          "GraphQL",
-    "typescript":       "TypeScript",
-    "react native":     "React Native",
-    "next.js":          "Next.js",
-    "nextjs":           "Next.js",
-    "cybersecurity":    "Cybersecurity",
-    "penetration":      "Pen Testing",
-    "zero trust":       "Zero Trust",
-    "rate limit":       "Rate Limiting",
-    "caching":          "Caching",
-    "load balanc":      "Load Balancing",
-    "data pipeline":    "Data Pipelines",
-    "data engineer":    "Data Engineering",
-    "mlops":            "MLOps",
-    "burnout":          "Developer Burnout",
-    "remote work":      "Remote Work",
-    "tech salar":       "Tech Salaries",
-    "negotiate":        "Salary Negotiation",
-    "ai ethics":        "AI Ethics",
-    "ai tool":          "AI Tools",
-    "ai agent":         "AI Agents",
-    "ai model":         "AI Models",
-    "ai workflow":      "AI Workflows",
-    "ai skill":         "AI Skills",
-    "ai-powered":       "AI-Powered Apps",
-    "chatgpt":          "ChatGPT",
-    "openai":           "OpenAI",
-    "fine-tun":         "Fine-Tuning LLMs",
-    "artificial int":   "Artificial Intelligence",
+    "deep learning": "Deep Learning",
+    "neural network": "Neural Networks",
+    "large language": "LLMs",
+    "llm": "LLMs",
+    "generative ai": "Generative AI",
+    "prompt engineer": "Prompt Engineering",
+    "rag ": "RAG",
+    "vector db": "Vector Databases",
+    "microservice": "Microservices",
+    "serverless": "Serverless",
+    "ci/cd": "CI/CD",
+    "devops": "DevOps",
+    "terraform": "Terraform",
+    "passive income": "Passive Income",
+    "side hustle": "Side Hustle",
+    "side project": "Side Projects",
+    "indie hacker": "Indie Hacking",
+    "saas": "SaaS",
+    "web performance": "Web Performance",
+    "core web vital": "Core Web Vitals",
+    "websocket": "WebSockets",
+    "graphql": "GraphQL",
+    "typescript": "TypeScript",
+    "react native": "React Native",
+    "next.js": "Next.js",
+    "nextjs": "Next.js",
+    "cybersecurity": "Cybersecurity",
+    "penetration": "Pen Testing",
+    "zero trust": "Zero Trust",
+    "rate limit": "Rate Limiting",
+    "caching": "Caching",
+    "load balanc": "Load Balancing",
+    "data pipeline": "Data Pipelines",
+    "data engineer": "Data Engineering",
+    "mlops": "MLOps",
+    "burnout": "Developer Burnout",
+    "remote work": "Remote Work",
+    "tech salar": "Tech Salaries",
+    "negotiate": "Salary Negotiation",
+    "ai ethics": "AI Ethics",
+    "ai tool": "AI Tools",
+    "ai agent": "AI Agents",
+    "ai model": "AI Models",
+    "ai workflow": "AI Workflows",
+    "ai skill": "AI Skills",
+    "ai-powered": "AI-Powered Apps",
+    "chatgpt": "ChatGPT",
+    "openai": "OpenAI",
+    "fine-tun": "Fine-Tuning LLMs",
+    "artificial int": "Artificial Intelligence",
 }
 
 
 def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
     import re as _re
+
     title_lower = f" {title.lower()} "
     for key, phrase in _TOPIC_OVERRIDES.items():
         if key in title_lower:
@@ -784,7 +1071,7 @@ def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
     for w in words:
         if w.lower() in _HOOK_STOP_WORDS:
             continue
-        if _re.match(r'^\d{4}$', w):
+        if _re.match(r"^\d{4}$", w):
             continue
         if w.isupper() and len(w) >= 2:
             meaningful.append(w)
@@ -797,130 +1084,130 @@ def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
 
 _HASHTAG_TIERS = {
     "broad": {
-        " ai ":           ["AI", "ArtificialIntelligence"],
+        " ai ": ["AI", "ArtificialIntelligence"],
         "artificial int": ["AI", "ArtificialIntelligence"],
-        "python":         ["Python", "Python3"],
-        "javascript":     ["JavaScript", "JS"],
-        "typescript":     ["TypeScript"],
-        "react":          ["ReactJS"],
-        "frontend":       ["WebDev", "Frontend"],
-        "backend":        ["Backend", "SoftwareEngineering"],
-        " web ":          ["WebDev"],
-        "web dev":        ["WebDev"],
-        "devops":         ["DevOps"],
-        "cloud":          ["CloudComputing"],
-        "security":       ["CyberSecurity", "InfoSec"],
-        "hacker":         ["CyberSecurity", "EthicalHacking"],
-        "data ":          ["DataEngineering"],
-        "data science":   ["DataScience"],
-        "machine learn":  ["MachineLearning"],
-        " ml ":           ["MachineLearning"],
-        "llm":            ["LLM", "GenerativeAI"],
-        "generat":        ["GenerativeAI"],
-        " tech ":         ["Tech", "Technology"],
-        "coding":         ["Coding", "Programming"],
-        "programming":    ["Programming"],
-        "software":       ["SoftwareEngineering"],
-        "startup":        ["Startups", "Entrepreneurship"],
-        " api ":          ["APIs"],
-        "apis":           ["APIs"],
-        "database":       ["Database"],
-        "performance":    ["Performance"],
-        "mobile":         ["MobileDev"],
-        "android":        ["AndroidDev"],
-        " ios ":          ["iOSDev"],
-        "profit":         ["Entrepreneurship", "Tech"],
-        "income":         ["PassiveIncome", "Entrepreneurship"],
-        "salary":         ["TechCareer"],
-        "career":         ["TechCareer"],
-        "developer":      ["SoftwareEngineering", "Coding"],
-        "engineer":       ["SoftwareEngineering"],
+        "python": ["Python", "Python3"],
+        "javascript": ["JavaScript", "JS"],
+        "typescript": ["TypeScript"],
+        "react": ["ReactJS"],
+        "frontend": ["WebDev", "Frontend"],
+        "backend": ["Backend", "SoftwareEngineering"],
+        " web ": ["WebDev"],
+        "web dev": ["WebDev"],
+        "devops": ["DevOps"],
+        "cloud": ["CloudComputing"],
+        "security": ["CyberSecurity", "InfoSec"],
+        "hacker": ["CyberSecurity", "EthicalHacking"],
+        "data ": ["DataEngineering"],
+        "data science": ["DataScience"],
+        "machine learn": ["MachineLearning"],
+        " ml ": ["MachineLearning"],
+        "llm": ["LLM", "GenerativeAI"],
+        "generat": ["GenerativeAI"],
+        " tech ": ["Tech", "Technology"],
+        "coding": ["Coding", "Programming"],
+        "programming": ["Programming"],
+        "software": ["SoftwareEngineering"],
+        "startup": ["Startups", "Entrepreneurship"],
+        " api ": ["APIs"],
+        "apis": ["APIs"],
+        "database": ["Database"],
+        "performance": ["Performance"],
+        "mobile": ["MobileDev"],
+        "android": ["AndroidDev"],
+        " ios ": ["iOSDev"],
+        "profit": ["Entrepreneurship", "Tech"],
+        "income": ["PassiveIncome", "Entrepreneurship"],
+        "salary": ["TechCareer"],
+        "career": ["TechCareer"],
+        "developer": ["SoftwareEngineering", "Coding"],
+        "engineer": ["SoftwareEngineering"],
     },
     "niche": {
-        "kubernetes":      ["Kubernetes", "K8s"],
-        "docker":          ["Docker", "Containers"],
-        "container":       ["Docker", "Containers"],
-        "rustlang":        ["RustLang"],
-        " rust ":          ["RustLang"],
-        "golang":          ["Golang"],
-        " go ":            ["Golang"],
-        "java ":           ["Java"],
-        "rest api":        ["REST", "APIDesign"],
-        "graphql":         ["GraphQL"],
-        " sql ":           ["SQL"],
-        "postgres":        ["PostgreSQL"],
-        "mysql":           ["MySQL"],
-        "mongodb":         ["MongoDB"],
-        "redis":           ["Redis"],
-        "kafka":           ["ApacheKafka"],
-        "system design":   ["SystemDesign"],
-        "open source":     ["OpenSource"],
-        "cloud native":    ["CloudNative"],
-        "terraform":       ["Terraform", "IaC"],
-        "github":          ["GitHub"],
-        "swift":           ["Swift", "iOSDev"],
-        "kotlin":          ["Kotlin", "AndroidDev"],
-        "flutter":         ["Flutter"],
-        "react native":    ["ReactNative"],
-        "next.js":         ["NextJS"],
-        "nextjs":          ["NextJS"],
-        "tailwind":        ["TailwindCSS"],
-        "serverless":      ["Serverless"],
-        "microservice":    ["Microservices"],
-        "rag":             ["RAG", "VectorSearch"],
-        "vector":          ["VectorDB"],
-        "saas":            ["SaaS"],
-        "mlops":           ["MLOps"],
-        "fine-tun":        ["FineTuning"],
-        "gpt":             ["ChatGPT", "OpenAI"],
-        "chatgpt":         ["ChatGPT"],
+        "kubernetes": ["Kubernetes", "K8s"],
+        "docker": ["Docker", "Containers"],
+        "container": ["Docker", "Containers"],
+        "rustlang": ["RustLang"],
+        " rust ": ["RustLang"],
+        "golang": ["Golang"],
+        " go ": ["Golang"],
+        "java ": ["Java"],
+        "rest api": ["REST", "APIDesign"],
+        "graphql": ["GraphQL"],
+        " sql ": ["SQL"],
+        "postgres": ["PostgreSQL"],
+        "mysql": ["MySQL"],
+        "mongodb": ["MongoDB"],
+        "redis": ["Redis"],
+        "kafka": ["ApacheKafka"],
+        "system design": ["SystemDesign"],
+        "open source": ["OpenSource"],
+        "cloud native": ["CloudNative"],
+        "terraform": ["Terraform", "IaC"],
+        "github": ["GitHub"],
+        "swift": ["Swift", "iOSDev"],
+        "kotlin": ["Kotlin", "AndroidDev"],
+        "flutter": ["Flutter"],
+        "react native": ["ReactNative"],
+        "next.js": ["NextJS"],
+        "nextjs": ["NextJS"],
+        "tailwind": ["TailwindCSS"],
+        "serverless": ["Serverless"],
+        "microservice": ["Microservices"],
+        "rag": ["RAG", "VectorSearch"],
+        "vector": ["VectorDB"],
+        "saas": ["SaaS"],
+        "mlops": ["MLOps"],
+        "fine-tun": ["FineTuning"],
+        "gpt": ["ChatGPT", "OpenAI"],
+        "chatgpt": ["ChatGPT"],
         "prompt engineer": ["PromptEngineering"],
-        "penetration":     ["PenTesting"],
-        "zero trust":      ["ZeroTrust"],
-        "ci/cd":           ["CICD", "DevOps"],
-        "gitops":          ["GitOps"],
-        "websocket":       ["WebSockets", "RealTime"],
-        "webassembly":     ["WebAssembly", "WASM"],
-        "wasm":            ["WebAssembly"],
-        "platform eng":    ["PlatformEngineering"],
-        "devsecops":       ["DevSecOps"],
-        "agentic":         ["AgenticAI"],
-        "multi-agent":     ["MultiAgent"],
-        "vibe cod":        ["VibeCoding"],
-        "claude code":     ["ClaudeCode"],
-        "cursor":          ["CursorAI"],
+        "penetration": ["PenTesting"],
+        "zero trust": ["ZeroTrust"],
+        "ci/cd": ["CICD", "DevOps"],
+        "gitops": ["GitOps"],
+        "websocket": ["WebSockets", "RealTime"],
+        "webassembly": ["WebAssembly", "WASM"],
+        "wasm": ["WebAssembly"],
+        "platform eng": ["PlatformEngineering"],
+        "devsecops": ["DevSecOps"],
+        "agentic": ["AgenticAI"],
+        "multi-agent": ["MultiAgent"],
+        "vibe cod": ["VibeCoding"],
+        "claude code": ["ClaudeCode"],
+        "cursor": ["CursorAI"],
     },
     "monetization": {
-        "passive income":    ["PassiveIncome"],
-        "side hustle":       ["SideHustle"],
-        "indie hacker":      ["IndieHacker"],
-        " indie ":           ["IndieHacker"],
-        "freelance":         ["Freelancing"],
-        "build in public":   ["BuildInPublic"],
+        "passive income": ["PassiveIncome"],
+        "side hustle": ["SideHustle"],
+        "indie hacker": ["IndieHacker"],
+        " indie ": ["IndieHacker"],
+        "freelance": ["Freelancing"],
+        "build in public": ["BuildInPublic"],
         "building in publi": ["BuildInPublic"],
-        "bootstrapp":        ["BootstrappedFounder"],
-        "product launch":    ["ProductLaunch"],
-        " mvp":              ["BuildInPublic", "IndieHacker"],
-        "monetize":          ["Monetization"],
-        "affiliate":         ["AffiliateMarketing"],
-        " blog":             ["Blogging", "ContentCreator"],
-        "content creator":   ["ContentCreator"],
-        "learn to code":     ["LearnToCode", "100DaysOfCode"],
-        "get hired":         ["GetHired", "TechJobs"],
-        " job":              ["TechJobs"],
-        "remote work":       ["RemoteWork"],
-        "digital nomad":     ["DigitalNomad"],
-        "profit":            ["Entrepreneurship", "BuildInPublic"],
-        "make money":        ["MakeMoneyOnline"],
-        "10k":               ["IndieHacker", "MicroSaaS"],
-        "150k":              ["TechSalary"],
-        "negotiate":         ["CareerAdvice"],
-        "promoted":          ["CareerAdvice", "TechCareer"],
-        "burnout":           ["DevWellbeing"],
-        "burn out":          ["DevWellbeing"],
-        "andela":            ["TechCareer", "AfricaTech"],
-        "africa tech":       ["AfricaTech"],
-        "nairobi":           ["AfricaTech", "NairobiTech"],
+        "bootstrapp": ["BootstrappedFounder"],
+        "product launch": ["ProductLaunch"],
+        " mvp": ["BuildInPublic", "IndieHacker"],
+        "monetize": ["Monetization"],
+        "affiliate": ["AffiliateMarketing"],
+        " blog": ["Blogging", "ContentCreator"],
+        "content creator": ["ContentCreator"],
+        "learn to code": ["LearnToCode", "100DaysOfCode"],
+        "get hired": ["GetHired", "TechJobs"],
+        " job": ["TechJobs"],
+        "remote work": ["RemoteWork"],
+        "digital nomad": ["DigitalNomad"],
+        "profit": ["Entrepreneurship", "BuildInPublic"],
+        "make money": ["MakeMoneyOnline"],
+        "10k": ["IndieHacker", "MicroSaaS"],
+        "150k": ["TechSalary"],
+        "negotiate": ["CareerAdvice"],
+        "promoted": ["CareerAdvice", "TechCareer"],
+        "burnout": ["DevWellbeing"],
+        "burn out": ["DevWellbeing"],
+        "andela": ["TechCareer", "AfricaTech"],
+        "africa tech": ["AfricaTech"],
+        "nairobi": ["AfricaTech", "NairobiTech"],
     },
 }
 
@@ -928,7 +1215,7 @@ _HASHTAG_TIERS = {
 def _is_valid_hashtag(tag: str) -> bool:
     if not tag:
         return False
-    if not re.match(r'^[A-Za-z0-9]+$', tag):
+    if not re.match(r"^[A-Za-z0-9]+$", tag):
         return False
     if len(tag) > _HASHTAG_MAX_CHARS:
         return False
@@ -942,8 +1229,7 @@ def _derive_hashtags_from_keywords(
     max_hashtags: int = 5,
 ) -> List[str]:
     combined = f" {' '.join([title, topic] + keywords).lower()} "
-    selected: Dict[str, List[str]] = {
-        "broad": [], "niche": [], "monetization": []}
+    selected: Dict[str, List[str]] = {"broad": [], "niche": [], "monetization": []}
 
     for tier, mapping in _HASHTAG_TIERS.items():
         for keyword, tags in mapping.items():
@@ -958,13 +1244,12 @@ def _derive_hashtags_from_keywords(
     result.extend(selected["monetization"][:1])
 
     if len(result) < max_hashtags:
-        question_starters = {"how", "what", "why",
-                             "when", "where", "which", "who"}
+        question_starters = {"how", "what", "why", "when", "where", "which", "who"}
         for kw in keywords:
             kw = kw.strip().lower()
             if not kw:
                 continue
-            words = [w for w in re.split(r'[\s\-_/]+', kw) if w]
+            words = [w for w in re.split(r"[\s\-_/]+", kw) if w]
 
             if words and words[0] in question_starters:
                 continue
@@ -1000,7 +1285,12 @@ _OPENROUTER_FALLBACK_MODELS = [
 ]
 
 _OPENROUTER_FREE_MODEL_EXCLUDE_SUBSTRINGS = (
-    "safety", "safeguard", "guard", "moderat", "-mt", "content-safety",
+    "safety",
+    "safeguard",
+    "guard",
+    "moderat",
+    "-mt",
+    "content-safety",
     "thinkingmachines",
 )
 
@@ -1026,7 +1316,7 @@ _STRUCTURE_SETS = [
             "## The gap between what the docs say and what production needs",
             "## How {topic} actually works under the hood",
             "## Step-by-step implementation with real code",
-            "## Performance numbers from a live system",
+            "## How to measure performance, and what to expect",
             "## The failure modes nobody warns you about",
             "## Tools and libraries worth your time",
             "## When this approach is the wrong choice",
@@ -1048,7 +1338,7 @@ _STRUCTURE_SETS = [
             "## Step 2 — core implementation",
             "## Step 3 — handle edge cases and errors",
             "## Step 4 — add observability and tests",
-            "## Real results from running this",
+            "## How to verify it works",
             "## Common questions and variations",
             "## Where to go from here",
         ],
@@ -1065,7 +1355,7 @@ _STRUCTURE_SETS = [
             "## The conventional wisdom (and why it's incomplete)",
             "## What actually happens when you follow the standard advice",
             "## A different mental model",
-            "## Evidence and examples from real systems",
+            "## Documented evidence and typical examples",
             "## The cases where the conventional wisdom IS right",
             "## How to decide which approach fits your situation",
             "## Common objections, and responses",
@@ -1086,9 +1376,9 @@ _STRUCTURE_SETS = [
             "## Why this comparison matters right now",
             "## Option A — how it works and where it shines",
             "## Option B — how it works and where it shines",
-            "## Head-to-head: performance",
+            "## Head-to-head: performance characteristics",
             "## Head-to-head: developer experience",
-            "## Head-to-head: operational cost",
+            "## Head-to-head: cost model",
             "## A decision framework",
             "## Recommendation and caveats",
             "## Final verdict",
@@ -1108,11 +1398,11 @@ _STRUCTURE_SETS = [
             "## The approaches that commonly fail, and why",
             "## The approach that works in practice",
             "## Implementation details",
-            "## Results — the numbers to expect, and their limits",
+            "## What outcomes to expect, and their limits",
             "## What to watch out for",
             "## The broader lesson",
             "## How to apply this to your situation",
-            "## Resources that helped",
+            "## Further reading",
         ],
         (
             "Write this as a walkthrough of a well-documented pattern, not as a first-person case study. "
@@ -1146,8 +1436,8 @@ _STRUCTURE_SETS = [
         [
             "## What this list actually solves",
             "## Evaluation criteria",
-            "## {topic} — the full ranked list",
-            "## The top pick and why it won",
+            "## {topic} — the options compared",
+            "## The strongest default, and why",
             "## Honorable mentions worth knowing about",
             "## Options that look appealing but fail in practice",
             "## How to choose based on your situation",
@@ -1188,8 +1478,7 @@ _STRUCTURE_SETS = [
 
 
 def _pick_structure(topic: str) -> tuple:
-    idx = int(hashlib.md5(topic.encode()).hexdigest(),
-              16) % len(_STRUCTURE_SETS)
+    idx = int(hashlib.md5(topic.encode()).hexdigest(), 16) % len(_STRUCTURE_SETS)
     return _STRUCTURE_SETS[idx]
 
 
@@ -1333,50 +1622,44 @@ _AUTHOR_CONTEXTS = [
 
 
 def _build_humanization_note(topic: str) -> str:
-    idx = int(hashlib.sha256(topic.encode()).hexdigest(),
-              16) % len(_AUTHOR_CONTEXTS)
+    idx = int(hashlib.sha256(topic.encode()).hexdigest(), 16) % len(_AUTHOR_CONTEXTS)
     return _AUTHOR_CONTEXTS[idx]
 
 
 _FABRICATED_CITATION_PATTERNS = [
-    r'\b(?i:(?:a|the)\s+)?(?:\d{4}\s+)?'
-    r'(?i:(?:study|paper|report|research|survey|analysis)\s+(?:by|from)\s+)'
-    r'([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,5})',
-
-    r'\b(?i:according to\s+)(?:(?i:a|an|the)\s+)?'
-    r'([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,5})',
-
-    r'\b([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,3})\'s\s+'
-    r'(?i:study|research|red[\s-]?team|findings|report|analysis|survey)\b',
-
-    r'(?i:\baccording to\s+(?:a\s+|an\s+)?(?:\d{4}\s+)?'
-    r'(?:stack overflow|gartner|forrester|mckinsey|gitlab|github|jetbrains)\b)',
-    r'(?i:\b(?:\d{4}\s+)?(?:stack overflow|gartner|forrester|mckinsey)'
-    r'\s+(?:survey|report|study)\b)',
-    r'(?i:\ba (?:survey|study) of [\d,]+\s+(?:developers|engineers|teams|companies)\b)',
-
-    r'\b(?:(?i:a|the)\s+)?(?:\d{4}\s+)?'
-    r'([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,3})\s+'
-    r'(?i:(?:survey|study|report|research|analysis|benchmark)\s+'
-    r'(?:that|which)?\s*(?:found|shows?|tracked|reveals?|says?|showed))\b',
-
-    r'\b([A-Z][\w&\'-]+)\s+'
-    r'(?i:(?:survey|study|report)\s+'
-    r'(?:shows?|finds?|found|showed|revealed|estimates?))\b',
+    r"\b(?i:(?:a|the)\s+)?(?:\d{4}\s+)?"
+    r"(?i:(?:study|paper|report|research|survey|analysis)\s+(?:by|from)\s+)"
+    r"([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,5})",
+    r"\b(?i:according to\s+)(?:(?i:a|an|the)\s+)?"
+    r"([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,5})",
+    r"\b([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,3})\'s\s+"
+    r"(?i:study|research|red[\s-]?team|findings|report|analysis|survey)\b",
+    r"(?i:\baccording to\s+(?:a\s+|an\s+)?(?:\d{4}\s+)?"
+    r"(?:stack overflow|gartner|forrester|mckinsey|gitlab|github|jetbrains)\b)",
+    r"(?i:\b(?:\d{4}\s+)?(?:stack overflow|gartner|forrester|mckinsey)"
+    r"\s+(?:survey|report|study)\b)",
+    r"(?i:\ba (?:survey|study) of [\d,]+\s+(?:developers|engineers|teams|companies)\b)",
+    r"\b(?:(?i:a|the)\s+)?(?:\d{4}\s+)?"
+    r"([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,3})\s+"
+    r"(?i:(?:survey|study|report|research|analysis|benchmark)\s+"
+    r"(?:that|which)?\s*(?:found|shows?|tracked|reveals?|says?|showed))\b",
+    r"\b([A-Z][\w&\'-]+)\s+"
+    r"(?i:(?:survey|study|report)\s+"
+    r"(?:shows?|finds?|found|showed|revealed|estimates?))\b",
 ]
 
 
 _DUP_JACCARD_THRESHOLD = 0.35
 _DUP_NGRAM_SIZE = 8
 _GENERIC_META_PATTERNS = [
-    r'^Blog post about .+$',
-    r'^Learn about .+ in this post\.?$',
+    r"^Blog post about .+$",
+    r"^Learn about .+ in this post\.?$",
 ]
 
 
 def _shingles(text: str, n: int = _DUP_NGRAM_SIZE) -> set:
-    words = _re.findall(r'\w+', text.lower())
-    return {' '.join(words[i:i + n]) for i in range(len(words) - n + 1)}
+    words = _re.findall(r"\w+", text.lower())
+    return {" ".join(words[i : i + n]) for i in range(len(words) - n + 1)}
 
 
 def _jaccard_shingles(a: set, b: set) -> float:
@@ -1418,19 +1701,19 @@ def _reject_if_generic_meta_description(meta_description: str) -> Optional[str]:
 
 
 _LEGITIMATE_SOURCE_CONTEXT = re.compile(
-    r'\b('
-    r'documentation|docs\b|changelog|release notes|official (docs|'
-    r'documentation|guide)|readme|man page|manual|rfc\s?\d|spec(ification)?|'
-    r'error message|log output|log files?|logs?\b|stack trace|source code|'
-    r'the source|\.md\b|github\.com|repository|'
-    r'exit code|runtime|its own|their own|'
-    r'the (query|table|response|output|payload|request|config|settings|'
-    r'dashboard|metrics|monitor|system|service|application|process|'
-    r'result|results|function|variable|parameter|schema|index|cache)|'
-    r'per (the|its|their|our)|'
-    r'report (?:from|of) the (query|table|dashboard|job|pipeline|process)|'
-    r'according to the (config|settings|documentation|logs?|exit code)'
-    r')\b',
+    r"\b("
+    r"documentation|docs\b|changelog|release notes|official (docs|"
+    r"documentation|guide)|readme|man page|manual|rfc\s?\d|spec(ification)?|"
+    r"error message|log output|log files?|logs?\b|stack trace|source code|"
+    r"the source|\.md\b|github\.com|repository|"
+    r"exit code|runtime|its own|their own|"
+    r"the (query|table|response|output|payload|request|config|settings|"
+    r"dashboard|metrics|monitor|system|service|application|process|"
+    r"result|results|function|variable|parameter|schema|index|cache)|"
+    r"per (the|its|their|our)|"
+    r"report (?:from|of) the (query|table|dashboard|job|pipeline|process)|"
+    r"according to the (config|settings|documentation|logs?|exit code)"
+    r")\b",
     re.IGNORECASE,
 )
 
@@ -1443,9 +1726,9 @@ def _reject_if_fabricated_citation(content: str) -> Optional[str]:
             if len(matched_text.split()) < 3:
                 continue
 
-            window = content[max(0, match.start() - 200):match.end() + 200]
+            window = content[max(0, match.start() - 200) : match.end() + 200]
 
-            if _re.search(r'https?://', window):
+            if _re.search(r"https?://", window):
                 continue
 
             if _LEGITIMATE_SOURCE_CONTEXT.search(window):
@@ -1513,22 +1796,22 @@ def _check_expansion_completeness(content: str) -> List[str]:
 
     stripped = content.rstrip()
 
-    if stripped.count('```') % 2 != 0:
+    if stripped.count("```") % 2 != 0:
         issues.append("unbalanced code fence (```) — likely cut off mid code block")
 
     _FOOTER_DATE_LINE = re.compile(
-        r'^\*\*Last (?:reviewed|generated):\*\*\s*\S.*\S$|^\*\*Last (?:reviewed|generated):\*\*\s*\S$'
+        r"^\*\*Last (?:reviewed|generated):\*\*\s*\S.*\S$|^\*\*Last (?:reviewed|generated):\*\*\s*\S$"
     )
-    last_line = stripped.rsplit('\n', 1)[-1].strip()
+    last_line = stripped.rsplit("\n", 1)[-1].strip()
     ends_on_footer_date = bool(_FOOTER_DATE_LINE.match(last_line))
 
     if (
         stripped
-        and stripped[-1] not in '.!?`"\')]}\n'
-        and not stripped.endswith('```')
+        and stripped[-1] not in ".!?`\"')]}\n"
+        and not stripped.endswith("```")
         and not ends_on_footer_date
     ):
-        tail = stripped[-60:].replace('\n', ' ')
+        tail = stripped[-60:].replace("\n", " ")
         issues.append(f"content does not end on a finished sentence (tail: …{tail!r})")
 
     _LEAKED_INSTRUCTION_PHRASES = (
@@ -1539,12 +1822,16 @@ def _check_expansion_completeness(content: str) -> List[str]:
     lower = content.lower()
     for phrase in _LEAKED_INSTRUCTION_PHRASES:
         if phrase in lower:
-            issues.append(f"heading appears to echo prompt instruction text: '{phrase}'")
+            issues.append(
+                f"heading appears to echo prompt instruction text: '{phrase}'"
+            )
 
     return issues
 
 
-def _build_system_prompt(author_note: str, format_name: str, format_note: str, year_guidance: str) -> str:
+def _build_system_prompt(
+    author_note: str, format_name: str, format_note: str, year_guidance: str
+) -> str:
     return (
         f"{author_note}\n\n"
         f"{year_guidance}\n\n"
@@ -1578,29 +1865,29 @@ def _build_system_prompt(author_note: str, format_name: str, format_note: str, y
         "- 'harness the power'\n"
         "- 'unlock the potential'\n"
         "- Any phrase that sounds like it belongs in a press release\n\n"
-        "CONTENT QUALITY REQUIREMENTS — the post will be rejected if it lacks:\n"
-        "1. At least ONE concrete, illustrative example or scenario that makes an "
-        "abstract point specific — framed as a typical/common situation ('a common "
-        "failure mode here is...', 'teams running into this usually see...'), NOT "
-        "as an unverifiable personal claim ('I spent three days on this'). The "
-        "goal is specificity, not fabricated autobiography.\n"
-        "2. At least TWO code blocks with language tags\n"
-        "3. At least THREE concrete numbers (ms, %, cost, line count, version number) "
-        "— present these as realistic/typical figures for the scenario, not as "
-        "your own personally-measured results unless the post format is explicitly "
-        "a documented case study with a real, disclosed source.\n"
-        "3b. NEVER attribute a number, percentage, or claim to a named real-world "
-        "source you cannot verify exists (e.g. 'a 2026 Stack Overflow survey found...', "
-        "'according to Gartner...', 'McKinsey reports...'). If you don't have a real, "
-        "checkable URL for the claim, state the figure as a typical/illustrative "
-        "estimate with no named source attached — inventing a citation to a real "
-        "organization is a factual-accuracy violation, not a style choice.\n"
-        "4. At least ONE tool with a specific version number "
-        "(e.g. 'Python 3.11', 'Redis 7.2', 'Node 20 LTS')\n"
-        "5. A comparison table using markdown table syntax\n"
-        "6. A 'Frequently Asked Questions' section with 3-4 real developer questions\n"
-        "7. A specific, actionable closing step the reader can do in the next 30 minutes\n"
-        "8. TITLE SHAPE — the title must describe a TOPIC or CLAIM, not an "
+        "GROUNDING RULES — the post is discarded if it breaks these:\n"
+        "1. You cannot browse. State only facts you are certain are true of real, "
+        "widely documented tools and standards. NEVER name a product, library, "
+        "service or version number unless you are sure it exists. If unsure, "
+        "describe the category ('a managed LLM gateway') instead of inventing a name.\n"
+        "2. NEVER invent benchmark tables, 'survival rates', survey or customer "
+        "counts, rankings of products by measured performance, or percentages "
+        "attributed to anyone. Numbers are allowed only when (a) you show the "
+        "arithmetic, (b) they are labelled assumptions ('assume 10k req/s'), or "
+        "(c) they are documented defaults (e.g. a documented timeout). Mark "
+        "illustrative figures as illustrative.\n"
+        "3. NEVER write as if you personally ran, measured, shipped, joined or "
+        "lost anything. Use impersonal framing ('teams commonly...', 'a typical "
+        "failure mode is...').\n"
+        "4. Link to an official documentation URL only if you are certain it "
+        "exists; otherwise omit the link.\n"
+        "5. STRUCTURE FOLLOWS THE TOPIC. Do not use a fixed template. Use only "
+        "the sections this topic needs. A comparison table only if there is a "
+        "genuine side-by-side comparison; an FAQ only if there are real "
+        "follow-up questions; code blocks (with language tags) only where code "
+        "makes the point clearer.\n"
+        "6. Close with one specific, actionable step the reader can take next.\n"
+        "7. TITLE SHAPE — the title must describe a TOPIC or CLAIM, not an "
         "INCIDENT. Forbidden title shapes (any of these will cause the whole "
         "draft to be discarded before publishing):\n"
         "   - First-person past tense:   'I actually used X', 'I regret shipping Y'\n"
@@ -1686,17 +1973,17 @@ _INTRO_FRICTIONS = [
 
 _INTRO_PROMISES = [
     "This post covers what comes after the happy path.",
-    "Here's what actually worked, and why.",
+    "Here's what holds up in practice, and why.",
     "Here's the fuller picture, with the tradeoffs left in.",
     "This is the version of the write-up that includes the part that broke.",
-    "Here's what I'd tell a colleague hitting this for the first time.",
+    "Here's what a colleague hitting this for the first time needs to know.",
     "This walks through the fix and the reasoning, not just the patch.",
     "Here's the root cause, not just the symptom.",
-    "This is what I put together after working through it properly.",
-    "Here's the version I wish someone had handed me first.",
-    "This is the writeup with the mistakes left in, not edited out.",
-    "Here's what changed once we stopped guessing and started measuring.",
-    "This covers the fix, the cost of not knowing sooner, and what we monitor now.",
+    "This works through the problem properly, from cause to fix.",
+    "Here's the version that skips the happy-path tutorial.",
+    "This is the writeup that includes the part that usually goes wrong.",
+    "Here's what changes once the guessing is replaced with measurement.",
+    "This covers the fix, the cost of not knowing sooner, and what to monitor.",
 ]
 
 
@@ -1716,7 +2003,9 @@ def build_intro(keyword: str, seed: str) -> str:
     hook = _select(_INTRO_HOOKS, f"hook:{seed}").format(keyword=keyword)
     friction = _select(_INTRO_FRICTIONS, f"friction:{seed}")
     promise = _select(_INTRO_PROMISES, f"promise:{seed}")
-    order = _INTRO_ORDERS[int(hashlib.md5(f"order:{seed}".encode()).hexdigest(), 16) % len(_INTRO_ORDERS)]
+    order = _INTRO_ORDERS[
+        int(hashlib.md5(f"order:{seed}".encode()).hexdigest(), 16) % len(_INTRO_ORDERS)
+    ]
     clauses = {"hook": hook, "friction": friction, "promise": promise}
     return " ".join(clauses[part] for part in order)
 
@@ -1728,11 +2017,9 @@ _TWEET_HOOK_EXAMPLES = [
             "Most teams burn $8k+ on AI tools before measuring ROI.\\n\\n"
             "Most of it goes to autocomplete nobody audits.\\n\\n"
             "Here is what actually paid off 👇",
-
             "The AI tooling bill quietly doubles long before anyone checks "
             "what it's buying.\\n\\n"
             "Here's where the spend actually goes 👇",
-
             "Half the AI spend on a typical team goes to seats nobody logs "
             "into twice.\\n\\n"
             "Here's how to find out which half 👇",
@@ -1744,11 +2031,9 @@ _TWEET_HOOK_EXAMPLES = [
             "Before: two engineers, two days, one timeout nobody could explain.\\n\\n"
             "After: a single config line.\\n\\n"
             "Here's what changed 👇",
-
             "The setup that took a full sprint to build now takes one "
             "afternoon, thanks to one removed step.\\n\\n"
             "Here's the diff 👇",
-
             "It used to take a postmortem to find this. Now it's a linter "
             "rule.\\n\\n"
             "Here's what moved 👇",
@@ -1760,11 +2045,9 @@ _TWEET_HOOK_EXAMPLES = [
             "The docs for this are good. They just skip the part that pages "
             "you at 2am.\\n\\n"
             "Here's the gap nobody mentions 👇",
-
             "Official docs cover the setup. Almost none cover what happens "
             "at month four.\\n\\n"
             "Here's the part that's missing 👇",
-
             "The reference guide is accurate right up until the first edge "
             "case that actually matters.\\n\\n"
             "Here's where it stops helping 👇",
@@ -1776,10 +2059,8 @@ _TWEET_HOOK_EXAMPLES = [
             "One misconfigured connection pool added 400ms to every request.\\n\\n"
             "It took a day to find and one line to fix.\\n\\n"
             "Here's how 👇",
-
             "A single default setting was quietly adding 30% to every build.\\n\\n"
             "Here's the one that mattered 👇",
-
             "One missing index turned a 40ms query into a 4-second one.\\n\\n"
             "Here's how it was found 👇",
         ],
@@ -1790,11 +2071,9 @@ _TWEET_HOOK_EXAMPLES = [
             "It took three failed deploys to find the real cause of this.\\n\\n"
             "The fix was smaller than the debugging session.\\n\\n"
             "Here's what finally worked 👇",
-
             "This shipped broken for weeks before anyone noticed the numbers "
             "were wrong.\\n\\n"
             "Here's what the postmortem found 👇",
-
             "The rollback happened before the root cause was understood.\\n\\n"
             "Here's what actually caused it 👇",
         ],
@@ -1805,15 +2084,12 @@ _TWEET_HOOK_EXAMPLES = [
             "Most teams optimize the wrong layer first, and the fix that "
             "actually moves the needle looks nothing like the usual advice.\\n\\n"
             "Here's the layer that mattered 👇",
-
             "The advice repeated most often about this is also the least "
             "useful part of it.\\n\\n"
             "Here's what actually worked instead 👇",
-
             "Conventional wisdom here optimizes for the tutorial case, not "
             "the production one.\\n\\n"
             "Here's where that falls apart 👇",
-
             "The standard mental model for this teaches the wrong thing "
             "first, and most of the confusion traces back to that.\\n\\n"
             "Here's the model that holds up under load 👇",
@@ -1825,10 +2101,8 @@ _TWEET_HOOK_EXAMPLES = [
             "Reviewed a dozen implementations of this pattern.\\n\\n"
             "Almost all of them hit the same wall.\\n\\n"
             "Here's the fix that held up in production 👇",
-
             "Same failure mode, three unrelated codebases, same root cause.\\n\\n"
             "Here's the pattern 👇",
-
             "The teams that get this right all made one decision early.\\n\\n"
             "Here's what it was 👇",
         ],
@@ -1838,11 +2112,9 @@ _TWEET_HOOK_EXAMPLES = [
         "examples": [
             "How long should this actually take a team to get right?\\n\\n"
             "Longer than the docs suggest — and here's why 👇",
-
             "At what point does this stop being a config problem and start "
             "being a design problem?\\n\\n"
             "Here's where that line usually is 👇",
-
             "What's the assumption here that costs the most time to unlearn?\\n\\n"
             "Here's the one that trips up the most teams 👇",
         ],
@@ -1850,7 +2122,9 @@ _TWEET_HOOK_EXAMPLES = [
 ]
 
 
-def _pick_tweet_hook_example(topic: str, recent_styles: Optional[List[str]] = None) -> dict:
+def _pick_tweet_hook_example(
+    topic: str, recent_styles: Optional[List[str]] = None
+) -> dict:
     recent = set(recent_styles or [])
     pool = _TWEET_HOOK_EXAMPLES
     candidates = [entry for entry in pool if entry["style"] not in recent]
@@ -1867,10 +2141,29 @@ def _pick_tweet_hook_example(topic: str, recent_styles: Optional[List[str]] = No
 
 def inject_personal_intro(post, topic: str) -> None:
     topic_lower = topic.lower()
-    stop = {"how", "to", "the", "a", "an", "for", "and", "or", "vs",
-            "when", "why", "what", "which", "guide", "tutorial", "tips"}
-    words = [w for w in re.sub(r'[^\w\s]', '', topic_lower).split()
-             if w not in stop and len(w) > 2]
+    stop = {
+        "how",
+        "to",
+        "the",
+        "a",
+        "an",
+        "for",
+        "and",
+        "or",
+        "vs",
+        "when",
+        "why",
+        "what",
+        "which",
+        "guide",
+        "tutorial",
+        "tips",
+    }
+    words = [
+        w
+        for w in re.sub(r"[^\w\s]", "", topic_lower).split()
+        if w not in stop and len(w) > 2
+    ]
     keyword = " ".join(words[:2]) if words else topic_lower
 
     seed = getattr(post, "slug", None) or topic
@@ -1886,9 +2179,9 @@ _EEAT_FOOTER_TEMPLATE = """
 
 ### About this article
 
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
+**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya.
 
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
+**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify them against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
 
 **Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
 
@@ -1915,13 +2208,15 @@ CONTENT_DUPLICATE_THRESHOLD = dedup_similarity.DUPLICATE_SIMILARITY_THRESHOLD
 
 
 def _validate_dedup_thresholds() -> None:
-    assert 0.0 < CONTENT_DUPLICATE_THRESHOLD < 1.0, (
-        f"CONTENT_DUPLICATE_THRESHOLD={CONTENT_DUPLICATE_THRESHOLD} must be in (0, 1)"
-    )
-    assert 0.0 < _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD < 1.0, (
-        f"_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD={_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD} must be in (0, 1)"
-    )
-    assert _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD <= CONTENT_DUPLICATE_THRESHOLD + 0.25, (
+    assert (
+        0.0 < CONTENT_DUPLICATE_THRESHOLD < 1.0
+    ), f"CONTENT_DUPLICATE_THRESHOLD={CONTENT_DUPLICATE_THRESHOLD} must be in (0, 1)"
+    assert (
+        0.0 < _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD < 1.0
+    ), f"_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD={_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD} must be in (0, 1)"
+    assert (
+        _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD <= CONTENT_DUPLICATE_THRESHOLD + 0.25
+    ), (
         "_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD is far looser than "
         "CONTENT_DUPLICATE_THRESHOLD — review both before shipping."
     )
@@ -1937,8 +2232,7 @@ class ContentDuplicateGate:
 
     def check(self, title: str, content: str, exclude_slug: str = "") -> tuple:
         CANDIDATE_KEY = "__candidate__"
-        documents: Dict[str, Tuple[str, str]] = {
-            CANDIDATE_KEY: (title, content)}
+        documents: Dict[str, Tuple[str, str]] = {CANDIDATE_KEY: (title, content)}
 
         if self.docs_dir.exists():
             for post_dir in self.docs_dir.iterdir():
@@ -1953,14 +2247,15 @@ class ContentDuplicateGate:
                     with open(post_json, "r", encoding="utf-8") as f:
                         data = json.load(f)
                 except (json.JSONDecodeError, OSError, UnicodeDecodeError) as exc:
-                    print(f"  ⚠️  ContentDuplicateGate: skipping unreadable "
-                          f"{post_json} ({exc})")
+                    print(
+                        f"  ⚠️  ContentDuplicateGate: skipping unreadable "
+                        f"{post_json} ({exc})"
+                    )
                     continue
                 existing_content = data.get("content", "")
                 if not existing_content:
                     continue
-                documents[post_dir.name] = (
-                    data.get("title", ""), existing_content)
+                documents[post_dir.name] = (data.get("title", ""), existing_content)
 
         if len(documents) < 2:
             return False, "", "", 0.0
@@ -2000,10 +2295,23 @@ class PreFlightIndex:
             else:
                 self._rebuild_from_docs()
                 self._save_cache()
+            _have = {e.get("slug") for e in self._entries}
+            for _b in quality_gate.load_blocklist():
+                if _b.get("slug") not in _have:
+                    self._entries.append(
+                        {
+                            "slug": _b.get("slug", ""),
+                            "title": _b.get("title", ""),
+                            "summary": _b.get("title", ""),
+                            "blocked": True,
+                        }
+                    )
             self._fit_vectorizer()
             self._loaded = True
             print(
-                f"  PreFlightIndex ready: {len(self._entries)} posts indexed.")
+                f"  PreFlightIndex ready: {len(self._entries)} posts indexed "
+                f"(incl. {len(quality_gate.load_blocklist())} blocked)."
+            )
         except Exception as exc:
             print(f"  ⚠️  PreFlightIndex load failed (non-fatal): {exc}")
             self._entries = []
@@ -2015,14 +2323,12 @@ class PreFlightIndex:
         try:
             return self._cosine_check(candidate)
         except Exception as exc:
-            print(
-                f"  ⚠️  PreFlightIndex.is_duplicate error (non-fatal): {exc}")
+            print(f"  ⚠️  PreFlightIndex.is_duplicate error (non-fatal): {exc}")
             return False, "", 0.0
 
     def add_entry(self, slug: str, title: str, content: str) -> None:
         summary = self._make_summary(content)
-        self._entries.append(
-            {"slug": slug, "title": title, "summary": summary})
+        self._entries.append({"slug": slug, "title": title, "summary": summary})
         try:
             self._fit_vectorizer()
             self._save_cache()
@@ -2048,8 +2354,7 @@ class PreFlightIndex:
         with open(self.cache_file, "r", encoding="utf-8") as f:
             data = json.load(f)
         self._entries = data.get("entries", [])
-        print(
-            f"  PreFlightIndex: loaded {len(self._entries)} entries from cache.")
+        print(f"  PreFlightIndex: loaded {len(self._entries)} entries from cache.")
 
     def _rebuild_from_docs(self) -> None:
         self._entries = []
@@ -2067,15 +2372,16 @@ class PreFlightIndex:
                 title = data.get("title", "").strip()
                 content = data.get("content", "")
                 if title:
-                    self._entries.append({
-                        "slug": post_dir.name,
-                        "title": title,
-                        "summary": self._make_summary(content),
-                    })
+                    self._entries.append(
+                        {
+                            "slug": post_dir.name,
+                            "title": title,
+                            "summary": self._make_summary(content),
+                        }
+                    )
             except Exception:
                 pass
-        print(
-            f"  PreFlightIndex: rebuilt {len(self._entries)} entries from docs/.")
+        print(f"  PreFlightIndex: rebuilt {len(self._entries)} entries from docs/.")
 
     def _save_cache(self) -> None:
         import os as _os
@@ -2089,7 +2395,7 @@ class PreFlightIndex:
         try:
             fd, tmp_path = _tempfile.mkstemp(dir=cache_dir, suffix=".tmp")
             try:
-                with _os.fdopen(fd, 'w', encoding='utf-8') as f:
+                with _os.fdopen(fd, "w", encoding="utf-8") as f:
                     json.dump(payload, f, ensure_ascii=False, indent=2)
                 _os.replace(tmp_path, self.cache_file)
             except Exception:
@@ -2099,8 +2405,7 @@ class PreFlightIndex:
                     pass
                 raise
         except Exception as exc:
-            print(
-                f"  ⚠️  PreFlightIndex._save_cache atomic write failed: {exc}")
+            print(f"  ⚠️  PreFlightIndex._save_cache atomic write failed: {exc}")
 
     def _make_summary(self, content: str, max_chars: int = 300) -> str:
         text = re.sub(r"```[\s\S]*?```", " ", content)
@@ -2117,10 +2422,8 @@ class PreFlightIndex:
             self._matrix = None
             return
         from sklearn.feature_extraction.text import TfidfVectorizer
-        corpus = [
-            f"{e['title']} {e['summary']}"
-            for e in self._entries
-        ]
+
+        corpus = [f"{e['title']} {e['summary']}" for e in self._entries]
         self._vectorizer = TfidfVectorizer(
             analyzer="word",
             ngram_range=(1, 2),
@@ -2176,9 +2479,16 @@ class BlogSystem:
         self._log_key_status()
 
         self.api_key = (
-            self.deepseek_key or self.groq_key or self.openrouter_key
-            or self.gemini_key or self.hf_token or self.mistral_key
-            or self.nvidia_key or self.zai_key or self.llm7_key or "unused"
+            self.deepseek_key
+            or self.groq_key
+            or self.openrouter_key
+            or self.gemini_key
+            or self.hf_token
+            or self.mistral_key
+            or self.nvidia_key
+            or self.zai_key
+            or self.llm7_key
+            or "unused"
         )
 
         self.monetization = MonetizationManager(config)
@@ -2196,23 +2506,32 @@ class BlogSystem:
     def _log_key_status(self):
         print("=== API Key Status ===")
         print(
-            f"  DeepSeek (primary): {'configured' if self.deepseek_key    else 'NOT SET'}")
+            f"  DeepSeek (primary): {'configured' if self.deepseek_key    else 'NOT SET'}"
+        )
         print(
-            f"  Groq:           {'configured' if self.groq_key            else 'NOT SET'}")
+            f"  Groq:           {'configured' if self.groq_key            else 'NOT SET'}"
+        )
         print(
-            f"  OpenRouter:     {'configured' if self.openrouter_key       else 'NOT SET'}")
+            f"  OpenRouter:     {'configured' if self.openrouter_key       else 'NOT SET'}"
+        )
         print(
-            f"  Gemini:         {'configured' if self.gemini_key           else 'NOT SET'}")
+            f"  Gemini:         {'configured' if self.gemini_key           else 'NOT SET'}"
+        )
         print(
-            f"  Hugging Face:   {'configured' if self.hf_token             else 'NOT SET'}")
+            f"  Hugging Face:   {'configured' if self.hf_token             else 'NOT SET'}"
+        )
         print(
-            f"  Mistral:        {'configured' if self.mistral_key          else 'NOT SET'}")
+            f"  Mistral:        {'configured' if self.mistral_key          else 'NOT SET'}"
+        )
         print(
-            f"  NVIDIA NIM:     {'configured' if self.nvidia_key           else 'NOT SET'}")
+            f"  NVIDIA NIM:     {'configured' if self.nvidia_key           else 'NOT SET'}"
+        )
         print(
-            f"  Z.AI / Zhipu:   {'configured' if self.zai_key              else 'NOT SET'}")
+            f"  Z.AI / Zhipu:   {'configured' if self.zai_key              else 'NOT SET'}"
+        )
         print(
-            f"  LLM7.io:        {'configured' if self.llm7_key             else 'anon (unused)'}")
+            f"  LLM7.io:        {'configured' if self.llm7_key             else 'anon (unused)'}"
+        )
         print("======================")
 
     def cleanup_posts(self):
@@ -2230,8 +2549,7 @@ class BlogSystem:
             if not post_json_path.exists() and markdown_path.exists():
                 try:
                     print(f"Recovering {post_dir.name}...")
-                    post = BlogPost.from_markdown_file(
-                        markdown_path, post_dir.name)
+                    post = BlogPost.from_markdown_file(markdown_path, post_dir.name)
                     self.save_post(post)
                     fixed_count += 1
                     print(f"Recovered: {post.title}")
@@ -2244,8 +2562,7 @@ class BlogSystem:
                     removed_count += 1
                 except OSError:
                     print(f"Directory not empty: {list(post_dir.iterdir())}")
-        print(
-            f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
+        print(f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
 
     def purge_low_quality_posts(self, dry_run: bool = True):
         results = audit_posts(self.output_dir)
@@ -2254,17 +2571,15 @@ class BlogSystem:
         print(f"  Short:    {len(results['short'])} posts")
         print(f"  Fallback: {len(results['fallback'])} posts")
 
-        to_remove = results["fallback"] + \
-            [slug for slug, _ in results["short"]]
+        to_remove = results["fallback"] + [slug for slug, _ in results["short"]]
 
         if not to_remove:
             print("Nothing to remove — all posts meet quality bar.")
             return
 
-        tombstone_tmpl = StaticSiteGenerator(self).templates['tombstone']
+        tombstone_tmpl = StaticSiteGenerator(self).templates["tombstone"]
         log_path = self.output_dir / "_removed_posts.json"
-        removed_log = json.loads(
-            log_path.read_text()) if log_path.exists() else {}
+        removed_log = json.loads(log_path.read_text()) if log_path.exists() else {}
 
         for slug in to_remove:
             post_dir = self.output_dir / slug
@@ -2274,17 +2589,18 @@ class BlogSystem:
                 continue
 
             html = tombstone_tmpl.render(
-                site_name=self.config.get('site_name', 'Tech Blog'),
-                base_path=self.config.get('base_path', ''),
+                site_name=self.config.get("site_name", "Tech Blog"),
+                base_path=self.config.get("base_path", ""),
             )
-            for stale in post_dir.glob('*'):
-                if stale.name != 'index.html':
+            for stale in post_dir.glob("*"):
+                if stale.name != "index.html":
                     if stale.is_dir():
                         import shutil
+
                         shutil.rmtree(stale, ignore_errors=True)
                     else:
                         stale.unlink(missing_ok=True)
-            (post_dir / "index.html").write_text(html, encoding='utf-8')
+            (post_dir / "index.html").write_text(html, encoding="utf-8")
             removed_log[slug] = {
                 "removed_at": datetime.now().isoformat(),
                 "reason": reason,
@@ -2292,12 +2608,12 @@ class BlogSystem:
             print(f"  Tombstoned: {slug} ({reason})")
 
         if dry_run:
-            print(
-                f"\nRun with dry_run=False to tombstone {len(to_remove)} posts.")
+            print(f"\nRun with dry_run=False to tombstone {len(to_remove)} posts.")
         else:
             log_path.write_text(json.dumps(removed_log, indent=2))
             print(
-                f"\nPurged {len(to_remove)} low-quality posts (tombstoned, not deleted).")
+                f"\nPurged {len(to_remove)} low-quality posts (tombstoned, not deleted)."
+            )
 
     def generate_og_images(self) -> bool:
         if not PILLOW_AVAILABLE:
@@ -2310,20 +2626,22 @@ class BlogSystem:
             print(f"⚠️  OG image script not found at {script_path}")
             return False
 
-        base_url = self.config.get(
-            "base_url", "https://kubaik.github.io").rstrip("/")
+        base_url = self.config.get("base_url", "https://kubaik.github.io").rstrip("/")
 
-        print("\n" + "="*80)
+        print("\n" + "=" * 80)
         print("📸 Generating per-article OG images (1200×630 PNG)")
-        print("="*80)
+        print("=" * 80)
 
         try:
             cmd = [
                 sys.executable,
                 str(script_path),
-                "--posts-dir", str(self.output_dir),
-                "--output-dir", str(self.og_dir),
-                "--base-url", base_url,
+                "--posts-dir",
+                str(self.output_dir),
+                "--output-dir",
+                str(self.og_dir),
+                "--base-url",
+                base_url,
                 "--patch-html",
             ]
 
@@ -2333,12 +2651,7 @@ class BlogSystem:
 
             print(f"\nRunning OG generation...\n")
 
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=600
-            )
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
 
             if result.stdout:
                 print(result.stdout)
@@ -2383,21 +2696,20 @@ class BlogSystem:
 
         stale_posts.sort(
             key=lambda x: (
-                0 if x['priority'] == 'high' else 1,
-                -x['days_old'],
+                0 if x["priority"] == "high" else 1,
+                -x["days_old"],
             )
         )
 
         print(
-            f"\nFound {len(stale_posts)} stale post(s). "
-            f"Refreshing top {limit}..."
+            f"\nFound {len(stale_posts)} stale post(s). " f"Refreshing top {limit}..."
         )
 
         for i, stale_post in enumerate(stale_posts[:limit]):
-            slug = stale_post['slug']
-            title = stale_post['title']
-            days_old = stale_post['days_old']
-            is_fast_decay = stale_post['fast_decay']
+            slug = stale_post["slug"]
+            title = stale_post["title"]
+            days_old = stale_post["days_old"]
+            is_fast_decay = stale_post["fast_decay"]
 
             print(
                 f"\n[{i+1}/{min(limit, len(stale_posts))}] "
@@ -2482,8 +2794,7 @@ class BlogSystem:
                 _inject_freshness_footer_inline(post_data)
                 print(f"  ✓ Freshness footer updated")
             except Exception as e:
-                print(
-                    f"  ⚠️  Freshness footer update failed (non-fatal): {e}")
+                print(f"  ⚠️  Freshness footer update failed (non-fatal): {e}")
 
             try:
                 with open(post_json, "w", encoding="utf-8") as f:
@@ -2515,11 +2826,15 @@ class BlogSystem:
         keywords_str = ", ".join(seo_keywords[:8])
 
         decay_context = (
-            "This is a FAST-DECAY technical topic (AI, LLM, cloud, Kubernetes, DevOps). "
-            "Tool versions, API endpoints, and best practices may have shifted significantly."
-        ) if is_fast_decay else (
-            "This is a standard-decay topic. Core concepts are stable, but tool versions and "
-            "examples should be modernized."
+            (
+                "This is a FAST-DECAY technical topic (AI, LLM, cloud, Kubernetes, DevOps). "
+                "Tool versions, API endpoints, and best practices may have shifted significantly."
+            )
+            if is_fast_decay
+            else (
+                "This is a standard-decay topic. Core concepts are stable, but tool versions and "
+                "examples should be modernized."
+            )
         )
 
         messages = [
@@ -2638,26 +2953,28 @@ class BlogSystem:
             )
         return content
 
-    async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 6000) -> str:
+    async def _call_api_with_fallback(
+        self, messages: List[Dict], max_tokens: int = 6000
+    ) -> str:
         providers = []
 
         if self.deepseek_key:
-            providers.append(("DeepSeek",         self._call_deepseek))
+            providers.append(("DeepSeek", self._call_deepseek))
         if self.groq_key:
-            providers.append(("Groq",             self._call_groq))
+            providers.append(("Groq", self._call_groq))
         if self.gemini_key:
-            providers.append(("Gemini",           self._call_gemini))
+            providers.append(("Gemini", self._call_gemini))
         if self.openrouter_key:
-            providers.append(("OpenRouter",       self._call_openrouter))
+            providers.append(("OpenRouter", self._call_openrouter))
         if self.hf_token:
-            providers.append(("Hugging Face",     self._call_huggingface))
+            providers.append(("Hugging Face", self._call_huggingface))
         if self.nvidia_key:
-            providers.append(("NVIDIA NIM",       self._call_nvidia))
+            providers.append(("NVIDIA NIM", self._call_nvidia))
         if self.mistral_key:
-            providers.append(("Mistral",          self._call_mistral))
+            providers.append(("Mistral", self._call_mistral))
         if self.zai_key:
-            providers.append(("Z.AI",             self._call_zai))
-        providers.append(("LLM7.io",              self._call_llm7))
+            providers.append(("Z.AI", self._call_zai))
+        providers.append(("LLM7.io", self._call_llm7))
 
         if not providers:
             raise Exception(
@@ -2683,8 +3000,10 @@ class BlogSystem:
             for name, caller in providers:
                 try:
                     result = await caller(messages, max_tokens)
-                    print(f"API: {name} responded successfully "
-                          f"(chain attempt {chain_attempt}).")
+                    print(
+                        f"API: {name} responded successfully "
+                        f"(chain attempt {chain_attempt})."
+                    )
                     return result
                 except Exception as e:
                     last_error = e
@@ -2692,8 +3011,10 @@ class BlogSystem:
                     if name != providers[-1][0]:
                         print("Falling back to next provider...")
 
-            print(f"Full provider chain exhausted on attempt "
-                  f"{chain_attempt}/{_MAX_CHAIN_RETRIES}.")
+            print(
+                f"Full provider chain exhausted on attempt "
+                f"{chain_attempt}/{_MAX_CHAIN_RETRIES}."
+            )
 
         raise Exception(
             f"All configured API providers failed after {_MAX_CHAIN_RETRIES} attempts. "
@@ -2704,8 +3025,10 @@ class BlogSystem:
         if not self.deepseek_key:
             raise EnvironmentError("DEEPSEEK_API_KEY not set")
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.deepseek_key}",
-                   "Content-Type": "application/json"}
+        headers = {
+            "Authorization": f"Bearer {self.deepseek_key}",
+            "Content-Type": "application/json",
+        }
         data = {
             "model": _DEEPSEEK_MODEL,
             "messages": messages,
@@ -2720,14 +3043,14 @@ class BlogSystem:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
                         "https://api.deepseek.com/chat/completions",
-                        headers=headers, json=data,
+                        headers=headers,
+                        json=data,
                         timeout=aiohttp.ClientTimeout(total=90),
                     ) as r:
                         if r.status == 200:
                             result = await r.json()
                             if "error" in result:
-                                raise Exception(
-                                    f"DeepSeek error: {result['error']}")
+                                raise Exception(f"DeepSeek error: {result['error']}")
                             return self._extract_message_content(result, "DeepSeek")
                         if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
@@ -2744,15 +3067,26 @@ class BlogSystem:
 
     async def _call_groq(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.groq_key}",
-                   "Content-Type": "application/json"}
-        data = {"model": _GROQ_MODEL, "messages": messages,
-                "max_tokens": max_tokens, "temperature": 0.7}
+        headers = {
+            "Authorization": f"Bearer {self.groq_key}",
+            "Content-Type": "application/json",
+        }
+        data = {
+            "model": _GROQ_MODEL,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": 0.7,
+        }
         waits = [2, 5, 10]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=45)) as r:
+                    async with s.post(
+                        "https://api.groq.com/openai/v1/chat/completions",
+                        headers=headers,
+                        json=data,
+                        timeout=aiohttp.ClientTimeout(total=45),
+                    ) as r:
                         if r.status == 200:
                             return self._extract_message_content(await r.json(), "Groq")
                         if r.status in RETRYABLE and attempt < 2:
@@ -2777,7 +3111,8 @@ class BlogSystem:
             ) as r:
                 if r.status != 200:
                     raise Exception(
-                        f"OpenRouter models list {r.status}: {await r.text()}")
+                        f"OpenRouter models list {r.status}: {await r.text()}"
+                    )
                 payload = await r.json()
 
         candidates = []
@@ -2789,17 +3124,21 @@ class BlogSystem:
             pricing = m.get("pricing", {})
             if pricing.get("prompt") != "0" or pricing.get("completion") != "0":
                 continue
-            if "text" not in (m.get("architecture", {}).get(
-                    "output_modalities", []) or []):
+            if "text" not in (
+                m.get("architecture", {}).get("output_modalities", []) or []
+            ):
                 continue
-            if any(bad in model_id.lower()
-                   for bad in _OPENROUTER_FREE_MODEL_EXCLUDE_SUBSTRINGS):
+            if any(
+                bad in model_id.lower()
+                for bad in _OPENROUTER_FREE_MODEL_EXCLUDE_SUBSTRINGS
+            ):
                 continue
             expires = m.get("expiration_date")
             if expires and expires < today:
                 continue
             max_completion = (m.get("top_provider", {}) or {}).get(
-                "max_completion_tokens") or 0
+                "max_completion_tokens"
+            ) or 0
             if max_completion and max_completion < 4000:
                 continue
             candidates.append((model_id, max_completion, expires))
@@ -2841,24 +3180,35 @@ class BlogSystem:
             for attempt in range(1, 3):
                 try:
                     async with aiohttp.ClientSession() as s:
-                        async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=45)) as r:
+                        async with s.post(
+                            "https://openrouter.ai/api/v1/chat/completions",
+                            headers=headers,
+                            json=data,
+                            timeout=aiohttp.ClientTimeout(total=45),
+                        ) as r:
                             if r.status == 200:
                                 result = await r.json()
                                 if "error" in result:
                                     raise Exception(
-                                        f"OpenRouter error: {result['error']}")
+                                        f"OpenRouter error: {result['error']}"
+                                    )
                                 return self._extract_message_content(
-                                    result, f"OpenRouter ({model_id})")
+                                    result, f"OpenRouter ({model_id})"
+                                )
 
                             body = await r.text()
 
-                            if r.status == 404 and "unavailable for free" in body.lower():
+                            if (
+                                r.status == 404
+                                and "unavailable for free" in body.lower()
+                            ):
                                 print(
                                     f"OpenRouter: {model_id} is no longer free "
                                     f"({body[:200]}). Trying next free model..."
                                 )
                                 last_error = Exception(
-                                    f"OpenRouter 404 (model retired): {model_id}")
+                                    f"OpenRouter 404 (model retired): {model_id}"
+                                )
                                 break
 
                             if r.status in RETRYABLE and attempt < 2:
@@ -2892,30 +3242,37 @@ class BlogSystem:
                     break
 
         raise Exception(
-            f"All OpenRouter free-model candidates failed. Last error: {last_error}")
+            f"All OpenRouter free-model candidates failed. Last error: {last_error}"
+        )
 
     async def _call_mistral(self, messages: List[Dict], max_tokens: int) -> str:
         if not self.mistral_key:
             raise EnvironmentError("MISTRAL_API_KEY not set")
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.mistral_key}",
-                   "Content-Type": "application/json"}
-        data = {"model": _MISTRAL_MODEL, "messages": messages,
-                "max_tokens": max_tokens, "temperature": 0.7}
+        headers = {
+            "Authorization": f"Bearer {self.mistral_key}",
+            "Content-Type": "application/json",
+        }
+        data = {
+            "model": _MISTRAL_MODEL,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": 0.7,
+        }
         waits = [5, 15]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
                         "https://api.mistral.ai/v1/chat/completions",
-                        headers=headers, json=data,
+                        headers=headers,
+                        json=data,
                         timeout=aiohttp.ClientTimeout(total=60),
                     ) as r:
                         if r.status == 200:
                             result = await r.json()
                             if "error" in result:
-                                raise Exception(
-                                    f"Mistral error: {result['error']}")
+                                raise Exception(f"Mistral error: {result['error']}")
                             return self._extract_message_content(result, "Mistral")
                         if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
@@ -2934,27 +3291,35 @@ class BlogSystem:
         if not self.hf_token:
             raise EnvironmentError("HF_TOKEN not set")
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.hf_token}",
-                   "Content-Type": "application/json"}
-        data = {"model": _HF_MODEL, "messages": messages,
-                "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
+        headers = {
+            "Authorization": f"Bearer {self.hf_token}",
+            "Content-Type": "application/json",
+        }
+        data = {
+            "model": _HF_MODEL,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": 0.7,
+            "stream": False,
+        }
         waits = [2, 8]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
                         "https://router.huggingface.co/v1/chat/completions",
-                        headers=headers, json=data,
+                        headers=headers,
+                        json=data,
                         timeout=aiohttp.ClientTimeout(total=180),
                     ) as r:
                         if r.status == 200:
                             return self._extract_message_content(
-                                await r.json(), "Hugging Face")
+                                await r.json(), "Hugging Face"
+                            )
                         if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
-                        raise Exception(
-                            f"Hugging Face {r.status}: {await r.text()}")
+                        raise Exception(f"Hugging Face {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
                 if attempt < 2:
                     await asyncio.sleep(waits[attempt - 1])
@@ -2987,12 +3352,12 @@ class BlogSystem:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
                         "https://api.z.ai/api/paas/v4/chat/completions",
-                        headers=headers, json=data,
+                        headers=headers,
+                        json=data,
                         timeout=aiohttp.ClientTimeout(total=120),
                     ) as r:
                         if r.status == 200:
-                            return self._extract_message_content(
-                                await r.json(), "Z.AI")
+                            return self._extract_message_content(await r.json(), "Z.AI")
                         if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
@@ -3009,24 +3374,28 @@ class BlogSystem:
     async def _call_llm7(self, messages: List[Dict], max_tokens: int) -> str:
         key = self.llm7_key or "unused"
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {key}",
-                   "Content-Type": "application/json"}
-        data = {"model": _LLM7_MODEL, "messages": messages,
-                "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
+        headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+        data = {
+            "model": _LLM7_MODEL,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": 0.7,
+            "stream": False,
+        }
         waits = [2, 8]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
                         "https://api.llm7.io/v1/chat/completions",
-                        headers=headers, json=data,
+                        headers=headers,
+                        json=data,
                         timeout=aiohttp.ClientTimeout(total=120),
                     ) as r:
                         if r.status == 200:
                             result = await r.json()
                             if "error" in result:
-                                raise Exception(
-                                    f"LLM7 error: {result['error']}")
+                                raise Exception(f"LLM7 error: {result['error']}")
                             return self._extract_message_content(result, "LLM7.io")
                         if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
@@ -3043,17 +3412,31 @@ class BlogSystem:
 
     async def _call_nvidia(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.nvidia_key}",
-                   "Content-Type": "application/json"}
-        data = {"model": _NVIDIA_MODEL, "messages": messages,
-                "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
+        headers = {
+            "Authorization": f"Bearer {self.nvidia_key}",
+            "Content-Type": "application/json",
+        }
+        data = {
+            "model": _NVIDIA_MODEL,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": 0.7,
+            "stream": False,
+        }
         waits = [2, 5, 10]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=60)) as r:
+                    async with s.post(
+                        "https://integrate.api.nvidia.com/v1/chat/completions",
+                        headers=headers,
+                        json=data,
+                        timeout=aiohttp.ClientTimeout(total=60),
+                    ) as r:
                         if r.status == 200:
-                            return self._extract_message_content(await r.json(), "NVIDIA NIM")
+                            return self._extract_message_content(
+                                await r.json(), "NVIDIA NIM"
+                            )
                         if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
@@ -3078,21 +3461,24 @@ class BlogSystem:
                 model = genai.GenerativeModel(
                     model_name=GEMINI_MODEL,
                     generation_config=genai.types.GenerationConfig(
-                        max_output_tokens=max_tokens, temperature=0.7),
+                        max_output_tokens=max_tokens, temperature=0.7
+                    ),
                 )
                 parts = [
-                    ("SYSTEM: " if m.get("role") ==
-                     "system" else "USER: ") + m.get("content", "")
+                    ("SYSTEM: " if m.get("role") == "system" else "USER: ")
+                    + m.get("content", "")
                     for m in messages
                 ]
                 text = model.generate_content(
-                    "\n\n".join(parts) + "\n\nASSISTANT:").text
+                    "\n\n".join(parts) + "\n\nASSISTANT:"
+                ).text
                 if not text or not text.strip():
                     raise Exception(
                         "Gemini returned empty content (likely a safety "
                         "block or max_output_tokens hit before any text)."
                     )
                 return text
+
             return await asyncio.get_event_loop().run_in_executor(None, _sdk_call)
         except ImportError:
             pass
@@ -3101,28 +3487,31 @@ class BlogSystem:
             f"https://generativelanguage.googleapis.com/v1/models/"
             f"{GEMINI_MODEL}:generateContent?key={self.gemini_key}"
         )
-        system_parts = [m["content"]
-                        for m in messages if m.get("role") == "system"]
-        user_parts = [m["content"]
-                      for m in messages if m.get("role") != "system"]
-        first_user = (
-            ("\n\n".join(system_parts) + "\n\n" if system_parts else "")
-            + (user_parts[0] if user_parts else "")
+        system_parts = [m["content"] for m in messages if m.get("role") == "system"]
+        user_parts = [m["content"] for m in messages if m.get("role") != "system"]
+        first_user = ("\n\n".join(system_parts) + "\n\n" if system_parts else "") + (
+            user_parts[0] if user_parts else ""
         )
         contents = [{"role": "user", "parts": [{"text": first_user}]}]
         for extra in user_parts[1:]:
             contents.append({"role": "user", "parts": [{"text": extra}]})
-        payload = {"contents": contents, "generationConfig": {
-            "maxOutputTokens": max_tokens, "temperature": 0.7}}
+        payload = {
+            "contents": contents,
+            "generationConfig": {"maxOutputTokens": max_tokens, "temperature": 0.7},
+        }
         waits = [2, 5, 10, 20]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(api_url, json=payload, timeout=aiohttp.ClientTimeout(total=60)) as r:
+                    async with s.post(
+                        api_url, json=payload, timeout=aiohttp.ClientTimeout(total=60)
+                    ) as r:
                         if r.status == 200:
                             result = await r.json()
                             try:
-                                text = result["candidates"][0]["content"]["parts"][0]["text"]
+                                text = result["candidates"][0]["content"]["parts"][0][
+                                    "text"
+                                ]
                             except (KeyError, IndexError) as e:
                                 raise Exception(f"Gemini parse error: {e}")
                             if not text or not text.strip():
@@ -3144,7 +3533,9 @@ class BlogSystem:
                 raise Exception("Gemini timed out.")
         raise Exception("Gemini unavailable.")
 
-    async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> "BlogPost":
+    async def generate_blog_post(
+        self, topic: str, keywords: List[str] = None
+    ) -> "BlogPost":
         banned = topic_policy_violation(topic or "")
         if banned:
             raise InsufficientContentError(
@@ -3227,8 +3618,7 @@ class BlogSystem:
                     current_topic, current_keywords, existing_titles
                 )
             except Exception as e:
-                print(
-                    f"Bundle generation failed on attempt {attempt_num}: {e}")
+                print(f"Bundle generation failed on attempt {attempt_num}: {e}")
                 if attempt_num < MAX_GENERATION_ATTEMPTS:
                     current_topic = self._pick_retry_topic(
                         current_topic, existing_titles, exclude=attempted_topics
@@ -3243,16 +3633,15 @@ class BlogSystem:
             try:
                 title = bundle["title"].strip().strip('"')
                 _TITLE_FILLER = re.compile(
-                    r'^(a\s+|an\s+|the\s+|complete\s+|ultimate\s+|comprehensive\s+|'
-                    r'introduction\s+to\s+|guide\s+to\s+|overview\s+of\s+|'
-                    r'everything\s+you\s+need\s+to\s+know\s+about\s+)',
+                    r"^(a\s+|an\s+|the\s+|complete\s+|ultimate\s+|comprehensive\s+|"
+                    r"introduction\s+to\s+|guide\s+to\s+|overview\s+of\s+|"
+                    r"everything\s+you\s+need\s+to\s+know\s+about\s+)",
                     re.IGNORECASE,
                 )
-                title = _TITLE_FILLER.sub('', title).strip()
+                title = _TITLE_FILLER.sub("", title).strip()
 
                 full_title = title
-                title = generate_display_title(
-                    full_title, _VALIDATOR_MAX_DISPLAY_TITLE)
+                title = generate_display_title(full_title, _VALIDATOR_MAX_DISPLAY_TITLE)
 
                 _title_check = validate_title(title, full_title)
                 if _title_check["errors"]:
@@ -3265,18 +3654,24 @@ class BlogSystem:
 
                 content = bundle["content"].strip()
                 meta_description = bundle["meta_description"].strip()
-                seo_keywords = [k.strip()
-                                for k in bundle["seo_keywords"] if k.strip()]
+                seo_keywords = [k.strip() for k in bundle["seo_keywords"] if k.strip()]
 
                 if not meta_description:
                     print(
-                        "Warning: meta_description empty from API — deriving from content.")
+                        "Warning: meta_description empty from API — deriving from content."
+                    )
                     meta_description = _derive_description(content, title)
 
                 _weak_openers = (
-                    "this post", "in this article", "a guide to",
-                    "learn about", "an overview", "this tutorial",
-                    "this article", "we will", "you will learn",
+                    "this post",
+                    "in this article",
+                    "a guide to",
+                    "learn about",
+                    "an overview",
+                    "this tutorial",
+                    "this article",
+                    "we will",
+                    "you will learn",
                 )
                 if any(meta_description.lower().startswith(w) for w in _weak_openers):
                     print("Warning: meta_description has weak opener — re-deriving.")
@@ -3284,10 +3679,13 @@ class BlogSystem:
 
                 _META_MAX_LEN = 155
                 if len(meta_description) > _META_MAX_LEN:
-                    print(f"Warning: meta_description is {len(meta_description)} chars "
-                          f"(> {_META_MAX_LEN}) — trimming to fit the SERP snippet length.")
+                    print(
+                        f"Warning: meta_description is {len(meta_description)} chars "
+                        f"(> {_META_MAX_LEN}) — trimming to fit the SERP snippet length."
+                    )
                     meta_description = _truncate_description(
-                        meta_description, _META_MAX_LEN)
+                        meta_description, _META_MAX_LEN
+                    )
 
                 if not current_keywords:
                     current_keywords = seo_keywords
@@ -3344,7 +3742,8 @@ class BlogSystem:
                             f"picking a new topic."
                         )
                         current_topic = self._pick_retry_topic(
-                            current_topic, existing_titles,
+                            current_topic,
+                            existing_titles,
                             exclude=attempted_topics,
                         )
                         current_keywords = None
@@ -3378,7 +3777,8 @@ class BlogSystem:
                         )
                 except Exception as e:
                     print(
-                        f"Expansion pass failed: {e}. Continuing with original content.")
+                        f"Expansion pass failed: {e}. Continuing with original content."
+                    )
 
             if word_count < MIN_ACCEPTABLE_WORDS:
                 print(
@@ -3419,6 +3819,49 @@ class BlogSystem:
                     f"{MAX_GENERATION_ATTEMPTS} attempts. No post has been saved."
                 )
 
+            entity_problem = entity_gate.gate(
+                content,
+                max_unverified=3,
+                verify_online=os.getenv("ENTITY_VERIFY_ONLINE", "1") == "1",
+            )
+            if entity_problem:
+                print(
+                    f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
+                    f"{entity_problem}."
+                )
+                if attempt_num < MAX_GENERATION_ATTEMPTS:
+                    current_topic = self._pick_retry_topic(
+                        current_topic, existing_titles, exclude=attempted_topics
+                    )
+                    current_keywords = None
+                    print(f"Switching to new topic: '{current_topic}'")
+                    continue
+                raise InsufficientContentError(
+                    f"Failed to generate content without unverifiable products/"
+                    f"benchmarks after {MAX_GENERATION_ATTEMPTS} attempts. "
+                    f"No post has been saved."
+                )
+
+            gate_problem = quality_gate.fabrication_problem(
+                title, content
+            ) or quality_gate.blocked_title_problem(title)
+            if gate_problem:
+                print(
+                    f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
+                    f"{gate_problem}."
+                )
+                if attempt_num < MAX_GENERATION_ATTEMPTS:
+                    current_topic = self._pick_retry_topic(
+                        current_topic, existing_titles, exclude=attempted_topics
+                    )
+                    current_keywords = None
+                    print(f"Switching to new topic: '{current_topic}'")
+                    continue
+                raise InsufficientContentError(
+                    f"Failed quality gate after {MAX_GENERATION_ATTEMPTS} attempts: "
+                    f"{gate_problem}. No post has been saved."
+                )
+
             anecdote_hits = _flag_fabricated_anecdotes(content)
             repair_tries = 0
             while anecdote_hits and repair_tries < _MAX_REPAIR_ATTEMPTS:
@@ -3429,7 +3872,7 @@ class BlogSystem:
                     f"({repair_tries}/{_MAX_REPAIR_ATTEMPTS}):"
                 )
                 for h in anecdote_hits[:3]:
-                    print(f"    - \"{h}...\"")
+                    print(f'    - "{h}..."')
                 repaired = await self._repair_anecdotes(
                     content, title, current_topic, anecdote_hits
                 )
@@ -3445,7 +3888,7 @@ class BlogSystem:
                     f"remain after repair attempts:"
                 )
                 for h in anecdote_hits[:3]:
-                    print(f"    - \"{h}...\"")
+                    print(f'    - "{h}..."')
                 if attempt_num < MAX_GENERATION_ATTEMPTS:
                     current_topic = self._pick_retry_topic(
                         current_topic, existing_titles, exclude=attempted_topics
@@ -3554,8 +3997,7 @@ class BlogSystem:
                     existing_titles=existing_titles_now,
                 )
                 full_title = regenerated.strip().strip('"')
-                title = generate_display_title(
-                    full_title, _VALIDATOR_MAX_DISPLAY_TITLE)
+                title = generate_display_title(full_title, _VALIDATOR_MAX_DISPLAY_TITLE)
                 _title_check = validate_title(title, full_title)
                 if _title_check["errors"] or _title_check["warnings"]:
                     for _err in _title_check["errors"]:
@@ -3564,16 +4006,18 @@ class BlogSystem:
                         print(f"    ⚠  {_warn}")
                 print(f"  New title : '{title}'")
 
-            meta_problem = _reject_if_generic_meta_description(
-                meta_description)
+            meta_problem = _reject_if_generic_meta_description(meta_description)
             if meta_problem:
                 print(
-                    f"  ⚠  meta_description problem: {meta_problem} — regenerating it")
+                    f"  ⚠  meta_description problem: {meta_problem} — regenerating it"
+                )
                 meta_description = _derive_description(content, title)
-                meta_description = _truncate_description(meta_description) \
-                    if '_truncate_description' in dir() else meta_description
-                meta_problem = _reject_if_generic_meta_description(
-                    meta_description)
+                meta_description = (
+                    _truncate_description(meta_description)
+                    if "_truncate_description" in dir()
+                    else meta_description
+                )
+                meta_problem = _reject_if_generic_meta_description(meta_description)
                 if meta_problem:
                     raise InsufficientContentError(
                         f"meta_description still failing after regeneration: {meta_problem}. "
@@ -3597,16 +4041,15 @@ class BlogSystem:
             )
 
             post.affiliate_links = []
-            post.monetization_data = self.monetization.generate_ad_slots(
-                post.content)
+            post.monetization_data = self.monetization.generate_ad_slots(post.content)
 
             faq_schema = extract_and_build_faq_schema(
                 post.content,
-                self.config.get('base_url', 'https://kubaik.github.io'),
+                self.config.get("base_url", "https://kubaik.github.io"),
                 post.slug,
             )
             if faq_schema:
-                post.monetization_data['faq_schema'] = faq_schema
+                post.monetization_data["faq_schema"] = faq_schema
                 print("  ✅ FAQ schema extracted and attached to post.")
 
             post.full_title = full_title
@@ -3619,8 +4062,7 @@ class BlogSystem:
 
             all_tags = _to_single_word_tags(seo_keywords[:5] + hashtags)
             post.tags = all_tags[:15]
-            post.seo_keywords = _to_single_word_tags(
-                seo_keywords + hashtags)[:15]
+            post.seo_keywords = _to_single_word_tags(seo_keywords + hashtags)[:15]
             post.twitter_hashtags = " ".join(
                 f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags
             )
@@ -3642,6 +4084,7 @@ class BlogSystem:
                 TWITTER_LIMIT = 280
 
                 from visibility_automator import _get_hashtags_for_post
+
                 hashtag_str = _get_hashtags_for_post(post, max_tags=4)
 
                 if len(hashtag_str) > MAX_TAGS_CHARS:
@@ -3663,8 +4106,9 @@ class BlogSystem:
                     "What's the tool you wished you'd found earlier?",
                     "Anyone hit a different failure mode? Reply below.",
                 ]
-                bait_idx = int(hashlib.md5(post.slug.encode()
-                                           ).hexdigest(), 16) % len(_BAIT_POOL)
+                bait_idx = int(hashlib.md5(post.slug.encode()).hexdigest(), 16) % len(
+                    _BAIT_POOL
+                )
                 reply_bait = _BAIT_POOL[bait_idx]
 
                 fixed_cost = URL_SEP + TCO_LEN
@@ -3679,8 +4123,7 @@ class BlogSystem:
                         f"(budget was {body_budget})."
                     )
 
-                effective = len(bundle_tweet) + fixed_cost + \
-                    tags_cost + bait_cost
+                effective = len(bundle_tweet) + fixed_cost + tags_cost + bait_cost
                 if effective > TWITTER_LIMIT:
                     bait_cost = 0
                     reply_bait = ""
@@ -3718,6 +4161,63 @@ class BlogSystem:
             f"producing adequate content. No post has been saved."
         )
 
+    async def expand_topics(
+        self, n: int = 40, config_path: str = "config.yaml"
+    ) -> List[str]:
+        """Ask the LLM for fresh topics, keep only those passing every gate
+        (claim-style, blocklist, policy, duplicate vs. existing posts + current topics),
+        and append them to config.yaml content_topics. Lets the pipeline scale to
+        thousands of posts without recycling topics."""
+        existing = _load_existing_titles(self.output_dir)
+        with open(config_path, "r", encoding="utf-8") as f:
+            cfg = yaml.safe_load(f) or {}
+        current = cfg.get("content_topics", [])
+        sample = random.sample(existing, min(40, len(existing))) if existing else []
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are the editor of a software-engineering blog. Output ONLY a JSON array of strings."
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"Propose {n} NEW blog topics for backend, cloud, security, AI-engineering and developer-career "
+                    "readers. Rules: each topic is a neutral subject or reader question (6-14 words) that can carry "
+                    "2000 words of evergreen, documentation-grounded content; NO first-person wording (we/our/I/my); "
+                    "NO numeric outcome claims (percent, dollars, 'cut X by'); NO incidents or war stories; NO invented "
+                    "product names; spread across different technologies. Must differ from these existing titles:\n- "
+                    + "\n- ".join(sample)
+                    + "\n\nReturn ONLY the JSON array."
+                ),
+            },
+        ]
+        raw = await self._call_api_with_fallback(messages, max_tokens=2500)
+        m = re.search(r"\[.*\]", raw, re.S)
+        proposed = json.loads(m.group(0)) if m else []
+        pool = list(existing) + list(current)
+        kept: List[str] = []
+        for t in proposed:
+            t = str(t).strip().strip('"')
+            if not t or quality_gate.topic_problem(t) or topic_policy_violation(t):
+                continue
+            dup, _, _ = _is_duplicate_title(
+                t, pool + kept, threshold=DUPLICATE_TITLE_THRESHOLD
+            )
+            if dup:
+                continue
+            kept.append(t)
+        if kept:
+            cfg["content_topics"] = current + kept
+            with open(config_path, "w", encoding="utf-8") as f:
+                yaml.safe_dump(cfg, f, sort_keys=True, allow_unicode=True)
+        print(
+            f"expand_topics: {len(proposed)} proposed, {len(kept)} accepted, "
+            f"{len(cfg.get('content_topics', []))} total topics."
+        )
+        return kept
+
     async def _ask_llm_for_distinct_topic(
         self,
         blocked_topic: str,
@@ -3750,7 +4250,10 @@ class BlogSystem:
         ]
         raw = await self._call_api_with_fallback(messages, max_tokens=80)
         new_topic = raw.strip().strip('"').strip("'").strip()
-        return new_topic if new_topic else blocked_topic
+        _why = quality_gate.topic_problem(new_topic) if new_topic else "empty topic"
+        if _why:
+            raise ValueError(f"LLM proposed unusable topic '{new_topic}': {_why}")
+        return new_topic
 
     async def _generate_full_bundle(
         self,
@@ -3768,22 +4271,24 @@ class BlogSystem:
 
         keyword_text = (
             f"\nKeywords to incorporate naturally: {', '.join(keywords)}"
-            if keywords else ""
+            if keywords
+            else ""
         )
         existing_hint = (
             " Avoid titles similar to: "
             + ", ".join(f'"{t}"' for t in existing_titles[:8])
-            if existing_titles else ""
+            if existing_titles
+            else ""
         )
 
         title_guidance = {
-            "deep_dive":       "Title: MAX 50 chars. Lead with the insight, not the topic. E.g. 'Postgres indexes: the setting nobody checks'.",
-            "tutorial":        "Title: MAX 50 chars. Name the outcome + tool only. E.g. 'FastAPI rate limiting in 20 lines'.",
-            "opinion":         "Title: MAX 50 chars. State the contrarian take directly. E.g. 'Microservices slowed us down'.",
-            "comparison":      "Title: MAX 50 chars. Name both options + the verdict angle. E.g. 'Redis vs Memcached: the benchmark that matters'.",
-            "case_study":      "Title: MAX 50 chars. Name the mechanism, not a fake percentage. E.g. 'One btree index removed the seq scan'.",
-            "explainer":       "Title: MAX 50 chars. Name the confusion being resolved. E.g. 'Async Python: when it helps, when it hurts'.",
-            "listicle":        "Title: MAX 50 chars. Number + specific promise. E.g. '7 TypeScript traps that show up in reviews'.",
+            "deep_dive": "Title: MAX 50 chars. Lead with the insight, not the topic. E.g. 'Postgres indexes: the setting nobody checks'.",
+            "tutorial": "Title: MAX 50 chars. Name the outcome + tool only. E.g. 'FastAPI rate limiting in 20 lines'.",
+            "opinion": "Title: MAX 50 chars. State the contrarian take directly. E.g. 'Microservices slowed us down'.",
+            "comparison": "Title: MAX 50 chars. Name both options + the verdict angle. E.g. 'Redis vs Memcached: the benchmark that matters'.",
+            "case_study": "Title: MAX 50 chars. Name the mechanism, not a fake percentage. E.g. 'One btree index removed the seq scan'.",
+            "explainer": "Title: MAX 50 chars. Name the confusion being resolved. E.g. 'Async Python: when it helps, when it hurts'.",
+            "listicle": "Title: MAX 50 chars. Number + specific promise. E.g. '7 TypeScript traps that show up in reviews'.",
             "troubleshooting": "Title: MAX 50 chars. Use the exact error symptom. E.g. 'Node.js memory leak: how to find it in 10 min'.",
         }.get(format_name, "Title: MAX 50 chars. Specific, benefit-driven, no filler.")
 
@@ -3819,29 +4324,33 @@ Write a 2500-word {format_name} blog post about: "{topic}"{keyword_text}
 
 {title_guidance}{existing_hint}
 
-CONTENT QUALITY BAR — YOUR POST MUST SATISFY ALL OF THESE:
-1. Minimum 2000 words of ORIGINAL, substantive content. No filler.
-2. At least ONE concrete, illustrative scenario or example that makes an abstract
-   point specific — framed as a typical/common situation ("a common trap here
-   is…", "this usually shows up when…"), NOT as an invented personal claim
-   ("I ran into this when…", "I spent two weeks on this…"). This site discloses
-   AI-assisted authorship; specificity should come from real, verifiable
-   technical detail, not from fabricated first-hand stories.
-3. Named, version-pinned tools and services (e.g. "pytest 7.4", "Node 20 LTS",
-   "AWS Lambda with arm64", "Redis 7.2").
-4. At least THREE concrete numbers: latency figures, cost savings, benchmark
-   results, error rates, salary ranges, or line-of-code counts.
-5. A clear point of view — take a side, do not just say "it depends".
-6. FORBIDDEN phrases: "In today's fast-paced world", "dive into", "delve into",
+CONTENT QUALITY BAR — A POST THAT BREAKS ANY OF THESE IS DISCARDED:
+1. 2000+ words of substantive, non-repetitive content. Every section must teach
+   something a reader cannot get from the first page of the official docs.
+2. GROUNDING. You cannot browse or measure anything. State only facts you are
+   certain are true of real, widely documented tools and standards. Name a tool
+   or version only if you are sure it exists; otherwise describe the category.
+   NEVER invent products, benchmark tables, customer counts, survey results or
+   percentages attributed to anyone.
+3. NUMBERS are optional. Use a number only if it is (a) a documented default or
+   limit, (b) arithmetic you show step by step from stated assumptions
+   ("assume 10k requests/s..."), or (c) explicitly labelled illustrative. Never
+   present a figure as something that was measured.
+4. NO FIRST-HAND CLAIMS. No "I", "we", "our team", "in production at my company",
+   "a client of mine". Use impersonal framing: "teams commonly...", "a typical
+   failure mode is...". Opinions are fine when argued from documented behavior.
+5. ORIGINAL VALUE: include at least one of — a decision framework, a worked
+   example with shown reasoning, a checklist, a failure-mode analysis, or a
+   minimal runnable code sample. Code must be correct and self-contained.
+6. A clear point of view where the topic warrants one — but never "it depends"
+   as the whole answer.
+7. FORBIDDEN phrases: "In today's fast-paced world", "dive into", "delve into",
    "leverage", "game-changer", "it's important to note", "needless to say",
    "In conclusion", "comprehensive guide", "this article will", "we will explore".
-7. The final section must end with ONE specific, actionable next step the reader
-   can do today — not "start exploring" or "begin your journey".
-8. TITLE must describe a topic or claim, NOT an incident. Forbidden shapes:
-   "I actually used...", "Added X 3 days after...", "Cloud agents burned $18k",
-   "Saved $3k/month", "Survived 12,000 agents". Prefer: "Redis caching: what
-   breaks first" / "TypeScript strict mode traps" / "Why does my p99 spike?" /
-   "Stop using cron for retries".
+8. End with ONE specific action the reader can take in the next 30 minutes.
+9. TITLE describes a topic or claim, NOT an incident or a result. Forbidden:
+   "How we...", "I actually used...", "Saved $3k/month", "Cut costs 68%",
+   "Survived 12,000 agents".
 
 TITLE FORMAT — do NOT default to a "Cut/Reduce/Improve X% with Y" pattern. That
 is one of at least five acceptable shapes below; if the last few posts on this
@@ -3857,9 +4366,8 @@ easiest):
   - Named trap/mistake:            "TypeScript strict mode traps"
   - Question the reader is asking: "Why does my p99 spike after deploy?"
   - Blunt verdict/recommendation:  "Stop using cron for retries"
-  - Quantified outcome (use sparingly, and vary the metric — not always a
-    percentage): "Redis caching: what breaks first", "3 days lost to one
-    missing depends_on", "Cut AWS costs 40%: the real levers"
+  - Mechanism-first (no outcome claim): "Why one missing depends_on breaks
+    startup order", "Where AWS costs actually come from"
 
 TWEET HOOK FORMAT — do NOT default to a "Most teams burn $X on Y" cost/waste
 opener every time. That is one of at least eight acceptable hook shapes;
@@ -3878,32 +4386,23 @@ Respond with ONLY a JSON object in this exact shape:
   "seo_keywords": ["kw1","kw2","kw3","kw4","kw5","kw6","kw7","kw8"]
 }}}}
 
-Use EXACTLY these ## headings inside "content" (in order):
+SUGGESTED OUTLINE (adapt wording, merge, reorder or drop sections so the structure
+fits THIS topic — a rigid identical skeleton across posts reads as mass-produced):
 {heading_block}
 
 Hard requirements for "content":
-- Minimum 2000 words
-- At least 2 code examples with language tags (```python, ```javascript, etc.)
-- At least 3 concrete numbers (benchmarks, latency ms, percentages, cost figures) —
-  present as realistic/typical figures for the scenario, not as your own
-  personally-measured results
-- At least 1 concrete illustrative example: a specific, well-documented failure
-  mode, error message, or gotcha, framed as a common/typical occurrence
-- Each section minimum 200 words
+- Minimum 2000 words; each section substantive (no padding to hit a count)
+- Code examples with language tags ONLY where code clarifies the point; at least
+  one runnable, correct example for tutorial/troubleshooting posts
+- Numbers only under the NUMBERS rule above; no invented benchmarks
+- A markdown table only for a genuine side-by-side comparison
+- A "## Frequently Asked Questions" section ONLY if there are real follow-up
+  questions (3-4, phrased as real search queries, 3-5 sentence answers)
 - Do NOT include the title as a # heading at the top
-- The final section must end with a specific, actionable next step — not a generic "start today"
-- "## Frequently Asked Questions" section near the end with 3–4 questions written as
-  real search queries (the kind a developer would type into Google).
-  Answer each in 3–5 sentences.
-- At least one comparison table using markdown table syntax
-- OPENING: The introduction should end with one specific, concrete sentence that
-  frames the real problem this post solves — e.g. "The part that trips people up
-  is X, and that's what this post actually covers." Do NOT invent a specific
-  personal incident or claim a first-hand experience the model doesn't have
-  ("I spent three days debugging...") — ground the hook in the technical problem
-  itself, not a fabricated autobiography.
-- Closing line of last section: a single, specific action the reader can take in the
-  next 30 minutes — name the exact file, command, or metric they should check first.
+- OPENING: end the introduction with one concrete sentence naming the real
+  problem this post solves. Do NOT invent a personal incident.
+- Closing line of the last section: one specific action for the next 30 minutes —
+  name the exact file, command, or metric to check first.
 
 Requirements for "seo_keywords": 8 items — 2 short-tail (1-2 words), 4 long-tail (3-5 words),
 2 question-based (starting with "how", "why", "what", or "when").
@@ -3922,12 +4421,12 @@ Return ONLY the JSON object.""",
 
         for key in ("title", "content"):
             if key not in data:
-                raise ValueError(
-                    f"Bundle response missing required key: '{key}'")
+                raise ValueError(f"Bundle response missing required key: '{key}'")
 
         if not data.get("meta_description", "").strip():
             print(
-                "Note: meta_description missing from API response — deriving from content.")
+                "Note: meta_description missing from API response — deriving from content."
+            )
             data["meta_description"] = _derive_description(
                 data.get("content", ""), data.get("title", topic)
             )
@@ -3952,7 +4451,8 @@ Return ONLY the JSON object.""",
 
         if not data.get("tweet_text", "").strip():
             print(
-                "Note: tweet_text missing from bundle — template fallback will be used.")
+                "Note: tweet_text missing from bundle — template fallback will be used."
+            )
 
         data["_format"] = format_name
         data["_hook_style"] = hook_style
@@ -4008,8 +4508,7 @@ Return ONLY the JSON object.""",
                 )
             return new_title if new_title else title
         except Exception as e:
-            print(
-                f"  Title regeneration failed ({e}). Keeping original title.")
+            print(f"  Title regeneration failed ({e}). Keeping original title.")
             return title
 
     async def _regenerate_title_only(
@@ -4073,7 +4572,7 @@ Return ONLY the JSON object.""",
                     result.append(ch)
                     esc = False
                     continue
-                if ch == '\\':
+                if ch == "\\":
                     result.append(ch)
                     esc = True
                     continue
@@ -4082,19 +4581,19 @@ Return ONLY the JSON object.""",
                     result.append(ch)
                     continue
                 if in_str:
-                    if ch == '\n':
-                        result.append('\\n')
-                    elif ch == '\r':
-                        result.append('\\r')
-                    elif ch == '\t':
-                        result.append('\\t')
+                    if ch == "\n":
+                        result.append("\\n")
+                    elif ch == "\r":
+                        result.append("\\r")
+                    elif ch == "\t":
+                        result.append("\\t")
                     elif ord(ch) < 0x20:
-                        result.append(f'\\u{ord(ch):04x}')
+                        result.append(f"\\u{ord(ch):04x}")
                     else:
                         result.append(ch)
                 else:
                     result.append(ch)
-            return ''.join(result)
+            return "".join(result)
 
         def _repair(text):
             text = text.rstrip()
@@ -4108,24 +4607,24 @@ Return ONLY the JSON object.""",
                 if esc:
                     esc = False
                     continue
-                if ch == '\\' and in_str:
+                if ch == "\\" and in_str:
                     esc = True
                     continue
                 if ch == '"':
                     in_str = not in_str
                     continue
                 if not in_str:
-                    if ch == '{':
+                    if ch == "{":
                         depth += 1
-                    elif ch == '}':
+                    elif ch == "}":
                         depth -= 1
             rep = text
             if in_str:
                 rep += '"'
-            for _ in range(max(0, rep.count('[') - rep.count(']'))):
-                rep += ']'
-            for _ in range(max(0, rep.count('{') - rep.count('}'))):
-                rep += '}'
+            for _ in range(max(0, rep.count("[") - rep.count("]"))):
+                rep += "]"
+            for _ in range(max(0, rep.count("{") - rep.count("}"))):
+                rep += "}"
             return rep
 
         def _fix_unquoted_content(text: str) -> str:
@@ -4139,59 +4638,58 @@ Return ONLY the JSON object.""",
             prefix = m.group(1)
             content = m.group(2)
             suffix = m.group(3)
-            content = content.replace('\\n', '\n')
+            content = content.replace("\\n", "\n")
             encoded = json.dumps(content)
-            return text[:m.start()] + prefix + encoded + suffix + text[m.end():]
+            return text[: m.start()] + prefix + encoded + suffix + text[m.end() :]
 
         def _partial(text):
             data = {}
-            m = re.search(
-                r'"title"\s*:\s*"(.*?)(?:"\s*,|\"\s*\})', text, re.DOTALL)
+            m = re.search(r'"title"\s*:\s*"(.*?)(?:"\s*,|\"\s*\})', text, re.DOTALL)
             if m:
-                data['title'] = m.group(1).replace('\\"', '"').strip()
+                data["title"] = m.group(1).replace('\\"', '"').strip()
 
             m = re.search(
                 r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"(?:meta_description|seo_keywords|tweet_text)|"\s*\})',
-                text, re.DOTALL,
+                text,
+                re.DOTALL,
             )
             if not m:
                 m = re.search(r'"content"\s*:\s*"(.*)', text, re.DOTALL)
             if m:
-                data['content'] = (
+                data["content"] = (
                     m.group(1)
-                    .replace('\\n', '\n')
+                    .replace("\\n", "\n")
                     .replace('\\"', '"')
-                    .replace('\\t', '\t')
+                    .replace("\\t", "\t")
                 )
             else:
                 m2 = re.search(
                     r'"content"\s*:\s*([^"\{][^}]*?)(?=,\s*"(?:meta_description|tweet_text|seo_keywords)"|\s*\})',
-                    text, re.DOTALL,
+                    text,
+                    re.DOTALL,
                 )
                 if m2:
-                    data['content'] = m2.group(1).strip().rstrip(',').strip()
+                    data["content"] = m2.group(1).strip().rstrip(",").strip()
 
             m = re.search(
-                r'"meta_description"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})', text, re.DOTALL)
+                r'"meta_description"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})', text, re.DOTALL
+            )
             if m:
-                data['meta_description'] = m.group(
-                    1).replace('\\n', ' ').strip()
+                data["meta_description"] = m.group(1).replace("\\n", " ").strip()
 
             m = re.search(
-                r'"tweet_text"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})', text, re.DOTALL)
+                r'"tweet_text"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})', text, re.DOTALL
+            )
             if m:
-                data['tweet_text'] = (
-                    m.group(1)
-                    .replace('\\n', '\n')
-                    .replace('\\"', '"')
-                    .strip()
+                data["tweet_text"] = (
+                    m.group(1).replace("\\n", "\n").replace('\\"', '"').strip()
                 )
 
             m = re.search(r'"seo_keywords"\s*:\s*\[(.*?)\]', text, re.DOTALL)
             if m:
-                data['seo_keywords'] = [
+                data["seo_keywords"] = [
                     k.strip().strip('"')
-                    for k in m.group(1).split(',')
+                    for k in m.group(1).split(",")
                     if k.strip().strip('"')
                 ]
             return data
@@ -4200,9 +4698,11 @@ Return ONLY the JSON object.""",
             lambda t: json.loads(t),
             lambda t: json.loads(_sanitize(t)),
             lambda t: json.loads(_sanitize(_fix_unquoted_content(t))),
-            lambda t: json.loads(_sanitize(
-                re.search(r'\{.*\}', t, re.DOTALL).group()
-            )) if re.search(r'\{.*\}', t, re.DOTALL) else (_ for _ in ()).throw(ValueError()),
+            lambda t: (
+                json.loads(_sanitize(re.search(r"\{.*\}", t, re.DOTALL).group()))
+                if re.search(r"\{.*\}", t, re.DOTALL)
+                else (_ for _ in ()).throw(ValueError())
+            ),
             lambda t: json.loads(_sanitize(_repair(t))),
             lambda t: json.loads(_sanitize(_repair(_fix_unquoted_content(t)))),
         ]:
@@ -4213,11 +4713,11 @@ Return ONLY the JSON object.""",
 
         print("Warning: JSON unrecoverable — extracting fields individually.")
         data = _partial(raw)
-        if 'content' in data:
-            data.setdefault('title', '')
-            data.setdefault('meta_description', '')
-            data.setdefault('tweet_text', '')
-            data.setdefault('seo_keywords', [])
+        if "content" in data:
+            data.setdefault("title", "")
+            data.setdefault("meta_description", "")
+            data.setdefault("tweet_text", "")
+            data.setdefault("seo_keywords", [])
             return data
 
         raise ValueError(
@@ -4330,7 +4830,9 @@ Return ONLY the JSON object.""",
             return None
         return rewritten
 
-    async def _expand_content(self, existing_content: str, title: str, topic: str) -> str:
+    async def _expand_content(
+        self, existing_content: str, title: str, topic: str
+    ) -> str:
         author_note = _build_humanization_note(topic)
         messages = [
             {
@@ -4392,9 +4894,9 @@ Return ONLY the JSON object.""",
 
     def _create_slug(self, title: str) -> str:
         slug = title.lower()
-        slug = re.sub(r'[^\w\s-]', '', slug)
-        slug = re.sub(r'[\s_-]+', '-', slug)
-        return slug.strip('-')[:60]
+        slug = re.sub(r"[^\w\s-]", "", slug)
+        slug = re.sub(r"[\s_-]+", "-", slug)
+        return slug.strip("-")[:60]
 
     def _pick_retry_topic(
         self,
@@ -4419,14 +4921,14 @@ Return ONLY the JSON object.""",
 
         safe_topics = filter_safe_topics(all_topics)
         candidates = [
-            t for t in safe_topics
+            t
+            for t in safe_topics
             if t != failed_topic and t not in exclude and t not in used
         ]
 
         if not candidates:
             candidates = [
-                t for t in safe_topics
-                if t != failed_topic and t not in exclude
+                t for t in safe_topics if t != failed_topic and t not in exclude
             ]
 
         if not candidates:
@@ -4503,6 +5005,7 @@ Return ONLY the JSON object.""",
         if existing_json.exists():
             try:
                 import json as _json
+
                 with open(existing_json, "r", encoding="utf-8") as _f:
                     _existing = _json.load(_f)
                 if _existing.get("title", "").strip() != post.title.strip():
@@ -4515,41 +5018,43 @@ Return ONLY the JSON object.""",
             except (json.JSONDecodeError, KeyError):
                 pass
 
-        if not getattr(post, 'meta_description', '').strip():
-            post.meta_description = _derive_description(
-                post.content, post.title)
+        if not getattr(post, "meta_description", "").strip():
+            post.meta_description = _derive_description(post.content, post.title)
             print("  meta_description was empty — derived from content.")
         elif len(post.meta_description.strip()) > 155:
-            print(f"  meta_description was {len(post.meta_description.strip())} chars "
-                  f"(> 155) — trimming before save.")
+            print(
+                f"  meta_description was {len(post.meta_description.strip())} chars "
+                f"(> 155) — trimming before save."
+            )
             post.meta_description = _truncate_description(
-                post.meta_description.strip(), 155)
+                post.meta_description.strip(), 155
+            )
 
         post_dir = self.output_dir / post.slug
         post_dir.mkdir(exist_ok=True)
 
         post_data = post.to_dict()
-        post_data['word_count'] = word_count
-        post_data['reading_time_minutes'] = reading_time
-        post_data['has_code'] = '```' in post.content
-        post_data['has_table'] = '|' in post.content
+        post_data["word_count"] = word_count
+        post_data["reading_time_minutes"] = reading_time
+        post_data["has_code"] = "```" in post.content
+        post_data["has_table"] = "|" in post.content
 
-        post_data['full_title'] = getattr(post, 'full_title', post.title)
+        post_data["full_title"] = getattr(post, "full_title", post.title)
 
-        _final_check = validate_title(post.title, post_data['full_title'])
-        if not _final_check['valid']:
+        _final_check = validate_title(post.title, post_data["full_title"])
+        if not _final_check["valid"]:
             print(f"  ⚠️  Title failed validation at save time: {post.title}")
-            for _err in _final_check['errors']:
+            for _err in _final_check["errors"]:
                 print(f"      ❌ {_err}")
 
-        if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
-            post_data['twitter_hashtags'] = post.twitter_hashtags
+        if hasattr(post, "twitter_hashtags") and post.twitter_hashtags:
+            post_data["twitter_hashtags"] = post.twitter_hashtags
 
-        if hasattr(post, 'prewritten_tweet') and post.prewritten_tweet:
-            post_data['prewritten_tweet'] = post.prewritten_tweet
+        if hasattr(post, "prewritten_tweet") and post.prewritten_tweet:
+            post_data["prewritten_tweet"] = post.prewritten_tweet
 
-        if hasattr(post, 'tweet_hook_style') and post.tweet_hook_style:
-            post_data['tweet_hook_style'] = post.tweet_hook_style
+        if hasattr(post, "tweet_hook_style") and post.tweet_hook_style:
+            post_data["tweet_hook_style"] = post.tweet_hook_style
 
         with open(post_dir / "post.json", "w", encoding="utf-8") as f:
             json.dump(post_data, f, indent=2, ensure_ascii=False)
@@ -4564,8 +5069,7 @@ Return ONLY the JSON object.""",
                 content=post.content,
             )
         except Exception as exc:
-            print(
-                f"  ⚠️  PreFlightIndex post-save update failed (non-fatal): {exc}")
+            print(f"  ⚠️  PreFlightIndex post-save update failed (non-fatal): {exc}")
 
         print(
             f"Saved: {post.title} ({post.slug}) — "
@@ -4574,7 +5078,8 @@ Return ONLY the JSON object.""",
         if post.affiliate_links:
             print(f"  - {len(post.affiliate_links)} affiliate links")
         print(
-            f"  - has_code={post_data['has_code']} | has_table={post_data['has_table']}")
+            f"  - has_code={post_data['has_code']} | has_table={post_data['has_table']}"
+        )
 
 
 class InsufficientContentError(Exception):
@@ -4597,8 +5102,8 @@ class TopicExhaustedError(Exception):
 _STALE_YEARS = {"2020", "2021", "2022", "2023", "2024", "2025"}
 
 _HISTORICAL_MARKERS = re.compile(
-    r'\b(survey|report|study|research|data|found|published|showed|according|released|'
-    r'as of|back in|historically|in a|the \d{4}|a \d{4})\b',
+    r"\b(survey|report|study|research|data|found|published|showed|according|released|"
+    r"as of|back in|historically|in a|the \d{4}|a \d{4})\b",
     re.IGNORECASE,
 )
 
@@ -4609,32 +5114,32 @@ def _trim_to_budget(text: str, budget: int) -> str:
 
     window = text[:budget]
 
-    for punct in ('.', '!', '?'):
+    for punct in (".", "!", "?"):
         pos = window.rfind(punct)
         if pos >= budget // 2:
-            candidate = text[:pos + 1].rstrip()
+            candidate = text[: pos + 1].rstrip()
             if len(candidate) <= budget:
                 return candidate
 
-    for sep in ('—', ';'):
+    for sep in ("—", ";"):
         pos = window.rfind(sep)
         if pos >= budget // 2:
-            candidate = text[:pos].rstrip().rstrip(',;')
+            candidate = text[:pos].rstrip().rstrip(",;")
             if candidate:
-                return candidate + '…'
+                return candidate + "…"
 
-    pos = window.rfind(',')
+    pos = window.rfind(",")
     if pos >= budget // 2:
         candidate = text[:pos].rstrip()
         if candidate:
-            return candidate + '…'
+            return candidate + "…"
 
-    pos = window.rfind(' ')
+    pos = window.rfind(" ")
     if pos > 0:
-        candidate = text[:pos].rstrip('.,;: ')
-        return candidate + '…'
+        candidate = text[:pos].rstrip(".,;: ")
+        return candidate + "…"
 
-    return window.rstrip() + '…'
+    return window.rstrip() + "…"
 
 
 def _scrub_stale_years(text: str) -> str:
@@ -4644,8 +5149,8 @@ def _scrub_stale_years(text: str) -> str:
         code_blocks.append(m.group(0))
         return f"\x00CODE{len(code_blocks) - 1}\x00"
 
-    text = re.sub(r'```[\s\S]*?```', _mask_code, text)
-    text = re.sub(r'`[^`\n]+`', _mask_code, text)
+    text = re.sub(r"```[\s\S]*?```", _mask_code, text)
+    text = re.sub(r"`[^`\n]+`", _mask_code, text)
 
     iso_dates: list = []
 
@@ -4653,19 +5158,19 @@ def _scrub_stale_years(text: str) -> str:
         iso_dates.append(m.group(0))
         return f"\x00ISO{len(iso_dates) - 1}\x00"
 
-    text = re.sub(r'\b(202[0-5])-\d{2}-\d{2}\b', _mask_iso, text)
+    text = re.sub(r"\b(202[0-5])-\d{2}-\d{2}\b", _mask_iso, text)
 
     def _replace_year(m):
         year = m.group(0)
         if year not in _STALE_YEARS:
             return year
         start = max(0, m.start() - 80)
-        preceding = text[start:m.start()]
+        preceding = text[start : m.start()]
         if _HISTORICAL_MARKERS.search(preceding):
             return year
         return "2026"
 
-    text = re.sub(r'\b202[0-5]\b', _replace_year, text)
+    text = re.sub(r"\b202[0-5]\b", _replace_year, text)
 
     for i, block in enumerate(iso_dates):
         text = text.replace(f"\x00ISO{i}\x00", block)
@@ -4676,16 +5181,15 @@ def _scrub_stale_years(text: str) -> str:
 
 
 def _inject_freshness_footer_inline(post_data: dict) -> None:
-    if not post_data.get('content', ''):
+    """Refresh the 'Last generated' stamp after an LLM refresh. Never emits a
+    'Last reviewed' claim: no human review happens in this pipeline."""
+    if not post_data.get("content", ""):
         return
-
-    today_str = datetime.now().strftime('%B %d, %Y')
-    reviewed_pattern = r'(\*\*Last reviewed:\*\*\s*)([^\n]+)'
-
-    post_data['content'] = re.sub(
-        reviewed_pattern,
-        lambda m: f"{m.group(1)}{today_str}",
-        post_data['content'],
+    stamp = datetime.now().strftime("%B %Y")
+    post_data["content"] = re.sub(
+        r"\*\*Last (?:reviewed|generated):\*\*\s*[^\n]+",
+        f"**Last generated:** {stamp}",
+        post_data["content"],
     )
 
 
@@ -4697,7 +5201,8 @@ def pick_next_topic(
     print(f"Picking topic from {config_path}")
     if not os.path.exists(config_path):
         raise FileNotFoundError(
-            f"Config file {config_path} not found. Run 'python blog_system.py init' first.")
+            f"Config file {config_path} not found. Run 'python blog_system.py init' first."
+        )
 
     with open(config_path, "r") as f:
         config = yaml.safe_load(f)
@@ -4716,7 +5221,11 @@ def pick_next_topic(
 
     available = [t for t in filter_safe_topics(topics) if t not in used]
     if not available:
-        print("All topics used, resetting...")
+        # Cycling topics is how near-duplicate posts get written. Reset only the
+        # used-history; the duplicate checks below still reject covered topics.
+        print(
+            "All topics used, resetting used-history (duplicate checks still apply)..."
+        )
         available = filter_safe_topics(topics)
         used = []
 
@@ -4727,24 +5236,26 @@ def pick_next_topic(
         safe_available, skipped = [], []
         for candidate in available:
             is_dup, match, score = _is_duplicate_title(
-                candidate, existing_titles, threshold=DUPLICATE_TITLE_THRESHOLD)
+                candidate, existing_titles, threshold=DUPLICATE_TITLE_THRESHOLD
+            )
             if is_dup:
                 skipped.append((candidate, match, score))
             else:
                 safe_available.append(candidate)
 
         if skipped:
-            print(
-                f"Skipped {len(skipped)} topic(s) already covered (Jaccard):")
+            print(f"Skipped {len(skipped)} topic(s) already covered (Jaccard):")
             for topic, match, score in skipped:
                 print(f"  '{topic}' ≈ '{match}' ({score:.0%})")
 
         if safe_available:
             available = safe_available
         else:
-            print("All available topics covered (Jaccard). Resetting.")
-            available = topics
-            used = []
+            print("All available topics covered (Jaccard).")
+            raise TopicExhaustedError(
+                "Every remaining topic duplicates an existing post. Add fresh entries to "
+                "content_topics in config.yaml (or run 'python blog_system.py topics expand')."
+            )
 
     if available:
         if preflight_index is None:
@@ -4753,8 +5264,7 @@ def pick_next_topic(
 
         pf_safe, pf_skipped = [], []
         for candidate in available:
-            blocked, match_title, pf_score = preflight_index.is_duplicate(
-                candidate)
+            blocked, match_title, pf_score = preflight_index.is_duplicate(candidate)
             if blocked:
                 pf_skipped.append((candidate, match_title, pf_score))
             else:
@@ -4762,7 +5272,8 @@ def pick_next_topic(
 
         if pf_skipped:
             print(
-                f"Skipped {len(pf_skipped)} topic(s) already covered (TF-IDF pre-flight):")
+                f"Skipped {len(pf_skipped)} topic(s) already covered (TF-IDF pre-flight):"
+            )
             for t, m, s in pf_skipped:
                 print(f"  '{t}' ≈ '{m}' ({s:.0%})")
 
@@ -4793,27 +5304,28 @@ def create_sample_config(config_path: str = "config.yaml"):
         try:
             with open(CONFIG_FILE, "r", encoding="utf-8") as _f:
                 existing = yaml.safe_load(_f) or {}
-            print(
-                f"  Found existing {CONFIG_FILE} — merging new defaults only.")
+            print(f"  Found existing {CONFIG_FILE} — merging new defaults only.")
         except Exception as _e:
-            print(f"  Warning: could not read {CONFIG_FILE} ({_e}). "
-                  "Treating as new file.")
+            print(
+                f"  Warning: could not read {CONFIG_FILE} ({_e}). "
+                "Treating as new file."
+            )
             existing = {}
             is_new_file = True
 
     SCALAR_DEFAULTS = {
-        "site_name":               "Kubai Kevin",
+        "site_name": "Kubai Kevin",
         "site_description": (
             "Practical backend engineering, AI tooling, and developer career "
             "advice by Kubai Kevin — 10+ years building production systems."
         ),
-        "base_url":                "https://kubaik.github.io",
-        "base_path":               "",
-        "amazon_affiliate_tag":    "aiblogcontent-20",
-        "google_analytics_id":     "",
-        "google_adsense_id":       "",
+        "base_url": "https://kubaik.github.io",
+        "base_path": "",
+        "amazon_affiliate_tag": "aiblogcontent-20",
+        "google_analytics_id": "",
+        "google_adsense_id": "",
         "google_search_console_key": "",
-        "hook_style":              "auto",
+        "hook_style": "auto",
     }
 
     changed_keys: list[str] = []
@@ -4824,14 +5336,16 @@ def create_sample_config(config_path: str = "config.yaml"):
 
     gsc = existing.get("google_search_console_key", "")
     if isinstance(gsc, str) and gsc.startswith("AIza"):
-        print(f"  ⚠️  google_search_console_key looks like a Google API key "
-              f"(starts with 'AIza'). Clearing it — paste the HTML-meta "
-              f"verification token from Search Console instead.")
+        print(
+            f"  ⚠️  google_search_console_key looks like a Google API key "
+            f"(starts with 'AIza'). Clearing it — paste the HTML-meta "
+            f"verification token from Search Console instead."
+        )
         existing["google_search_console_key"] = ""
         changed_keys.append("google_search_console_key (cleared bad value)")
 
     social_defaults = {
-        "twitter":  "https://twitter.com/KubaiKevin",
+        "twitter": "https://twitter.com/KubaiKevin",
         "linkedin": "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
         "facebook": "your-facebook-page",
     }
@@ -4991,8 +5505,7 @@ def create_sample_config(config_path: str = "config.yaml"):
     existing_topics: list = config.get("content_topics") or []
     existing_topic_set = set(existing_topics)
     appended_topics = [
-        t for t in filter_safe_topics(NEW_TOPICS)
-        if t not in existing_topic_set
+        t for t in filter_safe_topics(NEW_TOPICS) if t not in existing_topic_set
     ]
     config["content_topics"] = existing_topics + appended_topics
     if appended_topics:
@@ -5002,8 +5515,7 @@ def create_sample_config(config_path: str = "config.yaml"):
         )
 
     with open(CONFIG_FILE, "w", encoding="utf-8") as _f:
-        yaml.dump(config, _f, default_flow_style=False,
-                  indent=2, allow_unicode=True)
+        yaml.dump(config, _f, default_flow_style=False, indent=2, allow_unicode=True)
 
     if is_new_file:
         print(f"Created {CONFIG_FILE} with default configuration.")
@@ -5065,12 +5577,11 @@ if __name__ == "__main__":
             blog_system = BlogSystem(config)
 
             try:
-                topic = pick_next_topic(
-                    preflight_index=blog_system.preflight_index
-                )
+                topic = pick_next_topic(preflight_index=blog_system.preflight_index)
             except Exception as e:
                 print(f"Unexpected error picking a topic: {e}")
                 import traceback
+
                 traceback.print_exc()
                 sys.exit(1)
 
@@ -5082,13 +5593,13 @@ if __name__ == "__main__":
                 attempted_topics.append(topic)
 
                 try:
-                    blog_post = asyncio.run(
-                        blog_system.generate_blog_post(topic))
+                    blog_post = asyncio.run(blog_system.generate_blog_post(topic))
 
                 except TopicExhaustedError as e:
                     print("\n" + "═" * 68)
                     print(
-                        "⏭️   NO POST PUBLISHED TODAY — every candidate topic was a duplicate")
+                        "⏭️   NO POST PUBLISHED TODAY — every candidate topic was a duplicate"
+                    )
                     print("═" * 68)
                     print(f"  Reason : {e}")
                     print(
@@ -5115,6 +5626,7 @@ if __name__ == "__main__":
                 except Exception as e:
                     print(f"Unexpected error: {e}")
                     import traceback
+
                     traceback.print_exc()
                     sys.exit(1)
 
@@ -5141,7 +5653,8 @@ if __name__ == "__main__":
                         sys.exit(1)
 
                     existing_titles_for_retry = _load_existing_titles(
-                        blog_system.output_dir)
+                        blog_system.output_dir
+                    )
                     topic = blog_system._pick_retry_topic(
                         topic, existing_titles_for_retry, exclude=attempted_topics
                     )
@@ -5152,8 +5665,7 @@ if __name__ == "__main__":
                     continue
 
                 if quality_warnings:
-                    print(
-                        f"\n⚠️  Content quality warnings ({len(quality_warnings)}):")
+                    print(f"\n⚠️  Content quality warnings ({len(quality_warnings)}):")
                     for w in quality_warnings:
                         print(f"   • {w}")
                     print()
@@ -5170,13 +5682,18 @@ if __name__ == "__main__":
                         for warning in sim_result.warnings:
                             print(f"  ⚠️  Similarity: {warning}")
                 except Exception as sim_err:
-                    print(f"\n🛑  SimilarityGuard raised an error — aborting "
-                          f"per its fail-closed contract: {sim_err}")
+                    print(
+                        f"\n🛑  SimilarityGuard raised an error — aborting "
+                        f"per its fail-closed contract: {sim_err}"
+                    )
                     import traceback
+
                     traceback.print_exc()
                     print("   This post has been aborted. No file was written.")
-                    print("   Investigate the SimilarityGuard/.similarity_index.json "
-                          "error above before re-running.")
+                    print(
+                        "   Investigate the SimilarityGuard/.similarity_index.json "
+                        "error above before re-running."
+                    )
                     sys.exit(1)
 
                 if not dup_detected:
@@ -5195,9 +5712,12 @@ if __name__ == "__main__":
                                 f"(/{topic_dup['slug']}/)"
                             )
                     except Exception as topic_err:
-                        print(f"\n🛑  topic_dedup raised an error — aborting "
-                              f"per its fail-closed contract: {topic_err}")
+                        print(
+                            f"\n🛑  topic_dedup raised an error — aborting "
+                            f"per its fail-closed contract: {topic_err}"
+                        )
                         import traceback
+
                         traceback.print_exc()
                         print("   This post has been aborted. No file was written.")
                         sys.exit(1)
@@ -5208,13 +5728,14 @@ if __name__ == "__main__":
                     inject_freshness_footer(blog_post)
 
                     try:
-                        claim_result = check_claims(
-                            blog_post.content, blog_post.title
-                        )
+                        claim_result = check_claims(blog_post.content, blog_post.title)
                     except Exception as claim_err:
-                        print(f"\n🛑  claim_gate raised an error — aborting "
-                              f"per its fail-closed contract: {claim_err}")
+                        print(
+                            f"\n🛑  claim_gate raised an error — aborting "
+                            f"per its fail-closed contract: {claim_err}"
+                        )
                         import traceback
+
                         traceback.print_exc()
                         print("   This post has been aborted. No file was written.")
                         sys.exit(1)
@@ -5232,7 +5753,8 @@ if __name__ == "__main__":
                             )
                             sys.exit(1)
                         existing_titles_for_retry = _load_existing_titles(
-                            blog_system.output_dir)
+                            blog_system.output_dir
+                        )
                         topic = blog_system._pick_retry_topic(
                             topic, existing_titles_for_retry, exclude=attempted_topics
                         )
@@ -5245,38 +5767,39 @@ if __name__ == "__main__":
                     try:
                         injected_imgs = inject_alt_text(blog_post)
                         if injected_imgs:
-                            print(
-                                f"  🖼  {injected_imgs} image alt text(s) injected.")
+                            print(f"  🖼  {injected_imgs} image alt text(s) injected.")
                     except Exception as e:
-                        print(
-                            f"  ⚠️  Alt text injection failed (non-fatal): {e}")
+                        print(f"  ⚠️  Alt text injection failed (non-fatal): {e}")
 
                     try:
                         posts_index = build_posts_index(blog_system.output_dir)
                         base_path = config.get("base_path", "")
                         inject_internal_links(
-                            blog_post, posts_index, base_path=base_path)
+                            blog_post, posts_index, base_path=base_path
+                        )
                     except Exception as e:
-                        print(
-                            f"  ⚠️  Internal link injection failed (non-fatal): {e}")
+                        print(f"  ⚠️  Internal link injection failed (non-fatal): {e}")
 
                     try:
                         removed_links = validate_post_links(
-                            blog_post, blog_system.output_dir)
+                            blog_post, blog_system.output_dir
+                        )
                         if removed_links:
-                            print(f"  🔗 Link validator removed {len(removed_links)} unresolvable link(s): "
-                                  f"{', '.join(removed_links)}")
+                            print(
+                                f"  🔗 Link validator removed {len(removed_links)} unresolvable link(s): "
+                                f"{', '.join(removed_links)}"
+                            )
                     except Exception as e:
                         print(f"  ⚠️  Link validator failed (non-fatal): {e}")
 
                     try:
                         canon_issues = validate_canonical(
-                            blog_post, config.get('base_url', ''))
+                            blog_post, config.get("base_url", "")
+                        )
                         for issue in canon_issues:
                             print(f"  ⚠️  Canonical: {issue}")
                     except Exception as e:
-                        print(
-                            f"  ⚠️  Canonical validation failed (non-fatal): {e}")
+                        print(f"  ⚠️  Canonical validation failed (non-fatal): {e}")
 
                     try:
                         blog_system.save_post(blog_post)
@@ -5305,7 +5828,8 @@ if __name__ == "__main__":
                     sys.exit(1)
 
                 existing_titles_for_retry = _load_existing_titles(
-                    blog_system.output_dir)
+                    blog_system.output_dir
+                )
                 topic = blog_system._pick_retry_topic(
                     topic, existing_titles_for_retry, exclude=attempted_topics
                 )
@@ -5319,7 +5843,7 @@ if __name__ == "__main__":
                 generate_og_card(
                     blog_post,
                     output_dir=blog_system.output_dir,
-                    site_name=config.get('site_name', 'Kubai Kevin'),
+                    site_name=config.get("site_name", "Kubai Kevin"),
                 )
             except Exception as e:
                 print(f"  ⚠️  OG card generation failed (non-fatal): {e}")
@@ -5362,13 +5886,13 @@ if __name__ == "__main__":
             print(SEP + "\n")
 
             if not _twitter_posting_enabled():
-                print(
-                    "⏭️  Twitter posting SKIPPED (ENABLE_TWITTER_POSTING != true).")
+                print("⏭️  Twitter posting SKIPPED (ENABLE_TWITTER_POSTING != true).")
                 print("  ↑ Tweet above is what would have been posted.\n")
             else:
                 print("Posting tweet...")
                 post_result = visibility.post_prewritten_tweet(
-                    blog_post, final_tweet_text)
+                    blog_post, final_tweet_text
+                )
 
                 if post_result["success"]:
                     print(SEP)
@@ -5376,8 +5900,7 @@ if __name__ == "__main__":
                     print(SEP)
                     print(f"  URL           : {post_result['url']}")
                     print(f"  Tweet ID      : {post_result['tweet_id']}")
-                    print(
-                        f"  Char count    : {post_result['char_count']} / 280")
+                    print(f"  Char count    : {post_result['char_count']} / 280")
                     print(SEP + "\n")
                 else:
                     print("❌  X / TWITTER — POST FAILED (no retry)")
@@ -5443,24 +5966,25 @@ if __name__ == "__main__":
                 config = yaml.safe_load(f)
             blog_system = BlogSystem(config)
             print(
-                f"Output directory: {blog_system.output_dir} (exists: {blog_system.output_dir.exists()})")
+                f"Output directory: {blog_system.output_dir} (exists: {blog_system.output_dir.exists()})"
+            )
             if blog_system.output_dir.exists():
                 for item in blog_system.output_dir.iterdir():
-                    print(
-                        f"  - {item.name} ({'dir' if item.is_dir() else 'file'})")
+                    print(f"  - {item.name} ({'dir' if item.is_dir() else 'file'})")
                     if item.is_dir():
                         for fname in ["post.json", "index.md", "social_posts.json"]:
                             print(
-                                f"    {fname}: {'Yes' if (item / fname).exists() else 'No'}")
+                                f"    {fname}: {'Yes' if (item / fname).exists() else 'No'}"
+                            )
                         if (item / "post.json").exists():
                             try:
                                 with open(item / "post.json") as f:
                                     data = json.load(f)
-                                wc = _count_words(data.get('content', ''))
-                                is_fb = data.get('monetization_data', {}).get(
-                                    'used_fallback', False)
-                                has_tweet = bool(
-                                    data.get('prewritten_tweet', ''))
+                                wc = _count_words(data.get("content", ""))
+                                is_fb = data.get("monetization_data", {}).get(
+                                    "used_fallback", False
+                                )
+                                has_tweet = bool(data.get("prewritten_tweet", ""))
                                 print(
                                     f"    Title: {data.get('title', 'Unknown')} | "
                                     f"Words: {wc} {'✓' if wc >= MIN_WORD_COUNT else '⚠'} "
@@ -5484,7 +6008,9 @@ if __name__ == "__main__":
             visibility = VisibilityAutomator(config)
             for post in posts:
                 social_posts = visibility.generate_social_posts(post)
-                with open(blog_system.output_dir / post.slug / "social_posts.json", 'w') as f:
+                with open(
+                    blog_system.output_dir / post.slug / "social_posts.json", "w"
+                ) as f:
                     json.dump(social_posts, f, indent=2)
                 print(f"Social posts generated for: {post.title}")
             print("Done!")
@@ -5500,8 +6026,10 @@ if __name__ == "__main__":
 
         elif mode == "dedup":
             import subprocess
-            subprocess.run(["python", "deduplicate_posts.py",
-                           "--delete"] + sys.argv[2:])
+
+            subprocess.run(
+                ["python", "deduplicate_posts.py", "--delete"] + sys.argv[2:]
+            )
 
         elif mode == "fix-descriptions":
             if not os.path.exists("config.yaml"):
@@ -5523,9 +6051,15 @@ if __name__ == "__main__":
                         data = json.load(f)
                     desc = data.get("meta_description", "").strip()
                     _weak_openers = (
-                        "this post", "in this article", "a guide to",
-                        "learn about", "an overview", "this tutorial",
-                        "this article", "we will", "you will learn",
+                        "this post",
+                        "in this article",
+                        "a guide to",
+                        "learn about",
+                        "an overview",
+                        "this tutorial",
+                        "this article",
+                        "we will",
+                        "you will learn",
                     )
                     needs_fix = (
                         not desc
@@ -5533,24 +6067,30 @@ if __name__ == "__main__":
                         or len(desc) > 155
                     )
                     if needs_fix:
-                        if desc and len(desc) > 155 and not any(
-                                desc.lower().startswith(w) for w in _weak_openers):
+                        if (
+                            desc
+                            and len(desc) > 155
+                            and not any(
+                                desc.lower().startswith(w) for w in _weak_openers
+                            )
+                        ):
                             fixed_desc = _truncate_description(desc, 155)
                             reason = "too long"
                         else:
                             fixed_desc = _derive_description(
-                                data.get("content", ""), data.get("title", ""))
+                                data.get("content", ""), data.get("title", "")
+                            )
                             reason = "empty" if not desc else "weak opener"
                         data["meta_description"] = fixed_desc
                         with open(post_json, "w", encoding="utf-8") as f:
                             json.dump(data, f, indent=2, ensure_ascii=False)
-                        print(
-                            f"Fixed ({reason}): {post_dir.name} → {fixed_desc[:80]}…")
+                        print(f"Fixed ({reason}): {post_dir.name} → {fixed_desc[:80]}…")
                         fixed += 1
                 except Exception as e:
                     print(f"Error fixing {post_dir.name}: {e}")
             print(
-                f"\nFixed {fixed} posts. Run 'python blog_system.py build' to regenerate HTML.")
+                f"\nFixed {fixed} posts. Run 'python blog_system.py build' to regenerate HTML."
+            )
 
         elif mode == "fix-titles":
             if not os.path.exists("config.yaml"):
@@ -5576,7 +6116,9 @@ if __name__ == "__main__":
                     stored_full_title = data.get("full_title", current_title)
                     result = validate_title(current_title, stored_full_title)
 
-                    if not data.get("full_title") and _title_is_truncated(current_title):
+                    if not data.get("full_title") and _title_is_truncated(
+                        current_title
+                    ):
                         print(
                             f"  ⚠️  {post_dir.name}: title looks truncated but has "
                             f"no `full_title` on record — cannot recover the "
@@ -5622,73 +6164,89 @@ if __name__ == "__main__":
                 config = yaml.safe_load(f)
 
             blog_system = BlogSystem(config)
-            refresh_results = asyncio.run(
-                blog_system.refresh_stale_posts(limit=limit)
-            )
+            refresh_results = asyncio.run(blog_system.refresh_stale_posts(limit=limit))
 
             print("\n" + "=" * 70)
             print("REFRESH RESULTS")
             print("=" * 70)
             print(f"Refreshed : {len(refresh_results['refreshed'])} posts")
-            if refresh_results['refreshed']:
-                for slug in refresh_results['refreshed']:
+            if refresh_results["refreshed"]:
+                for slug in refresh_results["refreshed"]:
                     print(f"  ✓ {slug}")
 
-            if refresh_results['skipped']:
+            if refresh_results["skipped"]:
                 print(f"\nSkipped   : {len(refresh_results['skipped'])} posts")
-                for reason in refresh_results['skipped']:
+                for reason in refresh_results["skipped"]:
                     print(f"  - {reason}")
 
-            if refresh_results['errors']:
+            if refresh_results["errors"]:
                 print(f"\nErrors    : {len(refresh_results['errors'])} posts")
-                for error in refresh_results['errors']:
+                for error in refresh_results["errors"]:
                     print(f"  ✗ {error}")
 
             print("=" * 70 + "\n")
 
-            if refresh_results['refreshed']:
+            if refresh_results["refreshed"]:
                 print(f"has_refreshed=true")
-                print(
-                    f"refreshed_list={','.join(refresh_results['refreshed'])}")
+                print(f"refreshed_list={','.join(refresh_results['refreshed'])}")
             else:
                 print(f"has_refreshed=false")
 
-            if refresh_results['refreshed']:
+            if refresh_results["refreshed"]:
                 StaticSiteGenerator(blog_system).generate_site()
                 print("Site rebuilt after stale-post refresh.")
 
         elif mode == "classify":
             from adsense_fixes.classify_posts import main as classify_main
+
             raise SystemExit(classify_main(sys.argv[2:]))
 
         elif mode == "apply-verdicts":
             from adsense_fixes.content_audit_verdicts import main as verdicts_main
+
             raise SystemExit(verdicts_main(sys.argv[2:]))
 
         elif mode == "audit-links":
             from adsense_fixes.link_validator import audit_all_internal_links
-            report = audit_all_internal_links(Path('./docs'))
+
+            report = audit_all_internal_links(Path("./docs"))
             print(report)
 
         elif mode == "audit-slugs":
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found.")
                 sys.exit(1)
-            report = audit_duplicate_slugs(Path('./docs'))
+            report = audit_duplicate_slugs(Path("./docs"))
             print(report)
 
         elif mode == "audit-freshness":
             from adsense_fixes.content_freshness import stale_report
-            print(stale_report(Path('./docs')))
+
+            print(stale_report(Path("./docs")))
             print()
-            print(get_publishing_schedule_status(Path('./docs')))
+            print(get_publishing_schedule_status(Path("./docs")))
+
+        elif mode == "topics":
+            subcmd = sys.argv[2] if len(sys.argv) > 2 else "expand"
+            if subcmd == "expand":
+                count = (
+                    int(sys.argv[3])
+                    if len(sys.argv) > 3 and sys.argv[3].isdigit()
+                    else 40
+                )
+                with open("config.yaml", "r", encoding="utf-8") as _f:
+                    _cfg = yaml.safe_load(_f) or {}
+                asyncio.run(BlogSystem(_cfg).expand_topics(count))
+            else:
+                print("Usage: python blog_system.py topics expand [N]")
 
         elif mode == "velocity":
             vc = VelocityController()
             subcmd = sys.argv[2] if len(sys.argv) > 2 else "status"
             if subcmd == "status":
                 print(
-                    f"Today: {vc.today_count()}/{vc.effective_limit()} posts published")
+                    f"Today: {vc.today_count()}/{vc.effective_limit()} posts published"
+                )
             elif subcmd == "reset":
                 print(
                     "Nothing to reset: the publish count is derived live from "
@@ -5703,8 +6261,7 @@ if __name__ == "__main__":
             docs_dir = Path("./docs")
             idx = PreFlightIndex(docs_dir=docs_dir)
             idx.load(force_rebuild=True)
-            print(
-                f"Pre-flight index rebuilt: {len(idx._entries)} posts indexed.")
+            print(f"Pre-flight index rebuilt: {len(idx._entries)} posts indexed.")
             print(f"Cache written to: {idx.cache_file}")
 
         elif mode == "preflight-check":
@@ -5720,7 +6277,8 @@ if __name__ == "__main__":
             print(f"Topic   : {candidate}")
             print(f"Status  : {status}")
             print(
-                f"Score   : {score:.2f} (threshold {_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD})")
+                f"Score   : {score:.2f} (threshold {_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD})"
+            )
             if match_title:
                 print(f"Nearest : {match_title}")
 
@@ -5734,7 +6292,9 @@ if __name__ == "__main__":
 
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
-        print("Commands: init | auto | build | cleanup | audit | purge | debug | social | "
-              "test-twitter | dedup | fix-descriptions | fix-titles | refresh-stale | "
-              "audit-links | audit-slugs | audit-freshness | velocity | preflight-rebuild | "
-              "preflight-check")
+        print(
+            "Commands: init | auto | build | cleanup | audit | purge | debug | social | "
+            "test-twitter | dedup | fix-descriptions | fix-titles | refresh-stale | "
+            "audit-links | audit-slugs | audit-freshness | velocity | topics | preflight-rebuild | "
+            "preflight-check"
+        )

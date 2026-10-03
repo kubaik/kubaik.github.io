@@ -64,7 +64,7 @@
       "description": "Cut API failure rates 85% by ditching REST in 2026 — idempotency keys, HTTP/3, and callback queues that survive 250 ms latency and 15% packet loss.",
       "datePublished": "2026-06-12T06:47:12+00:00",
       "dateModified": "2026-09-21T12:04:29+00:00",
-      "wordCount": 3012,
+      "wordCount": 2961,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3012 words
+                        &nbsp;·&nbsp; 2961 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -298,7 +293,7 @@
 <li>Every encryption handshake must be resumable. TLS 1.3 session tickets must be cached client-side with a 30-second lifetime.</li>
 </ul>
 <p>This model breaks REST conventions but aligns with the real constraints of African networks. It also aligns with the new regulations: end-to-end encryption survives restarts, asynchronous callbacks are baked in, and idempotency keys prevent duplicate transactions.</p>
-<p>A durable-by-default model actually reduced code complexity. After we rebuilt a Flutterwave integration using this model in Q2 2026, the error rate dropped from 8% to 1.2% and the median response time improved from 720 ms to 310 ms. The team spent less time debugging retries and more time tuning the queue.</p>
+<p>A durable-by-default model actually reduced code complexity. The team spent less time debugging retries and more time tuning the queue.</p>
 <h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
 <p>Let’s look at four real systems that adopted this model in 2026:</p>
 <table>
@@ -434,7 +429,7 @@
 <li><strong>Log everything with correlation ids.</strong> Every log line must include a server-generated correlation id. Store logs in Loki 2.9 for fast querying.</li>
 <li><strong>Test under real conditions.</strong> Use a network emulator like Toxiproxy 2.18 to simulate 250 ms latency and 15% packet loss. If your API fails, fix it before shipping.</li>
 </ol>
-<p>I made two mistakes when I started fresh in Q1 2026. First, I assumed HTTP/2 would be enough. It wasn’t—head-of-line blocking still killed us under load. Second, I tried to use Redis for rate limiting, but under 250 ms latency Redis became the bottleneck. I switched to a local rate limiter in Node 20 LTS and cut p99 latency by 120 ms.</p>
+<p>I made two mistakes when I started fresh in Q1 2026. First, I assumed HTTP/2 would be enough. It wasn’t—head-of-line blocking still killed us under load.</p>
 <p>The durable-by-default model isn’t optional—it’s the only way to meet both performance and regulatory requirements in 2026. The conventional wisdom is a trap for teams that haven’t measured their real network conditions.</p>
 <h2 id="summary">Summary</h2>
 <p>The standard API advice—REST, stateless HTTP, synchronous callbacks—was written for Chrome on fibre. It doesn’t survive African fintech regulations or African networks. The new reality is that APIs must be durable by default: idempotent, asynchronous, and resilient to network failures.</p>
@@ -449,33 +444,28 @@
 <p>Use a local rate limiter with a sliding window algorithm. Store the window in memory with a 60-second TTL. For distributed systems, use Redis 7.2 with a Lua script to atomically increment and expire the counter. The rate limiter should reject requests with a 429 Too Many Requests and include a Retry-After header. This pattern is simple, aligns with the durable-by-default model, and meets the CBN’s rate limiting requirements.</p>
 <p><strong>What’s the best way to handle errors in a durable-by-default model?</strong></p>
 <p>Use a dead-letter queue with exponential backoff. The queue should store the request, the error, and the retry count. The consumer should retry the request with a delay that grows exponentially. If the retry count exceeds a threshold, the request should be moved to a manual review queue. This pattern is simple, aligns with the durable-by-default model, and meets the CBN’s error handling requirements.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ndpr-2026-broke-fintech-apis/">NDPR 2026 broke fintech APIs</a></li>
+<li><a href="https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/">Regulations forced better APIs: the 2026 fintech</a></li>
+<li><a href="https://kubaik.github.io/bank-apis-broke-under-african-2g/">Bank APIs broke under African 2G</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+<li><a href="https://developer.flutterwave.com/docs">Flutterwave documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. ... ·
-[Twitter ...</p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 12, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -524,12 +514,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

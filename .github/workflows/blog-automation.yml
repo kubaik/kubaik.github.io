@@ -10,6 +10,14 @@ on:
         required: false
         default: false
         type: boolean
+      improve_limit:
+        description: "Posts LLM-rewritten this run (0 = all remaining; mind provider rate limits)"
+        required: false
+        default: "5"
+      triage_max_deletions:
+        description: "Max DELETE-verdict posts removed this run (run once with 100 for the initial cleanup)"
+        required: false
+        default: "10"
       regenerate_og_only:
         description: "Only regenerate OG images (skip content generation)"
         required: false
@@ -163,6 +171,7 @@ jobs:
           LLM7_API_KEY: ${{ secrets.LLM7_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ENABLE_TWITTER_POSTING: ${{ steps.twitter_flag.outputs.effective_flag }}
+          ENTITY_VERIFY_ONLINE: "1"
         run: |
           python blog_system.py auto || {
             echo "WARNING: Content generation failed — rebuilding existing content"
@@ -326,6 +335,48 @@ jobs:
       # repo's history, and whichever ran last silently won. That
       # duplication is gone now — sitemap_url_count is derived from the
       # file SSG just wrote.
+      # ── Corpus quality cleanup (bounded per run, resumable, everything backed up) ──────────
+      # 1. triage.py        report-only verdicts (DELETE / IMPROVE) from deterministic gates
+      # 2. delete_posts.py  deletes DELETE posts AND writes blocked_topics.json so they can never regenerate
+      # 3. improve_posts.py LLM rewrite of IMPROVE posts, validated; failures leave the original untouched
+      # 4. post_enhancer    related-reading + official-docs links + honest AI-disclosure footer (run by 3)
+      # Enable with workflow_dispatch inputs; both default to a small safe batch.
+      - name: 🧮 Triage corpus (report only)
+        run: python triage.py --docs ./docs --out ./triage_report
+
+      - name: 🗑️ Delete DELETE-verdict posts + block their topics
+        run: |
+          python delete_posts.py --docs ./docs --verdicts ./triage_report/verdicts.csv \
+            --max "${{ github.event.inputs.triage_max_deletions || '10' }}" \
+            --backup-dir ./.triage_backups --confirm
+
+      - name: ✨ LLM-improve IMPROVE-verdict posts
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
+          LLM7_API_KEY: ${{ secrets.LLM7_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          ENTITY_VERIFY_ONLINE: "1"
+        run: |
+          python triage.py --docs ./docs --out ./triage_report
+          python improve_posts.py --docs ./docs --verdicts ./triage_report/verdicts.csv \
+            --limit "${{ github.event.inputs.improve_limit || '5' }}" --verify-online --confirm || \
+            echo "WARNING: improve_posts.py failed — continuing with the build"
+
+      # Idempotent, no LLM: replaces the false legacy footer on EVERY kept post, strips leftover invented
+      # claims, adds related-reading/official-docs links, repairs links to deleted posts.
+      - name: 🔗 Apply code-driven post improvements (all posts)
+        run: |
+          python triage.py --docs ./docs --out ./triage_report
+          python post_enhancer.py --docs ./docs --verdicts ./triage_report/verdicts.csv \
+            --backup ./.quality_review_backups --verify-links --confirm
+
       - name: 🔁 Rebuild site after automated fixes
         run: |
           python blog_system.py build
@@ -418,7 +469,9 @@ jobs:
           # scripts/process_regeneration_queue.py, and
           # scripts/process_citation_queue.py touched this run — a backup
           # that isn't persisted across checkouts isn't a backup.
-          git add . .duplicate_backups/ .fabrication_backups/ .citation_backups/
+          # git add exits 128 on a pathspec that doesn't exist yet (first run, nothing deleted)
+          mkdir -p .duplicate_backups .fabrication_backups .citation_backups .triage_backups .quality_review_backups
+          git add . .duplicate_backups/ .fabrication_backups/ .citation_backups/ .triage_backups/ .quality_review_backups/
           if git diff --staged --quiet; then
             echo "Nothing to commit"
           else

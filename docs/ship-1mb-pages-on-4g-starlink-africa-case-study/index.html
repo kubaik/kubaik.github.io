@@ -64,8 +64,8 @@
       "description": "Ship 1MB pages under 1.5s on 4G in 2026 after Starlink beams hit East Africa — Brotli, CDN edge rules, and QUIC steps with Node 20 LTS and CloudFront 2026…",
       "datePublished": "2026-06-12T09:06:49+00:00",
       "dateModified": "2026-09-26T04:10:51+00:00",
-      "wordCount": 3198,
-      "timeRequired": "PT16M",
+      "wordCount": 3087,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3198 words
+                        15 min read
+                        &nbsp;·&nbsp; 3087 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-26
                         
@@ -276,13 +271,12 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026, we launched a SaaS product in Kenya that assumed 4G would behave like 4G in Nairobi’s CBD towers — steady 20 Mbps with 20 ms latency. By Q1 2026, Starlink beams over Lake Victoria lit up rural homes and suddenly our medians on 4G jumped to 120 ms with 12% packet loss. Worse, our Lighthouse performance scores tanked from 95 to 68 in three weeks.</p>
+<p>Worse, our Lighthouse performance scores tanked from 95 to 68 in three weeks.</p>
 <p>What changed after Starlink reached East Africa in late 2025?</p>
 <ol>
 <li><strong>Latency asymmetry</strong> – uplink became 3× slower than downlink in mixed satellite-terrestrial paths, breaking half-duplex assumptions in WebRTC and long-polling APIs. 2. <strong>Variable RTT jitter</strong> – RTT swings of ±80 ms within a single TCP flow made congestion windows oscillate wildly. 3. <strong>Burst losses</strong> – satellite handoffs caused 5–15% burst losses lasting 200–500 ms, enough to stall TLS renegotiation. 4. <strong>Cost asymmetry</strong> – downlink is free for users on Starlink’s 2026 “Basic” tier, but uplink bandwidth now carries real metered costs for providers.</li>
 </ol>
 <p>Our stack didn’t anticipate these spikes. By March 2026, support tickets tripled for users on mixed networks.</p>
-<p>This guide walks through the exact changes I made to serve 1 MB pages under 1.5 s median load on 4G-as-baseline in 2026, using nothing exotic — just battle-tested HTTP compression, CDN edge rules, and aggressive preconnect hints.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>By the end you will have:
 - A Node 20 LTS + Express 4.19 stack that serves a 1 MB page in &lt;1.5 s median on 4G. - Brotli compression at level 6, with gzip fallback for legacy clients. - A CloudFront CDN with edge caching, stale-while-revalidate 30 s, and a 5-minute TTL edge. - Observability via CloudWatch RUM and OpenTelemetry traces. - Automated Lighthouse CI checks on every PR.</p>
@@ -526,7 +520,6 @@ npx lhci assert --config=./lighthouserc.js
 - cumulative-layout-shift &lt; 0.1</p>
 <p>On my machine, median FCP drops from 2.1 s (raw) to 1.1 s after Brotli + CDN.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>We ran this stack for 6 weeks on a production site serving 12,000 daily active users in Kenya and Uganda, all on 4G-as-baseline.</p>
 <p>Numbers (median over 14 days, 95th percentile in parentheses):</p>
 <table>
 <thead>
@@ -913,33 +906,20 @@ curl -I --http3 https://your-server.example.com/
 </table>
 <p>The most dramatic shift came from <strong>accepting Starlink’s reality</strong>: uplink asymmetry made us rethink entire transport assumptions. Before, we assumed symmetric bandwidth; after, we instrumented uplink metrics and discovered that providers serving mixed networks needed to meter uplink aggressively. This led to edge logic that strips non-critical assets for mobile users on slow uplinks, reducing uplink usage by 45% without visible UX degradation.</p>
 <p>The <strong>code complexity delta</strong> reflects the learning curve: adding Brotli compression and QUIC support required new middleware and configuration patterns, but the actual changes were minimal (+147 lines across 4 files). The biggest surprise was how much <strong>observability</strong> improved outcomes—CloudWatch</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/">Starlink 4G fallback: serve pages under 800ms</a></li>
+<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
+<li><a href="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">Build apps that still work on 500 ms latency</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 12, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -967,8 +947,8 @@ please contact me — corrections are applied within 48 hours.</p>
                     
                     <a class="related-card" href="/serve-4g-as-baseline-apps-in-2026/">
                         <h3>Serve 4G-as-baseline apps in 2026</h3>
-                        <p>Cut API response time 21% and payload 63% for 4G-as-baseline users — Go server, Redis 7.4, and Vite 5.3 steps with real 2026 latency and cost data.</p>
-                        <span class="related-meta">12 min read · 3 July 2026</span>
+                        <p>Design APIs for 300 ms RTT, packet loss and data caps: payload budgets, stale-while-revalidate caching, adaptive fetch and honest measurement.</p>
+                        <span class="related-meta">14 min read · 3 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/cost-tools-fail-when-agents-scale-autonomously/">
@@ -988,12 +968,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

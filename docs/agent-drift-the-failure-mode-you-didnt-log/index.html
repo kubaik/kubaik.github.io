@@ -64,7 +64,7 @@
       "description": "Agent drift hides in flat latency and clean eval suites.",
       "datePublished": "2026-09-18T08:41:59+00:00",
       "dateModified": "2026-09-18T08:41:59+00:00",
-      "wordCount": 2888,
+      "wordCount": 2886,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -258,7 +253,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2888 words
+                        &nbsp;·&nbsp; 2886 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-18
                         
@@ -463,27 +458,21 @@ def enforce_sequence(history: list[str], next_tool: str) -&gt; bool:
 <p>When your agent handles fewer than 1,000 decisions per day, when its action space changes frequently, or when drift is the intended behavior (adaptive recommenders). In those cases, use per-trace guards like sequencing checks instead of distributional detection. The full PSI pipeline is overkill below roughly 10,000 decisions per day.</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Open your agent's trace log and extract the last 500 decisions. For each one, write down the tool name and the argument keys as a single string. Count how many distinct strings you get. If it is under 500, you can build the categorical drift detector this afternoon — that count is your signature space, and it is small enough that a Redis hash and a PSI function will give you a usable signal within a week. Start with the sequencing guard, not the dashboard.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://langchain-ai.github.io/langgraph/">LangGraph documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -518,7 +507,7 @@ def enforce_sequence(history: list[str], next_tool: str) -&gt; bool:
                     <a class="related-card" href="/ai-observability-the-metrics-that-matter/">
                         <h3>AI observability: the metrics that matter</h3>
                         <p>AI observability cuts false alerts 8× by tracking drift vectors and confidence histograms instead of just latency and errors.</p>
-                        <span class="related-meta">19 min read · 28 June 2026</span>
+                        <span class="related-meta">17 min read · 28 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-agent-postmortem-human-loop-vs-blind-replay/">
@@ -532,12 +521,7 @@ def enforce_sequence(history: list[str], next_tool: str) -&gt; bool:
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

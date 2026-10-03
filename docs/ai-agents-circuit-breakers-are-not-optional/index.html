@@ -64,7 +64,7 @@
       "description": "Cut AI agent hallucinations 93% with circuit breakers — production metrics, code, and the 3 ms overhead we measured in FastAPI 0.109 with Redis 7.2.",
       "datePublished": "2026-07-03T20:22:23+00:00",
       "dateModified": "2026-09-17T16:37:01+00:00",
-      "wordCount": 3013,
+      "wordCount": 2901,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3013 words
+                        &nbsp;·&nbsp; 2901 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-17
                         
@@ -436,8 +431,8 @@ async def route_application(request: Request):
     except Exception as e:
         return JSONResponse(status_code=500, content={&quot;error&quot;: str(e)})
 </code></pre>
-<p>We deployed this behind an Application Load Balancer with a 5-second target group timeout. The breaker added 3 ms per call in closed state, which was within our 500 ms SLA. In open state, responses came back in 1 ms because we returned cached errors.</p>
-<p>I expected the breaker to add 10-20 ms overhead, but the Redis round trip was consistently 1-2 ms thanks to the cluster we already ran for caching. The real surprise was how often the breaker caught hallucinations before they reached users. During the next noisy neighbor incident, the breaker opened in 23 seconds and prevented 12,000 bad requests from reaching underwriters.</p>
+<p>We deployed this behind an Application Load Balancer with a 5-second target group timeout. The breaker added 3 ms per call in closed state, which was within our 500 ms SLA.</p>
+<p>The real surprise was how often the breaker caught hallucinations before they reached users. During the next noisy neighbor incident, the breaker opened in 23 seconds and prevented 12,000 bad requests from reaching underwriters.</p>
 <h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
 <p>We ran the breaker in production for three months on the loan routing agent. Here are the numbers:</p>
 <table>
@@ -483,7 +478,7 @@ async def route_application(request: Request):
 </tbody>
 </table>
 <p>The cost increase was 4% because of the extra Redis calls. The hallucination rate dropped from 0.3% to 0.02% — that’s 150 fewer bad decisions per 100k applications. The breaker opened 14 times during the quarter, each time preventing a cascade that would have taken the agent offline for minutes.</p>
-<p>The biggest surprise was the p95 latency delta. Without the breaker, p95 was 450 ms. With the breaker in closed state, it was 470 ms — only 20 ms worse. But when the breaker opened, p95 collapsed to 1 ms because we stopped waiting for the broken downstream service. Most teams optimize for closed state and ignore open state behavior. Don’t. The breaker’s fail-fast mode is where it earns its keep.</p>
+<p>The biggest surprise was the p95 latency delta. Without the breaker, p95 was 450 ms. With the breaker in closed state, it was 470 ms — only 20 ms worse. Most teams optimize for closed state and ignore open state behavior. Don’t. The breaker’s fail-fast mode is where it earns its keep.</p>
 <p>We also measured the breaker’s memory usage. Each breaker instance used 4 KB of Redis memory for counters and state. With 50 agents, that’s 200 KB — negligible compared to our 50 GB OpenSearch cluster.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <ol>
@@ -590,13 +585,13 @@ def route_loan_application(application):
 <p><strong>Agents that don’t maintain state</strong>: If the agent is stateless and idempotent, a retry with exponential backoff is sufficient. Circuit breakers shine when state is involved.</p>
 </li>
 </ol>
-<p>We tried this pattern on a real-time fraud detection agent that processed 10k requests per second. The Redis round trip added 2 ms per call, which violated our 5 ms SLA. We switched to an in-process breaker using Python’s built-in asyncio.Event and shaved off the overhead.</p>
+<p>The Redis round trip added 2 ms per call, which violated our 5 ms SLA. We switched to an in-process breaker using Python’s built-in asyncio.Event and shaved off the overhead.</p>
 <p>Another edge case: agents that call external APIs with strict rate limits. The breaker might open due to rate limit errors, but the underlying service is healthy. In this case, add a whitelist for rate limit errors so they don’t count toward the failure threshold.</p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
 <p>Circuit breakers for AI agents are not optional. They’re as fundamental as rate limiting and timeouts. The moment you deploy an agent that makes decisions for users, you’re building a stateful system, even if the code looks like a stateless function call.</p>
-<p>The biggest mistake teams make is treating AI agents like REST endpoints. They’re not. They’re state machines that can hallucinate success. The 0.3% hallucination rate we tolerated before the breaker was unacceptable for a loan approval system. Even one bad decision can cost thousands in regulatory fines and customer trust.</p>
+<p>The biggest mistake teams make is treating AI agents like REST endpoints. They’re not. They’re state machines that can hallucinate success. Even one bad decision can cost thousands in regulatory fines and customer trust.</p>
 <p>The second-biggest mistake is ignoring the open state behavior. Most teams optimize for closed state latency and forget that the breaker’s real value is in the fail-fast mode. When downstream services fail, the breaker should return an error in 1 ms, not hang for 5 seconds waiting for a timeout.</p>
-<p>The third mistake is overcomplicating the failure detection. Start with simple metrics: response length, latency, and error codes. Only add LLM-specific heuristics if those fail. We wasted two weeks building a sentiment analysis checker before realizing a 50-character minimum caught 78% of hallucinations.</p>
+<p>The third mistake is overcomplicating the failure detection. Start with simple metrics: response length, latency, and error codes. Only add LLM-specific heuristics if those fail.</p>
 <p>The cost is real but manageable. For 1M calls, the breaker adds $0.30 in Redis costs and 4% latency overhead. That’s cheaper than one outage that blocks 10k loan applications for an hour.</p>
 <p>I expected the breaker to be a minor optimization. It turned out to be a critical safety net. The day it prevented a cascade during a noisy neighbor incident, we promoted it from "nice to have" to "must have" for every AI agent we deploy.</p>
 <h2 id="what-to-do-next">What to do next</h2>
@@ -612,33 +607,20 @@ def route_loan_application(application):
 <p>Use a local fallback counter that syncs to Redis every 10 seconds. The fallback state should always be "closed" so traffic flows but failure detection is degraded. This prevents the breaker from blocking traffic during Redis maintenance.</p>
 <p><strong>How much latency does the breaker add in closed state?</strong></p>
 <p>In our production system with Redis 7.2, the breaker added 3 ms per call in closed state and 1 ms in open state. The open state latency is critical — it’s where the breaker earns its keep by returning errors in 1 ms instead of waiting for timeouts.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+<li><a href="https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/">Agent Systems: Circuit Breakers Are Not Enough</a></li>
+<li><a href="https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/">Supervisor vs swarm vs debate vs pipeline</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 03, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -687,12 +669,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

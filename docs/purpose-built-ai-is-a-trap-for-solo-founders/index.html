@@ -64,7 +64,7 @@
       "description": "Purpose-built AI platforms promise speed but bury control flow. For solo founders, a thin provider-SDK pipeline is fewer dependencies and faster to debug.",
       "datePublished": "2026-09-19T09:31:04+00:00",
       "dateModified": "2026-09-19T09:31:04+00:00",
-      "wordCount": 2805,
+      "wordCount": 2806,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -251,7 +246,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2805 words
+                        &nbsp;·&nbsp; 2806 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -262,7 +257,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>Most write-ups stop exactly where the interesting part starts. The same purposebuilt platforms mistake shows up across production codebases often enough to be a pattern, not bad luck. This is what I put together after working through it properly.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>The conventional wisdom <a href="/ai-solo-saas-2026-build-vs-buy/">in 2026</a> says: if you're building an AI product, use a purpose-built AI platform. LangChain, LlamaIndex, CrewAI, AutoGen — these frameworks promise to handle memory, tool calling, retries, and agent orchestration out of the box. The pitch is seductive: you get a pre-built abstraction layer so you can focus on your product, not plumbing.</p>
+<p>The conventional wisdom in 2026 says: if you're building an AI product, use a purpose-built AI platform. LangChain, LlamaIndex, CrewAI, AutoGen — these frameworks promise to handle memory, tool calling, retries, and agent orchestration out of the box. The pitch is seductive: you get a pre-built abstraction layer so you can focus on your product, not plumbing.</p>
 <p>The problem is that this advice was written for teams with platform engineers. When you're a solo founder in Cape Town or Tallinn, you are the platform engineer. Every abstraction you adopt is a dependency you now maintain, a version you must track, and a failure mode you must debug at 2 AM. Purpose-built AI platforms optimize for a different constraint than yours: they optimize for feature velocity in a large team, not for operational simplicity in a one-person shop.</p>
 <p>The part that trips people up is that the abstraction looks free until it breaks, and then you're debugging someone else's opinionated stack instead of your own code. That's what this post actually covers.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
@@ -473,27 +468,22 @@ Postgres 16 with pgvector is the boring, proven choice. You already have Postgre
 When you hit a problem you can't solve in a week with your own code, and the framework has a clear, well-documented solution. Before adopting, read the changelog for the last six months. If there are frequent breaking changes, budget for that maintenance. If the framework is stable and solves your problem, it might be worth it.</p>
 <h2 id="closing-action">Closing action</h2>
 <p>Open your <code>requirements.txt</code> or <code>package.json</code> and count how many dependencies your AI pipeline pulls in. If it's more than 15, spend the next 30 minutes identifying which ones are framework-specific and whether you could replace them with direct provider SDK calls. Start with the one that causes you the most debugging pain.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://github.com/pgvector/pgvector">pgvector README</a></li>
+<li><a href="https://docs.anthropic.com/">Anthropic documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -542,12 +532,7 @@ When you hit a problem you can't solve in a week with your own code, and the fra
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -64,7 +64,7 @@
       "description": "AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k…",
       "datePublished": "2026-06-20T22:43:19+00:00",
       "dateModified": "2026-09-21T11:42:57+00:00",
-      "wordCount": 3319,
+      "wordCount": 3318,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3319 words
+                        &nbsp;·&nbsp; 3318 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -533,33 +528,20 @@ replay:
 <p>When the agent is highly user-facing and safety-critical (e.g., medical triage, financial advice) or when your incident volume is below 168/month. Human review can override guardrails that are too strict for the domain, reducing false positives. At low volume, the reviewer time cost is lower than the infrastructure cost of blind replay.</p>
 <p><strong>how to handle prompt drift in blind replay</strong></p>
 <p>Prompt drift breaks blind replay because old traces fail the new prompt's guardrails even when the failure is harmless. Add a prompt comparison step that diffs the old and new prompts and only reruns assertions that are still relevant. In our setup, this cut spurious bug reports from 34% to 6%. If you update the prompt frequently, consider keeping a rolling window of prompts in your trace store so you can replay against the correct version.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/">Fix AI agent failures: postmortem guide</a></li>
+<li><a href="https://kubaik.github.io/debug-ai-agent-failures-differently/">Debug AI agent failures differently</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 20, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -594,7 +576,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/debug-ai-agents-failures-arent-just-bugs/">
                         <h3>Debug AI agents: failures aren&#39;t just bugs</h3>
                         <p>Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.</p>
-                        <span class="related-meta">15 min read · 1 July 2026</span>
+                        <span class="related-meta">14 min read · 1 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/debug-ai-agent-failures-differently/">
@@ -608,12 +590,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

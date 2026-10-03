@@ -64,7 +64,7 @@
       "description": "Rust backend rewrites pay off for CPU-bound work, not I/O.",
       "datePublished": "2026-09-21T10:01:49+00:00",
       "dateModified": "2026-09-21T10:01:49+00:00",
-      "wordCount": 2799,
+      "wordCount": 2804,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2799 words
+                        &nbsp;·&nbsp; 2804 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -429,27 +424,22 @@ Use <code>sqlx</code> with a connection pool (<code>sqlx::PgPool</code>). It han
 If your service is I/O-bound, if your team lacks Rust experience, or if you need to ship features quickly. Rewriting for a 10% performance gain isn't worth the cost. Only rewrite when the performance gain is 3-4x and the workload is CPU-bound. Otherwise, optimize your Python code first (e.g., use <code>uvloop</code>, <code>orjson</code>, or a faster database driver).</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Before you commit to a rewrite, measure your current bottleneck. Run a profiler on your existing service under production-like load. If CPU usage is below 50% and latency is dominated by I/O waits, Rust won't help. If CPU is pegged at 100% and you're seeing GC pauses, Rust is a strong candidate. Start by rewriting a single, well-isolated endpoint — not the whole service. Use <code>axum</code> 0.7 and <code>tokio</code> 1.35, and deploy it alongside your existing service. Compare p99 latency and throughput over a week. If the numbers justify the complexity, expand. If not, you've saved yourself months of work. The next step: run <code>cargo install cargo-flamegraph</code> and profile your current Rust prototype (or your Python service with <code>py-spy</code>) to confirm where the time actually goes.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -498,12 +488,7 @@ If your service is I/O-bound, if your team lacks Rust experience, or if you need
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

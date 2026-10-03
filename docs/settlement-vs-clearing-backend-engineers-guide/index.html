@@ -64,7 +64,7 @@
       "description": "Clearing vs settlement: why your ledger doesn't balance. A backend engineer's guide to obligations, netting, and settlement finality.",
       "datePublished": "2026-09-28T04:25:56+00:00",
       "dateModified": "2026-09-28T04:25:56+00:00",
-      "wordCount": 2785,
+      "wordCount": 2782,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2785 words
+                        &nbsp;·&nbsp; 2782 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-28
                         
@@ -491,27 +486,20 @@ def reconcile(clearing_ledger, settlement_ledger, as_of: datetime.date):
 <h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
 <p>The Bank for International Settlements publishes the definitive primers on payment systems. Their "Payment Systems in the United States" (available at bis.org) is dry but authoritative. The Federal Reserve's FedNow documentation explains real-time settlement mechanics in detail. For ISO 20022, the official catalogue at iso20022.org is the source of truth — start with the <code>pacs</code> and <code>camt</code> message sets. If you're building a ledger, Martin Kleppmann's "Designing Data-Intensive Applications" (O'Reilly, 2017) has the best treatment of the underlying consistency models. For a practical implementation, the open-source <code>ledger</code> project by Chris D'Costa on GitHub is worth reading, though it's a personal finance ledger, not a settlement system.</p>
 <p><strong>Your next step:</strong> Open your payments database schema and find every column named <code>balance</code>, <code>amount</code>, or <code>status</code>. For each one, write down whether it represents an obligation (clearing) or a settled amount (settlement). If you can't tell, you've found the bug. Do this now — it takes 15 minutes and will tell you whether your system needs a two-ledger refactor.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -560,12 +548,7 @@ def reconcile(clearing_ledger, settlement_ledger, as_of: datetime.date):
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

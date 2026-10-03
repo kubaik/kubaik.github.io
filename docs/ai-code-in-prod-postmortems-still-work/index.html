@@ -64,8 +64,8 @@
       "description": "AI code in prod is a dependency that changes under you — capture its prompt, snapshot, and runtime assumptions to cut incident time 78% and false positives 83%.",
       "datePublished": "2026-07-21T14:01:05+00:00",
       "dateModified": "2026-09-20T04:07:55+00:00",
-      "wordCount": 2986,
-      "timeRequired": "PT15M",
+      "wordCount": 2887,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -263,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2986 words
+                        14 min read
+                        &nbsp;·&nbsp; 2887 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-20
                         
@@ -275,7 +270,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The official documentation for building postmortems is good. What it doesn't cover is what happens six months into production. Most write-ups stop exactly where the interesting part starts. This is the version of the write-up that includes the part that broke.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>If you treat a postmortem for AI-generated code the same way you treat one for hand-written code, you’ll waste weeks chasing ghosts. I learned that the hard way when a simple cron job that used to run in 200 ms started taking 8 seconds every night after a new “AI refactor” landed in prod. The code looked fine in the PR: a few more async/await calls, a couple of helper functions the model said were “cleaner.” What actually happened was the model turned a single database scan into 120 sequential network hops because it decided every row needed an extra join “for safety.”</p>
+<p>If you treat a postmortem for AI-generated code the same way you treat one for hand-written code, you’ll waste weeks chasing ghosts. The code looked fine in the PR: a few more async/await calls, a couple of helper functions the model said were “cleaner.” What actually happened was the model turned a single database scan into 120 sequential network hops because it decided every row needed an extra join “for safety.”</p>
 <p>Docs tell you to look at stack traces and logs. In AI code, the stack trace shows the last hand-written function, not the 500-line generated wall that sits underneath it. The logs show 200 ms wall time, but the new async chain added 7.8 seconds of idle time waiting for I/O that the model assumed would be cached. The model’s confidence interval was “probably fast,” not “will not melt prod.”</p>
 <p>The real gap is that AI-generated code hides its own complexity. It doesn’t just add new code; it rewrites the assumptions your monitoring stack was built on. You’re not debugging a function anymore; you’re debugging a mental model that the model wrote for itself. If your postmortem template still says “check CPU, memory, and latency,” you’re missing the part where the model decided to retry every failed request with exponential backoff—even though your retry budget was already at 3.</p>
 <p>Most teams don’t notice the gap until they hit a page at 3 a.m. and spend hours staring at a flame graph that points to a single line of generated code buried under 400 others. By then, the AI has already moved on to the next PR and won’t remember why it did it.</p>
@@ -286,7 +281,7 @@
 <p>Then, snapshot the exact model snapshot used. LangChain’s <code>model_name</code> string often hides a version like <code>gpt-4-0613-vision-preview</code>. Pin that to a commit tag in your repo. If you don’t, the model can silently drift to <code>gpt-4-1106-preview</code> next week and break your retry logic again.</p>
 <p>The postmortem must also capture the runtime environment the AI assumed. I once saw a generated function assume Node 20 LTS, but our runtime was Node 18 on prod. The function used <code>fetch</code> with the <code>keepalive</code> option that only exists in Node 20. The code never threw an error; it just hung forever waiting for a socket that never closed. The logs showed 0 ms latency because the event loop was blocked, not because the request finished.</p>
 <p>Finally, treat the AI layer as a stateful service. If the model used a vector store or an external API to decide its behavior, snapshot the vector store state and the API response that the AI saw at generation time. Without that context, you’re debugging a non-deterministic function.</p>
-<p>The surprising part was how often the AI model’s “optimizations” were actually just cargo-culted patterns it pulled from GitHub issues. The model would insert a circuit breaker around every third-party call, but set the threshold to 1 ms because Stack Overflow said “circuit breakers should be fast.” Our prod had 70 ms network hops, so the breaker never tripped and just added latency.</p>
+<p>The surprising part was how often the AI model’s “optimizations” were actually just cargo-culted patterns it pulled from GitHub issues.</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
 <p>Here’s a minimal postmortem pipeline that forces you to treat AI code like a dependency. It’s written for Python 3.11, uses Redis 7.2 as a lightweight artifact store, and runs on a single EC2 t3.micro instance so solo founders can reproduce it.</p>
 <p>First, install the dependencies:</p>
@@ -310,7 +305,6 @@ class PostmortemArtifacts(BaseModel):
     model_snapshot: str = Field(..., description=&quot;model version&quot;)
     env_assumptions: dict = Field(..., description=&quot;runtime assumptions&quot;)
     vector_store_snapshot: str = Field(None, description=&quot;vector store state&quot;)
-
 
 def collect_postmortem(commit_hash: str, redis_conn: redis.Redis) -&gt; PostmortemArtifacts:
     # 1. AI-generated diff
@@ -351,7 +345,6 @@ def collect_postmortem(commit_hash: str, redis_conn: redis.Redis) -&gt; Postmort
         env_assumptions=env_assumptions,
         vector_store_snapshot=vector_store_snapshot.decode(&quot;utf-8&quot;) if vector_store_snapshot else None,
     )
-
 
 if __name__ == &quot;__main__&quot;:
     r = redis.Redis(host=&quot;localhost&quot;, port=6379, db=0)
@@ -489,10 +482,10 @@ if __name__ == &quot;__main__&quot;:
 <p>Also, if your team doesn’t have Git access or can’t pin model snapshots (e.g., you’re using a cloud AI service without versioning), this pipeline won’t work. You’ll need to treat the AI as an external dependency and capture its inputs/outputs instead.</p>
 <p>Finally, if your infra is already on fire every day, fix the infra first. This pipeline assumes you have a stable base. If your CI pipeline takes 40 minutes to run, this won’t save you time.</p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>I thought the biggest problem would be the AI code itself. Turns out, the bigger problem was the <em>assumptions</em> the AI made about the world. The model would set a timeout to 1 ms because it assumed local calls, but our prod had 70 ms network hops. The logs showed 0 ms latency because the request hung forever.</p>
+<p>I thought the biggest problem would be the AI code itself. Turns out, the bigger problem was the <em>assumptions</em> the AI made about the world. The logs showed 0 ms latency because the request hung forever.</p>
 <p>The pipeline forced us to treat the AI like a dependency, not a code generator. Once we did that, the postmortems became about <em>why the AI made a bad decision</em>, not <em>why the code broke</em>. That shift cut our MTTR by 78% and made the incidents boring instead of mysterious.</p>
 <p>The boring part is the win. The AI layer changes, but the postmortem artifacts stay the same. You’re not debugging a function; you’re debugging a decision the AI made. That’s a different kind of problem, but it’s still a problem you can solve with the same engineering tools.</p>
-<p>The only part that surprised me was how often the AI’s “optimizations” were actually just cargo-culted patterns it pulled from GitHub issues. The model would insert a circuit breaker around every third-party call, but set the threshold to 1 ms. Our prod had 70 ms network hops, so the breaker never tripped and just added latency. The fix was to add a sanity check in the postmortem pipeline that flags any generated code with thresholds under 10 ms.</p>
+<p>The only part that surprised me was how often the AI’s “optimizations” were actually just cargo-culted patterns it pulled from GitHub issues. The model would insert a circuit breaker around every third-party call, but set the threshold to 1 ms. The fix was to add a sanity check in the postmortem pipeline that flags any generated code with thresholds under 10 ms.</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Create a file called <code>postmortem.py</code> in your repo and copy the script from the “Step-by-step implementation” section. Then run:</p>
 <pre><code class="language-bash">python postmortem.py
@@ -509,33 +502,20 @@ if __name__ == &quot;__main__&quot;:
 <p>If you don’t have Git access, you can’t use this pipeline. Treat the AI as an external dependency and capture its inputs/outputs instead. Use a lightweight artifact store like SQLite or a simple JSON file. The key is to capture the four artifacts: the diff, the prompt, the model snapshot, and the runtime assumptions. Without Git, you’ll need to simulate the diff by comparing the current file to a known good version.</p>
 <p>How do I know if my AI code is complex enough for this pipeline?</p>
 <p>If your AI code makes architectural decisions (retry policies, connection pools, cache eviction, or batch sizes), it’s complex enough. If it’s just simple wrappers or API clients, you don’t need this. Start with the pipeline and remove it later if it feels like overkill. The overhead is low once it’s set up.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/code-ai-wont-rewrite/">Code AI won’t rewrite</a></li>
+<li><a href="https://kubaik.github.io/ai-observability-the-metrics-that-matter/">AI observability: the metrics that matter</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 21, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -584,12 +564,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -64,8 +64,8 @@
       "description": "Cut image upload time 60% with Starlink CDN — Lambda@Edge, sharp 0.33.2, and the resize mistakes most teams make.",
       "datePublished": "2026-06-18T16:57:23+00:00",
       "dateModified": "2026-09-30T17:49:54+00:00",
-      "wordCount": 2148,
-      "timeRequired": "PT11M",
+      "wordCount": 2090,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -259,8 +254,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2148 words
+                        10 min read
+                        &nbsp;·&nbsp; 2090 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-30
                         
@@ -271,7 +266,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In mid-2026, I joined a team shipping a photo-sharing app for East African photographers using mid-range Android devices on 4G or Starlink dishes. We thought our CDN would be enough, but in early 2026 Starlink beams lit up Nairobi and Kampala, and latency to our origin in London fell from 280 ms to 110 ms overnight. That sounds great, but our image CDN still choked when 100 photographers in a single ward uploaded 10 MB photos at once. The origin saw 502 timeouts, and Safari on iOS 17 refused to retry, leaving white thumbnails. We lost 4% of uploads during the first week of Starlink rollout. This post is what I wish I’d had then.</p>
+<p>In mid-2026, I joined a team shipping a photo-sharing app for East African photographers using mid-range Android devices on 4G or Starlink dishes. That sounds great, but our image CDN still choked when 100 photographers in a single ward uploaded 10 MB photos at once. The origin saw 502 timeouts, and Safari on iOS 17 refused to retry, leaving white thumbnails. This post is what I wish I’d had then.</p>
 <p>The real shift in 2026 isn’t raw latency—it’s the sudden spike in concurrent uploads from users who now have flat-rate gigabit Starlink dishes. Traditional CDNs were built for bursty 4G with 2–3 concurrent requests per user, not for 50 concurrent 5 MB uploads from a single household. If you’re still tuning your stack for 2026 latency profiles, your error budget is about to burn.</p>
 <p>Early adopters in Nairobi told us they expected instant uploads now that Starlink is here. When they saw the spinner for more than two seconds, they closed the app. Two seconds is the new 200 ms.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -345,7 +340,7 @@
 </li>
 <li>
 <p><strong>Clock skew between CloudFront and S3 during origin fetches</strong>
-   In April 2026, we noticed 15% of resizes failing with <code>InvalidArgument: RequestTimeTooSkewed</code> in <code>us-east-1</code> buckets accessed from <code>af-south-1</code>. The issue was subtle: CloudFront’s origin fetch timeout was set to 30 seconds, but S3’s clock tolerance is only 15 seconds. When Starlink users in Mombasa uploaded during peak solar activity (which affects GPS timing), the skew exceeded S3’s threshold. The fix was to set <code>originReadTimeout: 25000</code> (25 s) in the CloudFront origin configuration, giving a 10-second buffer. We also enabled S3’s <code>Bucket Versioning</code> explicitly to avoid <code>x-amz-meta-version-id</code> mismatches under clock skew.</p>
+The issue was subtle: CloudFront’s origin fetch timeout was set to 30 seconds, but S3’s clock tolerance is only 15 seconds. When Starlink users in Mombasa uploaded during peak solar activity (which affects GPS timing), the skew exceeded S3’s threshold. The fix was to set <code>originReadTimeout: 25000</code> (25 s) in the CloudFront origin configuration, giving a 10-second buffer. We also enabled S3’s <code>Bucket Versioning</code> explicitly to avoid <code>x-amz-meta-version-id</code> mismatches under clock skew.</p>
 </li>
 <li>
 <p><strong>Cold-start latency spikes in Lambda@Edge during Nairobi business hours</strong>
@@ -644,33 +639,20 @@ export async function getOptimizedUrl(src, width) {
 </table>
 <p><strong>Why the numbers matter</strong>
 - <strong>Latency drop</strong>: 110 ms is now the “new normal” for Nairobi users. Apps that still target 280 ms are perceived as sluggish. - <strong>Concurrency spike</strong>: Starlink dishes in a single household can saturate a 1 Gbps link. Your CDN must handle 50 concurrent uploads per IP, not 3. - <strong>Memory &amp; cold starts</strong>: The sharp streaming fix reduced memory by 62% and cold-start latency by 87%, directly impacting Safari’s 2-second spinner limit. - <strong>Data savings</strong>: The WebP fallback and Next.js loader saved photographers in metered Starlink zones 43% of their data budget, a critical cost saving in Kenya’s 2026 energy crisis. - <strong>Observability debt</strong>: The 40% log volume increase is the hidden cost of debugging Safari 17.4. Without Prometheus metrics, we would have missed the WebP crash pattern until it hit 15% of users.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">Build apps that still work on 500 ms latency</a></li>
+<li><a href="https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/">Starlink 4G fallback: serve pages under 800ms</a></li>
+<li><a href="https://kubaik.github.io/ship-1mb-pages-on-4g-starlink-africa-case-study/">Ship 1MB pages on 4G: Starlink Africa case study</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 18, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -705,7 +687,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ship-to-nairobi-users-starlink-latency-guide-2026/">
                         <h3>Ship to Nairobi users: Starlink latency guide 2026</h3>
                         <p>Cut Nairobi SaaS page load times 70% — Starlink 2026 edge cache with CloudFront Functions, Redis 7.2, and k6 load tests from Kenya</p>
-                        <span class="related-meta">12 min read · 25 June 2026</span>
+                        <span class="related-meta">11 min read · 25 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/audit-logs-compliance-vs-performance/">
@@ -719,12 +701,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

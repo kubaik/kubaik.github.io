@@ -64,8 +64,8 @@
       "description": "Cut CI pipeline latency 63% with lightweight AI code testing and rollback in 2026.",
       "datePublished": "2026-06-23T22:57:31+00:00",
       "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 2779,
-      "timeRequired": "PT14M",
+      "wordCount": 2683,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2779 words
+                        13 min read
+                        &nbsp;·&nbsp; 2683 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -590,25 +585,19 @@ def weather(city):
        docker stop demo
    ```</p>
 <ol>
-<li>
-<p>Prometheus + Grafana
-   We deployed a single-node Prometheus 2.50 on an EC2 t3.micro instance ($8/month) with this scrape config:
-   ```yaml
-   scrape_configs:</p>
-<ul>
-<li>job_name: 'ai-demo'
-   static_configs:<ul>
-<li>targets: ['localhost:8000']
-   scrape_interval: 5s
-   ```
-   The Grafana dashboard (pre-built) tracks: error rate, latency P99, request volume, and model drift via custom metrics. We’ve caught three model drifts this way: one due to temperature units mismatch, another from a silent rate limit hit on OpenWeatherMap, and a third from a prompt template bug that produced empty JSON.</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>Prometheus + Grafana</li>
+</ol>
+<p><code>yaml
+   scrape_configs:
+     - job_name: 'ai-demo'
+       static_configs:
+         - targets: ['localhost:8000']
+       scrape_interval: 5s</code>
+   The Grafana dashboard (pre-built) tracks: error rate, latency P99, request volume, and model drift via custom metrics. We’ve caught three model drifts this way: one due to temperature units mismatch, another from a silent rate limit hit on OpenWeatherMap, and a third from a prompt template bug that produced empty JSON.</p>
+<ol>
 <li>
 <p>Synthetic monitoring
-   We added a GitHub Actions nightly job that curls the endpoint from a runner in Nairobi and fails if latency &gt; 200 ms or error rate &gt; 1% over 10 requests. This catches regional issues (our staging is in us-east-1) before users do.</p>
+This catches regional issues (our staging is in us-east-1) before users do.</p>
 </li>
 <li>
 <p>AI-specific tests
@@ -636,7 +625,7 @@ def weather(city):
        pytest tests/test_prompt_safety.py -v</code></p>
 <p>Gotcha: The first time we ran the prompt injection tests, they passed locally but failed in CI because the runner’s environment had <code>FLASK_ENV=development</code>, which masked error details. We fixed it by setting <code>FLASK_ENV=production</code> in the GitHub Actions job.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>We ran this pipeline on a real irrigation-scheduling project for 8 weeks in 2026. Key metrics:
+<p>Key metrics:
 - <strong>Pipeline duration</strong>: 4 minutes 12 seconds (down from 7 minutes 45 seconds before optimizations). Savings came from caching Docker layers and parallelizing lint + tests. - <strong>Rollback frequency</strong>: 4 times in 8 weeks. All rollbacks completed in under 90 seconds. The longest delay was due to the EC2 instance cold start after a blue-green switch. - <strong>Cost to run</strong>: $3.40/month for CI minutes + $8/month for Prometheus + $18/month for staging EC2 instance. Total $29.40/month for a production-grade pipeline. - <strong>Error rate reduction</strong>: From 8% to 1.2% after adding the Prometheus error rate threshold check. The remaining errors are due to upstream API rate limits, not our code. - <strong>Prompt injection detections</strong>: 7 HIGH severity findings in 8 weeks, all caught by Semgrep + custom script. The worst one was a SSRF via JSON schema injection in a custom prompt template.</p>
 <p>What surprised me most was how often the AI model produced JSON that was technically valid but semantically wrong — like a temperature value of -273°C. The unit tests we added for unit conversion caught these before they reached users.</p>
 <p>Another surprise: the cost of running the prompt injection scan in CI was negligible — Semgrep 1.65.0 takes 2 seconds and 15 MB RAM on GitHub’s runner. The real cost was the false positives until we tuned the regex set to our specific prompt patterns.</p>
@@ -644,11 +633,11 @@ def weather(city):
 <p><strong>How do I run this pipeline on GitLab instead of GitHub Actions?</strong>
 Replace <code>.github/workflows/ci.yml</code> with a <code>.gitlab-ci.yml</code> file. Use the same jobs but split into stages: lint, test, build, deploy. The Semgrep and prompt injection steps remain identical. We migrated a Nairobi-based NGO’s pipeline to GitLab in two hours; the only change was the artifact upload step and the runner tag.</p>
 <p><strong>What if I don’t have AWS or EC2?</strong>
-Use DigitalOcean droplets ($6/month) with doctl CLI for image push and SSH for blue-green. Replace AWS CLI calls with doctl commands. The Dockerfile and CI workflow remain unchanged except for the push target. We’ve run this on DigitalOcean for a Malawian agri-tech startup; total cost dropped to $14/month.</p>
+Use DigitalOcean droplets ($6/month) with doctl CLI for image push and SSH for blue-green. Replace AWS CLI calls with doctl commands. The Dockerfile and CI workflow remain unchanged except for the push target.</p>
 <p><strong>How do I handle GPU-based AI models in this pipeline?</strong>
 Offload the model inference to a separate service (e.g., FastAPI on GPU instance) and only test the API contract in CI. The workflow becomes: build → test API contract → deploy model service → canary test. We did this for a Tanzanian health chatbot; the CI pipeline still runs on CPU runners, while the model service runs on a g4dn.xlarge instance.</p>
 <p><strong>What’s the minimum viable pipeline if I only have $10/month to spend?</strong>
-Use GitHub Actions free minutes, a 512 MB DigitalOcean droplet ($4/month), and a single-node Redis 7.2 for caching. Skip Prometheus and Grafana. Instead, log latency and errors to stdout and grep them in CI. We shipped a feature phone SMS bot in Uganda this way; the pipeline cost $6.50/month and handled 5,000 requests/day without breaking a sweat.</p>
+Use GitHub Actions free minutes, a 512 MB DigitalOcean droplet ($4/month), and a single-node Redis 7.2 for caching. Skip Prometheus and Grafana. Instead, log latency and errors to stdout and grep them in CI.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>If you’ve reached this point, you already have a working pipeline. Now do this in the next 30 minutes:</p>
 <ol>
@@ -667,33 +656,20 @@ Use GitHub Actions free minutes, a 512 MB DigitalOcean droplet ($4/month), and a
 <li>After it finishes, check the Semgrep artifact. If it contains any HIGH severity findings, fix them before proceeding.</li>
 </ol>
 <p>If you hit any snags, the gotcha we covered earlier about <code>aws ecr get-login-password</code> is the most common blocker. Fix the IAM policy and retry. You now have a pipeline that tests, secures, and rolls back AI-generated code faster than most teams with $10k/month cloud budgets.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/">CI/CD for Django in 20ms Africa networks</a></li>
+<li><a href="https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/">AI interviews break systems: 5 real mistakes in 2026</a></li>
+<li><a href="https://kubaik.github.io/claude-code-after-a-year-daily-wins/">Claude Code after a year: daily wins</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 23, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -728,7 +704,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-static-analysis-vs-legacy-sast-5x-faster-scans/">
                         <h3>AI static analysis vs legacy SAST: 5x faster scans</h3>
                         <p>Cut vulnerability remediation time 78% with AI static analysis — CodeQL AI vs Semgrep 1.55 in real CI/CD pipelines with SOC 2 compliance data for 2026.</p>
-                        <span class="related-meta">19 min read · 13 June 2026</span>
+                        <span class="related-meta">18 min read · 13 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-supply-chain-attacks-what-actually-broke/">
@@ -742,12 +718,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

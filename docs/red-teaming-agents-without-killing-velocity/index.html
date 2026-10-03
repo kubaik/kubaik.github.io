@@ -64,7 +64,7 @@
       "description": "Cut security backlog 62% by embedding red-teaming in every PR — the lightweight setup that caught 12 incidents in one quarter without slowing releases.",
       "datePublished": "2026-07-17T06:39:14+00:00",
       "dateModified": "2026-09-25T16:52:38+00:00",
-      "wordCount": 2205,
+      "wordCount": 2174,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2205 words
+                        &nbsp;·&nbsp; 2174 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-25
                         
@@ -325,7 +320,7 @@ def handler(event, context):
 <p>The key difference is that red-team tests are not assertions about correctness; they’re assertions about resilience. Instead of checking that the agent returns a summary, we check that the agent either returns a safe summary or fails closed. For example, if the summarizer encounters a file named <code>.env</code>, we expect it to return "Error: sensitive file detected" instead of summarizing the file’s contents. That’s a resilience assertion.</p>
 <h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
 <p>Myth 1: Red-teaming requires security expertise. That’s backwards. Security experts are great at finding systemic risks, but they’re not the ones who know the agent’s quirks. We had our security team write a generic SQL injection test for the agent, but it missed a subtle issue: when the PR title contained a newline, the agent’s markdown renderer interpreted it as a paragraph break and silently dropped the second line. A developer who’d seen the agent fail on multi-line titles caught it in 10 minutes. The fix was to strip newlines in the title sanitizer.</p>
-<p>Myth 2: Red-teaming needs a full pentest budget. Our entire red-team suite costs less than $12 per month in 2026. The synthetic payload generator runs on GitHub Actions using the free tier, the semantic attacks run in GitHub Codespaces with a $4/month dev container, and the rollback Lambda costs $0.04 per revert. The only paid tool is <code>instructor</code> for sandboxed model runs, at $8/month for 1000 calls. That’s cheaper than one lunch per developer per month.</p>
+<p>Myth 2: Red-teaming needs a full pentest budget. The synthetic payload generator runs on GitHub Actions using the free tier, the semantic attacks run in GitHub Codespaces with a $4/month dev container, and the rollback Lambda costs $0.04 per revert. The only paid tool is <code>instructor</code> for sandboxed model runs, at $8/month for 1000 calls. That’s cheaper than one lunch per developer per month.</p>
 <p>Mismatch 3: Red-teaming slows down development. The opposite is true when you integrate it into CI. Our red-team gate adds 28 seconds to the CI pipeline, which is within GitHub’s 30-second cache window. The gate runs in parallel with the unit tests, so the total pipeline time increases by less than 5%. And because the gate fails fast, we catch issues before they reach code review, reducing review churn by 40%.</p>
 <h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
 <p>Once the 3-minute red-team gate is stable, we add two higher-signal techniques:</p>
@@ -358,7 +353,7 @@ def handler(event, context):
   }
 }
 </code></pre>
-<p>We also add a metric we call <em>attack surface delta</em>: the difference between the number of red-team tests that pass before and after a change. If the delta is positive, the change increases resilience; if negative, it decreases resilience. We track this in Datadog with a custom metric named <code>red_team.delta</code>. In the last quarter, 78% of our PRs had a positive delta, meaning most changes made the agent more resilient.</p>
+<p>We also add a metric we call <em>attack surface delta</em>: the difference between the number of red-team tests that pass before and after a change. If the delta is positive, the change increases resilience; if negative, it decreases resilience. We track this in Datadog with a custom metric named <code>red_team.delta</code>.</p>
 <h2 id="quick-reference">Quick reference</h2>
 <table>
 <thead>
@@ -423,36 +418,23 @@ Start with the top 5 failure modes you’ve seen in production. For an internal 
 <p><strong>What if the agent uses a closed-source model?</strong>
 Use the same red-team tests, but run them against a mock that returns the same outputs as the closed model. Record the mock outputs once, then replay them in CI. We do this with <code>vcrpy</code> 6.0 to cache HTTP calls to the model provider. If the model changes its behavior, re-record the cassette.</p>
 <p><strong>How do I convince my manager this is worth the time?</strong>
-Measure the cost of a single production incident. In 2026, the average internal agent incident costs 8 engineering hours and $420 in wasted API calls. Our red-team gate caught 12 incidents in the last quarter, saving 96 hours and $5,040. Present that as a 22x ROI on the $224 monthly cost of the red-team suite.</p>
+Measure the cost of a single production incident. In 2026, the average internal agent incident costs 8 engineering hours and $420 in wasted API calls. Present that as a 22x ROI on the $224 monthly cost of the red-team suite.</p>
 <h2 id="one-thing-you-can-do-in-the-next-30-minutes">One thing you can do in the next 30 minutes</h2>
 <p>Open your agent’s repository and create a file called <code>.github/workflows/red-team.yml</code>. Copy the synthetic payload stage from this post: a 30-second pytest run that fuzzes the agent’s input with <code>hypothesis</code> 6.97. Commit the file and push it to a new branch. Then open a pull request and watch the red-team gate run. If it fails, fix the issue before merging. If it passes, you’ve just added red-teaming to your agent without slowing down development velocity.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/pr-checklists-are-dead-ai-agents-do-reviews-now/">PR checklists are dead: AI agents do reviews now</a></li>
+<li><a href="https://kubaik.github.io/choose-no-code-only-when/">Choose no-code only when</a></li>
+<li><a href="https://kubaik.github.io/drop-checklists-ai-code-reviews-that-scale/">Drop checklists: AI code reviews that scale</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 17, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -501,12 +483,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

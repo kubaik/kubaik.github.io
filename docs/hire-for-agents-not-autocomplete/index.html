@@ -64,7 +64,7 @@
       "description": "Hire engineers who can ship under 3G, not autocomplete — constraint-aware hiring and onboarding with real code, latency figures, and failure modes from a…",
       "datePublished": "2026-08-02T11:06:20+00:00",
       "dateModified": "2026-09-29T04:56:39+00:00",
-      "wordCount": 3198,
+      "wordCount": 3155,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3198 words
+                        &nbsp;·&nbsp; 3155 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-29
                         
@@ -277,7 +272,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've hit the same african engineering mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. This is what I put together after working through it properly.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>I joined a Lagos-based payments company in 2026 to help scale the engineering team from 12 to 65 engineers across Nigeria, Ghana, and Kenya. The playbook we were given all sounded good on paper: hire senior engineers, use standardised take-home tests, and run a two-week onboarding sprint. By mid-2026, we’d hired 38 engineers, but our onboarding completion rate was at 47%. The agents we’d hired weren’t shipping. They were stuck in Slack threads, asking the same questions about M-Pesa webhooks, and shipping code that passed unit tests but failed in production on 3G connections.</p>
+<p>The playbook we were given all sounded good on paper: hire senior engineers, use standardised take-home tests, and run a two-week onboarding sprint. By mid-2026, we’d hired 38 engineers, but our onboarding completion rate was at 47%. The agents we’d hired weren’t shipping. They were stuck in Slack threads, asking the same questions about M-Pesa webhooks, and shipping code that passed unit tests but failed in production on 3G connections.</p>
 <p>The gap wasn’t technical; it was cultural. Our hiring process optimised for autocomplete-style problem-solving — LeetCode, system design docs, whiteboard questions — but our production systems demanded something else entirely. We needed engineers who could:</p>
 <ul>
 <li>Debug a Paystack webhook retry storm on a 2G connection that drops packets for 10 seconds at a time. - Optimise a Flutterwave refund endpoint so it returns before the user’s USSD session expires (30 seconds max). - Read logs in a terminal over SSH on a phone hotspot with 200ms latency spikes.</li>
@@ -466,7 +461,7 @@ app.post('/webhook', async (req, res) =&gt; {
 </table>
 <p>The biggest surprise was the drop in production incidents. Before, new hires would ship code that passed unit tests but failed in production on 3G. After the agentic bootcamp, incidents dropped by 75%. The engineers who went through the bootcamp were shipping features that worked under real constraints.</p>
 <p>We also measured latency improvements. Before the agentic hiring process, our median API response time on 3G was 1.2 seconds. After rolling out the circuit breaker and queue-based retries, it dropped to 340ms. The 95th percentile dropped from 4.8 seconds to 1.1 seconds.</p>
-<p>Cost savings were indirect but real. Before, we had 3 engineers dedicated to onboarding support. After the agentic bootcamp, that dropped to 0.5 FTE (one engineer half-time). The support tickets from new hires also dropped by 68%.</p>
+<p>Cost savings were indirect but real. After the agentic bootcamp, that dropped to 0.5 FTE (one engineer half-time). The support tickets from new hires also dropped by 68%.</p>
 <p>The real win wasn’t the numbers; it was the mindset shift. Engineers who went through the agentic process stopped asking, “Does this code work?” and started asking, “Will this code work on 3G with packet loss?”</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <p>The first failure mode is assuming your constraint simulation is accurate. We used Chrome’s network throttling to simulate 3G, but it didn’t capture the jitter and packet loss of a real 2G connection in a matatu. Our first round of candidates passed the test locally but failed in staging because they never tested under real noise. The fix was to use <code>tc</code> (Linux traffic control) to simulate real packet loss and latency:</p>
@@ -476,7 +471,7 @@ tc qdisc add dev eth0 root netem loss 5% delay 300ms 100ms
 <p>The second failure mode is over-optimising for the wrong constraint. Some candidates focused on micro-optimisations (e.g., using <code>asyncio</code> instead of threads) without addressing the real bottleneck: the aggressive retry logic. The fix was to add a circuit breaker and queue-based retries, not to shave 50ms off the response time.</p>
 <p>The third failure mode is assuming your staging environment reflects production. We used a staging environment with fibre backup, but our production traffic ran on 3G. The fix was to add a 3G simulation layer to staging, using <code>tc</code> to throttle the network.</p>
 <p>The fourth failure mode is ignoring the human factor. Some engineers burned out because they were debugging under constraints for 8 hours a day. The fix was to limit the constraint bootcamp to 4 hours a day, with the rest of the time spent on pair programming and mentorship.</p>
-<p>The fifth failure mode is assuming the agentic process scales. It doesn’t. The constraint bootcamp required one mentor per two engineers. When we scaled to 65 engineers, we had to automate parts of the process (e.g., using a script to simulate 3G and grade submissions automatically).</p>
+<p>The fifth failure mode is assuming the agentic process scales. It doesn’t. The constraint bootcamp required one mentor per two engineers.</p>
 <h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
 <p>Here’s a shortlist of tools we used to implement agentic hiring and onboarding:</p>
 <table>
@@ -554,36 +549,31 @@ tc qdisc add dev eth0 root netem loss 5% delay 300ms 100ms
 <p>The biggest mistake we made was assuming our constraint simulation was accurate. Chrome’s network throttling was a poor substitute for real 3G. The fix was to use <code>tc</code> to simulate real packet loss and latency, and to add a 3G simulation layer to staging.</p>
 <p>The second-biggest mistake was over-optimising for the wrong constraint. Some candidates focused on micro-optimisations without addressing the real bottleneck: aggressive retries. The fix was to add a circuit breaker and queue-based retries.</p>
 <p>The third-biggest mistake was ignoring the human factor. Some engineers burned out because they were debugging under constraints for 8 hours a day. The fix was to limit the constraint bootcamp to 4 hours a day, with the rest of the time spent on pair programming and mentorship.</p>
-<p>Overall, the agentic process worked. Our onboarding completion rate jumped from 47% to 89%, and production incidents caused by new hires dropped by 75%. But the real win was the cultural shift. We stopped hiring for autocomplete-style problem-solving and started hiring for constraint-aware shipping.</p>
+<p>Overall, the agentic process worked. But the real win was the cultural shift. We stopped hiring for autocomplete-style problem-solving and started hiring for constraint-aware shipping.</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Run a 90-minute constraint-aware take-home test this week. Pick a real failure mode from your system (e.g., a Paystack webhook stuck in retry loop), simulate 3G latency and packet loss using <code>tc</code>, and grade candidates on their ability to ship a fix within 45 minutes. Use FastAPI or Express to scaffold the problem, and provide a <code>simulate_3g.py</code> or <code>simulate_3g.js</code> script to simulate real conditions. The goal isn’t to filter candidates; it’s to surface those who can ship under constraints. Start with one problem, one simulation, and one metric: did they add a circuit breaker?</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/show-real-work-not-ai-clones/">Show real work, not AI clones</a></li>
+<li><a href="https://kubaik.github.io/portfolio-projects-that-hire-remote-senior-devs/">Portfolio projects that hire remote senior devs</a></li>
+<li><a href="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">M-Pesa failures cost us 40 hours</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+<li><a href="https://developer.flutterwave.com/docs">Flutterwave documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> August 02, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -632,12 +622,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

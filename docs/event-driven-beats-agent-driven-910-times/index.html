@@ -64,8 +64,8 @@
       "description": "Choose event-driven over agent-driven 9/10 times — latency spikes, locking, and retry storms explained with concrete fixes and 2026 tools like EventBridge…",
       "datePublished": "2026-07-30T02:38:09+00:00",
       "dateModified": "2026-09-19T09:24:55+00:00",
-      "wordCount": 3706,
-      "timeRequired": "PT19M",
+      "wordCount": 3680,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -251,8 +246,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3706 words
+                        18 min read
+                        &nbsp;·&nbsp; 3680 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -266,7 +261,7 @@
 <p>What follows is the diagnostic path I wish I’d had then: how to spot the shift early, how to reverse it, and when to embrace the pain of an agent-driven design. Spoiler: 9 out of 10 solo-founder stacks are better off event-driven once you account for maintenance time.</p>
 <hr />
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>The surface symptom is always the same: spikes in latency or CPU that correlate with scheduled jobs, not request volume. In our case, every 10 minutes we saw a 2–3 second spike in API response time, even though traffic was flat. The logs showed nothing unusual until we enabled AWS X-Ray traces (cost: $0.50 for 1M traces/month). The trace waterfall revealed that a scheduled Lambda was triggering a chain of retries, each one spinning up a new container, each container trying to insert into the same database table that was locked by the previous job. We blamed the database, then the queue, then the Lambda concurrency limit. It wasn’t any of those.</p>
+<p>The surface symptom is always the same: spikes in latency or CPU that correlate with scheduled jobs, not request volume. In our case, every 10 minutes we saw a 2–3 second spike in API response time, even though traffic was flat. The trace waterfall revealed that a scheduled Lambda was triggering a chain of retries, each one spinning up a new container, each container trying to insert into the same database table that was locked by the previous job. We blamed the database, then the queue, then the Lambda concurrency limit. It wasn’t any of those.</p>
 <p>The real mistake was architectural: we’d started with an event-driven core (Lambda + SQS) but bolted on agent-driven patterns (cron + retries + state table) to handle edge cases. The cron jobs were the agents: they polled, they decided, they acted. The system had subtly become a hybrid where events were treated as commands and commands were treated as events. The confusion came because both approaches use queues and both use workers. The difference is subtle but brutal in production.</p>
 <p>Event-driven: event arrives → handler decides what to do → side effect. Agent-driven: agent polls for work → agent decides what to do → side effect.</p>
 <p>In 2026, most solo stacks default to event-driven because it maps one-to-one to user actions. The trap is adding agents (scheduled jobs, batch processors, cleanup scripts) without realising that agents introduce state, retries, and locking that events don’t require. Once you have more than 3 agents, the system’s complexity explodes and latency spikes become weekly events.</p>
@@ -338,7 +333,7 @@ def process_dlq():
 <hr />
 <h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
 <p>The environment-specific cause is using an agent to handle resource cleanup in ephemeral environments like staging or preview deploys. This is common in solo stacks that use Kubernetes or ECS with short-lived resources. The agent is a cron job that runs every hour and deletes old namespaces, pods, or volumes. The agent introduces state (which namespaces are old?) and concurrency control (locking the namespace list during deletion).</p>
-<p>In a 2026 stack using Amazon EKS with Karpenter 0.32 and ArgoCD 2.10, we saw this pattern: a daily cron job that used kubectl to list namespaces older than 7 days and delete them. The cron job used a leader election lock to prevent multiple agents from running at once, but the lock was stored in a ConfigMap that was itself stored in a namespace that the agent was about to delete. This created a race condition where the leader lock ConfigMap was deleted before the agent released it, causing the agent to hang and orphan resources.</p>
+<p>The cron job used a leader election lock to prevent multiple agents from running at once, but the lock was stored in a ConfigMap that was itself stored in a namespace that the agent was about to delete. This created a race condition where the leader lock ConfigMap was deleted before the agent released it, causing the agent to hang and orphan resources.</p>
 <p>The fix is to use the platform’s native lifecycle hooks and garbage collection. EKS has pod lifecycle hooks. Kubernetes has TTL-after-finished for Jobs. ArgoCD has automated cleanup policies. Use them.</p>
 <p>For cleanup, the pattern is:</p>
 <ol>
@@ -369,7 +364,7 @@ metadata:
 <p><strong>Queue depth and DLQ rate:</strong> Use CloudWatch metrics for SQS queue depth and DLQ redrive count. After removing agents, the queue depth should be stable and the DLQ rate should drop to near zero. If the DLQ rate is high, you’ve moved the problem, not fixed it.</p>
 </li>
 <li>
-<p><strong>Cost delta:</strong> Compare the cost of the old agent (cron job + Lambda + retries) vs the new event-driven pattern (EventBridge rule + Lambda + SQS). In our stack, the cost dropped from $12/month to $2/month, a 83% saving.</p>
+<p><strong>Cost delta:</strong> Compare the cost of the old agent (cron job + Lambda + retries) vs the new event-driven pattern (EventBridge rule + Lambda + SQS).</p>
 </li>
 <li>
 <p><strong>Alert noise:</strong> Count the number of PagerDuty alerts related to queue depth or agent failures in the 30 days before and after the change. Expect a 90%+ reduction if the fix worked.</p>
@@ -570,33 +565,28 @@ UPDATE outbox SET processed_at = now() WHERE id = 123;
 <p>The result would be a system that scales to 10,000 req/s with zero operational overhead, and a p99 latency that’s consistent, not spiky.</p>
 <hr />
 <p>Take the 30-minute action now: run <code>npx @kubai/agent-pattern-detector@1.2 .</code> in your repo root. It will print a list of files that match agent patterns. Delete or refactor the top 3 offenders before your next deploy.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/">Cut cold starts 70%: Lambda cost hack</a></li>
+<li><a href="https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/">Temporal changed our agent retries for good</a></li>
+<li><a href="https://kubaik.github.io/replace-managed-services-with-postgres-17/">Replace managed services with Postgres 17</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 30, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -625,7 +615,7 @@ please contact me and I'll review and correct it.</p>
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/spot-evictions-the-retry-logic-that-holds-up/">
@@ -645,12 +635,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

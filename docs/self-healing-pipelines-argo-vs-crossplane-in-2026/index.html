@@ -64,8 +64,8 @@
       "description": "Cut mean time to recovery 70% with self-healing CI/CD — Argo CD vs Crossplane performance and cost compared using 2026 data from production clusters.",
       "datePublished": "2026-06-25T13:16:29+00:00",
       "dateModified": "2026-09-19T11:54:35+00:00",
-      "wordCount": 3860,
-      "timeRequired": "PT19M",
+      "wordCount": 3696,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -256,8 +251,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3860 words
+                        18 min read
+                        &nbsp;·&nbsp; 3696 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -268,12 +263,12 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, self-healing deployment pipelines aren’t just a nice-to-have — they’re the difference between a 3 a.m. firefight and waking up to a green build. The hard truth? Most teams still treat their CI/CD as a glorified script runner, manually babysitting deployments when Kubernetes decides to reschedule pods or Argo Workflows hits a flaky node. I learned this the hard way when a single misconfigured retry policy in a 2024 deployment cost us $12k in wasted AWS Lambda invocations and 4 hours of downtime. That incident pushed us to evaluate two approaches: Argo CD’s ApplicationSets with automated rollback, and Crossplane’s declarative infrastructure with real-time reconciliation engines.</p>
+<p>In 2026, self-healing deployment pipelines aren’t just a nice-to-have — they’re the difference between a 3 a.m. firefight and waking up to a green build. The hard truth? Most teams still treat their CI/CD as a glorified script runner, manually babysitting deployments when Kubernetes decides to reschedule pods or Argo Workflows hits a flaky node. That incident pushed us to evaluate two approaches: Argo CD’s ApplicationSets with automated rollback, and Crossplane’s declarative infrastructure with real-time reconciliation engines.</p>
 <p>Both tools claim to heal themselves, but they solve different problems. Argo CD is battle-tested for GitOps deployments with automatic drift correction, while Crossplane turns Kubernetes into a control plane for cloud resources with built-in health checks. The catch? Argo’s self-healing is reactive — it waits for Kubernetes to misbehave before triggering a rollback — whereas Crossplane proactively reconciles cloud resources to match your desired state every 60 seconds by default. That latency meant 45-second windows where a misconfigured RDS instance could stay broken before Crossplane noticed — plenty of time to break prod.</p>
 <p>But the real differentiator? Tooling friction. They only made progress when they started from scratch with Crossplane Composition functions. The lesson? Self-healing isn’t just about the tool — it’s about how much cognitive overhead you’re willing to pay in setup and maintenance.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p>Argo CD’s self-healing comes from two features: ApplicationSets and automated rollback via health checks. An ApplicationSet is a Kubernetes CRD that generates Argo Applications from a template, syncing multiple clusters or namespaces from a single Git repo. The magic happens in the health assessment: Argo CD continuously compares the live state of your cluster against the desired state in Git, and triggers a rollback if the health score drops below a threshold you define.</p>
-<p>Here’s the kicker: Argo CD performs these checks every 3 seconds by default. That’s faster than Kubernetes’ own readiness probes in many cases, and it’s why we saw 87% fewer manual rollbacks after switching to Argo CD 2.10 in Q1 2026. The self-healing is reactive — it doesn’t predict failures — but the 3-second polling loop is aggressive enough to catch most misconfigurations before they propagate. One edge case we hit was with Custom Resource Definitions (CRDs) that Argo doesn’t natively understand. When we deployed a Prometheus Operator CRD that mutated pod specs, Argo’s health checks started reporting the pods as "Unknown" because the CRD’s status subresource wasn’t updating fast enough. We spent three days debugging the CRD’s status update mechanism before realizing the issue was in the Prometheus Operator itself — not Argo. Lesson learned: Argo’s self-healing is only as good as the health status your applications expose.</p>
+<p>Here’s the kicker: Argo CD performs these checks every 3 seconds by default. The self-healing is reactive — it doesn’t predict failures — but the 3-second polling loop is aggressive enough to catch most misconfigurations before they propagate. One edge case we hit was with Custom Resource Definitions (CRDs) that Argo doesn’t natively understand. When we deployed a Prometheus Operator CRD that mutated pod specs, Argo’s health checks started reporting the pods as "Unknown" because the CRD’s status subresource wasn’t updating fast enough. We spent three days debugging the CRD’s status update mechanism before realizing the issue was in the Prometheus Operator itself — not Argo. Lesson learned: Argo’s self-healing is only as good as the health status your applications expose.</p>
 <p>The other strength of Argo CD is its integration with existing GitOps tools. We used Argo CD with Tekton 0.55 for CI and Vault 1.14 for secrets, and the setup took two engineers three days to stabilize. The self-healing pipeline automatically rolls back to the last known good commit if any stage in the Tekton pipeline fails — including infrastructure provisioning via Terraform wrapped in a Kubernetes Job. That saved us $8k/month in wasted AWS costs during the 2025 holiday season when a Terraform module leaked 200 RDS instances before Argo detected the drift and rolled back to the last stable state.</p>
 <p>Where Argo shines:
 - Native GitOps workflows with minimal configuration
@@ -444,10 +439,10 @@ spec:
 </tr>
 </tbody>
 </table>
-<p>The 63-second detection time for Crossplane is deceptive — in reality, the reconciliation loop runs every 60 seconds, but the RDS health check in Crossplane has a built-in 30-second cooldown after detecting a change. That means the first reconciliation attempt happens at 60 seconds, but if the resource is still in a transitional state, Crossplane waits another 30 seconds before retrying. We patched this behavior in production by reducing the cooldown to 10 seconds, which brought the detection time down to 45 seconds — still faster than Argo’s 4m 12s.</p>
+<p>The 63-second detection time for Crossplane is deceptive — in reality, the reconciliation loop runs every 60 seconds, but the RDS health check in Crossplane has a built-in 30-second cooldown after detecting a change. That means the first reconciliation attempt happens at 60 seconds, but if the resource is still in a transitional state, Crossplane waits another 30 seconds before retrying.</p>
 <p>Argo CD’s detection time was dominated by the Tekton pipeline’s readiness probe. Our application had a 60-second liveness probe, and Argo only considered the pod unhealthy after three consecutive failures — 180 seconds total. Even with Argo’s 3-second health polling, the pod wasn’t marked as "Degraded" until Tekton reported the failure, which took 4 minutes in our setup. The lesson? Argo’s self-healing is only as fast as your application’s health signals.</p>
-<p>On resource overhead, Argo CD is lighter because it’s polling Kubernetes API objects that already exist in memory. Crossplane, by contrast, runs a full reconciliation loop for every cloud resource in your cluster, which adds up when you have 50+ EKS clusters and 200+ RDS instances. In our production cluster, Crossplane used 7.8% CPU versus Argo’s 3.2% — but that’s with a full AWS provider and 15 Composition functions. When we trimmed the Composition functions to only the essential ones, Crossplane’s CPU dropped to 4.1%.</p>
-<p>Cost-wise, Crossplane’s reconciliation is cheaper because it uses AWS Lambda for drift detection via CloudWatch Events, while Argo CD relies on Kubernetes API calls that generate cost via the EKS control plane. We measured 87 fewer Lambda invocations per hour with Crossplane, saving $0.75/day — not much, but it adds up across hundreds of resources.</p>
+<p>On resource overhead, Argo CD is lighter because it’s polling Kubernetes API objects that already exist in memory. Crossplane, by contrast, runs a full reconciliation loop for every cloud resource in your cluster, which adds up when you have 50+ EKS clusters and 200+ RDS instances. In our production cluster, Crossplane used 7.8% CPU versus Argo’s 3.2% — but that’s with a full AWS provider and 15 Composition functions.</p>
+<p>Cost-wise, Crossplane’s reconciliation is cheaper because it uses AWS Lambda for drift detection via CloudWatch Events, while Argo CD relies on Kubernetes API calls that generate cost via the EKS control plane.</p>
 <p>The performance winner is clear: Crossplane detects and reconciles failures faster, especially at the infrastructure layer. But Argo CD’s performance is more predictable and easier to optimize because it’s tightly coupled with Kubernetes’ own health mechanisms. If you’re running a stateful application with strict latency requirements, Crossplane’s proactive reconciliation is worth the overhead. If you’re mostly concerned with application-level failures, Argo CD is faster to adopt and lighter on resources.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
 <p>Developer experience isn’t just about setup time — it’s about how quickly a new engineer can debug a self-healing pipeline when it fails. In 2026, we onboarded six engineers to both systems and tracked their ramp-up time and error rates.</p>
@@ -488,7 +483,7 @@ spec:
 </tr>
 </tbody>
 </table>
-<p>The biggest pain point with Crossplane is the need to write Composition functions in Go. Most engineers on our team were comfortable with YAML and Terraform, but Go felt like a foreign language. We tried using Crossplane’s Function Framework with Python, but the performance overhead made the reconciliation loop miss deadlines. In the end, we had to hire a Go contractor for two weeks to stabilize our Compositions — costing us $4.2k in contractor fees.</p>
+<p>The biggest pain point with Crossplane is the need to write Composition functions in Go. Most engineers on our team were comfortable with YAML and Terraform, but Go felt like a foreign language. We tried using Crossplane’s Function Framework with Python, but the performance overhead made the reconciliation loop miss deadlines.</p>
 <p>Argo CD’s developer experience is smoother because it’s declarative and Git-centric. New engineers can clone the GitOps repo, run <code>argocd app create</code> with the provided manifest, and immediately see the application sync. The self-healing behavior is visible in the Argo CD UI, which shows health status and rollback history. We built a custom dashboard in Grafana that pulls Argo CD’s metrics via the Argo CD API, and it took one engineer two days to build — something we couldn’t replicate with Crossplane because its metrics are scattered across Prometheus exporters.</p>
 <p>Debugging Crossplane failures is harder because the reconciler logs are long and noisy. When we introduced a syntax error in a Composition, Crossplane’s controller would log 500 lines of stack traces before failing. We had to write a custom log parser in Go to filter the relevant errors, which took another week. Argo CD’s logs, by contrast, are concise and actionable — the error message for a failed health check is usually the pod’s liveness probe output, which any engineer can read.</p>
 <p>Another developer experience win for Argo CD is its integration with existing CI/CD tools. We used Argo CD with GitHub Actions 2.31 and Sentry 1.32 for error tracking. When a deployment failed, GitHub Actions automatically opened a Jira ticket with the Argo CD sync status, and Sentry correlated the error with the commit hash. Crossplane doesn’t have native integrations with most CI/CD tools, so we had to write custom webhooks to trigger GitHub Actions — a brittle solution that broke every time we updated Crossplane.</p>
@@ -539,7 +534,7 @@ spec:
 </tbody>
 </table>
 <p>The AWS cost difference is small but measurable. Argo CD runs on EKS, which charges $0.10 per hour per cluster for the control plane. Crossplane uses AWS Lambda for drift detection via CloudWatch Events, which costs $0.20 per million requests. In our setup, Crossplane made 1.2 million Lambda calls per month, while Argo CD’s API calls cost $187. The difference is negligible for most teams, but it adds up when you have 50+ clusters.</p>
-<p>The real cost driver is engineering time. We measured onboarding time for new engineers — Argo CD took 2.5 days per engineer, while Crossplane took 8.5 days. At an average salary of $150/hour, that’s an $8.4k difference per engineer. Add debugging time: Argo CD averaged 35 minutes per failure, while Crossplane took 90 minutes. Over six months, that’s an extra 21 hours per engineer — $3.15k per engineer.</p>
+<p>The real cost driver is engineering time. At an average salary of $150/hour, that’s an $8.4k difference per engineer. Add debugging time: Argo CD averaged 35 minutes per failure, while Crossplane took 90 minutes. Over six months, that’s an extra 21 hours per engineer — $3.15k per engineer.</p>
 <p>Incident cost is where Crossplane shines. In the six-month period, Argo CD had 12 incidents that required manual intervention, costing $2.4k per incident in lost revenue and AWS cleanup costs. Crossplane had three incidents, costing $0.9k each — mostly because Crossplane caught infrastructure drift before it caused application failures. The $1.5k per-incident difference is significant when you scale to hundreds of resources.</p>
 <p>The operational cost winner is Argo CD for teams that prioritize speed and cost efficiency. Crossplane’s higher TCO is justified if you have a large infrastructure footprint and can afford the upfront investment in Go expertise. For most teams, the $8k+ difference in engineering time isn’t worth the faster reconciliation — unless your application can’t tolerate even 6 minutes of downtime.</p>
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
@@ -618,33 +613,20 @@ spec:
 <p>I’ll end with a story. In early 2026, we had a production incident where a misconfigured IAM policy caused our RDS instance to restart every 10 minutes. Argo CD detected the drift in 4 minutes and rolled back to the last known good state — saving us from a full outage. Crossplane, running in a separate cluster, detected the drift in 63 seconds but couldn’t roll back the RDS instance because AWS doesn’t allow automatic rollbacks for IAM-related changes. The incident highlighted a key weakness of both tools: self-healing is only as good as the cloud provider’s APIs. Argo CD’s strength was its GitOps model, which let us quickly revert the IAM policy change via a Git commit. Crossplane’s strength was its proactive detection, but it couldn’t fix the problem because AWS doesn’t support automatic rollbacks for IAM.</p>
 <p>The lesson? Self-healing pipelines are a tool, not a silver bullet. They’ll catch most failures, but not all. Combine them with automated testing, canary deployments, and chaos engineering for a truly resilient system.</p>
 <p>If you’re starting today, <strong>create a new Argo CD ApplicationSet that syncs a simple Nginx deployment across two clusters. Set the sync policy to <code>selfHeal: true</code> and <code>prune: true</code>, and watch how it automatically corrects drift.</strong> That’s the fastest way to see self-healing in action without committing to a full GitOps migration.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/">AI agents vs Argo, Tekton: which pipeline heals itself?</a></li>
+<li><a href="https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">Self-healing AI agents vs rule-based ops: 40% fewer</a></li>
+<li><a href="https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/">Agent governance: OPA vs Kyverno after our incident</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 25, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -673,7 +655,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/only-boring-stacks-survive-ai-services/">
                         <h3>Only boring stacks survive AI services</h3>
                         <p>Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…</p>
-                        <span class="related-meta">16 min read · 31 August 2026</span>
+                        <span class="related-meta">17 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
@@ -693,12 +675,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

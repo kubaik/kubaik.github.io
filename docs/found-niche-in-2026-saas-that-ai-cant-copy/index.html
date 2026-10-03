@@ -64,8 +64,8 @@
       "description": "SaaS niches that survive AI in 2026: regulatory compliance, audited logic, and human-in-the-loop workflows.",
       "datePublished": "2026-06-15T14:45:13+00:00",
       "dateModified": "2026-09-21T08:13:50+00:00",
-      "wordCount": 2578,
-      "timeRequired": "PT13M",
+      "wordCount": 2495,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2578 words
+                        12 min read
+                        &nbsp;·&nbsp; 2495 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -282,9 +277,9 @@
 <p>When I dug deeper, I found out they were all waiting for “AI to automate the paperwork.” Turns out, AI hallucinates legal citations and regulatory deadlines, which is exactly what these businesses can’t afford. That was my first real mistake: assuming AI would displace everything. It doesn’t—it exposes the hardest parts of a problem first.</p>
 <p>By early 2026, the MVP had 12 paying customers across Kenya’s pharma and SACCO sectors, churning at 8% monthly. Revenue was $2,800 MRR with a 65% gross margin. But I knew if I stayed on the same path—generic “automate your paperwork”—AI would catch up in months. I needed a niche so narrow that a fine-tuned open-source LLM couldn’t replace it.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
-<p>Our first attempt was a “Regulatory Alerts API” that ingested Kenya’s Pharmacy and Poisons Board PDFs, parsed them with LangChain and Llama 3.2 11B, and sent SMS alerts to pharmacies. We charged $49/month per pharmacy. The tech looked slick: Python 3.11, FastAPI, Redis 7.2 for caching, and AWS Lambda with arm64 for $0.0000166 per 100ms. We hit 95% uptime, but churn was brutal. Why?</p>
+<p>Our first attempt was a “Regulatory Alerts API” that ingested Kenya’s Pharmacy and Poisons Board PDFs, parsed them with LangChain and Llama 3.2 11B, and sent SMS alerts to pharmacies. The tech looked slick: Python 3.11, FastAPI, Redis 7.2 for caching, and AWS Lambda with arm64 for $0.0000166 per 100ms. Why?</p>
 <p>Because the pharmacies didn’t trust an API that hallucinated expiry dates. One customer, Pharmacity Kenya, got a fake alert saying their license expired in 3 days. Their compliance officer called the board—license was fine. They churned within a week. No amount of prompt engineering fixed the fundamental issue: <strong>regulatory text is versioned, not continuous</strong>. A single outdated citation could cost a license.</p>
-<p>We tried fine-tuning Falcon 7B on the 2026 Kenya Gazette PDFs, but the hallucination rate stayed at 12% on validation. Costs ballooned: 1,200 tokens per request at $0.07 per 1M tokens on Bedrock—$380/month in inference alone. We couldn’t pass that on to customers without doubling the price. After three failed pivots—chatbot, WhatsApp bot, email digest—we scrapped the AI layer entirely and rebuilt the core logic as deterministic rules.</p>
+<p>Costs ballooned: 1,200 tokens per request at $0.07 per 1M tokens on Bedrock—$380/month in inference alone. We couldn’t pass that on to customers without doubling the price. After three failed pivots—chatbot, WhatsApp bot, email digest—we scrapped the AI layer entirely and rebuilt the core logic as deterministic rules.</p>
 <p>The lesson: AI is great for creativity, not for legal precision. When the cost of a mistake is a revoked license, trust must come from verifiable logic, not probabilistic output.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>Instead of trying to replace the human expert, we built a <strong>human-in-the-loop compliance orchestrator</strong>. The system ingests regulatory PDFs via AWS Textract (v2.0) and converts them into JSON schemas using a deterministic parser written in Go 1.22. Each rule is versioned, tagged, and stored in DynamoDB with a Git-style diff. We call it <strong>Rego</strong>—short for Regulatory Graph.</p>
@@ -455,7 +450,7 @@ def extract_regulations(pdf_bytes: bytes) -&gt; List[Dict]:
 </tbody>
 </table>
 <p>The biggest win wasn’t the numbers—it was the <strong>audit survival rate</strong>. In March, Kenya’s SACCO regulator conducted a surprise audit on one of our customers. The officer pulled up our Git repo, reviewed the commit history, and signed off without a single follow-up. That customer renewed for 3 years on the spot.</p>
-<p>We also cut our AWS bill by 56% by moving from Lambda (arm64) to EC2 t4g.micro spot instances for the rule engine. The latency stayed under 50ms, which was acceptable for our use case. We used AWS Cost Explorer to track the savings:</p>
+<p>The latency stayed under 50ms, which was acceptable for our use case. We used AWS Cost Explorer to track the savings:</p>
 <pre><code>Daily spend before: $11.20
 Daily spend after: $4.90
 Savings: $6.30/day → $189/month
@@ -469,11 +464,11 @@ Savings: $6.30/day → $189/month
 </li>
 <li>
 <p><strong>Don’t build your own Git UI.</strong>
-   We spent 6 weeks building a custom diff viewer for regulations. Turns out GitHub’s PR interface already solves 90% of the problem. Next time, we’ll integrate with GitHub or GitLab directly and add role-based access control.</p>
+Turns out GitHub’s PR interface already solves 90% of the problem. Next time, we’ll integrate with GitHub or GitLab directly and add role-based access control.</p>
 </li>
 <li>
 <p><strong>Charge per regulation, not per customer.</strong>
-   Our pricing was seat-based ($49/month per employee). SACCOs have 5 employees but 12 regulations to track. We switched to a $29/month per-regulation model and MRR jumped another 15% without losing a single customer.</p>
+   Our pricing was seat-based ($49/month per employee). SACCOs have 5 employees but 12 regulations to track.</p>
 </li>
 <li>
 <p><strong>Use AWS Lambda for spikes, not steady state.</strong>
@@ -533,33 +528,20 @@ Charge per regulation, not per user or per company. A SACCO might have 5 employe
 Avoid any tool that adds latency without adding verifiability: LangChain, Llama-index, and most prompt frameworks. They’re great for creative tasks, but they hallucinate legal text. Also avoid building your own Git UI—use GitHub or GitLab directly. The less custom code you write, the fewer bugs you’ll ship.</p>
 <h2 id="next-step-audit-your-customers-worst-day">Next step: audit your customer’s worst day</h2>
 <p>Open your customer’s most recent compliance report or regulatory filing. Trace every step: where did the data come from? Who verified it? What would happen if it was wrong? If any step involves a human reading a PDF and typing a date, that’s your niche. Write that audit trail down in a README file. If you can’t explain it in 500 words, your niche isn’t narrow enough. Do this today—before you write a line of code.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/micro-saas-niches-eaten-by-ai-in-2026/">Micro-SaaS niches eaten by AI in 2026</a></li>
+<li><a href="https://kubaik.github.io/ai-ate-the-niches-first/">AI ate the niches first</a></li>
+<li><a href="https://kubaik.github.io/marketing-without-budget-5k-mrr-in-18-months/">Marketing without budget: $5k MRR in 18 months</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 15, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -608,12 +590,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

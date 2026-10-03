@@ -64,7 +64,7 @@
       "description": "The gap between what the docs say and what production needs Most AI agent tutorials end at \"here’s the prompt and a success case.\" They don’t mention what…",
       "datePublished": "2026-06-11T09:20:50+00:00",
       "dateModified": "2026-09-27T04:25:01+00:00",
-      "wordCount": 3449,
+      "wordCount": 3310,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -248,7 +243,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3449 words
+                        &nbsp;·&nbsp; 3310 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-27
                         
@@ -264,7 +259,7 @@
 <ol>
 <li>Token inflation: Every retry adds tokens. A 200-token prompt retried 5 times becomes 1,000 tokens. At $0.03/1K tokens in 2026, that’s $0.03 per call instead of $0.006. 2. Clock drift: Timeouts aren’t just about failing fast. They’re about how long the agent waits before retrying, how many retries it attempts, and whether it’s still useful when it finally responds. 3. Resource drift: Memory leaks from unclosed connections, orphaned contexts, and streaming buffers pile up faster than you’d expect in long-running agents.</li>
 </ol>
-<p>The numbers that surprised me most: our staging system used 12% more tokens than production because staging’s 99.9% success rate hid 100% of the retries. In production, retries added 23% to our token usage — and 41% to our bill.</p>
+<p>In production, retries added 23% to our token usage — and 41% to our bill.</p>
 <p>I thought adding a retry budget would fix it. It didn’t. The budget capped retries but didn’t account for the fact that each retry doubled the token cost and tripled the wall-clock time when the LLM was cold. We needed to measure both dimensions together.</p>
 <p><strong>What the docs got wrong</strong>: 
 - They assume constant latency. In reality, cold starts in serverless functions add 1.2–2.5 seconds to the first call, and LLM providers throttle under load (we hit 429s at 1,200 RPM in us-east-1). - They ignore token bloat from retries. A 500-token prompt retried 3 times becomes 2,000 tokens — but the provider charges per token in the final request only. The intermediate tokens are free? No. They count toward your rate limits and may trigger higher-tier pricing. - They treat timeouts as binary. A 5-second timeout isn’t the same as a 5-second timeout plus a 2-second backoff plus a 3-second retry limit. Those three numbers multiply the actual latency your users experience.</p>
@@ -294,7 +289,7 @@ This is the user-facing code that waits for the agent to respond. It sets timeou
 When an agent fails, every client that hits refresh triggers a new agent instance. At 1,200 RPM, 300 concurrent users can spawn 300 agents simultaneously. Each agent tries to call the LLM at the same time, triggering rate limits and 429s. The retry storm becomes a thundering herd.</p>
 <p>The fix is to add a concurrency gate: either a rate limiter (Redis 7.2 with a sliding window) or a queue (SQS with a 10-second visibility timeout). Without it, your retry budget explodes.</p>
 <p><strong>Streaming vs batch retries</strong>:
-Streaming partial responses reduces perceived latency but increases token usage. A 512-token partial response that gets discarded still costs tokens. Batch retries (retry the whole request) avoid partial token waste but increase wall-clock time. In our tests, streaming added 18% to token usage but reduced p95 latency from 8.2s to 3.1s. The trade-off is real.</p>
+Streaming partial responses reduces perceived latency but increases token usage. A 512-token partial response that gets discarded still costs tokens. Batch retries (retry the whole request) avoid partial token waste but increase wall-clock time. The trade-off is real.</p>
 <p><strong>The cold start tax</strong>:
 Lambda cold starts in 2026 average 1.2s for Node 20 LTS in us-east-1. If your agent’s timeout is 2s, the first call has a 60% chance of timing out before the Lambda even starts. The docs don’t tell you to set the timeout to 5s or use Provisioned Concurrency ($0.015 per GB-hour).</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
@@ -435,7 +430,7 @@ if __name__ == &quot;__main__&quot;:
 </code></pre>
 <p>Key details in this implementation:
 1. <strong>Exponential backoff with jitter</strong>: <code>backoff.expo</code> with <code>full_jitter</code> prevents thundering herd retries. 2. <strong>Structured logging</strong>: Each attempt logs duration, tokens, and cost in JSON for analysis. 3. <strong>Rate limiting with Redis</strong>: A sliding window of 10 requests per second per user prevents concurrent storms. 4. <strong>Timeout wrapping</strong>: The httpx timeout is set to <code>BASE_TIMEOUT</code>, but the total retry duration can exceed it. The client’s timeout should be higher than the retry budget.</p>
-<p>The most surprising part? The cost calculation is per-token, but the retry loop burns tokens even when the call fails. Our staging tests showed 18% of token usage came from failed attempts that never reached the user.</p>
+<p>The most surprising part? The cost calculation is per-token, but the retry loop burns tokens even when the call fails.</p>
 <p>Next, add caching to avoid repeated prompts. Use Redis with a TTL:</p>
 <pre><code class="language-python">CACHE_TTL = 300  # 5 minutes
 
@@ -467,7 +462,7 @@ async def handle_agent(prompt: str):
 </code></pre>
 <p>This setup is minimal but production-ready. It logs every retry, tracks token costs, and enforces rate limits. The next step is to add observability: Prometheus metrics for duration, tokens, and cost, plus Sentry for error tracking.</p>
 <h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>We deployed this agent in production for a customer support use case in Q1 2026. The system handled 12,000 requests/day with a peak of 180 RPM. Here’s what we measured over 30 days:</p>
+<p>We deployed this agent in production for a customer support use case in Q1 2026. The system handled 12,000 requests/day with a peak of 180 RPM.</p>
 <table>
 <thead>
 <tr>
@@ -543,7 +538,7 @@ Total: $120.00</p>
 <p><strong>Latency outliers</strong>:
 The p99 latency was 68s during the thundering herd. The culprit was Lambda cold starts: 310 concurrent Lambdas each took 2.5s to initialize, then hit Anthropic’s rate limit, then waited 5s for the timeout. The total retry budget was 5s * 3 retries = 15s, but the wall-clock time was 68s.</p>
 <p><strong>The fix</strong>:
-We switched to Provisioned Concurrency in Lambda ($0.015/GB-hour) for the agent worker. This cut cold starts to &lt;100ms but increased the base cost by $450/month. We also added SQS as a queue: users submit requests to SQS, and workers pull from the queue at 100 RPM. This added 50ms of latency but cut thundering herd errors by 94%.</p>
+This cut cold starts to &lt;100ms but increased the base cost by $450/month. We also added SQS as a queue: users submit requests to SQS, and workers pull from the queue at 100 RPM. This added 50ms of latency but cut thundering herd errors by 94%.</p>
 <p><strong>Token inflation by prompt length</strong>:
 We tested 5 prompt lengths:
 - 50 tokens: +12% token usage on retries
@@ -556,9 +551,9 @@ We tested 5 prompt lengths:
 <p><strong>1. The retry budget trap</strong>
 You set <code>max_retries=3</code> and <code>timeout=5s</code>, so the max wall-clock time is 5s * 3 = 15s. But if the first call takes 4s (timeout), the second takes 4s (timeout), and the third takes 4s (success), the user waits 12s — but the system thinks it’s within budget. The docs don’t tell you to measure the actual retry interval, which includes backoff and jitter. In our tests, the actual retry interval was 5s * (2^attempt) + jitter, so the third attempt started at 10s + jitter, not 10s. The user waited 14.2s.</p>
 <p><strong>2. The credit card drain</strong>
-Most teams set a retry budget but forget that retries compound token usage. A 200-token prompt retried 3 times becomes 800 tokens — but Anthropic charges $0.03/1K tokens, so the cost is $0.024. If you have 10,000 failed calls, that’s $240 in token costs even though no response was delivered. We saw a 10x spike in token usage during a regional outage that triggered retries across 50,000 calls.</p>
+Most teams set a retry budget but forget that retries compound token usage. A 200-token prompt retried 3 times becomes 800 tokens — but Anthropic charges $0.03/1K tokens, so the cost is $0.024. If you have 10,000 failed calls, that’s $240 in token costs even though no response was delivered.</p>
 <p><strong>3. The orphaned context leak</strong>
-When an agent times out, it often leaves orphaned contexts in the LLM provider. Anthropic charges for context windows per request, but abandoned contexts aren’t cleaned up. We measured 18% higher token usage in the hour after a regional outage because orphaned contexts were still active. The fix was to add a cleanup task that cancels requests after timeout and logs the cleanup.</p>
+When an agent times out, it often leaves orphaned contexts in the LLM provider. Anthropic charges for context windows per request, but abandoned contexts aren’t cleaned up. The fix was to add a cleanup task that cancels requests after timeout and logs the cleanup.</p>
 <p><strong>4. The streaming illusion</strong>
 Streaming partial responses feels faster, but each chunk is a separate token. A 512-token response streamed in 16 chunks costs $0.0768. The same response batched costs $0.0768 but feels slower. The illusion of speed hides the token cost.</p>
 <p><strong>5. The rate limit race condition</strong>
@@ -577,7 +572,7 @@ When an agent fails, it often returns a verbose error message that itself contai
 <p><strong>7. The memory leak in long-running agents</strong>
 Agents that run for minutes (e.g., code generation) can leak memory in the orchestrator. We saw a 200MB leak over 4 hours in a LangGraph agent. The fix was to add a max duration (60s) and force garbage collection every 10s.</p>
 <p><strong>The surprise that cost us 3 days</strong>:
-We set <code>timeout=5s</code> in the HTTP client but forgot that the retry loop’s total duration could exceed the client’s timeout. The httpx timeout was per-attempt, but the retry loop’s total duration was attempt * (timeout + backoff). When the first attempt took 4.8s (close to timeout), the second attempt started at 4.8s + 1s backoff = 5.8s, which exceeded the 5s client timeout. The error was “timeout” but the retry loop thought it was still within budget. The fix was to set the client timeout to <code>BASE_TIMEOUT * (MAX_RETRIES + 1)</code> or use a single timeout for the entire retry loop.</p>
+The httpx timeout was per-attempt, but the retry loop’s total duration was attempt * (timeout + backoff). When the first attempt took 4.8s (close to timeout), the second attempt started at 4.8s + 1s backoff = 5.8s, which exceeded the 5s client timeout. The error was “timeout” but the retry loop thought it was still within budget. The fix was to set the client timeout to <code>BASE_TIMEOUT * (MAX_RETRIES + 1)</code> or use a single timeout for the entire retry loop.</p>
 <h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
 <table>
 <thead>
@@ -670,33 +665,20 @@ OpenTelemetry’s async instrumentation. We added a custom span for each agent c
 We initially used <code>tenacity</code> for retries, but its backoff didn’t account for jitter. Migrating to <code>backoff</code> with <code>full_jitter</code> cut our retry storms by 60%.</p>
 <p><strong>The tool we wish existed</strong>:
 A provider-agnostic retry budget calculator that takes prompt length, timeout, and retry count, then outputs the max wall-clock time and token cost. No such tool exists in 2026, but we built an internal one using the formulas above</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/most-llm-cost-dashboards-lie/">Most LLM cost dashboards lie…</a></li>
+<li><a href="https://kubaik.github.io/prompt-injections-hidden-aws-tax/">Prompt injection’s hidden AWS tax</a></li>
+<li><a href="https://kubaik.github.io/ai-observability-the-metrics-that-matter/">AI observability: the metrics that matter</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 11, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -725,7 +707,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-codebases-two-onboarding-paths-that-actually-work/">
                         <h3>AI codebases: two onboarding paths that actually work</h3>
                         <p>Cut onboarding friction 40% with these two AI codebase paths — the hard lessons from six mid-size teams in 2026</p>
-                        <span class="related-meta">16 min read · 15 June 2026</span>
+                        <span class="related-meta">15 min read · 15 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/why-ai-interviewers-failed-68-of-us-in-2026/">
@@ -745,12 +727,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -68,7 +68,6 @@ from datetime import date
 from pathlib import Path
 from typing import List, Optional
 
-
 # Override via environment variable for staging environments.
 # E.g.:  PUBLISH_DAILY_LIMIT=10 python blog_system.py auto
 _ENV_LIMIT_KEY = "PUBLISH_DAILY_LIMIT"
@@ -76,13 +75,21 @@ _ENV_LIMIT_KEY = "PUBLISH_DAILY_LIMIT"
 # Default caps indexed by domain-age tier (days since first publish).
 # Set DOMAIN_AGE_DAYS in env to skip auto-detection.
 _DEFAULT_CAPS = {
-    "early":   1,   # 0-30 days
-    "growing": 2,   # 31-90 days
-    "mature":  25,   # 91-180 days
-    "scaled":  4,   # 181+ days
+    "early": 1,  # 0-30 days
+    "growing": 2,  # 31-90 days
+    "mature": 2,  # 91-180 days
+    "scaled": 2,  # 181+ days
 }
 
-_SKIP_DIRS = {"static", "tag", "author"}
+# Hard ceiling regardless of env/tier. NOTE: repo main drifted to mature=25 /
+# scaled=4 vs. the reviewed 1/2/2/2 table above; that made days 91+ effectively
+# uncapped. Caps are validated at import so drift fails loudly.
+_ABSOLUTE_MAX = 3
+assert all(
+    1 <= v <= _ABSOLUTE_MAX for v in _DEFAULT_CAPS.values()
+), f"_DEFAULT_CAPS out of range 1..{_ABSOLUTE_MAX}: {_DEFAULT_CAPS}"
+
+_SKIP_DIRS = {"static", "tag", "author", "about", "contact", "dmca", "page"}
 
 
 class VelocityController:
@@ -142,7 +149,10 @@ class VelocityController:
         """
         env_override = os.getenv(_ENV_LIMIT_KEY, "").strip()
         if env_override.isdigit():
-            return max(1, int(env_override))
+            # Clamp: a stray PUBLISH_DAILY_LIMIT=25 in a workflow must never
+            # turn this into a content-farm cadence. Raise _ABSOLUTE_MAX in
+            # code (reviewed) if a higher ceiling is ever justified.
+            return min(_ABSOLUTE_MAX, max(1, int(env_override)))
 
         domain_age = self._domain_age_days()
         if domain_age is None:
@@ -158,7 +168,11 @@ class VelocityController:
     def domain_age_summary(self) -> str:
         """Human-readable summary for CLI output."""
         age = self._domain_age_days()
-        age_str = f"{age} days" if age is not None else "unknown (no posts found in docs_dir yet)"
+        age_str = (
+            f"{age} days"
+            if age is not None
+            else "unknown (no posts found in docs_dir yet)"
+        )
         return (
             f"Domain age : {age_str}\n"
             f"Daily limit: {self.effective_limit()} posts\n"

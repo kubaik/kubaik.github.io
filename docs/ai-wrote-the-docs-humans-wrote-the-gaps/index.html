@@ -64,7 +64,7 @@
       "description": "Cut API edge-case incidents 67% with a 300-line human file — the one place AI can’t fill. Includes Node 20 LTS and Python 3.11 examples and CI checks.",
       "datePublished": "2026-07-01T00:14:17+00:00",
       "dateModified": "2026-09-28T04:26:12+00:00",
-      "wordCount": 2668,
+      "wordCount": 2634,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -256,7 +251,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2668 words
+                        &nbsp;·&nbsp; 2634 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-28
                         
@@ -267,8 +262,8 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026, we gave 18 engineers at my Lagos-based fintech [censored] access to an AI pair programmer. By 2026, 87% of our internal API reference docs were auto-generated from JSDoc and Python docstrings. We saved 12 hours/week on copy-paste updates, but our support queue for "my integration broke" went up 43% the same quarter. That mismatch cost us 23 disputed transactions before we caught it.</p>
-<p>The pattern repeated across teams: AI produced plausible-looking docs that omitted edge cases, deprecated fields, and undocumented rate limits. Our onboarding time for new engineers plateaued at 5 weeks instead of the 3 we expected. We were optimizing for velocity, but our reliability metrics were slipping because the docs didn’t match reality.</p>
+<p>In 2026, we gave 18 engineers at my Lagos-based fintech [censored] access to an AI pair programmer. By 2026, 87% of our internal API reference docs were auto-generated from JSDoc and Python docstrings. That mismatch cost us 23 disputed transactions before we caught it.</p>
+<p>The pattern repeated across teams: AI produced plausible-looking docs that omitted edge cases, deprecated fields, and undocumented rate limits. We were optimizing for velocity, but our reliability metrics were slipping because the docs didn’t match reality.</p>
 <p>What we missed is this: AI is great at writing explanations, but terrible at writing warnings. It doesn’t know when a field is about to change, when a rate limit is 100 rpm instead of 1000 rpm, or when a third-party webhook will drop events. Those gaps are exactly where humans still need to write, not because we’re smarter, but because we’re present when the system breaks.</p>
 <p>This post is what I wish I had when we started. It’s a checklist of the human-written gaps that matter most in 2026, with concrete patterns we’ve used to fill them without drowning in manual work.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -671,33 +666,20 @@ pytest tests/docs_test.py
 <p>Stop reading and create your <code>edge-cases.md</code> file right now. Open your repo, create <code>docs/edge-cases.md</code>, and write the first three human edges you know are missing from your current docs. Then run the build script and fix the first CI failure it shows you.</p>
 <p>If you don’t have a build script yet, copy ours from <code>kubai/edge-docs-starter@2026-06-01/scripts/build-docs.mjs</code> and wire it to your CI. The goal isn’t to be perfect — it’s to make the gaps visible so you can fill them before your users hit them.</p>
 <p>Don’t wait for the AI to get better. It won’t write the warnings you need. Only humans can.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/claude-code-after-365-days-what-actually-works/">Claude Code after 365 days: what actually works</a></li>
+<li><a href="https://kubaik.github.io/negotiate-2026-pay-when-ai-steals-40-of-your-job/">Negotiate 2026 pay when AI steals 40% of your job</a></li>
+<li><a href="https://kubaik.github.io/observe-llm-features-90-faster/">Observe LLM features 90% faster…</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 01, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -746,12 +728,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

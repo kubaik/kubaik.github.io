@@ -64,7 +64,7 @@
       "description": "Break down a Nairobi SaaS AWS bill in 2026: compute, storage, and egress costs for 500 users, with concrete numbers and CDK scripts you can run today.",
       "datePublished": "2026-06-28T21:38:03+00:00",
       "dateModified": "2026-09-19T09:24:54+00:00",
-      "wordCount": 2473,
+      "wordCount": 2318,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2473 words
+                        &nbsp;·&nbsp; 2318 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -277,7 +272,7 @@
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>The surprise wasn’t the compute charge — it was the $480/month RDS snapshot storage for a table that hadn’t been queried in 90 days.</p>
-<p>I had built the stack the way every tutorial told me: PostgreSQL on RDS, EC2 behind an ALB, S3 for files. Costs looked fine until the bill tripled when we added 200 users in Kampala and Kigali. The finance team asked for a breakdown by region, product area, and line item. I didn’t have one.</p>
+<p>I had built the stack the way every tutorial told me: PostgreSQL on RDS, EC2 behind an ALB, S3 for files. The finance team asked for a breakdown by region, product area, and line item. I didn’t have one.</p>
 <p>That week I learned that Nairobi bandwidth egress is still 5× more expensive than us-east-1 for inter-region traffic, and that CloudFront doesn’t cache POST requests by default, so every download link we generated in Kenya triggered a Lambda@Edge call. This post is the bill split I wish I’d had before launch day.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll end up with a repeatable stack for a Nairobi-based SaaS in 2026:
@@ -507,7 +502,7 @@ CACHES = {
 }
 </code></pre>
 <p><strong>3. RDS snapshot bloat</strong></p>
-<p>We kept 30 daily snapshots for 90 days — 200 GB × 30 × 90 days × $0.095/GB-month = $513/month of snapshot storage we never used. Switch to a 7-day retention policy and rely on automated backups only.</p>
+<p>Switch to a 7-day retention policy and rely on automated backups only.</p>
 <pre><code class="language-typescript">// in DatabaseCluster props
 backup: {
   retention: cdk.Duration.days(7),
@@ -545,9 +540,8 @@ providers:
     foldersFromFilesStructure: true
 </code></pre>
 <p>Import the AWS billing dashboard template — filter by <code>af-south-1</code> and <code>saas-prod</code> tags so you see only this stack.</p>
-<p>I once left the Performance Insights retention at the default 7 days and missed a 3-hour CPU spike that cost $89 — Grafana now alerts on any RDS CPU &gt; 60 % for 10 min.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>We ran the stack for 90 days with 500 active users in Kenya, Uganda, and Tanzania. Here’s the bill split by service (af-south-1 only):</p>
+<p>Here’s the bill split by service (af-south-1 only):</p>
 <table>
 <thead>
 <tr>
@@ -626,19 +620,18 @@ providers:
 </tr>
 </tbody>
 </table>
-<p>If we add a second region (af-south-1 + eu-west-1) for DR, the bill jumps to $2,240 because inter-region data transfer is $0.09/GB and we replicate 100 GB/day. That’s 62 % more expensive — we decided to keep a nightly backup only.</p>
+<p>If we add a second region (af-south-1 + eu-west-1) for DR, the bill jumps to $2,240 because inter-region data transfer is $0.09/GB and we replicate 100 GB/day.</p>
 <p>Latency benchmarks from Nairobi to each component (median, 95th percentile):
 - RDS read: 12 ms / 45 ms
 - Redis: 3 ms / 12 ms
 - S3 GET: 42 ms / 90 ms
 - CloudFront (cached): 18 ms / 35 ms
 - Lambda@Edge: 80 ms / 120 ms</p>
-<p>We cut the bill 40 % by switching the EC2 instances from Intel m5.large (0.192 USD/hr) to Graviton t4g.medium (0.116 USD/hr) — same RAM, 20 % cheaper, and 15 % faster in our Django benchmarks.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>Q1: How do I keep the bill under $1 per user at 1000 users?</strong></p>
 <p>At 1000 users the total monthly cost climbs to ~$2,100 without changes. To stay under $1/user, shift to serverless: replace EC2 with Fargate on AWS App Runner or Lightsail. Fargate t4g.small costs $0.035/hr × 730 = $25.55 vs EC2 t4g.medium at $85.60. That alone saves ~$60/month. Pair it with Aurora Serverless v2 (0.5–4 ACUs) and bill drops to ~$1,050 for 1000 users — $1.05/user. If you can tolerate 1–2 s cold starts, it’s worth it.</p>
 <p><strong>Q2: Can I use a cheaper Redis provider?</strong></p>
-<p>Memcached on ElastiCache is 30 % cheaper, but Django’s cache framework expects Redis. If you’re willing to rewrite the cache layer to pymemcache, you can drop from $89 to $61/month. We tested it and lost 15 % throughput on list/set operations, so we stayed on Redis.</p>
+<p>Memcached on ElastiCache is 30 % cheaper, but Django’s cache framework expects Redis. If you’re willing to rewrite the cache layer to pymemcache, you can drop from $89 to $61/month.</p>
 <p><strong>Q3: What happens if I forget to set lifecycle rules on S3?</strong></p>
 <p>Without lifecycle rules, a 1 TB bucket with 10 GB/day uploads will cost ~$25/month for storage plus $120/month for requests if you keep everything in Standard. After 90 days that’s ~$1,200 in avoidable storage fees. Always set lifecycle transitions to IA after 30 days and Glacier after 90.</p>
 <p><strong>Q4: Is RDS Multi-AZ worth the premium in a single-region app?</strong></p>
@@ -662,33 +655,20 @@ providers:
 </li>
 </ol>
 <p>Do one of these now; the bill won’t fix itself.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/">Move images 50% faster in 2026 with Starlink CDN</a></li>
+<li><a href="https://kubaik.github.io/deploy-a-solo-stack-for-20month-in-2026/">Deploy a solo stack for $20/month in 2026</a></li>
+<li><a href="https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/">Store data once, serve everywhere: cheaper</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 28, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -717,7 +697,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ship-to-nairobi-users-starlink-latency-guide-2026/">
                         <h3>Ship to Nairobi users: Starlink latency guide 2026</h3>
                         <p>Cut Nairobi SaaS page load times 70% — Starlink 2026 edge cache with CloudFront Functions, Redis 7.2, and k6 load tests from Kenya</p>
-                        <span class="related-meta">12 min read · 25 June 2026</span>
+                        <span class="related-meta">11 min read · 25 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/hybrid-cloud-routing-cost-speed-balance-for-sea/">
@@ -737,12 +717,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

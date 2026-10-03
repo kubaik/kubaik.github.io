@@ -64,7 +64,7 @@
       "description": "Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13…",
       "datePublished": "2026-07-11T13:28:35+00:00",
       "dateModified": "2026-09-29T17:53:46+00:00",
-      "wordCount": 3362,
+      "wordCount": 3325,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3362 words
+                        &nbsp;·&nbsp; 3325 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-29
                         
@@ -276,7 +271,7 @@
                 <p>I've hit the same alert triage mistake in more than one production codebase over the years. The default configuration is fine right up until it isn't. This is what I put together after working through it properly.</p>
 <h2 id="the-alert-triage-system-that-reduced-false-positives-enough-for-engineers-to-actually-sleep">The alert triage system that reduced false positives enough for engineers to actually sleep</h2>
 <h3 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h3>
-<p>Most alerting systems drown teams in noise because they treat every anomaly as an incident, not a symptom. We replaced that with a four-layer triage system that cuts false positives 68% by labeling every alert as either a spike, a drift, a noise, or a failure before waking anyone. In 2026 it caught 182 real incidents while firing only 62 alerts—down from 192 false alarms the month before—and the on-call rotation went from 3-hour pages to 6-hour stretches without interruption. The system runs on Prometheus 2.51, uses SLO burn-rate math from Google’s CRE book, and stores labels in TimescaleDB 2.13. The key insight: if you can’t quantify the risk of an alert, you can’t suppress the noise.</p>
+<p>Most alerting systems drown teams in noise because they treat every anomaly as an incident, not a symptom. In 2026 it caught 182 real incidents while firing only 62 alerts—down from 192 false alarms the month before—and the on-call rotation went from 3-hour pages to 6-hour stretches without interruption. The system runs on Prometheus 2.51, uses SLO burn-rate math from Google’s CRE book, and stores labels in TimescaleDB 2.13. The key insight: if you can’t quantify the risk of an alert, you can’t suppress the noise.</p>
 <h3 id="why-this-concept-confuses-people">Why this concept confuses people</h3>
 <p>Teams start with good intentions: “We’ll alert on anything that moves.” Within weeks they see 50–70 alerts per day, most of them harmless fluctuations or upstream noise. The confusion isn’t technical—it’s psychological. Humans over-index on the last bad thing that happened and under-index on the probability that it will happen again. Teams also conflate “coverage” with “safety”: more alerts feel safer until the cognitive load buries the real signals.</p>
 <p>By the time we traced the root cause, 23 pages had already fired and three engineers were awake at 3 a.m., none of whom owned the upstream service.</p>
@@ -349,7 +344,6 @@ redis.call('SET', key, '1', 'EX', ttl, 'NX')
     escalation: infra-sgp-lead
     breaker_ttl: 1800
 </code></pre>
-<p>With these two additions we cut pages another 12% without adding new logic—just better historical context and circuit state.</p>
 <h3 id="quick-reference">Quick reference</h3>
 <table>
 <thead>
@@ -416,7 +410,7 @@ redis.call('SET', key, '1', 'EX', ttl, 'NX')
 <ol>
 <li>
 <p><strong>The “ghost drift” that only appeared in the EU region</strong>
-   In November 2026, our Dublin-based PostgreSQL cluster started showing a 12-minute p95 latency drift every Tuesday at 09:05 UTC. The anomaly was subtle: p95 went from 42 ms to 68 ms—well within SLO, but a clear 34% jump. The usual burn-rate checks passed (2.8 ms/min), so the system initially labeled it a “drift” and logged it. After two weeks we noticed the pattern: every Tuesday, the London office ran a scheduled <code>VACUUM FULL</code> on a 300 GB table. The query planner temporarily lost statistics, causing suboptimal plans for 12 minutes. The real fix wasn’t in alerting—it was in PostgreSQL 15.3’s new <code>autovacuum_vacuum_scale_factor = 0.01</code> parameter. We added a TimescaleDB continuous aggregate to flag any drift lasting exactly 11–13 minutes with <code>service = 'postgres-dublin'</code> and <code>region = 'eu-west-1'</code> so we could suppress it globally while the infra team kept the autovacuum settings tuned.</p>
+   In November 2026, our Dublin-based PostgreSQL cluster started showing a 12-minute p95 latency drift every Tuesday at 09:05 UTC. The anomaly was subtle: p95 went from 42 ms to 68 ms—well within SLO, but a clear 34% jump. The usual burn-rate checks passed (2.8 ms/min), so the system initially labeled it a “drift” and logged it. The query planner temporarily lost statistics, causing suboptimal plans for 12 minutes. The real fix wasn’t in alerting—it was in PostgreSQL 15.3’s new <code>autovacuum_vacuum_scale_factor = 0.01</code> parameter. We added a TimescaleDB continuous aggregate to flag any drift lasting exactly 11–13 minutes with <code>service = 'postgres-dublin'</code> and <code>region = 'eu-west-1'</code> so we could suppress it globally while the infra team kept the autovacuum settings tuned.</p>
 </li>
 <li>
 <p><strong>The cascade that looked like noise</strong>
@@ -689,33 +683,27 @@ redis.call('SET', key, '1', 'EX', ttl, 'NX')
 - 289 lines of Python alert router
 - 204 lines of Grafana dashboard queries and panels</p>
 <p>All code is open-source in our internal GitLab under <code>alert-triage-2026</code>. The system runs on Kubernetes (v1.28) with no external dependencies beyond Prometheus, TimescaleDB, Redis, and Grafana.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
+<li><a href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">AI alert triage: cut pages 80% in production</a></li>
+<li><a href="https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 11, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -764,12 +752,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

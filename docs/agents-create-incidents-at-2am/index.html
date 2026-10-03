@@ -64,7 +64,7 @@
       "description": "Agents create incidents at 2am — why automation turns into 2 a.m. pages and how to lock the mutator circle down.",
       "datePublished": "2026-08-06T08:07:50+00:00",
       "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 2344,
+      "wordCount": 2365,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2344 words
+                        &nbsp;·&nbsp; 2365 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -494,27 +489,25 @@ client.mark_ticket_stale(&quot;INC-9987&quot;, &quot;Automated stale marker appl
 <li><strong>Write boundary enforcement</strong>: Reduced mutable scope to only <code>logs:PutLogEvents</code> and <code>dynamodb:Query</code> via IAM boundaries. The 64 % reduction in IAM policy lines came from removing <code>jira:*</code> and <code>sts:AssumeRole</code> unless explicitly audited. - <strong>Deduplication</strong>: Using <code>dedup_key</code> in PagerDuty Events API v2 cut duplicate incidents to zero. The latency improvement (2.1 → 1.8 minutes) is due to fewer noisy pages distracting engineers. - <strong>Rate limiting</strong>: The Jira client’s bounded retry reduced API calls from 1 200 to 180 p95. This is critical in fintech where Jira API tokens are shared across teams and rate limits are 1 000 calls/minute. - <strong>Cost</strong>: The reduction in Lambda retries and Jira API calls saved $26/month, but the real win was operational: engineers slept through fewer pages. - <strong>Observability</strong>: CloudWatch Container Insights now shows a 42 % drop in <code>PagerDuty.Trigger</code> events during maintenance windows (02:00–04:00 UTC), aligning with the Datadog 2026 survey trend of 42 % agent-triggered pages.</li>
 </ul>
 <p>These numbers come from a production deployment where the agent was migrated in February 2026. The team used AWS CloudTrail Lake and PagerDuty’s Analytics API to compute the before/after comparison over a 30-day window. The biggest surprise? The write boundary didn’t just reduce noise—it forced the team to document what each agent was <em>supposed</em> to do, not just what it could do.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/aws-cloudwatch-synthetics-for-ai-pipelines/">AWS CloudWatch Synthetics for AI pipelines</a></li>
+<li><a href="https://kubaik.github.io/track-ai-agent-costs-in-fractal-workflows/">Track AI agent costs in fractal workflows</a></li>
+<li><a href="https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/">Starlink in production: what changed in our stack</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -563,12 +556,7 @@ client.mark_ticket_stale(&quot;INC-9987&quot;, &quot;Automated stale marker appl
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

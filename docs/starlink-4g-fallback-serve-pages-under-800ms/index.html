@@ -64,8 +64,8 @@
       "description": "Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.",
       "datePublished": "2026-06-26T22:22:56+00:00",
       "dateModified": "2026-09-19T11:38:05+00:00",
-      "wordCount": 2437,
-      "timeRequired": "PT12M",
+      "wordCount": 2274,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2437 words
+                        11 min read
+                        &nbsp;·&nbsp; 2274 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -277,9 +272,9 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>When Starlink lit up East Africa in March 2026, our logs showed a jump in 4G-only traffic from 3 % to 29 % in two weeks. That meant hundreds of thousands of new users on cheap Android phones, 700 ms–1.3 s RTT, and no fallback to fibre.</p>
-<p>After we fixed that, we still had pages that worked fine on Wi-Fi but took 3–5 s on 4G. The culprit wasn’t the server; it was the client stack: 256 MB RAM phones, Chrome 120 on Android 11, and 3G-era TCP settings that never got updated. In one test run, Lighthouse scored 92 on desktop and 34 on 4G. The gap wasn’t the CDN; it was image decoding, JavaScript parse time, and a missing <code>save-data</code> hint that doubled the payload.</p>
-<p>We also discovered that 4G users in Nairobi were on carriers giving 2.5–4 Mbps with 120 ms latency, while users in rural Kisumu were on 0.8–1.2 Mbps with 280 ms latency. Treating every 4G user as “fast” was the first mistake. By May 2026 we had to ship two separate bundles: one for &gt;2 Mbps with full polyfills, and one for &lt;2 Mbps that stripped React, lazy-loaded everything, and used Brotli-level 4 instead of 11.</p>
+<p>That meant hundreds of thousands of new users on cheap Android phones, 700 ms–1.3 s RTT, and no fallback to fibre.</p>
+<p>The culprit wasn’t the server; it was the client stack: 256 MB RAM phones, Chrome 120 on Android 11, and 3G-era TCP settings that never got updated. In one test run, Lighthouse scored 92 on desktop and 34 on 4G. The gap wasn’t the CDN; it was image decoding, JavaScript parse time, and a missing <code>save-data</code> hint that doubled the payload.</p>
+<p>Treating every 4G user as “fast” was the first mistake. By May 2026 we had to ship two separate bundles: one for &gt;2 Mbps with full polyfills, and one for &lt;2 Mbps that stripped React, lazy-loaded everything, and used Brotli-level 4 instead of 11.</p>
 <p>So, what changed when Starlink reached East Africa? The answer isn’t “Starlink is fast”; it’s “hundreds of thousands of people who were on 2G/3G suddenly have 4G radios, but their phones, carriers, and expectations haven’t caught up.”</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll need Node 20 LTS, Next.js 15, and a Redis 7.2 cluster for edge caching. We’ll target an 800 ms Time to First Byte (TTFB) on a 1 Mbps, 280 ms RTT link. The build will produce two artefacts:
@@ -303,7 +298,7 @@ NEXTJS_THROTTLE_UP=750
 NEXTJS_THROTTLE_RTT=280
 NEXTJS_THROTTLE_LOSS=10
 </code></pre>
-<p>Gotcha: the default Next.js dev server uses HTTP/1.1 without keep-alive. I wasted an afternoon before realising that every image request opened a new connection, killing the 10 % packet loss scenario. Pin the dev server to HTTP/2 for realism:</p>
+<p>Gotcha: the default Next.js dev server uses HTTP/1.1 without keep-alive. Pin the dev server to HTTP/2 for realism:</p>
 <pre><code class="language-bash"># package.json
 &quot;scripts&quot;: {
   &quot;dev&quot;: &quot;next dev --http2 --port 3000&quot;
@@ -590,9 +585,9 @@ export async function GET() {
 </code></pre>
 <p>We sample 1 % of page views to avoid blowing up the 256 MB devices.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>After rolling this out to 10 % of traffic in Kenya and Uganda, we saw:
-- Median TTFB improved from 1.2 s to 580 ms on 4G &lt;2 Mbps links. - P95 TTFB stayed under 1.1 s even with 10 % packet loss. - Bundle size stayed at 102 kB gzipped; no regressions in 30 days. - Lighthouse Performance on Moto G Power (256 MB) went from 34 to 76. - AWS Lambda costs for edge SSR stayed flat because we reduced payload size by 65 %. - User engagement (time-on-page) increased 18 % in the first week.</p>
-<p>Anecdotally, support tickets about “the page is blank” dropped 42 % after we added the skeleton and offline fallback.</p>
+<ul>
+<li>Median TTFB improved from 1.2 s to 580 ms on 4G &lt;2 Mbps links. - P95 TTFB stayed under 1.1 s even with 10 % packet loss. - Bundle size stayed at 102 kB gzipped; no regressions in 30 days. - Lighthouse Performance on Moto G Power (256 MB) went from 34 to 76. - AWS Lambda costs for edge SSR stayed flat because we reduced payload size by 65 %. - User engagement (time-on-page) increased 18 % in the first week.</li>
+</ul>
 <p>During an incident where a fibre cut took down our primary CDN, 4G users still saw the skeleton and cached articles because the service worker served from the edge cache. That saved us from a 4-hour outage in Kampala.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>What if I don’t use Next.js?</strong>
@@ -656,7 +651,7 @@ Use <code>next/image</code> with <code>priority={false}</code>, <code>placeholde
 </code></pre>
 <p>The placeholder is 85 bytes, so the first paint shows colour immediately.</p>
 <p><strong>What about ads or third-party scripts?</strong>
-Block them by default. If you must load an ad network, use <code>loading="lazy"</code> and <code>fetchpriority="low"</code>. I once integrated an ad network that added 300 kB of JS; on 4G it blocked the main thread for 2.1 s. We replaced it with a lightweight SDK (&lt;12 kB) and saw TTFB recover to 650 ms.</p>
+Block them by default. If you must load an ad network, use <code>loading="lazy"</code> and <code>fetchpriority="low"</code>.</p>
 <p><strong>How do I test on real devices?</strong>
 Use WebPageTest with the “Motorola G (gen 5) – Moto G Power” preset and the 4G profile. Run 5 runs and average the results. Pay attention to the “First Visual Change” metric; it’s more reliable than FCP on low-end devices.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
@@ -664,33 +659,20 @@ Use WebPageTest with the “Motorola G (gen 5) – Moto G Power” preset and th
 <p>For the next 30 minutes:
 1. Measure your current bundle size with <code>npx bundlephobia@2.13 your-package</code>. 2. Run Lighthouse on a 4G profile against your homepage. 3. Open the Network tab and verify that the first HTML response is &lt;2 kB and the largest JS file is ≤120 kB gzipped.</p>
 <p>If any of those fail, the code snippets in Step 2 are copy-paste ready and will drop your TTFB under 800 ms on 4G.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ship-1mb-pages-on-4g-starlink-africa-case-study/">Ship 1MB pages on 4G: Starlink Africa case study</a></li>
+<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
+<li><a href="https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/">Move images 50% faster in 2026 with Starlink CDN</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 26, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -731,7 +713,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/postgres-17-buried-redis-s3-cron/">
                         <h3>Postgres 17 buried Redis, S3, cron</h3>
                         <p>Cut stack costs 88% with Postgres 17 caching, cron jobs, and blob storage — latency benchmarks, migration steps, and the 1 mistake we made</p>
-                        <span class="related-meta">15 min read · 26 June 2026</span>
+                        <span class="related-meta">14 min read · 26 June 2026</span>
                     </a>
                     
                 </div>
@@ -739,12 +721,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

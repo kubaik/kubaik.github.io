@@ -64,7 +64,7 @@
       "description": "Prompt and tool injection in LLM apps: schema validation, tool allowlists, SSRF blocks, and the write-confirmation step that actually stops exfiltration.",
       "datePublished": "2026-09-27T16:41:09+00:00",
       "dateModified": "2026-09-27T16:41:09+00:00",
-      "wordCount": 2803,
+      "wordCount": 2799,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2803 words
+                        &nbsp;·&nbsp; 2799 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-27
                         
@@ -541,27 +536,20 @@ def test_unknown_tool_rejected():
 <p><strong>Should I use a framework like LangChain or LlamaIndex?</strong> Frameworks are fine for prototyping, but they often hide the tool-execution boundary. If you use one, find the exact line where a tool call becomes a function invocation and verify that validation happens before it. If you cannot find that line, you cannot audit your own security posture.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>The single most useful thing you can do in the next 30 minutes is open your tool-execution code and find the line where a model-supplied tool name and arguments become a function call. If that line looks like <code>globals()[name](**args)</code> or <code>getattr(module, name)(**args)</code>, you have an unguarded execution path. Replace it with a registry lookup and a Pydantic schema validation before you do anything else. That one change eliminates the entire class of arbitrary-tool-call injections, and it takes less time than reading the rest of this post.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
+<li><a href="https://docs.anthropic.com/">Anthropic documentation</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -596,13 +584,13 @@ def test_unknown_tool_rejected():
                     <a class="related-card" href="/llm-risks-underestimated-in-owasp-top-10/">
                         <h3>LLM risks underestimated in OWASP Top 10</h3>
                         <p>OWASP’s LLM risks miss the real threats in production — tool proliferation, context pollution, and output side effects cost teams real money and uptime.</p>
-                        <span class="related-meta">12 min read · 30 August 2026</span>
+                        <span class="related-meta">11 min read · 30 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/prompt-injections-hidden-aws-tax/">
                         <h3>Prompt injection’s hidden AWS tax</h3>
                         <p>Cut LLM costs 40% by blocking prompt injection — sandboxing, schema validation, and the retry storm mistake most teams miss.</p>
-                        <span class="related-meta">19 min read · 3 July 2026</span>
+                        <span class="related-meta">18 min read · 3 July 2026</span>
                     </a>
                     
                 </div>
@@ -610,12 +598,7 @@ def test_unknown_tool_rejected():
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

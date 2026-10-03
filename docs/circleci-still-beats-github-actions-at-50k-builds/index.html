@@ -64,7 +64,7 @@
       "description": "CircleCI beats GitHub Actions at 50k builds/month by 75% — with real cost breakdowns, hidden fees, and Nairobi fintech case studies from 2026.",
       "datePublished": "2026-06-09T04:46:48+00:00",
       "dateModified": "2026-09-18T08:45:13+00:00",
-      "wordCount": 3061,
+      "wordCount": 2901,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -256,7 +251,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3061 words
+                        &nbsp;·&nbsp; 2901 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-18
                         
@@ -268,14 +263,14 @@
                 <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>Most teams I talk to treat GitHub Actions as the default CI platform in 2026. The narrative goes like this: GitHub Actions is free for public repos, tightly integrated with your code, and if you're already on GitHub, why bother with another tool? CircleCI, we're told, is for legacy shops, large monorepos, or teams that insist on paying for features everyone else gets for free.</p>
-<p>We had 300+ repos and ~50k builds per month. The CTO pushed hard for GitHub Actions because "every engineer knows it." We hit a wall after six weeks when our average queued time jumped from 20 seconds to 3 minutes during peak hours. The real cost wasn’t the minutes themselves, but the fact that each extra minute came with no SLA and no visibility into why our jobs were queued. CircleCI’s concurrency model, we later discovered, would have given us predictable performance at a lower total cost.</p>
+<p>The CTO pushed hard for GitHub Actions because "every engineer knows it." We hit a wall after six weeks when our average queued time jumped from 20 seconds to 3 minutes during peak hours. The real cost wasn’t the minutes themselves, but the fact that each extra minute came with no SLA and no visibility into why our jobs were queued. CircleCI’s concurrency model, we later discovered, would have given us predictable performance at a lower total cost.</p>
 <p>The honest answer is that the conventional wisdom ignores three realities:</p>
 <ol>
 <li>
 <p><strong>The free tier math changes at scale.</strong> GitHub Actions’ generous 2k minutes/month covers small teams, but at 50k builds/month you’re paying for every extra minute, every extra concurrent job, and every artifact retention day. CircleCI’s pricing scales with parallelism, not minutes, which matters when your builds are short (&lt;2 min) but frequent.</p>
 </li>
 <li>
-<p><strong>Artifacts and caching are where the money leaks.</strong> GitHub Actions charges for artifact storage after the first 500 MB included. We had a Python test suite that produced 1.2 GB of coverage reports and screenshots. By month three, our artifact bill hit $4k/month on top of the minute charges. CircleCI’s artifact retention is simpler: 30 days included in every plan, then $0.023/GB/day. No surprises.</p>
+<p><strong>Artifacts and caching are where the money leaks.</strong> GitHub Actions charges for artifact storage after the first 500 MB included. CircleCI’s artifact retention is simpler: 30 days included in every plan, then $0.023/GB/day. No surprises.</p>
 </li>
 <li>
 <p><strong>Concurrency is the real bottleneck, not minutes.</strong> GitHub Actions’ default concurrency limit is 20 jobs per repository. We hit it daily and had to request bumps. CircleCI’s smallest paid plan includes 100 concurrent jobs. At 50k builds/month, concurrency matters more than minutes.</p>
@@ -317,7 +312,6 @@
 <p>CircleCI, in contrast, is optimized for <strong>predictable performance</strong>. Its runners are larger (32 GB disk on Performance runners), concurrency is explicit, and pricing is based on parallelism, not minutes. That means you can budget for 200 parallel jobs without surprises. The trade-off is integration: you need to wire up CircleCI’s API tokens to your GitHub repos, and the UI feels dated. But at scale, predictability beats convenience.</p>
 <p>I’ve seen this fail when teams try to shoehorn CircleCI into a GitHub-centric workflow without adjusting their mental model. One Nairobi startup moved to CircleCI but kept their GitHub PR comments. We had to build a custom webhook relay because CircleCI’s GitHub app doesn’t support PR comments at scale. The lesson: choose the platform that matches your scale, and accept the integration friction if it saves you money.</p>
 <h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
-<p>Let’s look at three real systems I’ve worked on in Nairobi fintech, all running 50k+ builds/month in 2026.</p>
 <h3 id="case-1-neobank-a-github-actions-60k-buildsmonth">Case 1: Neobank A — GitHub Actions, 60k builds/month</h3>
 <ul>
 <li>Stack: Python 3.11, FastAPI, Node 20 LTS, pytest + Jest</li>
@@ -439,7 +433,7 @@
 - Queue time during peaks
 - Artifact storage growth
 - Hidden costs (waiting time, runner evictions)</p>
-<p>I ran this test for a client in 2026 and discovered that CircleCI’s runners had 16 GB RAM vs GitHub’s 7 GB. Our memory-heavy Python tests were thrashing on GitHub but ran cleanly on CircleCI. The pilot saved us $8k over six months.</p>
+<p>Our memory-heavy Python tests were thrashing on GitHub but ran cleanly on CircleCI. The pilot saved us $8k over six months.</p>
 <h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
 <h3 id="circlecis-ui-is-ugly-and-slow-why-suffer">"CircleCI’s UI is ugly and slow — why suffer?"</h3>
 <p>I agree. CircleCI’s UI hasn’t aged well. But the UI is separate from the runner performance. You can use CircleCI’s API and CLI for day-to-day work. We built a small dashboard that pulls CircleCI data via their REST API and surfaces only the metrics we care about: queue time, build time, and artifact size. The UI pain is real, but it’s not a blocker for scale.</p>
@@ -456,10 +450,10 @@
 <p><strong>Start with CircleCI Performance plan ($89/month) even at 1k builds/month.</strong> The predictability is worth it. We made the mistake of starting on GitHub Actions for convenience, then paid $1,300/month at 5k builds before realizing the concurrency tax. CircleCI’s plan would have covered 100 concurrent jobs from day one.</p>
 </li>
 <li>
-<p><strong>Cache aggressively and measure artifact growth.</strong> We didn’t track artifact growth until we hit $4k/month in storage fees. CircleCI’s API lets you query artifact size by project. Set up a cron job that emails the team when a repo’s artifacts exceed 500 MB. We built this in 2026 and cut artifact costs by 40% in three months.</p>
+<p>CircleCI’s API lets you query artifact size by project. Set up a cron job that emails the team when a repo’s artifacts exceed 500 MB.</p>
 </li>
 <li>
-<p><strong>Benchmark queue time, not just build time.</strong> Queue time is the hidden killer. In our first month, we optimized build time from 2m to 1m 15s but queue time stayed at 3m. We fixed the queue issue by moving to CircleCI’s Scale plan and adding a <code>resource_class</code> hint in our config:</p>
+<p><strong>Benchmark queue time, not just build time.</strong> Queue time is the hidden killer. We fixed the queue issue by moving to CircleCI’s Scale plan and adding a <code>resource_class</code> hint in our config:</p>
 </li>
 </ol>
 <pre><code class="language-yaml"># .circleci/config.yml
@@ -489,7 +483,7 @@ jobs:
           circle-token: ${{ secrets.CIRCLECI_TOKEN }}
 </code></pre>
 <ol>
-<li><strong>Set a budget alert at 80% of plan cost.</strong> CircleCI’s dashboard lets you set monthly budget alerts. We didn’t do this until we hit $900 on a $249 plan. Set the alert at $200 to catch surprises early.</li>
+<li><strong>Set a budget alert at 80% of plan cost.</strong> CircleCI’s dashboard lets you set monthly budget alerts. Set the alert at $200 to catch surprises early.</li>
 </ol>
 <p>Starting with CircleCI’s larger runners would have saved us the headache.</p>
 <h2 id="summary">Summary</h2>
@@ -502,7 +496,7 @@ jobs:
 <p><strong>why does circleci cost less than github actions at scale</strong></p>
 <p>CircleCI’s pricing is based on parallelism, not minutes. Its Scale plan ($249/month) includes 50k minutes and 100 concurrency. Extra minutes are $0.008/minute, same as GitHub, but CircleCI includes SLA-backed queue time and larger runners (32 GB disk vs GitHub’s 14 GB). The result is 75% lower total cost at 50k builds/month.</p>
 <p><strong>what is the fastest ci for python and node.js in nairobi 2026</strong></p>
-<p>CircleCI Performance runners with <code>resource_class: medium+</code> are the fastest for mixed Python/Node stacks in Nairobi. We measured build time reductions of 30% compared to GitHub Actions runners, thanks to larger disk and RAM. The fastest single-platform option is CircleCI’s Scale plan with 200 concurrent jobs.</p>
+<p>CircleCI Performance runners with <code>resource_class: medium+</code> are the fastest for mixed Python/Node stacks in Nairobi. The fastest single-platform option is CircleCI’s Scale plan with 200 concurrent jobs.</p>
 <p><strong>how to reduce github actions cost for 1000 builds per month</strong></p>
 <p>For 1k builds/month, GitHub Actions’ free grant covers 90% of workloads. To cut costs further:
 - Use <code>jobs.&lt;job_id&gt;.timeout-minutes: 10</code> to cap long builds
@@ -516,33 +510,20 @@ jobs:
 2. Your <strong>artifact storage</strong> growth in the last 30 days
 3. Your <strong>peak concurrency</strong> during the last billing cycle</p>
 <p>If your queue time is &gt; 2 minutes or your concurrency &gt; 50 jobs, run a 30-day pilot on CircleCI’s Scale plan. Start with a single high-traffic repo and mirror your GitHub PRs via the <code>circleci orb</code> for GitHub. Measure the same three numbers. If CircleCI saves you 20% on total cost or 30% on queue time, migrate the rest of your repos.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/double-the-price-double-the-revenue/">Double the price, double the revenue</a></li>
+<li><a href="https://kubaik.github.io/migrations-stop-running-them-live/">Migrations? Stop running them live</a></li>
+<li><a href="https://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026/">Why I picked Playwright and Vitest in 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 09, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -591,12 +572,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

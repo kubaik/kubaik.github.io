@@ -64,7 +64,7 @@
       "description": "Portfolio that hires: show constraints, not code — median page load 320 ms on 3G, API p95 145 ms, $12/month. PortfolioOS template included.",
       "datePublished": "2026-06-16T04:33:09+00:00",
       "dateModified": "2026-09-24T16:46:51+00:00",
-      "wordCount": 2676,
+      "wordCount": 2672,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2676 words
+                        &nbsp;·&nbsp; 2672 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-24
                         
@@ -607,33 +602,20 @@ export default {
 <p>A useful debenture is short—around 500 words—and covers three things: the latency spikes that were observed, the cache misses that were observed, and the cost changes that were observed, each with the fix that was applied. It should name the specific trade-off (for example, “switched from <code>allkeys-lru</code> to <code>volatile-ttl</code> to stop evicting hot keys”) rather than restating the architecture. Recruiters read it to see whether the candidate can reason about trade-offs, so concrete numbers and rejected alternatives matter more than polished prose.</p>
 <h3 id="how-do-i-handle-intermittent-connectivity-without-writing-a-full-offline-first-app">How do I handle intermittent connectivity without writing a full offline-first app?</h3>
 <p>Start with three cheap mechanisms: exponential backoff with jitter on every client retry, a server-side heartbeat so half-open sockets are detected within a couple of seconds, and a short-TTL cache layer (local in-memory plus Redis) so a brief drop doesn’t trigger a stampede on the origin. These three changes cover most intermittent-connection failures and add relatively little code. Only reach for a full offline-first sync layer if the product genuinely needs to accept writes while disconnected; for a portfolio, read-path resilience is usually enough.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/show-real-work-not-ai-clones/">Show real work, not AI clones</a></li>
+<li><a href="https://kubaik.github.io/build-dev-platform-for-2kmonth/">Build dev platform for $2k/month</a></li>
+<li><a href="https://kubaik.github.io/portfolio-projects-hiring-managers-skip/">Portfolio projects hiring managers skip</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 16, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -662,13 +644,13 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/meter-dev-tool-pricing-in-2026/">
                         <h3>Meter dev-tool pricing in 2026</h3>
                         <p>Cut dev tool churn 3× with usage pricing — $0.043 per active user, $1,124 ARR from 187 users, and a free-to-paid jump of 2.3×</p>
-                        <span class="related-meta">11 min read · 2 July 2026</span>
+                        <span class="related-meta">10 min read · 2 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/double-the-price-double-the-revenue/">
                         <h3>Double the price, double the revenue</h3>
                         <p>Raise dev tool MRR 15% in 7 days with four pricing tiers, Redis usage counters, and a $5/month infra bill — real data from 8k users in 2026</p>
-                        <span class="related-meta">12 min read · 30 June 2026</span>
+                        <span class="related-meta">11 min read · 30 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/portfolio-projects-hiring-managers-skip/">
@@ -682,12 +664,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

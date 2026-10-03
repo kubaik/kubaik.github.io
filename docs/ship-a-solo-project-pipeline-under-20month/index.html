@@ -64,7 +64,7 @@
       "description": "Ship a solo project pipeline in 10 minutes under $20/month — Fly.io, GitHub Actions, and the trade-offs you won’t read in the docs",
       "datePublished": "2026-06-15T23:01:02+00:00",
       "dateModified": "2026-09-16T07:36:59+00:00",
-      "wordCount": 2639,
+      "wordCount": 2558,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2639 words
+                        &nbsp;·&nbsp; 2558 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -277,7 +272,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>That’s when I decided to burn the whole stack down and rebuild it with just what I needed — no YAML, no Dockerfile complexity, and no surprise bills. This isn’t about saving pennies; it’s about shipping without waking up to a $342 AWS bill because CloudFront decided to bill me for 400k requests I never made.</p>
+<p>That’s when I decided to burn the whole stack down and rebuild it with just what I needed — no YAML, no Dockerfile complexity, and no surprise bills.</p>
 <p>Most solo project pipelines end up either:</p>
 <ul>
 <li>Over-provisioned (a $50/month server that idles 99% of the time)</li>
@@ -285,7 +280,7 @@
 <li>Hidden-cost hell (GitHub Actions minutes, Docker Hub pulls, object storage egress)</li>
 </ul>
 <p>Every path had at least one footgun. The worst was watching a 6-line Dockerfile balloon into 12 layers because I copy-pasted a community base image — that image alone added 600 MB and doubled cold-start latency to 850 ms.</p>
-<p>What finally stuck was treating the pipeline as code, not infrastructure. No Docker Hub, no intermediate layers, no surprise cache hits. It cost me $2.14 to set up and $14.78 to run for the first month. The second month it dropped to $12.65 because I finally tuned the Fly.io scaling triggers.</p>
+<p>What finally stuck was treating the pipeline as code, not infrastructure. No Docker Hub, no intermediate layers, no surprise cache hits. It cost me $2.14 to set up and $14.78 to run for the first month.</p>
 <p>This post is what I wish I had when I started. Skip the hype and the 27-slide architecture diagrams — here’s the actual trade-offs, the real numbers, and the one change that saved me the most time.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You need four things to follow along:</p>
@@ -687,7 +682,6 @@ def test_metrics():
 <li>Sentry: free plan (5k events) = $0</li>
 </ul>
 <p>Total: $15.63</p>
-<p>If I had used AWS ECS Fargate with 0.25 vCPU and 0.5 GB memory, the same load would have cost $28.40/month. If I had used a $5 DO droplet, I would have paid $5 but risked downtime during noisy neighbors.</p>
 <p>The biggest surprise was Fly.io’s automatic TLS. That alone saved me a day of certificate rotation scripts.</p>
 <p>Fly.io’s CPU credits system kept it throttled but responsive.</p>
 <p>The weakest link turned out to be Cloudflare DNS propagation. When I switched domains, it took 17 minutes for the new A record to propagate globally. During that window, some users got certificate errors. Lesson: always test DNS changes with a secondary provider or use Fly.io’s built-in DNS for the first week.</p>
@@ -735,33 +729,20 @@ flyctl auth login
 flyctl launch --name my-solo-app --image none --no-deploy
 </code></pre>
 <p>You’ll have a production-grade pipeline in under 10 minutes and a bill you can show your manager without flinching.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/deploy-a-solo-stack-for-20month-in-2026/">Deploy a solo stack for $20/month in 2026</a></li>
+<li><a href="https://kubaik.github.io/senior-role-projects-3-real-paths/">Senior role projects: 3 real paths</a></li>
+<li><a href="https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/">CI/CD for AI code: test, secure, rollback fast</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 15, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -796,7 +777,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/commit-ownership-in-ai-pair-coding/">
                         <h3>Commit ownership in AI pair coding</h3>
                         <p>AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.</p>
-                        <span class="related-meta">16 min read · 31 August 2026</span>
+                        <span class="related-meta">17 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/wasm-servers-beat-containers-here/">
@@ -810,12 +791,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

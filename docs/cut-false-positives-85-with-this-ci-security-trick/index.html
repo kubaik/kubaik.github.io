@@ -64,7 +64,7 @@
       "description": "Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month",
       "datePublished": "2026-06-12T07:15:04+00:00",
       "dateModified": "2026-09-23T03:57:45+00:00",
-      "wordCount": 2664,
+      "wordCount": 2585,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -256,7 +251,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2664 words
+                        &nbsp;·&nbsp; 2585 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-23
                         
@@ -337,7 +332,6 @@ class Rule(BaseModel):
 
 class Policy(BaseModel):
     rules: List[Rule]
-
 
 def filter_findings(policy: Policy, pr_diff: Dict, findings: List[Dict]) -&gt; Dict:
     filtered = []
@@ -441,8 +435,8 @@ jobs:
 <ol>
 <li><strong>Conditional filtering</strong> removed 89 alerts per PR on average. 2. <strong>Unified policy file</strong> replaced 118 lines of tool-specific config with 50 lines of policy, which reduced global false positives by 21 alerts per PR.</li>
 </ol>
-<p>The 73% drop in PR merge time was a side effect of fewer findings and a faster pipeline. The security gate now runs in 1m 10s, down from 3m 12s, because we only scan files touched by the PR (thanks to Trivy’s <code>--security-checks vuln</code> flag and Snyk’s <code>--file</code> target).</p>
-<p>The cost drop from $8,100 to $2,100 per month was real: fewer minutes, fewer parallel jobs, and no need for nightly scans. We also reduced our Dependabot PRs by 60% because we now only surface vulns in dependencies that actually change in the PR.</p>
+<p>The 73% drop in PR merge time was a side effect of fewer findings and a faster pipeline.</p>
+<p>The cost drop from $8,100 to $2,100 per month was real: fewer minutes, fewer parallel jobs, and no need for nightly scans.</p>
 <p>The biggest surprise was that engineers stopped gaming the system. When the security gate became context-aware, the “disable the rule” workaround no longer worked because the rule only applied to the files that mattered. Engineers started fixing real issues instead of silencing alerts.</p>
 <h2 id="what-wed-do-differently">What we'd do differently</h2>
 <p>If we started over in 2026, we’d skip the custom <code>policy-gate</code> service and use an off-the-shelf policy engine. At the time, OPA (Open Policy Agent) 0.63 was too heavy for our GitHub Actions workflow, but by mid-2026 it had slimmed down to 34 MB and added a <code>opa eval --fail-defined</code> flag that does exactly what we built ourselves.</p>
@@ -489,36 +483,23 @@ jobs:
 <p><strong>What about secrets scanning?</strong></p>
 <p>Secrets scanning (e.g., GitHub Secret Scanning, TruffleHog) produces fewer false positives because a leaked secret is almost always a real issue. We still run secrets scanning per-PR, but we don’t apply the same context-aware filtering. If a secret is found, the PR is blocked regardless of the file path. We do, however, exclude the <code>.github/</code> folder from secrets scanning because it contains tokens for GitHub Actions.</p>
 <p><strong>How do I migrate from global exclusions to policy-as-code?</strong></p>
-<p>Start by listing every exclusion you currently have (SonarQube, Snyk, Dependabot). For each one, ask: “Is this exclusion always valid, or only when specific files change?” If it’s always valid (e.g., “ignore all findings in <code>node_modules/</code>”), move it to a repo-level rule. If it’s conditional (e.g., “ignore port 8080 only in Dockerfiles”), add a condition in the policy file. Commit the new policy file and remove the old exclusions one by one. We did this over a weekend and saw a 30% drop in findings immediately.</p>
+<p>Start by listing every exclusion you currently have (SonarQube, Snyk, Dependabot). For each one, ask: “Is this exclusion always valid, or only when specific files change?” If it’s always valid (e.g., “ignore all findings in <code>node_modules/</code>”), move it to a repo-level rule. If it’s conditional (e.g., “ignore port 8080 only in Dockerfiles”), add a condition in the policy file. Commit the new policy file and remove the old exclusions one by one.</p>
 <p><strong>What’s the biggest mistake teams make when adopting this?</strong></p>
-<p>They try to solve everything in one PR. They move from 130 findings to 20 in a single commit, which breaks the build for weeks while engineers fix every alert. Instead, aim for a 30% reduction in the first week, then iterate. Our first policy file only had 8 rules and cut findings by 40%. We added rules over months, not days.</p>
+<p>They try to solve everything in one PR. They move from 130 findings to 20 in a single commit, which breaks the build for weeks while engineers fix every alert. Instead, aim for a 30% reduction in the first week, then iterate. We added rules over months, not days.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/">Stop false positives in CI scanning now</a></li>
+<li><a href="https://kubaik.github.io/ai-static-analysis-vs-legacy-sast-5x-faster-scans/">AI static analysis vs legacy SAST: 5x faster scans</a></li>
+<li><a href="https://kubaik.github.io/ai-scanners-overlook-real-vulns/">AI scanners overlook real vulns</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 12, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -567,12 +548,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -49,7 +49,7 @@ class SEOOptimizer:
     #  GLOBAL HEAD TAGS                                                    #
     # ------------------------------------------------------------------ #
 
-    def generate_global_meta_tags(self) -> str:
+    def generate_global_meta_tags(self, page_type: str = "article") -> str:
         """
         Emit: AdSense account tag, GSC verification, GA4 snippet, AdSense loader.
 
@@ -93,10 +93,15 @@ class SEOOptimizer:
             )
 
         # AdSense loader — async; respects consent default pushed by consent.js
-        if adsense_id:
+        # AdSense policy: Google-served ads/Auto Ads must not run on screens
+        # without publisher content (404, legal, contact, about, listings).
+        # The loader is what Auto Ads keys off, so it is emitted only on
+        # page types listed in config.adsense_loader_page_types.
+        loader_types = self.config.get("adsense_loader_page_types", ["home", "article"])
+        if adsense_id and page_type in loader_types:
             parts.append(
                 f"    <!-- Google AdSense -->\n"
-                f'    <script async '
+                f"    <script async "
                 f'src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={adsense_id}" '
                 f'crossorigin="anonymous"></script>'
             )
@@ -162,7 +167,13 @@ class SEOOptimizer:
     #  AD UNITS                                                            #
     # ------------------------------------------------------------------ #
 
-    def generate_adsense_ad(self, slot_type: str = "display", slot_id: str = None) -> str:
+    def generate_adsense_ad(
+        self,
+        slot_type: str = "display",
+        slot_id: str = None,
+        page_type: str = "article",
+        word_count: int = None,
+    ) -> str:
         """
         Return a bare <ins> + push() block with NO wrapping <div>.
 
@@ -189,13 +200,31 @@ class SEOOptimizer:
         Once real slot IDs exist, pass them via config and they will be
         used instead.
         """
+        # Gate 1: explicit switch. Off until the site is approved, so pages are
+        # not full of empty reserved ad boxes during review.
+        if not self.config.get("adsense_ads_enabled", False):
+            return ""
+        # Gate 2: manual units only on article pages with real publisher content.
+        if page_type != "article":
+            return ""
+        min_words = {"header": 0, "inline": 1500, "middle": 1800, "footer": 1200}.get(
+            slot_type, 1500
+        )
+        if word_count is not None and word_count < max(
+            min_words, int(self.config.get("ads_min_words", 1200))
+        ):
+            return ""
         adsense_id = self._fmt_adsense_id()
         if not adsense_id:
             return f"<!-- AdSense slot '{slot_type}' — no publisher ID configured -->"
 
         slot_map = self.config.get("adsense_slots", {})
         resolved_slot_id = slot_id or slot_map.get(slot_type, "")
-        data_slot_attr = f'\n         data-ad-slot="{_esc(resolved_slot_id)}"' if resolved_slot_id else ""
+        data_slot_attr = (
+            f'\n         data-ad-slot="{_esc(resolved_slot_id)}"'
+            if resolved_slot_id
+            else ""
+        )
 
         # Use Auto Ads (responsive) when no slot ID — safest for approval phase.
         # CRITICAL for Core Web Vitals / CLS: always reserve vertical space
@@ -355,8 +384,11 @@ class SEOOptimizer:
             f"<changefreq>daily</changefreq><priority>1.0</priority></url>"
         ]
         for post in posts:
-            lastmod = post.updated_at.split(
-                "T")[0] if "T" in post.updated_at else post.updated_at
+            lastmod = (
+                post.updated_at.split("T")[0]
+                if "T" in post.updated_at
+                else post.updated_at
+            )
             urls.append(
                 f"  <url><loc>{base_url}/{post.slug}/</loc>"
                 f"<lastmod>{lastmod}</lastmod>"
@@ -387,10 +419,19 @@ class SEOOptimizer:
     def get_social_media_links(self) -> dict:
         social = self.config.get("social_accounts", {})
         links = {}
-        if social.get("twitter"):
-            links["twitter"] = f"https://twitter.com/{social['twitter'].lstrip('@')}"
-        if social.get("linkedin") and not social["linkedin"].startswith("your-"):
-            links["linkedin"] = f"https://www.linkedin.com/in/{social['linkedin']}"
+
+        def _url(v, base):
+            v = (v or "").strip()
+            if not v or v.startswith("your-"):
+                return None
+            return v if v.lower().startswith("http") else f"{base}{v.lstrip('@')}"
+
+        tw = _url(social.get("twitter"), "https://twitter.com/")
+        li = _url(social.get("linkedin"), "https://www.linkedin.com/in/")
+        if tw:
+            links["twitter"] = tw
+        if li:
+            links["linkedin"] = li
         return links
 
     # ------------------------------------------------------------------ #

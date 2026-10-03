@@ -64,7 +64,7 @@
       "description": "Cut state update latency 75% with Signals in 2026 — Preact Signals Core 1.7.0 runs in React, Node, and Workers with 0.8 ms median updates and 3.2 kB bundle.",
       "datePublished": "2026-07-03T04:50:42+00:00",
       "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2613,
+      "wordCount": 2618,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2613 words
+                        &nbsp;·&nbsp; 2618 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -531,33 +526,20 @@ Deno.serve(() =&gt; {
 1. <strong>Latency:</strong> Signals reduced update latency by 24x, making the dashboard usable on low-end devices. The React + Redux version had visible lag when typing in a search box; Signals eliminated it. 2. <strong>Memory:</strong> Signals cut memory usage by 85%, which mattered on devices with &lt;4 GB RAM. The Redux version GC’d aggressively, causing UI stutters. 3. <strong>Code maintenance:</strong> Fewer lines of code meant fewer bugs. In one case, a missing memoization in Redux caused a 500 ms delay on a mobile device — a bug that would have been impossible with Signals because dependencies are tracked automatically. 4. <strong>Cold start:</strong> Signals shaved 140 ms off cold starts by reducing the amount of code React had to hydrate. This was a surprise — I expected Signals to add overhead, but they actually reduced it because the reactivity graph was simpler.</p>
 <p><strong>Cost implication (2026 pricing):</strong>
 - On AWS Lambda (128 MB memory, 512 MB burst), the Signals version ran 18% cheaper because it used less memory and had shorter execution times. - On Cloudflare Workers ($5 per 10 million requests), the Signals version reduced CPU time by 30%, cutting costs by $150/month for a high-traffic dashboard.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/global-state-is-the-wrong-tool-for-ai-features/">Global state is the wrong tool for AI features</a></li>
+<li><a href="https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/">AI UI tools broke my React flow — here’s why</a></li>
+<li><a href="https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/">Vibe coding: MVP gem, prod albatross</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 03, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -606,12 +588,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

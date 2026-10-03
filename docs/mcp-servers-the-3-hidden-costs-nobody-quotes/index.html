@@ -64,8 +64,8 @@
       "description": "MCP servers in 2026: real memory leaks, bandwidth inflation, proxy timeouts, and the TLS trap most teams miss before going live.",
       "datePublished": "2026-08-05T02:46:23+00:00",
       "dateModified": "2026-09-21T08:28:27+00:00",
-      "wordCount": 3674,
-      "timeRequired": "PT18M",
+      "wordCount": 3712,
+      "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -262,8 +257,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        18 min read
-                        &nbsp;·&nbsp; 3674 words
+                        19 min read
+                        &nbsp;·&nbsp; 3712 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -577,33 +572,28 @@ Sanitize all resource URIs to absolute paths and reject relative segments (<code
 Most teams hit one of three culprits: nginx’s default <code>proxy_read_timeout</code> of 60 s is too short for 20-minute tool calls, the client never sends ping frames so the proxy kills idle sockets, or the server process is blocking the event loop with a CPU-bound task. Fix by setting <code>proxy_read_timeout 180s</code> in nginx, adding a 5-minute client-side ping/pong loop, and replacing blocking tool calls with thread-pool workers (<code>ThreadPoolExecutor</code> with <code>max_workers=8</code>). Monitor <code>/var/log/nginx/error.log</code> for <code>upstream prematurely closed connection</code>; if you see it, the timeouts are misaligned.</p>
 <p><strong>What’s the cheapest way to run MCP at scale?</strong>
 Use AWS Fargate with 0.5 vCPU and 1 GB memory per task, and set the task to stop after 5 minutes of idle time. Fargate charges $0.00001667 per vCPU-second and $0.00000334 per GB-second; a task that runs 1000 requests/day with 2 MB payloads costs ~$1.10/month. Pair it with CloudFront ($0.085/GB beyond the first 10 TB) to cache static tool manifests and reduce bandwidth costs. Avoid ALB if possible; use a Network Load Balancer ($0.0225/LCU-hour) for raw WebSocket throughput. The savings are significant once you exceed the ALB free tier.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/mcp-servers-real-time-pipelines-without-agents/">MCP servers: real-time pipelines without agents</a></li>
+<li><a href="https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/">Platform teams in 2026: Docs vs. production reality</a></li>
+<li><a href="https://kubaik.github.io/trim-llm-bills-3-finops-moves-that-work/">Trim LLM bills: 3 FinOps moves that work</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://modelcontextprotocol.io/">Model Context Protocol docs</a></li>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> August 05, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -632,7 +622,7 @@ please contact me and I'll review and correct it.</p>
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">
@@ -652,12 +642,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

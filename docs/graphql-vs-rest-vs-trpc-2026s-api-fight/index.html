@@ -64,7 +64,7 @@
       "description": "Cut API design debates with data — REST vs GraphQL vs tRPC in 2026 with concrete benchmarks, cost figures, and the exact mistake I made shipping GraphQL for…",
       "datePublished": "2026-06-09T19:36:20+00:00",
       "dateModified": "2026-09-19T11:42:21+00:00",
-      "wordCount": 2328,
+      "wordCount": 2310,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -262,7 +257,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2328 words
+                        &nbsp;·&nbsp; 2310 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -273,7 +268,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same api design mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, API design isn’t about choosing a religion. It’s about matching a tool to a specific kind of pain. I learned that the hard way when I shipped a GraphQL API for a payments dashboard in January. The frontend team loved the flexibility—until they started complaining about query depth limits and N+1s that appeared only in production, not in staging. By the time we switched to a REST layer for bulk operations, we’d burned 40 engineering hours and $2k in extra monitoring.</p>
+<p>In 2026, API design isn’t about choosing a religion. It’s about matching a tool to a specific kind of pain. I learned that the hard way when I shipped a GraphQL API for a payments dashboard in January. The frontend team loved the flexibility—until they started complaining about query depth limits and N+1s that appeared only in production, not in staging.</p>
 <p>That experience crystallized what too many teams miss: API choices aren’t abstract. They’re trade-offs that surface in production at 2 AM. By 2026, GraphQL is stable but overused, REST is boring but reliable, and tRPC is the sleeper hit for TypeScript monorepos. Each solves a different kind of problem. This post is the map I wish I’d had before that payments incident.</p>
 <h2 id="option-a-graphql-how-it-works-and-where-it-shines">Option A — GraphQL: how it works and where it shines</h2>
 <p>GraphQL isn’t going away. In 2026, it powers 38% of new internal APIs at companies I talk to, largely because it decouples frontend and backend change cycles. The protocol itself is simple: a single endpoint, a typed schema, and a query language that lets clients ask for exactly what they need. But the magic—and the pain—lives in the edges.</p>
@@ -423,33 +418,20 @@
 <p>If you’re in a TypeScript monorepo, tRPC is the best choice you’re not using yet. It’s not perfect—tooling is young and error messages are cryptic—but the compile-time safety pays for itself in weeks.</p>
 <p>GraphQL isn’t dead. It’s just not the default anymore. REST is boring. tRPC is sneaky. Pick the boring one unless you have a reason not to.</p>
 <p><strong>Your next step today:</strong> Open your API’s most recent OpenAPI spec or GraphQL schema file and check the line count. If it’s under 100 lines, rewrite it as a REST endpoint with OpenAPI validation. If it’s over 500 lines, audit your query depth and resolver chains. If you’re in a monorepo, install tRPC 10.40.0 and generate a procedure for your top 5 API calls—then measure compile-time errors in the next PR.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI ops vs human ops: the incidents that broke them</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-the-three-surprises/">AI agent postmortems: the three surprises</a></li>
+<li><a href="https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/">Tool calls under load: async batch vs fire-and-forget</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 09, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -498,12 +480,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

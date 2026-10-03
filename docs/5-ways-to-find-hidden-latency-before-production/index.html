@@ -64,7 +64,7 @@
       "description": "Cut hidden latency detection time 92%: 5 observability pipelines with concrete numbers, versioned tools, and real postmortems from 2026 production incidents.",
       "datePublished": "2026-06-30T22:23:14+00:00",
       "dateModified": "2026-09-15T04:12:08+00:00",
-      "wordCount": 2486,
+      "wordCount": 2388,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -259,7 +254,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2486 words
+                        &nbsp;·&nbsp; 2388 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-15
                         
@@ -296,7 +291,7 @@ vegeta attack -duration=60s -rate=100 -targets=targets.json | \
 </code></pre>
 <h3 id="2-synthetic-probing-with-multi-region-canaries">2. Synthetic probing with multi-region canaries</h3>
 <p>What it does: Deploys lightweight Node 20 LTS probes in every AWS region (us-east-1, eu-west-1, ap-southeast-1) that hit a <code>/healthz</code> endpoint every 30 seconds and validate response time, error rate, and payload size. Uses AWS Lambda@Edge for regional execution and CloudWatch Synthetics for alerting.</p>
-<p>Strength: Catches regional latency spikes before they affect users. One team I worked with found a 200ms increase in <code>us-west-2</code> due to a new AWS AZ announcement that broke EBS burst credits. The alert fired 7 minutes after deployment.</p>
+<p>Strength: Catches regional latency spikes before they affect users. The alert fired 7 minutes after deployment.</p>
 <p>Weakness: Only tests the happy path. If your <code>/healthz</code> endpoint uses a cached result, it won’t catch a slow database query behind it. Also, probes add ~$12/month per region in AWS costs at 2026 pricing.</p>
 <p>Best for: Multi-region services with SLA commitments above 99.5%.</p>
 <pre><code class="language-javascript">// aws-synthetics-canary.js
@@ -338,7 +333,7 @@ after = subprocess.check_output([&quot;py-spy&quot;, &quot;dump&quot;, &quot;--p
 </code></pre>
 <h3 id="4-query-plan-diffing-for-database-bound-services">4. Query plan diffing for database-bound services</h3>
 <p>What it does: Captures PostgreSQL 15 query plans before and after a migration, then diffs them using <code>pg_plan_mgmt</code> to detect full table scans or missing indexes. Fails the migration if any query plan changes by more than 10% in estimated cost.</p>
-<p>Strength: Prevents database performance regressions at the source. I’ve blocked a migration that added a 500ms query because the planner switched from an index scan to a bitmap heap scan — the diff flagged it before it hit production.</p>
+<p>Strength: Prevents database performance regressions at the source.</p>
 <p>Weakness: Only works for PostgreSQL. MySQL and DynamoDB need different tools. Also requires query plan capture in CI, which adds ~1 second per test.</p>
 <p>Best for: Services where &gt;50% of latency comes from database calls.</p>
 <pre><code class="language-sql">-- Capture baseline plan
@@ -364,7 +359,7 @@ services:
         p95: 15ms
 </code></pre>
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
-<p>Traffic replay with latency injection (#1) won because it cut MTTD from 28 hours to 22 minutes in our benchmark and had the lowest false-positive rate (1.8%) after 30 days. It also added only 2.3 seconds to each CI run, which was below our 3-second threshold.</p>
+<p>It also added only 2.3 seconds to each CI run, which was below our 3-second threshold.</p>
 <p>The key insight: most hidden latency isn’t hidden — it’s just not visible under normal load. By replaying production traffic with injected delays, we surface exactly the latency that matters to users. The other approaches are valuable but solve narrower problems (CPU profiling, query plans, regional probes). Latency injection catches the rest.</p>
 <p>If you only implement one thing from this list, make it traffic replay. The others are complements, not replacements.</p>
 <h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
@@ -375,7 +370,7 @@ services:
 <p>Best for: Teams running on bare metal or EKS with custom AMIs.</p>
 <h3 id="distributed-tracing-diff">Distributed tracing diff</h3>
 <p>What it does: Uses Jaeger 1.45 or Tempo 2.4 to capture traces before and after a change, then diffs them using <code>tracetest</code> to detect latency increases in specific spans. Fails the build if any span’s p99 latency increases by &gt;15%.</p>
-<p>Strength: Pinpoints latency regressions to specific code paths. I’ve used it to catch a 60ms increase in JWT validation that only appeared in the <code>/refresh</code> endpoint.</p>
+<p>Strength: Pinpoints latency regressions to specific code paths.</p>
 <p>Weakness: Requires distributed tracing to be enabled in all services, which adds ~10% overhead. Also, trace sampling can hide regressions if the slow path isn’t sampled.</p>
 <p>Best for: Teams already using OpenTelemetry with 100% trace sampling.</p>
 <h3 id="shadow-traffic-with-latency-injection">Shadow traffic with latency injection</h3>
@@ -465,33 +460,20 @@ services:
 </code></pre>
 <p>Commit the pcap and the workflow file. The next time a latency regression sneaks in, the build will fail in 62 seconds instead of 28 hours.</p>
 <p>That’s the entire setup — no new tools, no dashboards, just a 30-minute fix that pays off the first time it catches a hidden latency spike.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/3-mistakes-that-break-deployments-for-everyone/">3 mistakes that break deployments for everyone</a></li>
+<li><a href="https://kubaik.github.io/7-skills-senior-engineers-need-now-agents-are-live/">7 skills senior engineers need now agents are live</a></li>
+<li><a href="https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 30, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -520,7 +502,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">
                         <h3>AI in slow networks: why models flop where data costs rise</h3>
                         <p>Cut API data cost 88% and latency 76% for AI features in high-cost, high-latency markets.</p>
-                        <span class="related-meta">13 min read · 5 July 2026</span>
+                        <span class="related-meta">12 min read · 5 July 2026</span>
                     </a>
                     
                 </div>
@@ -528,12 +510,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -64,8 +64,8 @@
       "description": "Cut stack costs 88% with Postgres 17 caching, cron jobs, and blob storage — latency benchmarks, migration steps, and the 1 mistake we made",
       "datePublished": "2026-06-26T21:04:08+00:00",
       "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2957,
-      "timeRequired": "PT15M",
+      "wordCount": 2740,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2957 words
+                        14 min read
+                        &nbsp;·&nbsp; 2740 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -277,20 +272,19 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, Postgres has quietly become the Swiss Army knife of backend infrastructure. Teams in Jakarta, Dublin, and São Paulo are waking up to a single database holding JSON caches, scheduled jobs, and file blobs—all while outperforming the separate Redis, S3, and cron stacks they used last year. My own team made the jump six months ago after a 3-day outage hunting a Redis connection leak that cost us $14k in egress fees.</p>
+<p>In 2026, Postgres has quietly become the Swiss Army knife of backend infrastructure. Teams in Jakarta, Dublin, and São Paulo are waking up to a single database holding JSON caches, scheduled jobs, and file blobs—all while outperforming the separate Redis, S3, and cron stacks they used last year.</p>
 <p>The shift isn’t hype. Postgres 17, released in October 2025, added features that quietly obliterate three separate tools:
 - pg_cron for cron replacement (jobs run inside the database, not a sidecar that dies at 3am)
 - pg_largeobject and TOAST for file storage under 1GB (cheaper than S3 in 7 regions I checked)
 - JSONB with GiST indexes for hot caches (10x faster than Redis for our read-heavy workloads)</p>
-<p>That last point is the kicker: Redis is no longer the default cache for everyone. When your JSON payload is under 1MB and you already trust Postgres to be highly available, the network hop to Redis becomes the slowest part of your stack. I benchmarked a 95th percentile cache hit of 12ms over Redis vs 2ms to Postgres on an m7g.4xlarge in us-west-2. The gap is only 10ms, but in a 200ms SLA world, that’s half your budget gone before you do any real work.</p>
-<p>The operational cost of maintaining three systems—Redis for caching, S3 for blobs, cron for jobs—adds up fast. A 2026 cost audit at my company showed:
+<p>That last point is the kicker: Redis is no longer the default cache for everyone. When your JSON payload is under 1MB and you already trust Postgres to be highly available, the network hop to Redis becomes the slowest part of your stack. The gap is only 10ms, but in a 200ms SLA world, that’s half your budget gone before you do any real work.</p>
+<p>The operational cost of maintaining three systems—Redis for caching, S3 for blobs, cron for jobs—adds up fast.
 - Redis instance running 3 replicas in us-west-2: $1,842/month
 - S3 Standard storage for 42GB of user uploads: $93/month
-- EC2 m6i.large for cron jobs: $112/month
-Total: $2,047/month + the 12 engineer-hours we spent wiring them together.</p>
-<p>With Postgres alone, we cut storage to $38/month (gp3 50GB), dropped the Redis and EC2 lines, and saved $1,956/month. The switch took 12 days of engineering time—mostly writing the migration script and testing rollback. I still remember the moment we turned off the Redis cluster and everything kept working. That’s not supposed to happen when you consolidate.</p>
-<p>This comparison is real. I’ve used both stacks in production for 12 months. The new stack isn’t perfect—pg_cron can still wedge itself into a deadlock if you’re not careful, and TOAST has a 1GB soft limit you’ll hit eventually—but it’s good enough that we no longer wake up at 2am because a cron job failed or Redis evicted a key we needed.</p>
-<p>If you’re running any three of these: a cache, a scheduler, or a blob store, it’s time to measure before you migrate. The break-even point for most teams is under six weeks once you factor in the engineering cost of maintaining the old stack. I’ve seen teams save $30k/year and cut incident pages by 40% by consolidating to Postgres. The rest of this post shows exactly how that happened.</p>
+- EC2 m6i.large for cron jobs: $112/month</p>
+<p>The switch took 12 days of engineering time—mostly writing the migration script and testing rollback. I still remember the moment we turned off the Redis cluster and everything kept working. That’s not supposed to happen when you consolidate.</p>
+<p>This comparison is real.</p>
+<p>If you’re running any three of these: a cache, a scheduler, or a blob store, it’s time to measure before you migrate. The break-even point for most teams is under six weeks once you factor in the engineering cost of maintaining the old stack. The rest of this post shows exactly how that happened.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p>Postgres 17 (released October 2025) is the engine we run. It’s not just a database anymore; it’s a runtime with batteries included. The three features that matter are pg_cron, TOAST/pg_largeobject, and JSONB with GiST indexes.</p>
 <p>pg_cron is a cron replacement that runs inside Postgres. You schedule jobs with SQL:</p>
@@ -314,9 +308,9 @@ Total: $2,047/month + the 12 engineer-hours we spent wiring them together.</p>
 - Redis Functions for Lua scripting (reduces network round trips)
 - Active Replication for multi-AZ setups (RPO &lt; 1ms)
 - Redis on Flash for cheaper large caches (but adds complexity)</p>
-<p>We ran Redis 7.2 with 3 replicas in us-west-2, m7g.4xlarge, 16GB RAM. The cluster cost $1,842/month plus $89/month for Multi-AZ replication. The cache hit rate was 94%, and p99 latency for GET requests was 4ms. That’s hard to beat for a cache.</p>
+<p>The cluster cost $1,842/month plus $89/month for Multi-AZ replication. The cache hit rate was 94%, and p99 latency for GET requests was 4ms. That’s hard to beat for a cache.</p>
 <p>For blobs, S3 Standard is still the cheapest durable storage for files over 1GB. At 42GB of user uploads, the bill was $93/month. The durability is 11 nines, and the API is everywhere. No proxying needed—clients stream directly.</p>
-<p>Cron jobs ran on an EC2 m6i.large ($112/month) with systemd timers. The jobs were simple: nightly batch jobs, report generation, cleanup. The failure mode was a reboot at 3am that killed the instance and left the job unscheduled until someone noticed. We had 3 incidents in 6 months.</p>
+<p>Cron jobs ran on an EC2 m6i.large ($112/month) with systemd timers. The jobs were simple: nightly batch jobs, report generation, cleanup. The failure mode was a reboot at 3am that killed the instance and left the job unscheduled until someone noticed.</p>
 <p>The Redis stack is mature and predictable. You can tune eviction policies, connection pools, and replica lag without touching Postgres internals. The downside is the operational overhead: connection leaks, failover drills, IAM policies for S3, backup scripts for cron jobs. It adds up.</p>
 <p>A 2026 hiring trend survey showed that teams with Redis experience command 12% higher salaries in London and 8% in Bangalore. The skill is still valuable, even if the cost isn’t.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
@@ -457,14 +451,14 @@ Total: $2,047/month + the 12 engineer-hours we spent wiring them together.</p>
 </tr>
 </tbody>
 </table>
-<p>The savings are real: $2,047/month or $24,564/year. For a 20-person team, that’s two junior salaries or one senior hire.</p>
+<p>The savings are real: $2,047/month or $24,564/year.</p>
 <p><strong>Indirect costs:</strong>
 - Old stack: 12 Terraform resources, 3 dashboards, 2 on-call rotations
 - New stack: 3 Terraform resources, 1 dashboard, 1 on-call rotation
 - Old stack: 3 incident pages/month related to cron or Redis
 - New stack: 0 incident pages/month from the consolidated services</p>
 <p>The indirect savings are harder to quantify but matter more. Fewer moving parts mean fewer surprises. We went from a 300-line Ansible playbook for Redis failover to a 15-line script for Postgres failover. The playbook was written by an engineer who left in 2026; we still run the script.</p>
-<p>The break-even for the migration was 12 days of engineering time. We spent 3 days writing the migration script, 4 days testing, and 5 days in dual-write. The script reused 80% of our existing Postgres connection pool code, so it wasn’t greenfield work.</p>
+<p>The break-even for the migration was 12 days of engineering time. The script reused 80% of our existing Postgres connection pool code, so it wasn’t greenfield work.</p>
 <p><strong>When the old stack is cheaper:</strong>
 - Your cache is larger than 16GB RAM (use Redis Cluster or on Flash)
 - Your blobs are larger than 1GB and rarely accessed (S3 is still cheaper)
@@ -507,7 +501,7 @@ Total: $2,047/month + the 12 engineer-hours we spent wiring them together.</p>
 <p>The framework is opinionated but works. It’s not a silver bullet—we still keep Redis for one feature—but it’s a reliable gut check.</p>
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p>Recommendation: <strong>Use Postgres 17 as your cache, scheduler, and blob store if your cache is under 16GB, your p99 latency target is under 15ms, and your queries are simple JSON path queries.</strong></p>
-<p>That’s a narrow window, but it’s where most teams live. The operational savings are real, the performance is acceptable, and the developer experience is better. We cut incident pages by 40% and saved $24k/year by doing it.</p>
+<p>That’s a narrow window, but it’s where most teams live. The operational savings are real, the performance is acceptable, and the developer experience is better.</p>
 <p>But ignore this recommendation if:
 - You run a high-traffic cache that needs sub-millisecond p99
 - Your cache is larger than 16GB RAM (use Redis Cluster or on Flash)
@@ -520,33 +514,20 @@ Total: $2,047/month + the 12 engineer-hours we spent wiring them together.</p>
 <p>The switch isn’t free. You’ll need to test your cache queries, tune your connection pool, and monitor p99 latency. But the upside is real: fewer services, fewer dashboards, fewer pages, and a measurable cost cut.</p>
 <p>I still wake up some nights wondering if we should have kept Redis for the cache. But the data is clear: at our scale and latency targets, Postgres is the better choice. Your numbers may differ, so measure before you migrate.</p>
 <p><strong>Action for the next 30 minutes:</strong> Open <code>pg_stat_statements</code> in your Postgres instance and run <code>SELECT query, calls, total_exec_time, mean_exec_time FROM pg_stat_statements ORDER BY mean_exec_time DESC LIMIT 10;</code>. If your top 10 queries are simple JSON path queries with mean_exec_time under 10ms and total cache size under 16GB, start the consolidation. If not, keep Redis for the cache and revisit this in a month.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">Postgres 17 swallowed Redis, Kafka, Timescale</a></li>
+<li><a href="https://kubaik.github.io/replace-managed-services-with-postgres-17/">Replace managed services with Postgres 17</a></li>
+<li><a href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 26, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -575,7 +556,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/postgres-17-swallowed-redis-kafka-timescale/">
                         <h3>Postgres 17 swallowed Redis, Kafka, Timescale</h3>
                         <p>Cut AWS costs 56% by replacing Redis, Kafka, and TimescaleDB with Postgres 17 — connection pooling, pgmq benchmarks, and the schema mistake that cost us 3 days.</p>
-                        <span class="related-meta">15 min read · 2 July 2026</span>
+                        <span class="related-meta">14 min read · 2 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/memory-systems-for-production-agents/">
@@ -595,12 +576,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

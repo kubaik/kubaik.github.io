@@ -64,8 +64,8 @@
       "description": "Observability agents in production: the memory leaks, configuration drift, and hidden costs most teams miss.",
       "datePublished": "2026-08-11T08:54:57+00:00",
       "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2683,
-      "timeRequired": "PT13M",
+      "wordCount": 2704,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2683 words
+                        14 min read
+                        &nbsp;·&nbsp; 2704 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -424,27 +419,27 @@
 <p>Managed services reduce operational overhead but don’t eliminate it. In 2026, Datadog’s container agent (7.53) still requires a DaemonSet with hostNetwork: true, which breaks network policies on some clusters. It also needs a service account with cluster-admin permissions and dedicated API keys per environment. The managed service abstracts the agent’s resource usage, but the configuration and permissions still need to be managed. For small teams, this is fine—but for teams running 50+ services, the overhead shifts to managing the vendor’s API limits and pricing model.</p>
 <p><strong>What’s the minimal viable agent setup for a 2026 stack?</strong></p>
 <p>Start with a centralized OpenTelemetry Collector (otelcol 0.92) using a minimal build (only prometheusreceiver and otlpexporter). Deploy it as a Deployment (not DaemonSet) with resource requests/limits of 512 MiB RAM and 0.5 CPU. Use OTLP over gRPC for push-based telemetry. Monitor the collector’s own metrics with a separate scrape job. This setup handles up to 50k metrics/s with 0.2% sample loss and minimal operational overhead.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/">Multi-agent handoffs: the latency tax nobody measures</a></li>
+<li><a href="https://kubaik.github.io/orchestration-tax-kills-multi-agent-systems/">Orchestration tax kills multi-agent systems</a></li>
+<li><a href="https://kubaik.github.io/agentic-finops-is-a-trap/">Agentic FinOps is a trap</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -479,7 +474,7 @@
                     <a class="related-card" href="/only-boring-stacks-survive-ai-services/">
                         <h3>Only boring stacks survive AI services</h3>
                         <p>Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…</p>
-                        <span class="related-meta">16 min read · 31 August 2026</span>
+                        <span class="related-meta">17 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agent-followed-instructions-too-literally-the-cron-job-trap/">
@@ -493,12 +488,7 @@
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

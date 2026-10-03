@@ -64,8 +64,8 @@
       "description": "Cut hallucination rates 18x with PostgreSQL vs Redis for long-running agents — durability, latency, and cost breakdown with RedisJSON and pgvector in 2026.",
       "datePublished": "2026-07-09T07:11:24+00:00",
       "dateModified": "2026-09-16T09:55:28+00:00",
-      "wordCount": 3605,
-      "timeRequired": "PT18M",
+      "wordCount": 3419,
+      "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        18 min read
-                        &nbsp;·&nbsp; 3605 words
+                        17 min read
+                        &nbsp;·&nbsp; 3419 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -370,10 +365,10 @@ def get_relevant_context(agent_id, query, limit=10):
 </code></pre>
 <p>We benchmarked this setup on a t3.xlarge instance in AWS us-east-1 with PostgreSQL 16, pgvector 0.7.0, and TimescaleDB 2.14.2. Querying for relevant context takes 120ms to 250ms depending on the embedding size and filter complexity. But the real win is durability: even after a full database restart, we can reconstruct agent context from the event log with no data loss. During a simulated Redis node failure in our staging environment, agents using PostgreSQL continued without interruption, while Redis agents hallucinated missing context in 12% of sessions.</p>
 <p>The trade-off? Cost and complexity. In 2026, a PostgreSQL 16 instance with 1TB of provisioned IOPS and TimescaleDB compression costs about $1,200/month in AWS. A comparable Redis 7.2 cluster with replication and persistence costs $450/month. That’s a 2.7x premium for durability.</p>
-<p>We also hit a surprise wall with pgvector: embedding generation adds 300ms to each agent step. We mitigated it by caching embeddings per unique payload, but for high-volume agents, the cost adds up. In Ghana, where compute costs are high and GPUs are scarce, this matters.</p>
+<p>We mitigated it by caching embeddings per unique payload, but for high-volume agents, the cost adds up. In Ghana, where compute costs are high and GPUs are scarce, this matters.</p>
 <p>Still, for agents handling loan applications or supply chain disputes, the audit trail is non-negotiable. One Nigerian bank using this pattern reduced fraud-related customer complaints by 42% in 6 months — not because the model got smarter, but because the context was never lost and disputes could be replayed exactly.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>Let’s put numbers to the trade-offs. We ran a 7-day load test simulating 10,000 concurrent agents in Nigeria, Ghana, and Kenya. Agents performed 5 actions per minute on average, with 30% of actions triggering a tool call. We measured latency, memory usage, and hallucination rates under three network conditions: stable Wi-Fi, Safaricom 3G (average 1.5 Mbps, 300ms RTT), and Airtel 4G (average 8 Mbps, 80ms RTT).</p>
+<p>Let’s put numbers to the trade-offs. We ran a 7-day load test simulating 10,000 concurrent agents in Nigeria, Ghana, and Kenya. Agents performed 5 actions per minute on average, with 30% of actions triggering a tool call.</p>
 <table>
 <thead>
 <tr>
@@ -436,16 +431,16 @@ def get_relevant_context(agent_id, query, limit=10):
 </table>
 <p>What jumps out? Redis wins on latency across all network conditions. On 3G, Redis agents complete loops in 120ms vs 250ms for PostgreSQL. That’s the difference between a user feeling like the agent is responsive and one who thinks the connection is stuck. But PostgreSQL wins on reliability: its hallucination rate is 18x lower because it never loses context.</p>
 <p>The surprise came in memory usage. We expected Redis to blow up because of the stream append-only log. But with Redis 7.2’s active defragmentation and stream trimming, memory stayed flat at 1.8KB per agent during warm sessions. When agents went cold (no activity for 30 minutes), Redis dropped the full context and kept only the stream tail, reducing memory to 120KB per agent. PostgreSQL, by contrast, kept 2.1KB per agent in the event log plus 0.3KB in the cache, which is actually less — but don’t let the bytes fool you. The real cost is in I/O and CPU for pgvector similarity search.</p>
-<p>Another surprise: on Airtel 4G, PostgreSQL latency dropped to 210ms, but 12% of queries still timed out at 500ms because of embedding similarity computation. We had to add a Redis cache in front of pgvector to store recent embeddings, which brought latency down to 140ms — but then we were back to running two systems.</p>
+<p>Another surprise: on Airtel 4G, PostgreSQL latency dropped to 210ms, but 12% of queries still timed out at 500ms because of embedding similarity computation.</p>
 <p>So performance isn’t just about raw numbers. It’s about how the system behaves when the network is bad, the database is under load, or the agent restarts. Redis is faster until it isn’t. PostgreSQL is slower until it isn’t. The inflection point is usually around session length and data volume. If your agent needs to remember more than 100 events, or if sessions last longer than 24 hours, PostgreSQL starts to pull ahead in reliability.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
 <p>Developer experience isn’t just about writing code — it’s about debugging when the agent hallucinates, the network drops, or the user yells at the support chat. With Redis, the context is a single JSON blob. You can <code>GET agent:123:context</code> in redis-cli and see exactly what the agent sees. That’s invaluable for reproducing bugs. We once had a Tanzanian agent inventing a transaction that never occurred. With Redis, we pulled the context blob, saw a malformed <code>reversal_flag</code>, and fixed the bug in 10 minutes. With PostgreSQL, we had to query three tables and join events to reconstruct context. That took an hour.</p>
-<p>But PostgreSQL shines when you need to answer complex questions: <em>‘Show me all agents that discussed “MPesa reversal” in the last 30 days.’</em> With Redis, you’d need to scan every agent’s stream — which is slow and expensive. With PostgreSQL and pgvector, it’s a single query with a vector similarity filter. We used this to audit a fraud pattern across 5,000 agents in Kenya and found a correlation between reversal requests and SIM swap attacks.</p>
+<p>But PostgreSQL shines when you need to answer complex questions: <em>‘Show me all agents that discussed “MPesa reversal” in the last 30 days.’</em> With Redis, you’d need to scan every agent’s stream — which is slow and expensive. With PostgreSQL and pgvector, it’s a single query with a vector similarity filter.</p>
 <p>Tooling matters too. Redis has built-in persistence, replication, and failover. PostgreSQL 16 with TimescaleDB has compression, continuous aggregates, and time-series optimizations. But PostgreSQL’s ecosystem for observability is richer: pgBadger, pganalyze, and TimescaleDB’s built-in monitoring give us query plans, slow query logs, and embedding cache hit rates. With Redis, we rely on RedisInsight or manual log scraping.</p>
-<p>The real pain point with PostgreSQL is schema evolution. When we added a new field to agent events, we had to backfill it for 3 months of history — a 2-hour operation that locked tables and spiked CPU. With Redis, we just added the field to the JSON blob. No migrations, no downtime.</p>
+<p>The real pain point with PostgreSQL is schema evolution. With Redis, we just added the field to the JSON blob. No migrations, no downtime.</p>
 <p>So the developer experience trade-off:
 - <strong>Redis</strong>: simpler to debug, faster to iterate, easier to understand. Best for agents that change frequently and need quick fixes. - <strong>PostgreSQL</strong>: better for analytics, audit, and long-running sessions. Best for agents that need to scale and prove compliance.</p>
-<p>In 2026, most teams I talk to start with Redis for speed and move to PostgreSQL when they hit 10,000 agents or need audit trails. The migration isn’t fun — it involves replaying event logs and rehydrating context — but it’s manageable if you design the event schema upfront.</p>
+<p>The migration isn’t fun — it involves replaying event logs and rehydrating context — but it’s manageable if you design the event schema upfront.</p>
 <h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
 <p>Cost isn’t just the bill — it’s the cost of failure. A hallucinating agent can cost a bank millions in disputed transactions. But even in non-critical systems, cost compounds.</p>
 <p>Here’s a 2026 cost breakdown for 50,000 agents running 1M steps per day, 30 days:</p>
@@ -538,7 +533,7 @@ def get_relevant_context(agent_id, query, limit=10):
 <li>In West Africa, data costs matter. A 2KB Redis context blob costs less to transmit than a 120ms pgvector query. On 3G, that’s a real user-visible difference.</li>
 <li>But a lost $2,400 transaction costs more than $200/month in PostgreSQL bills.</li>
 </ol>
-<p>I once rejected PostgreSQL for a Ghanaian microloan agent because the CFO said, <em>“We can’t afford $1,200/month.”</em> Six months later, after 18 disputed loans totaling $18,000, the same CFO approved the migration. The cost of context loss was higher than the cost of durability.</p>
+<p>The cost of context loss was higher than the cost of durability.</p>
 <p>So the framework isn’t about features — it’s about risk. Map your system to these constraints, assign weights, and choose.</p>
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p>I recommend <strong>PostgreSQL 16 with pgvector and TimescaleDB for long-running agents in 2026</strong>, with a few caveats.</p>
@@ -567,33 +562,20 @@ def get_relevant_context(agent_id, query, limit=10):
 echo &quot;TTL for agent:123:context: $(redis-cli TTL agent:123:context)&quot;
 </code></pre>
 <p>If the TTL is less than your longest session or the size is growing without bound, you’re one network drop away from a hallucination. Fix it now.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agents-running-hours-youre-losing-context-fast/">Agents running hours? You're losing context fast</a></li>
+<li><a href="https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-the-three-surprises/">AI agent postmortems: the three surprises</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 09, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -628,13 +610,13 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-agents-killed-dev-tool-sales-cycles/">
                         <h3>AI agents killed dev tool sales cycles</h3>
                         <p>Sell dev tools in the AI era: 3.8% landing page conversion after rebuilding for 30-second agent integrations — GitHub Actions, Redis caching, and pricing…</p>
-                        <span class="related-meta">13 min read · 2 July 2026</span>
+                        <span class="related-meta">12 min read · 2 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/store-data-once-serve-everywhere-cheaper/">
                         <h3>Store data once, serve everywhere: cheaper</h3>
                         <p>Cut cross-region egress 70% with edge caching — real latency, cost, and failure modes from a 2026 health-data backend serving Nigeria, Kenya, and South Africa.</p>
-                        <span class="related-meta">17 min read · 25 June 2026</span>
+                        <span class="related-meta">16 min read · 25 June 2026</span>
                     </a>
                     
                 </div>
@@ -642,12 +624,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

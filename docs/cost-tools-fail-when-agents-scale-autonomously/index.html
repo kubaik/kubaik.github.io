@@ -64,7 +64,7 @@
       "description": "Traditional cloud cost tools report hours after autonomous agents make scaling decisions — the attribution gap that turns $12,000 surprise bills into…",
       "datePublished": "2026-09-09T12:51:51+00:00",
       "dateModified": "2026-09-09T12:51:51+00:00",
-      "wordCount": 2730,
+      "wordCount": 2756,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2730 words
+                        &nbsp;·&nbsp; 2756 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-09
                         
@@ -383,27 +378,27 @@ Usually not. The observability overhead of $75-155/month for the metrics pipelin
 <p>The blind spot is assuming one tool can do both jobs. It cannot. The cost tool reports on what happened; the agent decides what happens next. If the feedback between them is broken — and it is, in most setups today — you get either delayed cost signals that the agent cannot use, or cost signals that are too noisy to trust.</p>
 <p>Fix the feedback loop first. Instrument your scaling agent to emit a <code>scaling_decision_cost</code> metric. Feed that into Prometheus 2.51. Build a Grafana 11.0 dashboard that shows cost per decision alongside performance per decision. Only then does agent-driven scaling become observable, and only then can you trust the cost savings it promises.</p>
 <p>Action step: in the next 30 minutes, add a <code>scaling_decision_cost</code> counter metric to your agent's scaling loop and query it in Prometheus 2.51 with <code>sum(rate(scaling_decision_cost_total[5m])) by (decision_type)</code>. If the metric does not exist yet, create it in your scaling service code — the file to edit is whichever service handles your autoscaling decisions, and the metric name should follow your existing Prometheus naming convention. Check the value after the next scaling event and compare it against the actual cloud cost delta. That single metric is the bridge between your agent and your cost visibility.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/">Cloud agents burned $18k: 8 tools that didn't work</a></li>
+<li><a href="https://kubaik.github.io/agentic-finops-is-a-trap/">Agentic FinOps is a trap</a></li>
+<li><a href="https://kubaik.github.io/who-signs-off-on-ai-code/">Who signs off on AI code?</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -444,7 +439,7 @@ Usually not. The observability overhead of $75-155/month for the metrics pipelin
                     <a class="related-card" href="/only-boring-stacks-survive-ai-services/">
                         <h3>Only boring stacks survive AI services</h3>
                         <p>Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…</p>
-                        <span class="related-meta">16 min read · 31 August 2026</span>
+                        <span class="related-meta">17 min read · 31 August 2026</span>
                     </a>
                     
                 </div>
@@ -452,12 +447,7 @@ Usually not. The observability overhead of $75-155/month for the metrics pipelin
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

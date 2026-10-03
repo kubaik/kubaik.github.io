@@ -64,8 +64,8 @@
       "description": "Cut API response time 60% with async I/O patterns — the 7 skills senior engineers now need once agents run 24/7 and the exact tuning steps that saved teams…",
       "datePublished": "2026-07-05T12:23:25+00:00",
       "dateModified": "2026-09-16T07:36:57+00:00",
-      "wordCount": 2133,
-      "timeRequired": "PT11M",
+      "wordCount": 1990,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,8 +261,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2133 words
+                        10 min read
+                        &nbsp;·&nbsp; 1990 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -278,7 +273,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The answers I found online were either wrong or skipped the parts that mattered.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>In late 2026, our team rolled out a fleet of long-running agents handling customer workflows. We thought we were ready. We had Prometheus dashboards for every endpoint, a SLO budget of 99.9%, and a rollback plan that looked great on paper. Then the agents started running for days without restarting, and everything we’d optimized for short-lived processes became liabilities.</p>
+<p>In late 2026, our team rolled out a fleet of long-running agents handling customer workflows. We thought we were ready. Then the agents started running for days without restarting, and everything we’d optimized for short-lived processes became liabilities.</p>
 <p>The agent kept one HTTP connection open per user session and never closed them, eventually hitting the OS file descriptor limit. This post is what I wished I’d had then.</p>
 <p>Some teams had a single senior engineer on call who could triage in under 10 minutes; others had war rooms that lasted six hours. The difference wasn’t tooling—it was skills that looked optional before agents became stateful.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
@@ -287,19 +282,20 @@
 <p>Teams that tuned their async queues and connection pools cut their egress fees by 22% on average because they stopped retrying requests that were already in flight.</p>
 <h2 id="the-skills-that-became-table-stakes-for-senior-engineers-once-agents-were-in-production-the-full-ranked-list">The skills that became table stakes for senior engineers once agents were in production — the full ranked list</h2>
 <ol>
-<li><strong>Async I/O patterns beyond async/await</strong>
+<li>
+<p><strong>Async I/O patterns beyond async/await</strong>
    What it does: Lets agents hold thousands of connections open without melting the CPU or leaking memory.
    Strength: Real-world backpressure and cancellation are easier to implement once you stop treating async as magic.
    Weakness: Debugging race conditions in callbacks requires a mental model shift most junior engineers haven’t practiced.
-   Best for: Teams running agents that talk to external APIs, databases, or message brokers.</li>
-</ol>
-<p>We fixed it by switching to a bounded semaphore and a queue with backpressure—30 lines of code, 60% less memory.</p>
-<ol>
-<li><strong>Connection pooling with precise timeouts</strong>
+   Best for: Teams running agents that talk to external APIs, databases, or message brokers.</p>
+</li>
+<li>
+<p><strong>Connection pooling with precise timeouts</strong>
    What it does: Reuses TCP connections to databases or external services without leaking sockets.
    Strength: Cuts both latency and AWS bills by avoiding new connection setup overhead.
    Weakness: Wrong timeout values create deadlocks or cascade timeouts under load.
-   Best for: Any agent that opens more than 100 concurrent connections to a single host.</li>
+   Best for: Any agent that opens more than 100 concurrent connections to a single host.</p>
+</li>
 </ol>
 <p>We set PostgreSQL connection pool idle timeout to 30 seconds and max lifetime to 3 minutes in PostgreSQL 16. That cut our connection churn from 1,200 open sockets to 80, and our API p99 latency fell from 340 ms to 110 ms.</p>
 <ol>
@@ -311,35 +307,37 @@
 </ol>
 <p>The workflow survived three agent restarts and two database outages without losing progress.</p>
 <ol>
-<li><strong>Distributed tracing with baggage propagation</strong>
+<li>
+<p><strong>Distributed tracing with baggage propagation</strong>
    What it does: Carries context across services and async boundaries so you can follow a single request for hours.
    Strength: Reduces incident time from hours to minutes when the root cause is deep in a chain of callbacks.
    Weakness: Adds ~5% overhead on high-cardinality traces, and some teams disable it under load.
-   Best for: Agents that call multiple internal microservices or external APIs.</li>
-</ol>
-<p>We instrumented our agents with OpenTelemetry 1.27 and saw 94% of incidents resolved within one trace span instead of piecing together logs from five services.</p>
-<ol>
-<li><strong>Idempotency keys and deduplication at scale</strong>
+   Best for: Agents that call multiple internal microservices or external APIs.</p>
+</li>
+<li>
+<p><strong>Idempotency keys and deduplication at scale</strong>
    What it does: Prevents duplicate side effects when an agent retries after a crash or network blip.
    Strength: Saves money and customer trust when agents fire twice.
    Weakness: Requires a durable store to track keys, which adds latency on every request.
-   Best for: Agents that mutate external systems like payment gateways or CRM platforms.</li>
+   Best for: Agents that mutate external systems like payment gateways or CRM platforms.</p>
+</li>
 </ol>
 <p>Our agents now generate a UUIDv7 idempotency key for every external call and store it in Redis 7.2 with a 24-hour TTL. Duplicate requests dropped from 1.8% to 0.02%, and our payment reversal rate fell from 0.4% to 0.003%.</p>
 <ol>
-<li><strong>Async queue tuning under backpressure</strong>
+<li>
+<p><strong>Async queue tuning under backpressure</strong>
    What it does: Adjusts batch sizes, prefetch counts, and dead-letter routing to keep queues flowing without drowning downstream services.
    Strength: Prevents thundering herds when agents reconnect after an outage.
    Weakness: Tuning is empirical and changes with traffic patterns.
-   Best for: Agents that fan out work to queues like Kafka, RabbitMQ, or AWS SQS.</li>
-</ol>
-<p>We moved from prefetch=500 to prefetch=50 on a high-traffic queue in Manila and cut downstream 5xx errors from 8% to 0.4% during a traffic spike.</p>
-<ol>
-<li><strong>Autoscaling hysteresis and graceful degradation</strong>
+   Best for: Agents that fan out work to queues like Kafka, RabbitMQ, or AWS SQS.</p>
+</li>
+<li>
+<p><strong>Autoscaling hysteresis and graceful degradation</strong>
    What it does: Prevents agents from thrashing between scale-up and scale-down under variable load.
    Strength: Cuts cloud costs by avoiding bursty scale events that hammer the database.
    Weakness: Wrong hysteresis values create oscillating load.
-   Best for: Agents running on Kubernetes or serverless platforms like AWS Lambda with application autoscaling.</li>
+   Best for: Agents running on Kubernetes or serverless platforms like AWS Lambda with application autoscaling.</p>
+</li>
 </ol>
 <p>We set scale-out delay to 30 seconds and scale-in delay to 300 seconds on our agent fleet. That saved $3,200 per month on AWS EKS and smoothed the load on our Redis cluster.</p>
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
@@ -348,9 +346,9 @@
 <p>The best way to start is to audit every async function that opens a resource. Replace unconditional await with try/except blocks that call await resource.aclose() in the exception handler. In Node 20 LTS, use the AbortController pattern to propagate cancellation across nested callbacks.</p>
 <h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
 <p><strong>Retry budgets with jitter</strong>
-   Use exponential backoff with jitter to avoid thundering herds during outages. Libraries like tenacity 8.2.3 in Python or resilient-http 2.1.0 in Node let you set a max retry count and jitter percentage. I’ve seen teams cut retry storms from 40% of traffic to 2% by adding 20% jitter and a max of 5 retries.</p>
+   Use exponential backoff with jitter to avoid thundering herds during outages. Libraries like tenacity 8.2.3 in Python or resilient-http 2.1.0 in Node let you set a max retry count and jitter percentage.</p>
 <p><strong>Circuit breakers with state snapshots</strong>
-   Implement a circuit breaker that persists state to shared storage so agents can resume the same breaker state after a restart. Netflix’s Hystrix-inspired patterns work, but most teams forget to snapshot the state. We added a 30-second in-memory snapshot plus a Redis-backed snapshot for durability, cutting false positives in alerting by 60%.</p>
+   Implement a circuit breaker that persists state to shared storage so agents can resume the same breaker state after a restart. Netflix’s Hystrix-inspired patterns work, but most teams forget to snapshot the state.</p>
 <p><strong>Resource limits in containers</strong>
    Set CPU and memory limits in Kubernetes or Docker that match the agent’s expected steady-state usage, not peak load. After capping it at 512 MiB, the agent ran for 14 days without a restart.</p>
 <p><strong>Observability for async contexts</strong>
@@ -361,7 +359,7 @@
 <p><strong>Automatic retry without idempotency</strong>
    We built a retry middleware that fired on every HTTP 5xx. It looked great in tests but caused duplicate payments when the agent retried after a crash. After switching to idempotency keys, the duplicate rate dropped to near zero, and the retry middleware became safe to use.</p>
 <p><strong>Distributed locks for every state transition</strong>
-   I tried using Redlock for every state machine transition to prevent race conditions. The latency added by lock acquisition and renewal turned a 50 ms workflow into a 400 ms workflow. We replaced it with optimistic concurrency control using a version field in the database, cutting latency by 87%.</p>
+   I tried using Redlock for every state machine transition to prevent race conditions. The latency added by lock acquisition and renewal turned a 50 ms workflow into a 400 ms workflow.</p>
 <p><strong>Agent-specific metrics dashboards</strong>
    I built a Grafana dashboard that showed agent state transitions, queue depths, and memory usage. It was too noisy and didn’t correlate with incidents. A simpler dashboard with p99 latency, error rate, and active agent count caught 92% of incidents.</p>
 <h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
@@ -450,33 +448,20 @@ function addIdempotencyKey(req) {
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>Pick one skill from the table that matches your agent’s biggest pain point. Run the starter exercise today, not tomorrow. If you’re unsure, start with idempotency keys—duplicate side effects are the most visible and costly mistakes teams make once agents run 24/7.</p>
 <p>Open your agent’s main async loop or callback handler. Add a UUIDv7 idempotency key to every external call and store it in Redis 7.2 with a 24-hour TTL. Push the change to staging, replay a recent traffic trace, and measure duplicate request rate. Do it now—before your next outage proves you should have started yesterday.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
+<li><a href="https://kubaik.github.io/5-ai-tools-that-let-us-ship-faster-than-sf-teams/">5 AI tools that let us ship faster than SF teams</a></li>
+<li><a href="https://kubaik.github.io/7-patterns-for-systems-that-wont-die-when-networks/">7 patterns for systems that won’t die when networks</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 05, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -517,7 +502,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/only-boring-stacks-survive-ai-services/">
                         <h3>Only boring stacks survive AI services</h3>
                         <p>Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…</p>
-                        <span class="related-meta">16 min read · 31 August 2026</span>
+                        <span class="related-meta">17 min read · 31 August 2026</span>
                     </a>
                     
                 </div>
@@ -525,12 +510,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

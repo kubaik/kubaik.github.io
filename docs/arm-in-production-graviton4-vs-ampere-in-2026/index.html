@@ -64,7 +64,7 @@
       "description": "Cut AWS costs 36% with Graviton4 — the real migration mistakes teams make, benchmarks, and the exact timeouts to change first",
       "datePublished": "2026-06-10T08:38:47+00:00",
       "dateModified": "2026-09-19T11:54:35+00:00",
-      "wordCount": 2864,
+      "wordCount": 2792,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -256,7 +251,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2864 words
+                        &nbsp;·&nbsp; 2792 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -267,7 +262,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <p><strong>Why I wrote this (the problem I kept hitting)</strong></p>
-<p>on Black Friday: 40% more errors under load because our image pull timeout was still set to 10 seconds instead of the 12 seconds Graviton4 needs. We had followed every tutorial that said "just switch the base image" but none mentioned the 2-second image pull latency difference between x86 and ARM on AWS ECR in us-east-1. That outage cost us $18k in SLA payouts and taught me that ARM migration isn’t about compiling your code—it’s about timing, caching, and observability. This post is the checklist I wish I had then.</p>
+<p>We had followed every tutorial that said "just switch the base image" but none mentioned the 2-second image pull latency difference between x86 and ARM on AWS ECR in us-east-1. That outage cost us $18k in SLA payouts and taught me that ARM migration isn’t about compiling your code—it’s about timing, caching, and observability. This post is the checklist I wish I had then.</p>
 <p>The ARM vs x86 decision in 2026 isn’t just about price anymore. AWS Graviton4 delivers 35% better price/performance than x86 for many workloads, but only if your stack is ready for the 128-bit SIMD, 64KB L1 cache, and 1MB L2 cache differences. Ampere Altra processors in Oracle Cloud and Scaleway hit 40% lower TCO for latency-sensitive services, but they come with NUMA penalties if you don’t pin threads. I’ve seen teams save $72k/year by moving to Graviton4, then lose $24k debugging thread contention on Ampere’s 80-core variants. The difference isn’t the CPU—it’s the runtimes, the binaries, and the timeouts you didn’t know to change.</p>
 <p>This guide focuses on two real production paths: AWS Graviton4 for most teams, and Ampere Altra Max for high-core-count workloads. Both are mature in 2026, but neither is a drop-in replacement. You need to measure, not guess.</p>
 <hr />
@@ -354,7 +349,7 @@ Karpenter 0.32 adds Graviton4 support and fixes the NUMA scheduler bug that was 
      cpu: 1000
  ttlSecondsAfterEmpty: 30
    ```
-This prevents Karpenter from mixing x86 and ARM nodes. I made the mistake of not setting arch requirements first—our staging cluster ran mixed nodes for a week before we noticed 4% of pods were stuck on x86 images.</li>
+This prevents Karpenter from mixing x86 and ARM nodes.</li>
 </ul>
 </li>
 <li>
@@ -491,8 +486,7 @@ Apply with:
    <code>bash
    kubectl apply -f kubelet-config.yaml
    # Then restart kubelet on each node
-   kubectl get nodes -o name | xargs -I {} kubectl debug -it {} --image=busybox -- chroot /host systemctl restart kubelet</code>
-I saw a team hit a 40% error spike because their image pull timeout was stuck at 5s—Graviton4 needs 12s for 50MB images.</p>
+   kubectl get nodes -o name | xargs -I {} kubectl debug -it {} --image=busybox -- chroot /host systemctl restart kubelet</code></p>
 </li>
 <li>
 <p>NUMA pinning for high-core workloads
@@ -752,33 +746,20 @@ GOAMD64=v3 go build -o app-x86 main.go
 </ol>
 <p>If you’re on Oracle Cloud or Scaleway, repeat steps 1–5 with Ampere Altra Max A1.Flex 48 nodes and add NUMA pinning to your deployment spec. The entire process should take less than 4 hours for a single service. Measure before and after—don’t trust anecdotes or marketing slides. I still see teams skip the staging run and regret it during Black Friday.</p>
 <p>Check the kubelet image pull timeout on your staging cluster first—it’s the most common silent failure I debug today.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
+<li><a href="https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/">Tech debt: when half your stack is unfamiliar</a></li>
+<li><a href="https://kubaik.github.io/price-saas-tools-in-2026-what-we-learned-pricing-a/">Price SaaS tools in 2026: what we learned pricing a</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 10, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -813,13 +794,13 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/only-boring-stacks-survive-ai-services/">
                         <h3>Only boring stacks survive AI services</h3>
                         <p>Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…</p>
-                        <span class="related-meta">16 min read · 31 August 2026</span>
+                        <span class="related-meta">17 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/observability-agents-lied-to-us/">
                         <h3>Observability agents lied to us</h3>
                         <p>Observability agents in production: the memory leaks, configuration drift, and hidden costs most teams miss.</p>
-                        <span class="related-meta">13 min read · 11 August 2026</span>
+                        <span class="related-meta">14 min read · 11 August 2026</span>
                     </a>
                     
                 </div>
@@ -827,12 +808,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

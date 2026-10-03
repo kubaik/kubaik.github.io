@@ -1,43 +1,45 @@
-# AI interviews: 4 questions that caught 80% of weak
+# AI Interviews: Four Resilience Questions That Matter
 
-The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.
+Interview guides often lag behind what production teams actually need. A guide written around whiteboard algorithms can still ask candidates to implement a binary search tree while the systems those candidates will maintain fail under retry storms and connection leaks. The gap is not that algorithms are useless; it is that algorithm puzzles rarely exercise the failure modes that dominate real incident reports.
 
-## The gap between what the docs say and what production needs
+This article describes a screening approach built around fault injection: run a small service, break it in a controlled way, and grade whether the candidate's change restores service-level objectives. It covers the four question types that catch the most weak candidates, a minimal reference implementation, the failure modes of the harness itself, and when this approach is the wrong choice.
 
-In 2026, most interview guides still asked candidates to implement a binary search tree or write a recursive Fibonacci function. By 2026, those same guides look like relics. Real engineering teams now demand proof that engineers can build resilient, observable systems that survive real traffic—not just whiteboard correctness.
+## The gap between coding puzzles and production resilience
 
-Our new screening bot evaluated candidates on three things we’d learned the hard way: cache stampedes in high-write Redis clusters, deadlocks in distributed transactions, and graceful degradation when downstream services return 5xx. Candidates who aced the BST still failed when asked to diagnose a 200 ms P99 latency spike caused by a single misconfigured connection pool. The surprise wasn’t that algorithms mattered less—it was that production resilience mattered more.
+Classic coding challenges test correctness in isolation. They do not test whether a candidate can diagnose a latency spike caused by a misconfigured connection pool, or whether they understand why a fixed retry delay makes an outage worse. Those skills are learned on call rotations, not on whiteboards.
 
-The shift reflects what we actually ship. In our main payment service, 72% of incidents in 2026 were traced to thread starvation, connection leaks, or retry storms—none of which appear in classic coding challenges. What hiring managers now want is not just code that compiles, but code that survives Monday morning at 9 a.m. when 10,000 users hit “Pay” at once.
+A typical failure mode in real payment services is a cascade: a downstream dependency slows down, callers hold connections open while retrying, the connection pool exhausts, and the API begins timing out for unrelated requests. None of those steps appear in a binary search tree question. A screening process that only measures algorithmic fluency will select for a skill that is necessary but not sufficient.
 
-This gap is why we added a 10-minute live debugging segment to every screening round. It’s not about solving LeetCode; it’s about spotting the one line that will kill the system at scale.
+The practical response is to add a short live debugging segment to each screening round. The goal is not to solve a puzzle; it is to spot the one change that keeps the system within its latency budget under load.
 
-## How AI changed what hiring managers are looking for in engineering interviews actually works under the hood
+## How a fault-injection screening harness works
 
-AI interviews don’t just grade answers—they simulate real systems. Our screening pipeline uses a lightweight Python 3.11 runtime on AWS Lambda with arm64 to spin up ephemeral Docker containers per candidate. Each container runs a stripped-down version of our payment service, seeded with synthetic traffic. The AI proctor injects faults: a Redis 7.2 cache miss, a 500 ms downstream delay, a sudden spike to 5,000 RPS. The candidate’s score isn’t based on whether they wrote correct code, but on whether their changes survive the fault injection without cascading failures.
+An AI-assisted screening harness does not just grade an answer. It runs a candidate's change against a simulated system and observes the result. The architecture is straightforward:
 
-The scoring engine is built on FastAPI 0.109 and Prometheus 2.50 for metrics. We log every syscall, network latency, and GC cycle. A PromQL query checks if the candidate’s fix restored the P99 latency to under 150 ms within 30 seconds of the fault. If not, they fail the round. This isn’t theoretical; it’s a replay of the incident we had last March when our Redis connection pool exhausted under load and our API started timing out.
+1. A small service (for example, a FastAPI app with a `/pay` endpoint and a `/metrics` endpoint) runs in a container.
+2. Supporting containers provide a cache, a worker, and a metrics store.
+3. The harness replays a recorded traffic pattern and injects a fault: a cache miss, a downstream delay, or a sudden RPS spike.
+4. A scoring query checks whether the candidate's fix restores the target latency within a time window.
+5. The harness records syscall counts, network latency, and garbage-collection cycles for later review.
 
-What surprised me was how often strong engineers failed this test. I assumed senior candidates would instinctively wrap Redis calls in retries and circuit breakers. Instead, many wrote clean, correct code that still leaked sockets after three retries. The AI didn’t care about cleanliness; it cared about survival.
+The scoring engine can be built on any metrics stack. A common choice is Prometheus for metrics and a query language such as PromQL for the pass/fail check. The important property is that the grade depends on observed behavior, not on code style.
 
-Under the hood, the AI uses a lightweight state machine to orchestrate the test. It starts a localstack AWS stack with S3 and DynamoDB, spins up three containers (API, worker, cache), and replays a recorded traffic pattern. The candidate’s terminal is a VS Code Web instance running in an EC2 t3.small instance in us-east-1. We chose t3.small because it’s cheap—~$12/month—and representative of the smallest footprint we actually deploy.
-
-The real magic is in the fault injection. We don’t just kill a pod; we simulate a downstream service that starts returning 5xx, then recovers after 60 seconds. This mimics the real outage we had with a third-party provider in December 2026. Candidates who hard-coded retry delays of 10 seconds failed; those who used exponential backoff with jitter passed.
+A frequent surprise is how often experienced engineers fail this kind of test. Candidates who write clean, correct code may still leak sockets after three retries or add a fixed delay that turns a slow dependency into a queue. The harness does not care about cleanliness; it cares about whether the service stays within its latency budget.
 
 ## Step-by-step implementation with real code
 
-Here’s how we built our screening pipeline. We started with a simple FastAPI 0.109 service that exposes two endpoints: `/pay` and `/health`. The `/pay` endpoint simulates charging a card, and the `/health` endpoint returns Prometheus metrics.
-
-First, the service code. This is the core of what candidates see:
+The reference service below exposes two endpoints: `/pay` simulates charging a card, and `/metrics` returns Prometheus metrics. It is intentionally small so that a candidate can read it in a few minutes.
 
 ```python
 # app/main.py
-from fastapi import FastAPI, HTTPException
-from redis import Redis
-from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
-from contextlib import asynccontextmanager
 import asyncio
 import logging
+import time
+
+from fastapi import FastAPI, HTTPException
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+from redis import Redis
+from contextlib import asynccontextmanager
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -46,11 +48,14 @@ redis = Redis(host="redis", port=6379, decode_responses=True, socket_timeout=5)
 
 PAYMENT_COUNTER = Counter("payments_total", "Total payment attempts")
 FAILURE_COUNTER = Counter("payments_failed", "Failed payment attempts")
-LATENCY_HISTOGRAM = Histogram("payment_latency_ms", "Payment latency in ms", buckets=[50, 100, 200, 500, 1000])
+LATENCY_HISTOGRAM = Histogram(
+    "payment_latency_ms",
+    "Payment latency in ms",
+    buckets=[50, 100, 200, 500, 1000],
+)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # warm up Redis
     redis.ping()
     yield
 
@@ -62,21 +67,17 @@ async def pay(amount: float, card_id: str):
     PAYMENT_COUNTER.inc()
 
     try:
-        # Simulate downstream call
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(0.1)  # simulate downstream call
 
-        # Cache key
         cache_key = f"card:{card_id}"
         cached = redis.get(cache_key)
         if cached:
             LATENCY_HISTOGRAM.observe((time.time() - start) * 1000)
             return {"status": "cached", "amount": float(cached)}
 
-        # Simulate charging
         if amount <= 0:
             raise HTTPException(status_code=400, detail="Invalid amount")
 
-        # Store in cache with 60s TTL
         redis.setex(cache_key, 60, str(amount))
         LATENCY_HISTOGRAM.observe((time.time() - start) * 1000)
         return {"status": "charged", "amount": amount}
@@ -92,7 +93,9 @@ async def metrics():
     return generate_latest(), 200, {"Content-Type": CONTENT_TYPE_LATEST}
 ```
 
-Next, we need a Dockerfile to containerize the service. We use multi-stage to keep the image small:
+Note the bug fixes relative to a typical first draft: `time` is imported, and the histogram is declared before use. Without those, the service fails at import time.
+
+A multi-stage Dockerfile keeps the image small:
 
 ```dockerfile
 # Dockerfile
@@ -110,7 +113,7 @@ ENV PYTHONPATH=/app
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
-The requirements file pins versions we’ve tested in production:
+The requirements file pins versions that have been tested together:
 
 ```
 fastapi==0.109.0
@@ -119,11 +122,10 @@ prometheus-client==0.19.0
 uvicorn==0.27.0
 ```
 
-Now, the AI proctor. This is the part that runs the fault injection and grades the candidate. It’s written in Node.js 20 LTS because it needs to orchestrate Docker and AWS services reliably:
+The harness itself can be written in any language that can orchestrate containers and query metrics. Node.js is a common choice because its event loop handles many short-lived containers without blocking. The example below is intentionally minimal; it does not handle cleanup perfectly, but it is enough to run a test.
 
 ```javascript
 // proctor/index.js
-import { spawn } from 'child_process';
 import { Docker } from 'node-docker-api';
 import axios from 'axios';
 import { PrometheusDriver } from 'prometheus-query';
@@ -131,193 +133,145 @@ import { PrometheusDriver } from 'prometheus-query';
 const docker = new Docker({ socketPath: '/var/run/docker.sock' });
 const prom = new PrometheusDriver({ endpoint: 'http://prometheus:9090' });
 
+async function waitForHealth(retries = 30) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await axios.get('http://localhost:8000/health');
+      return;
+    } catch {
+      await new Promise((r) => setTimeout(r, 1000));
+    }
+  }
+  throw new Error('service did not become healthy');
+}
+
 async function runCandidateTest(candidateId) {
-  // Spin up service
   const service = await docker.container.create({
     Image: 'payment-service:latest',
     name: `candidate-${candidateId}`,
-    HostConfig: { NetworkMode: 'host' }
+    HostConfig: { NetworkMode: 'host' },
   });
   await service.start();
 
-  // Spin up Redis
   const redis = await docker.container.create({
     Image: 'redis:7.2',
     name: `redis-${candidateId}`,
-    HostConfig: { NetworkMode: 'host' }
+    HostConfig: { NetworkMode: 'host' },
   });
   await redis.start();
 
-  // Wait for healthy
   await waitForHealth();
 
-  // Inject fault: downstream delay
-  setTimeout(async () => {
-    const res = await axios.post('http://localhost:8000/pay', {
-      amount: 100,
-      card_id: 'test123'
-    });
-    console.log('Payment response:', res.data);
+  await axios.post('http://localhost:8000/pay', {
+    amount: 100,
+    card_id: 'test123',
+  });
 
-    // Check metrics after 30s
-    const metrics = await prom.instantQuery(
-      'rate(payment_latency_ms_sum[5m])',
-      Date.now()
-    );
+  const metrics = await prom.instantQuery(
+    'rate(payment_latency_ms_sum[5m]) / rate(payment_latency_ms_count[5m])',
+    Date.now(),
+  );
 
-    if (metrics.result[0].value > 200) {
-      console.log('Candidate failed: latency too high');
-      await service.stop();
-      await service.remove();
-      await redis.stop();
-      await redis.remove();
-      return { passed: false };
-    }
+  const avgLatency = Number(metrics.result[0]?.value?.[1] ?? Infinity);
+  const passed = avgLatency < 200;
 
-    return { passed: true };
-  }, 10000);
+  await service.stop();
+  await service.remove();
+  await redis.stop();
+  await redis.remove();
+
+  return { passed, avgLatency };
 }
 
 runCandidateTest('candidate-123').catch(console.error);
 ```
 
-This code is intentionally minimal. It doesn’t handle cleanup perfectly, but it’s enough to run the test. We run it in an EC2 t3.small instance in us-east-1, which costs about $12/month. We chose t3.small because it’s the cheapest instance that can run three containers and Prometheus without swapping.
+Two corrections matter here. First, the latency query divides the sum by the count; querying the sum alone gives a meaningless number that grows with traffic. Second, cleanup happens on every path, not only on failure, so containers do not accumulate.
 
-## Performance numbers from a live system
+## Measuring whether the harness actually works
 
-We rolled this screening pipeline out in Q1 2026. In the first three months, we screened 428 candidates. Here’s what the numbers show:
+Claims about screening improvements are only meaningful if they are measured. Before rolling out a harness, define the metrics and the instrumentation that produces them.
 
-| Metric                          | Before AI screening | After AI screening |
-|---------------------------------|---------------------|--------------------|
-| False positives (good engineers rejected) | 18%                 | 5%                 |
-| False negatives (bad engineers passed)    | 12%                 | 3%                 |
-| Avg. screening time per candidate         | 45 minutes          | 30 minutes         |
-| Cost per screen                           | $4.20               | $1.80              |
-| Incident rate in first 30 days after hire | 8%                  | 2%                 |
+What to instrument:
 
-The biggest surprise was the 60% drop in false negatives. We’d been rejecting strong algorithm candidates who couldn’t debug a real system under load. Now, we’re rejecting fewer of them because the AI test is more realistic.
+- **Candidate outcomes.** For each candidate, record the harness verdict, the human reviewer verdict, and the eventual hiring decision. This lets you compute agreement between the harness and human review.
+- **Harness reliability.** Record the number of runs that failed for infrastructure reasons (container startup failure, metrics scrape gap, timeout) versus candidate reasons. A harness with a high infrastructure-failure rate is not measuring candidates.
+- **Time to signal.** Record the wall-clock time from fault injection to the candidate's first change. This is a proxy for debugging skill.
+- **Post-hire signal.** If your organization tracks incidents, record the count of incidents attributed to new hires in their first 30 days, normalized by hire count. This is a lagging indicator and requires a long observation window.
 
-Latency is critical. Our test requires that the `/pay` endpoint responds in under 150 ms P99 during normal load. Candidates who add retries without backoff often push P99 to 300 ms, which fails the test. This mirrors the real outage we had in November 2026 when a Redis connection pool exhausted under 5,000 RPS and our API started timing out.
+How to measure:
 
-Cost savings came from two places: shorter screens (30 vs 45 minutes) and cheaper infrastructure. We moved from a fleet of t3.medium instances ($48/month each) to t3.small ($12/month each) because the test is ephemeral and lightweight. We also reduced the number of humans reviewing screens by 40% because the AI grades the test automatically.
+- Run the harness against a known-good reference solution and a known-bad solution. The known-good solution should pass every time; the known-bad solution should fail every time. If either result is inconsistent, the harness is flaky.
+- Repeat the reference runs at least twenty times to estimate the false-failure rate. A false-failure rate above a few percent makes the harness unusable for hiring decisions.
+- Compare harness verdicts against human reviewer verdicts on the same candidate submissions. Report the disagreement rate, not just the agreement rate, so that the failure modes are visible.
 
-The incident rate is the real win. Before, 8% of new hires had an incident in their first 30 days. After, it’s 2%. That’s a 75% reduction in early-stage failures. The incidents we still see are usually around configuration—like forgetting to set a Redis TTL—which the AI test now catches.
+What to compare:
 
-## The failure modes nobody warns you about
+- The harness's verdict on a candidate's change versus a human reviewer's verdict on the same change.
+- The harness's latency measurement versus an independent measurement of the same service under the same load.
+- The harness's infrastructure-failure rate across runs on the same day versus across days. A rate that varies by day suggests a resource or scheduling problem.
 
-The first failure mode is flaky tests. We spent two weeks tweaking the fault injection logic because Redis 7.2 sometimes took 200 ms to respond instead of 50 ms. This caused false failures when candidates’ fixes were actually correct. We fixed it by adding a 300 ms grace period in the PromQL query.
+A worked example of the arithmetic: suppose a harness runs 100 candidate sessions. Twenty fail for infrastructure reasons and are discarded. Of the remaining 80, 60 pass and 20 fail. If a human reviewer later judges that 5 of the 60 passes were actually weak submissions, the false-pass rate among valid runs is 5/80 = 6.25%. If 2 of the 20 failures were actually strong submissions, the false-fail rate is 2/80 = 2.5%. Those two numbers, not a single accuracy figure, determine whether the harness is useful.
 
-The second is Docker networking. Our initial setup used bridge networking, and sometimes containers couldn’t reach each other. We switched to host networking and the problem disappeared. I only realized this after watching a candidate fail because their API couldn’t talk to Redis.
+## The four question types that catch weak candidates
 
-The third is Prometheus scraping. We forgot to label the metrics with the candidate ID, so we couldn’t tell which candidate caused which latency spike. We fixed it by adding a `candidate_id` label to every metric.
+The four fault-injection scenarios below cover the failure modes that most often separate candidates who can write code from candidates who can keep a service running.
 
-The fourth is timeouts. Our original test gave candidates 60 seconds to fix the fault. But under load, Redis sometimes took 50 seconds to respond, leaving only 10 seconds for the candidate to act. We reduced the test window to 45 seconds and the problem went away.
+**1. Cache stampede under high write volume.** The harness makes a popular cache key expire while many requests arrive at once. A weak candidate either removes the cache entirely or adds a lock with a fixed delay, which serializes requests and pushes latency up. A strong candidate uses a short TTL with a lock and jitter, or a single-flight pattern that lets one request refresh the value while others serve stale data.
 
-The fifth is cost creep. We started with t3.small, but after 100 screens, our bill crept up because we weren’t cleaning up containers fast enough. We added a cron job to prune stopped containers every hour. The cleanup script is a one-liner:
+**2. Deadlock or connection exhaustion in a distributed transaction.** The harness holds a connection open while a downstream call is slow. A weak candidate adds retries without bounding them, and the pool exhausts. A strong candidate bounds the retry count, uses exponential backoff with jitter, and ensures every acquired connection is released on every path.
+
+**3. Graceful degradation when a downstream returns 5xx.** The harness makes a dependency fail for a fixed interval and then recover. A weak candidate hard-codes a retry delay or removes the dependency call entirely. A strong candidate degrades to a cached or default response and recovers automatically when the dependency returns.
+
+**4. Latency spike from a single misconfigured connection pool.** The harness constrains the pool size. A weak candidate increases the pool size without understanding the downstream limit. A strong candidate identifies the bottleneck, sets a pool size consistent with the downstream capacity, and adds a timeout so that slow calls do not hold connections indefinitely.
+
+Each scenario is graded against a latency budget. The budget should be derived from the service's own SLO, not chosen arbitrarily. If the `/pay` endpoint must respond within 150 ms at P99 under normal load, the harness should check whether the candidate's change restores P99 to that level within a defined window after the fault.
+
+## Failure modes of the harness itself
+
+A fault-injection harness has its own failure modes, and they are easy to miss because they look like candidate failures.
+
+**Flaky infrastructure.** Container startup, DNS resolution, and network configuration can all introduce nondeterminism. Bridge networking in particular can cause intermittent container-to-container failures. Host networking removes one class of problems but introduces port conflicts. Whatever the choice, the harness should record infrastructure failures separately from candidate failures.
+
+**Metrics scrape gaps.** If the metrics store is not scraping the service during the fault window, the scoring query returns no data. The harness should treat missing data as an infrastructure failure, not a candidate failure, and should retry the scrape before scoring.
+
+**Missing labels.** If metrics are not labeled with the candidate or session identifier, a latency spike cannot be attributed to a specific run. Add a session label to every metric at the source.
+
+**Timeout budget too tight.** If the fault window is shorter than the service's own recovery time, even a correct fix will fail. Measure the recovery time of a known-good solution and set the window with margin.
+
+**Cache hits masking the fault.** If the cache serves a response during the fault window, latency may look fine even when the candidate's code is flawed. Disable or isolate the cache during the scored window.
+
+**Cost creep from orphaned containers.** Containers that are not cleaned up after a run accumulate and consume resources. A periodic prune of stopped containers is a simple mitigation:
 
 ```bash
 docker ps -a --filter "status=exited" --filter "name=candidate-*" -q | xargs -r docker rm
 ```
 
-The sixth is false positives from cache hits. If Redis returns a cached response, the latency might be low even if the candidate’s code is flawed. We fixed this by disabling the cache during the test.
-
-## Tools and libraries worth your time
-
-Here’s what we use and why:
-
-| Tool/Library       | Version       | Why we picked it                          | Where to use it                     |
-|--------------------|---------------|--------------------------------------------|-------------------------------------|
-| Python             | 3.11          | Mature async runtime, good for FastAPI      | Core service                        |
-| FastAPI            | 0.109         | Async, type hints, automatic docs          | API layer                           |
-| Redis              | 7.2           | Stable, supports RESP3, good for caching   | Cache layer                         |
-| Prometheus         | 2.50          | Industry standard, PromQL is powerful      | Metrics and alerting                |
-| Grafana            | 10.2          | Great dashboards, easy to share            | Dashboarding                        |
-| Node.js            | 20 LTS        | Reliable Docker orchestration              | AI proctor and test runner          |
-| Docker             | 24.0          | Lightweight containers, good for ephemeral | Containerization                    |
-| AWS Lambda         | arm64         | Cheaper than x86, good for batch jobs      | Cost savings for cleanup            |
-| localstack         | 3.0           | Emulate AWS services locally               | Testing downstream integrations     |
-
-We tried pytest 7.4 for unit tests, but it wasn’t flexible enough for our AI-driven scenarios. Instead, we use Node.js for orchestration because it’s easier to manage async Docker and AWS calls.
-
-We built a dashboard that shows the candidate’s latency, error rate, and cache hit rate in real time. If the candidate’s fix causes a spike, we see it immediately.
-
-One surprise was how much we relied on Redis 7.2’s RESP3 support. We use Redis Streams for event sourcing, and RESP3 made the protocol more reliable under load.
-
 ## When this approach is the wrong choice
 
-This screening pipeline is overkill for small teams or early-stage startups. If you’re a team of three, a whiteboard session is enough. The overhead of maintaining the AI proctor, Prometheus, and Docker is significant.
+This harness is not appropriate for every team or every role.
 
-It’s also wrong if your stack is heavily event-driven or uses Kafka. Our system is RESTful and uses Redis for caching. If you’re building a real-time trading engine, a different set of tests is needed.
+- **Small teams without observability.** If you cannot measure latency, error rates, and cache behavior, you cannot grade a candidate's fix. Building the metrics pipeline is a prerequisite, and it can take months.
+- **Non-service roles.** Embedded systems, FPGA, and similar specialties have different failure modes. A REST-and-cache harness will not reflect their work.
+- **Event-driven stacks.** If your production system is built around a message broker, a REST-based harness will test the wrong skills. The same principles apply, but the harness must be rebuilt around the actual stack.
+- **Early-stage startups.** The maintenance overhead of a harness, a metrics store, and a container orchestrator is significant. A structured whiteboard or take-home exercise may be a better use of limited time.
+- **Teams without a reference solution.** Without a known-good solution to calibrate the harness, you cannot distinguish a flaky harness from a weak candidate.
 
-Another wrong fit is teams that don’t have observability in place. If you can’t measure latency, error rates, or cache hit rates, you can’t grade the candidate’s performance. We spent three months building our metrics pipeline before we could run this test.
+## Decision checklist
 
-Finally, it’s wrong if you’re hiring for niche skills like FPGA programming or embedded systems. Our test assumes a RESTful service with Redis and Prometheus. If your stack is different, the test won’t reflect reality.
+Before adopting a fault-injection screening harness, confirm each of the following:
 
-## My honest take after using this in production
+- You can measure P99 latency, error rate, and cache hit rate for the reference service.
+- You have a known-good solution that passes the harness consistently and a known-bad solution that fails consistently.
+- You have run the harness at least twenty times to estimate the false-failure rate.
+- You record infrastructure failures separately from candidate failures.
+- You have defined a latency budget derived from an SLO, not chosen arbitrarily.
+- You have a cleanup process for orphaned containers.
+- You have a plan for comparing harness verdicts against human reviewer verdicts.
+- You have decided what you will do if the harness and a human reviewer disagree.
 
-I was wrong to think that strong engineers would ace this test. Many senior engineers, with 8+ years of experience, failed because they optimized for correctness, not resilience. They wrote clean code that still leaked sockets after three retries. The real skill isn’t writing a binary search tree; it’s writing code that survives 5,000 RPS without melting.
-
-The other surprise was how much the test exposed our own weaknesses. We discovered that our Redis connection pool was misconfigured, causing latent connections to pile up. We fixed it by setting `maxmemory-policy allkeys-lru` and tuning `tcp-keepalive`. This wasn’t a candidate issue; it was an infrastructure issue we’d overlooked.
-
-The cost savings were real, but the real win was the 75% drop in early-stage incidents. We went from 8% of new hires causing incidents in their first 30 days to 2%. That’s a massive improvement in team stability.
-
-On the downside, the test is still brittle. Flaky Docker networking, Redis latency spikes, and Prometheus scraping issues still cause false failures. We’ve mitigated them, but they’re never fully gone.
-
-Overall, I’d recommend this approach to any team shipping production software. The ROI is clear: fewer incidents, cheaper screens, and better hires. But be prepared to invest in observability and infrastructure first.
+If any of those are missing, the harness will produce noise rather than signal.
 
 ## What to do next
 
-Open your `/metrics` endpoint and measure the P99 latency of your `/pay` (or equivalent) endpoint under normal load. If it’s above 150 ms, your candidates won’t pass the AI test. Fix that first.
-
-Then, run this command to check your Redis connection pool settings:
-
-```bash
-docker exec -it redis redis-cli config get maxclients maxmemory-policy tcp-keepalive
-```
-
-If `maxclients` is too low or `maxmemory-policy` isn’t `allkeys-lru`, update your Redis config. This will prevent connection leaks during the test.
-
-Finally, set up a local Prometheus instance with Grafana. Use this dashboard query to monitor your system:
-
-```promql
-rate(payment_latency_ms_sum[5m]) / rate(payment_latency_ms_count[5m])
-```
-
-If the P99 is above 150 ms, your candidates will fail the test. Fix that before you roll out the AI screening pipeline.
-
-
-## Frequently Asked Questions
-
-**how do ai interviews catch connection leaks in redis 7.2?**
-
-The AI proctor runs a synthetic load test that simulates 5,000 RPS. It monitors Redis connections with `redis-cli info clients` and checks for leaked sockets. If the number of clients exceeds `maxclients`, the test fails. We learned this the hard way when a senior engineer’s code leaked 200 sockets under load.
-
-**what’s the best way to handle cache stampedes in production?**
-
-Use a short TTL (30–60 seconds) and a lock with exponential backoff. We tried `SETNX` with a fixed delay and saw stampedes. Switching to a lock with jitter reduced retry storms by 80%. Candidates who use a simple `SET` without TTL or locks fail our test.
-
-**why does node.js 20 lts work better than python for orchestration?**
-
-Node.js has better async primitives for managing Docker containers and AWS services. Python’s asyncio is great for I/O, but Node’s event loop handles thousands of short-lived containers more reliably. We tried Python for orchestration first and hit deadlocks under 100 screens.
-
-**when should i not use an ai screening pipeline?**
-
-Don’t use it if your stack isn’t observable or if you can’t measure latency, error rates, or cache hit rates. We spent three months building our metrics pipeline before we could run the test. If you can’t instrument your system, this approach won’t work.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 14, 2026
+In the next 30 minutes, instrument the endpoint you would use for a screening harness and measure its P99 latency under normal load. If you do not already have a metrics endpoint, add one, then run a short load test and record the P99. That single number tells you whether the latency budget you would set is realistic, and it is the prerequisite for every other step in this article.

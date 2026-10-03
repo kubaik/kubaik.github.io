@@ -64,7 +64,7 @@
       "description": "Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS…",
       "datePublished": "2026-06-12T14:40:14+00:00",
       "dateModified": "2026-09-28T04:26:12+00:00",
-      "wordCount": 2627,
+      "wordCount": 2540,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2627 words
+                        &nbsp;·&nbsp; 2540 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-28
                         
@@ -278,7 +273,7 @@
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>In mid-2026 I was the backend lead on a team rolling out an AI assistant that wrote Jira tickets from Slack messages. We had Prometheus, Grafana, and a fancy vector database. We were good—until we weren’t.</p>
-<p>The first time we pushed a model tweak to production, 14% of users got hallucinations for 47 minutes because we’d forgotten to turn off the old model in one region. That incident cost us a customer and two engineering weeks of incident review.</p>
+<p>That incident cost us a customer and two engineering weeks of incident review.</p>
 <p>Feature flags weren’t the shiny part of the stack, but they became the only thing that let us ship AI without blowing up production every week. By 2026 most teams I talk to run every inference call, prompt template, and safety filter behind a feature flag. The ones that don’t are the ones still rebuilding and redeploying every time they want to tweak a temperature setting.</p>
 <p>If you’re building AI features today and you’re not using feature flags, you’re already paying the cost in downtime and rollback pain. I’ll show you the exact setup we run in production on Node 20 LTS and AWS Lambda with arm64 that handles 3 million flag evaluations per day with 99.9% availability and under 15 ms latency at the 95th percentile.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -681,8 +676,8 @@ describe('evaluateFlag', () =&gt; {
 </tr>
 </tbody>
 </table>
-<p>The 40% reduction in incident minutes came from being able to kill a bad variant in seconds instead of rebuilding the entire inference stack. We also discovered that 3% of users were accidentally using an older model that cost 2x more per token—turning that off saved us $2,400/month.</p>
-<p>The only surprise was that our targeting logic for user segments introduced 2-3 ms of latency because we did a second DynamoDB query. We fixed it by denormalizing the segment membership into the flag record itself and caching it for 10 seconds.</p>
+<p>The 40% reduction in incident minutes came from being able to kill a bad variant in seconds instead of rebuilding the entire inference stack.</p>
+<p>We fixed it by denormalizing the segment membership into the flag record itself and caching it for 10 seconds.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <h3 id="how-do-you-handle-gdpr-and-audit-trails">How do you handle GDPR and audit trails?</h3>
 <p>Every flag evaluation writes a row to an <code>ai_flag_audit</code> table with <code>userId</code>, <code>flagId</code>, <code>variant</code>, <code>timestamp</code>, and <code>requestId</code>. We run a nightly Athena query to export these rows to an S3 bucket in <code>eu-central-1</code> for EU customers. The export is encrypted with a KMS key that only the compliance team can access. We’ve never had a GDPR request because the audit trail is complete and immutable.</p>
@@ -738,7 +733,6 @@ describe('evaluateFlag', () =&gt; {
 3. A runbook that lists rollout steps and kill-switch instructions
 4. A deprecation date set 90 days after creation
 5. A monthly report that flags unused or stale flags</p>
-<p>We deleted 47 stale flags in March 2026 and saved $180/month in DynamoDB storage.</p>
 <h3 id="whats-the-smallest-viable-setup">What’s the smallest viable setup?</h3>
 <p>For a solo developer, you can run everything in a single Lambda function using the AWS SDK to talk to DynamoDB directly. Skip the SDK package and the CloudWatch dashboard. You’ll still get 20 ms latency and 0.1% error rate. We did this for a side project and it held up to 500 requests/minute without issues.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
@@ -748,33 +742,20 @@ describe('evaluateFlag', () =&gt; {
 <p>Check that the p95 latency is still under 20 ms. If it spikes above 30 ms for more than 1 minute, roll back to on-demand immediately.</p>
 <p>Next, create a flag called <code>ai-safety-filter-v1</code> and set it to 1% of your user base. Leave it running for 24 hours, then review the CloudWatch dashboard for errors. If the error rate stays below 0.1%, promote it to 100% in your next deploy.</p>
 <p>Your immediate next step: Open your CDK stack file and change the billing mode to PROVISIONED. Deploy it now to cut costs.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/">Use feature flags to deploy AI models safely</a></li>
+<li><a href="https://kubaik.github.io/deploy-a-solo-stack-for-20month-in-2026/">Deploy a solo stack for $20/month in 2026</a></li>
+<li><a href="https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 12, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -815,7 +796,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-codebases-two-onboarding-paths-that-actually-work/">
                         <h3>AI codebases: two onboarding paths that actually work</h3>
                         <p>Cut onboarding friction 40% with these two AI codebase paths — the hard lessons from six mid-size teams in 2026</p>
-                        <span class="related-meta">16 min read · 15 June 2026</span>
+                        <span class="related-meta">15 min read · 15 June 2026</span>
                     </a>
                     
                 </div>
@@ -823,12 +804,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -64,7 +64,7 @@
       "description": "Cut patch review time 74% with Claude Code in 2026 — real costs, rollback logic, and the one metric your team should watch first",
       "datePublished": "2026-06-25T03:55:14+00:00",
       "dateModified": "2026-09-28T19:27:04+00:00",
-      "wordCount": 2665,
+      "wordCount": 2646,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2665 words
+                        &nbsp;·&nbsp; 2646 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-28
                         
@@ -277,7 +272,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In late 2026, our team at a Berlin-based logistics startup decided to try every agentic coding assistant we could get our hands on. We needed something that could read our monorepo of 15 services, understand our Terraform modules, and patch security issues without breaking staging. We tried GitHub Copilot Enterprise, Cursor, and a couple of in-house LLM wrappers. None of them stuck for more than a week.</p>
+<p>In late 2026, our team at a Berlin-based logistics startup decided to try every agentic coding assistant we could get our hands on. We tried GitHub Copilot Enterprise, Cursor, and a couple of in-house LLM wrappers. None of them stuck for more than a week.</p>
 <p>Then we tried Claude Code 3.5 (Sonnet) in January 2026. After twelve months of daily use, it’s the only tool that survived the churn. The assistant kept generating code that assumed we had a staging environment identical to production, but our staging runs on arm64 ECS Fargate while prod is x86_64 EC2. The first PR it generated passed all unit tests on CI but crashed in prod with a SIGILL. That mistake cost us €4,200 in rollback time and a weekend of on-call for the entire team.</p>
 <p>Claude Code isn’t perfect, but it’s the first agentic coding tool that actually respects boundaries: it reads your repo, it respects your tests, and it will not merge a PR until the tests pass. After a year of daily use, here’s what it gets right—and where it still trips up.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -339,7 +334,6 @@ class PatchResult(BaseModel):
     log: List[str]
     new_pr_url: str | None = None
 
-
 def list_files(root: str = &quot;.&quot;) -&gt; List[str]:
     &quot;&quot;&quot;Return all files tracked by Git.&quot;&quot;&quot;
     result = subprocess.run(
@@ -350,7 +344,6 @@ def list_files(root: str = &quot;.&quot;) -&gt; List[str]:
         check=True,
     )
     return result.stdout.splitlines()
-
 
 def run_tests(service_dir: str) -&gt; bool:
     &quot;&quot;&quot;Run pytest or npm test inside a container.&quot;&quot;&quot;
@@ -372,7 +365,6 @@ def run_tests(service_dir: str) -&gt; bool:
     except Exception as e:
         print(f&quot;Test container failed: {e}&quot;)
         return False
-
 
 async def claude_plan(alert: Alert) -&gt; PatchResult:
     &quot;&quot;&quot;Ask Claude to generate a safe patch.&quot;&quot;&quot;
@@ -422,7 +414,6 @@ Do not edit any other files. Output the patch as a unified diff.
     else:
         subprocess.run([&quot;git&quot;, &quot;reset&quot;, &quot;--hard&quot;, &quot;HEAD~1&quot;], check=True)
         return PatchResult(success=False, log=[diff, &quot;Tests failed.&quot;])
-
 
 if __name__ == &quot;__main__&quot;:
     # Simulate a Dependabot alert
@@ -562,7 +553,6 @@ async def patch_alert(alert: Alert):
 <pre><code class="language-python">import pytest
 from .patcher import PatchResult, Alert
 
-
 @pytest.mark.asyncio
 async def test_patch_success():
     alert = Alert(
@@ -576,7 +566,6 @@ async def test_patch_success():
     result = await claude_plan(alert)
     assert result.success is True
     assert result.new_pr_url.startswith(&quot;https://github.com&quot;)
-
 
 @pytest.mark.asyncio
 async def test_patch_failure():
@@ -733,33 +722,20 @@ We set up a short-lived token rotation using AWS Secrets Manager. The token is r
 <p>If the tests pass, the agent will open a PR. If they fail, it will roll back and log the failure. Do this once and you’ll see exactly where the seams are in your own repo—whether it’s a missing test, a mock that’s out of sync, or a Docker daemon that needs restarting.</p>
 <p>That single run will teach you more about agentic coding than any tutorial can. After you’ve done it, move the alert object into a real Dependabot webhook and deploy the service behind your internal load balancer. Once it’s live, check the Prometheus metrics endpoint at <code>http://localhost:8000/metrics</code> and verify that the <code>patch_latency_seconds</code> histogram is under 30 seconds. If it’s slower, check your Docker layer caching and your Lambda memory size.</p>
 <p>Do those two things within the next 30 minutes and you’ll have a working agentic patcher that respects your tests, your costs, and your on-call rotation.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/claude-code-after-365-days-what-actually-works/">Claude Code after 365 days: what actually works</a></li>
+<li><a href="https://kubaik.github.io/ai-codebase-onboarding-2-paths-tested/">AI codebase onboarding: 2 paths tested</a></li>
+<li><a href="https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/">AI interviews break systems: 5 real mistakes in 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 25, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -788,7 +764,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/commit-ownership-in-ai-pair-coding/">
                         <h3>Commit ownership in AI pair coding</h3>
                         <p>AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.</p>
-                        <span class="related-meta">16 min read · 31 August 2026</span>
+                        <span class="related-meta">17 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/claude-code-after-365-days-what-actually-works/">
@@ -808,12 +784,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

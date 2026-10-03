@@ -64,7 +64,7 @@
       "description": "In our production systems at [redacted fintech], we saw a 37% increase in flaky tests after migrating to pytest 8.1 in Q3 2024.",
       "datePublished": "2026-06-10T07:28:02+00:00",
       "dateModified": "2026-09-16T09:17:03+00:00",
-      "wordCount": 3682,
+      "wordCount": 3596,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -248,7 +243,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3682 words
+                        &nbsp;·&nbsp; 3596 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -261,9 +256,9 @@
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>In 2026, every engineering team adopted some form of AI-assisted development. By mid-2026, the feedback loop had fully rewritten what hiring managers expect in interviews. The change wasn’t subtle — it was abrupt.</p>
 <p>I first noticed this when interviewing at three Nairobi fintech companies within a month. The first two asked for classic system design. The third interviewer opened their laptop, spun up a live environment, and said, <em>"Fix this flaky test in the next 20 minutes, then explain why it failed."</em> I bombed. Not because I couldn’t fix the test, but because I’d never been asked to debug a test that was <em>designed to be flaky</em> — one that passed locally but failed 1 in 10 times on CI. That test was a side effect of a 2026 migration from pytest 7.4 to pytest 8.1 with <code>--random-order</code> enabled by default. No one had rolled back the flag, and no one had written a seed file to make the shuffle deterministic. The flakiness wasn’t a bug — it was a hidden requirement.</p>
-<p>Hiring managers now assume you’ve worked in environments where tests are unreliable by design. They’re not wrong. In our production systems at [redacted fintech], we saw a 37% increase in flaky tests after migrating to pytest 8.1 in Q3 2026. The culprit? <code>--random-order</code> and a lack of seed control. The fix? A custom plugin to pin the seed per run, but no one on the team knew it existed until we hired a senior engineer who’d dealt with the same issue at a previous job. That’s the new baseline: you’re expected to know that flakiness is a feature, not a bug, and that reproducibility is a discipline, not a default.</p>
+<p>Hiring managers now assume you’ve worked in environments where tests are unreliable by design. They’re not wrong. The culprit? <code>--random-order</code> and a lack of seed control. The fix? A custom plugin to pin the seed per run, but no one on the team knew it existed until we hired a senior engineer who’d dealt with the same issue at a previous job. That’s the new baseline: you’re expected to know that flakiness is a feature, not a bug, and that reproducibility is a discipline, not a default.</p>
 <p>The second gap is around observability. In 2026, AWS rolled out CloudWatch Lambda Insights v1.4 with custom metrics support. Teams started instrumenting everything — not just requests, but the <em>latency of the instrumentation itself</em>. Hiring managers now ask candidates to walk through a flame graph that includes the overhead of emitting metrics. No one had optimized the client for high-cardinality labels. The candidate deleted the custom histogram and moved to OpenTelemetry 1.30, cutting overhead to 1.2ms. That’s the new standard: you’re not just expected to debug code — you’re expected to debug the <em>cost</em> of debugging.</p>
-<p>The third gap is around security assumptions. In 2026, most teams have moved from environment variables to AWS Secrets Manager with IAM-based rotation. But the interview question has shifted: <em>"Show me how you’d rotate a secret without dropping traffic below 99.9% availability."</em> Candidates are expected to know that Secrets Manager’s rotation lambda can fail mid-rotation, leaving the old secret in memory but invalid in the DB. The fix? Dual-write with a grace period. But no one teaches that in tutorials. I learned it the hard way when a rotation script failed on a Friday at 5 PM. We dropped 0.3% of transactions, but a post-mortem revealed that the failure mode was predictable — the lambda timeout was set to 60 seconds, but the DB write could take 90 seconds under load. The fix was to set the timeout to 120 seconds and add a retry with exponential backoff. That’s the new baseline: you’re expected to know that secrets rotation is a distributed systems problem, not a configuration problem.</p>
+<p>The third gap is around security assumptions. In 2026, most teams have moved from environment variables to AWS Secrets Manager with IAM-based rotation. But the interview question has shifted: <em>"Show me how you’d rotate a secret without dropping traffic below 99.9% availability."</em> Candidates are expected to know that Secrets Manager’s rotation lambda can fail mid-rotation, leaving the old secret in memory but invalid in the DB. The fix? Dual-write with a grace period. But no one teaches that in tutorials. I learned it the hard way when a rotation script failed on a Friday at 5 PM. The fix was to set the timeout to 120 seconds and add a retry with exponential backoff. That’s the new baseline: you’re expected to know that secrets rotation is a distributed systems problem, not a configuration problem.</p>
 <p>The final gap is around AI-specific skills. In 2026, most teams use GitHub Copilot Enterprise with a custom model fine-tuned on their codebase. The interview question now includes: <em>"Take this prompt, run it through the model, and explain why the generated code might introduce a race condition under load."</em> Candidates are expected to know that Copilot Enterprise v3.1 tends to inline constants into hot paths, which can cause JIT deoptimization in V8. Under load, V8 would optimize the constant into the loop, but the retry logic relied on mutating the constant. The fix? Move the constant to module scope. That’s the new baseline: you’re expected to know that AI-generated code has its own performance quirks, and you need to audit them like any other code.</p>
 <p>Hiring managers are no longer asking about algorithms or system design in isolation. They’re asking about the <em>edge cases</em> that only emerge in production systems that use AI tools, observability stacks, and security practices that didn’t exist two years ago.</p>
 <h2 id="how-ai-changed-what-hiring-managers-are-looking-for-in-engineering-interviews-actually-works-under-the-hood">How AI changed what hiring managers are looking for in engineering interviews actually works under the hood</h2>
@@ -390,7 +385,7 @@ def test_create_user(setup_db):
 <p>The endpoint was using SQLAlchemy, which can be slow under load. We profiled it using <code>py-spy</code> 0.4.0:</p>
 <pre><code class="language-bash">py-spy top --pid &lt;pid&gt; --duration 10
 </code></pre>
-<p>We found that the <code>SessionLocal()</code> call was taking 2ms per request, and the DB commit was taking 5ms. The fix was to use connection pooling and async SQLAlchemy:</p>
+<p>The fix was to use connection pooling and async SQLAlchemy:</p>
 <pre><code class="language-python">from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
@@ -662,38 +657,25 @@ def process():
 <p>If your team doesn’t measure and act on performance, cost, and reliability data, the interview questions about profiling and cost estimation will feel theoretical. A data-driven culture is a prerequisite.</p>
 <p>If any of these apply to your team, focus on building the prerequisites before adopting this interview style. Otherwise, you’ll end up with questions that don’t reflect your reality — and candidates who can’t answer them.</p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>I’ve interviewed 47 engineers in the last six months using this approach. The results surprised me.</p>
+<p>The results surprised me.</p>
 <p>The first surprise was that <em>junior</em> engineers often outperformed <em>senior</em> engineers in debugging AI-generated flakiness. Juniors were more likely to question brittle tests and suggest fixes. Seniors were more likely to assume the tests were correct and blame the system.</p>
 <p>The second surprise was that <em>remote</em> candidates were more likely to succeed. Remote candidates were more comfortable with async debugging and distributed systems concepts. On-site candidates were more likely to get stuck on local setup issues.</p>
 <p>The third surprise was that <em>diverse</em> candidates were more likely to catch edge cases. Candidates from non-traditional backgrounds were more likely to notice that AI-generated code assumed Western date formats or English error messages. They also caught race conditions that Western candidates missed.</p>
 <p>The fourth surprise was that <em>culture fit</em> was harder to assess. The new</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/hire-for-agents-not-autocomplete/">Hire for agents, not autocomplete</a></li>
+<li><a href="https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/">Map legacy code with AI before it breaks</a></li>
+<li><a href="https://kubaik.github.io/ai-interviews-broke-system-design-3-patterns-that/">AI interviews broke system design: 3 patterns that</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 10, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -722,7 +704,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-codebases-two-onboarding-paths-that-actually-work/">
                         <h3>AI codebases: two onboarding paths that actually work</h3>
                         <p>Cut onboarding friction 40% with these two AI codebase paths — the hard lessons from six mid-size teams in 2026</p>
-                        <span class="related-meta">16 min read · 15 June 2026</span>
+                        <span class="related-meta">15 min read · 15 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/why-ai-interviewers-failed-68-of-us-in-2026/">
@@ -742,12 +724,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

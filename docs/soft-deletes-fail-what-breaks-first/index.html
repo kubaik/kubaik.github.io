@@ -64,7 +64,7 @@
       "description": "Cut API response time 75% by ditching soft deletes — index bloat, 1.8s queries, and $18k/month storage bills exposed",
       "datePublished": "2026-06-09T23:03:28+00:00",
       "dateModified": "2026-10-02T04:46:16+00:00",
-      "wordCount": 2526,
+      "wordCount": 2525,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -263,7 +258,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2526 words
+                        &nbsp;·&nbsp; 2525 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-02
                         
@@ -515,33 +510,20 @@ EXECUTE FUNCTION archive_old_orders();
 <li><strong>Audit your slowest queries.</strong> Run <code>pg_stat_statements</code> on your Postgres 16 cluster and identify queries that filter on <code>deleted_at IS NULL</code>. Note the table, index, and execution time. 2. <strong>Create a lifecycle model.</strong> Add <code>orders_live</code> and <code>orders_archive</code> tables with the same schema as your current <code>orders</code> table, but omit <code>deleted_at</code>. 3. <strong>Backfill in batches.</strong> Use a script to copy rows older than 30 days from <code>orders</code> to <code>orders_archive</code> in batches of 10k rows. Measure the time and storage impact. 4. <strong>Update your app.</strong> Configure your FastAPI 0.109 app to read from <code>orders_live</code> and write to both <code>orders</code> and <code>orders_live</code> during the transition. Flush writes to <code>orders</code> but read from <code>orders_live</code>. 5. <strong>Drop the soft delete.</strong> Once the backfill is complete and queries are fast, remove the <code>deleted_at</code> column from the live table and drop the old <code>orders</code> table.</li>
 </ol>
 <p>Do the first step now: run <code>SELECT query, total_exec_time, calls FROM pg_stat_statements ORDER BY total_exec_time DESC LIMIT 10;</code> and note the first query that filters on <code>deleted_at IS NULL</code>. That’s your starting point.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/choose-no-code-only-when/">Choose no-code only when</a></li>
+<li><a href="https://kubaik.github.io/bootstrapped-5k-mrr-without-ads/">Reaching $5k MRR Without Paid Ads: A Product-Led Playbook</a></li>
+<li><a href="https://kubaik.github.io/rag-pipelines-4-silent-prod-killers/">RAG pipelines: 4 silent prod killers</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 09, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -570,7 +552,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/rag-on-legacy-systems-vector-db-vs-full-text-sql/">
                         <h3>RAG on legacy systems: vector DB vs. full-text SQL</h3>
                         <p>Cut RAG hosting cost 78% with PostgreSQL 16 + pgvector 0.7 vs Weaviate 1.22. Real latency and cost data from a 12-month enterprise rollout.</p>
-                        <span class="related-meta">15 min read · 30 June 2026</span>
+                        <span class="related-meta">14 min read · 30 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/log-audit-costs-without-breaking-compliance/">
@@ -590,12 +572,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

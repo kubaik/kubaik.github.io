@@ -64,7 +64,7 @@
       "description": "Spot vs on-demand GPU instances for AI experiments: the $8k/month crossover, checkpoint interval math, and the resume bug that silently corrupts results.",
       "datePublished": "2026-09-18T13:01:40+00:00",
       "dateModified": "2026-09-18T13:01:40+00:00",
-      "wordCount": 2592,
+      "wordCount": 2588,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -256,7 +251,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2592 words
+                        &nbsp;·&nbsp; 2588 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-18
                         
@@ -268,7 +263,7 @@
                 <p>infrastructure patterns is easy to demo and hard to keep honest at scale. The workaround gets copy-pasted forward long after the original reason is forgotten. This is the writeup with the mistakes left in, not edited out.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
 <p>AI experimentation budgets are under pressure. A typical fine-tuning run on a 7B parameter model with LoRA uses around 12 GPU-hours on an A100. At on-demand rates of roughly $3.50 per GPU-hour, that's $42 per experiment. Multiply by 50 experiments a week across a small team and you're looking at $8,400 a month before you've even served a single user. The instinct is to cut experiments. The better move is to cut the cost per experiment.</p>
-<p>The two levers that actually move the needle <a href="/gpu-spot-instances-reserved-for-ai-costs/">are spot instances</a> (or their equivalents on other clouds) and aggressive checkpointing with preemptible-friendly orchestration. But there's a catch: spot instances are not a drop-in replacement for on-demand. They come with a 2-minute warning before termination on AWS, and if your training loop can't survive a mid-epoch kill, you'll spend more time babysitting than you saved in dollars.</p>
+<p>The two levers that actually move the needle are spot instances (or their equivalents on other clouds) and aggressive checkpointing with preemptible-friendly orchestration. But there's a catch: spot instances are not a drop-in replacement for on-demand. They come with a 2-minute warning before termination on AWS, and if your training loop can't survive a mid-epoch kill, you'll spend more time babysitting than you saved in dollars.</p>
 <p>A common failure mode here is teams enabling spot, watching their first job get preempted at epoch 3, and immediately concluding spot is unusable. The real issue is almost always that the training script has no resumable checkpoint, or the checkpoint saves only at epoch boundaries while the job runs 6-hour epochs. The part that trips people up is the interaction between checkpoint frequency and preemption rate, and that's what this post actually covers.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p>Option A is the spot-instance pattern: request capacity from a pool of unused cloud VMs at a 60–90% discount, accept that the provider can reclaim it with short notice, and design your training job to survive that. On AWS, this means EC2 Spot with a capacity-optimized allocation strategy across multiple instance types. On GCP, it's Spot VMs (formerly preemptible). On Azure, it's Spot Virtual Machines.</p>
@@ -409,27 +404,20 @@ Usually not. If your monthly GPU spend is under ~$8,000, the engineering cost of
 <h2 id="final-verdict">Final verdict</h2>
 <p>Spot instances are the bigger lever, but only above a spend threshold that most small teams don't hit. Below ~$8,000/month in GPU spend, the honest answer is that on-demand with good autoscaling and a warm pool is cheaper once you account for engineering time. Above that threshold, spot with 10-minute checkpoints and a tested resume path is the single biggest cost reduction available, and it's not close.</p>
 <p>The action for today: open your cloud billing console, filter GPU instances for the last 30 days, and write down two numbers — total GPU spend and average utilization (idle hours divided by total hours). If spend is above $8,000 and utilization is below 60%, you have both a spot opportunity and an autoscaling opportunity, and the autoscaling one is cheaper to fix first. Start there before you touch spot.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -478,12 +466,7 @@ Usually not. If your monthly GPU spend is under ~$8,000, the engineering cost of
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

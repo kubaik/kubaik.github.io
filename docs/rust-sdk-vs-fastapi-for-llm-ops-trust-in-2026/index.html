@@ -64,7 +64,7 @@
       "description": "Fast 2026 benchmark: Rust SDK vs FastAPI for LLM ops — cold-start latency, cache stampedes, and the $180 vs $220 bill split that trips teams after a…",
       "datePublished": "2026-08-14T02:13:08+00:00",
       "dateModified": "2026-08-14T02:13:08+00:00",
-      "wordCount": 2386,
+      "wordCount": 2415,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2386 words
+                        &nbsp;·&nbsp; 2415 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-14
                         
@@ -374,27 +369,28 @@ default = [&quot;wee_alloc&quot;]
 <h2 id="final-verdict">Final verdict</h2>
 <p>Choose the Rust SDK (<code>llama-cpp-rs</code> 0.7) if you need to ship a production-grade LLM feature that must stay under 500 ms p99 at 1 000 RPS on a tight budget. The stack’s cold-start latency, memory footprint, and cache resilience are measurably better than the Python alternative, but only if you are willing to maintain the build pipeline and tune the allocator. The Python FastAPI stack (<code>vllm</code> 0.6.3) is the pragmatic choice for teams that ship daily in Python and can tolerate slightly higher latency and memory usage, provided they pin versions, set the Redis eviction policy, and use uvloop.</p>
 <p>Check your current Redis config now. Run <code>redis-cli info memory</code> and look for <code>maxmemory_policy</code>. If it is not <code>allkeys-lru</code>, set it and restart Redis. If you cannot do that in the next 30 minutes, pin <code>vllm==0.6.3</code> and switch to <code>--workers 4 --loop uvloop</code> in Uvicorn before you ship another feature.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/wasm-servers-beat-containers-here/">WASM servers beat containers here</a></li>
+<li><a href="https://kubaik.github.io/rust-rewrites-where-they-pay-off-where-they-dont/">Rust rewrites: where they pay off, where they don't</a></li>
+<li><a href="https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/">AI micro-SaaS under $150/month: the real infra choices</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -423,7 +419,7 @@ default = [&quot;wee_alloc&quot;]
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/orchestration-tax-kills-multi-agent-systems/">
@@ -443,12 +439,7 @@ default = [&quot;wee_alloc&quot;]
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

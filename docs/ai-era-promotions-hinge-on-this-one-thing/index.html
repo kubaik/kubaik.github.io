@@ -64,7 +64,7 @@
       "description": "ClearFlow’s fintech case study: why AI-era promotions go to engineers who treat AI output as data, not magic—schema validation, rollback caches, and the…",
       "datePublished": "2026-08-15T12:43:35+00:00",
       "dateModified": "2026-08-15T12:43:35+00:00",
-      "wordCount": 2267,
+      "wordCount": 2263,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2267 words
+                        &nbsp;·&nbsp; 2263 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-15
                         
@@ -445,7 +440,7 @@ async def get_summary(request: SummaryRequest):
 </li>
 <li>
 <p><strong>Budget for rollback storage</strong>
-   The rollback cache (<code>last_good</code>) added 15% to Redis memory usage. We initially capped it at 1GB, which meant we evicted old rollbacks too aggressively. Next time, we’ll budget 30% headroom or use a tiered storage approach with <strong>Dragonfly 1.14</strong> for hot data and S3 for cold.</p>
+   The rollback cache (<code>last_good</code>) added 15% to Redis memory usage. Next time, we’ll budget 30% headroom or use a tiered storage approach with <strong>Dragonfly 1.14</strong> for hot data and S3 for cold.</p>
 </li>
 </ol>
 <h2 id="the-broader-lesson">The broader lesson</h2>
@@ -507,27 +502,20 @@ No. Vector databases solve semantic search, not resilience. The brittleness in A
 Use a <strong>Locust</strong> test that injects malformed JSON, oversized prompts, or unexpected fields. If your CI pipeline runs these tests, you’ll catch validation gaps before they hit production. The goal isn’t to test the LLM—it’s to test your validation logic.</p>
 <h2 id="next-step-measure-your-ai-features-brittleness">Next step: measure your AI feature’s brittleness</h2>
 <p>Open your AI feature’s endpoint in a browser or curl it. Check the response headers for <code>X-Cache-Fallback</code> or <code>X-Validation-Failure</code>. If you see either header in more than 1% of requests, your feature is already brittle. Add a rollback cache and schema validation before the next deploy. Start with a 30-minute spike: add Pydantic validation to the LLM output and log any failures. That’s the first step to keeping the feature—and your promotion prospects—alive.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
+<li><a href="https://kubaik.github.io/ai-revives-unloved-legacy-codebases/">AI revives unloved legacy codebases</a></li>
+<li><a href="https://kubaik.github.io/ai-steals-junior-tasks-3-skills-that-protect-pay/">AI steals junior tasks: 3 skills that protect pay</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -576,12 +564,7 @@ Use a <strong>Locust</strong> test that injects malformed JSON, oversized prompt
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

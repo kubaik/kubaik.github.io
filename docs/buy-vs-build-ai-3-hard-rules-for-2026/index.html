@@ -64,7 +64,7 @@
       "description": "Embedding cache vs hosted LLMs: 70 % token savings and 2.3× latency cut in 2026.",
       "datePublished": "2026-08-11T13:13:49+00:00",
       "dateModified": "2026-09-22T16:35:41+00:00",
-      "wordCount": 3661,
+      "wordCount": 3671,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -242,12 +242,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -289,7 +284,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3661 words
+                        &nbsp;·&nbsp; 3671 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-22
                         
@@ -397,7 +392,7 @@
 <p>Best for: side projects, MVPs, or staging environments where infra cost must be near zero.</p>
 <h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
 <h3 id="langchain-025">LangChain 0.2.5</h3>
-<p>LangChain promised to unify 30+ LLM providers and 20 vector stores behind one API. In practice, the <code>RunnablePassthrough</code> chain added 80 ms per hop, and the memory layer (Redis + checkpointing) leaked 400 MB per user session. When we hit 1 000 concurrent users, Redis memory ballooned to 22 GB and eviction storms crashed the cluster. Switched to plain <code>httpx</code> + <code>pydantic</code> + <code>redis-py</code> and cut memory 75 %.</p>
+<p>LangChain promised to unify 30+ LLM providers and 20 vector stores behind one API. In practice, the <code>RunnablePassthrough</code> chain added 80 ms per hop, and the memory layer (Redis + checkpointing) leaked 400 MB per user session. Switched to plain <code>httpx</code> + <code>pydantic</code> + <code>redis-py</code> and cut memory 75 %.</p>
 <h3 id="haystack-25">Haystack 2.5</h3>
 <p>Haystack 2.5 shipped a unified pipeline for indexing and querying, but the default <code>InMemoryDocumentStore</code> kept every embedding in RAM. For a 500k-document corpus, that meant 2.1 GB RAM at startup—fine on a dev laptop, fatal on a <code>t3.medium</code> in AWS. Migrated to RedisSearch and trimmed RAM to 300 MB.</p>
 <h3 id="fastapi-uvicorn-with-gunicorn">FastAPI + Uvicorn with Gunicorn</h3>
@@ -562,27 +557,28 @@ def search(query_embedding: list[float], k: int = 5) -&gt; list[dict]:
     return [doc.__dict__ for doc in res.docs]
 </code></pre>
 <p>That single change cuts token spend 70 % and drops p99 from 800 ms to 35 ms on 2G. Everything else can be bought as an API and wrapped in a thin local cache or queue.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/stop-assuming-payment-apis-never-fail/">Stop assuming payment APIs never fail</a></li>
+<li><a href="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
+<li><a href="https://kubaik.github.io/ai-errors-hide-in-plain-latency/">AI errors hide in plain latency</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -617,13 +613,13 @@ def search(query_embedding: list[float], k: int = 5) -&gt; list[dict]:
                     <a class="related-card" href="/2026-ai-stack-solo-saas-cost-showdown/">
                         <h3>2026 AI stack: solo SaaS cost showdown</h3>
                         <p>Last quarter I shipped two identical micro-SaaSes: one where I outsourced 80% of the backend to an AI agent (using a custom prompt chain on AWS Bedrock)…</p>
-                        <span class="related-meta">18 min read · 30 June 2026</span>
+                        <span class="related-meta">17 min read · 30 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/micro-saas-niches-eaten-by-ai-in-2026/">
                         <h3>Micro-SaaS niches eaten by AI in 2026</h3>
                         <p>Discover which micro-SaaS niches survived AI commoditization in 2026 — and which ones got absorbed by platforms.</p>
-                        <span class="related-meta">19 min read · 29 June 2026</span>
+                        <span class="related-meta">18 min read · 29 June 2026</span>
                     </a>
                     
                 </div>
@@ -631,12 +627,7 @@ def search(query_embedding: list[float], k: int = 5) -&gt; list[dict]:
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

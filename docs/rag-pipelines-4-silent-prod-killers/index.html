@@ -64,7 +64,7 @@
       "description": "Cut RAG pipeline latency from 280ms to 35ms and monthly costs from $980 to $620 by moving vector search out of PostgreSQL 16 into Milvus 2.4.3 with Caffeine…",
       "datePublished": "2026-06-08T23:47:39+00:00",
       "dateModified": "2026-09-19T11:54:35+00:00",
-      "wordCount": 2409,
+      "wordCount": 2323,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2409 words
+                        &nbsp;·&nbsp; 2323 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -298,7 +293,7 @@ At 15k QPS, some FastAPI endpoints started timing out at 1.5s despite Milvus ret
 </li>
 <li>
 <p><strong>Prometheus scrape timeouts under high cardinality</strong>
-With 500+ time series (latency buckets, cache metrics, error counts), Prometheus 2.47.0 started missing scrapes at 25k QPS. The scrape interval was 15s, but the <code>/metrics</code> endpoint took 8s to respond. We reduced the scrape interval to 5s and added a caching layer (<code>prometheus-fastcache</code>) to the <code>/metrics</code> endpoint. Scrape time dropped to 200ms, and we stopped losing metrics.</p>
+With 500+ time series (latency buckets, cache metrics, error counts), Prometheus 2.47.0 started missing scrapes at 25k QPS. The scrape interval was 15s, but the <code>/metrics</code> endpoint took 8s to respond.</p>
 </li>
 <li>
 <p><strong>Redis 7.2 Lua script memory leaks</strong>
@@ -306,7 +301,7 @@ We used a Lua script to batch-update hot embeddings in Redis. After 48 hours at 
 </li>
 <li>
 <p><strong>Anthropic Bedrock rate limiting</strong>
-The Claude 3 Sonnet model on Bedrock has a soft limit of 1000 TPS per account. At 20k QPS, we hit <code>ThrottlingException</code> every 3 minutes. The solution: use Bedrock’s <code>ModelStreaming</code> with exponential backoff (1s, 2s, 4s) and a circuit breaker (<code>pybreaker</code> 1.0.1). Error rate dropped to 0.01%, but we had to shard the LLM calls across 3 Bedrock accounts.</p>
+The Claude 3 Sonnet model on Bedrock has a soft limit of 1000 TPS per account. The solution: use Bedrock’s <code>ModelStreaming</code> with exponential backoff (1s, 2s, 4s) and a circuit breaker (<code>pybreaker</code> 1.0.1).</p>
 </li>
 <li>
 <p><strong>Kubernetes DNS throttling</strong>
@@ -314,7 +309,7 @@ The FastAPI service used <code>milvus-lite.default.svc.cluster.local</code> for 
 </li>
 <li>
 <p><strong>Nightly cost spikes from on-demand Graviton instances</strong>
-Milvus Lite on Graviton3 (m7g.4xlarge) was $0.62/hour on-demand. During nightly batch jobs (02:00–04:00 UTC), our QPS spiked to 30k, tripling the EC2 bill for 2 hours. We switched to Spot Instances with a max price of $0.45/hour and added a cluster autoscaler to drain shards before termination. Nightly cost dropped from $12 to $3.</p>
+Milvus Lite on Graviton3 (m7g.4xlarge) was $0.62/hour on-demand. Nightly cost dropped from $12 to $3.</p>
 </li>
 </ol>
 <hr />
@@ -842,33 +837,20 @@ query_engine = index.as_query_engine(
 </table>
 <h3 id="final-recommendation-2026">Final recommendation (2026)</h3>
 <p>If you’re building a RAG pipeline for &gt;5k QPS, <strong>Milvus 2.4.3 on Graviton3 with a two-tier Caffeine/Redis cache is the only architecture that balances cost, latency, and reliability</strong>. The numbers don’t lie: PostgreSQL melts, FAISS OOMs, Redis costs too much, and Milvus scales. Treat retrieval as a stateless service, not a database query — your future self will thank you when the chaos tests pass.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/">RAG is not enough: hybrid search + reranking in 2026</a></li>
+<li><a href="https://kubaik.github.io/build-a-search-system-in-2026-semantic-keyword/">Build a search system in 2026: semantic, keyword</a></li>
+<li><a href="https://kubaik.github.io/one-misconfigured-vector-db-killed-our-rag-pipeline/">One misconfigured vector DB killed our RAG pipeline</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 08, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -917,12 +899,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

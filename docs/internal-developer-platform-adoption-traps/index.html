@@ -64,7 +64,7 @@
       "description": "Internal developer platforms fail at adoption, not tech. Instrument Backstage 1.28 with event tracking to find the 70% of teams stuck on the golden path.",
       "datePublished": "2026-09-23T03:57:25+00:00",
       "dateModified": "2026-09-23T03:57:25+00:00",
-      "wordCount": 2825,
+      "wordCount": 2827,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2825 words
+                        &nbsp;·&nbsp; 2827 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-23
                         
@@ -488,27 +483,22 @@ There is no universal benchmark, and any vendor claiming one is selling somethin
 Yes, at least initially. The service is small and the platform team has the context to interpret the data. Once it stabilizes, it can move to a shared observability team if you have one. Do not put it in the hands of a central data team that does not understand the platform's domain — they will build the wrong metrics and the platform team will stop trusting the numbers.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>The next step is to instrument one event type and watch it for a week. Pick the scaffolder task completion event, wire it to a single Postgres table, and run the refresh query on a schedule. Do not build the dashboard yet. After seven days, query the table for the number of distinct <code>team_ref</code> values with at least one event, and compare it to the number of teams in your Backstage catalog. That gap is your adoption problem, quantified. Open <code>src/server.ts</code> in your metrics service, add the <code>/events</code> endpoint from Step 2, and deploy it behind the same ingress as your Backstage instance. Then check the gap on Monday morning.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+<li><a href="https://backstage.io/docs/">Backstage documentation</a></li>
+<li><a href="https://oauth.net/2/">OAuth 2.0 resources</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -557,12 +547,7 @@ Yes, at least initially. The service is small and the platform team has the cont
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

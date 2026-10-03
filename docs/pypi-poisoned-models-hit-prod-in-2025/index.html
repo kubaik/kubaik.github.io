@@ -64,7 +64,7 @@
       "description": "PyPI poisoned models hit prod in 2025 — deterministic pins, hash verification, and dataset commit pins that teams actually used to stop supply-chain…",
       "datePublished": "2026-08-25T01:25:20+00:00",
       "dateModified": "2026-08-25T01:25:20+00:00",
-      "wordCount": 2717,
+      "wordCount": 2740,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -260,7 +255,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2717 words
+                        &nbsp;·&nbsp; 2740 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-25
                         
@@ -529,27 +524,25 @@ print('Hash OK' if actual in hashes else 'MISMATCH')
 <p>Poetry does not natively support deterministic hashes in lockfiles as of 2026.05. The lockfile format includes hashes, but they are not enforced at install time unless you use <code>poetry install --no-root</code> and manually verify. Teams that switch to Poetry often end up reimplementing <code>pip-tools</code> behavior with custom scripts, adding more complexity than value. Stick with <code>pip-tools</code> for ML dependency management.</p>
 <p><strong>How do I handle internal mirrors that lag behind PyPI?</strong></p>
 <p>Set a 24-hour SLA for mirror updates. If a package update lands on PyPI and your mirror hasn’t synced within 24 hours, fail the CI job. Use <code>devpi</code> 6.8 or <code>pypiserver</code> 2.0 with a nightly sync cron. In 2026, 18% of teams reported supply-chain incidents due to stale mirrors, proving that lagging mirrors are a real risk, not a hypothetical.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-model-poisoning-3-real-attacks-on-datasets/">AI model poisoning: 3 real attacks on datasets</a></li>
+<li><a href="https://kubaik.github.io/ai-supply-chain-attacks-what-actually-broke/">AI supply chain attacks: what actually broke</a></li>
+<li><a href="https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/">Prompt Injection Is Not Your Biggest LLM Data Risk</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -582,9 +575,9 @@ print('Hash OK' if actual in hashes else 'MISMATCH')
                     </a>
                     
                     <a class="related-card" href="/prompt-injection-got-the-hype-poison-data-ruined-us/">
-                        <h3>Prompt injection got the hype — poison data ruined us</h3>
-                        <p>Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.</p>
-                        <span class="related-meta">16 min read · 3 August 2026</span>
+                        <h3>Prompt Injection Is Not Your Biggest LLM Data Risk</h3>
+                        <p>Prompt injection dominates LLM security checklists, but poisoned training data and label drift often cause more damage. A pipeline-stage model for triage.</p>
+                        <span class="related-meta">17 min read · 3 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/purpose-built-beats-general-ai-tools/">
@@ -598,12 +591,7 @@ print('Hash OK' if actual in hashes else 'MISMATCH')
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

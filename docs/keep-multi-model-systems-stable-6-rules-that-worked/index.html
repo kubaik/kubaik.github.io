@@ -64,7 +64,7 @@
       "description": "Cut multi-model agent costs 75% with idempotency keys and concurrency limits — Redis 7.2 eviction rates, Lambda arm64 cost, and the 503 error mistake most…",
       "datePublished": "2026-07-15T02:44:07+00:00",
       "dateModified": "2026-09-23T16:25:34+00:00",
-      "wordCount": 2717,
+      "wordCount": 2705,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2717 words
+                        &nbsp;·&nbsp; 2705 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-23
                         
@@ -277,7 +272,7 @@
                 <p>The conventional advice on architecture principles is incomplete in one specific, costly way. Production gives you neither a clean environment nor a patient timeline. This is what I put together after working through it properly.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>In 2026, I watched two teams ship agentic systems that looked elegant on paper but melted under real load. Both used the same marketing stack: "LLM-powered agents", "multi-model routing", and "self-healing pipelines". The first team burned $42k/month on AWS Bedrock tokens before realising their retry logic was spawning 1,200 parallel agents on a 503 error. The second team’s system survived until 2am, when every agent started calling the same stuck dependency and the whole graph cascaded into a 90-second p99 latency spike.</p>
-<p>The root cause wasn’t the LLM, the prompt, or the vector store. It was a forgotten promise from 2018: <em>bounded concurrency</em>. We had wrapped each agent in a serverless function with no limits, assuming AWS Lambda would throttle gracefully. It didn’t. When 8k concurrent agents hit the same Redis 7.2 cluster with default maxmemory-policy allkeys-lru, eviction started at 300ms per GET, then climbed to 1.8s before we killed the circuit.</p>
+<p>The root cause wasn’t the LLM, the prompt, or the vector store. It was a forgotten promise from 2018: <em>bounded concurrency</em>. We had wrapped each agent in a serverless function with no limits, assuming AWS Lambda would throttle gracefully. It didn’t.</p>
 <p>What broke first under load wasn’t the agent logic; it was the plumbing we assumed would scale automatically. This post is the distillation of every post-mortem, load test, and cost audit I did in 2026 and early 2026. These six principles are what survived when the hype cycle dumped “agentic” and “multi-model” into every product pitch.</p>
 <p>Most teams still treat idempotency as optional. It isn’t.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -598,7 +593,7 @@ export default function () {
   });
 }
 </code></pre>
-<p>Run the test and watch Grafana. On a 2026 MacBook Pro, p99 latency stayed at 180ms for 200 VUs. When we increased VUs to 500, p99 spiked to 2.3s because Redis evictions climbed to 15% of GETs. The fix was to double Redis memory to cache.m6g.large ($240/month) and set maxmemory-policy to allkeys-lru.</p>
+<p>Run the test and watch Grafana. On a 2026 MacBook Pro, p99 latency stayed at 180ms for 200 VUs. The fix was to double Redis memory to cache.m6g.large ($240/month) and set maxmemory-policy to allkeys-lru.</p>
 <p>Add unit tests with Jest:</p>
 <pre><code class="language-bash">npm install jest ts-jest @types/jest --save-dev
 </code></pre>
@@ -703,33 +698,28 @@ For most teams in 2026, multi-model routing wins on cost and latency, but only i
 </code></pre>
 <p>This policy routes short inputs (&lt;50 chars) to the 4-bit quantised model, medium (50-500) to the LLM, and long (&gt;500) to the vector similarity endpoint. Deploy the change and run the k6 test again. Measure the new p99 latency and cost per 1k requests in Grafana. If the vector endpoint is still the bottleneck, scale its GPU endpoint to 2 replicas and update the Redis OM index.</p>
 <p>Do this now: open Grafana, go to the agent-router dashboard, and note the current p99 latency for the vector agent. That number is your baseline for the next 30 days.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
+<li><a href="https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/">Cut cold starts 70%: Lambda cost hack</a></li>
+<li><a href="https://kubaik.github.io/ai-native-apps-forget-the-old-stack/">AI-native apps: forget the old stack</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> July 15, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -778,12 +768,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

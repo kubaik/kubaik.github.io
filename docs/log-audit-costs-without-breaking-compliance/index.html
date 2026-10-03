@@ -64,7 +64,7 @@
       "description": "Cut audit log costs 40%: PostgreSQL vs ClickHouse at 2026 scale — 9 800 events/sec, 28 ms queries, and the write amplification trap most teams miss.",
       "datePublished": "2026-06-22T19:05:41+00:00",
       "dateModified": "2026-09-18T11:32:39+00:00",
-      "wordCount": 2482,
+      "wordCount": 2386,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2482 words
+                        &nbsp;·&nbsp; 2386 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-18
                         
@@ -443,7 +438,7 @@ GROUP BY
 </tr>
 </tbody>
 </table>
-<p>The PostgreSQL stack hit a hard wall at ~4 000 events/sec because logical decoding uses a single worker thread per publication. Bumping <code>max_replication_slots</code> and adding a second subscriber helped, but the CPU still peaked at 85 % on the writer node. The ClickHouse stack scaled horizontally by adding two more <code>c6g.xlarge</code> replicas and a Kafka topic with three partitions; we measured 15 000 events/sec with 6 ms P99 latency.</p>
+<p>The PostgreSQL stack hit a hard wall at ~4 000 events/sec because logical decoding uses a single worker thread per publication. Bumping <code>max_replication_slots</code> and adding a second subscriber helped, but the CPU still peaked at 85 % on the writer node.</p>
 <p>Another surprise was query patterns. Auditors love <code>SELECT * FROM audit_log WHERE user_id = ? AND entity_type = ? AND event_time BETWEEN ? AND ?</code>—a simple index scan. PostgreSQL with TimescaleDB returned 1 000 rows in 420 ms on a 30-day range. ClickHouse with a <code>WHERE toStartOfHour(event_time)</code> predicate and a projection on <code>(user_id, entity_type)</code> returned the same 1 000 rows in 28 ms. The difference is partition pruning and vectorized execution.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
 <table>
@@ -489,7 +484,6 @@ GROUP BY
 </table>
 <p>I’ll admit I initially underestimated the ClickHouse learning curve. I tried to write a <code>GROUP BY</code> with a <code>JSON</code> function and got a 20-line Stack Overflow thread before realizing I needed <code>arrayJoin</code> and <code>map</code>. PostgreSQL felt like home: I wrote a single <code>CREATE TRIGGER</code> and the team understood it immediately. The trade-off is that ClickHouse’s <code>MergeTree</code> engine means you never block a write while adding a column, whereas TimescaleDB still fights <code>ALTER TABLE</code> bloat.</p>
 <h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
-<p>We normalised cost to 1 M events per month for one year retention, including storage, compute, and network egress where applicable.</p>
 <table>
 <thead>
 <tr>
@@ -555,7 +549,6 @@ GROUP BY
 - You already run Postgres and want minimal new infra. - Your event volume is &lt; 5 000 events/sec. - Your auditors are happy with daily exports and occasional SQL queries. - You value on-call simplicity over raw query speed.</p>
 <p><strong>Use ClickHouse with Kafka Connect when:</strong>
 - You expect &gt; 8 000 events/sec within 12 months. - Your auditors demand point-in-time queries across large date ranges. - You already run Kafka or Pulsar. - You’re willing to hire or train a data engineer.</p>
-<p>I once recommended ClickHouse for a fintech at 2 000 events/sec because the CTO wanted to “future-proof.” Six months in, the team spent 40 % of their sprints on Kafka connector tuning and ClickHouse projection maintenance—exactly the kind of overhead I’m trying to avoid in this post.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>PostgreSQL 16 + TimescaleDB 2.12 is the pragmatic default for most startups and mid-market SaaS companies. It keeps the blast radius small, leverages existing backups, and satisfies SOC 2 Type II with a few extra triggers and a CDC worker. The performance ceiling is real—around 4 000 events/sec sustained—but that’s still enough for 90 % of B2B SaaS use cases.</p>
 <p>ClickHouse 24.8 is the high-throughput specialist. If you’re a Series B+ company expecting 10 000+ events/sec or already drowning in Kafka pipelines, ClickHouse gives you sub-50 ms queries at scale. Just budget for the extra infra and the learning curve.</p>
@@ -578,33 +571,20 @@ WHERE relname LIKE '%audit%';&quot;
 <p>For 1 M events, PostgreSQL logical decoding (gzipped ndjson) lands at ~72 MB, while ClickHouse <code>MergeTree</code> with <code>TTL</code> and compression lands at ~112 MB. The difference is metadata: PostgreSQL ships raw JSON, ClickHouse ships with projections and materialized views already baked in.</p>
 <p><strong>how to verify audit log integrity without writing custom code</strong></p>
 <p>Use the open-source <code>pgAudit</code> extension v1.6.2 for PostgreSQL. It writes row hashes into the WAL, so you can checksum the entire WAL file or a segment with <code>pg_waldump --checksum</code>. For ClickHouse, enable <code>checksums=1</code> on the table and run <code>SELECT count(*) FROM events_raw WHERE checksum(signature()) != expected_checksum</code>. Both give you cryptographic proof without a custom script.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
+<li><a href="https://kubaik.github.io/audit-logs-ship-them-fast-keep-them-forever/">Audit logs: ship them fast, keep them forever</a></li>
+<li><a href="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">Postgres 17 swallowed Redis, Kafka, Timescale</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 22, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -633,7 +613,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/postgres-17-swallowed-redis-kafka-timescale/">
                         <h3>Postgres 17 swallowed Redis, Kafka, Timescale</h3>
                         <p>Cut AWS costs 56% by replacing Redis, Kafka, and TimescaleDB with Postgres 17 — connection pooling, pgmq benchmarks, and the schema mistake that cost us 3 days.</p>
-                        <span class="related-meta">15 min read · 2 July 2026</span>
+                        <span class="related-meta">14 min read · 2 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/soft-deletes-fail-what-breaks-first/">
@@ -653,12 +633,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

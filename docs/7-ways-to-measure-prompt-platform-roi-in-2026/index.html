@@ -64,8 +64,8 @@
       "description": "Cut prompt spend 30% with 7 real ways to measure agent platform ROI in 2026 — token logging, Redis caching, and the one metric that actually matters.",
       "datePublished": "2026-07-08T11:53:30+00:00",
       "dateModified": "2026-09-15T09:18:04+00:00",
-      "wordCount": 2627,
-      "timeRequired": "PT13M",
+      "wordCount": 2499,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2627 words
+                        12 min read
+                        &nbsp;·&nbsp; 2499 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-15
                         
@@ -277,7 +272,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The answers I found online were either wrong or skipped the parts that mattered.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>Early in 2026 I hit the same wall every solo founder hits when AI features go from 10% of requests to 90%: all my old metrics were useless. We had built a small agent orchestrator on AWS Lambda with Node 20 LTS that handled our ETL jobs, but by March we were running 12,000 prompts per day instead of 1,200. My Grafana dashboard still tracked Lambda duration, but the real cost was token-level, and the real value was in prompt cache hits I couldn’t see. Prompts aren’t just new endpoints—they’re a second control plane sitting on top of the first. What I needed was a way to answer three questions I couldn’t get from the old stack:</p>
+<p>We had built a small agent orchestrator on AWS Lambda with Node 20 LTS that handled our ETL jobs, but by March we were running 12,000 prompts per day instead of 1,200. My Grafana dashboard still tracked Lambda duration, but the real cost was token-level, and the real value was in prompt cache hits I couldn’t see. Prompts aren’t just new endpoints—they’re a second control plane sitting on top of the first. What I needed was a way to answer three questions I couldn’t get from the old stack:</p>
 <ol>
 <li>Which prompts actually save developer time?</li>
 <li>Which agent graphs leak dollars instead of saving them?</li>
@@ -294,7 +289,7 @@
 <li><strong>Solo-founder overhead</strong> – Did the setup and maintenance fit in my 10-hour weekly dev budget?</li>
 </ul>
 <p>The worst offenders added 120 ms on cold starts and required a full weekend to unwind. The best ones added 8 ms and could be toggled off with a single feature flag.</p>
-<p>with each tool enabled. The tool that claimed 2% overhead actually cost 18% more once I factored in the extra Lambda invocations it triggered. That surprise taught me to distrust any vendor that quotes “negligible” overhead without naming their measurement window.</p>
+<p>with each tool enabled. That surprise taught me to distrust any vendor that quotes “negligible” overhead without naming their measurement window.</p>
 <h2 id="how-we-measure-platform-value-when-half-the-code-is-now-prompts-and-agent-graphs-the-full-ranked-list">How we measure platform value when half the 'code' is now prompts and agent graphs — the full ranked list</h2>
 <p>Below is the ranked list of approaches I actually deployed, with the raw numbers I measured. Each entry includes the concrete outcome, the one edge case that broke it, and who should use it.</p>
 <h3 id="1-opentelemetry-prompt-tokens-in-context">1. OpenTelemetry + Prompt tokens in context</h3>
@@ -309,12 +304,12 @@
 <p>Best for: Founders who want a SaaS-like UX without SaaS pricing.</p>
 <h3 id="3-openllmetry-with-agent-graph-tracing">3. OpenLLMetry with agent graph tracing</h3>
 <p>What it does: OpenLLMetry (v1.2) instruments agent graphs at the routing layer. It emits a span for each agent invocation, plus a parent span for the entire graph. You can visualize the graph in Grafana Tempo or Jaeger and compute “agent hop cost” as the sum of child spans.</p>
-<p>Strength: You can answer “which agent in my graph leaks dollars?” directly. In one week I found a summarization agent that used 4x the tokens of the upstream agent and added zero value.</p>
+<p>Strength: You can answer “which agent in my graph leaks dollars?” directly.</p>
 <p>Weakness: OpenLLMetry adds 15–20 ms on cold starts because it traces every hop. If your graph has 5+ agents, the first request can hit 250 ms.</p>
 <p>Best for: Graphs larger than 3 agents where the cost of tracing is outweighed by the savings.</p>
 <h3 id="4-prompt-caching-with-redis-72-and-lua">4. Prompt caching with Redis 7.2 and Lua</h3>
 <p>What it does: A Redis 7.2 Lua script that hashes the prompt text and stores responses with a TTL. The agent runner checks the cache before invoking the LLM.</p>
-<p>Strength: Cache hit ratio directly maps to token savings. My cache hit ratio peaked at 68% after I normalized whitespace and trimmed trailing newlines in prompt strings. That saved ~30% of the token spend in a week.</p>
+<p>Strength: Cache hit ratio directly maps to token savings. That saved ~30% of the token spend in a week.</p>
 <p>Weakness: Prompt drift breaks the cache. If the upstream service changes a field name, the prompt hash changes and the cache misses. The Lua script is 120 lines and hard to unit test—any syntax error in the script returns a 500 to the agent runner.</p>
 <p>Best for: Static prompts that don’t change often.</p>
 <h3 id="5-aws-cost-explorer-custom-tagging">5. AWS Cost Explorer + Custom tagging</h3>
@@ -334,7 +329,6 @@
 <p>Best for: Founders who live in Prometheus and want alerting.</p>
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
 <p>OpenTelemetry + prompt tokens in context is the winner. It gives me token-level cost attribution without adding more than 8 ms on warm runs, and it integrates with the observability stack I already run (Jaeger + Grafana). The hard-reversal cost is near zero: I can disable the span processor with a feature flag and the rest of the system keeps working.</p>
-<p>Here’s the concrete delta I measured over 30 days:</p>
 <table>
 <thead>
 <tr>
@@ -371,7 +365,7 @@
 </tr>
 </tbody>
 </table>
-<p>The $0.45/month is the cost of shipping spans to Jaeger in the same region. If I had shipped to a remote Jaeger instance, the latency would have jumped to 25 ms and the cost to $12/month—so locality matters.</p>
+<p>The $0.45/month is the cost of shipping spans to Jaeger in the same region.</p>
 <p>Agents with score &gt;0.8 (tokens used / tokens saved) were kept; the rest were refactored. That alone saved 14% of the token bill.</p>
 <p>If you’re running a Node 20 LTS agent runner on AWS Lambda and you control the SDK, this is the path of least resistance. The only prerequisite is a single line to patch the SDK’s span emitter:</p>
 <pre><code class="language-javascript">// patch-bedrock.js
@@ -388,7 +382,7 @@ patchBedrock();
 <p><strong>Honeycomb</strong> – The BubbleUp feature looked promising, but the free tier capped at 5k spans/day. Once I hit that, the sampling rate destroyed the attribution accuracy.</p>
 <p><strong>Langfuse SaaS</strong> – At $299/month for 100k prompts, the pricing was fine, but the latency added 25 ms because it shipped spans to Germany.</p>
 <p><strong>Astra Assistants API logging</strong> – The Assistants API doesn’t emit OpenTelemetry spans, so I had to fork the SDK. The fork broke the streaming API and I spent a day debugging JSON parse errors. Never again.</p>
-<p><strong>Custom CloudWatch Logs Insights queries</strong> – I tried to parse prompt tokens from raw logs. The query took 6 seconds to run and cost $0.03 per 1k logs. Once I hit 12k prompts/day, the bill exploded.</p>
+<p><strong>Custom CloudWatch Logs Insights queries</strong> – I tried to parse prompt tokens from raw logs. The query took 6 seconds to run and cost $0.03 per 1k logs.</p>
 <h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
 <p>Your choice depends on three variables: control over the agent runtime, tolerance for latency overhead, and whether you have a non-technical reviewer.</p>
 <p>If you run the agent runtime yourself and can patch the SDK, start with OpenTelemetry + prompt tokens. It’s the only option that gives you token-level attribution without adding more than 8 ms. The patch is one line and the collector runs as a sidecar.</p>
@@ -430,33 +424,20 @@ return redis.call(&quot;HSET&quot;, key, &quot;value&quot;, ARGV[2], &quot;ttl&q
 <pre><code class="language-bash">yarn add @opentelemetry/instrumentation-openai@1.2 &amp;&amp; node patch-bedrock.js
 </code></pre>
 <p>Then export the traces to Jaeger and check the <code>llm.prompt_tokens</code> attribute on the <code>generation</code> span. If you see the attribute, you’re done.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/observe-llm-features-90-faster/">Observe LLM features 90% faster…</a></li>
+<li><a href="https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/">7 code review traps when AI writes half your code</a></li>
+<li><a href="https://kubaik.github.io/event-driven-beats-agent-driven-910-times/">Event-driven beats agent-driven 9/10 times</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 08, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -505,12 +486,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

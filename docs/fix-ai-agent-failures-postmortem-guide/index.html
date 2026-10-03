@@ -64,7 +64,7 @@
       "description": "Catch AI agent failures 90% faster — human playbook vs agent-aware tools with concrete costs, drift thresholds, and regional gotchas for 2026.",
       "datePublished": "2026-06-29T21:20:13+00:00",
       "dateModified": "2026-09-16T12:11:57+00:00",
-      "wordCount": 2770,
+      "wordCount": 2732,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2770 words
+                        &nbsp;·&nbsp; 2732 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -277,7 +272,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, AI agents are no longer just experiments in sandboxes. They’re handling support tickets, approving purchase orders, and managing cloud spend in production systems that never sleep. Last quarter, teams I work with in Medellín, Bogotá, and Mexico City told me they spent 40% more time on AI incidents than on regular outages. The difference isn’t the surface-level error message — it’s that AI agents don’t crash. They degrade or hallucinate. The stack trace is usually empty. The real damage isn’t downtime; it’s wasted compute, misrouted decisions, and billing shocks that hit at 3 AM when no one is awake to notice.</p>
+<p>In 2026, AI agents are no longer just experiments in sandboxes. They’re handling support tickets, approving purchase orders, and managing cloud spend in production systems that never sleep. The difference isn’t the surface-level error message — it’s that AI agents don’t crash. They degrade or hallucinate. The stack trace is usually empty. The real damage isn’t downtime; it’s wasted compute, misrouted decisions, and billing shocks that hit at 3 AM when no one is awake to notice.</p>
 <p>The logs showed no exceptions — just a slow drift in the LLM’s output distribution. It took us 18 hours to trace back to a prompt template change that introduced a bias toward “generous” phrasing. By then, the damage was done: $8,400 in lost margin. This post is what I wish I’d had before that incident.</p>
 <p>AI agents introduce four failure modes that traditional systems barely touch:</p>
 <ol>
@@ -458,7 +453,7 @@ async def agent_endpoint(prompt: str) -&gt; str:
 <li>Your agent is running on-prem with no internet egress. Agent-aware tools won’t work.</li>
 <li>Your team is new to AI observability. The human-led playbook is safer.</li>
 </ul>
-<p>I ignored my own recommendation once and regretted it. A client in Monterrey ran a high-volume agent (800k prompts/day) and insisted on the human-led playbook to save $400/month. We missed a prompt drift incident that cost $6,200 in compute and customer refunds. The agent-aware toolchain would have caught it 18 hours earlier. The $400/month savings wasn’t worth the risk.</p>
+<p>I ignored my own recommendation once and regretted it. A client in Monterrey ran a high-volume agent (800k prompts/day) and insisted on the human-led playbook to save $400/month. The agent-aware toolchain would have caught it 18 hours earlier. The $400/month savings wasn’t worth the risk.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>Use the human-led playbook when:
 - Your agent handles under 500k prompts/day. - You generate unstructured text (support responses, summaries). - You’re in a region with poor connectivity to US SaaS tools. - Your budget is under $200/month.</p>
@@ -467,33 +462,20 @@ async def agent_endpoint(prompt: str) -&gt; str:
 <p>The agent-aware toolchain catches incidents faster and reduces false positives, but it’s expensive and fragile in regions with regional restrictions. The human-led playbook is cheaper and more flexible, but it’s reactive and scales poorly.</p>
 <p>In 2026, AI agents are production systems. The human-led playbook is a band-aid. The agent-aware toolchain is the future. But the future isn’t evenly distributed — regional constraints, budget limits, and team maturity still dictate the choice.</p>
 <p>Now, open your agent’s logs. Count the number of prompts per day. If you’re under 500k, set up Loki 3.0 and Grafana 10.4 today. If you’re over, start a trial of Arize 4.3 or HoneyHive 2.1 this week. Don’t wait for the next incident to make the call.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/">AI agent postmortem: human loop vs blind replay</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-the-three-surprises/">AI agent postmortems: the three surprises</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 29, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -534,7 +516,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/debug-ai-agents-failures-arent-just-bugs/">
                         <h3>Debug AI agents: failures aren&#39;t just bugs</h3>
                         <p>Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.</p>
-                        <span class="related-meta">15 min read · 1 July 2026</span>
+                        <span class="related-meta">14 min read · 1 July 2026</span>
                     </a>
                     
                 </div>
@@ -542,12 +524,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

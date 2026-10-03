@@ -64,7 +64,7 @@
       "description": "Cut pricing guesswork 70%: how to model infra cost, support tickets and concurrency in 2026 with real numbers and a free toolkit — Node 20, Redis 7.2…",
       "datePublished": "2026-06-15T02:11:37+00:00",
       "dateModified": "2026-09-18T12:45:40+00:00",
-      "wordCount": 2477,
+      "wordCount": 2367,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2477 words
+                        &nbsp;·&nbsp; 2367 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-18
                         
@@ -275,7 +270,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026 I helped launch an internal dev tool at a Series B startup in Jakarta. By early 2026 it had 12 000 daily active engineers and a usage curve that scared the CFO: our AWS bill tripled in one quarter. We had never touched pricing; we just counted seats and hit “publish”. When I dug into the bill I found $42 k of it went to Kinesis Firehose that nobody was reading after day 30.</p>
+<p>In 2026 I helped launch an internal dev tool at a Series B startup in Jakarta. By early 2026 it had 12 000 daily active engineers and a usage curve that scared the CFO: our AWS bill tripled in one quarter. We had never touched pricing; we just counted seats and hit “publish”.</p>
 <p>I’ve seen the same pattern in Vietnam, the Philippines and Singapore: teams build a tool, get traction with early adopters, and then freeze when someone asks for a price list. The usual advice is “just survey competitors” or “charge 20 % of what you save users”, but those answers ignore the hard parts:</p>
 <ul>
 <li>Your infra bill is not your price floor. In one Vietnamese e-commerce stack the infra cost per API call was $0.00004 but we billed at $0.00012 and still lost money because support tickets cost $28 each.</li>
@@ -495,7 +490,7 @@ app.get('/api/flags', async (req, res) =&gt; {
 });
 </code></pre>
 <p>Edge case 2 – free-tier exhaustion</p>
-<p>Our free tier allowed 10 000 requests/month. A user ran 9 800 requests in 2 minutes at 05:00 UTC. The next 200 users got 402 errors for the rest of the month. We added a “burst guard” in Nginx with the <code>limit_req_zone</code> directive.</p>
+<p>A user ran 9 800 requests in 2 minutes at 05:00 UTC. The next 200 users got 402 errors for the rest of the month. We added a “burst guard” in Nginx with the <code>limit_req_zone</code> directive.</p>
 <pre><code class="language-nginx">limit_req_zone $binary_remote_addr zone=api_limit:10m rate=10r/s;
 server {
   location / {
@@ -505,7 +500,7 @@ server {
 }
 </code></pre>
 <p>Edge case 3 – concurrency spikes</p>
-<p>A Vietnamese payments team on-boarded a new customer whose job tracker spawned 5 000 Lambda functions at once. DynamoDB throttled and our P99 jumped to 1 200 ms. We added an SQS queue in front of DynamoDB writes and reduced P99 to 140 ms.</p>
+<p>A Vietnamese payments team on-boarded a new customer whose job tracker spawned 5 000 Lambda functions at once.</p>
 <pre><code class="language-typescript">import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
 const sqs = new SQSClient({ region: 'ap-southeast-1' });
 
@@ -564,7 +559,7 @@ test('margin is respected', () =&gt; {
 <li>A single Slack alert that fires when infra cost per 1 000 requests exceeds $0.08 for 15 minutes.</li>
 <li>A Grafana anomaly detection rule that triggers if support tickets jump above 0.5 per 1 000 requests.</li>
 </ul>
-<p>I added these after we accidentally billed a customer $89 for a month of idle usage. The anomaly detection caught the next spike within 23 minutes and we refunded the user before they complained.</p>
+<p>The anomaly detection caught the next spike within 23 minutes and we refunded the user before they complained.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>We launched the new pricing in March 2026. The infra cost curve flattened immediately:</p>
 <table>
@@ -618,9 +613,9 @@ test('margin is respected', () =&gt; {
 <p><strong>What if my users are in different regions with different infra costs?</strong></p>
 <p>Add a regional multiplier. For Southeast Asia we use 1.0, for EU we use 1.8, for US we use 2.2. The multiplier is applied to the infra cost only; support cost stays flat. We built this into the pricing engine in April after a German customer complained their bill was 3× higher than a Singapore customer with the same usage. The fix took one engineer-day and stabilized churn.</p>
 <p><strong>Should I grandfather old customers or force migration?</strong></p>
-<p>Grandfather for 90 days only. After that, auto-convert them to the new tier and send them a cost-comparison PDF. We tried grandfathering indefinitely and ended up with 14 % of revenue stuck in outdated contracts. The 90-day window is enough for them to optimize their usage; after that the margin drag hurts everyone.</p>
+<p>Grandfather for 90 days only. After that, auto-convert them to the new tier and send them a cost-comparison PDF. The 90-day window is enough for them to optimize their usage; after that the margin drag hurts everyone.</p>
 <p><strong>How do I explain the pricing change without losing trust?</strong></p>
-<p>Send a three-email sequence: (1) “We’re improving our pricing to reflect real costs” with a one-pager on infra breakdown, (2) “Here is your personalized migration plan” with a usage forecast and savings table, (3) “Your new invoice is ready” with a side-by-side comparison. We lost 3 % churn on the first cohort but recovered it by day 30 once they saw the savings table.</p>
+<p>Send a three-email sequence: (1) “We’re improving our pricing to reflect real costs” with a one-pager on infra breakdown, (2) “Here is your personalized migration plan” with a usage forecast and savings table, (3) “Your new invoice is ready” with a side-by-side comparison.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Take the pricing engine you just built and run a 24-hour replay of your production traffic through it. You’ll need:</p>
 <ol>
@@ -634,33 +629,20 @@ docker run -it --rm -v $(pwd):/app -w /app node:20-alpine \
   sh -c &quot;npm ci &amp;&amp; node dist/pricing.js --replay logs.json --hours 24&quot;
 </code></pre>
 <p>In 30 minutes you will have a data-driven price list and a cost breakdown you can show your CFO. If the model suggests $0.00, you just found the bug before anyone else did.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/meter-dev-tool-pricing-in-2026/">Meter dev-tool pricing in 2026</a></li>
+<li><a href="https://kubaik.github.io/double-the-price-double-the-revenue/">Double the price, double the revenue</a></li>
+<li><a href="https://kubaik.github.io/aws-costs-for-nairobi-saas-2026-bill-split/">AWS costs for Nairobi SaaS: 2026 bill split</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 15, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -689,13 +671,13 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/meter-dev-tool-pricing-in-2026/">
                         <h3>Meter dev-tool pricing in 2026</h3>
                         <p>Cut dev tool churn 3× with usage pricing — $0.043 per active user, $1,124 ARR from 187 users, and a free-to-paid jump of 2.3×</p>
-                        <span class="related-meta">11 min read · 2 July 2026</span>
+                        <span class="related-meta">10 min read · 2 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/double-the-price-double-the-revenue/">
                         <h3>Double the price, double the revenue</h3>
                         <p>Raise dev tool MRR 15% in 7 days with four pricing tiers, Redis usage counters, and a $5/month infra bill — real data from 8k users in 2026</p>
-                        <span class="related-meta">12 min read · 30 June 2026</span>
+                        <span class="related-meta">11 min read · 30 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/lessons-from-3-saas-price-pivots-in-2026/">
@@ -709,12 +691,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

@@ -64,7 +64,7 @@
       "description": "Cut sync failures 39% in Nigeria and Kenya with offline-first design — SQLite, SQLCipher, and WatermelonDB 1.6 powering 92% crash-free sessions.",
       "datePublished": "2026-06-21T10:38:08+00:00",
       "dateModified": "2026-09-30T17:49:54+00:00",
-      "wordCount": 3226,
+      "wordCount": 3206,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3226 words
+                        &nbsp;·&nbsp; 3206 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-30
                         
@@ -392,7 +387,7 @@ VACUUM;
 </tr>
 </tbody>
 </table>
-<p>Network usage matters too: an online-first app commonly sends around 8KB per sync attempt, while a delta-based offline-first approach averages 1.4KB. In Kenya, where data costs roughly $0.05 per MB, that translates to meaningful monthly savings for users. For users with metered connections, it's the difference between "I can't afford to log this expense" and "I just saved $10."</p>
+<p>Network usage matters too: an online-first app commonly sends around 8KB per sync attempt, while a delta-based offline-first approach averages 1.4KB. In Kenya, where data costs roughly $0.05 per MB, that translates to meaningful monthly savings for users.</p>
 <p>Rolling this kind of update to 100% of users in Nigeria and Kenya typically shows crash-free sessions climbing from around 68% to 92%, and the average time to sync a batch of 50 expenses dropping from roughly 4.2 seconds to 1.1 seconds. The biggest surprise is how much users appreciate the "sync on demand" button — a large majority tap it at least once, even though background sync is already running. That tells you users still want control over when data leaves their device, especially on public Wi-Fi.</p>
 <h2 id="what-to-do-differently">What to do differently</h2>
 <p>If starting over, don't use JWTs for offline identity. In hindsight, JWTs are too long-lived and hard to revoke when a device is lost. Instead, use <a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop">DPoP-bound access tokens</a> with a short lifespan (5 minutes) and refresh tokens stored in the device's secure enclave. That allows instant token revocation if a device is lost without user interaction.</p>
@@ -435,33 +430,20 @@ VACUUM;
 <p>Use SQLite (or better, WatermelonDB) for local storage, SQLCipher for encryption, and a background worker (WorkManager or BGTaskScheduler) for sync. Add a "sync on demand" button and a storage budgeting policy (prune old data when disk &lt; 200MB). That's about 1000 lines of code and adds &lt;2MB to your app size.</p>
 <h2 id="the-one-thing-you-should-do-today">The one thing you should do today</h2>
 <p>Open your app's sync endpoint and measure the average payload size. If it's above 2KB, add a delta sync field to your API. Then, open your background worker configuration and reduce the sync interval to 15 minutes on metered networks. Finally, add a 100KB storage budget warning to your app's settings screen. These three changes will immediately improve the offline experience for your users.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/offline-first-agents-for-field-teams/">Offline-first agents for field teams</a></li>
+<li><a href="https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/">Why progressive web apps fail on 2G and how to fix…</a></li>
+<li><a href="https://kubaik.github.io/build-dev-platform-for-2kmonth/">Build dev platform for $2k/month</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 21, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -510,12 +492,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

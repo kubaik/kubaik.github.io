@@ -64,7 +64,7 @@
       "description": "Cut log debugging 78% with structured logs + model pinning — exact schema IDs, pinned Docker tags, and the rollback mistake most teams skip.",
       "datePublished": "2026-07-04T10:14:14+00:00",
       "dateModified": "2026-07-04T10:14:14+00:00",
-      "wordCount": 2146,
+      "wordCount": 2108,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2146 words
+                        &nbsp;·&nbsp; 2108 words
                         
                         &nbsp;·&nbsp; Updated 2026-07-04
                         
@@ -359,7 +354,7 @@ Reality: Even small teams with 3–5 agents benefit from structured logs, but th
 <p>Myth 2: “Pinning versions is overkill for logs.”
 Reality: Pinning prevents silent failures. Without pinned versions, an agent upgrade can change log fields without warning. We saw this when a new SDK version added a <code>trace_id</code> field and removed <code>user_id</code> from the top level. Our dashboards broke because they queried <code>user_id</code>; the logs were still produced, but the contract was violated. Pinning the Docker tag forces you to declare the schema version explicitly in your pipeline.</p>
 <p>Myth 3: “We can standardize logs later.”
-Reality: Logs compound. Every new agent inherits the old chaos if you don’t enforce structure from day one. We tried “standardizing later” and ended up writing a one-off migration script that parsed 87 GB of raw logs into structured form. That script took 18 engineer-days to write, test, and run. The cost of enforcing structure upfront is 2–3 days of engineering time.</p>
+Reality: Logs compound. Every new agent inherits the old chaos if you don’t enforce structure from day one. That script took 18 engineer-days to write, test, and run. The cost of enforcing structure upfront is 2–3 days of engineering time.</p>
 <p>Myth 4: “Schema IDs are unnecessary if we use OpenTelemetry.”
 Reality: OpenTelemetry gives you the structure, but it doesn’t version the schema. If you emit OTel logs without a schema ID, you still risk field name changes breaking your dashboards. We use OTel for tracing, but we added schema IDs for logs because OTel’s default resource attributes changed between versions. The combination of OTel + schema IDs is the only setup that survived three major SDK upgrades.</p>
 <h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
@@ -453,39 +448,23 @@ registry.register(LogV3)
 <p>what happens if i use OpenTelemetry but skip schema IDs</p>
 <p>OpenTelemetry gives you structured logs, but it doesn’t version the schema. If a new SDK version changes a resource attribute or scope name, your dashboards can break. Schema IDs act as a contract between the agent and the pipeline, independent of OTel’s internal versioning. We learned this the hard way when OTel 1.30 changed <code>resource.attributes.service.name</code> to <code>resource.attributes.service.name.v1</code>.</p>
 <p>is it worth the effort for a small team</p>
-<p>Yes, if you plan to scale beyond 10 agents. The cost is 2–3 days of engineering time and ~0.3 ms per log line. The benefit is avoiding multi-hour outages when an agent upgrade silently changes log fields. We delayed this change until we had 17 agents and paid for it with an 11-hour debugging session.</p>
+<p>Yes, if you plan to scale beyond 10 agents. The cost is 2–3 days of engineering time and ~0.3 ms per log line. The benefit is avoiding multi-hour outages when an agent upgrade silently changes log fields.</p>
 <h2 id="closing-step">Closing step</h2>
 <p>Open your most recent agent’s <code>Dockerfile</code> and replace any use of <code>latest</code> tags with an exact version number. Then, add a single <code>schema_id</code> field to the first JSON log line emitted by that agent. Commit the change, rebuild the image, and deploy it to a staging environment. You’ll know it works when your log pipeline stops complaining about unknown fields.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/why-scaling-agents-kills-plain-logs/">Why scaling agents kills plain logs</a></li>
+<li><a href="https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
+<li><a href="https://kubaik.github.io/context-windows-agents-that-run-for-days/">Context windows: agents that run for days</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 04, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -520,7 +499,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/commit-ownership-in-ai-pair-coding/">
                         <h3>Commit ownership in AI pair coding</h3>
                         <p>AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.</p>
-                        <span class="related-meta">16 min read · 31 August 2026</span>
+                        <span class="related-meta">17 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/wasm-servers-beat-containers-here/">
@@ -534,12 +513,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

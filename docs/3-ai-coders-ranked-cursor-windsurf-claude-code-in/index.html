@@ -64,8 +64,8 @@
       "description": "Cut edit latency 40% with Windsurf 2026.3.1 — real latency, cost, and PII audit numbers for Cursor, Windsurf, and Claude Code in daily use.",
       "datePublished": "2026-06-12T11:36:40+00:00",
       "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 3178,
-      "timeRequired": "PT16M",
+      "wordCount": 3049,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -261,8 +256,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3178 words
+                        15 min read
+                        &nbsp;·&nbsp; 3049 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -273,11 +268,11 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>The promise was clear: less context switching, fewer tabs, and fewer bugs. What I got instead was a mess of half-completed snippets, 500ms latency spikes every other line, and a bill for $480 in overage because the AI kept calling the wrong AWS region for our PII logs.</p>
+<p>The promise was clear: less context switching, fewer tabs, and fewer bugs.</p>
 <p>Windsurf because the demo showed a 700ms faster edit cycle. Claude Code because Anthropic’s 2025 context window promised to remember every file in a monorepo. None of them worked out of the box for our stack: Python 3.11, Node 20 LTS, Postgres 15 with row-level security, and Redis 7.2 for caching. Each tool promised 90% fewer reviews, but delivered 30% more merges and two rollbacks a week.</p>
 <p>I was debugging a simple AWS Lambda timeout last month when Windsurf suggested a change that swapped our primary Postgres connection string with a read-only replica. The error message was buried in a 120-line diff. That’s when I decided to treat these tools like they were third-party services: measure, audit, and compare with real numbers.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>I ran a three-week benchmark using our internal monorepo (12,800 Python files, 84 Node packages, 3.2 GB of test data). Each tool got its own branch to avoid bias. I measured four metrics:</p>
+<p>Each tool got its own branch to avoid bias. I measured four metrics:</p>
 <ul>
 <li><strong>Latency per edit</strong>: average time between keystroke and first AI suggestion, measured with <code>hyperfine --warmup 3</code> and Node’s <code>performance.now()</code> in the renderer process. - <strong>Context retention</strong>: how often it remembered imports or types across files, counted as a percentage of edits that didn’t require manual context resupply. - <strong>Audit trail</strong>: how many edits included a commit message or inline comment with the AI suggestion source. I used <code>git log --grep="cursor:</code> to filter. - <strong>Cost</strong>: monthly spend on API tokens and local GPU usage, logged via <code>nvidia-smi --query-gpu=power.draw --format=csv</code> and Anthropic’s usage dashboard.</li>
 </ul>
@@ -319,16 +314,16 @@
 <p>I also tracked two failures that aren’t in the table: Cursor crashed twice on large diffs, Windsurf leaked our PII-compliant Redis connection string in the AI prompt cache, and Claude Code once filled the context window with 1,800 lines of unrelated logs.</p>
 <h2 id="cursor-vs-windsurf-vs-claude-code-in-2026-a-real-daily-use-comparison-the-full-ranked-list">Cursor vs Windsurf vs Claude Code in 2026: a real daily-use comparison — the full ranked list</h2>
 <h3 id="1-windsurf-v202631">1. Windsurf (v2026.3.1)</h3>
-<p>Windsurf is the fastest editor I tested for raw edit latency, clocking in at 210ms on average. The strength is its local-first architecture: it runs a TypeScript-based language server that indexes symbols in under 3 minutes for our monorepo. The weakness is the prompt expansion. Windsurf aggressively includes more context than needed, which triggered our PII policy last month when it included a user email in the prompt sent to the API. The logs showed the email in the <code>diff-context</code> field of the Anthropic API call.</p>
+<p>The strength is its local-first architecture: it runs a TypeScript-based language server that indexes symbols in under 3 minutes for our monorepo. The weakness is the prompt expansion. Windsurf aggressively includes more context than needed, which triggered our PII policy last month when it included a user email in the prompt sent to the API. The logs showed the email in the <code>diff-context</code> field of the Anthropic API call.</p>
 <p>Best for: Teams that prioritize speed and work on TypeScript-heavy codebases with less than 1,000 active files.</p>
 <h3 id="2-cursor-v0420">2. Cursor (v0.42.0)</h3>
-<p>Cursor is the most polished editor of the three. It handles large diffs without crashing and includes a built-in diff viewer that highlights AI changes. The strength is the inline chat: you can ask for a refactor and Cursor applies the changes in a single commit. The weakness is the latency spike when you open the first file in a new repository. I measured a 1.8s cold-start time on a repo with 12,000 files. That’s unacceptable for a daily driver.</p>
+<p>Cursor is the most polished editor of the three. It handles large diffs without crashing and includes a built-in diff viewer that highlights AI changes. The strength is the inline chat: you can ask for a refactor and Cursor applies the changes in a single commit. The weakness is the latency spike when you open the first file in a new repository. That’s unacceptable for a daily driver.</p>
 <p>Best for: Frontend teams that use React and need a tight integration with Storybook and Jest.</p>
 <h3 id="3-claude-code-v0123">3. Claude Code (v0.12.3)</h3>
-<p>Claude Code is the most accurate for large monorepos. It remembers imports across files 94% of the time, which saved me 45 minutes last week when I had to refactor a shared utility. The strength is the long context window: it can ingest the entire codebase without losing track of symbols. The weakness is the cost. At $212 a month for 350k tokens, it’s the most expensive option. I also hit a hard limit last week when it tried to include 1,800 lines of test logs in the context, which triggered our audit tool.</p>
+<p>Claude Code is the most accurate for large monorepos. The strength is the long context window: it can ingest the entire codebase without losing track of symbols. The weakness is the cost. At $212 a month for 350k tokens, it’s the most expensive option. I also hit a hard limit last week when it tried to include 1,800 lines of test logs in the context, which triggered our audit tool.</p>
 <p>Best for: Backend engineers maintaining large Python or Go monorepos with strict audit requirements.</p>
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
-<p>Windsurf won because it balanced speed and safety. The 210ms latency beat Cursor’s 340ms and Claude Code’s 420ms. The local-first architecture means we don’t leak PII in API calls, and the built-in audit trail (67% of edits) is enough to satisfy our compliance team.</p>
+<p>Windsurf won because it balanced speed and safety. The 210ms latency beat Cursor’s 340ms and Claude Code’s 420ms.</p>
 <p>We set up Windsurf with a custom prompt template that strips out user emails and Redis connection strings before sending to the API. The change cut our PII risk score from 8 to 2 on our internal audit scale. We also configured the language server to index only public symbols, which reduced the index time from 3 minutes to 45 seconds.</p>
 <p>The only trade-off is the monthly cost: $156 per seat. But that’s still cheaper than the $212 for Claude Code and the $89 for Cursor when you factor in the PII cleanup overhead.</p>
 <h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
@@ -552,33 +547,20 @@ def deploy():
 - AI suggestion hash: <code>wf-456</code>
 - PII leakage: None (all sensitive data redacted by local cleaners)</p>
 <p>The experiment confirmed that Windsurf isn’t just faster—it’s also safer and more auditable for teams with strict compliance requirements.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/5-ai-tools-that-let-us-ship-faster-than-sf-teams/">5 AI tools that let us ship faster than SF teams</a></li>
+<li><a href="https://kubaik.github.io/ai-pair-prompts-9-setups-we-tried-in-2026/">AI pair prompts: 9 setups we tried in 2026</a></li>
+<li><a href="https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/">Vibe coding: MVP gem, prod albatross</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 12, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -607,13 +589,13 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-burnout-why-output-pressure-rose-even-as-tools-got/">
                         <h3>AI burnout: why output pressure rose even as tools got</h3>
                         <p>Cut burnout 30% by measuring AI’s net time saved — GitHub Copilot Enterprise, Cursor logs, and the PR size trap most teams miss in 2026.</p>
-                        <span class="related-meta">14 min read · 9 June 2026</span>
+                        <span class="related-meta">13 min read · 9 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-code-traps-copilot-vs-cursor-smackdown/">
                         <h3>AI code traps: Copilot vs Cursor smackdown</h3>
                         <p>Cut AI code crashes 40% by picking the right sidekick. Compare GitHub Copilot Enterprise 2026 vs Cursor v0.32 on latency, edge cases, and offline survival.</p>
-                        <span class="related-meta">14 min read · 9 June 2026</span>
+                        <span class="related-meta">13 min read · 9 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/claude-code-review-wins-and-blind-spots/">
@@ -627,12 +609,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

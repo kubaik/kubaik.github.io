@@ -64,7 +64,7 @@
       "description": "Cut MVP build time 70% with vibe coding — but one wrong choice can cost $45k/year in hidden bills.",
       "datePublished": "2026-07-01T08:04:40+00:00",
       "dateModified": "2026-09-19T11:42:21+00:00",
-      "wordCount": 2447,
+      "wordCount": 2360,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2447 words
+                        &nbsp;·&nbsp; 2360 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -277,7 +272,7 @@
                 <p>The answers I found online were either wrong or skipped the parts that mattered.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
 <p>Early in my career I shipped a product in two weeks by stacking together GitHub Copilot snippets, Stack Overflow answers, and a bunch of <code>console.log</code> debugging. It worked. It even got users. Then the first production alert fired: 503s behind CloudFront because the Node 20 LTS Lambda runtime couldn’t keep up with 1000 RPS.</p>
-<p>Vibe coding feels fast until it isn’t. The same habits that make a 2-week MVP hum also turn a 6-month codebase into a ticking cost bomb. I’ve watched teams burn $45k/year on over-provisioned Redis clusters because they copied a stack overflow snippet that set <code>maxmemory-policy allkeys-lru</code> without understanding how eviction actually works. I’ve seen a single misplaced <code>await</code> in a Next.js 14.2.3 page turn a 40 ms render into a 3 s waterfall because React 19’s new Suspense boundaries didn’t play nice with the implicit hydration promise.</p>
+<p>Vibe coding feels fast until it isn’t. The same habits that make a 2-week MVP hum also turn a 6-month codebase into a ticking cost bomb.</p>
 <p>What separates a vibe-coded prototype from a maintainable system isn’t cleverness — it’s the boring details: connection limits, error budgets, and the fact that teams rarely budget time to refactor the “it works” mess into “it works and we can explain why”. This list ranks the tools, patterns, and even one database choice that look great when you’re solo and explode when you’re on-call.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <ol>
@@ -429,7 +424,7 @@
 <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 <p>Why does Next.js App Router break analytics scripts? Next.js 14.2.3 streams the page before the client runtime hydrates, so any script that assumes <code>document</code> or <code>window</code> is available will fire too early. The fix is to move analytics to a server component or use the new <code>next/script</code> strategy.</p>
 <p>How much does Pinecone actually cost at scale? Pinecone 2026 charges $0.10 per 1k vectors stored and $0.25 per 1k queries. A 500k vector index costs $50/month for storage and $125/month for 500k queries. If you double the chunk size to 1000 chunks, you go to $100 storage and $250 queries. Teams usually underestimate this by 2–3x.</p>
-<p>What’s the real cost of using raw SQL versus Prisma? Raw SQL adds 4–8 hours per feature for schema changes and debugging typos. Prisma cuts that to 30–60 minutes but adds 150 KB to the client bundle and $29/user/month. On a 7-person team, the time savings pay for the license in 6 weeks; the bundle cost is negligible unless you’re shipping to low-end Android devices.</p>
+<p>What’s the real cost of using raw SQL versus Prisma? Raw SQL adds 4–8 hours per feature for schema changes and debugging typos. Prisma cuts that to 30–60 minutes but adds 150 KB to the client bundle and $29/user/month.</p>
 <p>Why does Redis 7.2 evict keys randomly and spike bills? The default <code>maxmemory-policy allkeys-lru</code> evicts the least recently used key, regardless of TTL. If you have a hot key that’s not in the top N recently used, it gets evicted, and 1000 requests rebuild it simultaneously, causing a stampede. The fix is to use <code>volatile-ttl</code> so only keys with an expiry are candidates for eviction.</p>
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>Stop treating your prototype like a production system.</p>
@@ -438,33 +433,20 @@
 </ol>
 <p>Then, before you merge the PR, run <code>npm ls --all</code> and count the dependency graph depth. If it’s deeper than 5, schedule a tech-debt spike for the next sprint.</p>
 <p>Do this today: Open your project’s root directory, run <code>npx bundlephobia-cli size -p react</code>, and check the total KB. If it’s over 300 KB, delete one third-party library you copied from Stack Overflow last week and replace it with a native API or a smaller alternative.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/">Vibe coding: MVP gem, prod albatross</a></li>
+<li><a href="https://kubaik.github.io/vibe-code-works-great-fails-forever/">Vibe code: works great, fails forever</a></li>
+<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Keep multi-model systems stable: 6 rules that worked</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 01, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -505,7 +487,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/starlink-4g-fallback-serve-pages-under-800ms/">
                         <h3>Starlink 4G fallback: serve pages under 800ms</h3>
                         <p>Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.</p>
-                        <span class="related-meta">12 min read · 26 June 2026</span>
+                        <span class="related-meta">11 min read · 26 June 2026</span>
                     </a>
                     
                 </div>
@@ -513,12 +495,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

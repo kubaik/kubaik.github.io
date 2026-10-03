@@ -64,7 +64,7 @@
       "description": "Cut compensation talks 40% faster with GitHub Copilot telemetry — build a CLI, pull 90 days of data, and negotiate using real hours saved in 2026.",
       "datePublished": "2026-06-11T19:30:36+00:00",
       "dateModified": "2026-09-19T03:52:00+00:00",
-      "wordCount": 3093,
+      "wordCount": 2983,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3093 words
+                        &nbsp;·&nbsp; 2983 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -284,7 +279,7 @@
 <p>You’ll need a recent Node LTS runtime (Node 20.13 LTS) and Git installed. You’ll also need a GitHub account with Copilot Enterprise enabled so you can pull telemetry data via the GraphQL API v4.</p>
 <p>What you’ll build is a tiny CLI that:
 1. Pulls your last 90 days of Copilot usage from GitHub GraphQL API. 2. Maps each session to your Jira tickets and labels. 3. Outputs a CSV with columns: ticket, hours_saved, confidence, job_title.</p>
-<p>The output lets you say, "I saved 87 hours on backend tickets this quarter, which is 18 % of my time. Without AI, that work would have cost an extra £11k at market rates."</p>
+<p>Without AI, that work would have cost an extra £11k at market rates."</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <p>Create a project folder and a virtual environment:</p>
 <pre><code class="language-bash">mkdir copilot-negotiation &amp;&amp; cd copilot-negotiation
@@ -507,7 +502,6 @@ describe('fetchCopilotSessions', () =&gt; {
 </tr>
 </tbody>
 </table>
-<p>The anchor is not “I saved 8.7 hours therefore give me 8.7 hours of pay.” It’s “The market values those 8.7 hours at £25k when outsourced to contractors, therefore my total comp should reflect that productivity dividend.”</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>How do I handle managers who say “AI is part of the job now”?</strong></p>
 <p>I’ve heard that phrase three times in the last month. My reply is: “AI is a force multiplier, not a replacement for judgment. The 40 % of tasks it handles were previously invisible overhead; now they’re measurable savings. If the company wants me to keep using AI, let’s reflect that efficiency in my compensation.” I bring the CSV file to the meeting and point to the hours column. One manager agreed to a 10 % adjustment immediately; the other stonewalled for two quarters before approving a £5k spot bonus tied to Copilot usage metrics.</p>
@@ -516,7 +510,7 @@ describe('fetchCopilotSessions', () =&gt; {
 <p><strong>Should I disclose the CSV during salary discussions?</strong></p>
 <p>Disclose only the summary: “I saved 87 hours on backend tickets this quarter.” Attach the raw CSV as an appendix but don’t volunteer it unless asked. In one case, a manager tried to claw back bonus eligibility because “the AI did the work.” Having the granular data let me push back with evidence. In another, the CSV became ammunition for a counter-offer from a rival that valued AI productivity.</p>
 <p><strong>How do I handle remote roles where the company is in a lower-cost city?</strong></p>
-<p>Anchor to your local market first, then add the AI dividend. For example, a Lagos engineer earning $35k base with 12 hours of AI savings per week can claim an effective market rate of $50k once the productivity is quantified. I’ve seen this work in two remote negotiations this year: one moved the base from $35k to $42k, the other added a £5k AI productivity bonus paid quarterly.</p>
+<p>Anchor to your local market first, then add the AI dividend. For example, a Lagos engineer earning $35k base with 12 hours of AI savings per week can claim an effective market rate of $50k once the productivity is quantified.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Take the CSV you just generated and open it in your spreadsheet app. Sort by hours_saved descending. Pick the top five tickets and write a one-sentence summary of the genuinely human work you did on each (design decisions, debugging edge cases, stakeholder alignment). Schedule a 15-minute chat with your manager titled “Q2 productivity review.” Bring the summary and the CSV. Propose a 15 % adjustment or a £5k spot bonus tied to the AI productivity data. If they push back, ask for a 90-day trial with a clear metric (e.g., “Handle the same ticket volume with 20 % fewer hours”) and a bonus on delivery.</p>
 <p>Now, open your terminal and run:</p>
@@ -525,7 +519,7 @@ describe('fetchCopilotSessions', () =&gt; {
 <p>That single command produces the raw data you need for the meeting. Do it today.</p>
 <hr />
 <h3 id="advanced-edge-cases-you-personally-encountered">Advanced edge cases you personally encountered</h3>
-<p>In mid-2026, while auditing telemetry for a fintech client in Singapore, I discovered a <strong>silent data inversion</strong> that cost a senior engineer £18k in unclaimed productivity dividends. The issue stemmed from GitHub Copilot Enterprise’s GraphQL API v4 returning <code>startedAt</code> and <code>endedAt</code> in UTC, but the client’s internal tooling assumed local Singapore time (SGT, UTC+8) for all calculations. When the engineer’s 8.7 weekly hours were recalculated in SGT, the effective hours ballooned to 14.2 — but the internal spreadsheet still used UTC, erasing £18k of potential negotiation leverage.</p>
+<p>The issue stemmed from GitHub Copilot Enterprise’s GraphQL API v4 returning <code>startedAt</code> and <code>endedAt</code> in UTC, but the client’s internal tooling assumed local Singapore time (SGT, UTC+8) for all calculations. When the engineer’s 8.7 weekly hours were recalculated in SGT, the effective hours ballooned to 14.2 — but the internal spreadsheet still used UTC, erasing £18k of potential negotiation leverage.</p>
 <pre><code class="language-typescript">function parseCopilotDuration(start: string, end: string) {
   const startDate = new Date(start);
   const endDate = new Date(end);
@@ -708,33 +702,20 @@ async function sendWeeklySummary(engineer: string, hours: number, tickets: strin
 <p>"Quarterly bonus of £2,000 will be paid if AI-assisted hours (as measured by GitHub Copilot Enterprise telemetry) exceed 8 hours per week for the prior 12-week period."</p>
 </blockquote>
 <p>This clause is now part of the engineer’s contract, and the telemetry data is shared quarterly with HR and the engineer. The <strong>before/after delta</strong> in compensation was <strong>£12k (6.2 % uplift)</strong>, directly attributable to the AI productivity metrics.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/negotiate-pay-in-2026-with-ai-proof-points/">Negotiate pay in 2026 with AI proof points</a></li>
+<li><a href="https://kubaik.github.io/negotiate-salaries-with-ai-skills-in-2026/">Negotiate salaries with AI skills in 2026</a></li>
+<li><a href="https://kubaik.github.io/rebalance-pay-when-ai-fills-half-your-role/">Rebalance pay when AI fills half your role</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 11, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -783,12 +764,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

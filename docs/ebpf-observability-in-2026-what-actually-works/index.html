@@ -64,7 +64,7 @@
       "description": "The map uses BPFFNOPREALLOC to avoid preallocating 65k entries at load time, reducing startup latency from 420ms to 12ms on a t3.medium.",
       "datePublished": "2026-08-09T17:47:30+00:00",
       "dateModified": "2026-08-09T17:47:30+00:00",
-      "wordCount": 2955,
+      "wordCount": 2985,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -248,7 +243,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2955 words
+                        &nbsp;·&nbsp; 2985 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-09
                         
@@ -672,27 +667,27 @@ tox -e py311
 <p>BPF LSM hooks run in the LSM framework and can block syscalls before they enter the kernel, but they do not expose struct arguments. Seccomp profiles run in the syscall path and can inspect arguments, but they cannot block syscalls based on internal kernel state. Use BPF LSM for simple deny-lists (e.g., block execve for UID X) and seccomp for argument-based filtering (e.g., block open with O_WRONLY). In practice, teams deploy both: BPF LSM for runtime security and seccomp for container hardening.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>If you’re running a 2026-era Kubernetes cluster on kernel 6.8 and need zero-instrumentation observability, pin the TCP retransmission program to bpffs and expose it to Prometheus. Then check the p99 latency</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cqrs-when-it-pays-off-and-when-it-breaks/">CQRS: when it pays off and when it breaks</a></li>
+<li><a href="https://kubaik.github.io/agent-tracing-when-logs-lie-and-metrics-mislead/">Agent tracing: when logs lie and metrics mislead</a></li>
+<li><a href="https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/">LLM evals: LangSmith vs Promptfoo in prod</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://ebpf.io/what-is-ebpf/">ebpf.io: What is eBPF?</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -741,12 +736,7 @@ tox -e py311
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

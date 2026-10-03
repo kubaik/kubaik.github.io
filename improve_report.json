@@ -1,0 +1,55 @@
+{
+  "improved": [
+    {
+      "slug": "bootstrapped-5k-mrr-without-ads",
+      "attempts": 1,
+      "retitled": true
+    },
+    {
+      "slug": "json-modes-silent-failures-exposed",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "reconciling-mobile-money-edge-cases-banks-ignore",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "stop-false-positives-in-ci-scanning-now",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "api-abuse-patterns-rising-in-2026",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "9-ai-wrapper-plays-that-worked-in-2026",
+      "attempts": 1,
+      "retitled": true
+    },
+    {
+      "slug": "prompt-injection-got-the-hype-poison-data-ruined-us",
+      "attempts": 1,
+      "retitled": true
+    },
+    {
+      "slug": "serve-4g-as-baseline-apps-in-2026",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "ai-interviews-4-questions-that-caught-80-of-weak",
+      "attempts": 1,
+      "retitled": true
+    },
+    {
+      "slug": "7-ways-to-earn-extra-in-2026-without-shipping-saas",
+      "attempts": 1,
+      "retitled": false
+    }
+  ],
+  "failed": []
+}

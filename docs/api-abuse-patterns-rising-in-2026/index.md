@@ -1,46 +1,50 @@
 # API abuse patterns rising in 2026
 
-Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.
+Most API security guides assume a clean environment and a patient timeline. Production gives you neither. This article describes a layered architecture for API abuse defense — client integrity tokens, cohort-based rate limiting, and behavioral scoring — and explains why each layer sits where it does.
 
-## The situation (what we were trying to solve)
+## The problem shape
 
-In early 2026 our SaaS platform saw API call volume double every six weeks. The traffic spike wasn’t organic: it came from distributed scraper bots that mimicked mobile clients and from a new breed of “credential-stuffing as a service” tools that rotated IPs every 30 seconds. Our existing WAF rules (AWS WAF v2.8) were tuned for volumetric DDoS and SQLi, so they let these slow, credential-based attacks slip through with only 40 % detection accuracy on login endpoints.
+Two abuse patterns dominate modern API traffic:
 
-We needed to cut the noise without adding latency to legitimate calls. The business constraint was blunt: stay under 250 ms 95th-percentile latency on every endpoint or risk churn from impatient mobile users in Manila and Lagos who abandoned flows after 4 seconds.
+1. **Distributed credential stuffing.** Attackers rotate source IPs quickly (often every 30–60 seconds) and mimic legitimate mobile clients, so IP-reputation and volumetric rules never accumulate enough signal on any single address.
+2. **Low-and-slow scraping.** Bots imitate a real user session for minutes at a time, walking through pricing, catalog, or profile endpoints at human-plausible rates.
 
-## What we tried first and why it didn’t work
+Traditional WAF rules are usually tuned for volumetric DDoS and injection attacks. They perform poorly against both patterns above because the request *shape* looks legitimate — the only anomalies are in aggregate behavior and in client provenance.
 
-First, we bolted on Cloudflare Bot Management (v2026.2) with the strictest “JS challenge” setting. In staging it looked perfect: 99 % bot blocking at 80 ms average overhead. When we rolled it to production behind our CloudFront distribution we saw a different picture:
+The engineering constraint that shapes everything else: any defense that adds a JavaScript challenge or a synchronous round trip to the client will hurt mobile users on high-latency networks. A challenge that costs 80 ms on a desktop connection can cost 1.4–1.8 seconds on a congested 3G link, and users abandon flows long before that.
 
-- Legitimate mobile SDK traffic jumped from 120 ms to 280 ms on login endpoints because Cloudflare’s JavaScript challenge added an extra round trip. - Brazilian and Nigerian users on 3G faced 1.4–1.8 s spikes during challenges, killing conversion. - The managed bot score rules had 15 % false positives on automated testing bots we used internally.
+## Why the obvious options fall short
 
-Next, we threw AWS Shield Advanced at the problem. It stopped the volumetric part of the traffic but didn’t help with credential stuffing or API scraping. More importantly, Shield cost $18 k per month by the time we turned on all the advanced protections — more than our entire AWS bill for compute.
+**JavaScript challenges.** Effective against headless browsers that don't execute JS, but they add a full round trip. On mobile SDK traffic — which doesn't run a browser at all — a challenge either breaks the client or forces you to maintain an allowlist, which attackers then target.
 
-Finally, we added Redis 7.2 in front of the auth service for request throttling. The Lua script we wrote capped 200 req/min per IP, but the attackers simply switched to IPv6 ranges and kept the same request pattern. Redis memory usage exploded from 1.2 GB to 18 GB in 48 hours because each IPv6 address got a separate key, and we didn’t set TTLs aggressively enough.
+**Volumetric scrubbing services.** These absorb large floods but do nothing for credential stuffing or scraping, because the traffic volume per source is small and the requests are well-formed. They also tend to be priced for the flood case, so the cost is hard to justify if your actual problem is 200 req/min of credential stuffing from 50,000 IPs.
 
-## The approach that worked
+**Per-IP rate limiting in Redis.** The first naive implementation usually looks like this: one sorted-set key per IP, trimmed on a rolling window. It works until attackers move to IPv6, where the address space is large enough that each request can come from a distinct address. Memory then grows with the number of distinct addresses seen, and without aggressive TTLs the keyspace can grow faster than the request rate.
 
-We combined three layers that play to each other’s strengths rather than piling one heavyweight filter on top of another:
+The lesson from all three: a single heavyweight filter at one layer cannot separate good from bad traffic when the bad traffic is designed to look like the good traffic. The defense has to be a pipeline.
 
-1. **Client-side integrity tokens** to separate real human-operated clients from headless scripts. 2. **Adaptive rate limiting** that adjusts per user cohort instead of per IP. 3. **Behavioral fingerprinting** at the CDN edge to spot anomalous sequences without executing JavaScript challenges.
+## The architecture: cheap stateless checks at the edge, stateful checks in the API
 
-The key insight was to move the cheap, stateless checks to the edge and keep the stateful, expensive checks in the API layer. We used CloudFront Functions (Node.js 20) for the first two layers because they run in <1 ms and don’t require a Lambda@Edge warm-up penalty.
+The design principle is to triage early and cheaply:
 
-For the fingerprinting we relied on Akamai Bot Manager (2026.1) but only enabled the lightweight “behavioral” rules, not the JavaScript challenges. The Akamai rules gave us a 0.2 ms overhead and blocked 72 % of the credential stuffing traffic before it hit our origin.
+1. **Client-side integrity tokens** to establish that a request came from a real client build, not a script.
+2. **Adaptive rate limiting** bucketed by user cohort rather than by IP.
+3. **Behavioral fingerprinting** at the CDN edge to score request sequences without executing JavaScript.
 
-## Implementation details
+Stateless verification (signature checks, token expiry) belongs at the edge, where it costs microseconds and never touches origin capacity. Stateful logic (rolling windows, per-account anomaly detection) belongs in the API layer, where you control cost, data residency, and observability.
 
-### 1. Client Integrity Token (CIT)
+## Layer 1: client integrity tokens
 
-Every legitimate mobile and web client generates a short-lived CIT by combining:
-- A hardware-backed public key (Android Keystore / iOS Secure Enclave)
-- A device fingerprint hash (Canvas, WebGL, AudioContext)
-- A monotonic counter to prevent replay
+A client integrity token (CIT) is a short-lived signed assertion that the request originated from a legitimate client build. A typical construction combines:
 
-The token is signed with ECDSA-P256 and lasts 15 minutes. We added the token to the `X-CIT` header on every request. The CloudFront Function extracts and verifies the token using the public key embedded in the client build. Invalid tokens are dropped at the edge (5 ms penalty); valid tokens get an early pass to the origin.
+- A hardware-backed public key (Android Keystore or iOS Secure Enclave) so the key can't be trivially extracted from a repackaged app.
+- A device fingerprint hash (Canvas, WebGL, AudioContext) as a secondary signal.
+- A monotonic counter or nonce to prevent replay.
+
+The token is signed with ECDSA-P256 and expires quickly — 15 minutes is a reasonable starting point. Clients send it in a custom header, for example `X-CIT`. The edge function verifies the signature against a public key embedded in the client build and rejects invalid or expired tokens before they reach the origin.
 
 ```javascript
-// CloudFront Function (Node.js 20)
+// Edge function (Node.js runtime) — verify CIT before forwarding
 export async function handler(event) {
   const { request } = event;
   const cit = request.headers['x-cit'];
@@ -59,24 +63,32 @@ export async function handler(event) {
 }
 ```
 
-We shipped this in one sprint and cut origin traffic from 12 k req/s to 7 k req/s overnight.
+Two implementation notes that matter in practice:
 
-### 2. Adaptive Rate Limiting
+- **Nonce tracking is stateful.** The `nonceUsed` set above is illustrative; in production you either keep it in a low-latency store with a TTL equal to the token lifetime, or you rely on the monotonic counter plus a short expiry window and accept a small replay surface.
+- **Key rotation needs a plan.** Embedding a single public key in the client build means you can't rotate it without shipping an app update. Support at least two valid keys at any time so rotation is a server-side operation.
 
-Instead of a static limit per IP we bucket users by:
-- Account age (new, regular, veteran)
-- Device class (iOS 17+, Android 14+, web mobile, web desktop)
-- Region (Africa, Asia, Europe, Americas)
+The cost of this layer is a signature verification per request — microseconds on modern runtimes — and it eliminates the entire class of clients that can't produce a valid signature.
 
-The CloudFront Function reads the CIT payload and selects the appropriate bucket. Each bucket has a dynamic limit based on a 10-minute rolling window:
+## Layer 2: adaptive rate limiting by cohort
 
-| Bucket           | Limit (req/min) | Burst (req) |
-|------------------|-----------------|-------------|
-| new_africa_web   | 30              | 60          |
-| regular_asia_mob | 120             | 240         |
-| veteran_eu_mob   | 300             | 600         |
+Static per-IP limits fail against distributed sources. The alternative is to bucket requests by properties that are expensive for an attacker to fake at scale:
 
-We implemented the rate limiter in Redis 7.2 with a sorted-set window:
+- **Account age** (new, regular, veteran)
+- **Device class** (iOS, Android, web mobile, web desktop)
+- **Region** (based on the client's declared locale or a coarse geo signal, not on IP)
+
+The edge function reads the verified CIT payload and selects a bucket. Each bucket has a dynamic limit over a rolling window. A representative table:
+
+| Bucket | Limit (req/min) | Burst (req) |
+|---|---|---|
+| new_africa_web | 30 | 60 |
+| regular_asia_mob | 120 | 240 |
+| veteran_eu_mob | 300 | 600 |
+
+These numbers are illustrative — the correct values come from your own traffic distribution, which the measurement section below describes how to collect.
+
+The limiter itself is a sorted-set window in Redis:
 
 ```lua
 -- Redis Lua script for adaptive rate limit
@@ -99,126 +111,85 @@ else
 end
 ```
 
-We call this script from the CloudFront Function only when the CIT is valid. The overhead is 1.2 ms on cache hit and 3.8 ms on cold Redis.
+Three things to get right:
 
-### 3. Behavioral Fingerprinting at Edge
+1. **Always set a TTL on the bucket key.** Without `EXPIRE`, keys for cohorts that go quiet are never reclaimed. Set the TTL to at least twice the window length so a burst of activity near the boundary isn't truncated.
+2. **Bucket on the account, not the IP.** A distributed attacker controls many IPs but must reuse accounts (or create new ones, which lands them in the `new_*` bucket with the tightest limit). Bucketing on account identity collapses the address-space problem.
+3. **Return a retry hint.** A 429 with a `Retry-After` header lets well-behaved clients back off gracefully instead of hammering the limiter.
 
-We configured Akamai Bot Manager (2026.1) to emit a custom header `X-Behavior-Score`. The header value is a float between 0 and 1, where 0 means “almost certainly a bot” and 1 means “almost certainly human”. We only forward traffic that scores ≥ 0.7 to the origin; the rest get a 403 with a retry-after hint.
+## Layer 3: behavioral scoring at the edge
 
-We measured the false-positive rate over two weeks:
+Behavioral bot detection assigns each request a score based on request sequence patterns — timing, header consistency, navigation order — rather than on a single request's content. Managed services in this category expose the score as a header (commonly something like `X-Behavior-Score`) that your edge function can read and act on.
 
-| Traffic type       | Volume (req) | FP rate |
-|--------------------|--------------|---------|
-| Mobile SDK         | 8.2 M        | 0.04 %  |
-| Web mobile (real)  | 3.1 M        | 0.12 %  |
-| Scraper (bad)      | 11.7 M       | 99.8 %  |
+The integration pattern:
 
-The Akamai rules added 0.2 ms to the edge and saved us 120 k CPU-minutes per month at origin.
+- Configure the bot management service to emit the score header on every request.
+- At the edge, forward only requests scoring above a threshold; return 403 with a retry hint for the rest.
+- Log the score alongside the request so you can tune the threshold against real data.
 
-## Results — the numbers before and after
+A threshold of 0.7 (on a 0–1 scale where 1 is almost certainly human) is a common starting point, but the right value depends entirely on your false-positive tolerance. The measurement section below explains how to find it.
 
-Baseline (Jan 2026, pre-changes):
-- Origin CPU utilization: 85 %
-- 95th-percentile latency: 220 ms
-- Login success rate: 89 %
-- Monthly infra cost: $23 k (AWS + Cloudflare)
+The key advantage over JavaScript challenges is latency: behavioral scoring is a server-side decision made from request metadata, so it adds no client round trip. Behavioral rules typically add well under a millisecond to edge processing.
 
-After full rollout (March 2026):
-- Origin CPU utilization: 32 %
-- 95th-percentile latency: 175 ms (-20 %)
-- Login success rate: 96 %
-- Monthly infra cost: $21 k (-9 %)
-- Blocked credential stuffing volume: 94 % reduction
-- Blocked scraping volume: 92 % reduction
+## Measuring false positives — and why it's the only number that matters
 
-The biggest surprise was the latency drop: both CloudFront Functions and Akamai Bot Manager ran faster than our old WAF, so the combined median overhead was 2 ms vs the 80 ms we expected from Cloudflare JS challenges.
+Every bot defense trades false positives for false negatives. The only way to set thresholds honestly is to measure the false-positive rate per cohort, because a threshold that's fine for desktop web may be unacceptable for a mobile SDK.
 
-## What we’d do differently
+What to instrument:
 
-1. **Don’t trust the device fingerprint alone.** We initially skipped hardware-backed attestation because we thought it would be too invasive. In hindsight, the 12 % false-positive rate on pure software fingerprints cost us more support tickets than the privacy concerns we imagined.
+- **Per-cohort request counts** tagged with the bot score and the final decision (allowed / blocked / challenged).
+- **Per-cohort block rates** over a rolling window.
+- **Support-ticket volume** tagged with the cohort and the timestamp, so you can correlate a threshold change with a support spike.
 
-2. **Rate-limit per session, not per IP.** IPv6 exhaustion attacks forced us to switch to session tokens within a week of rolling out the IP-based limiter. Moving to session buckets cut Redis memory from 18 GB back to 2.4 GB.
+A practical workflow:
 
-3. **Avoid Lua complexity in edge functions.** Our first CloudFront Lua scripts hit the 1 MB function size limit and we had to split them into multiple files. Node.js 20 functions are easier to test and version.
+1. Run the bot scoring layer in **monitor mode** for at least one full traffic cycle (a week is typical, longer if you have weekly seasonality). Log the score and the decision but don't enforce.
+2. Compute the block rate per cohort at several candidate thresholds.
+3. Pick the threshold where the block rate on known-good cohorts (your own test devices, internal service accounts, monitored customer segments) stays below your tolerance. A common target is under 0.5% per cohort, but the number is a business decision, not a technical one.
+4. Enforce, and keep the monitor-mode logging on so you can detect drift.
 
-4. **Monitor false positives weekly.** We set up a Grafana dashboard that surfaces any cohort with >0.5 % false-positive rate. The dashboard flagged our new_iOS_17_web cohort after a bot vendor shipped a new headless driver that mimicked iOS user agents.
+If you don't have a labeled "known-good" cohort, build one: enroll a set of internal test devices and a small opt-in group of real users, and treat their traffic as ground truth.
 
-## The broader lesson
+## A worked example: choosing a threshold
 
-The attackers aren’t getting faster; they’re getting smarter about blending in. In 2026 the real threat isn’t a 1 Tbps SYN flood—it’s a bot that imitates a loyal mobile user for 9 minutes, scrapes your pricing page, and then disappears.
+Suppose you run monitor mode for a week and observe the following (figures illustrative, not measured):
 
-The defense that scales isn’t a single silver bullet; it’s a pipeline of cheap, early filters that discard the obvious noise before you pay the cost of deeper inspection. Put the JavaScript challenges, device attestation, and behavioral fingerprints at the edge where they cost 1–3 ms, and keep the stateful, per-account logic (rate limits, anomaly detection) inside your VPC where you control the cost and the data.
+- Mobile SDK traffic: 8.2M requests, block rate 0.04% at threshold 0.7.
+- Web mobile (real users): 3.1M requests, block rate 0.12% at threshold 0.7.
+- Known scraper traffic (from a honeypot endpoint): 11.7M requests, block rate 99.8% at threshold 0.7.
 
-If you treat every request as equally important, you will always be playing catch-up. Instead, triage aggressively: the 5 % of traffic that looks risky should be the only one that touches your expensive detection layers.
+The web mobile cohort is the binding constraint: 0.12% of 3.1M requests is roughly 3,700 blocked requests per week. If your support capacity can absorb that, 0.7 is workable. If not, raise the threshold to 0.6 and re-measure — you'll trade some scraper detection for fewer false positives.
 
-## How to apply this to your situation
+The point of the example is the *method*, not the numbers. Run it on your own traffic.
 
-Start by measuring, not blocking. Pick one high-value endpoint (usually login or pricing) and log:
+## Failure modes to plan for
 
-- Request rate per IP / CIDR / ASN
-- Header completeness (User-Agent, Accept-Language, X-Device-ID)
-- Response time percentiles by cohort
+**Fingerprint drift.** Bot vendors ship new headless drivers regularly. A cohort that was clean last month can become noisy this month. The mitigation is continuous monitoring, not a one-time threshold.
 
-Use CloudFront real-time logs (2026.1) or CloudWatch Logs Insights to run this query in 10 minutes:
+**IPv6 address-space exhaustion of per-IP state.** If any part of your stack still keys on IP, plan for the keyspace to grow with the number of distinct addresses. Prefer account- or session-keyed buckets, and set TTLs on every key.
 
-```sql
-stats count(*) as reqs by bin(60) as minute
-| filter @message like /login/ and @message like /429/ 
-| stats avg(@latency) as p50, avg(@latency) as p95 by minute
-```
+**Token replay.** A signed token with a long expiry is a replayable credential. Keep expiries short, track nonces where you can, and rotate signing keys on a schedule.
 
-If you see flat lines of 429 responses across many IPs, you have a distributed credential-stuffing campaign. If you see 1.5× normal traffic with low success rate, you likely have scrapers.
+**Edge function size and complexity limits.** Edge runtimes have tighter constraints than origin runtimes — smaller bundle limits, fewer available APIs, no persistent state. Keep edge functions small and push complex logic to the origin. If a function grows past a few hundred lines, it probably belongs in the API layer.
 
-Next, pick the cheapest filter that solves 80 % of the noise:
+**Challenge-induced churn.** Any defense that adds a client round trip will show up as conversion loss on high-latency networks. If you must challenge, do it only for cohorts where the expected abuse cost exceeds the expected churn cost.
 
-- For scraper-heavy traffic: Akamai Bot Manager (behavioral rules only) or Fastly’s edge compute. - For credential stuffing: CloudFront Function + CIT tokens, then Redis adaptive limiter. - For volumetric junk: AWS Shield Advanced only if you have >100 Gbps traffic.
+## A decision checklist
 
-Finally, enforce a strict “no JavaScript challenges for mobile apps” policy. Our Brazilian users on 3G saved 400 ms per login when we dropped the JS challenge—conversion uplift paid for the Akamai bill in 12 days.
+Before adding a layer, answer these:
 
-## Resources that helped
+- **What's the abuse pattern?** Credential stuffing, scraping, and volumetric floods need different defenses. Don't buy a flood solution for a stuffing problem.
+- **Can the client change?** If you control the mobile app, CITs are viable. If you're defending a public API consumed by third parties, you can't require client-side changes.
+- **What's the latency budget?** Any defense that adds a client round trip consumes part of it. Stateless edge checks consume almost none.
+- **What's the false-positive tolerance?** This is a business decision. Get it in writing before you pick a threshold.
+- **Where does state live?** Stateful checks belong where you control cost and data residency. Stateless checks belong at the edge.
+- **How will you detect drift?** If you can't monitor block rates per cohort, you can't tune thresholds safely.
 
-- CloudFront Functions cookbook (Node.js 20 examples): https://github.com/aws-samples/cloudfront-functions-recipes/tree/v2026
-- Redis 7.2 rate-limiter patterns: https://redis.io/docs/stack/programmability/patterns/ratelimiter/
-- Akamai Bot Manager 2026 release notes: https://learn.akamai.com/en-us/webhelp/bot-manager/bot-manager-user-guide/GUID-2026CHANGES.html
-- OWASP API Security Top 10 (2026 update): https://owasp.org/www-project-api-security/
-- CloudWatch anomaly detection tutorial: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Anomaly-Detection.html
+## How to apply this in the next 30 minutes
 
-## Frequently Asked Questions
+Pick one high-value endpoint — login or pricing are the usual candidates — and enable real-time logging on it. Then run a query that groups requests by minute, cohort, and response status. Look for two signatures:
 
-**what is the cheapest way to stop api scraping in 2026**
+- **A flat line of 429s across many source addresses.** That's distributed credential stuffing.
+- **Traffic at 1.5× normal with a low success rate.** That's likely scraping.
 
-Start with Akamai Bot Manager or Fastly’s edge compute using behavioral rules only (no JavaScript challenges). The lightweight behavioral rules cost 0.2 ms and block 70–80 % of scrapers. Only if scraping persists should you move to device attestation or CIT tokens, which require client-side changes.
-
-**how to rate limit without breaking mobile apps in africa and asia**
-
-Bucket users by region, device type, and account age instead of IP. Use Redis 7.2 sorted sets for a 10-minute rolling window. Give African users on low-end Android a 30 req/min limit with a 60-req burst. Monitor your false-positive dashboard weekly and raise limits if you see >0.5 % blocked legitimate traffic.
-
-**what header should i add to my mobile app to prove it's real**
-
-Add an `X-CIT` header containing an ECDSA-signed token that includes the device’s hardware-backed public key, a device fingerprint hash, and a monotonic counter. The token should last 15 minutes. The CloudFront Function (Node.js 20) verifies the signature and nonce, then passes the token downstream for rate limiting.
-
-**why does aws waf keep missing credential stuffing attacks**
-
-Most WAF rules in 2026 are still tuned for volumetric DDoS or SQL injection. Credential stuffing bots rotate IPs every 30 seconds and mimic mobile user agents, so they slip past IP-based rules. AWS WAF v2.8 only catches 40 % of these attacks unless you write custom rate-based rules that bucket by account age and device class, which quickly becomes unmaintainable.
-
-## Next step
-
-Open your CloudFront distribution today and enable real-time logs. Then run the CloudWatch Logs Insights query above on your highest-traffic endpoint. In 15 minutes you’ll have the data to decide whether you need behavioral bot rules, client integrity tokens, or adaptive rate limiting first.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 24, 2026
+If you see either, you have the data to decide which layer to add first: CITs for stuffing, behavioral scoring for scraping, and cohort-based rate limiting when you need to cap both without breaking mobile clients. Start with the cheapest stateless layer and add state only when the data justifies it.

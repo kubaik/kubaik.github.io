@@ -64,7 +64,7 @@
       "description": "CDC pipeline crashes when LLM bursts hit — Postgres replication slot errors, 3 concrete fixes, vLLM 0.4.2 and Python semaphore patterns, plus the one…",
       "datePublished": "2026-08-02T13:29:42+00:00",
       "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 2463,
+      "wordCount": 2434,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -265,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2463 words
+                        &nbsp;·&nbsp; 2434 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -290,7 +285,7 @@ llm = LLM(
     enforce_eager=True,  # Critical to avoid buffering
 )
 </code></pre>
-<p>Without <code>enforce_eager=True</code>, vLLM buffers responses, which kills the CDC pipeline. We learned this the hard way when our staging environment ran for 3 days with a hidden bug.</p>
+<p>Without <code>enforce_eager=True</code>, vLLM buffers responses, which kills the CDC pipeline.</p>
 <p><strong>Case 2: The Kafka topic compaction storm</strong>
 We use AWS MSK (kafka_2.13:3.7.0) with topic compaction enabled. Under normal load, our <code>cdc_events</code> topic has ~500MB of data. During an LLM burst, one response generated 100,000 events (because the model expanded a single prompt into 100 separate chunks). MSK tried to compact the topic while the sink was still processing, causing a compaction storm. The sink thread blocked for 12 seconds while Kafka rebalanced partitions. Postgres replication lag hit 5 seconds, and the replication slot error appeared again. The fix was to disable compaction for the <code>cdc_events</code> topic and set <code>cleanup.policy=delete</code> instead:</p>
 <pre><code class="language-bash"># CLI command to update topic config
@@ -310,9 +305,9 @@ resource &quot;aws_db_instance&quot; &quot;postgres&quot; {
   # ... rest of config
 }
 </code></pre>
-<p>After this change, the replication lag stayed under 200ms even during LLM bursts. We also added a CloudWatch alarm for <code>BurstBalance &lt; 30%</code> to catch this before it becomes a problem.</p>
+<p>After this change, the replication lag stayed under 200ms even during LLM bursts.</p>
 <p><strong>Case 4: The Lambda concurrency throttle</strong>
-We migrated our CDC function to AWS Lambda (Python 3.12, 1.8GB memory) to reduce costs. During an LLM burst, the function hit the 1,000 concurrent execution limit. Lambda started throttling requests, and the CDC pipeline stalled. The replication slot lag spiked to 6 seconds, and the slot error appeared. The fix was to increase the reserved concurrency to 2,000:</p>
+During an LLM burst, the function hit the 1,000 concurrent execution limit. Lambda started throttling requests, and the CDC pipeline stalled. The replication slot lag spiked to 6 seconds, and the slot error appeared. The fix was to increase the reserved concurrency to 2,000:</p>
 <pre><code class="language-yaml"># serverless.yml snippet
 functions:
   cdc_processor:
@@ -323,7 +318,7 @@ functions:
 </code></pre>
 <p>We also added a <code>ConcurrencyLimitExceeded</code> alarm to catch this early. The lesson here is that Lambda’s concurrency limits can silently break your CDC pipeline if you don’t account for LLM bursts.</p>
 <p><strong>Case 5: The Debezium snapshot stall</strong>
-We used Debezium 2.5.0.Final to capture changes from a large Postgres table (100M rows). During an LLM burst, the snapshot phase (which runs a <code>SELECT * FROM table</code>) blocked the replication slot for 8 seconds. The replication lag spiked, and the slot error appeared. The fix was to split the snapshot into batches:</p>
+During an LLM burst, the snapshot phase (which runs a <code>SELECT * FROM table</code>) blocked the replication slot for 8 seconds. The replication lag spiked, and the slot error appeared. The fix was to split the snapshot into batches:</p>
 <pre><code class="language-yaml"># Debezium connector config
 snapshot.fetch.size: 10000
 snapshot.max.mb.per.sec: 10
@@ -671,33 +666,28 @@ resource &quot;aws_lambda_event_source_mapping&quot; &quot;msk_trigger&quot; {
 <p><strong>Lessons learned:</strong>
 1. <strong>Backpressure must be applied at every layer.</strong> One unconstrained component can break the entire pipeline. 2. <strong>Metrics are critical.</strong> Without <code>llm_call_duration_seconds</code> and <code>cdc_lag_seconds</code>, we wouldn’t have caught the problem early. 3. <strong>Cost savings follow reliability.</strong> By fixing the pipeline, we reduced cloud costs by 31%. 4. <strong>Minimal code changes can have maximal impact.</strong> We fixed the problem with just 15 lines of code.</p>
 <p><strong>Final thought:</strong> In 2026, LLM pipelines are the new "noisy neighbor." Without backpressure, they’ll break your entire infrastructure. The fix isn’t in Postgres—it’s in the tools you use to call the LLM.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">Postgres 17 swallowed Redis, Kafka, Timescale</a></li>
+<li><a href="https://kubaik.github.io/ai-agents-eat-your-budget-3-ways/">AI agents eat your budget 3 ways</a></li>
+<li><a href="https://kubaik.github.io/trim-llm-bills-3-finops-moves-that-work/">Trim LLM bills: 3 FinOps moves that work</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> August 02, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -726,7 +716,7 @@ please contact me and I'll review and correct it.</p>
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">
@@ -746,12 +736,7 @@ please contact me and I'll review and correct it.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

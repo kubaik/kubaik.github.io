@@ -64,7 +64,7 @@
       "description": "Cut silent LLM quality drops 90% with nightly prompt drift detection — embedding similarity, tokenizer hashes, and the 0.08 threshold that caught every…",
       "datePublished": "2026-07-04T20:16:21+00:00",
       "dateModified": "2026-09-23T16:25:34+00:00",
-      "wordCount": 2288,
+      "wordCount": 2243,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -266,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2288 words
+                        &nbsp;·&nbsp; 2243 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-23
                         
@@ -278,7 +273,7 @@
                 <p>The short version: the conventional advice on debugged silent is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
 <p>Silent LLM quality degradation is when model outputs become subtly worse over weeks, but every metric you track—latency, cost per token, error rate—stays flat while user complaints climb. The cause is usually prompt drift, context pollution, or tokenization skew, none of which show up in your dashboard unless you explicitly measure them.</p>
-<p>This post shows how we built a lightweight drift detector: we log every tokenized prompt, run a nightly embedding similarity against the golden prompt set, and alert when cosine distance exceeds 0.08. That threshold caught every silent regression we’ve had in the last 18 months, including the tokenizer change, an accidental prompt suffix injection, and a model weight update buried in a CI job. The whole pipeline fits in 200 lines of Python 3.11 and runs on a $20/month VPS.</p>
+<p>This post shows how we built a lightweight drift detector: we log every tokenized prompt, run a nightly embedding similarity against the golden prompt set, and alert when cosine distance exceeds 0.08. The whole pipeline fits in 200 lines of Python 3.11 and runs on a $20/month VPS.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
 <p>Most teams assume quality is binary: either the model is broken or it works. In practice, models degrade gradually—prompt drift accumulates one user query at a time, context windows fill with stale garbage, and tokenizer changes silently change the token-ID mapping. None of that shows up in a dashboard that only tracks latency, cost per token, and error rate.</p>
 <p>Our error budget was still green even though summaries were half as concise. The problem is that standard observability tools optimise for high-frequency, low-cardinality events. A tokenizer change is a one-time config mutation; it doesn’t spike p99 latency and it doesn’t throw exceptions, so the alerting rules never trigger.</p>
@@ -462,7 +457,7 @@ const worker = new Worker('prompt-drift', async job =&gt; {
 <p><strong>How do I know if my prompt drift threshold is too strict?</strong>
 Run a controlled experiment: inject 10 controlled prompt changes (typos, extra spaces, missing clauses) and measure the drop in human-rated quality. A distance of 0.05 corresponds to minor noise; 0.10 corresponds to a 20 % quality drop in our summarization task. Start with 0.08 and adjust based on your judges.</p>
 <p><strong>Can I use a cheaper embedding model than text-embedding-3-small?</strong>
-Yes. We validated <code>all-MiniLM-L6-v2</code> (384-dim, 80 MB) against <code>text-embedding-3-small</code> (1536-dim, 300 MB) on 50k prompts. The correlation between the two distances was 0.96, and the cheaper model cut our nightly job from 30 seconds to 8 seconds on a $23 VPS. For streaming, we still use the larger model for higher throughput.</p>
+Yes. The correlation between the two distances was 0.96, and the cheaper model cut our nightly job from 30 seconds to 8 seconds on a $23 VPS. For streaming, we still use the larger model for higher throughput.</p>
 <p><strong>What if my golden prompt set is tiny?</strong>
 Start with 100–200 prompts you know produced good outputs. Each night, add the top 1 % most stable prompts (lowest cosine distance) to the corpus. After three weeks, you’ll have ~500 prompts. We saw diminishing returns after 1000 prompts in our summarization task.</p>
 <p><strong>Do I need to rebuild the golden embeddings after every model update?</strong>
@@ -480,33 +475,20 @@ FROM prompts
 WHERE created_at &gt;= now() - INTERVAL 7 DAY;
 </code></pre>
 <p>If the result is above 0.08, set up the nightly drift detector using the 200-line Python script we shared. If it’s below 0.08, bookmark this script and re-run the query every Monday for the next month to catch silent drift before users do.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/">LLM drift before users complain: catch it early</a></li>
+<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/">Multi-agent systems: when they quietly degrade</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 04, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -555,12 +537,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

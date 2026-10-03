@@ -64,7 +64,7 @@
       "description": "Cut false positives 60% using AI scanners the right way — combine LLM rules with CodeQL 2.14, AFL++ fuzzing, and runtime monitoring to catch real…",
       "datePublished": "2026-07-02T20:27:23+00:00",
       "dateModified": "2026-09-16T07:36:58+00:00",
-      "wordCount": 2337,
+      "wordCount": 2301,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2337 words
+                        &nbsp;·&nbsp; 2301 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -481,11 +476,11 @@ klee --max-tests=10000 auth.bc
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>How do I know if my AI scanner is missing real bugs?</strong></p>
-<p>Start by auditing its false negatives. Pick a recent incident in your org or a public CVE from the past 6 months. Try to trigger the same vulnerability using the scanner. If it doesn’t flag it, you’ve found a gap. In one team I worked with, our AI scanner missed a race condition in a session store because it wasn’t in the training data. We caught it by writing a custom CodeQL rule that checked for concurrent writes to the same key.</p>
+<p>Start by auditing its false negatives. Pick a recent incident in your org or a public CVE from the past 6 months. Try to trigger the same vulnerability using the scanner. If it doesn’t flag it, you’ve found a gap. We caught it by writing a custom CodeQL rule that checked for concurrent writes to the same key.</p>
 <p><strong>Is it safe to use AI-generated security rules in production?</strong></p>
 <p>Only if you validate them. Run the rules against your own codebase first. Use a small staging environment to test them. It caused 47 false-positive PRs in a week. Always audit and refine.</p>
 <p><strong>What’s the best way to introduce fuzzing without slowing down CI?</strong></p>
-<p>Start with targeted fuzzing on one endpoint per sprint. Use lightweight harnesses and run them nightly. For example, fuzz your password reset endpoint by generating random tokens and checking for crashes. Tools like libFuzzer integrate with CMake and can run in under 2 minutes. I’ve seen teams cut fuzzing time by 70% by scoping it to high-risk paths only.</p>
+<p>Start with targeted fuzzing on one endpoint per sprint. Use lightweight harnesses and run them nightly. For example, fuzz your password reset endpoint by generating random tokens and checking for crashes. Tools like libFuzzer integrate with CMake and can run in under 2 minutes.</p>
 <p><strong>Can runtime monitoring replace static analysis?</strong></p>
 <p>No. Runtime monitoring catches what’s already happening; static analysis prevents it from happening. We caught 8 incidents in 30 days—but 3 of them could have been prevented with a simple CodeQL rule. Runtime is reactive; static is proactive. Use both.</p>
 <h2 id="close-the-gap-today">Close the gap today</h2>
@@ -500,33 +495,20 @@ semgrep --config=auto --lang=javascript --generate-config src/routes/api.js &gt;
 cat rules.yaml
 </code></pre>
 <p>Then, run one of the rules against your codebase and see how many issues it flags. If you find a false positive, fix the rule. If you find a real issue, file it. Do this today, even if it’s just one endpoint. That’s how you start turning AI scanners from noise into signal.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/">Stop false positives in CI scanning now</a></li>
+<li><a href="https://kubaik.github.io/claude-code-review-wins-and-blind-spots/">Claude code review: wins and blind spots</a></li>
+<li><a href="https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/">Cut false positives 85% with this CI security trick</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 02, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -565,9 +547,9 @@ please contact me — corrections are applied within 48 hours.</p>
                     </a>
                     
                     <a class="related-card" href="/prompt-injection-got-the-hype-poison-data-ruined-us/">
-                        <h3>Prompt injection got the hype — poison data ruined us</h3>
-                        <p>Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.</p>
-                        <span class="related-meta">16 min read · 3 August 2026</span>
+                        <h3>Prompt Injection Is Not Your Biggest LLM Data Risk</h3>
+                        <p>Prompt injection dominates LLM security checklists, but poisoned training data and label drift often cause more damage. A pipeline-stage model for triage.</p>
+                        <span class="related-meta">17 min read · 3 August 2026</span>
                     </a>
                     
                 </div>
@@ -575,12 +557,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

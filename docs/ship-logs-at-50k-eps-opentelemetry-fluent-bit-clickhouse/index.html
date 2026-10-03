@@ -64,7 +64,7 @@
       "description": "Cut log pipeline costs 60% with OpenTelemetry 1.30, Fluent Bit 2.2, and ClickHouse 23.10 — 50k EPS benchmark and the tuning mistakes I made first",
       "datePublished": "2026-07-03T13:30:22+00:00",
       "dateModified": "2026-09-16T12:40:06+00:00",
-      "wordCount": 3047,
+      "wordCount": 2912,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -242,7 +237,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3047 words
+                        &nbsp;·&nbsp; 2912 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -259,7 +254,6 @@
 <p>Below I compare two stacks that actually ship high-volume logs in 2026 without breaking the bank:</p>
 <p>• Option A: OpenTelemetry Collector (OTel) + Fluent Bit + ClickHouse
 • Option B: Filebeat + Elasticsearch 8.12 + Kibana</p>
-<p>I’ll show where each stack shines, where it craps out, and the exact knobs I turned to hit 50k EPS within budget.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p>The OpenTelemetry Collector (OTel) 1.30 is a vendor-agnostic agent that receives logs, metrics, and traces over OTLP, transforms them, and forwards them to any backend. Fluent Bit 2.2 is the lightweight log forwarder that ships logs from the host to OTel. ClickHouse 23.10 is the columnar analytical database that stores and queries logs at scale.</p>
 <p>Architecture at 50k EPS:</p>
@@ -341,7 +335,7 @@
 <p>Kibana uses the <code>discover</code> app with a saved search that filters on <code>timestamp</code> and <code>@timestamp</code>. The saved search returns in 2.4 s p99 for the same query that ClickHouse answers in 15 ms.</p>
 </li>
 </ol>
-<p>What surprised me is that Elasticsearch 8.12’s <code>ilm</code> policy (Index Lifecycle Management) saved us from manual cleanup. With a <code>hot</code> phase of 1 day, <code>warm</code> of 6 days, and <code>delete</code> of 8 days, we kept the active index under 50 GB and avoided the 2-hour reindex window that Elasticsearch 7.17 required.</p>
+<p>What surprised me is that Elasticsearch 8.12’s <code>ilm</code> policy (Index Lifecycle Management) saved us from manual cleanup.</p>
 <p>Region-specific gotchas:</p>
 <p>• In Lagos, Filebeat’s <code>close_inactive</code> setting must be ≥30 s or the agent keeps file handles open, which triggers <code>Too many open files</code> errors when disk IO stalls. • Elasticsearch’s <code>cluster.routing.allocation.balance.shard</code> must be set to <code>0.45</code> to avoid uneven shard distribution when nodes restart. • Kibana’s <code>server.publicBaseUrl</code> must point to the regional load balancer; otherwise, latency from the browser to Kibana adds 300 ms to every click.</p>
 <p>Operational complexity is higher: Filebeat configs live in a separate repo, Elasticsearch requires JVM tuning (<code>-Xms8g -Xmx8g</code>), and Kibana needs a reverse proxy with ACLs. Upgrades are rolling-restart heavy; we’ve seen 10 % query failures during Filebeat upgrades when the <code>ilm</code> rollover stalls.</p>
@@ -387,7 +381,7 @@
 </tr>
 </tbody>
 </table>
-<p>That’s 8 % cheaper than our previous Elasticsearch 7.17 cluster, but only because we downsized shards and enabled ILM. Without those changes, the cost would have been 40 % higher.</p>
+<p>Without those changes, the cost would have been 40 % higher.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
 <p>We ran a 30-minute sustained load test at 50,000 EPS (1 KB JSON, 9 fields) on both stacks. Metrics collected from Prometheus 2.47 and ClickHouse system tables.</p>
 <p>Benchmark results (median of 5 runs):</p>
@@ -446,8 +440,8 @@ WHERE tenant_id = 'acme'
   AND timestamp &gt; now() - INTERVAL 5 MINUTE
 </code></pre>
 <p>returns in 45 ms on ClickHouse with a <code>MergeTree</code> table and a skip index on <code>tenant_id</code>. The same query on Elasticsearch with a <code>keyword</code> mapping takes 3.2 s and triggers a 60-second refresh on the index.</p>
-<p>I learned this the hard way when a customer ran an ad-hoc dashboard that filtered on <code>user_id</code>. The Elasticsearch cluster CPU spiked to 95 % and the cluster blocked writes for 3 minutes. After the incident, we rebuilt the index with a <code>doc_values</code> mapping and a runtime field, but the latency never dropped below 2.1 s. ClickHouse handled the same load with 50 ms latency and no blocking.</p>
-<p>Indexing throughput is close: 52k vs 48k EPS. The difference is Fluent Bit’s memory buffer vs Filebeat’s filesystem buffer. Fluent Bit wins under sudden spikes because it streams chunks directly to OTel, while Filebeat spools to disk first. In our test, Fluent Bit handled a 30 % spike to 70k EPS with 0 dropped events, whereas Filebeat dropped 0.3 % of events before the bulk queue flushed.</p>
+<p>I learned this the hard way when a customer ran an ad-hoc dashboard that filtered on <code>user_id</code>. The Elasticsearch cluster CPU spiked to 95 % and the cluster blocked writes for 3 minutes. ClickHouse handled the same load with 50 ms latency and no blocking.</p>
+<p>Indexing throughput is close: 52k vs 48k EPS. The difference is Fluent Bit’s memory buffer vs Filebeat’s filesystem buffer. Fluent Bit wins under sudden spikes because it streams chunks directly to OTel, while Filebeat spools to disk first.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
 <p>Developer experience is measured in how fast a new engineer can onboard, debug, and ship changes without pager duty fire drills.</p>
 <p>Setup time:</p>
@@ -513,7 +507,7 @@ GROUP BY tenant_id, timestamp
 <p>• Filebeat/Elasticsearch/Kibana: 6 hours/week. Filebeat configs change per region, Elasticsearch JVM heap must be adjusted per node type, and Kibana ACLs break after each minor version upgrade.</p>
 <p>Upgrade risk:</p>
 <p>• OTel 1.30 → 1.31: zero downtime, Helm chart handles rolling restart. No data loss.</p>
-<p>• Elasticsearch 8.12 → 8.13: rolling restart required, but the cluster blocked writes for 2 minutes during a node restart in our Frankfurt region. We lost 0.1 % of events; the customer noticed.</p>
+<p>• Elasticsearch 8.12 → 8.13: rolling restart required, but the cluster blocked writes for 2 minutes during a node restart in our Frankfurt region.</p>
 <p>Storage efficiency:</p>
 <p>ClickHouse compresses logs at ~4:1 with <code>ZSTD(3)</code>. Elasticsearch compresses at ~2.5:1 with <code>best_compression</code>. That’s why the storage bill is the same despite ClickHouse using 3 nodes vs Elasticsearch using 3 nodes.</p>
 <p>Regional multipliers:</p>
@@ -549,33 +543,20 @@ GROUP BY tenant_id, timestamp
 <p>If you ship more than 10k EPS and your team is small, use OpenTelemetry 1.30 + Fluent Bit 2.2 + ClickHouse 23.10. The stack hits 80 ms p99 latency at 50k EPS, costs $1,473/month, and deploys in a single Helm chart. Elasticsearch 8.12 + Filebeat + Kibana is cheaper in compute but costs 3× the people time and returns queries 30× slower.</p>
 <p>If you only need basic log shipping and already live in the Elastic ecosystem, Filebeat + Elasticsearch 8.12 + Kibana is fine. Just size your shards aggressively, enable ILM, and train your team on JVM tuning.</p>
 <p>Action step for the next 30 minutes: Run <code>helm show values otel-collector/otel-collector</code> and compare the <code>processors.batch</code> and <code>receivers.otlp</code> sections against your current log pipeline. If you see <code>timeout: 1s</code> and <code>send_batch_size: 8192</code>, bump them to <code>timeout: 5s</code> and <code>send_batch_size: 32768</code> before you touch anything else.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+<li><a href="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">Postgres 17 swallowed Redis, Kafka, Timescale</a></li>
+<li><a href="https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 03, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -599,12 +580,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

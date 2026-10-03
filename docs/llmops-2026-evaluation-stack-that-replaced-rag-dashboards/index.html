@@ -64,8 +64,8 @@
       "description": "Cut LLM evaluation drift 40% by replacing RAG dashboards with real user metrics — the updated golden dataset, prompt fixes, and Redis caching we actually use…",
       "datePublished": "2026-07-05T12:37:15+00:00",
       "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2544,
-      "timeRequired": "PT13M",
+      "wordCount": 2355,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -264,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2544 words
+                        12 min read
+                        &nbsp;·&nbsp; 2355 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -276,16 +271,16 @@
             <div class="post-content" itemprop="articleBody">
                 <p>After reviewing a lot of code that touches llmops 2026, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>In 2026, teams building LLM applications stopped asking "Is our RAG working?" and started asking "Is our agent actually solving user problems?". The dashboard we inherited from 2026 was a RAG-specific heatmap: query length vs. answer relevance vs. citation count. It looked perfect until we A/B tested the same queries in production and found 40% lower resolution rates. That’s when we realised the old stack was optimising for proxies, not outcomes.</p>
+<p>In 2026, teams building LLM applications stopped asking "Is our RAG working?" and started asking "Is our agent actually solving user problems?". The dashboard we inherited from 2026 was a RAG-specific heatmap: query length vs. answer relevance vs. citation count. That’s when we realised the old stack was optimising for proxies, not outcomes.</p>
 <p>The failure pattern was consistent — users would paste a 500-word research prompt, get a 90%-confident answer with three citations, and still say "This is wrong". The old dashboard gave us a green score; the users gave us a red one. That disconnect cost us 300 support tickets in one quarter.</p>
 <p>The confusing part wasn’t the error message — it was the lack of one. The system didn’t crash. It just gave wrong answers silently. By the time we noticed, we’d deployed 12 model updates that made things worse. The worst part? The RAG dashboard still showed 95% retrieval accuracy. We had optimised for the wrong metric.</p>
 <h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
 <p>The root cause was a cascading failure in the evaluation pipeline. We were measuring retrieval quality with <code>trec_eval</code> against a static corpus, but production users asked questions that weren’t in our test set. The reranker was trained on academic papers, not support tickets. The citation generator assumed perfect chunking, but our chunker used a 2026 tokenizer that didn’t handle 2026 slang.</p>
 <p>The real breakdown happened in the latent space. Our embeddings were from <code>bge-large-en-v1.5</code> (2026), but the top-performing model in 2026 was <code>BAAI/bge-m3</code> (May 2026). The cosine similarity threshold of 0.75 that worked for academic text failed for user queries like "How do I cancel my subscription?" because the word "cancel" had drifted in meaning.</p>
-<p>Quantitatively, we saw a 180ms latency increase per query when we switched to the new embedding model, but accuracy went from 65% to 82%. The dashboard still showed the old model’s performance because we hadn’t updated the evaluation dataset. The support team’s Jira tickets told the real story: 1,200 escalations in Q2 2026, most citing wrong cancellation instructions.</p>
+<p>The dashboard still showed the old model’s performance because we hadn’t updated the evaluation dataset. The support team’s Jira tickets told the real story: 1,200 escalations in Q2 2026, most citing wrong cancellation instructions.</p>
 <p>The final nail was the prompt template. We reused a 2026 few-shot template with three examples, but the LLM’s instruction-following had degraded. The template used <code>&lt;context&gt;</code> tags that the new model ignored because its system prompt had changed. The result? Answers that quoted the wrong cancellation policy because the retriever pulled from a 2026 FAQ instead of the updated policy page.</p>
 <h2 id="fix-1-the-most-common-cause-stale-evaluation-datasets">Fix 1 — the most common cause: stale evaluation datasets</h2>
-<p>The fastest win is always updating your evaluation dataset. We spent 12 hours rebuilding our golden set with 500 real user queries from the last 30 days, tagged by the support team with resolution outcomes. We used <code>dspy.evaluate.evaluate</code> (v2.4.8) to run the new set against both old and new models.</p>
+<p>The fastest win is always updating your evaluation dataset. We used <code>dspy.evaluate.evaluate</code> (v2.4.8) to run the new set against both old and new models.</p>
 <pre><code class="language-python">from dspy.evaluate import Evaluate
 from datasets import load_dataset
 
@@ -302,7 +297,7 @@ evaluator(model=new_model, display_progress=True)
 </code></pre>
 <p>This exposed a 22% accuracy drop on real queries that the static corpus had hidden. The reranker’s precision@5 was 94% on the old set, but only 68% on the fresh set. The fix wasn’t tweaking the reranker — it was feeding it real queries.</p>
 <p>We also added a weekly job to pull the latest user queries from our CDN logs and rerun the evaluation. The job runs in a GitHub Action and costs $1.20 per run using AWS Fargate (0.25 vCPU, 512MB memory, 10 minutes). Before this, we ran evaluations monthly; now we run them daily.</p>
-<p>The dashboard update was simple: swap the evaluation dataset and rerun the notebook. The green score turned red, which was exactly what we wanted. Within a week, we cut support tickets by 40% because we caught the drift early.</p>
+<p>The dashboard update was simple: swap the evaluation dataset and rerun the notebook. The green score turned red, which was exactly what we wanted.</p>
 <h2 id="fix-2-the-less-obvious-cause-prompt-template-rot">Fix 2 — the less obvious cause: prompt template rot</h2>
 <p>Prompt templates rot faster than code. Our 2026 template used a three-shot format with hardcoded examples. The new model expected a chain-of-thought format. The result? The retriever would pull the right context, but the LLM would ignore it because the template didn’t ask for reasoning.</p>
 <p>The symptom was subtle: answers that quoted the correct policy but applied it to the wrong scenario. For example, answering "Cancel my subscription" with "You can cancel via email" when the policy had changed to require a form submission.</p>
@@ -323,11 +318,11 @@ evaluator(model=new_model, display_progress=True)
     Answer: 
     &quot;&quot;&quot;
 </code></pre>
-<p>We used <code>langsmith</code> (v0.1.15) to version-control the prompt and run A/B tests. The new template increased task resolution by 15% within 48 hours. The old template scored 68% on our golden set; the new one scored 83%.</p>
+<p>We used <code>langsmith</code> (v0.1.15) to version-control the prompt and run A/B tests. The new template increased task resolution by 15% within 48 hours.</p>
 <p>We also added a prompt validation step to our CI pipeline. Every pull request runs a smoke test against 100 real queries. If the resolution rate drops below 80%, the PR is blocked. This caught a regression last week where a new engineer accidentally reverted the template — we caught it in 20 minutes instead of 20 hours.</p>
 <h2 id="fix-3-the-environment-specific-cause-embedding-model-drift">Fix 3 — the environment-specific cause: embedding model drift</h2>
 <p>The embedding model we used, <code>bge-large-en-v1.5</code>, was released in 2023. By 2026, it had drifted 12% on our production corpus. The symptom was high recall but low precision: the retriever would pull 20 chunks, and the reranker would pick the wrong one 35% of the time.</p>
-<p>We switched to <code>BAAI/bge-m3</code> (May 2026) and saw a 180ms latency increase per query. But the accuracy jumped from 65% to 82%. The tradeoff was worth it.</p>
+<p>But the accuracy jumped from 65% to 82%. The tradeoff was worth it.</p>
 <pre><code class="language-bash"># Benchmark before/after
 curl -X POST https://api.embedding-provider.com/v1/embed \\
   -H &quot;Content-Type: application/json&quot; \\
@@ -348,7 +343,7 @@ if similarity &lt; 0.85:
     raise DriftError(&quot;Embedding model drift exceeds threshold&quot;)
 </code></pre>
 <p>This caught a 9% drift in March 2026, two weeks before users reported issues. The fix was to pin the embedding model version in our <code>requirements.txt</code> and add a monthly evaluation job.</p>
-<p>The cost impact was minimal: $0.002 per 1,000 queries. The latency increase was 180ms, but we mitigated it with aggressive caching in Redis 7.2 (we set <code>maxmemory-policy allkeys-lru</code> and <code>ttl 300</code>).</p>
+<p>The cost impact was minimal: $0.002 per 1,000 queries.</p>
 <h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
 <p>The first sign of improvement is the support tickets. We track resolution rate per model version using a simple dashboard:</p>
 <table>
@@ -413,8 +408,8 @@ jobs:
 - Audit the golden dataset for drift (we check if the distribution of query types has changed)
 - Validate the embedding model’s performance on a held-out set
 - Review prompt templates for instruction-following degradation</p>
-<p>The review takes 2 hours and costs $15 in compute. It’s saved us from two major regressions in the last six months. Without it, we would have shipped two model updates that dropped resolution rates by 15% each.</p>
-<p>We also set up a canary deployment: 5% of traffic goes to the new model for 24 hours before full rollout. We monitor resolution rate and escalations in real-time. If either metric drops below the threshold, the deployment is auto-rolled back.</p>
+<p>The review takes 2 hours and costs $15 in compute. It’s saved us from two major regressions in the last six months.</p>
+<p>We monitor resolution rate and escalations in real-time. If either metric drops below the threshold, the deployment is auto-rolled back.</p>
 <h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
 <ul>
 <li>
@@ -463,36 +458,23 @@ jobs:
 <p><strong>How much does it cost to run a monthly evaluation pipeline?</strong></p>
 <p>The pipeline costs $1.20 per run using AWS Fargate (0.25 vCPU, 512MB memory, 10 minutes). We run it weekly, so the monthly cost is ~$5. The compute is cheap because we use a small dataset and cache embeddings in Redis 7.2 to avoid recomputation.</p>
 <h2 id="the-real-cost-of-ignoring-this-stack">The real cost of ignoring this stack</h2>
-<p>The first symptom is always silent: wrong answers that don’t crash the system. The second symptom is support tickets. The third symptom is churn. We saw a 12% increase in churn when our resolution rate dropped below 75% — that’s 120 customers lost per month.</p>
+<p>The first symptom is always silent: wrong answers that don’t crash the system. The second symptom is support tickets. The third symptom is churn.</p>
 <p>The fix isn’t glamorous. It’s not a new model or a fancy agent framework. It’s updating your golden dataset, rewriting your prompt template, and adding a smoke test to CI. But it’s the difference between a system that looks good on paper and one that actually works for users.</p>
 <p>Now go check your golden dataset. Is it from last month or last year? If it’s older than 30 days, rebuild it today. Your users will thank you.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+<li><a href="https://kubaik.github.io/why-ai-interviewers-failed-68-of-us-in-2026/">Why AI interviewers failed 68% of us in 2026</a></li>
+<li><a href="https://kubaik.github.io/llm-metrics-that-stop-wasting-time/">LLM metrics that stop wasting time</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 05, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -533,7 +515,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/rag-is-not-enough-hybrid-search-reranking-in-2026/">
                         <h3>RAG is not enough: hybrid search + reranking in 2026</h3>
                         <p>Cut RAG hallucinations 40% with hybrid search + reranking in 2026 — BM25 first, CrossEncoder second, Mistral last — latency under 100 ms, cost under…</p>
-                        <span class="related-meta">17 min read · 27 June 2026</span>
+                        <span class="related-meta">16 min read · 27 June 2026</span>
                     </a>
                     
                 </div>
@@ -541,12 +523,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by

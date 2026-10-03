@@ -64,8 +64,8 @@
       "description": "Cut migration downtime 70% by versioning schemas before deploy — concrete patterns from 3 outages and 18 months of metrics.",
       "datePublished": "2026-06-28T01:58:52+00:00",
       "dateModified": "2026-09-18T12:45:40+00:00",
-      "wordCount": 2782,
-      "timeRequired": "PT14M",
+      "wordCount": 2637,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -201,12 +201,7 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header"><ins class="adsbygoogle"
-     style="display:block;width:100%;min-height:90px;max-height:90px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
@@ -259,8 +254,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2782 words
+                        13 min read
+                        &nbsp;·&nbsp; 2637 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-18
                         
@@ -272,14 +267,14 @@
                 <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>The standard playbook goes like this: you treat your database schema as a second-class citizen in your zero-downtime pipeline. You run migrations in production while the app is live, using tools like Flyway or Liquibase. You wrap them in transactional DDL (where supported), you add a retry loop, you test in staging first, and you ship the migration script with your next release. It’s the textbook approach and it’s taught in every deployment guide from Kubernetes docs to platform engineering blogs.</p>
-<p>I followed that playbook for three years at a healthtech startup serving 1.2 million users across four countries. It worked… until it didn’t. One night, a seemingly routine <code>ALTER TABLE</code> on a 140 GB table timed out after 35 minutes. The rollback script failed because the statement had already committed. We had to restore from a 4-hour-old backup, during which the system dropped 12% of inbound HL7 messages and violated our SLA for audit logs. That outage cost us $47k in SLA credits and two compliance reports.</p>
+<p>I followed that playbook for three years at a healthtech startup serving 1.2 million users across four countries. It worked… until it didn’t. One night, a seemingly routine <code>ALTER TABLE</code> on a 140 GB table timed out after 35 minutes. The rollback script failed because the statement had already committed. That outage cost us $47k in SLA credits and two compliance reports.</p>
 <p>The conventional wisdom assumes your schema is a deterministic artifact you can patch live. But in practice, schema changes leak state across deployments. A column added in v3.2 is still there when v4.5 deploys. A default value set in a migration can be overridden by application code. A foreign key added in a background job can block a foreground query during peak traffic. The honest answer is that live schema migrations are not “eventually consistent” — they are eventually <em>inconsistent</em> with the application’s expectations.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
 <p>Let’s simulate a typical production run. You prepare a migration that adds a <code>NOT NULL</code> column to the <code>users</code> table:</p>
 <pre><code class="language-sql">ALTER TABLE users ADD COLUMN mfa_required BOOLEAN NOT NULL DEFAULT FALSE;
 </code></pre>
 <p>You wrap it in a transaction, you set <code>lock_wait_timeout=1</code>, you run it in staging first, and it finishes in 250 ms. Confident, you roll it out at 2 AM with 99.9% of traffic still flowing. Five minutes later, the p95 latency on <code>/login</code> jumps from 85 ms to 2.1 seconds. Users in Singapore and Brazil start timing out. You check and the index creation on <code>mfa_required</code> is blocking the primary key scan for every authentication query. You roll back — except the <code>ALTER</code> already committed, so the rollback is another migration that drops the column. But your application code in v4.6 already references <code>user.mfa_required</code>, so the rollback breaks the new code path.</p>
-<p>I’ve seen this exact pattern at three companies. The root cause isn’t the tooling — it’s that the migration script and the application code are versioned independently. At one fintech we used Liquibase with Spring Boot. Our migration ran, the app deployed, and the new endpoint <code>/v2/profile</code> started querying a column that didn’t exist for 47% of users who hadn’t received the app update yet. The partial rollout left us with orphaned rows and a 3-hour incident.</p>
+<p>I’ve seen this exact pattern at three companies. The root cause isn’t the tooling — it’s that the migration script and the application code are versioned independently. At one fintech we used Liquibase with Spring Boot. The partial rollout left us with orphaned rows and a 3-hour incident.</p>
 <p>Even when the migration is reversible, the state it creates lingers. A soft-deleted column isn’t truly deleted; it’s just hidden behind a view or a feature flag. That hidden state becomes a landmine when you try to change the schema again. Tools like Atlas and Skeema help, but they don’t solve the coordination problem between the migration and the runtime behavior.</p>
 <h2 id="a-different-mental-model">A different mental model</h2>
 <p>Instead of treating the migration as a patch, treat it as a synchronization step between two independently evolving artifacts: the application code and the database schema. The key insight is that the schema must always be a valid superset of what every deployed version of the application expects. That means you cannot add a <code>NOT NULL</code> column and fill it with data in one step if older clients still read the table. You need a two-phase process: first widen the schema (add the column nullable), then deploy code that can handle both old and new, then tighten the schema (set the column non-nullable and drop the old column), then deploy cleanup code.</p>
@@ -319,7 +314,7 @@ func (s *SchemaLock) Acquire(ctx context.Context, client *s3.Client, bucket, key
 </code></pre>
 <p>We also use a background job that runs every 30 seconds to reconcile the actual schema with the expected version. If drift is detected, it emits an alert and pauses deployments until manual intervention. This job is idempotent and safe to run repeatedly — it never commits changes, only reports.</p>
 <h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
-<p>At a payments processor handling 8k transactions per second, we moved from Flyway’s in-place migrations to this versioned model. The change cut emergency rollbacks from 4 per quarter to 0 over 18 months. Here are the concrete numbers:</p>
+<p>The change cut emergency rollbacks from 4 per quarter to 0 over 18 months. Here are the concrete numbers:</p>
 <table>
 <thead>
 <tr>
@@ -352,8 +347,8 @@ func (s *SchemaLock) Acquire(ctx context.Context, client *s3.Client, bucket, key
 </tbody>
 </table>
 <p>The biggest surprise was that the versioned model actually sped up migrations. Because we no longer had to worry about partial rollouts, we could run heavier validations in staging. We also discovered that many “migrations” were actually data fixes that should have been separate jobs. By separating schema changes from data fixes, we reduced the blast radius of each release.</p>
-<p>Another data point: at a logistics SaaS with 400 GB of data, we used Skeema to diff the schema before every deploy. We found 14 drift incidents in 6 months where a developer had run an ad-hoc <code>ALTER</code> in production bypassing the pipeline. Without the diff step, those incidents would have surfaced as silent errors in the application layer. The cost of the extra validation was 3 extra minutes per deploy, but it prevented $230k in potential downtime.</p>
-<p>The operator would reconcile the desired state, but if the operator restarted mid-migration, it would resume without checking whether the migration had already committed. We added a leader election lock around the migration step, reducing failed reconciliations by 68%.</p>
+<p>Without the diff step, those incidents would have surfaced as silent errors in the application layer. The cost of the extra validation was 3 extra minutes per deploy, but it prevented $230k in potential downtime.</p>
+<p>The operator would reconcile the desired state, but if the operator restarted mid-migration, it would resume without checking whether the migration had already committed.</p>
 <h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
 <p>There are scenarios where live migrations are not just acceptable but optimal. For read-heavy systems with low write concurrency, adding a nullable column with a default value is usually safe. For example, adding a <code>preferences_json</code> column to a user table that’s only written by a background job and read by the new UI version. The key is that the new column doesn’t affect existing queries, and the background job can tolerate duplicates.</p>
 <p>Another valid case is when you control both the application and the database versions tightly, like in a mobile app where the backend and client release cycles are synchronized. If every user gets the new version within minutes, you can ship a schema migration that assumes all clients are updated. This works well for games or social apps, but it breaks down in regulated industries where audit trails require backward compatibility.</p>
@@ -438,34 +433,21 @@ func (s *SchemaLock) Acquire(ctx context.Context, client *s3.Client, bucket, key
 <p><strong>how to roll back a failed database migration in a zero downtime system</strong></p>
 <p>If the migration already committed, the rollback must also be a migration that reverses the change. But if the application code has already deployed, you need a feature flag to disable the new code path. The safest rollback is to deploy the previous application version and run the reverse migration. We use a GitHub Action that automatically rolls back both code and schema if the health checks fail within 5 minutes of deploy.</p>
 <p><strong>why do online schema change tools like pt-online-schema-change still cause issues in 2026</strong></p>
-<p>Tools like pt-osc 3.0.13 work by creating a shadow table and swapping it in, but they can still block queries during the swap phase. In high-concurrency systems, the swap can take seconds, during which locks accumulate and p99 latency spikes. We saw a 4x increase in latency when using pt-osc on a table with 300k active connections. The versioned model avoids this by decoupling schema changes from runtime behavior.</p>
+<p>Tools like pt-osc 3.0.13 work by creating a shadow table and swapping it in, but they can still block queries during the swap phase. In high-concurrency systems, the swap can take seconds, during which locks accumulate and p99 latency spikes. The versioned model avoids this by decoupling schema changes from runtime behavior.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/stop-the-writes-zero-downtime-db-migrations/">Stop the writes — zero-downtime DB migrations</a></li>
+<li><a href="https://kubaik.github.io/audit-logs-ship-them-fast-keep-them-forever/">Audit logs: ship them fast, keep them forever</a></li>
+<li><a href="https://kubaik.github.io/circleci-still-beats-github-actions-at-50k-builds/">CircleCI still beats GitHub Actions at 50k builds</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 28, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
-                <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-                
-                
-                <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
             
@@ -514,12 +496,7 @@ please contact me — corrections are applied within 48 hours.</p>
             
         </article>
     </main>
-    <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    
     <footer>
         <div class="container">
             <p>&copy; 2026 Kubai Kevin. Written by
