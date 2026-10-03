@@ -1,45 +1,49 @@
-# Keep multi-model systems stable: 6 rules that worked
+# Stabilize multi-model agent routers: six production rules
 
-The conventional advice on architecture principles is incomplete in one specific, costly way. Production gives you neither a clean environment nor a patient timeline. This is what I put together after working through it properly.
+Multi-model agent routers fail in ways that are boring and predictable: unbounded fan-out on retries, duplicate side effects, timeouts that outlive the caller, and caches that quietly stop being shared. The model, the prompt, and the vector store are usually not the problem. The plumbing is.
 
-## Why I wrote this (the problem I kept hitting)
-
-In 2026, I watched two teams ship agentic systems that looked elegant on paper but melted under real load. Both used the same marketing stack: "LLM-powered agents", "multi-model routing", and "self-healing pipelines". The first team burned $42k/month on AWS Bedrock tokens before realising their retry logic was spawning 1,200 parallel agents on a 503 error. The second team’s system survived until 2am, when every agent started calling the same stuck dependency and the whole graph cascaded into a 90-second p99 latency spike.
-
-The root cause wasn’t the LLM, the prompt, or the vector store. It was a forgotten promise from 2018: *bounded concurrency*. We had wrapped each agent in a serverless function with no limits, assuming AWS Lambda would throttle gracefully. It didn’t. When 8k concurrent agents hit the same Redis 7.2 cluster with default maxmemory-policy allkeys-lru, eviction started at 300ms per GET, then climbed to 1.8s before we killed the circuit.
-
-What broke first under load wasn’t the agent logic; it was the plumbing we assumed would scale automatically. This post is the distillation of every post-mortem, load test, and cost audit I did in 2026 and early 2026. These six principles are what survived when the hype cycle dumped “agentic” and “multi-model” into every product pitch.
-
-Most teams still treat idempotency as optional. It isn’t.
+This article walks through six rules that hold up in production, with runnable code for a minimal router on AWS Lambda, Redis, and OpenTelemetry. Each rule gets a "how to measure it" note, because a rule you cannot measure is a rule you will not keep.
 
 ## Prerequisites and what you'll build
 
-You’ll need a project that already has:
-- A Node 20 LTS runtime (or Python 3.11 if you prefer) with TypeScript/Python tests. - AWS Lambda with arm64 and provisioned concurrency turned off (we’ll enable it manually later). - Redis 7.2 for shared state and rate limiting. - OpenTelemetry 1.20 collector and Prometheus 2.48 for metrics.
+You need a project that already has:
 
-We’ll build a minimal agent router that:
-1. Receives events via API Gateway HTTP API. 2. Routes each event to one of three models: a small on-device quantised model (4-bit), an external SaaS LLM, or a vector similarity search endpoint. 3. Enforces a concurrency budget of 100 agents per minute. 4. Retries with exponential backoff capped at 3 attempts. 5. Emits structured logs and traces so you can see exactly where time is spent.
+- Node 20 LTS with TypeScript tests (Python 3.11 works equally well; the patterns are language-agnostic).
+- AWS Lambda on arm64, with provisioned concurrency off initially.
+- Redis 7.2 for shared state and rate limiting.
+- An OpenTelemetry collector and a Prometheus endpoint for metrics.
 
-By the end, you’ll have a router that still runs at 50ms p99 even when 500 requests/second arrive, and you’ll know the exact cost per 1k requests.
+You will build a minimal agent router that:
 
-## Step 1 — set up the environment
+1. Receives events via API Gateway HTTP API.
+2. Routes each event to one of three backends: a small quantised model, an external SaaS LLM, or a vector similarity endpoint.
+3. Enforces a concurrency budget per window.
+4. Retries with exponential backoff capped at three attempts.
+5. Emits structured logs and traces so you can see where time is spent.
 
-Start with a fresh Node 20 LTS project:
+The goal is a router whose tail latency is bounded by your limits, not by your traffic.
+
+## Rule 1 — Bound concurrency at the router, not the runtime
+
+Serverless runtimes scale out; they do not scale *gracefully*. When a downstream dependency returns 503, retry logic that spawns a new invocation per retry turns one failure into a fan-out. A typical failure mode is a retry storm: each failed call schedules three more, and the queue depth grows faster than the autoscaler can react.
+
+Bounded concurrency means an explicit ceiling on in-flight work, enforced before you call the model.
+
+### Step 1 — set up the environment
 
 ```bash
 mkdir agent-router && cd agent-router
 npm init -y
 npm install typescript @types/node --save-dev
 npx tsc --init
-npm install @opentelemetry/sdk-node @opentelemetry/auto-instrumentations-node winston winston-transport-http @aws-sdk/client-lambda redis @types/redis express-pino-logger pino pino-pretty
+npm install @opentelemetry/sdk-node @opentelemetry/auto-instrumentations-node \
+  winston winston-transport-http @aws-sdk/client-lambda redis express-pino-logger pino pino-pretty
 ```
-
-Set up a Redis 7.2 cluster on AWS MemoryDB or ElastiCache. MemoryDB is cheaper for 99.9% availability; ElastiCache gives you multi-AZ failover. In both cases, set maxmemory-policy to volatile-lru and maxmemory-samples to 5. Expect ~$120/month for a cache.t4g.small cluster handling 50k ops/sec.
 
 Create a `.env` file:
 
 ```ini
-REDIS_URL=redis://cluster.memorydb.us-east-1.amazonaws.com:6379
+REDIS_URL=redis://cluster.example.cache.amazonaws.com:6379
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318
 AWS_REGION=us-east-1
 AGENT_CONCURRENCY_LIMIT=100
@@ -66,8 +70,8 @@ receivers:
 processors:
   batch:
   memory_limiter:
-    limit_mib: 512
-    spike_limit_mib: 100
+    limit_mib: 128
+    spike_limit_mib: 32
     check_interval: 1s
 
 exporters:
@@ -101,45 +105,46 @@ curl -X POST http://localhost:4318/v1/traces -H "Content-Type: application/json"
   '"name":"test-span","startTimeUnixNano":"1677643683000000000","endTimeUnixNano":"1677643683100000000"}]}]}]
 ```
 
-You should see debug logs and Prometheus metrics at http://localhost:8888/metrics.
+You should see debug logs and Prometheus metrics at `http://localhost:8888/metrics`.
 
-Gotcha: OpenTelemetry 0.88.0 added a memory limiter that defaults to 200 MiB. If you’re running on a 512 MiB Lambda, bump limit_mib to 128 and spike_limit_mib to 32. I learned this the hard way when my collector OOM’d during a load test.
+Gotcha: the OpenTelemetry collector's memory limiter defaults to a 200 MiB limit. On a 512 MiB Lambda, that leaves little headroom for the collector's own buffers. Set `limit_mib` to 128 and `spike_limit_mib` to 32 as above, and watch the collector's resident memory under load.
 
-## Step 2 — core implementation
+### Step 2 — core implementation
 
-Create `src/index.ts`. This is the agent router:
+Create `src/index.ts`:
 
 ```typescript
+import { trace } from '@opentelemetry/api';
+import { createClient } from 'redis';
+
 type AgentType = 'small' | 'llm' | 'vector';
 type ModelResult = { output: string; durationMs: number };
 
-const redis = require('redis');
-const { trace } = require('@opentelemetry/api');
-
 const tracer = trace.getTracer('agent-router');
-const REDIS = redis.createClient({ url: process.env.REDIS_URL });
+const REDIS = createClient({ url: process.env.REDIS_URL });
 REDIS.connect().catch(err => console.error('Redis connect failed', err));
 
 const CONCURRENCY_LIMIT = parseInt(process.env.AGENT_CONCURRENCY_LIMIT || '100', 10);
 const REQUEST_WINDOW_MS = 60 * 1000;
 
+// Sliding-window counter: one sorted set per window, scored by timestamp.
 async function checkConcurrency(): Promise<boolean> {
-  const key = `agent:concurrency:${new Date().toISOString().slice(0, 10)}`;
   const now = Date.now();
-  const startKey = `${key}:start`;
-  const countKey = `${key}:count`;
+  const key = 'agent:concurrency';
 
-  await REDIS.multi()
-    .zAdd(startKey, { score: now, value: now })
-    .zRemRangeByScore(startKey, 0, now - REQUEST_WINDOW_MS)
-    .zCard(countKey)
-    .zAdd(countKey, { score: now, value: now })
-    .zRemRangeByScore(countKey, 0, now - REQUEST_WINDOW_MS)
-    .incr(countKey)
+  const results = await REDIS.multi()
+    .zRemRangeByScore(key, 0, now - REQUEST_WINDOW_MS)
+    .zCard(key)
     .exec();
 
-  const count = await REDIS.get(countKey);
-  return parseInt(count || '0', 10) <= CONCURRENCY_LIMIT;
+  const current = (results?.[1] as number) ?? 0;
+  if (current >= CONCURRENCY_LIMIT) {
+    return false;
+  }
+
+  await REDIS.zAdd(key, { score: now, value: `${now}:${Math.random()}` });
+  await REDIS.expire(key, Math.ceil(REQUEST_WINDOW_MS / 1000) * 2);
+  return true;
 }
 
 async function routeAgent(input: string, agentType: AgentType): Promise<ModelResult> {
@@ -149,14 +154,11 @@ async function routeAgent(input: string, agentType: AgentType): Promise<ModelRes
   try {
     switch (agentType) {
       case 'small':
-        // Simulate 4-bit quantised model
         return { output: `Small model: ${input.slice(0, 20)}`, durationMs: 12 };
       case 'llm':
-        // Simulate external LLM call
         await new Promise(res => setTimeout(res, 150));
         return { output: `LLM: ${input.toUpperCase()}`, durationMs: 160 };
       case 'vector':
-        // Simulate vector search
         await new Promise(res => setTimeout(res, 80));
         return { output: `Vector: ${input.length} chars`, durationMs: 85 };
       default:
@@ -167,9 +169,9 @@ async function routeAgent(input: string, agentType: AgentType): Promise<ModelRes
   }
 }
 
-async function handleRequest(event: any) {
+export async function handleRequest(event: any) {
   const span = tracer.startSpan('handleRequest');
-  span.setAttribute('http.method', event.httpMethod);
+  span.setAttribute('http.method', event.requestContext?.http?.method ?? 'POST');
 
   try {
     const body = JSON.parse(event.body || '{}');
@@ -188,23 +190,17 @@ async function handleRequest(event: any) {
     }
 
     const result = await routeAgent(input, agentType);
-    return {
-      statusCode: 200,
-      body: JSON.stringify(result),
-    };
+    return { statusCode: 200, body: JSON.stringify(result) };
   } catch (err: any) {
     span.recordException(err);
     span.setStatus({ code: 2, message: err.message });
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: err.message }),
-    };
+    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   } finally {
     span.end();
   }
 }
 
-exports.handler = async (event: any) => {
+export const handler = async (event: any) => {
   if (event.routeKey === '$default') {
     return await handleRequest(event);
   }
@@ -212,8 +208,11 @@ exports.handler = async (event: any) => {
 };
 ```
 
-Key design choices:
-- Concurrency guard uses Redis sorted sets instead of a simple counter. This avoids thundering herd on reset and gives us per-day buckets automatically. - Each agent type has a simulated latency: 12ms (small), 160ms (LLM), 85ms (vector). These numbers come from real quantised LLM binaries and AWS Bedrock on-demand throughput tests we ran in Q1 2026. - The router logs every span with OpenTelemetry. That lets you see exactly which agent type is the bottleneck in Grafana.
+Design notes:
+
+- The guard uses a Redis sorted set rather than a plain `INCR` counter. A counter resets on a fixed clock boundary, which produces a thundering herd at the boundary; a sliding window smooths it out. `zRemRangeByScore` drops entries older than the window, and `zCard` gives the current count.
+- The three simulated latencies (12 ms, 160 ms, 85 ms) are placeholders for whatever your backends actually do. Measure your own.
+- Every route call is wrapped in a span, so the trace shows which backend dominates the tail.
 
 Deploy to AWS Lambda:
 
@@ -224,7 +223,7 @@ npx esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js --mini
 zip -r function.zip dist/index.js node_modules package.json
 
 aws lambda create-function \
-  --function-name agent-router-2026 \
+  --function-name agent-router \
   --runtime nodejs20.x \
   --handler index.handler \
   --zip-file fileb://function.zip \
@@ -241,7 +240,7 @@ Attach an API Gateway HTTP API:
 aws apigatewayv2 create-api \
   --name agent-router-api \
   --protocol-type HTTP \
-  --target arn:aws:lambda:us-east-1:123456789012:function:agent-router-2026
+  --target arn:aws:lambda:us-east-1:123456789012:function:agent-router
 
 aws apigatewayv2 create-route \
   --api-id <api-id> \
@@ -251,126 +250,155 @@ aws apigatewayv2 create-route \
 aws apigatewayv2 deploy-api --api-id <api-id> --stage-name prod
 ```
 
-Cost so far: ~$17/month for 512 MB Lambda with 100 ms timeout, plus ~$120 for Redis, plus ~$10 for API Gateway (1M requests).
+How to measure bounded concurrency: instrument the router to emit a counter of accepted and rejected requests, plus a gauge of in-flight work. Compare the gauge against `AGENT_CONCURRENCY_LIMIT` in Prometheus. If the gauge ever exceeds the limit, the guard is not atomic and you have a race.
 
-## Step 3 — handle edge cases and errors
+## Rule 2 — Make every side effect idempotent
 
-The first edge case is idempotency. Without it, retries can duplicate work or charge you twice for the same LLM call. We’ll add a 128-bit idempotency key header.
+Retries are mandatory in a distributed system. Duplicate work is not. Without idempotency keys, a retry can charge you twice for the same LLM call, write two rows to a database, or send two emails.
 
-Create a Redis-backed idempotency store:
+Add a Redis-backed idempotency store keyed on a client-supplied header:
 
 ```typescript
-const IDEMPOTENCY_TTL = 24 * 60 * 60; // 24 hours
+const IDEMPOTENCY_TTL_SECONDS = 24 * 60 * 60;
 
 async function ensureIdempotency(event: any): Promise<void> {
-  const key = `idemp:${event.headers['idempotency-key']}`;
-  const exists = await REDIS.exists(key);
-  if (exists) {
+  const headerKey = event.headers?.['idempotency-key'];
+  if (!headerKey) return;
+
+  const key = `idemp:${headerKey}`;
+  // SET NX is atomic: only one caller wins.
+  const acquired = await REDIS.set(key, '1', {
+    NX: true,
+    EX: IDEMPOTENCY_TTL_SECONDS,
+  });
+
+  if (acquired === null) {
     throw new Error('Duplicate request');
   }
-  await REDIS.set(key, '1', { PX: IDEMPOTENCY_TTL * 1000 });
 }
 ```
 
-Add it to handleRequest:
+Wire it into `handleRequest` before any model call:
 
 ```typescript
-async function handleRequest(event: any) {
-  // ...
+export async function handleRequest(event: any) {
+  const span = tracer.startSpan('handleRequest');
   try {
-    if (event.headers?.['idempotency-key']) {
-      await ensureIdempotency(event);
-    }
-    // ... rest of the code
+    await ensureIdempotency(event);
+    // ... rest of the handler
   } catch (err: any) {
-    // ...
+    span.recordException(err);
+    span.setStatus({ code: 2, message: err.message });
+    return { statusCode: 409, body: JSON.stringify({ error: err.message }) };
+  } finally {
+    span.end();
   }
 }
 ```
 
-Next edge case: downstream timeouts. The default 10-second Lambda timeout is too generous for our simulated agents, but the LLM call can still take 1-2 seconds. Set provisioned concurrency to 50 for the Lambda to avoid cold starts, but cap the LLM call to 1.2 seconds:
+The important detail is `SET ... NX`. A read-then-write sequence (`EXISTS` then `SET`) has a race window: two concurrent requests can both see "not present" and both proceed. `SET NX` is a single atomic operation, so exactly one caller wins.
 
-```bash
-aws lambda put-provisioned-concurrency-config \
-  --function-name agent-router-2026 \
-  --qualifier $LATEST \
-  --provisioned-concurrent-executions 50
-```
+How to measure idempotency: count `Duplicate request` rejections as a metric. A healthy rate is nonzero — it means retries are actually being deduplicated. A rate of zero with retries enabled usually means the idempotency key is not reaching the router (check header casing and API Gateway mapping).
 
-Then update the Lambda timeout to 2 seconds:
+## Rule 3 — Cap timeouts below your caller's timeout
+
+A Lambda timeout of 10 seconds is generous for the router but dangerous for the caller. If your API Gateway integration timeout is 29 seconds and your Lambda can run for 10, a slow model call holds a connection for the full 10 seconds, and every retry stacks on top.
+
+Set the Lambda timeout to the smallest value that accommodates your slowest legitimate call, plus a small margin. If your LLM call has a 1.2-second budget, a 2-second Lambda timeout is reasonable:
 
 ```bash
 aws lambda update-function-configuration \
-  --function-name agent-router-2026 \
+  --function-name agent-router \
   --timeout 2
 ```
 
-Third edge case: Redis failures. We’ll add a 5-second fallback to in-memory cache for idempotency keys during Redis outages. This keeps the system running, but the cache is not shared across Lambda instances.
+Provisioned concurrency is a separate lever. It removes cold-start latency at the cost of paying for idle capacity. Enable it only after you have measured cold-start impact:
+
+```bash
+aws lambda put-provisioned-concurrency-config \
+  --function-name agent-router \
+  --qualifier '$LATEST' \
+  --provisioned-concurrent-executions 50
+```
+
+How to measure timeout headroom: emit a histogram of handler duration and compare its p99 to the configured timeout. If p99 is within 20% of the timeout, you are one traffic spike away from mass timeouts. Also emit a counter for timeout-induced failures; a nonzero rate means the timeout is too tight or a dependency is too slow.
+
+## Rule 4 — Degrade gracefully when shared state fails
+
+Redis is a single point of failure for both the concurrency guard and the idempotency store. When it is unavailable, you have three options: fail closed (reject everything), fail open (accept everything), or degrade to a local cache.
+
+A local fallback keeps the service up but weakens the guarantee:
 
 ```typescript
-let localCache: Map<string, string> = new Map();
+const localCache = new Map<string, number>();
 
 async function ensureIdempotency(event: any): Promise<void> {
-  const key = `idemp:${event.headers['idempotency-key']}`;
+  const headerKey = event.headers?.['idempotency-key'];
+  if (!headerKey) return;
+
+  const key = `idemp:${headerKey}`;
+
   try {
-    const exists = await REDIS.exists(key);
-    if (exists) throw new Error('Duplicate');
-    await REDIS.set(key, '1', { PX: IDEMPOTENCY_TTL * 1000 });
+    const acquired = await REDIS.set(key, '1', {
+      NX: true,
+      EX: IDEMPOTENCY_TTL_SECONDS,
+    });
+    if (acquired === null) throw new Error('Duplicate request');
   } catch (err) {
-    // Fallback to local cache
-    if (localCache.has(key)) throw new Error('Duplicate');
-    localCache.set(key, '1');
-    setTimeout(() => localCache.delete(key), IDEMPOTENCY_TTL * 1000);
+    // Redis unavailable: fall back to an instance-local cache.
+    const expiresAt = localCache.get(key);
+    if (expiresAt && expiresAt > Date.now()) {
+      throw new Error('Duplicate request');
+    }
+    localCache.set(key, Date.now() + IDEMPOTENCY_TTL_SECONDS * 1000);
+    setTimeout(() => localCache.delete(key), IDEMPOTENCY_TTL_SECONDS * 1000);
   }
 }
 ```
 
-Gotcha: the fallback cache is per-instance, so duplicated keys can still slip through during a rolling deployment. In production, always pair idempotency with a shared store.
+The honest caveat: an instance-local cache is not shared. During a rolling deployment, two Lambda instances can each accept the same idempotency key, so duplicates can still slip through. Treat the fallback as a availability trade, not a correctness fix, and alert when it is active.
 
-## Step 4 — add observability and tests
+How to measure the fallback: emit a counter every time the `catch` branch runs. If that counter is nonzero for more than a few seconds, page someone — you are running without a shared idempotency guarantee.
 
-Add structured logging with Winston and Pino:
+## Rule 5 — Instrument before you optimize
+
+You cannot tune what you cannot see. Add structured logging and a metrics pipeline before you change any routing policy.
 
 ```typescript
 import pino from 'pino';
 
 const logger = pino({
   level: process.env.LOG_LEVEL || 'info',
-  transport: {
-    target: 'pino-pretty',
-  },
+  transport: { target: 'pino-pretty' },
 });
 
-// In handleRequest
-logger.info({ event }, 'Incoming request');
-logger.error({ err }, 'Request failed');
+// Inside handleRequest:
+logger.info({ agentType, inputLength: input.length }, 'routing request');
+logger.error({ err }, 'request failed');
 ```
 
-Deploy Prometheus metrics via the OpenTelemetry collector:
+Prometheus exporter configuration in the collector:
 
 ```yaml
-# otel-config.yaml (add to exporters)
 exporters:
   prometheus:
     endpoint: "0.0.0.0:8889"
     metric_expiration: 15m
     resource_to_telemetry_conversion:
       enabled: true
-
-# Add to service pipelines
-metrics:
-  receivers: [otlp]
-  processors: [batch, memory_limiter]
-  exporters: [logging, prometheus]
 ```
 
-Add a Grafana dashboard with these panels:
-- p99 latency by agent type
-- concurrency usage per minute
-- Redis eviction rate
-- cost per 1k requests (Lambda duration * memory / 1024 / 1024 * $.0000166667 + Redis memory hours * $.012)
+A useful dashboard has at least these panels:
 
-Write a small load test with k6:
+- p50/p95/p99 latency, broken down by agent type.
+- Accepted vs. rejected requests (the concurrency guard).
+- Idempotency duplicate rate.
+- Redis eviction rate and memory usage.
+- Cost per 1,000 requests, computed from Lambda duration × memory and Redis instance hours.
+
+For the cost panel, the arithmetic is straightforward. AWS Lambda bills on GB-seconds: `duration_seconds × memory_MB / 1024 × price_per_GB_second`. Add your Redis instance-hour cost divided by requests per hour. Label the panel "illustrative" until you have a week of real traffic, because the per-request cost depends heavily on your mix of agent types.
+
+Load test with k6:
 
 ```javascript
 import http from 'k6/http';
@@ -387,28 +415,28 @@ export default function () {
     'Content-Type': 'application/json',
     'Idempotency-Key': `${__VU}-${__ITER}`,
   };
-  const res = http.post('https://<api-id>.execute-api.us-east-1.amazonaws.com/prod/', payload, { headers });
-  check(res, {
-    'status is 200': (r) => r.status === 200,
-  });
+  const res = http.post(
+    'https://<api-id>.execute-api.us-east-1.amazonaws.com/prod/',
+    payload,
+    { headers }
+  );
+  check(res, { 'status is 200 or 429': (r) => r.status === 200 || r.status === 429 });
 }
 ```
 
-Run the test and watch Grafana. On a 2026 MacBook Pro, p99 latency stayed at 180ms for 200 VUs. When we increased VUs to 500, p99 spiked to 2.3s because Redis evictions climbed to 15% of GETs. The fix was to double Redis memory to cache.m6g.large ($240/month) and set maxmemory-policy to allkeys-lru.
+Note the check accepts 429. Under a bounded-concurrency design, rejecting excess load is correct behavior, not a failure. A load test that only accepts 200 will report false failures.
 
-Add unit tests with Jest:
+How to measure: run the test, then compare p99 latency at 50, 100, and 200 VUs. Latency should stay flat until the concurrency limit is hit, then 429s should appear while latency stays flat. If latency climbs instead of 429s appearing, the guard is not working.
 
-```bash
-npm install jest ts-jest @types/jest --save-dev
-```
+## Rule 6 — Test the failure paths, not just the happy path
 
-Create `src/index.test.ts`:
+Unit tests that only cover successful routing are close to useless for a router. Test the guards:
 
 ```typescript
 import { handleRequest } from './index';
 
 describe('agent router', () => {
-  it('should reject duplicate idempotency key', async () => {
+  it('rejects a duplicate idempotency key', async () => {
     const event = {
       routeKey: '$default',
       headers: { 'idempotency-key': 'dup-123' },
@@ -416,12 +444,13 @@ describe('agent router', () => {
     };
     const res1 = await handleRequest(event);
     expect(res1.statusCode).toBe(200);
+
     const res2 = await handleRequest(event);
-    expect(res2.statusCode).toBe(500);
+    expect(res2.statusCode).toBe(409);
     expect(JSON.parse(res2.body).error).toContain('Duplicate');
   });
 
-  it('should route to small model', async () => {
+  it('routes short input to the small model', async () => {
     const event = {
       routeKey: '$default',
       body: JSON.stringify({ input: 'test', agentType: 'small' }),
@@ -430,83 +459,73 @@ describe('agent router', () => {
     expect(res.statusCode).toBe(200);
     const body = JSON.parse(res.body);
     expect(body.output).toContain('Small model');
-    expect(body.durationMs).toBe(12);
+  });
+
+  it('returns 429 when the concurrency limit is exceeded', async () => {
+    process.env.AGENT_CONCURRENCY_LIMIT = '0';
+    const event = {
+      routeKey: '$default',
+      body: JSON.stringify({ input: 'test', agentType: 'llm' }),
+    };
+    const res = await handleRequest(event);
+    expect(res.statusCode).toBe(429);
+    process.env.AGENT_CONCURRENCY_LIMIT = '100';
   });
 });
 ```
 
-Run tests:
+Run them:
 
 ```bash
+npm install jest ts-jest @types/jest --save-dev
 npx jest --detectOpenHandles
 ```
 
-You should see 100% coverage on routing logic and idempotency.
+The third test is the important one. It asserts the guard actually rejects, which is the behavior that protects your downstream dependencies.
 
-## Real results from running this
+## A worked example: choosing a routing policy
 
-We rolled this router out to three teams in March 2026. Here are the numbers after 60 days of production traffic:
+Suppose you have three backends with these *illustrative* characteristics:
 
-| Metric                     | Baseline (old system) | New router | Change |
-|----------------------------|-----------------------|------------|--------|
-| p99 latency                | 900 ms                | 180 ms     | -80%   |
-| Cost per 1k requests       | $0.45                 | $0.11      | -75%   |
-| Duplicate LLM calls        | 12% of retries        | 0.1%       | -99%   |
-| Agent failure rate         | 3.2%                  | 0.4%       | -87%   |
-| Redis evictions            | 28%                   | 4%         | -86%   |
+| Backend | Latency (p50) | Cost per 1k calls | Good at |
+|---|---|---|---|
+| Small quantised model | 12 ms | $0.001 | Short inputs, classification |
+| External LLM | 160 ms | $0.030 | Open-ended generation |
+| Vector endpoint | 85 ms | $0.011 | Retrieval, similarity |
 
-The cost drop came from three levers:
-1. Idempotency keys cut 12% duplicate LLM calls, saving ~$1,800/month at 800k requests/day. 2. Concurrency limiting reduced Lambda provisioned concurrency from 200 to 50, cutting compute costs 60%. 3. Smarter model routing (small model for short inputs) saved 30% on SaaS LLM tokens.
+If 70% of your traffic is short classification and 30% is generation, a naive policy that sends everything to the LLM costs:
 
-The latency drop came from bounded concurrency and provisioned concurrency. The old system had no limits; when traffic spiked at 2am, 1,200 Lambdas spun up, hit Redis, and the p99 climbed to 5s before autoscaling killed the circuit. The new system rejected 429s immediately when concurrency exceeded 100, so the tail never grew.
+`0.7 × $0.030 + 0.3 × $0.030 = $0.030` per call, or `$30` per 1,000 calls.
 
-Most surprising: the vector similarity endpoint was the latency outlier during peak hours. We moved it to a g4dn.xlarge GPU endpoint with Redis OM for vector search. Latency dropped from 85ms to 25ms, and cost per 1k searches fell from $0.032 to $0.011.
+A policy that routes short inputs to the small model:
 
-## Common questions and variations
+`0.7 × $0.001 + 0.3 × $0.030 = $0.0007 + $0.009 = $0.0097` per call, or `$9.70` per 1,000 calls.
+
+That is a 68% reduction, derived entirely from the stated assumptions. The catch: the small model must be accurate enough for the classification task. Measure accuracy on a held-out set before you route production traffic to it. A cheap wrong answer is more expensive than an expensive right one.
+
+## Failure modes to watch for
+
+- **Thundering herd at window boundaries.** A fixed-window counter resets all at once. Use a sliding window (sorted set) or a token bucket.
+- **Non-atomic idempotency.** `EXISTS` followed by `SET` has a race. Use `SET NX`.
+- **Timeout inversion.** If the router's timeout exceeds the caller's, the caller gives up first and retries, doubling load. Keep router timeouts strictly below caller timeouts.
+- **Silent fallback.** A local cache that activates during a Redis outage can mask duplicate processing. Alert on it.
+- **Load tests that reject 429.** A bounded system is supposed to reject excess load. Test for it.
+- **Unmeasured routing policy.** Changing which model handles which input without measuring accuracy and cost is guesswork.
+
+## FAQ
 
 **How do you handle model failures without losing data?**
-We added a dead-letter queue (SQS) for failed agent calls. Each failure writes the original event plus error context to the queue. A Lambda consumer retries up to 3 times with exponential backoff, then publishes to an SNS topic for alerts. No data loss, but we still cap total retries to avoid thundering herd.
+Write failed events to a dead-letter queue with the original payload and error context. A separate consumer retries with exponential backoff and a cap, then alerts. The cap matters: unbounded retries are how a partial outage becomes a total one.
 
-**Can I use this pattern with Kubernetes instead of Lambda?**
-Yes. Replace the Redis concurrency guard with a sidecar rate-limiter (Envoy) or a Redis-backed sliding window (Lua script). The idempotency store and observability stack stay the same. Expect ~20% higher latency on Kubernetes due to pod startup time, but better cold-start behaviour for long-running pods.
+**Can this pattern work on Kubernetes instead of Lambda?**
+Yes. Replace the Redis concurrency guard with a sidecar rate limiter or a Redis-backed sliding window in Lua. The idempotency store and observability stack stay the same. The trade-off is different: pods have slower cold starts but better long-lived connection reuse.
 
-**What if I need streaming responses from the LLM?**
-Use API Gateway WebSocket API and Lambda function URLs with streaming enabled. Keep the same concurrency guard and idempotency keys, but switch to a Redis stream for progress updates. Cost rises ~$0.0001 per 1k streaming messages, but user experience improves significantly.
+**What about streaming responses?**
+Streaming breaks the request/response idempotency model. Use a separate channel (WebSocket or a Redis stream) for progress, keep the idempotency key on the initiating request, and make the stream resumable by sequence number.
 
-**How do you monitor model drift?**
-We log output length, token usage, and sentiment analysis (using a fast local model) for every response. A daily Prometheus alert triggers if average output length deviates >20% from the 7-day baseline. This caught a prompt injection attempt in May 2026 before it reached the LLM.
+**Should I route across multiple models or fine-tune one?**
+Routing wins when your traffic is heterogeneous and your latency budget is tight. Fine-tuning wins when your task is narrow, your dataset is large enough to be representative, and you can tolerate higher per-call latency. Measure both on your own traffic; published comparisons rarely match your mix.
 
-**Should I use multi-model routing or single-model with fine-tuning?**
-For most teams in 2026, multi-model routing wins on cost and latency, but only if you enforce idempotency and concurrency limits. Single-model fine-tuning works when your dataset is small (<10k examples) and your latency tolerance is high (>500ms). Our benchmarks show fine-tuned models cost 3.5x more per 1k tokens than routing to a mix of small and large models.
+## Take action in the next 30 minutes
 
-## Where to go from here
-
-Your router now runs at 180ms p99, costs $0.11 per 1k requests, and has no duplicate work. The next step is to tighten the model routing policy. Open `src/index.ts` and change the routing rule:
-
-```typescript
-const modelPolicy = {
-  inputLength: { small: 50, llm: 500 },
-};
-```
-
-This policy routes short inputs (<50 chars) to the 4-bit quantised model, medium (50-500) to the LLM, and long (>500) to the vector similarity endpoint. Deploy the change and run the k6 test again. Measure the new p99 latency and cost per 1k requests in Grafana. If the vector endpoint is still the bottleneck, scale its GPU endpoint to 2 replicas and update the Redis OM index.
-
-Do this now: open Grafana, go to the agent-router dashboard, and note the current p99 latency for the vector agent. That number is your baseline for the next 30 days.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** July 15, 2026
+Open your router's metrics dashboard and find the p99 latency for your slowest agent backend. Write that number down. Then check whether your concurrency guard is a fixed-window counter or a sliding window. If it is fixed-window, replace it with the sorted-set implementation above — that single change is the most common fix for retry-storm tail latency.

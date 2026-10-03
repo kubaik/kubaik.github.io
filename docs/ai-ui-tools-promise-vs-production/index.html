@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI UI tools: promise vs. production - Kubai Kevin</title>
-        <meta name="description" content="Cut component build time 60% with AI UI tools — but watch bundle bloat, design drift, and missing a11y.">
+        <meta name="description" content="AI UI generators produce plausible React fast, but token drift, inline styles and missing a11y still need human review before merge.">
         <meta name="keywords" content="AiUiTools, Cursor0.32, FigmaAi2026, Github, SizeLimit5.0.1, AxeCore4.9, DesignTokens2026, Ai, Reactjs, Cursorai">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-30T01:37:01.441639">
-        <meta property="article:modified_time" content="2026-09-20T15:46:42.218477+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:33:04.877386+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI UI tools: promise vs. production">
-        <meta property="og:description" content="Cut component build time 60% with AI UI tools — but watch bundle bloat, design drift, and missing a11y.">
+        <meta property="og:description" content="AI UI generators produce plausible React fast, but token drift, inline styles and missing a11y still need human review before merge.">
         <meta property="og:url" content="https://kubaik.github.io/ai-ui-tools-promise-vs-production/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI UI tools: promise vs. production">
-        <meta name="twitter:description" content="Cut component build time 60% with AI UI tools — but watch bundle bloat, design drift, and missing a11y.">
+        <meta name="twitter:description" content="AI UI generators produce plausible React fast, but token drift, inline styles and missing a11y still need human review before merge.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-ui-tools-promise-vs-production.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-ui-tools-promise-vs-production/#article",
       "headline": "AI UI tools: promise vs. production",
-      "description": "Cut component build time 60% with AI UI tools — but watch bundle bloat, design drift, and missing a11y.",
+      "description": "AI UI generators produce plausible React fast, but token drift, inline styles and missing a11y still need human review before merge.",
       "datePublished": "2026-06-30T01:37:01+00:00",
-      "dateModified": "2026-09-20T15:46:42+00:00",
-      "wordCount": 1779,
-      "timeRequired": "PT9M",
+      "dateModified": "2026-10-03T12:33:04+00:00",
+      "wordCount": 2050,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI UI tools: promise vs. production</h1>
                 
-                <p class="post-lead">Cut component build time 60% with AI UI tools — but watch bundle bloat, design drift, and missing a11y.</p>
+                <p class="post-lead">AI UI generators produce plausible React fast, but token drift, inline styles and missing a11y still need human review before merge.</p>
                 
                 
                 <div class="tags">
@@ -260,47 +260,50 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        9 min read
-                        &nbsp;·&nbsp; 1779 words
+                        10 min read
+                        &nbsp;·&nbsp; 2050 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-20
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>AI UI tools like Cursor, Figma AI, and GitHub Copilot Workspace now build React components, generate full layouts, and update styles from plain English—but they still can’t ship production-ready UI alone. They accelerate prototyping by 3× to 5×, cut initial CSS line count by ~40%, and save ~2 developer days per feature story, yet they hallucinate color palettes that fail WCAG contrast, forget responsive breakpoints, and embed inline styles that bloat bundle size by 12–25%.</p>
-<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>That hides three brutal realities:</p>
+                <p>AI UI tools such as Cursor, Figma's AI features and GitHub Copilot Workspace can produce a working React component from a plain-English prompt in seconds. The output usually renders. It often looks close to the design. And it frequently fails in a small number of predictable ways that only surface once the component meets a real design system, a real bundle budget and a real accessibility audit.</p>
+<p>This article is about those failure modes, how to detect them cheaply, and how to structure prompts and review so that the generated code is a reviewable diff rather than a rewrite.</p>
+<h2 id="why-the-demo-and-production-diverge">Why the demo and production diverge</h2>
+<p>A demo prompt usually describes one component in isolation: a card, a button, a modal. Production code lives inside a design system with a fixed token vocabulary, a set of responsive breakpoints, i18n strings, RTL requirements, and a bundle budget enforced in CI. The gap between those two contexts is where AI UI output breaks.</p>
+<p>Three failure modes account for most of the cleanup work:</p>
 <ol>
-<li><strong>The happy-path lie</strong>: the demo uses a single, well-named component in isolation; production apps have nested contexts, i18n strings, RTL layouts, and strict token overrides. 2. <strong>The latency tax</strong>: generated inline styles add 12–25% to your bundle, and the CSS-in-JS runtime can push render time from 18 ms to 120 ms on low-end Android devices. 3. <strong>The design-system drift</strong>: tools often invent tokens (“primary-surface-400”) that don’t exist in your design system, so you still spend hours reconciling Sketch files with code.</li>
+<li><strong>Token drift.</strong> The model has seen thousands of Tailwind-style class names and invents plausible ones that do not exist in your token file. A component can reference <code>bg-surface-100</code> when your theme only defines <code>bg-surface-1</code>, and nothing will error until the class silently does nothing at runtime.</li>
+<li><strong>Inline style accumulation.</strong> Generated components frequently fall back to <code>style={{...}}</code> objects for anything the model is unsure about. These bypass your token system, cannot be themed, and add to the JS bundle rather than the CSS bundle.</li>
+<li><strong>Missing interaction and accessibility behavior.</strong> Focus management, <code>aria-live</code> regions for time-based content, keyboard traps in modals, and reduced-motion handling are rarely present unless explicitly requested.</li>
 </ol>
-<p>Ten minutes of manual cleanup per component added up to a day of lost velocity.</p>
-<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of AI UI tools like a very fast junior developer who has read every React and Tailwind doc but never shipped to production. The junior can write the happy path in minutes, but you still need a senior to:</p>
+<p>None of these are exotic. They are the same issues a junior developer produces on a first pass, which is a useful mental model.</p>
+<h2 id="the-mental-model-a-compiler-of-intent">The mental model: a compiler of intent</h2>
+<p>Treat the AI tool as a fast junior developer who has read every React and Tailwind doc but has never shipped to your codebase. The junior writes the happy path quickly. A senior still needs to:</p>
 <ul>
-<li>spot the missing alt text,</li>
-<li>trim the 200-line inline style object they produced, and</li>
-<li>enforce the design tokens before merge.</li>
+<li>check the output against the token vocabulary,</li>
+<li>remove inline styles that bypass the theme,</li>
+<li>add the accessibility behavior the prompt did not specify,</li>
+<li>verify the bundle cost of any new dependency.</li>
 </ul>
-<p>The magic happens when you treat the AI as a <strong>compiler of intent</strong> rather than a <strong>generator of truth</strong>. Feed it your design tokens, your breakpoints, your accessibility rules, and your bundle budget. Then its output becomes a pull-request diff you can review in minutes instead of days.</p>
-<h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Let’s build a responsive user-card that shows name, avatar, and last login time.</p>
-<p><strong>Step 1 – prompt engineering</strong></p>
+<p>The productive framing is to treat the tool as a <strong>compiler of intent</strong> rather than a generator of truth. You supply the constraints — token names, breakpoints, bundle limits, accessibility rules — and the tool produces a candidate diff. The quality of the output is a direct function of how completely those constraints are stated.</p>
+<h2 id="worked-example-a-user-card">Worked example: a user card</h2>
+<p>Consider a component that shows a name, an avatar and a relative last-login time.</p>
+<p><strong>Prompt</strong></p>
 <pre><code class="language-text">Build a UserCard component in React with TypeScript.
 
 Requirements:
-- Use our design tokens (--color-primary-500, --spacing-md, etc.)
+- Use only these design tokens: bg-surface-100, text-text-900, text-text-500
 - Support RTL and LTR without extra props
-- Avatar 48×48 with fallback initials
+- Avatar 48x48 with fallback initials
 - Last login relative time that updates every minute
-- TailwindCSS 3.4, no inline styles longer than 40 characters
-- Bundle impact ≤ 1 KB
+- TailwindCSS utility classes only, no inline style objects
+- No new dependencies beyond date-fns
 </code></pre>
-<p>Cursor produced this in 23 seconds:</p>
+<p><strong>A plausible generated result</strong></p>
 <pre><code class="language-tsx">// filename: UserCard.tsx
 import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
@@ -310,7 +313,7 @@ export const UserCard = ({ user }: { user: { id: string; name: string; avatar?: 
 
   useEffect(() =&gt; {
     if (!user.lastLogin) return;
-    const update = () =&gt; setTimeAgo(formatDistanceToNow(new Date(user.lastLogin)));
+    const update = () =&gt; setTimeAgo(formatDistanceToNow(new Date(user.lastLogin!)));
     update();
     const id = setInterval(update, 60_000);
     return () =&gt; clearInterval(id);
@@ -333,166 +336,128 @@ export const UserCard = ({ user }: { user: { id: string; name: string; avatar?: 
   );
 };
 </code></pre>
-<p><strong>Step 2 – the review</strong></p>
+<p><strong>Reviewing the diff</strong></p>
+<p>Walk through it against the constraints rather than against a feeling that it "looks right":</p>
 <ul>
-<li>Token fidelity: ✅ uses bg-surface-100 and text-text-900</li>
-<li>Bundle impact: 0.8 KB (measured with <code>size-limit 5.0.1</code>)</li>
-<li>RTL: classes are RTL-safe (flex, gap, rounded-lg)</li>
-<li>Accessibility: alt text is present, but we still need aria-live for the time</li>
-<li>Performance: 18 ms mount on M3 Mac, 110 ms on Moto G Power (2026) — acceptable</li>
+<li><strong>Token fidelity.</strong> The classes <code>bg-surface-100</code>, <code>text-text-900</code> and <code>text-text-500</code> must be checked against the actual theme file. Grep the token source for each class name. Any class that does not appear is a silent no-op.</li>
+<li><strong>Bundle cost.</strong> Adding <code>date-fns</code> as a dependency is a real cost. Measure it rather than guessing: run your existing bundle-size tooling against the built component and compare to the same component with a hand-written formatter. If the library is only used for one relative-time string, <code>Intl.RelativeTimeFormat</code> is built into the platform and adds nothing.</li>
+<li><strong>RTL behavior.</strong> Flex layouts, <code>gap</code> and logical properties are generally direction-agnostic. What is not direction-agnostic is any <code>ml-*</code>/<code>mr-*</code> or <code>pl-*</code>/<code>pr-*</code> class, or an explicit <code>dir</code> attribute. Check for those.</li>
+<li><strong>Accessibility.</strong> The <code>alt</code> text is present, which is good. The relative time string updates every minute, which means screen readers will not announce the change unless the element is a live region. Add <code>aria-live="polite"</code>:</li>
 </ul>
-<p>I added a single line for accessibility:</p>
 <pre><code class="language-tsx">&lt;p aria-live=&quot;polite&quot; className=&quot;text-text-500 text-xs&quot;&gt;
   Last active {timeAgo} ago
 &lt;/p&gt;
 </code></pre>
-<p>Total human touch: 5 minutes for review and a11y tweak.</p>
-<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>If you’ve ever used a code formatter or linter, you already understand the pattern: automation removes the mechanical work so you can focus on the intent. The difference is scope: a formatter touches whitespace, while an AI UI tool touches semantics, tokens, and bundle weight.</p>
 <ul>
-<li><strong>Design tokens</strong> = environment variables for your UI</li>
-<li><strong>Bundle budgets</strong> = performance budgets you already set in Lighthouse CI</li>
-<li><strong>Accessibility rules</strong> = the same axe-core rules you run in CI</li>
+<li><strong>Timer cleanup.</strong> The <code>useEffect</code> clears its interval, which is correct. A common generated variant omits the cleanup function, which leaks a timer per mount.</li>
 </ul>
-<p>The gap is that most teams haven’t wired these constraints into the AI prompt or post-processing pipeline. Once you do, the review becomes a 30-second diff instead of a 3-hour rework.</p>
-<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<p><strong>Myth 1: “AI tools eliminate the need for designers.”</strong></p>
-<p>Reality: They eliminate the need for designers to write code, not the need for design decisions. A tool can’t decide whether your login button should be primary or secondary; it can only enforce the decision once it’s made.</p>
-<p><strong>Myth 2: “Generated code is always faster than hand-written.”</strong></p>
-<p>Reality: In a 2026 benchmark of 120 React components across five teams, AI-generated code averaged 14% larger bundles and 22% slower mount times when inline styles exceeded 40 characters. The top performers manually refactored the AI output into semantic class names.</p>
-<p><strong>Myth 3: “You can skip unit tests for AI-generated components.”</strong></p>
-<p>Reality: I thought the same until a generated modal component swallowed focus on Safari. The fix was one line (<code>modalElement.focus()</code>), but the test I added caught two regressions in the next sprint.</p>
-<p><strong>Myth 4: “AI tools understand your design system out of the box.”</strong></p>
-<p>Reality: They understand the literal strings in your token JSON, but not the hierarchy. Our token file had <code>--color-primary-500</code> and <code>--color-primary-surface-500</code>. The AI happily invented <code>primary-surface-500</code> because it looked like a plausible class name.</p>
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>Add a <strong>prompt library</strong> and a <strong>post-processing pipeline</strong> so every new component starts from a vetted template.</p>
-<p><strong>Prompt library (in Cursor)</strong></p>
-<pre><code class="language-markdown"># Component Prompt Template
-## Requirements
-- Use design tokens from `/tokens.json`
-- No inline styles longer than 40 chars
-- Support breakpoints: sm=640, md=768, lg=1024
-- Include Storybook controls for all props
-- Use `cn()` helper from `/lib/cn.ts` for conditional classes
-</code></pre>
-<p><strong>Post-processing script (<code>ai-review.mjs</code>)</strong></p>
+<p>The point of the review is not that the component is bad. It is that the review is a checklist, not a judgement call, and a checklist takes minutes.</p>
+<h2 id="how-to-measure-the-things-that-matter">How to measure the things that matter</h2>
+<p>Claims about AI-generated UI being "faster" or "smaller" are only meaningful if you can measure them in your own repository. The instrumentation is not exotic.</p>
+<p><strong>Bundle impact.</strong> Use whatever size tooling your project already has — <code>size-limit</code>, <code>bundlesize</code>, <code>webpack-bundle-analyzer</code>, or the size reporting built into your framework's build output. The procedure is:</p>
+<ol>
+<li>Build the component in isolation or as part of a small entry point.</li>
+<li>Record the gzipped size of the chunk that contains it.</li>
+<li>Remove the component and rebuild.</li>
+<li>The difference is the marginal cost.</li>
+</ol>
+<p>Run this for the generated version and for a hand-written version using platform APIs. The comparison is what matters, not an absolute number.</p>
+<p><strong>Render cost.</strong> Use your browser's performance profiler or the React DevTools profiler. Record mount time on a throttled CPU profile (4x or 6x slowdown approximates a low-end device). Compare the generated component against the hand-written one. Inline style objects that are recreated on every render show up as repeated style recalculation in the profiler.</p>
+<p><strong>Accessibility.</strong> Run axe-core or an equivalent rule engine against the rendered component in a test environment. This catches missing labels, contrast failures, and — depending on the rule set — live-region issues. It does not catch focus management, which needs a manual keyboard pass or a dedicated test.</p>
+<p><strong>Token drift.</strong> This one is cheap to automate: extract every class name from the generated file, and check each against the token source. A regex over <code>className</code> strings plus a lookup is enough for most codebases.</p>
+<h2 id="common-misconceptions">Common misconceptions</h2>
+<p><strong>"AI tools remove the need for designers."</strong> They remove the need for designers to hand-write markup. They do not make design decisions. Whether a button is primary or secondary is a product decision that has to exist before the prompt is written.</p>
+<p><strong>"Generated code is faster than hand-written code."</strong> This is not a general truth. Generated code is faster to <em>produce</em>. Its runtime and bundle characteristics depend entirely on what the model chose to emit. A component that pulls in a date library for one string is slower and heavier than one that uses <code>Intl.RelativeTimeFormat</code>. Measure per component; do not assume.</p>
+<p><strong>"Unit tests are unnecessary for generated components."</strong> The opposite is true. Generated components encode assumptions that are invisible in the diff — that the first focusable element receives focus, that a timer is cleaned up, that a class name exists. Tests are how those assumptions become visible. A modal that renders correctly but never moves focus is a real and common failure.</p>
+<p><strong>"The tool understands my design system."</strong> It understands the literal strings you give it. It does not understand hierarchy or naming conventions. If your theme contains both <code>--color-primary-500</code> and <code>--color-primary-surface-500</code>, a model asked for a "primary surface" may invent a third name that matches neither. Paste the exact token list into the prompt.</p>
+<h2 id="a-post-processing-pipeline">A post-processing pipeline</h2>
+<p>The reliable way to keep review time low is to move the mechanical checks out of human review and into a script that runs before the diff is opened.</p>
+<p>A minimal version, using only Node built-ins plus your existing size tooling:</p>
 <pre><code class="language-javascript">// filename: ai-review.mjs
 import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
 
 const files = process.argv.slice(2);
+const ALLOWED_TOKENS = ['bg-surface-100', 'text-text-900', 'text-text-500'];
+
 for (const file of files) {
   const src = readFileSync(file, 'utf8');
-  // 1. Check for inline styles longer than 40 chars
-  const inlineStyleRegex = /style=\{[^}]+\}/g;
-  const longStyles = src.match(inlineStyleRegex)?.filter(s =&gt; s.length &gt; 40) || [];
-  if (longStyles.length) {
-    console.error(`⚠️  File ${file} has ${longStyles.length} long inline styles`);
+
+  // 1. Inline style objects, which bypass the token system
+  const inlineStyles = src.match(/style=\{\{[^}]*\}\}/g) || [];
+  if (inlineStyles.length) {
+    console.error(`Inline style objects in ${file}: ${inlineStyles.length}`);
   }
-  // 2. Check design tokens
-  const missingTokens = ['bg-surface-100', 'text-text-900'].filter(token =&gt; !src.includes(token));
-  if (missingTokens.length) {
-    console.error(`⚠️  Missing tokens: ${missingTokens.join(', ')} in ${file}`);
+
+  // 2. Class names that are not in the allowed token list
+  const classAttrs = src.match(/className=&quot;([^&quot;]*)&quot;/g) || [];
+  const used = classAttrs
+    .flatMap((c) =&gt; c.replace(/className=&quot;|&quot;/g, '').split(/\s+/))
+    .filter(Boolean);
+  const unknown = used.filter((cls) =&gt; !ALLOWED_TOKENS.includes(cls));
+  if (unknown.length) {
+    console.error(`Unrecognised classes in ${file}: ${unknown.join(', ')}`);
   }
-  // 3. Bundle size check
-  const size = execSync(`npx size-limit --json ${file}`, { encoding: 'utf8' });
-  const kb = JSON.parse(size).bundleSize / 1024;
-  if (kb &gt; 2) console.error(`⚠️  Bundle ${kb.toFixed(1)} KB exceeded 2 KB limit in ${file}`);
+
+  // 3. Bundle size, using whatever size tool the project already has
+  try {
+    const out = execSync(`npx size-limit --json ${file}`, { encoding: 'utf8' });
+    const kb = JSON.parse(out).bundleSize / 1024;
+    if (kb &gt; 2) console.error(`Bundle ${kb.toFixed(1)} KB exceeds 2 KB in ${file}`);
+  } catch {
+    // size-limit exits non-zero when the limit is exceeded
+  }
 }
 </code></pre>
-<p>Run it before every review:</p>
-<pre><code class="language-bash">node ai-review.mjs UserCard.tsx Modal.tsx
+<p>The token list and the size limit are project-specific. The value of the script is that it fails loudly before a human looks at the diff, so the human review is about behavior rather than about class names.</p>
+<p>Run it as a pre-commit hook or a CI step:</p>
+<pre><code class="language-bash">node ai-review.mjs src/components/UserCard.tsx src/components/Modal.tsx
 </code></pre>
-<p>This drops review time from 30 minutes to under 3 minutes per component and cuts bundle bloat by ~18% across our repo.</p>
-<h2 id="quick-reference">Quick reference</h2>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Version</th>
-<th>Best for</th>
-<th>Bundle impact</th>
-<th>Setup time</th>
-<th>Typical ROI</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Cursor</td>
-<td>0.32.20260318</td>
-<td>React components, Next.js pages</td>
-<td>+0.7 KB avg</td>
-<td>15 min</td>
-<td>3× to 5× faster prototyping</td>
-</tr>
-<tr>
-<td>Figma AI</td>
-<td>2026.3</td>
-<td>Layouts, marketing pages</td>
-<td>+0.3 KB (exported CSS)</td>
-<td>20 min</td>
-<td>2× to 4× design iteration</td>
-</tr>
-<tr>
-<td>GitHub Copilot Workspace</td>
-<td>1.18.20260401</td>
-<td>Full-stack flows</td>
-<td>+1.1 KB</td>
-<td>25 min</td>
-<td>4× faster story writing</td>
-</tr>
-<tr>
-<td>Locofy.ai</td>
-<td>2.4.1</td>
-<td>Design-to-code (React Native/Web)</td>
-<td>+0.5 KB</td>
-<td>30 min</td>
-<td>6× faster from Figma</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><strong>Prompt tip</strong>: always include your breakpoint list and token file path. - <strong>Review tip</strong>: run <code>size-limit 5.0.1</code> and axe-core 4.9 on generated files. - <strong>CI tip</strong>: gate merges on bundle ≤ 2 KB and 0 axe-core violations.</li>
-</ul>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<ul>
-<li><a href="https://tokens.studio/2026-guide">Design systems in 2026: tokens, themes, and tooling</a> — how to export tokens that AI tools can actually consume</li>
-<li><a href="https://bundlephobia.com/blog/2026">Bundlephobia 2.0: the new performance budget</a> — why 2 KB is the new 1 KB</li>
-<li><a href="https://rtlstyling.com/posts/rtl-checklist-2026">RTL testing checklist for React</a> — the 12 things most tools forget</li>
-<li><a href="https://github.com/dequelabs/axe-core/releases/tag/v4.9.0">axe-core 4.9 changelog</a> — what the new “aria-live region” rule catches that others miss</li>
-</ul>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why do AI tools keep inventing class names that don’t exist in my design system?</strong></p>
-<p>They tokenize your prompt, not your token file. If your prompt says “primary color” and your token is <code>--color-primary-500</code>, the tool invents <code>primary-color-500</code> because it assumes a simpler naming scheme. The fix is to paste your exact token list into the prompt:</p>
-<pre><code class="language-text">Use only these token names: --color-primary-500, --spacing-md, --radius-lg
+<h2 id="a-prompt-template-worth-reusing">A prompt template worth reusing</h2>
+<p>Constraints stated once in a template save restating them in every prompt.</p>
+<pre><code class="language-markdown"># Component Prompt Template
+
+## Constraints
+- Use only tokens listed in /tokens.json (paste the list)
+- Tailwind utility classes only; no inline style objects
+- Breakpoints: sm=640, md=768, lg=1024
+- Logical properties only (no ml-/mr-/pl-/pr-)
+- No new dependencies without explicit approval
+
+## Required behavior
+- Keyboard focus order documented in a comment
+- Live regions for any content that updates on a timer
+- Cleanup for every timer, listener and subscription
+
+## Output
+- TypeScript, one component per file
+- Storybook story with controls for all props
 </code></pre>
-<p><strong>Can I use AI UI tools with Vue or Svelte?</strong></p>
-<p>Yes. Cursor and GitHub Copilot Workspace now support Vue 3.4 and Svelte 4 out of the box.</p>
-<p><strong>How do I stop AI from bloating my bundle with inline styles?</strong></p>
-<p>Add a prompt constraint: “No inline styles longer than 40 characters.” Then run <code>size-limit 5.0.1</code> in CI. In our repo, teams that skipped this step averaged 1.8 KB of inline styles per component; those that enforced the rule stayed under 0.3 KB.</p>
-<p><strong>What’s the biggest surprise I’m likely to hit when I start using AI for UI?</strong></p>
-<p>A generated modal might render but never call <code>focus()</code> on the first focusable element, so keyboard users can’t interact. Always add an <code>autoFocus</code> prop or a manual <code>focus()</code> call to the first interactive child after mount.</p>
+<h2 id="decision-checklist-before-merging-generated-ui">Decision checklist before merging generated UI</h2>
+<ul>
+<li>[ ] Every class name exists in the token source.</li>
+<li>[ ] No inline style objects remain.</li>
+<li>[ ] Every timer, listener and subscription has a cleanup path.</li>
+<li>[ ] Keyboard focus is correct on mount and on open/close for overlays.</li>
+<li>[ ] Time-based or async content sits in a live region where appropriate.</li>
+<li>[ ] Bundle delta measured against the pre-change build.</li>
+<li>[ ] axe-core (or equivalent) passes with no new violations.</li>
+<li>[ ] Any new dependency is justified by a platform API that would not do the job.</li>
+</ul>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why do generated components use class names that do not exist?</strong></p>
+<p>The model predicts plausible names from training data rather than reading your theme. Pasting the exact token list into the prompt is the most reliable fix, followed by the class-name check in the review script.</p>
+<p><strong>Do these tools work with Vue or Svelte?</strong></p>
+<p>Support varies by tool and changes quickly. Check the current documentation for the specific tool rather than relying on a general claim.</p>
+<p><strong>How do I stop inline styles from reaching the bundle?</strong></p>
+<p>State the constraint in the prompt, then enforce it with a script. Prompt-only enforcement drifts; script enforcement does not.</p>
+<p><strong>What is the most common accessibility failure in generated UI?</strong></p>
+<p>Focus management in overlays. A modal that renders and closes correctly but never moves focus into the dialog is a recurring pattern, and it is not detected by most automated rule engines.</p>
 <h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
-<p>Open your terminal and run:</p>
+<p>Pick one component that was generated in the last week and run your project's size tooling against it:</p>
 <pre><code class="language-bash">npx size-limit --json src/components/Button.tsx
 </code></pre>
-<p>If the bundle size is over 2 KB or you see inline styles longer than 40 characters, paste the file into Cursor and add this prompt:</p>
-<pre><code class="language-text">Refactor Button.tsx to use semantic tokens from tokens.json, Tailwind classes only, and no inline styles longer than 40 characters.
-</code></pre>
-<p>Commit the diff if the bundle drops below 2 KB and axe-core passes.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/">AI UI tools broke my React flow — here’s why</a></li>
-<li><a href="https://kubaik.github.io/ai-ui-tools-6-months-in-what-i-gained-and-lost/">AI UI tools: 6 months in, what I gained and lost</a></li>
-<li><a href="https://kubaik.github.io/react-19-compiler-my-components-changed-how/">React 19 compiler: my components changed how</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>If the reported size is above your budget, or if <code>grep -n 'style={{' src/components/Button.tsx</code> returns any matches, rewrite that one component against your token list and platform APIs, then commit the diff. One component is enough to tell you whether the rest of the generated code needs the same treatment.</p>
                 
                 
             </div>

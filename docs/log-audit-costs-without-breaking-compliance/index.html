@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Log audit costs without breaking compliance - Kubai Kevin</title>
-        <meta name="description" content="Cut audit log costs 40%: PostgreSQL vs ClickHouse at 2026 scale — 9 800 events/sec, 28 ms queries, and the write amplification trap most teams miss.">
+        <meta name="description" content="Compare PostgreSQL and ClickHouse for audit logging: write amplification, query latency, retention, cost modelling, and a decision checklist.">
         <meta name="keywords" content="AuditLogDatabase, PostgresqlAuditLogs, ClickhouseForLogs, Timescaledb, Clickhouse, Database, Performance, Postgresql, Rag">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-22T19:05:41.885040">
-        <meta property="article:modified_time" content="2026-09-18T11:32:39.897224+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:39:01.048133+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Log audit costs without breaking compliance">
-        <meta property="og:description" content="Cut audit log costs 40%: PostgreSQL vs ClickHouse at 2026 scale — 9 800 events/sec, 28 ms queries, and the write amplification trap most teams miss.">
+        <meta property="og:description" content="Compare PostgreSQL and ClickHouse for audit logging: write amplification, query latency, retention, cost modelling, and a decision checklist.">
         <meta property="og:url" content="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Log audit costs without breaking compliance">
-        <meta name="twitter:description" content="Cut audit log costs 40%: PostgreSQL vs ClickHouse at 2026 scale — 9 800 events/sec, 28 ms queries, and the write amplification trap most teams miss.">
+        <meta name="twitter:description" content="Compare PostgreSQL and ClickHouse for audit logging: write amplification, query latency, retention, cost modelling, and a decision checklist.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/log-audit-costs-without-breaking-compliance.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,10 +61,10 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/log-audit-costs-without-breaking-compliance/#article",
       "headline": "Log audit costs without breaking compliance",
-      "description": "Cut audit log costs 40%: PostgreSQL vs ClickHouse at 2026 scale — 9 800 events/sec, 28 ms queries, and the write amplification trap most teams miss.",
+      "description": "Compare PostgreSQL and ClickHouse for audit logging: write amplification, query latency, retention, cost modelling, and a decision checklist.",
       "datePublished": "2026-06-22T19:05:41+00:00",
-      "dateModified": "2026-09-18T11:32:39+00:00",
-      "wordCount": 2386,
+      "dateModified": "2026-10-03T12:39:01+00:00",
+      "wordCount": 2429,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Log audit costs without breaking compliance</h1>
                 
-                <p class="post-lead">Cut audit log costs 40%: PostgreSQL vs ClickHouse at 2026 scale — 9 800 events/sec, 28 ms queries, and the write amplification trap most teams miss.</p>
+                <p class="post-lead">Compare PostgreSQL and ClickHouse for audit logging: write amplification, query latency, retention, cost modelling, and a decision checklist.</p>
                 
                 
                 <div class="tags">
@@ -260,31 +260,28 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2386 words
+                        &nbsp;·&nbsp; 2429 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've seen the same building audit mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
-<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>Three years ago, the EU’s Digital Operational Resilience Act (DORA) came into effect. By 2026, nearly every SaaS vendor serving EU banks has been audited at least once, and the common failure mode is not encryption—it’s write latency on audit logs. Their PostgreSQL 15 cluster was already on <code>pg_partman</code> and <code>timescaledb</code>, but the auditors wanted immutable, tamper-evident logs with sub-second queries. The team spent two weeks trying to tune <code>wal_level=logical</code>, <code>max_wal_senders</code>, and <code>shared_buffers</code>, only to learn that WAL shipping isn’t enough when the auditor asks for a point-in-time query at 2024-06-03 14:27:43.456.</p>
-<p>Compliance isn’t optional, but writing every event synchronously to PostgreSQL at 5 000 events/sec will melt your write-API tier. That’s the tension: you need durability today and fast queries tomorrow. Two patterns dominate the solutions space today:</p>
-<ol>
-<li>PostgreSQL with logical decoding + a CDC pipeline to an append-only table (partitioned by day, with <code>pgcrypto</code> for hashes).</li>
-<li>ClickHouse as a dedicated analytical store, ingesting raw JSON blobs with <code>MergeTree</code> tables and materialized views for common compliance queries.</li>
-</ol>
-<p>Both can satisfy SOC 2 Type II, ISO 27001, and DORA, but they hit different ceilings. In this post I’ll compare them on the metrics that actually break compliance projects: sustained write throughput, point-in-time query latency, and cost per 1 M events stored for one year.</p>
-<h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
-<p>PostgreSQL 16 with TimescaleDB 2.12 and logical decoding is the default choice for teams that already run Postgres as their system of record. You keep one database, you keep one backup strategy, and you bolt audit on top with row-level triggers and <code>pgoutput</code> to a dedicated <code>audit_log</code> table.</p>
-<p>Here’s the minimal working setup I ship to clients:</p>
-<pre><code class="language-sql">-- Extension must be installed once per DB
-CREATE EXTENSION IF NOT EXISTS timescaledb;
+                <p>Audit logging sits in an awkward spot between two requirements that pull in opposite directions. Compliance regimes want durable, tamper-evident, queryable records that survive for months or years. Application teams want the write path to stay fast, because an audit write that blocks a user request turns a compliance feature into an outage. The failure mode that shows up most often is not missing encryption or a bad retention policy — it is write amplification and query latency discovered during an audit, when changing the architecture is expensive.</p>
+<p>This article compares the two patterns that dominate the solution space, explains where each one hits a ceiling, and gives a way to decide between them without relying on vendor benchmarks. Every number below is either a documented default, arithmetic from stated assumptions, or explicitly labelled illustrative.</p>
+<h2 id="the-two-dominant-patterns">The two dominant patterns</h2>
+<p><strong>Pattern A — PostgreSQL as system of record plus an audit table.</strong> Audit rows are written into a dedicated table, usually partitioned or converted into a hypertable, and shipped off-box through logical replication or a change-data-capture pipeline. The appeal is operational: one database, one backup strategy, one access-control model, and SQL that every engineer already knows.</p>
+<p><strong>Pattern B — PostgreSQL as transactional source, a columnar store as the analytical sink.</strong> Raw events land in an append-only columnar table (ClickHouse is the common choice, though the category includes other columnar engines). Materialized views roll raw events into compliance-shaped tables. The appeal is query speed across wide date ranges and the ability to store raw payloads without flattening them up front.</p>
+<p>Both can satisfy SOC 2 Type II, ISO 27001, and financial-sector operational resilience requirements. They fail differently, and they fail at different volumes.</p>
+<h2 id="pattern-a-postgresql-with-an-audit-table">Pattern A: PostgreSQL with an audit table</h2>
+<p>The usual implementation is a <code>SECURITY DEFINER</code> trigger function attached to every table that needs auditing, writing into a single partitioned <code>audit_log</code> table. Logical replication then publishes that table to a downstream consumer that writes immutable files to object storage.</p>
+<p>A workable schema, using only core PostgreSQL plus the <code>pgcrypto</code> extension for hashing:</p>
+<pre><code class="language-sql">CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 CREATE TABLE audit_log (
-  id BIGSERIAL PRIMARY KEY,
+  id BIGSERIAL,
   event_time TIMESTAMPTZ NOT NULL DEFAULT now(),
   user_id TEXT NOT NULL,
   action TEXT NOT NULL,
@@ -294,68 +291,63 @@ CREATE TABLE audit_log (
   new_data JSONB,
   ip_address INET,
   user_agent TEXT,
-  hash BYTEA GENERATED ALWAYS AS (
-    digest(concat_ws('|', id::text, event_time::text, user_id, action, entity_type, entity_id, coalesce(old_data::text,''), coalesce(new_data::text,''), ip_address::text, user_agent), 'sha256')
-  ) STORED
-);
+  prev_hash BYTEA,
+  row_hash BYTEA,
+  PRIMARY KEY (id, event_time)
+) PARTITION BY RANGE (event_time);
 
--- TimescaleDB hypertable
-SELECT create_hypertable('audit_log', 'event_time', chunk_time_interval =&gt; INTERVAL '1 day', if_not_exists =&gt; true);
-
--- Trigger function
-CREATE OR REPLACE FUNCTION trg_audit() RETURNS TRIGGER AS $$
+CREATE TABLE audit_log_2026_01
+  PARTITION OF audit_log
+  FOR VALUES FROM ('2026-01-01') TO ('2026-02-01');
+</code></pre>
+<p>Note two deliberate choices. First, the partition key is part of the primary key, which PostgreSQL requires for partitioned tables. Second, the hash is not a generated column. A generated column cannot reference other rows, so it cannot express a hash chain. A chain has to be computed in application code or in a trigger that reads the previous row's hash:</p>
+<pre><code class="language-sql">CREATE OR REPLACE FUNCTION trg_audit() RETURNS TRIGGER AS $$
 DECLARE
-  _new_hash BYTEA;
+  _prev BYTEA;
+  _payload TEXT;
 BEGIN
-  IF TG_OP = 'INSERT' THEN
-    INSERT INTO audit_log (user_id, action, entity_type, entity_id, old_data, new_data, ip_address, user_agent)
-      VALUES (current_user, TG_OP, TG_TABLE_NAME, NEW.id::text, NULL, to_jsonb(NEW), inet '127.0.0.1', 'pg_trigger');
-    RETURN NEW;
-  ELSIF TG_OP = 'UPDATE' THEN
-    INSERT INTO audit_log (user_id, action, entity_type, entity_id, old_data, new_data, ip_address, user_agent)
-      VALUES (current_user, TG_OP, TG_TABLE_NAME, NEW.id::text, to_jsonb(OLD), to_jsonb(NEW), inet '127.0.0.1', 'pg_trigger');
-    RETURN NEW;
-  ELSIF TG_OP = 'DELETE' THEN
-    INSERT INTO audit_log (user_id, action, entity_type, entity_id, old_data, new_data, ip_address, user_agent)
-      VALUES (current_user, TG_OP, TG_TABLE_NAME, OLD.id::text, to_jsonb(OLD), NULL, inet '127.0.0.1', 'pg_trigger');
-    RETURN OLD;
-  END IF;
-  RETURN NULL;
+  SELECT row_hash INTO _prev
+  FROM audit_log
+  ORDER BY id DESC
+  LIMIT 1;
+
+  _payload := concat_ws('|',
+    TG_OP,
+    TG_TABLE_NAME,
+    coalesce(to_jsonb(NEW)::text, to_jsonb(OLD)::text),
+    encode(coalesce(_prev, ''::bytea), 'hex'));
+
+  INSERT INTO audit_log (
+    user_id, action, entity_type, entity_id,
+    old_data, new_data, ip_address, user_agent, prev_hash, row_hash
+  ) VALUES (
+    current_user, TG_OP, TG_TABLE_NAME,
+    coalesce(NEW.id, OLD.id)::text,
+    CASE WHEN TG_OP = 'INSERT' THEN NULL ELSE to_jsonb(OLD) END,
+    CASE WHEN TG_OP = 'DELETE' THEN NULL ELSE to_jsonb(NEW) END,
+    inet_client_addr(),
+    current_setting('application_name', true),
+    _prev,
+    digest(_payload, 'sha256')
+  );
+  RETURN coalesce(NEW, OLD);
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Attach to multiple tables
 CREATE TRIGGER trg_user_audit
   AFTER INSERT OR UPDATE OR DELETE ON users
   FOR EACH ROW EXECUTE FUNCTION trg_audit();
-
--- Logical replication publisher
-CREATE PUBLICATION audit_pub FOR TABLE audit_log;
 </code></pre>
-<p>The magic happens in the CDC pipeline. A small Go worker (using <code>github.com/jackc/pglogrepl</code> v0.10.0) streams <code>INSERT</code>s from the <code>audit_log</code> table to an S3 bucket every 500 ms. Each file is a gzipped newline-delimited JSON with an embedded SHA-256 hash of the entire payload. The auditor can verify the hash chain with a single Python script:</p>
-<pre><code class="language-python">import hashlib, json, pathlib
-
-def verify_chain(base_dir: str):
-    prev = None
-    for path in sorted(pathlib.Path(base_dir).glob('*.ndjson.gz')):
-        with gzip.open(path, 'rt') as f:
-            for line in f:
-                obj = json.loads(line)
-                payload = json.dumps(obj, sort_keys=True).encode()
-                h = hashlib.sha256(payload).hexdigest()
-                if prev is not None and h != prev['next_hash']:
-                    raise ValueError(f'Chain broken at {path}')
-                prev = obj
-    return True
-</code></pre>
-<p>The PostgreSQL stack shines when:
-- You already run Postgres and want to minimize new infra. - Your team is comfortable with SQL and <code>pg_dump</code>/<code>pg_basebackup</code>. - You need row-level security (RLS) on the source tables and want to reuse the same policy. - Your compliance tooling already speaks PostgreSQL (e.g., Vanta, Drata, AuditBoard).</p>
-<p>The biggest hidden cost is write amplification: every trigger fires an <code>INSERT</code> into <code>audit_log</code>, then logical replication ships the same row. At 3 000 events/sec, the cluster’s CPU jumps from 20 % to 70 %, and WAL size balloons from 200 MB/hour to 1.2 GB/hour.</p>
-<h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
-<p>ClickHouse 24.8 with the <code>MergeTree</code> engine and <code>JSONEachRow</code> format is the opposite extreme: you treat PostgreSQL as the transactional source and ClickHouse as the immutable analytical sink. The pattern is called “write-once, query-many”: raw JSON blobs land in a <code>RawEvents</code> table, then materialized views roll them up into compliance-ready tables.</p>
-<p>A typical schema looks like this:</p>
+<p>Two caveats worth stating plainly. <code>inet_client_addr()</code> returns NULL for local connections, so the trigger above will record NULL rather than a fabricated loopback address. And the <code>SELECT ... ORDER BY id DESC LIMIT 1</code> inside the trigger serializes concurrent inserts on the audit table — that is the price of a strict hash chain. If strict chaining is not required, drop <code>prev_hash</code> and compute a per-row hash instead; if it is required, expect the audit table to become a write bottleneck and plan accordingly.</p>
+<h3 id="where-pattern-a-breaks">Where Pattern A breaks</h3>
+<p>The dominant cost is write amplification. Every audited transaction produces at least one extra row, and if the row is then replicated, the same bytes are written again to the WAL and again on the subscriber. A single logical replication slot streams changes from one publication with one worker process; the documented behavior is that a slot is consumed by one active consumer at a time, so scaling the publisher means adding publications and slots, not threads.</p>
+<p>The second cost is <code>ALTER TABLE</code>. Adding a column to a large partitioned table takes an access-exclusive lock on each partition in turn, and the audit table is usually the largest table in the database.</p>
+<p>The third cost is retention. Dropping a partition is cheap; deleting rows with <code>DELETE</code> is not, and an audit table with a rolling delete job will bloat unless autovacuum keeps up.</p>
+<h2 id="pattern-b-a-columnar-analytical-sink">Pattern B: a columnar analytical sink</h2>
+<p>The columnar pattern treats the transactional database as the source of truth and the analytical store as an immutable, query-optimized copy. Events are written once, in append-only fashion, and never updated in place.</p>
+<p>A representative schema:</p>
 <pre><code class="language-sql">CREATE TABLE events_raw (
-  event_time DateTime64(3) TTL event_time + INTERVAL 366 DAY,
+  event_time DateTime64(3),
   user_id String,
   action LowCardinality(String),
   entity_type LowCardinality(String),
@@ -364,226 +356,125 @@ def verify_chain(base_dir: str):
   new_data String,
   ip_address IPv4,
   user_agent String,
-  hash String,
+  row_hash String,
   source_date Date MATERIALIZED toDate(event_time)
 ) ENGINE = MergeTree()
-ORDER BY (toStartOfHour(event_time), entity_type, user_id);
-
-CREATE MATERIALIZED VIEW mv_audit_soc2 TO events_soc2 AS
-SELECT 
-  event_time,
-  user_id,
-  action,
-  entity_type,
-  entity_id,
-  old_data,
-  new_data,
-  ip_address,
-  user_agent,
-  hash,
-  cityHash64(hash) AS integrity_hash
-FROM events_raw
-WHERE action IN ('CREATE','UPDATE','DELETE')
-GROUP BY 
-  event_time,
-  user_id,
-  action,
-  entity_type,
-  entity_id,
-  old_data,
-  new_data,
-  ip_address,
-  user_agent,
-  hash;
+PARTITION BY toYYYYMM(event_time)
+ORDER BY (toStartOfHour(event_time), entity_type, user_id)
+TTL event_time + INTERVAL 366 DAY;
 </code></pre>
-<p>Ingestion happens via <code>clickhouse-client --insert_format JSONEachRow</code> or via Kafka Connect with the <code>clickhouse-kafka-connect</code> v1.5.2 sink. The sink batches 1 000 events and flushes every 200 ms, giving ~5 000 events/sec sustained throughput on a single <code>c6g.xlarge</code> instance in AWS.</p>
-<p>ClickHouse shines when:
-- You expect 10 000+ events/sec and need sub-second queries across arbitrary date ranges. - You want to store raw JSON without flattening, so future auditors won’t ask for schema changes. - You already run Kafka or Pulsar, so the CDC pipeline is one connector. - You need geospatial and user-agent parsing for fraud detection dashboards.</p>
-<p>The biggest surprise I had was that <code>TTL</code> on <code>events_raw</code> actually deletes data faster than a cron job, but it also triggers merges that spike CPU once per day.</p>
-<h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>We ran a 60-minute sustained load test on two stacks:</p>
+<p>Ingestion is typically batched: either a client inserting <code>JSONEachRow</code> in blocks of a few thousand rows, or a Kafka sink connector batching on size and time. Batching is not an optimization here — it is mandatory. Columnar engines write one part per insert, and a high rate of tiny inserts produces a backlog of parts that background merges cannot keep up with. The documented remedy is to batch, or to enable asynchronous inserts so the server coalesces small writes.</p>
+<h3 id="where-pattern-b-breaks">Where Pattern B breaks</h3>
+<ul>
+<li><strong>Small inserts.</strong> A stream of single-row inserts will stall merges and degrade read performance. This is the most common operational mistake with columnar audit stores.</li>
+<li><strong>Late-arriving and corrected events.</strong> Columnar engines are append-only in practice; updates are expensive. If an audit record must be corrected, the correction is a new row, and every query has to account for that.</li>
+<li><strong>Coordination.</strong> A production cluster needs a coordination service for replication and distributed DDL. That is a second stateful system to operate, back up, and upgrade.</li>
+<li><strong>Deletes.</strong> Retention via TTL is cheap because it drops whole partitions. Point deletes for a data-subject request are not, and columnar engines generally do not offer row-level security equivalent to PostgreSQL's.</li>
+</ul>
+<h2 id="comparing-the-two-honestly">Comparing the two honestly</h2>
+<p>Do not trust throughput numbers from an article, including this one. The table below lists what to measure and how, not what the answer is.</p>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>PostgreSQL 16 + TimescaleDB 2.12</th>
-<th>ClickHouse 24.8 + Kafka Connect 1.5.2</th>
+<th>Dimension</th>
+<th>What to measure</th>
+<th>How to measure it</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Sustained write throughput</td>
-<td>3 200 events/sec</td>
-<td>9 800 events/sec</td>
+<td>Events/sec at a fixed p99 insert latency</td>
+<td>Replay a captured production event stream at increasing rates; record the rate at which p99 latency crosses your SLO</td>
 </tr>
 <tr>
-<td>P99 insert latency</td>
-<td>18 ms</td>
-<td>4 ms</td>
+<td>Write amplification</td>
+<td>Extra bytes written per event</td>
+<td>Compare <code>pg_stat_user_tables.n_tup_ins</code> growth for audited tables against application-level event counts; compare WAL generation rate (<code>pg_stat_wal</code>) before and after enabling auditing</td>
 </tr>
 <tr>
-<td>Point-in-time query (1 day)</td>
-<td>420 ms</td>
-<td>28 ms</td>
+<td>Point-in-time query latency</td>
+<td>Time to return N rows for a <code>(user_id, entity_type, time range)</code> predicate</td>
+<td>Run the same query shape against both stores on identical data; vary the range from one day to thirty</td>
 </tr>
 <tr>
-<td>Point-in-time query (30 days)</td>
-<td>980 ms</td>
-<td>45 ms</td>
+<td>Storage per million events</td>
+<td>Bytes on disk after compression</td>
+<td>Insert a fixed synthetic dataset, force a merge or vacuum, and measure the on-disk size</td>
 </tr>
 <tr>
-<td>Storage 1 M events</td>
-<td>72 MB</td>
-<td>112 MB</td>
+<td>Retention cost</td>
+<td>Cost of dropping one month of data</td>
+<td>Time the partition drop or TTL expiry and measure the CPU spike it causes</td>
+</tr>
+<tr>
+<td>Recovery time</td>
+<td>Time to restore and replay to a point in time</td>
+<td>Restore from backup in a staging environment and measure end to end</td>
 </tr>
 </tbody>
 </table>
-<p>The PostgreSQL stack hit a hard wall at ~4 000 events/sec because logical decoding uses a single worker thread per publication. Bumping <code>max_replication_slots</code> and adding a second subscriber helped, but the CPU still peaked at 85 % on the writer node.</p>
-<p>Another surprise was query patterns. Auditors love <code>SELECT * FROM audit_log WHERE user_id = ? AND entity_type = ? AND event_time BETWEEN ? AND ?</code>—a simple index scan. PostgreSQL with TimescaleDB returned 1 000 rows in 420 ms on a 30-day range. ClickHouse with a <code>WHERE toStartOfHour(event_time)</code> predicate and a projection on <code>(user_id, entity_type)</code> returned the same 1 000 rows in 28 ms. The difference is partition pruning and vectorized execution.</p>
-<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
-<table>
-<thead>
-<tr>
-<th>Dimension</th>
-<th>PostgreSQL + TimescaleDB</th>
-<th>ClickHouse</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Onboarding time</td>
-<td>2–3 days (familiar SQL)</td>
-<td>5–7 days (steep learning curve)</td>
-</tr>
-<tr>
-<td>Debugging a dropped event</td>
-<td><code>pg_stat_replication</code> + logs</td>
-<td><code>system.errors</code> table + Kafka UI</td>
-</tr>
-<tr>
-<td>Schema migrations</td>
-<td>ALTER TABLE is blocking</td>
-<td>ALTER TABLE is instant</td>
-</tr>
-<tr>
-<td>Backup &amp; restore</td>
-<td><code>pg_dump</code> + WAL archiving</td>
-<td><code>clickhouse-copier</code> + object storage</td>
-</tr>
-<tr>
-<td>Local development</td>
-<td>Docker in 30 sec</td>
-<td>ClickHouse server in 90 sec</td>
-</tr>
-<tr>
-<td>IDE support</td>
-<td>Every SQL editor</td>
-<td>ClickHouse plugin for IntelliJ</td>
-</tr>
-</tbody>
-</table>
-<p>I’ll admit I initially underestimated the ClickHouse learning curve. I tried to write a <code>GROUP BY</code> with a <code>JSON</code> function and got a 20-line Stack Overflow thread before realizing I needed <code>arrayJoin</code> and <code>map</code>. PostgreSQL felt like home: I wrote a single <code>CREATE TRIGGER</code> and the team understood it immediately. The trade-off is that ClickHouse’s <code>MergeTree</code> engine means you never block a write while adding a column, whereas TimescaleDB still fights <code>ALTER TABLE</code> bloat.</p>
-<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
-<table>
-<thead>
-<tr>
-<th>Cost bucket</th>
-<th>PostgreSQL 16 (m6g.xlarge)</th>
-<th>ClickHouse 24.8 (3x c6g.xlarge + Kafka m5.large)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Compute (12 months)</td>
-<td>$1 248</td>
-<td>$2 160</td>
-</tr>
-<tr>
-<td>Storage (gp3 20 IOPS)</td>
-<td>$144</td>
-<td>$192</td>
-</tr>
-<tr>
-<td>Data egress (Comcast)</td>
-<td>$18</td>
-<td>$24</td>
-</tr>
-<tr>
-<td>Maintenance (staff hours)</td>
-<td>8 hours/year</td>
-<td>16 hours/year</td>
-</tr>
-<tr>
-<td><strong>Total 12 months</strong></td>
-<td><strong>$1 410</strong></td>
-<td><strong>$2 376</strong></td>
-</tr>
-</tbody>
-</table>
-<p>PostgreSQL wins on raw dollars because it reuses existing infra. ClickHouse’s tripling of nodes and Kafka cluster pushes the bill 68 % higher. However, once you exceed ~5 000 events/sec, PostgreSQL’s write amplification doubles the storage footprint, flipping the advantage. A client with 15 000 events/sec saw PostgreSQL storage grow to 2 TB in six months, while ClickHouse stayed at 800 GB.</p>
-<h2 id="the-decision-framework-i-use">The decision framework I use</h2>
-<ol>
-<li>
-<p><strong>Event volume today and in 12 months</strong>
-   If &lt; 4 000 events/sec → PostgreSQL is simpler and cheaper.
-   If &gt; 8 000 events/sec → ClickHouse scales with fewer nodes.</p>
-</li>
-<li>
-<p><strong>Team skill set</strong>
-   If everyone knows SQL and has <code>psql</code> muscle memory → PostgreSQL.
-   If you already run Kafka and have a data team → ClickHouse.</p>
-</li>
-<li>
-<p><strong>Compliance depth</strong>
-   If the auditor only needs daily CSV dumps → PostgreSQL suffices.
-   If they want point-in-time queries across arbitrary date ranges → ClickHouse wins.</p>
-</li>
-<li>
-<p><strong>Exit strategy</strong>
-   PostgreSQL is a single binary; ClickHouse needs ClickHouse Keeper for coordination. Choose based on how painful it would be to migrate off either.</p>
-</li>
-</ol>
-<p>I’ve used this framework three times in the last year. The only time I ignored it was for a German bank that insisted on ClickHouse even though their event volume was 1 500 events/sec—because their auditor had a ClickHouse plugin for log analysis. That project still cost 20 % more in dev hours.</p>
-<h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
-<p><strong>Use PostgreSQL with TimescaleDB and logical replication when:</strong>
-- You already run Postgres and want minimal new infra. - Your event volume is &lt; 5 000 events/sec. - Your auditors are happy with daily exports and occasional SQL queries. - You value on-call simplicity over raw query speed.</p>
-<p><strong>Use ClickHouse with Kafka Connect when:</strong>
-- You expect &gt; 8 000 events/sec within 12 months. - Your auditors demand point-in-time queries across large date ranges. - You already run Kafka or Pulsar. - You’re willing to hire or train a data engineer.</p>
-<h2 id="final-verdict">Final verdict</h2>
-<p>PostgreSQL 16 + TimescaleDB 2.12 is the pragmatic default for most startups and mid-market SaaS companies. It keeps the blast radius small, leverages existing backups, and satisfies SOC 2 Type II with a few extra triggers and a CDC worker. The performance ceiling is real—around 4 000 events/sec sustained—but that’s still enough for 90 % of B2B SaaS use cases.</p>
-<p>ClickHouse 24.8 is the high-throughput specialist. If you’re a Series B+ company expecting 10 000+ events/sec or already drowning in Kafka pipelines, ClickHouse gives you sub-50 ms queries at scale. Just budget for the extra infra and the learning curve.</p>
-<p>The single mistake I see teams make is underestimating write amplification. Today I always ask: “How many extra rows are we shipping per event?” If the answer is more than 2, I reach for a dedicated analytical store.</p>
-<h3 id="check-your-own-write-amplification-right-now">Check your own write amplification right now</h3>
-<p>Run this one-liner on your PostgreSQL writer:</p>
-<pre><code class="language-bash">psql -c &quot;SELECT 
-  schemaname, relname, n_tup_ins, n_tup_upd, n_tup_del,
-  (n_tup_ins + n_tup_upd + n_tup_del) / (n_tup_ins + 1)::float AS rows_per_event
-FROM pg_stat_user_tables
-WHERE relname LIKE '%audit%';&quot;
-</code></pre>
-<p>If the <code>rows_per_event</code> ratio is above 1.3, you’re already shipping too much. Either switch to a dedicated analytical store or switch to a zero-copy trigger pattern using <code>pg_notify</code> and a separate queue.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>how to make PostgreSQL audit logs faster without adding new infra</strong></p>
-<p>Start with <code>timescaledb.compression</code> on the <code>audit_log</code> table. I’ve seen 5× reduction in storage and 3× faster scans after adding <code>compress_segmentby = 'entity_type'</code>, <code>compress_orderby = 'event_time'</code>. Also, disable <code>wal_level=logical</code> for non-audit tables—many teams leave it on globally and wonder why WAL grows.</p>
-<p><strong>what is the smallest ClickHouse cluster that can handle 5 000 events per second</strong></p>
-<p>A single <code>c6g.xlarge</code> (4 vCPU, 8 GB RAM) running ClickHouse 24.8 can sustain 5 000 events/sec with Kafka Connect v1.5.2 and <code>async_insert=1</code>. Add a second replica only if you need &gt; 10 000 events/sec or want HA for the Kafka topic.</p>
-<p><strong>which tool produces smaller audit log files: PostgreSQL logical decoding or ClickHouse MergeTree</strong></p>
-<p>For 1 M events, PostgreSQL logical decoding (gzipped ndjson) lands at ~72 MB, while ClickHouse <code>MergeTree</code> with <code>TTL</code> and compression lands at ~112 MB. The difference is metadata: PostgreSQL ships raw JSON, ClickHouse ships with projections and materialized views already baked in.</p>
-<p><strong>how to verify audit log integrity without writing custom code</strong></p>
-<p>Use the open-source <code>pgAudit</code> extension v1.6.2 for PostgreSQL. It writes row hashes into the WAL, so you can checksum the entire WAL file or a segment with <code>pg_waldump --checksum</code>. For ClickHouse, enable <code>checksums=1</code> on the table and run <code>SELECT count(*) FROM events_raw WHERE checksum(signature()) != expected_checksum</code>. Both give you cryptographic proof without a custom script.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>A few structural differences are worth stating without numbers:</p>
 <ul>
-<li><a href="https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
-<li><a href="https://kubaik.github.io/audit-logs-ship-them-fast-keep-them-forever/">Audit logs: ship them fast, keep them forever</a></li>
-<li><a href="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">Postgres 17 swallowed Redis, Kafka, Timescale</a></li>
+<li><strong>Partition pruning.</strong> Both systems prune by time. A columnar store additionally prunes by the sort key within a partition, which is why wide-range scans with a selective predicate tend to return faster there.</li>
+<li><strong>Schema changes.</strong> Adding a column is a metadata operation in a columnar engine and a locking operation in PostgreSQL. For an audit table that grows monotonically, this difference compounds.</li>
+<li><strong>Access control.</strong> PostgreSQL offers row-level security, which matters when the audit table lives in the same database as tenant data. Columnar stores generally implement access control at the database or table level.</li>
+<li><strong>Backup and restore.</strong> PostgreSQL backup tooling is mature and well understood. Columnar stores usually back up to object storage and restore by copying parts, which is fast but less familiar to on-call engineers.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="a-cost-model-you-can-fill-in-yourself">A cost model you can fill in yourself</h2>
+<p>Infrastructure cost comparisons age badly. Instead, build the model from four inputs and recompute it when any input changes.</p>
+<ol>
+<li><strong>Peak events per second.</strong> Take the 99th percentile over a month, not the average.</li>
+<li><strong>Bytes per event after compression.</strong> Measure it, do not estimate.</li>
+<li><strong>Retention window in months.</strong> This is usually set by policy, not by engineering.</li>
+<li><strong>Replication factor.</strong> One for a single-node analytical store, three for a typical replicated cluster.</li>
+</ol>
+<p>Illustrative arithmetic: at 2,000 events/sec sustained, one year holds roughly <code>2000 × 60 × 60 × 24 × 365 ≈ 6.3 × 10^10</code> events. At 200 bytes per event after compression, that is about 12.6 TB before replication. At a replication factor of three, 37.8 TB. Those figures are illustrative — substitute your own measured bytes-per-event and retention window, and the same multiplication gives you a storage budget you can defend.</p>
+<p>Then compare the operational side. A columnar cluster is at least one additional stateful system to run, plus a coordination service in a distributed deployment. A PostgreSQL audit table is zero additional systems but adds write load to the database that already serves user traffic. The right comparison is not "which is cheaper" but "which failure mode can this team absorb at 3 a.m."</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Work through these in order; the first few usually settle it.</p>
+<ul>
+<li><strong>What is peak sustained event rate, not average?</strong> Below roughly 2,000/sec, a well-partitioned PostgreSQL audit table is usually sufficient and adds no new systems.</li>
+<li><strong>Does the audit query pattern require wide date ranges with selective filters?</strong> If auditors routinely ask for a single user across ninety days, a columnar store will answer that faster and with less load on the transactional database.</li>
+<li><strong>Is a strict hash chain required, or only per-row integrity?</strong> A strict chain serializes writes. If the requirement is per-row tamper evidence, avoid the chain and keep the write path parallel.</li>
+<li><strong>Who is on call?</strong> Adding a columnar cluster adds a second system with its own failure modes. If the team has no one who has operated one, that is a real cost.</li>
+<li><strong>How often do audit schemas change?</strong> Frequent schema evolution favors a columnar store or a schemaless raw-event table.</li>
+<li><strong>What does the auditor actually accept?</strong> Ask before designing. Daily signed exports to object storage satisfy many regimes; point-in-time interactive queries satisfy a smaller set.</li>
+</ul>
+<h2 id="failure-modes-to-design-against">Failure modes to design against</h2>
+<p><strong>Write amplification discovered late.</strong> The audit trigger doubles or triples write volume on the busiest tables. Instrument <code>pg_stat_user_tables</code> and WAL generation before enabling auditing on a production table, not after.</p>
+<p><strong>Hash chain as a bottleneck.</strong> A trigger that reads the previous row's hash serializes inserts. Measure the throughput ceiling in staging with realistic concurrency; if it is below your peak event rate, use per-row hashes and rely on signed exports for chain integrity.</p>
+<p><strong>Small inserts into a columnar store.</strong> Batch on the client or enable server-side asynchronous inserts. Monitor the parts count; a rising count of small parts is the early warning.</p>
+<p><strong>Retention that does not actually delete.</strong> Verify that partition drops or TTL expiry are happening, and measure the CPU cost of the merge or drop. A retention policy that exists only in a document is not a retention policy.</p>
+<p><strong>No restore rehearsal.</strong> An audit log that cannot be restored to a point in time is not evidence. Restore into staging on a schedule and record the elapsed time.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Can PostgreSQL alone handle audit logging at scale?</strong>
+Yes, up to a point. The constraint is not PostgreSQL's storage engine but the write amplification of the audit path and the single-consumer behavior of logical replication slots. Partitioning by time, avoiding a strict hash chain, and archiving partitions to object storage extends the ceiling considerably.</p>
+<p><strong>Do I need Kafka to feed a columnar audit store?</strong>
+No. A batch writer that reads from the transactional database and inserts in blocks of a few thousand rows works for moderate volumes. Kafka becomes worthwhile when you already operate it or when you need multiple independent consumers of the same event stream.</p>
+<p><strong>How do I prove an audit log has not been tampered with?</strong>
+Two commonly used approaches: per-row hashes stored alongside the row, or a hash chain where each row includes the previous row's hash. Both are only as strong as the storage of the hashes themselves, so the usual design also writes signed, immutable exports to object storage on a schedule, where the retention policy prevents modification.</p>
+<p><strong>Is a columnar store a replacement for the transactional database?</strong>
+No. It is an analytical sink. The transactional database remains the source of truth for application state; the columnar store holds the audit record of changes to that state.</p>
+<p><strong>What is the single most useful thing to measure first?</strong>
+Write amplification: extra rows or bytes written per application event. It determines whether the current design will survive the next traffic increase, and it is measurable in a few minutes.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Run this against a staging copy of your production database and record the output before you change anything:</p>
+<pre><code class="language-sql">SELECT
+  schemaname,
+  relname,
+  n_tup_ins,
+  n_tup_upd,
+  n_tup_del,
+  CASE
+    WHEN n_tup_ins = 0 THEN NULL
+    ELSE round((n_tup_ins + n_tup_upd + n_tup_del)::numeric / n_tup_ins, 3)
+  END AS rows_written_per_insert
+FROM pg_stat_user_tables
+WHERE relname LIKE '%audit%'
+ORDER BY n_tup_ins DESC;
+</code></pre>
+<p>A ratio close to 1 means the audit path is writing roughly one row per insert. A ratio well above 1 means the audit path is multiplying write volume, and that number — not a vendor benchmark — is the one to bring to the next architecture discussion.</p>
                 
                 
             </div>

@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Drop EC2 bills 70% without code - Kubai Kevin</title>
-        <meta name="description" content="Cut EC2 costs 70% with one sysctl tweak — TCP BBR, zswap, gp3 IOPS, and the exact commands for Amazon Linux 2023 and Ubuntu 22.04 LTS.">
+        <title>Kernel and EBS Tuning That Cuts EC2 CPU Overhead - Kubai Kevin</title>
+        <meta name="description" content="A practical guide to TCP congestion control, zswap, and gp3 IOPS tuning on EC2, with measurement steps and failure modes.">
         <meta name="keywords" content="CutEc2Costs, Ec2CostOptimization, ZswapVsOom, Gp3IopsSettings, SysctlTweaksEc2, Performance, Techcareer">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T04:57:04.863722">
-        <meta property="article:modified_time" content="2026-09-19T11:54:35.551996+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:37:18.732988+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="Drop EC2 bills 70% without code">
-        <meta property="og:description" content="Cut EC2 costs 70% with one sysctl tweak — TCP BBR, zswap, gp3 IOPS, and the exact commands for Amazon Linux 2023 and Ubuntu 22.04 LTS.">
+        <meta property="og:title" content="Kernel and EBS Tuning That Cuts EC2 CPU Overhead">
+        <meta property="og:description" content="A practical guide to TCP congestion control, zswap, and gp3 IOPS tuning on EC2, with measurement steps and failure modes.">
         <meta property="og:url" content="https://kubaik.github.io/drop-ec2-bills-70-without-code/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/drop-ec2-bills-70-without-code.png">
-        <meta property="og:image:alt" content="Drop EC2 bills 70% without code">
+        <meta property="og:image:alt" content="Kernel and EBS Tuning That Cuts EC2 CPU Overhead">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Drop EC2 bills 70% without code">
-        <meta name="twitter:description" content="Cut EC2 costs 70% with one sysctl tweak — TCP BBR, zswap, gp3 IOPS, and the exact commands for Amazon Linux 2023 and Ubuntu 22.04 LTS.">
+        <meta name="twitter:title" content="Kernel and EBS Tuning That Cuts EC2 CPU Overhead">
+        <meta name="twitter:description" content="A practical guide to TCP congestion control, zswap, and gp3 IOPS tuning on EC2, with measurement steps and failure modes.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/drop-ec2-bills-70-without-code.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,12 +60,12 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/drop-ec2-bills-70-without-code/#article",
-      "headline": "Drop EC2 bills 70% without code",
-      "description": "Cut EC2 costs 70% with one sysctl tweak — TCP BBR, zswap, gp3 IOPS, and the exact commands for Amazon Linux 2023 and Ubuntu 22.04 LTS.",
+      "headline": "Kernel and EBS Tuning That Cuts EC2 CPU Overhead",
+      "description": "A practical guide to TCP congestion control, zswap, and gp3 IOPS tuning on EC2, with measurement steps and failure modes.",
       "datePublished": "2026-06-09T04:57:04+00:00",
-      "dateModified": "2026-09-19T11:54:35+00:00",
-      "wordCount": 3050,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-10-03T12:37:18+00:00",
+      "wordCount": 2497,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Drop EC2 bills 70% without code",
+          "name": "Kernel and EBS Tuning That Cuts EC2 CPU Overhead",
           "item": "https://kubaik.github.io/drop-ec2-bills-70-without-code/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>Drop EC2 bills 70% without code</span>
+            <span>Kernel and EBS Tuning That Cuts EC2 CPU Overhead</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">Drop EC2 bills 70% without code</h1>
+                <h1 itemprop="headline">Kernel and EBS Tuning That Cuts EC2 CPU Overhead</h1>
                 
-                <p class="post-lead">Cut EC2 costs 70% with one sysctl tweak — TCP BBR, zswap, gp3 IOPS, and the exact commands for Amazon Linux 2023 and Ubuntu 22.04 LTS.</p>
+                <p class="post-lead">A practical guide to TCP congestion control, zswap, and gp3 IOPS tuning on EC2, with measurement steps and failure modes.</p>
                 
                 
                 <div class="tags">
@@ -254,220 +254,231 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3050 words
+                        12 min read
+                        &nbsp;·&nbsp; 2497 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026 I switched a client’s Node 20 LTS backend from Elastic Beanstalk to raw EC2 because I needed a custom VPC with IPv6 and the Beanstalk IPv6 support was still in beta. The bill went from $180/month to $800/month in the first 30 days.</p>
-<p>Most cost-saving guides tell you to pick the cheapest instance type or run spot fleets. Those moves cut the bill by 30–40% but ignore the hidden levers: OS-level TCP tweaks, EBS volume type, and the fact that Amazon Linux 2026 still ships with the 2026-era <code>net.core.default_qdisc</code> set to <code>fq_codel</code> while the Linux kernel itself has moved on. That mismatch alone added 15–20% CPU overhead on every outbound HTTPS call.</p>
-<p>I rebuilt a 4 vCPU/8 GiB setup that handles 800 req/s at 95% CPU with an average latency of 120 ms on <code>m6i.large</code> in us-east-1. After applying the one-liner and two follow-up flags, the same workload ran at 45% CPU, 75 ms latency, and the bill dropped to $240 — a 70% cut with no code changes.</p>
-<p>If you’re still tuning connection pools or load-balancer timeouts while your EC2 bill climbs, the bottleneck is probably below the application layer.</p>
+                <p>Most cost-reduction guides stop at instance-type selection and spot fleets. Those levers are real, but they sit above a layer that many teams never inspect: the kernel networking stack and the storage configuration underneath the application. This article covers what can be tuned below the application layer, how to measure whether a change actually helped, and where the common failure modes are.</p>
+<p>The techniques here apply to any Linux workload on EC2 — Node, Python, Go, or JVM — because they operate at the sysctl and block-device level. Nothing requires recompiling a kernel or building a custom AMI.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You only need an AWS account, an EC2 instance running Amazon Linux 2026 or Ubuntu 22.04 LTS, and SSH access. The changes are kernel-level, so they work whether your app is Node 20 LTS, Python 3.11, or Go 1.22.</p>
-<p>By the end you’ll have:
-- A single sysctl tweak that reduces TCP retransmits by ~30%. - A swap + zswap configuration that prevents the 30-second OOM kills that AWS Support calls “normal behavior”. - An EBS gp3 volume tuned to 3,000 IOPS instead of the default 1,000.</p>
-<p>Nothing here requires compiling a kernel or rebooting into a custom AMI. All commands run on a live instance.</p>
+<p>You need an AWS account, an EC2 instance running a modern Linux distribution (Amazon Linux 2023 or Ubuntu 22.04 LTS are both reasonable), and SSH access. The commands assume a root-capable user or <code>sudo</code>.</p>
+<p>By the end you will have:
+- A TCP congestion-control change applied and persisted via <code>/etc/sysctl.d</code>.
+- A compressed swap configuration that reduces the chance of OOM kills during RSS spikes.
+- A gp3 volume provisioned above its default IOPS, with a documented method for verifying the change.
+- A measurement harness (iperf3, node_exporter, k6) that lets you decide whether any of this helped.</p>
+<p>A note on expectations: the size of the improvement depends heavily on your workload's traffic shape, connection lifetime, and I/O profile. Long-lived HTTP/2 connections and bulk transfers tend to benefit most from congestion-control changes. Request/response APIs with small payloads may see almost nothing. Measure before you conclude.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <ol>
-<li>
-<p>SSH into the instance.
-   <code>bash
-   ssh -i ~/.ssh/prod-key.pem ec2-user@3.235.198.42</code></p>
-</li>
-<li>
-<p>Confirm the OS and kernel.
-   <code>bash
-   cat /etc/os-release
-   uname -a
-   # Amazon Linux 2023 (kernel 6.1.69-78.158.amzn2023.x86_64)</code></p>
-</li>
-<li>
-<p>Install two tools you’ll need for measurement: <code>iperf3</code> and <code>bcc-tools</code>.
-   <code>bash
-   sudo dnf install -y iperf3 bcc-tools</code></p>
-</li>
-<li>
-<p>Baseline the network before any tweaks. Run a 60-second iperf3 server on the instance (port 5201) and a client on another host in the same AZ. Record the retransmit ratio.
-   ```bash
-   # On the server:
-   iperf3 -s -p 5201</p>
-</li>
+<li>SSH into the instance.</li>
 </ol>
-<p># On the client:
-   iperf3 -c <SERVER_IP> -p 5201 -t 60 -R --logfile baseline.json
-   ```</p>
-<ol>
-<li>
-<p>Parse the JSON to extract retransmits.
-   <code>bash
-   jq '.end.sum_retransmits' baseline.json
-   # 1872</code>
-Note that number; you’ll compare it after the tweak.</p>
-</li>
-<li>
-<p>Check EBS baseline. If your instance is EBS-only (no instance store) the default gp2/gp3 volume is 1,000 IOPS. Confirm with the AWS CLI.
-   <code>bash
-   aws ec2 describe-volumes --volume-ids vol-0abcdef1234567890 --query 'Volumes[0].Iops'
-   # 1000</code></p>
-</li>
-</ol>
-<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<h3 id="tcp-tweak-switch-the-qdisc">TCP tweak: switch the qdisc</h3>
-<p>Amazon Linux 2026 still sets:</p>
-<pre><code>net.core.default_qdisc = fq_codel
+<pre><code class="language-bash">ssh -i ~/.ssh/prod-key.pem ec2-user@&lt;instance-ip&gt;
 </code></pre>
-<p>That queue discipline is great for cable modems but over-prioritizes fairness on fast NICs. Switch to <code>bbr</code> (Bottleneck Bandwidth and Round-trip propagation time) which is in every 5.x+ kernel.</p>
 <ol>
-<li>
-<p>Confirm BBR is compiled in.
-   <code>bash
-   sysctl net.core.default_qdisc
-   # net.core.default_qdisc = fq_codel
-   lsmod | grep bbr
-   # nothing → kernel module is built-in but not loaded</code></p>
-</li>
-<li>
-<p>Make the change live.
-   <code>bash
-   sudo sysctl -w net.core.default_qdisc=bbr
-   sudo sysctl -w net.ipv4.tcp_congestion_control=bbr</code></p>
-</li>
-<li>
-<p>Persist the change.
-   <code>bash
-   echo "net.core.default_qdisc=bbr" | sudo tee -a /etc/sysctl.d/10-bbr.conf
-   echo "net.ipv4.tcp_congestion_control=bbr" | sudo tee -a /etc/sysctl.d/10-bbr.conf</code></p>
-</li>
-<li>
-<p>Re-run the iperf3 test and compare retransmits.
-   <code>bash
-   iperf3 -c &lt;SERVER_IP&gt; -p 5201 -t 60 -R --logfile after.json
-   jq '.end.sum_retransmits' after.json
-   # 1308  (≈30% drop)</code></p>
-</li>
+<li>Confirm the OS and kernel.</li>
 </ol>
-<h3 id="memory-enable-zswap-and-swap">Memory: enable zswap and swap</h3>
-<p>OOM kills on EC2 are not “normal”; they’re a sign you’re not using swap at all. Amazon Linux 2026 ships with zram disabled and no swap file. Enabling a 1 GiB zswap compressed cache plus a 2 GiB swap file prevents the kernel from killing your Node 20 LTS process when RSS briefly spikes.</p>
+<pre><code class="language-bash">cat /etc/os-release
+uname -a
+# Example: Amazon Linux 2023, kernel 6.1.x
+</code></pre>
 <ol>
-<li>
-<p>Enable zswap.
-   <code>bash
-   sudo dnf install -y zram-generator
-   echo "[zram0]
-gfs=zstd
-size=2G
-" | sudo tee /etc/systemd/zram-generator.conf
-   sudo systemctl restart systemd-zram-setup@zram0.service</code></p>
-</li>
-<li>
-<p>Add a swap file and activate it.
-   <code>bash
-   sudo fallocate -l 2G /swapfile
-   sudo chmod 600 /swapfile
-   sudo mkswap /swapfile
-   sudo swapon /swapfile
-   echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab</code></p>
-</li>
-<li>
-<p>Tune swappiness so the kernel swaps early but doesn’t thrash.
-   <code>bash
-   sudo sysctl -w vm.swappiness=10
-   echo "vm.swappiness=10" | sudo tee -a /etc/sysctl.d/10-swap.conf</code></p>
-</li>
+<li>Install the measurement tools you'll need.</li>
 </ol>
-<h3 id="ebs-boost-gp3-to-3000-iops">EBS: boost gp3 to 3,000 IOPS</h3>
-<p>The default gp3 is 1,000 IOPS. For a workload that does 800 req/s with JSON payloads of ~8 KiB, you need ~6,400 IOPS (8 KiB × 800). gp3 caps at 16,000, so set 3,000 as a safe middle ground.</p>
+<pre><code class="language-bash">sudo dnf install -y iperf3 bcc-tools jq
+# On Debian/Ubuntu: sudo apt install -y iperf3 bpfcc-tools jq
+</code></pre>
 <ol>
-<li>
-<p>Stop the instance.
-   <code>bash
-   aws ec2 stop-instances --instance-ids i-0abcdef1234567890</code></p>
-</li>
-<li>
-<p>Modify the volume.
-   <code>bash
-   aws ec2 modify-volume --volume-id vol-0abcdef1234567890 --iops 3000</code></p>
-</li>
-<li>
-<p>Start the instance and confirm.
-   <code>bash
-   aws ec2 start-instances --instance-ids i-0abcdef1234567890
-   aws ec2 describe-volumes --volume-ids vol-0abcdef1234567890 --query 'Volumes[0].Iops'
-   # 3000</code></p>
-</li>
+<li>Baseline the network before any tweaks. Run an iperf3 server on the instance and a client from another host in the same AZ. Record the retransmit count.</li>
 </ol>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<h3 id="edge-case-1-bbr-breaks-on-older-kernels">Edge case 1: BBR breaks on older kernels</h3>
-<p><strong>Problem</strong>: If you’re on Ubuntu 22.04 (kernel 5.15) instead of Amazon Linux 2026 (6.1), BBR is compiled in but the congestion control name is <code>bbr2</code>.</p>
-<p><strong>Fix</strong>: Detect the kernel and set the correct value.</p>
-<pre><code class="language-bash">KERNEL=$(uname -r)
-if [[ $KERNEL == *&quot;amzn2023&quot;* ]]; then
-  CTL=&quot;bbr&quot;
-elif [[ $KERNEL == *&quot;5.15.&quot;* ]]; then
-  CTL=&quot;bbr2&quot;
+<pre><code class="language-bash"># On the server:
+iperf3 -s -p 5201
+
+# On the client:
+iperf3 -c &lt;SERVER_IP&gt; -p 5201 -t 60 -R --logfile baseline.json
+</code></pre>
+<ol>
+<li>Parse the JSON to extract retransmits.</li>
+</ol>
+<pre><code class="language-bash">jq '.end.sum_retransmits' baseline.json
+</code></pre>
+<p>Write the number down. It is the only meaningful comparison point you have.</p>
+<ol>
+<li>Check the EBS baseline. gp3 volumes default to 3,000 IOPS and 125 MiB/s throughput, independent of volume size. (gp2 volumes, by contrast, scale IOPS with capacity at 3 IOPS/GiB.) Confirm the current setting with the AWS CLI.</li>
+</ol>
+<pre><code class="language-bash">aws ec2 describe-volumes \
+  --volume-ids vol-0abcdef1234567890 \
+  --query 'Volumes[0].[VolumeType,Iops,Throughput]'
+</code></pre>
+<p>If the volume is gp2, the query returns no IOPS field; gp2's performance is derived from size.</p>
+<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
+<h3 id="tcp-congestion-control">TCP congestion control</h3>
+<p>The Linux kernel supports pluggable congestion-control algorithms. The two most commonly discussed are CUBIC (the long-standing default) and BBR (Bottleneck Bandwidth and Round-trip propagation time), which models the bottleneck link rather than reacting to packet loss.</p>
+<p>On the relevant kernels, BBR is compiled in but not selected by default. Check the current state:</p>
+<pre><code class="language-bash">sysctl net.ipv4.tcp_congestion_control
+# net.ipv4.tcp_congestion_control = cubic
+
+sysctl net.core.default_qdisc
+# net.core.default_qdisc = fq_codel
+</code></pre>
+<p>List the algorithms the running kernel actually offers:</p>
+<pre><code class="language-bash">sysctl net.ipv4.tcp_available_congestion_control
+</code></pre>
+<p>If <code>bbr</code> does not appear in that list, the module is not available and the rest of this section will not work on that kernel. Do not assume; check.</p>
+<p>If it is available, apply it:</p>
+<pre><code class="language-bash">sudo sysctl -w net.core.default_qdisc=fq
+sudo sysctl -w net.ipv4.tcp_congestion_control=bbr
+</code></pre>
+<p>Note the pairing: BBR is designed to work with the <code>fq</code> queueing discipline, not <code>fq_codel</code>. Setting <code>net.core.default_qdisc=bbr</code> is a common mistake — <code>bbr</code> is a congestion-control algorithm, not a qdisc, and the kernel will reject it.</p>
+<p>Persist the change:</p>
+<pre><code class="language-bash">sudo tee /etc/sysctl.d/10-bbr.conf &gt; /dev/null &lt;&lt;'EOF'
+net.core.default_qdisc=fq
+net.ipv4.tcp_congestion_control=bbr
+EOF
+sudo sysctl --system
+</code></pre>
+<p>Re-run the iperf3 test and compare:</p>
+<pre><code class="language-bash">iperf3 -c &lt;SERVER_IP&gt; -p 5201 -t 60 -R --logfile after.json
+jq '.end.sum_retransmits' after.json
+</code></pre>
+<p>If the retransmit count did not move, the change is not helping your traffic pattern. That is a valid result, and the honest response is to revert it rather than keep a change that adds complexity for no benefit.</p>
+<h3 id="memory-swap-and-compressed-swap">Memory: swap and compressed swap</h3>
+<p>EC2 instances with no swap configured will invoke the OOM killer when memory pressure spikes. Whether that is acceptable depends on the workload. For services with occasional RSS spikes — JVM heaps, Node processes with large buffers, Python workers loading large datasets — a swap file paired with a compressed cache can turn a hard kill into a slowdown.</p>
+<p>Two mechanisms are commonly confused:</p>
+<ul>
+<li><strong>zram</strong> creates a compressed block device in RAM and uses it as swap. Fast, but consumes RAM.</li>
+<li><strong>zswap</strong> is a compressed cache in front of a real swap device. Pages are compressed before being written out; only pages that cannot be compressed effectively reach the disk.</li>
+</ul>
+<p>The two are alternatives, not complements. Pick one.</p>
+<p>A zram setup using <code>zram-generator</code> (available on Amazon Linux 2023 and recent Fedora/RHEL derivatives):</p>
+<pre><code class="language-bash">sudo dnf install -y zram-generator
+sudo tee /etc/systemd/zram-generator.conf &gt; /dev/null &lt;&lt;'EOF'
+[zram0]
+zram-size = min(ram / 4, 4096)
+compression-algorithm = zstd
+EOF
+sudo systemctl daemon-reload
+sudo systemctl start systemd-zram-setup@zram0.service
+</code></pre>
+<p>This sizes the zram device at one quarter of RAM, capped at 4 GiB, and uses zstd. Verify:</p>
+<pre><code class="language-bash">swapon --show
+zramctl
+</code></pre>
+<p>If you prefer a conventional swap file instead:</p>
+<pre><code class="language-bash">sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo &quot;/swapfile none swap sw 0 0&quot; | sudo tee -a /etc/fstab
+</code></pre>
+<p>Tune swappiness. The default of 60 is aggressive for a server. A value of 10 tells the kernel to prefer reclaiming page cache over swapping anonymous memory, which is usually the right trade-off for a service:</p>
+<pre><code class="language-bash">sudo sysctl -w vm.swappiness=10
+echo &quot;vm.swappiness=10&quot; | sudo tee /etc/sysctl.d/10-swap.conf
+</code></pre>
+<h3 id="ebs-raising-gp3-iops">EBS: raising gp3 IOPS</h3>
+<p>gp3 defaults to 3,000 IOPS and 125 MiB/s, and can be provisioned up to 16,000 IOPS and 1,000 MiB/s independently of volume size. Unlike gp2, you pay separately for provisioned IOPS above the baseline.</p>
+<p>Before raising IOPS, estimate what the workload actually needs. A worked example:</p>
+<ul>
+<li>Assume 800 requests per second.</li>
+<li>Assume each request reads an 8 KiB object from disk (this is a strong assumption — check your actual I/O pattern with <code>iostat -x 1</code> before trusting it).</li>
+<li>800 × 8 KiB = 6,400 KiB/s = 6.25 MiB/s.</li>
+<li>If each of those reads is a separate 8 KiB I/O operation, that is roughly 800 IOPS, well under the 3,000 gp3 baseline.</li>
+</ul>
+<p>That arithmetic suggests the default is already sufficient for this hypothetical workload. The reason to provision more IOPS is not request rate but burst behavior: a periodic job, a cache miss storm, or a batch process that issues thousands of small random reads in a short window. Measure with <code>iostat</code> and CloudWatch <code>VolumeReadOps</code>/<code>VolumeWriteOps</code> before paying for headroom you do not use.</p>
+<p>To raise IOPS on a gp3 volume, no detach is required. <code>modify-volume</code> works on attached volumes and the change takes effect after a short optimization window:</p>
+<pre><code class="language-bash">aws ec2 modify-volume \
+  --volume-id vol-0abcdef1234567890 \
+  --iops 6000 \
+  --throughput 250
+</code></pre>
+<p>Check the modification state:</p>
+<pre><code class="language-bash">aws ec2 describe-volumes-modifications \
+  --volume-ids vol-0abcdef1234567890
+</code></pre>
+<p>The volume remains mounted and usable throughout. The <code>modifying</code> state can persist for hours on large volumes; it does not block I/O.</p>
+<p>A caution on the arithmetic above: if you are using gp2, IOPS are not directly settable. You either resize the volume (3 IOPS per GiB) or migrate to gp3. Migration is done by snapshot-and-restore or by <code>modify-volume --volume-type gp3</code>, which is online.</p>
+<h2 id="step-3-edge-cases-and-failure-modes">Step 3 — edge cases and failure modes</h2>
+<h3 id="bbr-is-not-available-on-the-running-kernel">BBR is not available on the running kernel</h3>
+<p>The algorithm name is <code>bbr</code>, not <code>bbr2</code>. Some older documentation and forum posts refer to a <code>bbr2</code> variant; that was a development branch and is not a stable kernel interface. If <code>bbr</code> is not in <code>net.ipv4.tcp_available_congestion_control</code>, the module is not present.</p>
+<p>Detect and fail cleanly rather than silently applying a no-op:</p>
+<pre><code class="language-bash">if sysctl net.ipv4.tcp_available_congestion_control | grep -qw bbr; then
+  sudo sysctl -w net.core.default_qdisc=fq
+  sudo sysctl -w net.ipv4.tcp_congestion_control=bbr
 else
-  echo &quot;BBR not supported on kernel $KERNEL&quot;
+  echo &quot;BBR not available on this kernel: $(uname -r)&quot; &gt;&amp;2
   exit 1
 fi
-sudo sysctl -w net.ipv4.tcp_congestion_control=$CTL
 </code></pre>
-<h3 id="edge-case-2-zswap-fills-and-stalls-io">Edge case 2: zswap fills and stalls I/O</h3>
-<p><strong>Problem</strong>: If your workload is mostly small objects (Node 20 LTS heap objects are ~16 KiB), zstd compression can spike CPU and the writeback stalls.</p>
-<p><strong>Fix</strong>: Limit zswap max pool size to 512 MiB and keep swappiness at 10.</p>
-<pre><code class="language-bash">sudo sysctl -w vm.zswap.max_pool_percent=25
-sudo sysctl -w vm.zswap.compressor=lz4
+<h3 id="setting-the-qdisc-to-bbr">Setting the qdisc to <code>bbr</code></h3>
+<p>As noted above, <code>net.core.default_qdisc=bbr</code> is invalid. The kernel accepts the write but the qdisc is not applied, and the congestion control falls back. Verify after applying:</p>
+<pre><code class="language-bash">sysctl net.core.default_qdisc
+sysctl net.ipv4.tcp_congestion_control
 </code></pre>
-<h3 id="edge-case-3-ebs-gp3-resize-fails-on-live-volume">Edge case 3: EBS gp3 resize fails on live volume</h3>
-<p><strong>Problem</strong>: AWS only allows gp3 resizing when the volume is detached.</p>
-<p><strong>Fix</strong>: Script the detach/attach cycle.</p>
-<pre><code class="language-bash"># detach
-aws ec2 detach-volume --volume-id vol-0abcdef1234567890
-# wait until detached
-sleep 30
-# modify
-aws ec2 modify-volume --volume-id vol-0abcdef1234567890 --iops 3000
-# attach
-aws ec2 attach-volume --volume-id vol-0abcdef1234567890 --instance-id i-0abcdef1234567890 --device /dev/sdf
+<p>If the first returns anything other than <code>fq</code> (or <code>fq_codel</code>, which also works acceptably with BBR in practice), the configuration is wrong.</p>
+<h3 id="zram-and-swappiness-interaction">zram and swappiness interaction</h3>
+<p>If you use zram for swap, a high <code>vm.swappiness</code> will cause the kernel to push anonymous pages into the compressed device aggressively. On a memory-constrained instance with a CPU-bound workload, the compression cost can show up as a latency regression. Monitor CPU utilization after enabling zram. If it rises without a corresponding drop in OOM events, the configuration is not paying for itself.</p>
+<p>A reasonable starting point for zram-backed swap on a server is <code>vm.swappiness=100</code> (the kernel treats zram as fast) or a conventional value like 60 if you want to be conservative. The value of 10 that is appropriate for disk-backed swap is often wrong for zram. Test both.</p>
+<h3 id="ebs-modification-throttling">EBS modification throttling</h3>
+<p><code>modify-volume</code> is rate-limited per volume. Repeated modifications (for example, from a CI job that runs on every deploy) will be rejected. If you manage volumes declaratively, ensure the tooling is idempotent: read the current IOPS first and skip the call if it already matches.</p>
+<pre><code class="language-bash">current=$(aws ec2 describe-volumes \
+  --volume-ids vol-0abcdef1234567890 \
+  --query 'Volumes[0].Iops' --output text)
+if [ &quot;$current&quot; != &quot;6000&quot; ]; then
+  aws ec2 modify-volume --volume-id vol-0abcdef1234567890 --iops 6000
+fi
 </code></pre>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<h3 id="cloudwatch-dashboard-in-5-minutes">CloudWatch dashboard in 5 minutes</h3>
-<ol>
-<li>Open CloudWatch → Dashboards → Create dashboard.</li>
-<li>Add three widgets:</li>
-<li>CPU utilization (1-minute)</li>
-<li>EBS read/write IOPS (1-minute)</li>
-<li>Memory used (1-minute)</li>
-<li>Save as <code>EC2-BBR-Zswap-GP3</code>.</li>
-</ol>
-<h3 id="prometheus-exporter-for-tcp-metrics">Prometheus exporter for TCP metrics</h3>
-<p>Install the <code>node_exporter</code> v1.6.1 and expose the <code>/metrics</code> endpoint.</p>
-<pre><code class="language-bash">wget https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz
-tar xf node_exporter-1.6.1.linux-amd64.tar.gz
-cd node_exporter-1.6.1.linux-amd64
-./node_exporter &amp;
+<h2 id="step-4-observability-and-verification">Step 4 — observability and verification</h2>
+<h3 id="cloudwatch">CloudWatch</h3>
+<p>A minimal dashboard for validating these changes:</p>
+<ul>
+<li>CPU utilization, 1-minute period.</li>
+<li><code>EBSReadOps</code> and <code>EBSWriteOps</code>, 1-minute period.</li>
+<li><code>NetworkPacketsIn</code>/<code>NetworkPacketsOut</code> to correlate with retransmit changes.</li>
+</ul>
+<p>CloudWatch does not expose TCP retransmits directly. The kernel does, via <code>/proc/net/snmp</code>, and the standard way to export it is <code>node_exporter</code>.</p>
+<h3 id="node_exporter">node_exporter</h3>
+<p>Download the current release for your architecture from the Prometheus project's releases page, extract it, and run it as a systemd unit:</p>
+<pre><code class="language-bash">tar xf node_exporter-*.linux-amd64.tar.gz
+cd node_exporter-*.linux-amd64
+sudo install -m 0755 node_exporter /usr/local/bin/
+sudo tee /etc/systemd/system/node_exporter.service &gt; /dev/null &lt;&lt;'EOF'
+[Unit]
+Description=Prometheus node_exporter
+After=network.target
+
+[Service]
+User=nobody
+ExecStart=/usr/local/bin/node_exporter
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl enable --now node_exporter
 </code></pre>
-<p>Scrape it from your Prometheus server:</p>
-<pre><code class="language-yaml">  - job_name: 'ec2-bbr'
+<p>Scrape it from Prometheus:</p>
+<pre><code class="language-yaml">scrape_configs:
+  - job_name: 'ec2'
     static_configs:
-      - targets: ['3.235.198.42:9100']
+      - targets: ['&lt;instance-ip&gt;:9100']
 </code></pre>
-<p>Create an alert for retransmit ratio &gt; 0.10:</p>
+<p>The retransmit metric is <code>node_netstat_Tcp_RetransSegs</code>. A ratio against total segments sent gives a useful signal:</p>
 <pre><code class="language-yaml">- alert: HighRetransmitRatio
-  expr: rate(node_network_retransmits_total[1m]) / rate(node_network_transmit_packets_total[1m]) &gt; 0.10
-  for: 5m
+  expr: |
+    rate(node_netstat_Tcp_RetransSegs[5m])
+    / rate(node_netstat_Tcp_OutSegs[5m]) &gt; 0.02
+  for: 10m
   labels:
     severity: warning
   annotations:
-    summary: &quot;High TCP retransmit ratio on {{ $labels.instance }}&quot;
+    summary: &quot;Elevated TCP retransmit ratio on {{ $labels.instance }}&quot;
 </code></pre>
+<p>The 2% threshold is a starting point, not a universal constant. Establish your own baseline first.</p>
 <h3 id="load-test-with-k6">Load test with k6</h3>
 <pre><code class="language-javascript">// load-test.js
 import http from 'k6/http';
@@ -486,238 +497,74 @@ export default function () {
   });
 }
 </code></pre>
-<p>Run it before and after the tweaks; you should see latency drop from 120 ms to 75 ms.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
+<p>Run this before and after each change. Compare p50, p95, and p99, not just the mean. Congestion-control changes often shift the tail rather than the median.</p>
+<h2 id="how-to-know-whether-any-of-this-worked">How to know whether any of this worked</h2>
+<p>The honest answer is that you cannot know without measuring on your own workload. The following table describes what to instrument and what a meaningful change looks like, rather than asserting results:</p>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Before</th>
-<th>After</th>
-<th>Delta</th>
+<th>Change</th>
+<th>What to measure</th>
+<th>Where</th>
+<th>What a real improvement looks like</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>EC2 cost (m6i.large, us-east-1)</td>
-<td>$180</td>
-<td>$54</td>
-<td>-70%</td>
+<td>TCP congestion control</td>
+<td>Retransmit ratio; p95 latency on bulk transfers</td>
+<td><code>node_netstat_Tcp_RetransSegs</code>, k6</td>
+<td>Retransmit ratio falls; p95 improves on long-lived connections</td>
 </tr>
 <tr>
-<td>CPU steal (%)</td>
-<td>5</td>
-<td>1</td>
-<td>-80%</td>
+<td>zram or swap</td>
+<td>OOM kill count; CPU utilization; swap-in rate</td>
+<td><code>dmesg</code>, CloudWatch CPU, <code>vmstat 1</code></td>
+<td>OOM kills stop without a CPU regression</td>
 </tr>
 <tr>
-<td>TCP retransmits (per min)</td>
-<td>31</td>
-<td>9</td>
-<td>-71%</td>
-</tr>
-<tr>
-<td>P95 latency (ms)</td>
-<td>120</td>
-<td>75</td>
-<td>-37%</td>
-</tr>
-<tr>
-<td>OOM events (weekly)</td>
-<td>2</td>
-<td>0</td>
-<td>-100%</td>
-</tr>
-<tr>
-<td>EBS IOPS (read)</td>
-<td>980</td>
-<td>2920</td>
-<td>+198%</td>
+<td>gp3 IOPS increase</td>
+<td>Queue depth; I/O wait; p99 request latency</td>
+<td><code>iostat -x 1</code>, CloudWatch <code>VolumeQueueLength</code></td>
+<td>I/O wait falls; p99 improves under burst</td>
 </tr>
 </tbody>
 </table>
-<p>I applied these changes to four other clients—two Django 4.2 backends and one Go 1.22 service—all running on m6i.large in us-east-1. The smallest bill was a 62% cut; the largest was 73%. The Go service had the biggest latency drop (140 ms → 60 ms) because it was doing long-lived HTTP/2 connections that BBR optimizes best.</p>
-<p>One client had a custom AMI based on Ubuntu 20.04 (kernel 5.4). Lesson: kernel version matters more than instance size.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<p><strong>How do I apply these changes if I use Terraform?</strong>
-Add two <code>user_data</code> scripts: one for the sysctl tweaks and one for the zswap setup. Use the <code>templatefile</code> function to render the <code>/etc/sysctl.d/10-bbr.conf</code> content.</p>
-<pre><code class="language-hcl">user_data = templatefile(&quot;bbr-userdata.sh&quot;, {})
+<p>If a change does not move the relevant metric, revert it. Configuration that persists without benefit is technical debt.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before applying any of these:</p>
+<ol>
+<li>Have you confirmed the running kernel supports the feature you are about to enable? (<code>sysctl net.ipv4.tcp_available_congestion_control</code>, <code>modinfo zram</code>, <code>uname -r</code>)</li>
+<li>Do you have a baseline measurement from the last 24 hours that you can compare against?</li>
+<li>Is the change persisted in <code>/etc/sysctl.d</code> or an equivalent, so it survives a reboot?</li>
+<li>Have you verified the change took effect, rather than assuming the command succeeded?</li>
+<li>Do you have a rollback plan that does not require console access?</li>
+<li>If you are changing EBS IOPS, have you confirmed with <code>iostat</code> that the workload is actually I/O-bound?</li>
+</ol>
+<h2 id="faq">FAQ</h2>
+<p><strong>Does this work on Graviton instances?</strong>
+Yes. The kernel interfaces are identical across architectures. The <code>node_exporter</code> and <code>iperf3</code> binaries differ by architecture; download the <code>arm64</code> builds.</p>
+<p><strong>Do sysctl changes require a reboot?</strong>
+No. <code>sysctl -w</code> applies immediately, and <code>sysctl --system</code> reloads from the configuration directory.</p>
+<p><strong>Is <code>bbr2</code> a real thing?</strong>
+It was an experimental development branch of BBR, not a stable kernel interface. The stable algorithm is <code>bbr</code>. If you see <code>bbr2</code> in a tutorial, the tutorial is out of date.</p>
+<p><strong>Can I apply these changes with Terraform?</strong>
+Yes. Use <code>user_data</code> to run a shell script at first boot that writes the sysctl files and enables zram. For EBS, use the <code>aws_ebs_volume</code> resource's <code>iops</code> attribute on gp3 volumes; Terraform will call <code>modify-volume</code> if the attribute changes.</p>
+<p><strong>Will this reduce my bill by a specific percentage?</strong>
+No. The bill reduction depends on whether the changes reduce CPU utilization enough to justify a smaller instance type, or eliminate a scaling event. The way to find out is to apply the changes, measure CPU and latency for a full billing cycle, and then evaluate whether a resize is safe.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>SSH into one production instance and run the following, then record the output somewhere you can find it in a week:</p>
+<pre><code class="language-bash">echo &quot;=== kernel ===&quot;; uname -r
+echo &quot;=== congestion control ===&quot;; sysctl net.ipv4.tcp_congestion_control
+echo &quot;=== available algorithms ===&quot;; sysctl net.ipv4.tcp_available_congestion_control
+echo &quot;=== qdisc ===&quot;; sysctl net.core.default_qdisc
+echo &quot;=== swap ===&quot;; swapon --show
+echo &quot;=== swappiness ===&quot;; sysctl vm.swappiness
+echo &quot;=== retransmit counter ===&quot;; grep Tcp_RetransSegs /proc/net/snmp
+echo &quot;=== disk ===&quot;; lsblk -d -o NAME,SIZE,ROTA
+echo &quot;=== iostat ===&quot;; iostat -x 1 3
 </code></pre>
-<p>Then add <code>modify_volume</code> in a <code>null_resource</code> after the EC2 is created.</p>
-<p><strong>Can I do this on spot instances?</strong>
-Yes. The changes are instance-level, not tied to on-demand/reserved pricing. Just remember to set <code>instance_interruption_behavior = "stop"</code> so the instance doesn’t terminate mid-tweak.</p>
-<p><strong>What about ARM instances?</strong>
-All the commands work on <code>m6g.large</code> (Graviton3) with Amazon Linux 2026. The kernel is the same 6.1 branch, so BBR and zswap are identical.</p>
-<p><strong>Do I need to reboot?</strong>
-No. All sysctl changes and swap file creation take effect immediately. The only reboot needed is for the EBS volume resize, and even that can be avoided by attaching a new 3,000 IOPS volume and migrating the root filesystem.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>Open your EC2 console right now, pick the one instance that has the highest CPU steal percentage in the last 7 days, and run these three commands in order:</p>
-<pre><code class="language-bash"># 1. Check current congestion control
-sysctl net.ipv4.tcp_congestion_control
-
-# 2. Enable BBR if it's not already set
-sudo sysctl -w net.core.default_qdisc=bbr
-sudo sysctl -w net.ipv4.tcp_congestion_control=bbr
-
-# 3. Apply the one-liner that cuts 70% off most EC2 bills
-sudo bash -c 'echo &quot;net.core.default_qdisc=bbr&quot; &gt;&gt; /etc/sysctl.d/10-bbr.conf &amp;&amp; echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &gt;&gt; /etc/sysctl.d/10-bbr.conf &amp;&amp; sysctl -p /etc/sysctl.d/10-bbr.conf'
-</code></pre>
-<p>That single change will drop CPU steal by at least 20% on most Node 20 LTS backends and instantly lower your bill. If the instance reboots, the tweak survives because it’s in <code>/etc/sysctl.d</code>. Measure latency and cost for the next 48 hours; if you don’t see at least a 30% bill reduction, double-check the kernel version and EBS IOPS.</p>
-<hr />
-<h3 id="advanced-edge-cases-i-personally-encountered">Advanced Edge Cases I Personally Encountered</h3>
-<h4 id="1-the-cloudwatch-metric-streams-firehose-trap-that-cost-me-1200-in-48-hours">1. The “CloudWatch Metric Streams + Firehose” Trap That Cost Me $1,200 in 48 Hours</h4>
-<p>In late 2026 I onboarded a Colombian client running a high-traffic Django 4.2 API on <code>m6i.2xlarge</code> in us-east-1. They needed real-time metrics for their SRE team in Bogotá, so I set up CloudWatch Metric Streams pointing to a Kinesis Firehose delivery stream with Amazon OpenSearch as the destination. On paper, it was perfect: no polling, no Lambda invocations, just direct streaming.</p>
-<p>The first bill shock came after two days. The Firehose stream was configured with <strong>5-minute buffer intervals</strong> and <strong>1 MiB batch sizes</strong> — standard defaults, right? Wrong. The Django app’s metrics included custom <code>django.request</code> counters with labels like <code>view=api_v3_orders</code> and <code>status=429</code>. Each label added ~200 bytes to the payload, and with 15,000 requests per minute, the raw metric volume exploded to <strong>4.2 GiB/hour</strong> once serialized into the OpenSearch bulk format.</p>
-<p>I also set the buffer interval to <strong>60 seconds</strong> and capped the batch size at <strong>5 MiB</strong>. The ingestion cost dropped to <strong>$0.48/hour</strong>, a <strong>75% cut</strong>, and the latency for metric availability went from 300 ms to 150 ms because fewer, larger batches meant less HTTP overhead.</p>
-<blockquote>
-<p>Lesson: Firehose is not free. When you’re in a lower-cost country, every extra byte in your observability pipeline gets multiplied by your client’s cloud bill — and they <em>will</em> notice.</p>
-</blockquote>
-<h4 id="2-the-regional-outage-ipv6-dependency-nightmare-that-killed-a-mexico-city-clients-api">2. The “Regional Outage + IPv6 Dependency” Nightmare That Killed a Mexico City Client’s API</h4>
-<p>In March 2026, AWS had a regional outage in <code>us-east-1</code> that lasted 3 hours. My client in Mexico City had a Node 20 LTS backend running on <code>t3.medium</code> with a custom VPC configured for IPv6-only. The health checks from their frontend in <code>sa-east-1</code> (São Paulo) were timing out because the AWS Network Load Balancer (NLB) in us-east-1 couldn’t route traffic during the outage — even though the instance itself was up.</p>
-<p>The real issue? The NLB was configured with <strong>dual-stack (IPv4 + IPv6)</strong> but the target group only registered the instance’s <strong>private IPv4 address</strong>, not its <strong>IPv6 address</strong>. During the outage, AWS’s internal routing prioritized IPv4 over IPv6, and the NLB fell back to IPv4 — which was unreachable because the VPC was IPv6-only.</p>
-<p><strong>The fix</strong>: I rebuilt the target group to register <strong>both</strong> the instance’s IPv4 and IPv6 addresses, and added a <strong>failover routing policy</strong> in Route 53 to fail over to a secondary NLB in <code>us-west-2</code> during regional outages. The total cost increased by $18/month, but the uptime went from 99.5% to 99.95%.</p>
-<blockquote>
-<p>Lesson: IPv6-only is still a second-class citizen in many AWS services. If you’re forced to use it (e.g., because your client’s ISP in Latin America only supports IPv6), you <em>must</em> validate every networking component — NLBs, ALBs, ECS, and even RDS — for dual-stack support.</p>
-</blockquote>
-<h4 id="3-the-spot-instance-gp3-volume-termination-notice-data-loss-incident">3. The “Spot Instance + GP3 Volume + Termination Notice = Data Loss” Incident</h4>
-<p>The instance was configured with a <strong>gp3 volume at 3,000 IOPS</strong>, and I had set <code>instance_interruption_behavior = "stop"</code> so the EBS volume would persist. Everything looked green.</p>
-<p>Then, during a peak traffic spike at 2 AM (when I was asleep), AWS sent a <strong>2-minute spot termination notice</strong>. The Go service was handling a long-running gRPC stream, and the OS started flushing dirty pages to disk. But because the gp3 volume was already at 3,000 IOPS — near its burstable limit — the I/O latency spiked to <strong>800 ms</strong>, causing the Go runtime to hit its <code>http.Server</code>'s <code>ReadTimeout</code> and close the connection prematurely. The client lost data.</p>
-<p><strong>The fix</strong>: I added a <strong>pre-stop hook</strong> in the systemd service that gracefully shuts down the Go process before the spot instance is stopped:</p>
-<pre><code class="language-ini">[Service]
-ExecStop=/usr/local/bin/graceful-shutdown.sh
-</code></pre>
-<p>The script uses <code>SIGTERM</code> with a 10-second timeout, giving the Go runtime time to flush buffers and close connections cleanly.</p>
-<blockquote>
-<p>Lesson: Spot instances are not just about cost. When you’re running at high IOPS, you need to treat termination as a controlled shutdown, not a hard kill. Always validate your I/O profile under load.</p>
-</blockquote>
-<hr />
-<h3 id="integration-with-real-tools-2026-versions">Integration with Real Tools (2026 Versions)</h3>
-<h4 id="tool-1-ec2-cost-exporter-v241-track-ec2-costs-in-prometheus">Tool 1: <code>ec2-cost-exporter</code> (v2.4.1) – Track EC2 Costs in Prometheus</h4>
-<p>It uses the AWS Cost Explorer API with a daily refresh.</p>
-<p><strong>Installation</strong>:</p>
-<pre><code class="language-bash">pip install ec2-cost-exporter==2.4.1
-</code></pre>
-<p><strong>Run it with systemd</strong>:</p>
-<pre><code class="language-ini">[Unit]
-Description=EC2 Cost Exporter
-After=network.target
-
-[Service]
-ExecStart=/usr/local/bin/ec2-cost-exporter --region us-east-1 --output-file /var/lib/node_exporter/ec2_cost.prom
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-</code></pre>
-<p><strong>Prometheus scrape config</strong>:</p>
-<pre><code class="language-yaml">- job_name: 'ec2-cost'
-  scrape_interval: 5m
-  static_configs:
-    - targets: ['localhost:9101']
-</code></pre>
-<p><strong>Example metric</strong>:</p>
-<pre><code>ec2_instance_cost_hourly{instance=&quot;i-0abcdef1234567890&quot;, instance_type=&quot;m6i.large&quot;, state=&quot;running&quot;} 0.072
-</code></pre>
-<p><strong>Query to alert on cost spikes</strong>:</p>
-<pre><code class="language-promql">increase(ec2_instance_cost_hourly[24h]) &gt; 1.5
-</code></pre>
-<blockquote>
-<p>Tip: Use <code>--currency COP</code> if your client is in Colombia or Mexico to display costs in local currency.</p>
-</blockquote>
-<hr />
-<h4 id="tool-2-bbr-tuner-v130-automate-bbr-and-zswap-configuration">Tool 2: <code>bbr-tuner</code> (v1.3.0) – Automate BBR and zswap Configuration</h4>
-<p>This is a small Go CLI I wrote to detect the kernel, apply BBR, enable zswap, and tune swappiness — all in one command. It’s idempotent and logs everything to <code>/var/log/bbr-tuner.log</code>.</p>
-<p><strong>Installation</strong>:</p>
-<pre><code class="language-bash">wget https://github.com/kubaikevin/bbr-tuner/releases/download/v1.3.0/bbr-tuner-linux-amd64
-chmod +x bbr-tuner-linux-amd64
-sudo mv bbr-tuner-linux-amd64 /usr/local/bin/bbr-tuner
-</code></pre>
-<p><strong>Run it</strong>:</p>
-<pre><code class="language-bash">sudo bbr-tuner --enable-bbr --zswap-size 2G --swap-file-size 2G --swappiness 10
-</code></pre>
-<p><strong>Sample log output</strong>:</p>
-<pre><code>2026-04-05T03:12:01Z [INFO] Detected kernel: 6.1.69-78.158.amzn2023.x86_64
-2026-04-05T03:12:01Z [INFO] BBR congestion control set to 'bbr'
-2026-04-05T03:12:02Z [INFO] zswap enabled with size 2G and compressor zstd
-2026-04-05T03:12:03Z [INFO] swap file created at /swapfile (2G)
-2026-04-05T03:12:03Z [INFO] vm.swappiness set to 10
-</code></pre>
-<p><strong>Code snippet (main.go)</strong>:</p>
-<pre><code class="language-go">package main
-
-import (
-    &quot;log&quot;
-    &quot;os/exec&quot;
-)
-
-func enableBBR() error {
-    cmds := [][]string{
-        {&quot;sysctl&quot;, &quot;-w&quot;, &quot;net.core.default_qdisc=bbr&quot;},
-        {&quot;sysctl&quot;, &quot;-w&quot;, &quot;net.ipv4.tcp_congestion_control=bbr&quot;},
-    }
-    for _, cmd := range cmds {
-        if out, err := exec.Command(cmd[0], cmd[1:]...).CombinedOutput(); err != nil {
-            return fmt.Errorf(&quot;failed to run %v: %v, output: %s&quot;, cmd, err, out)
-        }
-    }
-    return nil
-}
-</code></pre>
-<blockquote>
-<p>Why Go? Because it’s easy to cross-compile for both x86_64 and ARM64, and I don’t want to rely on Python in production.</p>
-</blockquote>
-<hr />
-<h4 id="tool-3-ebs-optimizer-v092-automate-ebs-volume-resizing">Tool 3: <code>ebs-optimizer</code> (v0.9.2) – Automate EBS Volume Resizing</h4>
-<p>This Python script safely resizes EBS volumes to a target IOPS, handling the detach/attach cycle and validating the change. It uses Boto3 and adds a 30-second cooldown to avoid AWS throttling.</p>
-<p><strong>Installation</strong>:</p>
-<pre><code class="language-bash">pip install ebs-optimizer==0.9.2
-</code></pre>
-<p><strong>Run it</strong>:</p>
-<pre><code class="language-bash">ebs-optimizer --volume-id vol-0abcdef1234567890 --target-iops 3000 --region us-east-1
-</code></pre>
-<p><strong>Example output</strong>:</p>
-<pre><code>2026-04-05 03:15:01,123 - INFO - Detaching volume vol-0abcdef1234567890...
-2026-04-05 03:15:31,456 - INFO - Volume detached.
-2026-04-05 03:15:31,457 - INFO - Modifying volume to 3000 IOPS...
-2026-04-05 03:16:05,789 - INFO - Volume modified.
-2026-04-05 03:16:05,790 - INFO - Attaching volume to i-0abcdef1234567890...
-2026-04-05 03:16:35,213 - INFO - Volume attached.
-2026-04-05 03:16:35,214 - INFO - Verifying IOPS...
-2026-04-05 03:16:40,567 - INFO - Current IOPS: 3000. ✅
-</code></pre>
-<p><strong>Code snippet (optimizer.py)</strong>:</p>
-<pre><code class="language-python">import boto3
-import time
-import argparse
-
-def modify_volume(volume_id, iops, region):
-    ec2 = boto3.client('ec2', region_name=region)
-    try:
-        ec2.modify_volume(VolumeId=volume_id, Iops=iops)
-        print(f&quot;Modified {volume_id} to {iops} IOPS&quot;)
-    except Exception as e:
-        print(f&quot;Failed to modify volume: {e}&quot;)
-        raise
-</code></pre>
-<blockquote>
-<p>Pro tip: Run this script from a CI/CD pipeline <em>after</em> your Terraform apply, but wrap it in a <code>depends_on</code> so Terraform waits for the instance to be ready.</p>
-</blockquote>
-<hr />
-<h3 id="beforeafter-comparison-with-real-numbers">Before/After Comparison with Real Numbers</h3>
-<p>I applied these tools and tweaks to a **Node</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/unlock-python-313s-free-threaded-gil-for-web-apps/">Unlock Python 3.13's free-threaded GIL for web apps</a></li>
-<li><a href="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
-<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>That snapshot is your baseline. Without it, any change you make afterward is unfalsifiable. With it, you can decide in a week whether the kernel and storage tuning described here is worth keeping on your workload — or whether the real bottleneck is somewhere you have not looked yet.</p>
                 
                 
             </div>
@@ -757,9 +604,9 @@ def modify_volume(volume_id, iops, region):
                     </a>
                     
                     <a class="related-card" href="/why-does-my-model-drift-after-deploy/">
-                        <h3>Why does my model drift after deploy?</h3>
-                        <p>Spot hidden model drift before production — avoid silent 0.8% accuracy loss that can cost $10k monthly.</p>
-                        <span class="related-meta">17 min read · 11 September 2026</span>
+                        <h3>Why ML Models Drift After Deployment</h3>
+                        <p>Offline validation rarely matches production traffic. Learn the evaluation gap, how to measure drift, and concrete checks to add before your next deploy.</p>
+                        <span class="related-meta">15 min read · 11 September 2026</span>
                     </a>
                     
                 </div>

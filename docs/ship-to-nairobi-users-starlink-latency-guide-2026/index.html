@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Ship to Nairobi users: Starlink latency guide 2026 - Kubai Kevin</title>
-        <meta name="description" content="Cut Nairobi SaaS page load times 70% — Starlink 2026 edge cache with CloudFront Functions, Redis 7.2, and k6 load tests from Kenya">
+        <meta name="description" content="How to cut tail latency for users on congested 4G by moving cache logic to the CDN edge, with code, measurement commands and failure modes.">
         <meta name="keywords" content="EdgeCaching2026, StarlinkKenyaLatency, Cloudfront, Nairobi, 4gOptimizationGuide, Cloudcomputing, Performance, Redis, Saas, Africatech">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T23:11:40.027660">
-        <meta property="article:modified_time" content="2026-09-19T08:27:14.592090+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:34:56.332823+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Ship to Nairobi users: Starlink latency guide 2026">
-        <meta property="og:description" content="Cut Nairobi SaaS page load times 70% — Starlink 2026 edge cache with CloudFront Functions, Redis 7.2, and k6 load tests from Kenya">
+        <meta property="og:description" content="How to cut tail latency for users on congested 4G by moving cache logic to the CDN edge, with code, measurement commands and failure modes.">
         <meta property="og:url" content="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Ship to Nairobi users: Starlink latency guide 2026">
-        <meta name="twitter:description" content="Cut Nairobi SaaS page load times 70% — Starlink 2026 edge cache with CloudFront Functions, Redis 7.2, and k6 load tests from Kenya">
+        <meta name="twitter:description" content="How to cut tail latency for users on congested 4G by moving cache logic to the CDN edge, with code, measurement commands and failure modes.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ship-to-nairobi-users-starlink-latency-guide-2026.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/#article",
       "headline": "Ship to Nairobi users: Starlink latency guide 2026",
-      "description": "Cut Nairobi SaaS page load times 70% — Starlink 2026 edge cache with CloudFront Functions, Redis 7.2, and k6 load tests from Kenya",
+      "description": "How to cut tail latency for users on congested 4G by moving cache logic to the CDN edge, with code, measurement commands and failure modes.",
       "datePublished": "2026-06-25T23:11:40+00:00",
-      "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2295,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-10-03T12:34:56+00:00",
+      "wordCount": 2656,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Ship to Nairobi users: Starlink latency guide 2026</h1>
                 
-                <p class="post-lead">Cut Nairobi SaaS page load times 70% — Starlink 2026 edge cache with CloudFront Functions, Redis 7.2, and k6 load tests from Kenya</p>
+                <p class="post-lead">How to cut tail latency for users on congested 4G by moving cache logic to the CDN edge, with code, measurement commands and failure modes.</p>
                 
                 
                 <div class="tags">
@@ -260,44 +260,46 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2295 words
+                        13 min read
+                        &nbsp;·&nbsp; 2656 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In mid-2026 I helped a team in Nairobi move their B2B dashboard from AWS eu-central-1 to an edge POP in Mombasa. Everything looked faster on paper — 30 ms vs 120 ms median. Yet real user reports kept coming in: pages that took 5–8 seconds to load on 4G dongles at Uhuru Highway.</p>
-<p>The core problem wasn’t bandwidth; it was jitter and tail latency on last-mile 4G. Starlink’s consumer tier (120 Mb/s, 38 ms median in Kenya 2026) reached residential estates around Nairobi in March 2026, but <strong>40 % of daytime traffic still hits 4G towers</strong>. When you optimise for 200 ms peak latency instead of 120 ms median, <strong>cache hit ratios drop 15 %</strong> and <strong>API error rates rise 3 %</strong> because TCP retransmits double.</p>
-<p>That cut median load time from 2.1 s to 1.3 s, but the <strong>95th percentile stayed above 4 s</strong> for users on Safaricom 4G. The missing piece was small, repeated latency spikes that the median hides. A single 500 ms spike on a 4G tower can trigger a user to abandon a form, and that abandonment is permanent — no second chance to reload.</p>
-<p>The trick isn’t bigger pipes; it’s <strong>moving logic to the edge before the user feels the pipe</strong>.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You’ll need:</p>
+                <p>Median latency is a comfortable number to optimise against, and it is the wrong one. On congested mobile networks, the user experience is governed by the tail: the 95th and 99th percentile requests, where a single half-second stall can make a user abandon a form and never return. This article covers how to move cache and prefetch logic to a CDN edge function so that tail latency is absorbed before the user's browser ever waits on origin.</p>
+<p>The guidance is written for teams shipping to users on mixed connectivity — fibre, consumer satellite, and congested 4G — where the last mile is the dominant source of variance.</p>
+<h2 id="why-tail-latency-not-bandwidth-is-the-design-target">Why tail latency, not bandwidth, is the design target</h2>
+<p>Bandwidth on modern mobile networks is usually adequate. What varies is the time it takes for a connection to become usable and for the first byte of a response to arrive. Three mechanisms drive that variance:</p>
+<p><strong>Connection setup.</strong> A TLS handshake plus TCP slow start costs multiple round trips before any payload moves. On a link with 150 ms RTT, that is a fixed tax on every new connection.</p>
+<p><strong>Retransmission and handoff.</strong> Packet loss on a congested cell, or a tower handoff while the user is moving, produces stalls of hundreds of milliseconds. These do not show up in the median at all.</p>
+<p><strong>Render-blocking resources.</strong> An HTML document that blocks on a synchronous API call before painting anything leaves the user staring at a blank screen for the full duration of the slowest dependency.</p>
+<p>The practical consequence: a page whose median load is 2 seconds can still have a 95th percentile above 4 seconds, and it is the tail that generates support contacts and abandonment. Optimising the median further yields little; reducing the number of sequential round trips between the browser and origin yields a lot.</p>
+<p>The design principle that follows is simple: <strong>move the decision-making that determines what the browser fetches next to a location close to the user</strong>, so the browser can start work in parallel instead of waiting for origin.</p>
+<h2 id="prerequisites-and-what-you-will-build">Prerequisites and what you will build</h2>
+<p>You will need:</p>
 <ul>
-<li>A Node.js 20 LTS backend (Express 4.19 or Fastify 4.24)</li>
-<li>A CloudFront distribution (2026 build 2.388)</li>
-<li>A Redis 7.2 cluster in AWS ElastiCache Multi-AZ with cluster mode disabled (I tried cluster mode first and hit cross-slot errors that cost me two days)</li>
-<li>One 4G dongle or a phone on Airtel Kenya’s 4G network for manual testing</li>
+<li>A Node.js 20 LTS backend (Express 4.x is sufficient; any HTTP framework works)</li>
+<li>A CDN distribution that supports edge functions at the viewer-request stage</li>
+<li>A Redis 7.x instance, ideally with automatic failover, for origin-side caching</li>
+<li>A way to test on a real congested mobile connection — a phone on a local 4G network is more honest than a throttled desktop browser</li>
 </ul>
-<p>What you will ship:
-a 50-line edge worker that rewrites HTML to prefetch critical assets, sets a 60-second stale-while-revalidate cache on dynamic routes, and returns a 1 KB placeholder for slow API calls. The worker runs on CloudFront Functions so it’s billed at $0.10 per million requests — cheaper than Lambda@Edge and fast enough to hit 1.2 ms p99 latency from any Nairobi tower.</p>
-<p>By the end you’ll have:</p>
+<p>What you will build:</p>
 <ul>
-<li>Median page load time down from 2.1 s to 700 ms</li>
-<li>95th percentile load time down from 4.3 s to 1.9 s</li>
-<li>A 4 % drop in API error rate because fewer TCP retransmits occur under 500 ms spikes</li>
+<li>A small edge function that rewrites HTML responses, injects a prefetch hint for the slowest API route, and sets a short <code>stale-while-revalidate</code> window on dynamic responses</li>
+<li>An origin cache with a bounded in-process fallback so that a cache failover does not become an outage</li>
+<li>A measurement loop using <code>curl</code> timing output and a load test, so that claims about improvement are backed by numbers you produced yourself</li>
 </ul>
-<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<p>Create a new directory and install the toolchain:</p>
+<p>The edge function itself is roughly 50 lines. The interesting part is the failure handling and the measurement.</p>
+<h2 id="step-1-set-up-the-origin-service">Step 1 — set up the origin service</h2>
+<p>Create a project and install dependencies:</p>
 <pre><code class="language-bash">npm init -y
-npm install express@4.19 brotli@1.1 redis@4.6.12 zod@3.22.4
+npm install express@4.19 redis@4.6.12 zod@3.22.4
 </code></pre>
-<p>Add a minimal Express server:</p>
+<p>A minimal Express service with a Redis-backed cache:</p>
 <pre><code class="language-javascript">// server.js
 import express from 'express';
 import { createClient } from 'redis';
@@ -337,40 +339,36 @@ app.listen(port, () =&gt; {
   console.log(`Server running on port ${port}`);
 });
 </code></pre>
-<p>Start Redis locally for testing:</p>
+<p>Run Redis locally:</p>
 <pre><code class="language-bash">docker run --rm -p 6379:6379 redis:7.2-alpine
 </code></pre>
-<p>Run the server in one terminal and curl it five times to warm the cache:</p>
-<pre><code class="language-bash">curl http://localhost:3000/api/products/123 | jq .
+<p>Start the server, then verify the cache warms:</p>
+<pre><code class="language-bash">curl -s http://localhost:3000/api/products/123 | jq .
 </code></pre>
-<p>got:</p>
+<p>Expected output:</p>
 <pre><code class="language-json">{
   &quot;id&quot;: &quot;123&quot;,
   &quot;name&quot;: &quot;Sample Product&quot;,
   &quot;price&quot;: 29.99
 }
 </code></pre>
-<p>Now set the Redis cluster in ElastiCache:</p>
-<ol>
-<li>Create a subnet group covering us-east-1a and us-east-1b (cheaper than Multi-AZ across AZs). 2. Create a Redis 7.2 cluster with 1 GB memory, disabled cluster mode, and encryption in-transit. 3. Note the primary endpoint: <code>prod-cache.abc123.ng.0001.useast1.cache.amazonaws.com:6379</code>. 4. Update the Redis URL:</li>
-</ol>
-<pre><code class="language-bash">export REDIS_URL=redis://prod-cache.abc123.ng.0001.useast1.cache.amazonaws.com:6379
+<p>For a managed Redis deployment, the relevant settings are: a subnet group spanning at least two availability zones, a node with enough memory for your working set, cluster mode disabled unless the dataset exceeds roughly 10 GB, and encryption in transit enabled. Cluster mode is a real option for large datasets, but for a cache in the single-digit-gigabyte range it adds client-side complexity — cross-slot command errors are a common first encounter — without a latency benefit.</p>
+<p>Record the primary endpoint and export it:</p>
+<pre><code class="language-bash">export REDIS_URL=redis://prod-cache.example.abc123.use1.cache.amazonaws.com:6379
 </code></pre>
-<p>Gotcha: I first enabled cluster mode expecting horizontal scaling. Cluster mode is great for &gt;10 GB datasets; for a 1 GB cache it adds latency and complexity.</p>
-<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<p>Create a CloudFront Function that rewrites HTML and prefetches assets. Functions run at the edge in &lt;1 ms CPU time and cost $0.10 per million requests, so it’s cheaper than Lambda@Edge for simple rewrites.</p>
-<p>Create <code>edge-function.js</code>:</p>
+<h2 id="step-2-the-edge-function">Step 2 — the edge function</h2>
+<p>The edge function runs at the viewer-request stage. It does two things: it rewrites HTML to include a prefetch hint, and it applies a short cache window to dynamic API responses.</p>
 <pre><code class="language-javascript">// edge-function.js
 async function handler(event) {
   const request = event.request;
   const uri = request.uri;
 
-  // Skip static assets handled by S3
+  // Static assets are served from object storage; leave them alone.
   if (uri.startsWith('/static/')) {
     return request;
   }
 
-  // Rewrite HTML for prefetch
+  // HTML: inject a prefetch hint and set a short shared cache window.
   if (uri.endsWith('.html') || uri === '/') {
     const newHeaders = {
       'content-type': { value: 'text/html; charset=utf-8' },
@@ -398,7 +396,7 @@ async function handler(event) {
     };
   }
 
-  // Dynamic API: origin shield + cache key with query string
+  // Dynamic API: cache at the edge with stale-while-revalidate.
   if (uri.startsWith('/api/')) {
     const cacheKey = `api:${uri}`;
     const cached = await caches.default.match(cacheKey);
@@ -410,7 +408,6 @@ async function handler(event) {
     const upstreamResp = await fetch(request);
     const clone = upstreamResp.clone();
 
-    // Stale-while-revalidate for 60 seconds
     event.waitUntil(
       caches.default.put(
         cacheKey,
@@ -426,7 +423,8 @@ async function handler(event) {
   return request;
 }
 </code></pre>
-<p>Deploy the function:</p>
+<p>A note on the runtime: edge function runtimes differ in what they permit. Some are deliberately restricted to sub-millisecond CPU budgets and do not expose <code>fetch</code> or a cache API at all; others allow network calls and a persistent cache but bill per request at a higher rate and add tens of milliseconds. Check which class your CDN offers before writing the function. If your provider's viewer-request stage is CPU-only, the HTML rewrite still works and the API caching belongs at the origin-shield or origin-cache layer instead.</p>
+<p>Deploy and attach the function using your provider's CLI. The shape of the commands is consistent across providers — create, publish, then reference the published ARN in the distribution's viewer-request association:</p>
 <pre><code class="language-bash">aws cloudfront create-function \
   --name html-prefetch-v1 \
   --function-config Comment=&quot;Prefetch HTML assets&quot;, Runtime=cloudfront-js-2.0 \
@@ -434,105 +432,13 @@ async function handler(event) {
 
 aws cloudfront publish-function --name html-prefetch-v1 --if-match &lt;ETag&gt;
 </code></pre>
-<p>Attach the function to the CloudFront distribution’s viewer request:</p>
-<pre><code class="language-bash">aws cloudfront update-distribution \
-  --id E1234567890ABC \
-  --distribution-config &quot;ViewerRequest={\&quot;FunctionARN\&quot;:\&quot;arn:aws:cloudfront::123456789012:function/html-prefetch-v1\&quot;}&quot;
-</code></pre>
-<p>Test from Nairobi using a 4G dongle:</p>
+<h2 id="step-3-measure-before-you-claim-anything">Step 3 — measure before you claim anything</h2>
+<p>Do not trust a dashboard that reports averages. Measure connection timing directly from a client on the network you care about.</p>
 <pre><code class="language-bash">curl -w &quot;\nLookup: %{time_namelookup}s Connect: %{time_connect}s TLS: %{time_appconnect}s Pretransfer: %{time_pretransfer}s Starttransfer: %{time_starttransfer}s Total: %{time_total}s\n&quot; \
-  https://cdn.yourdomain.com/
+  -o /dev/null -s https://cdn.example.com/
 </code></pre>
-<p>Typical result before the worker:</p>
-<pre><code>Lookup: 0.032s Connect: 0.128s TLS: 0.256s Pretransfer: 0.257s Starttransfer: 3.128s Total: 3.892s
-</code></pre>
-<p>After the worker (worker runs in &lt;1 ms, so the extra latency is the prefetch itself):</p>
-<pre><code>Lookup: 0.031s Connect: 0.129s TLS: 0.254s Pretransfer: 0.256s Starttransfer: 0.712s Total: 0.987s
-</code></pre>
-<p>That’s a 75 % drop in start-transfer time because the browser already has the HTML and can prefetch the API call in parallel.</p>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>Edge cases that bit me:</p>
-<ol>
-<li>Safari blocks prefetch on cross-origin if the cookie header is missing. 2. Redis fails over during the 30-second window after a primary reboot. I added a local fallback JSON store that serves stale data for 5 seconds while Redis reconnects. 3. Long URLs (&gt;8 KB) break CloudFront Functions. I shrank dynamic queries to 255 characters by hashing the query string.</li>
-</ol>
-<p>Add a 5-second fallback in Express:</p>
-<pre><code class="language-javascript">// server.js — add after redis.connect()
-const fallbackStore = new Map();
-
-app.get('/api/products/:id', async (req, res) =&gt; {
-  const id = req.params.id;
-  const cacheKey = `prod:${id}`;
-
-  try {
-    const cached = await redis.get(cacheKey);
-    if (cached) return res.json(JSON.parse(cached));
-  } catch (e) {
-    console.warn('Redis failed:', e.message);
-  }
-
-  // Fallback: serve stale data for 5 seconds
-  const stale = fallbackStore.get(cacheKey);
-  if (stale &amp;&amp; (Date.now() - stale.ts) &lt; 5000) {
-    return res.json(stale.data);
-  }
-
-  // Fetch upstream
-  const mock = { id, name: 'Sample Product', price: 29.99 };
-  fallbackStore.set(cacheKey, { data: mock, ts: Date.now() });
-  await redis.set(cacheKey, JSON.stringify(mock), { EX: 30 });
-  res.json(mock);
-});
-</code></pre>
-<p>Handle Safari prefetch:</p>
-<pre><code class="language-html">&lt;!-- in the rewritten HTML --&gt;
-&lt;link rel=&quot;prefetch&quot; href=&quot;/api/products/123&quot; as=&quot;fetch&quot; crossorigin /&gt;
-</code></pre>
-<p>Handle long query strings:</p>
-<pre><code class="language-javascript">const shortId = require('crypto')
-  .createHash('sha256')
-  .update(req.originalUrl)
-  .digest('hex')
-  .slice(0, 16);
-</code></pre>
-<p>Redis failover test:</p>
-<pre><code class="language-bash"># Simulate failover
-aws elasticache reboot-cache-cluster --cache-cluster-id prod-cache --cache-node-ids-to-reboot 0001
-
-# Measure error rate
-awssudo apt install vegeta
-echo 'GET http://localhost:3000/api/products/123' | vegeta attack -duration=30s | vegeta report
-</code></pre>
-<p>Error rate stayed under 1 % because the fallback kicked in for 5 seconds.</p>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<p>Add OpenTelemetry traces to the Express server:</p>
-<pre><code class="language-bash">npm install @opentelemetry/sdk-node @opentelemetry/auto-instrumentations-node @opentelemetry/exporter-otlp-http
-</code></pre>
-<p>Create <code>tracer.js</code>:</p>
-<pre><code class="language-javascript">// tracer.js
-import { NodeSDK } from '@opentelemetry/sdk-node';
-import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-otlp-http';
-
-const sdk = new NodeSDK({
-  traceExporter: new OTLPTraceExporter({ url: process.env.OTLP_ENDPOINT || 'http://localhost:4318' }),
-  instrumentations: [getNodeAutoInstrumentations()]
-});
-
-sdk.start();
-</code></pre>
-<p>Add to <code>server.js</code>:</p>
-<pre><code class="language-javascript">import './tracer.js';
-</code></pre>
-<p>Deploy an OTel collector in ECS Fargate:</p>
-<pre><code class="language-bash">aws ecs create-cluster --cluster-name otel-collector
-</code></pre>
-<p>Set up CloudWatch dashboards for:</p>
-<ul>
-<li>CloudFront Function duration (p99 &lt; 2 ms)</li>
-<li>Redis hit ratio (target 90 %)</li>
-<li>API error rate (target &lt; 2 %)</li>
-</ul>
-<p>Write a simple load test with k6 to simulate 4G jitter:</p>
+<p>Run this 30 times on a real 4G connection and keep the raw output. The fields that matter are <code>time_starttransfer</code> (time to first byte of the response body) and <code>time_total</code>. Sort the results and look at the 95th percentile, not the mean.</p>
+<p>To instrument the same measurement continuously, emit the timing values from your load test rather than from a single shell session. A minimal k6 script:</p>
 <pre><code class="language-javascript">// load-test.js
 import http from 'k6/http';
 import { check } from 'k6';
@@ -546,136 +452,150 @@ export const options = {
 };
 
 export default function () {
-  const res = http.get('https://cdn.yourdomain.com/api/products/123');
+  const res = http.get('https://cdn.example.com/api/products/123');
   check(res, {
     'status is 200': (r) =&gt; r.status === 200
   });
 }
 </code></pre>
-<p>Run it from a small EC2 instance in Nairobi (t3.micro, 2 vCPU, 1 GiB):</p>
-<pre><code class="language-bash">docker run --rm grafana/k6 run -e K6_CLOUD_TOKEN=... load-test.js
+<p>Run it from a host on the same network path as your users:</p>
+<pre><code class="language-bash">docker run --rm -i grafana/k6 run - &lt; load-test.js
 </code></pre>
-<p>Typical result:</p>
+<p>The threshold <code>p(95)&lt;800</code> is a decision you make, not a fact about the world. Pick it from your product's tolerance for a slow first paint, and treat a breach as a regression to investigate.</p>
+<h3 id="what-to-instrument">What to instrument</h3>
 <table>
 <thead>
 <tr>
+<th>Layer</th>
 <th>Metric</th>
-<th>Before</th>
-<th>After</th>
+<th>Why it matters</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Median</td>
-<td>2100 ms</td>
-<td>700 ms</td>
+<td>Edge function</td>
+<td>Invocation duration, p99</td>
+<td>Confirms the edge is not becoming the bottleneck</td>
 </tr>
 <tr>
-<td>p95</td>
-<td>4300 ms</td>
-<td>1900 ms</td>
+<td>Edge cache</td>
+<td>Hit ratio on dynamic routes</td>
+<td>Directly determines origin round trips</td>
 </tr>
 <tr>
-<td>Error rate</td>
-<td>3.2 %</td>
-<td>0.9 %</td>
+<td>Origin cache</td>
+<td>Hit ratio, eviction rate</td>
+<td>Working set vs. provisioned memory</td>
 </tr>
 <tr>
-<td>Redis hit ratio</td>
-<td>78 %</td>
-<td>92 %</td>
+<td>Origin</td>
+<td>Error rate, retransmit-adjacent timeouts</td>
+<td>Distinguishes cache problems from network problems</td>
+</tr>
+<tr>
+<td>Client</td>
+<td><code>time_starttransfer</code> p95 from a real network</td>
+<td>The only number the user experiences</td>
 </tr>
 </tbody>
 </table>
-<p>The 14 % jump in Redis hit ratio came from the stale-while-revalidate header keeping hot keys around even when upstream latency spikes.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>I ran this setup for a SaaS used by 1200 Nairobi shops in April 2026.</p>
-<ul>
-<li>Median page load time dropped from 2.1 s to 700 ms. - 95th percentile dropped from 4.3 s to 1.9 s. - API error rate dropped from 3.2 % to 0.9 %. - CloudFront spend rose by $180 / month (extra cache hits) but support tickets fell by 40 %.</li>
-</ul>
-<p>The biggest surprise was that <strong>adding a 1 KB placeholder</strong> (the script tag in the HTML) cut perceived latency by 300 ms because users saw the skeleton UI instantly. The engineering team assumed bandwidth was the bottleneck; it turned out to be render-blocking resources.</p>
-<p>Another surprise: <strong>Redis 7.2’s built-in active defragmentation</strong> cut memory usage 12 % after 7 days, saving $12 / month on the ElastiCache instance.</p>
-<p>Comparison table after one month in production:</p>
-<table>
-<thead>
-<tr>
-<th>Latency metric</th>
-<th>Baseline (Starlink only)</th>
-<th>4G + edge cache</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Median</td>
-<td>2100 ms</td>
-<td>700 ms</td>
-</tr>
-<tr>
-<td>p95</td>
-<td>4300 ms</td>
-<td>1900 ms</td>
-</tr>
-<tr>
-<td>p99</td>
-<td>6200 ms</td>
-<td>2500 ms</td>
-</tr>
-<tr>
-<td>Error rate</td>
-<td>3.2 %</td>
-<td>0.9 %</td>
-</tr>
-<tr>
-<td>Support tickets</td>
-<td>42</td>
-<td>25</td>
-</tr>
-<tr>
-<td>CloudFront cost</td>
-<td>$240</td>
-<td>$420</td>
-</tr>
-</tbody>
-</table>
-<p>The extra $180 / month in CloudFront is cheaper than hiring one extra support agent in Nairobi ($1200 / month).</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<h3 id="why-not-use-lambdaedge-instead-of-cloudfront-functions">Why not use Lambda@Edge instead of CloudFront Functions?</h3>
-<p>CloudFront Functions run in &lt;1 ms CPU time and cost $0.10 per million requests. Lambda@Edge adds ~50 ms latency and costs $0.60 per million requests. For simple rewrites and prefetch, Functions are cheaper and faster.</p>
-<h3 id="how-do-i-handle-user-specific-data-in-the-edge-cache">How do I handle user-specific data in the edge cache?</h3>
-<p>Prefix the cache key with the user’s hashed ID and a short TTL. Example:</p>
+<p>If you want a single target: the client-side <code>time_starttransfer</code> p95 is the one to defend.</p>
+<h2 id="step-4-failure-modes-and-their-fixes">Step 4 — failure modes and their fixes</h2>
+<h3 id="cache-failover-becomes-an-outage">Cache failover becomes an outage</h3>
+<p>A managed cache with automatic failover will have a window — typically seconds to tens of seconds — where reads fail while the primary moves. If your request path treats a cache miss and a cache error identically, every request in that window hits origin simultaneously.</p>
+<p>The fix is a bounded in-process fallback: keep the last known value for each key for a short period, and serve it stale rather than failing.</p>
+<pre><code class="language-javascript">// server.js — add after redis.connect()
+const fallbackStore = new Map();
+
+app.get('/api/products/:id', async (req, res) =&gt; {
+  const id = req.params.id;
+  const cacheKey = `prod:${id}`;
+
+  try {
+    const cached = await redis.get(cacheKey);
+    if (cached) return res.json(JSON.parse(cached));
+  } catch (e) {
+    console.warn('Cache read failed:', e.message);
+  }
+
+  // Serve last known value for up to 5 seconds after a cache failure.
+  const stale = fallbackStore.get(cacheKey);
+  if (stale &amp;&amp; (Date.now() - stale.ts) &lt; 5000) {
+    return res.json(stale.data);
+  }
+
+  const mock = { id, name: 'Sample Product', price: 29.99 };
+  fallbackStore.set(cacheKey, { data: mock, ts: Date.now() });
+
+  try {
+    await redis.set(cacheKey, JSON.stringify(mock), { EX: 30 });
+  } catch (e) {
+    console.warn('Cache write failed:', e.message);
+  }
+
+  res.json(mock);
+});
+</code></pre>
+<p>Note that the fallback store is per-process. With N origin instances you get N independent copies, which is fine for a 5-second stale window and wrong for anything longer. Do not let the fallback TTL drift upward to paper over a persistent cache problem; alert on cache errors instead.</p>
+<p>To test the failover path, reboot a cache node while a load test is running and watch the origin error rate:</p>
+<pre><code class="language-bash">aws elasticache reboot-cache-cluster \
+  --cache-cluster-id prod-cache \
+  --cache-node-ids-to-reboot 0001
+</code></pre>
+<p>Run the load test in parallel and compare the error rate during the reboot window against the baseline. If the fallback is working, the error rate should stay near baseline; if it spikes, the fallback window is too short or the fallback is not being consulted.</p>
+<h3 id="prefetch-hints-that-do-nothing">Prefetch hints that do nothing</h3>
+<p>A <code>prefetch</code> hint is advisory. Browsers may ignore it entirely depending on the <code>as</code> value, the <code>crossorigin</code> attribute, and whether credentials are involved. A cross-origin prefetch without <code>crossorigin</code> will be discarded, and a prefetch for a credentialed endpoint will be dropped unless the fetch is issued with matching credentials mode.</p>
+<p>The practical approach is to verify with the browser rather than assume. Open DevTools, filter the network panel to the prefetched URL, and confirm a second request is not issued when the page's own script fetches it. If you see two requests, the prefetch did not populate the cache and is pure overhead.</p>
+<h3 id="long-urls-and-cache-key-explosion">Long URLs and cache key explosion</h3>
+<p>Edge functions have limits on request-line size, and cache keys built from full URLs fragment badly when query strings carry tracking parameters. Two mitigations:</p>
+<p>Canonicalise the cache key by stripping known-irrelevant parameters:</p>
+<pre><code class="language-javascript">function canonicalKey(uri) {
+  const [path, query] = uri.split('?');
+  if (!query) return path;
+  const keep = new URLSearchParams(query);
+  for (const p of ['utm_source', 'utm_medium', 'utm_campaign', 'fbclid']) {
+    keep.delete(p);
+  }
+  const rest = keep.toString();
+  return rest ? `${path}?${rest}` : path;
+}
+</code></pre>
+<p>Hash genuinely long query strings into a fixed-length key:</p>
+<pre><code class="language-javascript">import { createHash } from 'node:crypto';
+
+const shortId = createHash('sha256')
+  .update(req.originalUrl)
+  .digest('hex')
+  .slice(0, 16);
+</code></pre>
+<p>The hash approach collapses distinct inputs into one key, so it is only safe when the cacheable response does not depend on the parameters you hashed away. For anything user-specific, do not hash — scope the key explicitly and keep the TTL short.</p>
+<h3 id="user-specific-data-leaking-across-users">User-specific data leaking across users</h3>
+<p>Caching per-user responses at a shared edge is a data-leak risk. If you must cache them, include a stable user identifier in the key and keep the TTL short enough that staleness is not a correctness problem:</p>
 <pre><code class="language-javascript">const userKey = `user:${hash(userId)}:cart`;
 await redis.set(userKey, JSON.stringify(cart), { EX: 10 });
 </code></pre>
-<p>This keeps the cache small and prevents data leakage. I initially cached user carts with a 60-second TTL and leaked carts between users during a Redis failover — lesson learned.</p>
-<h3 id="what-happens-if-the-edge-worker-crashes">What happens if the edge worker crashes?</h3>
-<p>CloudFront Functions are executed in a sandbox; if they crash, CloudFront returns the original request to the origin. I tested this by throwing an error inside the worker and confirmed the origin still served the page — just without the prefetch hint. No user impact.</p>
-<h3 id="can-i-use-this-pattern-for-websockets">Can I use this pattern for WebSockets?</h3>
-<p>No. CloudFront Functions do not support WebSocket upgrades. For WebSocket apps, use Lambda@Edge or a regional WebSocket server.</p>
-<h3 id="whats-the-smallest-viable-setup">What’s the smallest viable setup?</h3>
-<p>If you’re bootstrapping, skip Redis and use CloudFront’s in-memory cache:</p>
-<pre><code class="language-javascript">// inside the function
-const cache = new Map();
-const cached = cache.get(cacheKey);
-if (cached) return cached;
-</code></pre>
-<p>It’s not durable, but it’s free and fast enough for MVP.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>If you’re still seeing spikes above 2 seconds on 4G, <strong>measure the exact moment the bottleneck occurs</strong>. Use Chrome DevTools’ Performance tab, look at the “Network” waterfall, and note the first orange bar. If it’s a single 800 ms chunk, you’re hitting a 4G tower handoff — move the logic to the edge before that tower blocks you.</p>
-<p>Deploy the CloudFront Function and Redis 7.2 cache today, then run a 5-minute k6 test from a Nairobi EC2 instance. The median should drop below 800 ms within one hour. After that, add OpenTelemetry traces to see if any new bottlenecks pop up.</p>
-<p>Now open <code>edge-function.js</code> and change the prefetch link to point to your slowest API route. Push the change; within 60 seconds the 4G users in Nairobi will start seeing the faster page load.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>A ten-second TTL on a shopping cart is defensible. A sixty-second TTL is not, because a failover or a delayed invalidation can serve one user's cart to another. When in doubt, do not cache authenticated responses at the edge at all; cache them at the origin instead, where the key space is under your control.</p>
+<h3 id="websockets">WebSockets</h3>
+<p>Viewer-request edge functions generally do not participate in WebSocket upgrades. If your application needs bidirectional streaming, terminate the WebSocket at a regional endpoint and use the edge only for the initial HTTP handshake and static assets.</p>
+<h2 id="a-worked-decision-example">A worked decision example</h2>
+<p>Suppose a team is deciding whether to add an edge cache layer for a dashboard used by customers on mixed connectivity. The reasoning, with numbers labelled as illustrative:</p>
+<p>Assume 100,000 page views per day. Assume the current median time to first byte is 1.2 s and the 95th percentile is 3.5 s, measured from a real client on a 4G network. Assume the origin API responds in 80 ms when the cache is warm and 400 ms when it is cold, and that the origin cache hit ratio is 70%.</p>
+<p>Each uncached request costs an extra 320 ms of origin time. With a 70% hit ratio, 30,000 requests per day pay that cost. Moving the cache to the edge does not change the origin's cold-path cost, but it removes the round trip from the user's perspective for the 70% that would have hit the origin cache anyway — the user now gets the response from a nearby point of presence instead of a distant origin.</p>
+<p>The decision hinges on two questions: what fraction of requests are cacheable at the edge (not just at origin), and whether the edge function's own execution time is small relative to the round trip it saves. If the edge function adds 50 ms and saves 150 ms, the trade is positive. If it adds 50 ms and saves 20 ms, it is not, and the effort belongs in reducing render-blocking resources instead.</p>
+<p>There is no universal answer. Measure both numbers on your own network before committing.</p>
+<h2 id="checklist-before-shipping">Checklist before shipping</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ship-1mb-pages-on-4g-starlink-africa-case-study/">Ship 1MB pages on 4G: Starlink Africa case study</a></li>
-<li><a href="https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/">Starlink 4G fallback: serve pages under 800ms</a></li>
-<li><a href="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">Build apps that still work on 500 ms latency</a></li>
+<li>[ ] Client-side <code>time_starttransfer</code> p95 measured from a real congested network, not a throttled desktop</li>
+<li>[ ] Edge function duration p99 instrumented and confirmed below your provider's budget</li>
+<li>[ ] Origin cache failure path tested by rebooting a node under load</li>
+<li>[ ] Fallback stale window bounded and alerted on, not silently extended</li>
+<li>[ ] Prefetch hints verified in a browser network panel, not assumed</li>
+<li>[ ] Cache keys canonicalised; tracking parameters stripped</li>
+<li>[ ] Authenticated responses either not edge-cached or keyed per user with a short TTL</li>
+<li>[ ] Load test threshold chosen from product tolerance, and a breach treated as a regression</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="take-this-action-now">Take this action now</h2>
+<p>Open your CDN's edge function file — or create one if you do not have one — and change the prefetch hint to point at the single API route your monitoring shows as slowest at the 95th percentile. Then run the <code>curl</code> timing command above thirty times from a phone on a congested mobile network, save the output, and compare the <code>time_starttransfer</code> p95 against a run with the prefetch hint removed. That comparison, not this article, is the evidence you should act on.</p>
                 
                 
             </div>

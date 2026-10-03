@@ -1,88 +1,105 @@
 # USSD fintech in 2026: the 300M user channel nobody
 
-The tutorials all showed the happy path. This post shows what comes after.
+USSD tutorials tend to stop at the happy path: a menu, a PIN, a confirmation. Production is what happens when the carrier edge times out, the handset drops mid-session, and the user presses the wrong key on a 2G connection. This guide covers the parts that decide whether a USSD flow survives contact with a live network.
 
-## Why I wrote this (the problem I kept hitting)
+## Why USSD still matters for fintech distribution
 
-In 2026 I helped a Lagos-based fintech launch a new wallet product that targeted 1.2 million existing users. Marketing promised a ‘mobile-first’ experience, so we built a React Native app and a polished web portal. Rollout started, but two weeks later only 8% of users had installed the app. Support tickets exploded: “I don’t have space for another app,” “I only have a Kesh 20 phone,” “I pay with USSD every day.”
+USSD has a set of properties that no app can replicate: it works on any GSM handset, requires no install, no data plan, and no storage. The user dials a short code and is inside a session within a second or two. For mass-market financial services in markets where smartphone penetration and storage are constrained, that combination keeps USSD relevant regardless of how polished the native app is.
 
-What we discovered is that USSD traffic still drives 33% of all transactions in West Africa, according to the 2026 GSMA State of the Industry Report on Mobile Money. That’s 300 million active users who never see our shiny React Native screen. Most product teams in 2026 still treat USSD as a legacy fallback. It isn’t; it’s a high-trust, ultra-low-friction channel that converts at 2.8× the rate of in-app sign-ups when you get the flow right.
+The common failure mode is treating USSD as a legacy fallback rather than a first-class product surface. Teams build the app first, bolt on a USSD menu later, and then discover the channel has hard constraints the app never had:
 
-The biggest mistake I see is assuming USSD is just a dial-up menu. It’s a state machine with strict 160-character limits per screen, a 20-second SLA enforced by carriers, and zero room for error recovery. Build it wrong and you leak money: the average failed session costs $0.003 in carrier fees, but multiply that by 10 million failed sessions and you’re burning $30k per month on silent churn.
+- **160 characters per screen.** Anything longer is truncated or rejected by the carrier.
+- **A short session budget.** Carriers commonly enforce a session timeout in the range of tens of seconds. When it expires, the session is dropped and the user must dial again.
+- **No client-side state.** Every screen is a fresh HTTP request to your endpoint. You own all session state.
+- **No error recovery UI.** You cannot show a spinner, a retry button, or a stack trace. You have one string.
+- **Per-session carrier fees.** Failed sessions still cost money. At scale, silent failures are a recurring line item.
 
-If you’re building fintech for Africa in 2026, USSD is not dead — it’s the backbone of mass-market adoption. This guide shows how to ship a production-grade USSD flow on AWS in less than a day using open-source tooling, and how to instrument it so you can catch failures before customers complain.
+None of these are reasons to avoid the channel. They are reasons to design for it deliberately.
 
-## Prerequisites and what you'll build
+This guide builds a stateless USSD service on AWS: a Lambda handler behind an HTTP API, a DynamoDB session table, a small explicit state machine, and CloudWatch metrics that tell you where latency actually lives. The code targets Node 20 LTS on Lambda, but the architecture is runtime-agnostic.
 
-You don’t need a USSD gateway contract to start. An 80% solution can run entirely on AWS using the Africa’s Talking sandbox (no contract, no upfront fee) and a small React-like state machine for the menu logic. By the end you will have:
+## Prerequisites and what you will build
 
-- A stateless USSD service running on AWS Lambda (Node 20 LTS) behind an Application Load Balancer
-- A 3-screen flow: Welcome → Authenticate → Choose Action
-- End-to-end latency under 1.8 seconds to the handset
-- CloudWatch dashboards that alert you when USSD latency exceeds 2 seconds for 5 minutes
-- A 99.9% uptime SLA over 30 days of load testing at 1,200 requests per minute (RPM)
+You do not need a carrier contract to start. Most USSD aggregators offer a sandbox that lets you point a short code at an HTTPS endpoint and drive the flow from a real handset. The sandbox is where you validate the state machine; the carrier integration is where you validate certificates, timeouts, and edge behavior.
 
-Cost for the sandbox setup: ~$12 per month at 2026 AWS on-demand prices if you stay under the free tier gracefully. That’s cheaper than one engineer’s coffee budget.
+By the end of this guide you will have:
 
-The menu flow we’ll build mirrors what most African wallets use today:
-1. User dials *123#
-2. System greets: “Welcome to Kuda. Enter PIN.”
-3. User enters PIN; system validates (mock for sandbox)
-4. Menu shows: “1. Transfer, 2. Balance, 3. Help”
-5. User picks 1, enters amount and phone, then confirms
-6. System replies with 6-digit OTP via SMS fallback
+- A stateless USSD service on AWS Lambda (Node 20 LTS) behind an HTTP API
+- A four-state flow: welcome, authenticate, menu, transfer
+- A DynamoDB session table with TTL-based expiry
+- Idempotency handling so carrier retries do not double-charge or double-execute
+- CloudWatch metrics and an alarm on p95 latency
+- A load test you can run before carrier integration
 
-Each menu screen is capped at 160 characters. The entire session must complete within 20 seconds or the carrier drops the session and the user has to dial again — costing you another $0.003.
+The flow mirrors what most wallet USSD menus look like:
 
-Gotcha: carriers in 2026 still expect USSD traffic on long codes (e.g., *123#) to hit their endpoints via HTTP/S with mutual TLS. Sandbox endpoints usually relax this, but production will need a certificate from DigiCert or Sectigo. Budget one week for certificate rotation testing.
+1. User dials the short code.
+2. System greets and asks for a PIN.
+3. User enters the PIN; the system validates it.
+4. Menu shows options: transfer, balance, help.
+5. User selects transfer, enters amount and recipient.
+6. System confirms and sends an OTP by SMS.
 
-## Step 1 — set up the environment
+Each screen is capped at 160 characters. The whole session must complete inside the carrier's timeout window, or the user redials and you pay the session fee again.
 
-Start by creating a new directory and a Node 20 LTS project. We’ll use TypeScript for safety, but you can drop to JS if you’re in a hurry.
+**Environment checklist:**
+
+- Node 20 LTS (`node --version`)
+- AWS CDK v2 installed and bootstrapped in your target account
+- An aggregator sandbox account with a short code and API credentials
+- An AWS region chosen for proximity to the carrier's gateway, not for your team's convenience
+
+The region choice matters more than most teams expect. Carrier session timeouts are measured from the carrier's edge, not from your Lambda. If the round trip from carrier edge to your region adds several hundred milliseconds before your code even runs, you have spent part of your budget on geography. Pick a region close to the carrier POP, and measure rather than assume.
+
+## Step 1 — project setup
+
+Create the project and install dependencies:
 
 ```bash
 mkdir ussd-fintech && cd ussd-fintech
 npm init -y
 npm install typescript @types/node --save-dev
 tsc --init
-npm install aws-cdk-lib constructs @aws-cdk/aws-lambda-nodejs aws-lambda express body-parser
+npm install aws-cdk-lib constructs aws-cdk-lib/aws-lambda-nodejs @aws-sdk/client-dynamodb @aws-sdk/lib-dynamodb @aws-sdk/client-cloudwatch
 ```
 
-Next, install the Africa’s Talking Node SDK for sandbox testing:
-
-```bash
-npm install @africastalking/ussd
-```
-
-We’ll scaffold a CDK project for AWS. Create `lib/ussd-stack.ts`:
+Scaffold the stack in `lib/ussd-stack.ts`:
 
 ```typescript
 import * as cdk from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as apigateway from 'aws-cdk-lib/aws-apigatewayv2';
-import * as targets from 'aws-cdk-lib/aws-apigatewayv2-targets';
+import * as integrations from 'aws-cdk-lib/aws-apigatewayv2-integrations';
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as logs from 'aws-cdk-lib/aws-logs';
 
 export class UssdStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // Lambda runtime with 512MB memory (enough for 160-char strings and JSON)
+    const table = new dynamodb.Table(this, 'SessionTable', {
+      partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING },
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      timeToLiveAttribute: 'expiresAt',
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
+
     const handler = new lambda.NodejsFunction(this, 'UssdHandler', {
       runtime: lambda.Runtime.NODEJS_20_X,
       memorySize: 512,
       timeout: cdk.Duration.seconds(15),
       logRetention: logs.RetentionDays.ONE_MONTH,
       environment: {
-        AT_USERNAME: process.env.AT_USERNAME!,
-        AT_API_KEY: process.env.AT_API_KEY!,
+        SESSION_TABLE: table.tableName,
+        AT_USERNAME: process.env.AT_USERNAME ?? '',
+        AT_API_KEY: process.env.AT_API_KEY ?? '',
       },
     });
 
-    // HTTP API with 20-second integration timeout (carrier SLA)
+    table.grantReadWriteData(handler);
+
     const httpApi = new apigateway.HttpApi(this, 'UssdApi', {
-      defaultIntegration: new apigateway.LambdaProxyIntegration({ handler }),
-      disableExecuteApiEndpoint: false,
+      defaultIntegration: new integrations.HttpLambdaIntegration('Handler', handler),
     });
 
     new cdk.CfnOutput(this, 'ApiUrl', { value: httpApi.url! });
@@ -100,82 +117,84 @@ import { UssdStack } from '../lib/ussd-stack';
 
 const app = new cdk.App();
 new UssdStack(app, 'UssdStack', {
-  env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: 'eu-west-1' },
+  env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
 });
 ```
 
-Spin up the stack:
+Deploy:
 
 ```bash
 export CDK_DEFAULT_ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 export CDK_DEFAULT_REGION=eu-west-1
 cdk bootstrap
-export $(cat .env | xargs)  # AT_USERNAME and AT_API_KEY from Africa’s Talking sandbox
-cdk deploy --require-approval never
+cdk deploy
 ```
 
-After deployment, grab the `ApiUrl` output. That’s your HTTPS endpoint the carrier will call when a user dials *123#.
+The `ApiUrl` output is the HTTPS endpoint your aggregator will call when a user dials the short code.
 
-Environment checklist:
-- Node 20 LTS (confirmed via `node --version`)
-- AWS CDK 2.89 (2026 LTS release)
-- Africa’s Talking sandbox account (free, no contract)
-- AWS region with low latency to target carrier (e.g., eu-west-1 for MTN Ghana, eu-central-1 for Airtel Nigeria)
+**Failure mode to plan for:** production carrier endpoints commonly require mutual TLS. Sandbox endpoints usually relax this, but the production integration will need a client certificate issued by a recognized CA, attached and rotated on a schedule the carrier dictates. Treat certificate provisioning and rotation testing as a distinct workstream with its own lead time, not as a deployment detail.
 
-Gotcha: if your AWS region is far from the carrier POP, latency can spike above 2 seconds. In 2026, carriers still measure from their edge — pick a region within 100ms of the carrier’s gateway or use AWS Local Zones if available.
+## Step 2 — the state machine
 
-## Step 2 — core implementation
+The core of a USSD service is a pure function: given the previous session state and the user's input, return the next message and the next state. Keeping it pure makes it testable without AWS, which matters because the interesting bugs are in the transitions.
 
-The USSD flow is a state machine. We’ll encode states as strings and transitions as JSON responses. Create `src/ussd.ts`:
+Create `src/ussd.ts`:
 
 ```typescript
+export type State = 'welcome' | 'auth' | 'menu' | 'transfer' | 'done';
+
 export type Session = {
   phoneNumber: string;
-  state: 'welcome' | 'auth' | 'menu' | 'transfer' | 'done';
+  state: State;
   pin?: string;
-  lastMessage?: string;
 };
 
+export type UssdResponse = {
+  message: string;
+  newState: State;
+};
+
+const MENU = '1. Transfer 2. Balance 3. Help';
+
 export function handleUssd(
-  session: Session,
-  text: string | null,
-  networkCode: string
-): { message: string; newState: Session['state'] } {
-  // New session
+  session: Session | null,
+  text: string | null
+): UssdResponse {
   if (!session) {
-    return {
-      message: 'Welcome to Kuda. Enter PIN.',
-      newState: 'auth',
-    };
+    return { message: 'Welcome. Enter PIN.', newState: 'auth' };
   }
 
   switch (session.state) {
     case 'auth':
-      // Simplified: real PIN would call a secure auth service
       if (text === '1234') {
-        return {
-          message: '1. Transfer 2. Balance 3. Help',
-          newState: 'menu',
-        };
+        return { message: MENU, newState: 'menu' };
       }
       return { message: 'Invalid PIN. Try again.', newState: 'auth' };
 
     case 'menu':
       if (text === '1') {
-        return { message: 'Enter amount & phone (e.g. 500 08012345678)', newState: 'transfer' };
+        return {
+          message: 'Enter amount and phone, e.g. 500 08012345678',
+          newState: 'transfer',
+        };
       }
       if (text === '2') {
-        return { message: `Your balance is 1,250 NGN. 1. Transfer 2. Balance 3. Help`, newState: 'menu' };
+        return { message: `Balance: 1,250 NGN. ${MENU}`, newState: 'menu' };
       }
-      return { message: 'Invalid option. 1. Transfer 2. Balance 3. Help', newState: 'menu' };
+      return { message: `Invalid option. ${MENU}`, newState: 'menu' };
 
-    case 'transfer':
-      const [amount, phone] = text?.split(' ') ?? [];
+    case 'transfer': {
+      const parts = (text ?? '').split(' ');
+      const amount = parts[0];
+      const phone = parts[1];
       if (amount && phone && /^\d{11}$/.test(phone)) {
-        // In prod: call compliance and fraud checks before OTP
         return { message: 'Enter OTP sent to your phone', newState: 'done' };
       }
-      return { message: 'Invalid format. Use: 500 08012345678', newState: 'transfer' };
+      return {
+        message: 'Invalid format. Use: 500 08012345678',
+        newState: 'transfer',
+      };
+    }
 
     default:
       return { message: 'Session ended. Thank you.', newState: 'done' };
@@ -183,204 +202,257 @@ export function handleUssd(
 }
 ```
 
-Update the Lambda handler in `src/lambda.ts`:
+Note the character budget. `Invalid format. Use: 500 08012345678` is 39 characters, comfortably inside the limit. The balance screen concatenates a live value with the menu, so the balance string must be formatted to a fixed width or the menu can overflow. A defensive truncation helper is worth writing:
 
 ```typescript
-import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
-import { handleUssd, Session } from './ussd';
+export function screen(text: string, max = 160): string {
+  return text.length <= max ? text : text.slice(0, max - 1) + '…';
+}
+```
+
+Truncation is a last resort. If a screen is being truncated in production, the flow is wrong and the user is seeing a broken prompt.
+
+## Step 3 — the Lambda handler
+
+The handler loads the session, calls the state machine, persists the new state, and returns the aggregator's expected response shape. The exact JSON contract varies by aggregator; the shape below is representative.
+
+```typescript
+import {
+  APIGatewayProxyEventV2,
+  APIGatewayProxyStructuredResultV2,
+} from 'aws-lambda';
+import { handleUssd, Session, screen } from './ussd';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { DynamoDBDocumentClient, GetCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
+import {
+  DynamoDBDocumentClient,
+  GetCommand,
+  PutCommand,
+} from '@aws-sdk/lib-dynamodb';
 
 const ddb = DynamoDBDocumentClient.from(new DynamoDBClient({}));
 const TABLE = process.env.SESSION_TABLE!;
+const SESSION_TTL_SECONDS = 300;
 
 export const handler = async (
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyStructuredResultV2> => {
-  const body = JSON.parse(event.body || '{}');
-  const sessionId = body.sessionId;
-  const phoneNumber = body.phoneNumber;
-  const text = body.text;
-  const networkCode = body.networkCode;
+  const body = JSON.parse(event.body ?? '{}');
+  const { sessionId, phoneNumber, text } = body;
 
-  // Load or create session
-  let session: Session | null = null;
-  try {
-    const res = await ddb.send(new GetCommand({ TableName: TABLE, Key: { id: sessionId } }));
-    session = res.Item as Session;
-  } catch (e) {
-    console.error('Dynamo read error', e);
+  if (!sessionId) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'missing sessionId' }) };
   }
 
-  const { message, newState } = handleUssd(session, text, networkCode);
+  let session: Session | null = null;
+  try {
+    const res = await ddb.send(
+      new GetCommand({ TableName: TABLE, Key: { id: sessionId } })
+    );
+    session = (res.Item as Session) ?? null;
+  } catch (err) {
+    console.error('session read failed', err);
+    // Fail open to a safe screen rather than dropping the session silently.
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        content: 'Service temporarily unavailable. Please try again.',
+        continueSession: false,
+      }),
+    };
+  }
 
-  // Save session
-  await ddb.send(
-    new PutCommand({
-      TableName: TABLE,
-      Item: { id: sessionId, phoneNumber, state: newState, lastMessage: message },
-    })
-  );
+  const { message, newState } = handleUssd(session, text);
+
+  try {
+    await ddb.send(
+      new PutCommand({
+        TableName: TABLE,
+        Item: {
+          id: sessionId,
+          phoneNumber,
+          state: newState,
+          lastMessage: message,
+          expiresAt: Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS,
+        },
+      })
+    );
+  } catch (err) {
+    console.error('session write failed', err);
+  }
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ content: message, continueSession: newState !== 'done' }),
+    body: JSON.stringify({
+      content: screen(message),
+      continueSession: newState !== 'done',
+    }),
   };
 };
 ```
 
-Create the DynamoDB table via CDK (`lib/ussd-stack.ts`):
+Two design decisions are worth calling out.
+
+**Fail open on read errors.** If DynamoDB is unavailable, dropping the session gives the user nothing. Returning a neutral "try again" screen at least ends the interaction gracefully. The tradeoff is that a persistent read failure looks like a working service from the outside, which is why the error path must emit a metric (see the observability section).
+
+**TTL on the session item.** USSD sessions are short-lived. Setting a TTL of a few minutes means abandoned sessions clean themselves up without a scheduled job. The TTL is a cleanup mechanism, not a correctness mechanism: never rely on TTL for session expiry logic, because DynamoDB deletes expired items on a best-effort basis.
+
+## Step 4 — idempotency
+
+Carriers retry. A retry that re-executes a transfer is a serious bug. The fix is to make the handler idempotent on a key the carrier supplies, or on a key you derive from the session and step.
 
 ```typescript
-import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
+import { createHash } from 'crypto';
 
-const table = new dynamodb.Table(this, 'SessionTable', {
-  partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING },
-  billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-  timeToLiveAttribute: 'expiresAt',
-  removalPolicy: cdk.RemovalPolicy.DESTROY,
-});
-
-handler.addEnvironment('SESSION_TABLE', table.tableName);
-```
-
-Deploy and test with the Africa’s Talking sandbox CLI:
-
-```bash
-npm install -g @africastalking/cli
-atsandbox ussd:start --url https://YOUR_API_URL/ --shortCode "*123#"
-```
-
-Expect first reply: “Welcome to Kuda. Enter PIN.”
-
-Latency check: from my machine in Accra to eu-west-1, median round-trip was 420ms. With a Local Zone in Lagos, it dropped to 180ms — within the 2-second carrier window.
-
-Cost check: 1,000 sessions/day × 30 days = 30,000 invocations. Lambda 512MB × 15s ≈ 0.0000166 GB-s → $0.04/month. Dynamo on-demand: 30k reads/writes ≈ $0.45/month. Total ≈ $0.50/month at 2026 AWS prices.
-
-Gotcha: if your Lambda times out after 15 seconds, the carrier may retry while your function is still running. Use X-Ray to trace where the latency hides — often it’s the DynamoDB cold start or a DNS lookup to an external auth service.
-
-## Step 3 — handle edge cases and errors
-
-USSD sessions are fragile. The handset can drop mid-session, the user can press the wrong key, or the carrier can time out. We need idempotency, retries, and graceful degradation.
-
-Add an idempotency key to every response so the carrier doesn’t charge you twice on retry:
-
-```typescript
-const idempotencyKey = body.idempotencyKey || crypto.randomUUID();
-```
-
-Store the key in DynamoDB with TTL 24h:
-
-```typescript
-await ddb.send(
-  new PutCommand({
-    TableName: TABLE,
-    Item: { id: sessionId, key: idempotencyKey, expiresAt: Math.floor(Date.now() / 1000) + 86400 },
-  })
-);
-```
-
-In the handler, check for duplicate keys:
-
-```typescript
-const existing = await ddb.send(new GetCommand({ TableName: TABLE, Key: { key: idempotencyKey } }));
-if (existing.Item) {
-  return { statusCode: 200, body: JSON.stringify({ content: existing.Item.lastMessage, continueSession: true }) };
+function idempotencyKey(sessionId: string, text: string | null): string {
+  return createHash('sha256')
+    .update(`${sessionId}:${text ?? ''}`)
+    .digest('hex');
 }
 ```
 
-Handle carrier timeouts with a 2-second circuit breaker in Lambda:
+Store the key alongside the response, and check it before doing any side-effecting work:
 
 ```typescript
-import { setTimeout } from 'timers/promises';
+const key = idempotencyKey(sessionId, text);
+const existing = await ddb.send(
+  new GetCommand({ TableName: TABLE, Key: { id: `idem#${key}` } })
+);
 
-const withTimeout = async <T>(promise: Promise<T>, ms: number): Promise<T> => {
-  return Promise.race([
-    promise,
-    setTimeout(ms, undefined).then(() => { throw new Error('USSD_TIMEOUT'); }),
-  ]);
-};
-
-// Wrap external calls
-const auth = await withTimeout(callAuthService(pin), 1500);
+if (existing.Item) {
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      content: existing.Item.lastMessage,
+      continueSession: existing.Item.continueSession,
+    }),
+  };
+}
 ```
 
-Add a dead-letter queue for failed sessions:
+The rule is simple: any operation that moves money or sends an SMS must be guarded by an idempotency check that runs before the side effect, and the result of the side effect must be persisted atomically with the key. If the key is written after the transfer, a crash between the two leaves you unable to tell whether the transfer happened.
 
-```typescript
-import * as sqs from 'aws-cdk-lib/aws-sqs';
+**Failure mode analysis.** Consider three retry scenarios:
 
-const dlq = new sqs.Queue(this, 'UssdDlq');
-handler.addEventSource(new lambda.SqsEventSource(dlq, { batchSize: 1 }));
-```
+1. **Carrier retries before your first response.** The first invocation is still running. Without a lock, both invocations execute the transfer. A conditional write on the idempotency key (`attribute_not_exists`) makes the second invocation a no-op.
+2. **Carrier retries after a successful response.** The key is present, so the stored response is returned. The user sees the same confirmation twice, which is confusing but not harmful.
+3. **Your Lambda times out and the carrier retries.** The first invocation may still complete after the timeout. This is the dangerous case: the carrier has already given up, but your code has not. A conditional write plus a short internal timeout on the side-effecting call reduces the window, but does not eliminate it. Reconciliation against the ledger is the only complete answer.
 
-Gotcha: in 2026, some carriers still send USSD as UDP-like datagrams. If you see “Invalid session ID” errors, it’s likely a missing keep-alive. Add a 5-second ping from the carrier endpoint to your Lambda to keep the session warm.
+## Step 5 — observability
 
-## Step 4 — add observability and tests
-
-USSD is silent until it breaks. We need three dashboards:
-
-1. Latency by carrier network (MTN, Airtel, Glo, 9mobile)
-2. Error rate by session state (welcome, auth, menu, transfer)
-3. Cost per 1,000 sessions
-
-Create a CloudWatch custom metric:
+USSD fails silently. The user sees a dropped session; you see nothing unless you instrument it. Emit a metric on every request with dimensions that let you slice by carrier and by state:
 
 ```typescript
 import { CloudWatchClient, PutMetricDataCommand } from '@aws-sdk/client-cloudwatch';
 
-const cloudwatch = new CloudWatchClient({});
+const cw = new CloudWatchClient({});
 
-await cloudwatch.send(
-  new PutMetricDataCommand({
-    Namespace: 'USSD/Flow',
-    MetricData: [
-      {
-        MetricName: 'LatencyMs',
-        Dimensions: [{ Name: 'Carrier', Value: networkCode }],
-        Value: Date.now() - body.startTime,
-        Unit: 'Milliseconds',
-      },
-    ],
-  })
-);
+async function emit(
+  networkCode: string,
+  state: string,
+  latencyMs: number,
+  success: boolean
+): Promise<void> {
+  await cw.send(
+    new PutMetricDataCommand({
+      Namespace: 'USSD/Flow',
+      MetricData: [
+        {
+          MetricName: 'LatencyMs',
+          Dimensions: [
+            { Name: 'Carrier', Value: networkCode },
+            { Name: 'State', Value: state },
+          ],
+          Value: latencyMs,
+          Unit: 'Milliseconds',
+        },
+        {
+          MetricName: 'SessionFailure',
+          Dimensions: [{ Name: 'Carrier', Value: networkCode }],
+          Value: success ? 0 : 1,
+          Unit: 'Count',
+        },
+      ],
+    })
+  );
+}
 ```
 
-Create an alarm in CDK:
+Alarm on p95 latency rather than average. Averages hide the tail, and the tail is what the carrier drops:
 
 ```typescript
 import * as cw from 'aws-cdk-lib/aws-cloudwatch';
+import * as cwActions from 'aws-cdk-lib/aws-cloudwatch-actions';
+import * as sns from 'aws-cdk-lib/aws-sns';
 
-const alarm = new cw.Alarm(this, 'HighLatencyAlarm', {
+const topic = new sns.Topic(this, 'UssdAlerts');
+
+new cw.Alarm(this, 'HighLatencyAlarm', {
   metric: new cw.Metric({
     namespace: 'USSD/Flow',
     metricName: 'LatencyMs',
     statistic: 'p95',
     period: cdk.Duration.minutes(5),
   }),
-  threshold: 2000,
+  threshold: 1500,
   evaluationPeriods: 1,
   comparisonOperator: cw.ComparisonOperator.GREATER_THAN_THRESHOLD,
-});
-alarm.addAlarmAction(new cw_actions.SnsAction(topic));
+}).addAlarmAction(new cwActions.SnsAction(topic));
 ```
 
-Write a smoke test in Jest:
+The threshold of 1500 ms is a choice, not a documented carrier limit. Set it below the carrier's timeout with enough margin that the alarm fires before users start seeing drops. If the carrier timeout is 20 seconds, alarming at 1.5 seconds p95 gives you a wide margin; if it is 5 seconds, tighten it.
+
+**How to measure latency honestly.** A single number from a single machine is not a benchmark. To get a defensible figure:
+
+1. Instrument the handler to record wall-clock time from request receipt to response return, and emit it as the `LatencyMs` metric.
+2. Drive load with a tool that reports percentiles (p50, p95, p99), not just mean.
+3. Measure from a vantage point that approximates the carrier edge, not from a developer laptop.
+4. Compare regions by deploying the same stack to each and running the identical load profile.
+
+The comparison table that matters is your own, produced by your own load test in your own regions.
+
+## Step 6 — testing before carrier integration
+
+Two layers of testing catch most problems before the carrier does.
+
+**Unit tests on the state machine.** Because `handleUssd` is pure, these run in milliseconds:
 
 ```typescript
 import { handleUssd } from '../src/ussd';
 
-test('welcome flow under 2s latency', () => {
-  const start = Date.now();
-  const { message, newState } = handleUssd(null, null, '621');
-  const latency = Date.now() - start;
-  expect(latency).toBeLessThan(50); // Lambda cold start not counted
-  expect(message).toContain('Welcome');
-  expect(newState).toBe('auth');
+test('new session asks for PIN', () => {
+  const res = handleUssd(null, null);
+  expect(res.newState).toBe('auth');
+  expect(res.message).toContain('PIN');
+});
+
+test('correct PIN advances to menu', () => {
+  const res = handleUssd({ phoneNumber: '2348012345678', state: 'auth' }, '1234');
+  expect(res.newState).toBe('menu');
+});
+
+test('malformed transfer input stays on transfer', () => {
+  const res = handleUssd(
+    { phoneNumber: '2348012345678', state: 'transfer' },
+    'abc def'
+  );
+  expect(res.newState).toBe('transfer');
+});
+
+test('every screen fits the 160-character budget', () => {
+  const screens = [
+    handleUssd(null, null).message,
+    handleUssd({ phoneNumber: '2348012345678', state: 'auth' }, '1234').message,
+    handleUssd({ phoneNumber: '2348012345678', state: 'menu' }, '2').message,
+  ];
+  for (const s of screens) {
+    expect(s.length).toBeLessThanOrEqual(160);
+  }
 });
 ```
 
-Load test with Artillery:
+The character-budget test is the one teams skip and regret. It is cheap and it catches the most common production defect.
+
+**Load test against the deployed endpoint.** A simple scenario that posts realistic bodies at a steady rate:
 
 ```yaml
 config:
@@ -399,86 +471,39 @@ scenarios:
             networkCode: "621"
 ```
 
-Run:
+Run it and read the percentiles. If p95 is above your alarm threshold under load, the bottleneck is usually one of three things: Lambda cold starts, DynamoDB read latency, or a synchronous call to an external service (auth, fraud, SMS). Instrument the handler with sub-segments so you can attribute the time rather than guess.
 
-```bash
-npm install -g artillery
-test -n 200 -c 20 artillery run load.yml
-```
+**A note on load-test realism.** A load generator produces clean, well-formed requests at a steady rate. Real handsets produce retries, duplicate submissions, and bursts when a carrier's edge has a problem. Budget concurrency headroom above your measured peak, and test the retry path explicitly by replaying the same idempotency key.
 
-Results after 10 minutes at 200 virtual users:
-- p95 latency 1.6s
-- 99.8% success rate
-- $0.0002 per session
+## Decision checklist before going live
 
-Gotcha: Artillery counts virtual users, not real handsets. Real handset retry logic can double your traffic during outages. Budget 2× headroom in Lambda concurrency.
+Work through this before the carrier integration window opens:
 
-## Real results from running this
+- [ ] Every screen is verified at or under 160 characters by an automated test.
+- [ ] The state machine is pure and covered by unit tests for every transition, including invalid input.
+- [ ] Session state is stored externally with a TTL, and no state lives in Lambda memory.
+- [ ] Every side-effecting operation is guarded by an idempotency check that runs before the side effect.
+- [ ] The idempotency key and the side-effect result are written atomically.
+- [ ] Mutual TLS is configured with a certificate from a CA the carrier accepts, and rotation is scheduled.
+- [ ] The AWS region is chosen for proximity to the carrier POP, and the choice is backed by a measured comparison.
+- [ ] p95 latency is alarmed below the carrier timeout with margin.
+- [ ] A read failure returns a graceful screen and emits a failure metric.
+- [ ] The load test has been run at expected peak plus headroom, and the retry path has been replayed.
 
-We rolled this stack into production for a Nigerian wallet in October 2026. After 90 days of live traffic:
+## FAQ
 
-| Metric | Sandbox (simulated) | Production (MTN) | Target |
-|---|---|---|---|
-| Median latency | 420 ms | 1.3 s | < 2 s |
-| P95 latency | 1.1 s | 1.8 s | < 2 s |
-| Cost per 1k sessions | $0.21 | $0.25 | < $0.30 |
-| Session success rate | 99.2% | 99.7% | > 99.5% |
-| Failed sessions cost | $0.003 | $0.003 | < $0.005 |
+**Can I use Go or Rust instead of Node?**
+Yes. The state machine is trivial in any language. The relevant difference is cold-start behavior: compiled runtimes generally start faster than interpreted ones, which matters if your traffic is bursty and your concurrency is spiky. Measure cold-start contribution to p95 in your own account before switching; the answer depends on your traffic shape more than on the runtime.
 
-Revenue uplift: 2.8% of USSD users became app users within 30 days, contributing 18% of daily active transactions. The highest-converting screen was the OTP delivery via SMS fallback after a transfer confirmation — 14.3% conversion vs 6.2% in-app.
+**How do I handle non-ASCII input?**
+Assume the carrier will strip or mangle anything outside basic Latin and digits. Validate input against a strict allowlist and reject anything else with a clear retry prompt. Do not attempt to echo user input back without sanitizing it; a malformed character in a response can break the screen.
 
-Carrier SLA penalties: we never paid a penalty. The CloudWatch alarm triggered twice when MTN’s edge popped above 2s for 12 minutes. We switched to eu-central-1 and latency recovered. No customer refunds.
+**What about dual-SIM users?**
+Some aggregators pass a network or SIM indicator in the request payload; others do not. Do not build logic that depends on a field the carrier may omit. If you need to route an SMS to a specific SIM, confirm the field's availability with the carrier during integration and have a documented fallback.
 
-Cost of observability: CloudWatch with custom metrics and one alarm costs $8/month at 2026 prices. That’s 32× cheaper than a single engineer’s salary for the same visibility.
+**How do I test on a real handset cheaply?**
+Acquire an inexpensive feature phone and a prepaid SIM from the target network. Walk the flow on the actual radio. Simulators do not reproduce the latency, the keypad behavior, or the carrier's session handling, and those are exactly the things that break.
 
-## Common questions and variations
+## What to do in the next 30 minutes
 
-**How do I move from sandbox to production with a real USSD gateway?**
-Replace the Africa’s Talking sandbox URL with your carrier’s HTTPS endpoint. Upload a DigiCert wildcard certificate to AWS ACM and attach it to your ALB. Rotate the certificate 30 days before expiry; carriers in 2026 still enforce 30-day rotation windows. Expect a 2-week integration test cycle with the carrier’s QA team — they’ll send malformed USSD packets to check your parser.
-
-**Can I use Go or Rust instead of Node 20?**
-Yes, but watch cold starts. Go 1.21 on Lambda (provided.al2023) has a 200ms cold start vs Node’s 500ms. Rust with custom runtime can hit 50ms, but the binary size limit is 50MB. If your USSD flow is under 100 lines, Node is fine; if you’re doing fraud scoring, Rust wins on latency.
-
-**What about Unicode and emoji?**
-Carriers in 2026 still strip Unicode beyond basic Latin and Arabic numerals. If you try to send “🔐 PIN: 1234” you’ll get “PIN: 1234”. Stick to ASCII for safety. The 160-character limit includes any stripped characters, so budget for 10% overhead.
-
-**How do I handle dual SIM users?**
-Most dual SIM phones in 2026 send the SIM slot number in the `networkCode` field. Use it to route OTP SMS to the correct SIM. If the field is missing, fall back to the highest-received signal strength reported by the handset (carrier-dependent). Budget extra latency for dual SIM routing — it can add 400ms per hop.
-
-**What’s the fastest way to test on a real handset?**
-Buy a $15 Nokia 2720 flip phone from Jumia. Dial the short code and walk through the flow. The Nokia’s 2G radio will reveal latency issues that simulators miss. Expect to see “Network busy” messages — that’s your signal to optimize Lambda concurrency or move to a Local Zone.
-
-## Where to go from here
-
-Production-grade USSD is not about pretty menus; it’s about surviving carrier edge cases while keeping costs under $0.003 per session. The stack we built on AWS Node 20 LTS, DynamoDB, and CloudWatch costs $12/month at sandbox scale and $45/month at 1 million sessions — cheaper than most teams spend on analytics tools.
-
-Before you schedule a carrier integration meeting, do this in the next 30 minutes:
-
-1. Clone the repo from https://github.com/kubai/ussd-starter-2026
-2. `npm install`
-3. `export $(cat .env.sample)` (fill in Africa’s Talking sandbox keys)
-4. `npx cdk deploy`
-5. Point your phone to the sandbox short code and walk through the flow
-6. Check CloudWatch Logs Insights for `REPORT` lines — confirm p95 latency < 2s
-
-If it works, you have a production-ready sandbox. If it doesn’t, the logs will show whether it’s Lambda cold start, DynamoDB latency, or carrier timeout. Fix the slowest step first — in 2026, it’s usually the first 500ms.
-
-That’s it. USSD is not dead; it’s the fastest path to 300 million users who still pay with buttons.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 11, 2026
+Clone or create the project skeleton, write `src/ussd.ts` with the four-state machine above, and write the character-budget test. Run it. If every screen passes at or under 160 characters and every transition has a test, you have the part of the system that is hardest to fix later. Everything else — the CDK stack, the DynamoDB table, the alarm — is configuration you can add once the flow itself is correct.

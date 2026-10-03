@@ -1,115 +1,113 @@
 # Vibe coding: MVP gem, prod albatross
 
-The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+## What "vibe coding" actually optimizes for
 
-## Why this list exists (what I was actually trying to solve)
+Vibe coding is the practice of writing code by iterating quickly against immediate feedback — a REPL session, a notebook cell, a browser refresh — without a design step, tests, or type checking. It is genuinely effective at one thing: reducing the time between an idea and a running artifact.
 
-I got hooked on vibe coding after shipping three MVPs in a single weekend using nothing but a REPL and a bunch of `console.log` statements. It felt like magic — until month six, when the same codebase that had felt so fun to write became a nightmare to change. The bug wasn’t in the code; it was in the assumptions I’d made while vibing.
+That property is valuable. It is also narrowly scoped. The techniques that make prototyping fast (global state, copy-paste reuse, no schemas, no tests) are the same techniques that make a codebase expensive to change once it has users, multiple contributors, and a deployment pipeline.
 
-What I learned the hard way is that vibe coding optimizes for speed, not longevity. It rewards clever one-liners and punishes you when those one-liners turn into 500-line spaghetti files that break when traffic doubles. This list exists because I wanted to know: *When does vibe coding stop working?* Not in theory, but in production, with real traffic, real dependencies, and real stakeholders who don’t care about your cleverness — they care about uptime.
+The failure is not that vibe coding produces bad code. It is that the code keeps working long enough to acquire dependents. A prototype that gets one paying customer is now a production system with a prototype's architecture.
 
-I evaluated every option on three things: maintainability cost (how much pain you feel in month six), onboarding friction (how long it takes a new dev to understand the code), and cognitive overhead (how often you have to context-switch to remember why you wrote something that way). Anything that scored poorly on maintainability got dropped. Anything that required tribal knowledge or magic incantations got a hard pass.
+This article covers where the approach breaks, how to measure the breakage in your own repository rather than trusting anyone's numbers, which tooling categories reduce the cost, and how to migrate incrementally without a rewrite.
 
-The result is a ranked list of approaches from “works for MVPs only” to “actually scales.” I’ve used each of these in production at least once, and I’ve broken each one at least once. This isn’t theoretical — it’s what happens when you go from “move fast and break things” to “please don’t break things.”
+## The four failure modes
 
+Almost every "the prototype became production" incident traces back to one of these.
 
-## How I evaluated each option
+### 1. Implicit state
 
-I used a simple but brutal test: could I hand the code to someone else three months later and have them ship a feature without me? If the answer was no, it didn’t make the list. That means I measured things like:
+Notebook cells and REPL sessions accumulate state that is not visible in the source file. A cell defines a variable; a later cell reads it. The notebook runs top-to-bottom in an interactive session and fails when run headlessly in CI, because the execution order or the pre-existing globals are gone.
 
-- **Comment density**: Not lines of comments, but the ratio of insightful comments to noise. If your comments just restate the code, they’re worse than useless — they’re misleading. - **Test coverage vs. test meaning**: I care about tests that catch real regressions, not tests that assert 1 + 1 = 2. - **Error rate under load**: I spun up each approach behind a proxy with 500 RPS for 24 hours and measured how often it errored out. Redis 7.2 with default eviction, for example, failed every 47 minutes when memory spiked — because the eviction policy was set to ‘volatile-lru’ and half the keys had no TTL. - **Time to fix a real bug**: I injected a real bug (a misconfigured timeout in Node 20 LTS) and measured how long it took to find and fix. The winner fixed it in 5 minutes. The worst took three days. - **Onboarding time**: I timed how long it took a mid-level developer to understand the architecture from scratch. Anything over 30 minutes got flagged as “high cognitive overhead.”
+The same pattern appears in application code as module-level mutable state: a cache dictionary that is populated at import time, a singleton client that is created on first call, a global config object mutated by whichever module loads first. It works until two code paths disagree about initialization order.
 
-I also measured things that sound boring but aren’t: how often environment variables were misconfigured, how easy it was to deploy to AWS Lambda with arm64, and how many times the build broke because of a missing dev dependency. The tools that survived this process aren’t the flashiest — they’re the ones that didn’t make me want to quit.
+### 2. Untyped boundaries
 
+When data crosses a boundary — HTTP request to handler, queue message to worker, environment variable to config — there is no check that the shape is what the consumer expects. In a dynamic language, a missing field surfaces as `undefined is not a function` deep inside a call stack, far from the request that caused it. The debugging cost is proportional to the distance between the boundary and the crash site.
 
-## Why vibe coding works for MVPs and fails for anything you need to maintain — the full ranked list
+### 3. No regression signal
 
-### 1. ChatGPT-style notebooks (Jupyter, VS Code Notebooks)
+Without tests that assert behavior, the only way to know a change is safe is to exercise the affected path manually. As the surface area grows, the fraction of paths a developer can manually check in a session shrinks toward zero. Changes become risky by default, and the team compensates with slow, careful releases rather than fast ones — which is the opposite of what vibe coding was supposed to buy.
 
-What it does: Lets you write code in cells, run it interactively, and iterate fast without restarting a process. Great for data exploration and quick prototypes.
+### 4. Configuration drift
 
-Strength: You can run one cell, see the result, tweak it, and rerun — perfect for exploratory work where the shape of the data isn’t known ahead of time.
+Infrastructure defined by ad-hoc commands (`terraform apply` against a state file nobody inspects, Kubernetes manifests with literal IPs, environment variables edited in a dashboard) diverges from what is in version control. The failure mode is a deploy that works from one machine and not another, or an environment that cannot be recreated after an incident.
 
-Weakness: State leaks between cells. Nothing is isolated. One cell sets a global variable, the next cell uses it — and six months later, when you try to run the notebook in CI, it fails because the global state is gone. Also, no type checking, no linting, and no way to enforce structure.
+None of these are language problems. They are all consequences of skipping a boundary, a check, or a record.
 
-Best for: Data scientists, analysts, or solo devs building a one-off report who won’t need to maintain the code long-term.
+## How to measure whether your codebase has drifted
 
+Rather than quoting error rates or onboarding times from someone else's project, instrument your own. Every measurement below is a command or a count you can run today.
 
-### 2. REPL-driven development (Python REPL, Node REPL, IRB)
+**Untyped surface area.** If the project is TypeScript, count occurrences of `any` and of `@ts-ignore` / `@ts-expect-error`:
 
-What it does: You write code interactively in a live environment, see results immediately, and build up a program piece by piece.
+```
+grep -rn --include='*.ts' --include='*.tsx' -E '\bany\b|@ts-(ignore|expect-error)' src | wc -l
+```
 
-Strength: Zero friction. You can try something, see if it works, and keep it — or throw it away. No boilerplate, no ceremony. This is how I built my first three MVPs.
+Compare that number to the total line count of `src`. A ratio that grows over time means the type system is being routed around rather than used.
 
-Weakness: No persistence. When the REPL session dies, your code dies with it. And when you copy-paste that snippet into a file, it often breaks because the context was lost. Also, no versioning, no tests, no way to audit changes.
+**Test signal quality.** Run the suite twice under identical conditions and compare results. A suite with order-dependent or timing-dependent tests will produce different outcomes. Then check coverage of the modules that handle money, auth, and persistence specifically — aggregate coverage numbers hide the fact that the risky modules are untested.
 
-Best for: Solo devs prototyping something they’ll throw away or rewrite completely. Not for teams.
+**Boundary validation.** For each external input (HTTP handler, queue consumer, cron entry point), check whether there is a schema or type assertion at the entry. The count of validated entry points divided by the total number of entry points is your boundary coverage. This is a small, countable number, not a survey.
 
+**Time to reproduce a failure.** Take a recent production bug. Measure wall-clock time from "we know something is wrong" to "we have a failing test that reproduces it." If that number is measured in hours or days, the codebase lacks the observability and test scaffolding to localize faults.
 
-### 3. Vibe-coded scripts (throwaway scripts, one-off scripts, shell one-liners)
+**Onboarding.** Have someone unfamiliar with the repository attempt a small, well-specified change — add a field to an existing response, for example — and record where they get stuck. The blockers they hit are the actual documentation and structure gaps.
 
-What it does: You write a script to solve a specific problem, run it once, and never look at it again. Maybe you save it in `~/bin` or commit it to a private repo.
+**Error rate under load.** If you want a load figure, generate it yourself. Put the service behind a load generator at your expected peak request rate, run it for a duration longer than your longest cache TTL and longer than your connection pool's idle timeout, and record the error rate and the p99 latency. The interesting failures — connection leaks, eviction storms, retry amplification — appear at the timescale of those timeouts, not in the first minute.
 
-Strength: Speed. You can solve a problem in 5 minutes that would take 3 hours to do properly. Perfect for one-off data migrations or ad-hoc automation.
+A note on one specific trap: a cache configured with an eviction policy that only evicts keys carrying a TTL will fail to evict keys that have none. When memory fills with non-expiring keys, writes start failing. The symptom is periodic, correlated with memory pressure rather than traffic. This is a configuration property you can check directly — list the eviction policy and count keys without TTL — rather than something to discover during an incident.
 
-Weakness: They never die. You’ll keep using that script for years, even when it breaks. And when it breaks, you’ll spend hours debugging something you wrote while half-asleep.
+## The tooling that pays for itself
 
-Best for: DevOps engineers who need to automate something *today* and don’t have time to write a proper tool. Not for anything mission-critical.
+The categories below are not a ranked list of technologies. They are the four mechanisms that address the four failure modes above.
 
+### Static types at the boundaries
 
-### 4. Vibe-coded APIs (FastAPI with auto-generated OpenAPI, Flask with no tests)
+A type system that runs before the code does converts a class of runtime failures into compile failures. The important part is not annotating every internal function; it is annotating the boundaries — request payloads, response shapes, config, and the return types of anything that touches the network or disk.
 
-What it does: You write an API endpoint, test it in the browser or curl, and move on. Maybe you commit it with a note like “works on my machine.”
+Runtime validation complements static types at the edges where data is genuinely untrusted. A schema library that parses an incoming payload and throws on mismatch turns a downstream `undefined` into a clear error at the entry point.
 
-Strength: You can ship an API in hours, not days. This is how most MVPs start.
+### Tests that assert behavior
 
-Weakness: No tests. No structure. No documentation beyond inline comments. When traffic doubles, the API either times out or returns 500 errors — and you have no idea why.
+The value of a test is the regression it catches, not the line it covers. A test that asserts a function returns the sum of its inputs catches nothing; a test that asserts a retry stops after N attempts, or that a timeout rejects with a specific error, catches a real change in behavior.
 
-Best for: Solo devs building a side project or a proof of concept for investors. Not for anything with users.
+Write tests at the level where the behavior is specified. For a retry helper, that means testing the retry count and the timeout, not the internal timer implementation.
 
+### Linting and formatting
 
-### 5. Vibe-coded frontend (React with create-react-app, no type checking, no tests)
+Linting is cheap consistency enforcement. The rules that matter most are the ones that prevent whole categories of bug — floating promises, unchecked `any`, unused variables that mask a typo — rather than stylistic preferences. Formatting is best delegated entirely to a tool so it never appears in a code review.
 
-What it does: You write a component, see it in the browser, tweak it, and call it done. No linting, no tests, no state management beyond useState.
+### Reproducible configuration
 
-Strength: You can build a UI in minutes. This is how most MVPs start.
+Infrastructure and environment configuration should be reconstructable from version control. The test is simple: can a new environment be created from the repository alone, with no manual steps that exist only in someone's memory? If not, the configuration is documentation, not infrastructure.
 
-Weakness: The component tree becomes a spaghetti monster. When you need to change one thing, you break three others. And when you try to add a new feature, the whole app crashes because of a missing prop.
+## A worked example: making a retry helper safe
 
-Best for: Solo devs building a personal project or a quick demo for a pitch deck. Not for anything with paying users.
+Consider a retry-with-timeout helper, the kind of utility that gets written quickly during a prototype and then relied on everywhere.
 
+The prototype version typically looks like this:
 
-### 6. Vibe-coded configs (Terraform with no state management, Kubernetes manifests with hardcoded IPs)
+```typescript
+// prototype version — do not ship
+export function withTimeout(fn: () => Promise<any>, ms: number, retries: number) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => reject(new Error('timeout')), ms);
+    fn().then(resolve).catch((err) => {
+      if (retries > 0) return withTimeout(fn, ms, retries - 1);
+      reject(err);
+    });
+  });
+}
+```
 
-What it does: You write a config file, run `terraform apply`, and pray it works. Maybe you commit it with a note like “this worked on my machine.”
+Three defects are visible on inspection:
 
-Strength: You can spin up infrastructure in minutes. This is how most MVPs start.
+1. The timer is never cleared. On success, the promise resolves but the timer still fires later and calls `reject` on an already-settled promise — harmless in this case, but it keeps the event loop alive and, in a server process, holds a handle per call.
+2. The timeout does not cancel the in-flight operation. `fn` keeps running after the caller has given up.
+3. The retry recursion has no delay, so a failing dependency is hit as fast as the event loop allows — the classic retry-amplification pattern that turns a partial outage into a full one.
 
-Weakness: The config becomes a snowflake. When you need to change one thing, you break the whole stack. And when you try to deploy to production, the config fails because it was tested on localhost.
-
-Best for: Solo devs building a quick prototype. Not for anything with real traffic.
-
-## The top pick and why it won
-
-### TypeScript + Jest + Prettier + ESLint (strict mode) + ts-jest
-
-What it does: A fully typed, linted, and tested frontend or Node.js backend written in TypeScript. Uses Jest for testing and TypeScript strict mode to catch errors at compile time.
-
-Strength: You write code in a way that’s self-documenting. The compiler catches many errors before you even run the code. Tests run in CI. Linting enforces consistency. Adding a new feature is safe because the type system catches regressions.
-
-Weakness: It’s slower to write code. You have to think about types, interfaces, and tests. But that’s the point — you’re trading speed today for speed later.
-
-Best for: Teams building anything that needs to last more than three months. This is the minimum viable way to write code that doesn’t collapse under its own weight.
-
-Why it won:
-- **Maintainability**: After three months, a new dev can onboard in under 30 minutes. They don’t need tribal knowledge — the types and tests tell them everything. - **Onboarding**: A new dev can clone the repo, run `npm install`, and start coding in under 10 minutes. No setup hell. - **Error rate**: Under load (500 RPS), this setup errored 0.02% of the time. The worst vibe-coded frontend I measured errored 12% of the time. - **Cost**: The tooling overhead is negligible — Jest runs in 1.2 seconds on a 2026 M2 MacBook. The cost of maintaining this code is also negligible — bugs are caught at compile time or in CI.
-
-I tried this on a React frontend for a SaaS MVP in 2026. It took me 20% longer to write the first version than if I’d used plain React, but six months later, when we needed to add a new feature and onboard three new devs, the codebase was still clean and understandable. The plain React version had become a dumpster fire of spaghetti components and undocumented state.
-
-This approach isn’t flashy. It’s not AI-assisted. It’s just good old-fashioned discipline. But it’s the only thing that survived the move from “move fast” to “don’t break.”
-
-
-### Code example: TypeScript + Jest + ESLint (strict mode)
+The corrected version separates configuration validation from the retry loop, clears the timer on every path, and adds a delay between attempts:
 
 ```typescript
 // src/utils/timeout.ts
@@ -118,6 +116,7 @@ import { z } from 'zod';
 const TimeoutConfig = z.object({
   timeoutMs: z.number().min(100).max(10000),
   retries: z.number().min(0).max(5),
+  delayMs: z.number().min(0).max(5000).default(100),
 });
 
 type TimeoutConfig = z.infer<typeof TimeoutConfig>;
@@ -126,7 +125,7 @@ export function withTimeout<T>(
   fn: () => Promise<T>,
   config: TimeoutConfig
 ): Promise<T> {
-  const { timeoutMs, retries } = TimeoutConfig.parse(config);
+  const { timeoutMs, retries, delayMs } = TimeoutConfig.parse(config);
 
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
@@ -141,45 +140,84 @@ export function withTimeout<T>(
       .catch((err) => {
         clearTimeout(timer);
         if (retries > 0) {
-          return withTimeout(fn, { timeoutMs, retries: retries - 1 });
+          setTimeout(() => {
+            withTimeout(fn, { timeoutMs, retries: retries - 1, delayMs })
+              .then(resolve)
+              .catch(reject);
+          }, delayMs);
+          return;
         }
         reject(err);
       });
   });
 }
+```
 
+The tests target the behavior that matters — the timeout, the retry count, the delay, and the configuration bounds:
+
+```typescript
 // __tests__/timeout.test.ts
+import { withTimeout } from '../src/utils/timeout';
+
 describe('withTimeout', () => {
-  it('should reject if the function times out', async () => {
-    const slowFn = () => new Promise((resolve) => setTimeout(resolve, 200));
-    await expect(withTimeout(slowFn, { timeoutMs: 100, retries: 0 })).rejects.toThrow(
-      'Timeout after 100ms'
-    );
+  it('rejects when the function exceeds the timeout', async () => {
+    const slowFn = () =>
+      new Promise((resolve) => setTimeout(resolve, 200));
+    await expect(
+      withTimeout(slowFn, { timeoutMs: 100, retries: 0, delayMs: 0 })
+    ).rejects.toThrow('Timeout after 100ms');
   });
 
-  it('should retry on failure', async () => {
+  it('retries until the function succeeds', async () => {
     let attempts = 0;
     const flakyFn = () => {
       attempts++;
-      if (attempts < 3) throw new Error('Flaky');
-      return Promise.resolve('Success');
+      if (attempts < 3) return Promise.reject(new Error('flaky'));
+      return Promise.resolve('ok');
     };
-    const result = await withTimeout(flakyFn, { timeoutMs: 100, retries: 3 });
-    expect(result).toBe('Success');
+    const result = await withTimeout(flakyFn, {
+      timeoutMs: 100,
+      retries: 3,
+      delayMs: 0,
+    });
+    expect(result).toBe('ok');
     expect(attempts).toBe(3);
+  });
+
+  it('stops retrying after the configured limit', async () => {
+    let attempts = 0;
+    const alwaysFails = () => {
+      attempts++;
+      return Promise.reject(new Error('always'));
+    };
+    await expect(
+      withTimeout(alwaysFails, { timeoutMs: 100, retries: 2, delayMs: 0 })
+    ).rejects.toThrow('always');
+    expect(attempts).toBe(3); // initial attempt plus two retries
+  });
+
+  it('rejects invalid configuration before calling the function', async () => {
+    const fn = jest.fn().mockResolvedValue('ok');
+    await expect(
+      // timeoutMs below the minimum of 100
+      withTimeout(fn, { timeoutMs: 50, retries: 0, delayMs: 0 })
+    ).rejects.toThrow();
+    expect(fn).not.toHaveBeenCalled();
   });
 });
 ```
 
+The last test is the one that matters most in practice: it asserts that a misconfiguration fails at the boundary rather than after the operation has already been attempted. That is the difference between a five-minute fix and a three-day investigation.
 
-### Configuration example: Jest + ESLint (strict mode)
+## Configuration for the tooling
 
 ```json
 // package.json
 {
   "scripts": {
     "test": "jest",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
@@ -191,7 +229,9 @@ describe('withTimeout', () => {
     "typescript": "^5.4.5"
   }
 }
+```
 
+```json
 // .eslintrc.json
 {
   "root": true,
@@ -204,167 +244,86 @@ describe('withTimeout', () => {
     "prettier"
   ],
   "rules": {
-    "@typescript-eslint/no-explicit-any": "error"
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-floating-promises": "error"
   }
 }
 ```
 
+Pin exact versions in your own project and update deliberately. Version ranges in a lockfile-less setup are a common source of "it worked yesterday" failures.
 
-## Honorable mentions worth knowing about
+## Other tooling categories worth knowing
 
-### 1. Rust + Cargo (for performance-critical code)
+**Compiled languages with strict compilers.** Languages whose compilers reject unsafe memory access or unchecked errors move a class of defect from runtime to build time. The tradeoff is development velocity: the compiler rejects programs that a dynamic language would run, at least until they fail. This is a reasonable trade for services where a crash is expensive and the domain is stable, and a poor trade for exploratory work where the shape of the problem is still unknown.
 
-What it does: Compiled systems language with a built-in package manager and strict compiler checks.
+**Languages with minimal feature sets and built-in tooling.** A small language surface makes code easier to read across a team and reduces the space of clever-but-wrong constructs. Error handling that is explicit and verbose is a cost, but it also makes failure paths visible in the source rather than hidden in exception propagation.
 
-Strength: Memory safety, zero-cost abstractions, and blazing-fast performance. The compiler catches many errors before runtime.
+**Dynamically typed languages with optional static checking.** Adding a type checker to a dynamic language is a common middle path. The checker catches a subset of errors before runtime, and the annotations double as documentation. The cost is that the checker is opt-in per module, so coverage is uneven unless enforced in CI.
 
-Weakness: Steep learning curve. You’ll spend more time fighting the borrow checker than writing code. Also, the ecosystem is smaller than TypeScript’s.
+**Managed platforms for internal tools.** Drag-and-drop builders produce working internal dashboards quickly. The costs are that the generated behavior is opaque when it breaks, and that the tool's data model is not portable. For short-lived internal tools this is often the right trade; for anything with a long lifetime, the exit cost should be estimated up front.
 
-Best for: Performance-critical services (e.g., payment processing, real-time analytics) where memory safety and speed matter more than speed of development.
+**AI code completion.** Completion tools generate plausible code quickly. The relevant risk is that plausibility and correctness are different properties. Generated code that compiles and reads correctly can still be wrong in ways that only appear under load or at a boundary — a connection that is opened and never closed, a retry with no backoff, a check that is inverted for the empty case. The mitigation is not to avoid these tools but to apply the same review and test discipline to generated code as to hand-written code, with particular attention to resource lifecycle and error paths.
 
-Why it’s honorable: It forces you to write correct code from day one. But it’s not for everyone — the cognitive overhead is high.
+## When to stop vibe coding
 
+The decision is not about code quality in the abstract. It is about whether the system has dependents whose failures are expensive.
 
-### 2. Go + `go test` (for simple, reliable services)
+Vibe coding remains appropriate when:
 
-What it does: Statically typed language with built-in testing, no generics (until Go 1.18), and a minimalist standard library.
+- The only user is the author.
+- The artifact has a defined, short lifetime and will be discarded.
+- The problem domain is still being explored and the shape of the solution is unknown.
+- A full rewrite is acceptable and expected.
 
-Strength: Easy to read, easy to deploy, and the tooling is built-in. Tests run fast, and the language is designed for simplicity.
+Move to structured tooling when any of these becomes true:
 
-Weakness: No generics until recently, so you’ll write more boilerplate. Also, error handling is verbose — every function returns an error.
+- Someone other than the author depends on the system working.
+- The code will outlive the current sprint.
+- More than one person edits it.
+- It runs in an environment where failure is visible to users.
+- A change can no longer be verified by hand in a single session.
 
-Best for: Backend services that need to be simple, reliable, and easy to deploy. Not for complex domain logic.
+The last condition is the practical trigger. Once manual verification stops being sufficient, the absence of automated verification becomes the dominant cost.
 
-Why it’s honorable: I’ve used this for a high-traffic API that scaled to 5k RPS without breaking. The codebase is still clean after two years.
+## A migration path that does not require a rewrite
 
+Rewrites are expensive and usually unnecessary. The failure modes above can be addressed incrementally, in an order that front-loads the highest-value fixes.
 
-### 3. Python + pytest + mypy (for data-heavy services)
+1. **Turn on the compiler in non-strict mode and fix what it reports.** This is mechanical and produces immediate value at the boundaries.
+2. **Add schema validation at every external entry point.** This is the highest-value change per line of code, because it converts distant crashes into local errors.
+3. **Write tests for the paths that handle money, auth, and persistence.** Coverage of these modules matters more than aggregate coverage.
+4. **Run the tests and the type checker in CI on every change.** A check that is not enforced will not be maintained.
+5. **Turn on linting rules that prevent whole bug categories**, not stylistic rules.
+6. **Move configuration into version control** and verify it by recreating an environment from scratch.
+7. **Tighten the compiler**, one module at a time, as each is brought under test.
 
-What it does: Dynamically typed language with optional static typing via mypy, and pytest for testing.
+Each step is independently shippable. None requires pausing feature work.
 
-Strength: Fast to write, easy to read, and great for data processing. The ecosystem is mature.
+## FAQ
 
-Weakness: Dynamic typing means many errors only show up at runtime. Also, mypy can be slow on large codebases.
+**How do I tell whether a codebase is still in "vibe" state?**
 
-Best for: Data-heavy services (e.g., ETL, ML pipelines) where speed of iteration matters more than type safety.
+Look for commented-out code nobody dares delete, tests that only cover the happy path, environment variables committed to the repository, a `utils` module whose contents are unfamiliar to the current maintainers, and a README that does not describe how to run the project. Any one of these indicates the codebase is being maintained by memory rather than by structure.
 
-Why it’s honorable: I’ve used this for a data pipeline that processed 10k rows/sec. The type checking caught many bugs early, but not all.
+**What is the fastest way to make a prototype maintainable?**
 
-## The ones I tried and dropped (and why)
+Add validation at the boundaries first, then tests for the risky paths, then enforce both in CI. Types and linting follow. The ordering matters: boundary validation and tests catch the failures that actually page someone.
 
-### 1. AI-assisted vibe coding (GitHub Copilot, Cursor, etc.)
+**Why does prototyping feel more productive than structured development?**
 
-What it does: You write a comment, and the AI writes the code for you.
+Because prototyping optimizes for the feedback loop, and the feedback is immediate and visible. Structured development's payoff is deferred and mostly invisible — it shows up as the bug that did not happen. Comparing the two by how they feel during a work session systematically favors the prototype.
 
-Strength: You can write code faster.
+**Can AI tools replace the discipline described here?**
 
-Weakness: The code is often wrong. It generates plausible-looking code that compiles but fails at runtime. Also, the AI doesn’t understand your domain — it just regurgitates patterns it’s seen before.
+No. They change the cost of producing code, not the cost of verifying it. Generated code still has to be reviewed, tested, and maintained, and it is subject to the same failure modes — resource leaks, missing backoff, incorrect edge-case handling — as code written by hand. The discipline is what makes the output of these tools safe to depend on.
 
-Why I dropped it: I used Copilot on a Node 20 LTS backend. It generated a Redis client wrapper that leaked connections. The leak only showed up under load, and it took me three days to find it because the generated code looked correct.
+## The next 30 minutes
 
+Run the type checker and the linter over your current project and count the errors:
 
-### 2. No-code/Low-code platforms (Retool, Appsmith)
+```
+npx tsc --noEmit
+npx eslint . --ext .ts,.tsx
+```
 
-What it does: Drag-and-drop UI builders for internal tools.
-
-Strength: You can build an internal dashboard in hours, not days.
-
-Weakness: Everything is a black box. When something breaks, you’re at the mercy of the platform. Also, vendor lock-in is real — you can’t easily move off the platform.
-
-Why I dropped it: I built a customer support tool in Retool. Six months later, the tool broke because Retool changed their API.
-
-
-### 3. Jupyter notebooks in production (Papermill, nbconvert)
-
-What it does: Run Jupyter notebooks in a pipeline.
-
-Strength: Great for data science workflows.
-
-Weakness: Notebooks are not code. They’re documents with embedded code. When you try to run them in CI, they fail because the state is gone. Also, no versioning, no tests, no way to audit changes.
-
-Why I dropped it: I tried running a notebook in production using Papermill. It failed every time the input data changed slightly because the notebook assumed a specific schema. Debugging took hours.
-
-## How to choose based on your situation
-
-| Situation | Tooling | Why | Risk if you choose wrong |
-|-----------|---------|-----|--------------------------|
-| Solo dev, MVP, < 3 months lifetime | Jupyter Notebooks, REPL-driven scripts | Speed of iteration | Tech debt piles up fast |
-| Small team, < 12 months lifetime | TypeScript + Jest + ESLint (strict) | Balances speed and maintainability | You’ll outgrow it if you scale fast |
-| Team of 5+, > 12 months lifetime | Rust or Go + built-in tooling | Enforces correctness and simplicity | Higher cognitive overhead |
-| Data-heavy, > 12 months lifetime | Python + pytest + mypy | Fast iteration with some safety | Runtime errors still happen |
-| High-traffic, low-latency | Rust or Go | Memory safety and performance | Not ideal for rapid prototyping |
-| Internal tools, < 6 months lifetime | Retool or Appsmith | Drag-and-drop speed | Vendor lock-in and black boxes |
-
-
-### When to stick with vibe coding
-
-- You’re the only user. - The code will be thrown away in < 3 months. - You’re exploring a problem domain and don’t know what the shape of the solution is yet. - You’re willing to rewrite the whole thing when it breaks.
-
-### When to drop vibe coding
-
-- You have users who depend on the system. - The code will live longer than three months. - More than one person will touch the code. - You need to run it in production.
-
-I’ve seen teams try to “scale up” a vibe-coded MVP. It never ends well. The code breaks under load, the tests are flaky, and the onboarding time is measured in days, not minutes. The only way out is a rewrite — and rewrites are expensive.
-
-
-## Frequently asked questions
-
-### How do I know if my code is still vibe-coded?
-
-Look for these red flags:
-- You have commented-out code blocks that you’re afraid to delete. - Tests only cover the happy path, and they fail randomly under load. - Environment variables are hardcoded in the repo. - You have a `utils/` folder that’s 300+ lines and no one knows what most functions do. - You need to ask the original author how to run the app.
-
-If any of these are true, your code is already collapsing under its own weight. The fix is to add types, tests, and linting — and delete the dead code.
-
-
-### What’s the fastest way to migrate a vibe-coded codebase to something maintainable?
-
-Start with TypeScript (for frontend/backend) or Go (for backend services). Add Jest/pytest for tests, ESLint/Go fmt for linting, and strict mode/type checking. Do this incrementally:
-
-1. Pick one file or module. 2. Add TypeScript/Go types. 3. Add tests for the happy path. 4. Run the tests in CI. 5. Repeat for the next file.
-
-This is called “incremental adoption.” It’s slower than a full rewrite, but it’s safer and you can ship features while you migrate.
-
-
-### Why does vibe coding feel so good at first?
-
-Because it optimizes for the dopamine hit of “I made something work,” not the long-term payoff of “I made something that won’t break.”
-
-The first few hours of vibe coding are euphoric — you’re solving problems, seeing results, and feeling productive. But after a few weeks, the cost accumulates: tests break randomly, the codebase is a mess, and every new feature feels like a minefield.
-
-This is why so many startups pivot from “move fast and break things” to “please don’t break things” — the pain of breaking things in production is greater than the pain of slowing down to write correct code.
-
-
-### Can AI tools replace vibe coding?
-
-No. AI tools can generate plausible-looking code, but they don’t understand your domain. They regurgitate patterns, not solutions.
-
-I used GitHub Copilot to generate a Redis client wrapper in Node 20 LTS. It looked correct, but it leaked connections. The leak only showed up under load, and it took me three days to find it because the generated code was syntactically correct.
-
-AI tools are great for boilerplate — generating CRUD endpoints, scaffolding tests, or writing repetitive utility functions. But they’re not a substitute for thinking. They optimize for speed, not correctness.
-
-## Final recommendation
-
-If you’re building an MVP that you plan to throw away in three months, vibe coding is fine. Use Jupyter notebooks, REPL-driven scripts, and throwaway APIs. It’s fast, and the cost of breaking things is low.
-
-But if you’re building something that needs to last — even if it’s just for a small team — adopt TypeScript (for frontend/backend) or Go (for backend services) from day one. Add tests, linting, and strict mode/type checking. It’ll feel slower at first, but it’ll save you weeks of debugging later.
-
-Here’s the concrete next step: **Go to your codebase right now and run `npx eslint . --ext .ts,.tsx` (if you’re using TypeScript) or `go fmt ./...` (if you’re using Go). If it reports any errors, fix them before you write another line of code. This single action will tell you how far your codebase has drifted from maintainability — and it’ll take less than 5 minutes.**
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 19, 2026
+If the project is not TypeScript, run the equivalent static check for your language. Record the two numbers. Then pick the single module that handles the most valuable data — payments, authentication, or persistence — and write one test that asserts a behavior you would be upset to lose. That test, not the error count, is the first piece of the safety net.

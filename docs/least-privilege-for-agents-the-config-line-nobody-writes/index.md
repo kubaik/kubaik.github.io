@@ -1,38 +1,64 @@
 # Least privilege for agents: the config line nobody writes
 
-The conventional advice on implemented leastprivilege is incomplete in one specific, costly way. The gap between the demo and the incident report is where this actually lives. Here's the root cause, not just the symptom.
+Most guidance on least privilege for AI agents stops at "grant only what the agent needs." That advice is correct and almost useless on its own, because in most agent frameworks the default is the opposite: every agent in the process gets access to every tool in the registry. The missing piece is not a principle but a config line — the one that makes authorization a runtime decision instead of a manifest-wide default.
 
-## The gap between what the docs say and what production needs
+This article covers why permissive defaults fail at scale, what a context-aware policy layer looks like, a working implementation skeleton, and the failure modes that show up only after you ship it.
 
-Most agent frameworks (LangChain, LlamaIndex, crewAI, AutoGen) ship with a default policy of granting broad tool access to every agent. The idea is convenience: the developer just lists every function in a manifest, and the agent can call any tool it wants. This works fine in demos, but once you scale past a dozen tools, you hit walls that the documentation rarely covers.
+## Why permissive tool defaults fail past a dozen tools
 
-A common failure mode here is **over-permissive tool sets causing cascading timeouts**. In a 2026 survey of 112 production agent systems, 68% of teams reported at least one incident where an agent exhausted its 30-second timeout budget by scanning every tool signature before picking one. The root cause isn’t the agent’s planning logic; it’s the runtime’s search space. When the agent calls `list_tools()` at the start of every turn, the HTTP round-trip to the tool registry adds 80–120 ms on AWS Lambda with Node.js 20 LTS, and that latency compounds across retries and deployments.
+Typical agent frameworks — LangChain, LlamaIndex, crewAI, AutoGen and similar — register tools into a shared pool and let the planner choose. Convenience wins in demos: list functions in a manifest, hand the manifest to the agent, done. Three things break as the tool set grows.
 
-Another trap is **compliance violations disguised as convenience**. SOC2, ISO 27001, and PCI-DSS auditors look for explicit least-privilege authorization, not permissive defaults. When a junior engineer adds a new tool with a broad scope, the change bypasses peer review because the framework’s policy engine doesn’t surface the widening blast radius. Teams end up with agents that can call `delete_customer_data()` because the policy file still grants `*_all` to every agent role.
+**Search space blows up the planning loop.** When an agent enumerates tool signatures at the start of each turn, the enumeration itself is a cost. If `list_tools()` is a network round-trip to a registry service, that latency is paid per turn and again per retry. A typical failure mode is an agent that exhausts its turn timeout budget scanning tool metadata rather than doing work. The fix is not a smarter planner; it is shrinking the candidate set the planner ever sees, which is exactly what a policy check does.
 
-The part that trips people up is the **gap between static manifests and dynamic runtime needs**. Static manifests (YAML or JSON) can express coarse-grained permissions, but they can’t adapt when the agent switches from a read-only mode in one conversation to a write-heavy mode in the next. Production systems need a policy engine that evaluates each tool call against a context-aware policy, not a static allow-list.
+**Widening blast radius passes review silently.** A junior engineer adds a tool with a broad scope. The change is one line in a manifest. Nothing in the diff shows that the agent's effective capabilities just grew from "read analytics" to "read analytics and delete customer records." Policy engines that evaluate at call time surface this because the deny shows up in test traffic; manifests do not.
 
-## How How we implemented least-privilege access for agents that need to call 30+ tools actually works under the hood
+**Auditors ask a question manifests cannot answer.** SOC 2, ISO 27001 and PCI-DSS reviews expect explicit, documented authorization for sensitive actions. A YAML file granting `*_all` to every role is not that. What satisfies the question is a record of every denied call, tied to a policy version, queryable after the fact.
 
-We built a policy layer called `agent-perms` that wraps every tool call with a runtime policy evaluator. Instead of statically listing every tool, the system uses a **resource-attribute policy** modeled after AWS IAM and Open Policy Agent (OPA). Each tool is tagged with metadata: `resource_type`, `action`, `sensitive_data`, `cost_tier`. The policy file defines roles like `read_only_agent`, `write_agent`, `admin_agent`, and each role has a set of conditions that must be true for a tool call to succeed.
+The deeper mismatch is that static manifests describe coarse-grained permissions, while agent behavior is dynamic. An agent may start a conversation in read-only mode and pivot to write operations after a user confirms an action. A static allow-list cannot express "read always, write only after confirmation," but a runtime policy can.
 
-The evaluator runs in the same process as the agent (Python 3.11, FastAPI 0.109). At call time, the evaluator checks:
-- Is the agent’s role allowed to perform this action on this resource type?
-- Is the current conversation context marked as `high_risk`? (e.g., customer support escalation)
-- Does the agent’s cumulative cost so far exceed its daily budget? (yes, we gatekeep on money now)
-- Is the tool’s sensitive_data flag set and is the agent’s session marked as `isolated`?
+## What a runtime policy layer actually is
 
-If any condition fails, the evaluator raises a `PolicyDenied` exception before the tool’s HTTP client even fires. This is not a soft block; the agent sees a 403 immediately, which prevents wasted latency and retries.
+A policy layer sits between the agent's decision to call a tool and the tool's execution. It answers one question per call: given this agent's role, this tool's metadata, and the current conversation context, is this call allowed?
 
-A surprising result was **how often context changes mid-conversation**. In one system we measured, 23% of tool calls happened after the agent pivoted from a low-risk query to a high-risk escalation. The static manifest had no way to model that pivot, but the runtime policy caught it every time. The evaluator’s context is a lightweight JSON object passed in the FastAPI dependency, so it adds <1 ms to the median latency.
+The design that holds up in practice borrows from two established systems: AWS IAM's action/resource model and Open Policy Agent (OPA) as the evaluation engine. Each tool carries metadata:
 
-## Step-by-step implementation with real code
+- `resource_type` — the category of thing being touched (e.g. `analytics_report`, `customer_record`)
+- `actions` — what the tool can do (`read`, `export_csv`, `delete`)
+- `sensitive_data` — whether the tool touches regulated or personal data
+- `cost_tier` — rough cost class, so budget rules can gate expensive calls
 
-Here’s the minimal skeleton you need to replicate this in your own system. We’ll use Python 3.11, FastAPI 0.109, and OPA’s Rego policy engine (v0.60.0).
+The policy defines roles (`read_only`, `write`, `admin`) and conditions. At call time the evaluator receives the role, the tool metadata, and a context object containing things like `allow_reads`, `daily_budget_remaining`, and `high_risk`. If any condition fails, the call is denied before the tool's HTTP client fires. A hard 403 is better than a soft warning here: it stops retries, stops latency spend, and gives the agent a clear signal to replan.
 
-### 1. Define tool metadata
+Two properties matter more than the specific engine:
 
-Each tool exports a `get_permissions()` function that returns a dictionary matching the OPA input schema. The schema is a subset of AWS IAM’s action-resource model.
+1. **Deny by default.** `default allow = false` is the only safe starting point.
+2. **The context is scoped to the conversation.** Role and budget flags must not leak across sessions. This is the single most common correctness bug in these systems, and it is covered in the failure modes below.
+
+## A worked example: gating an expensive export
+
+Before writing code, it helps to trace one call through the system.
+
+Assume an agent with role `write`. A user asks it to export a year of analytics data to CSV. The tool `analytics` has `resource_type: analytics_report`, `actions: [read, export_csv]`, `cost_tier: medium`, and `sensitive_data: true`. Context for this conversation is `{allow_reads: true, daily_budget_remaining: 320, high_risk: false}`.
+
+The evaluator checks, in order:
+
+1. Is `write` permitted to call `analytics` at all? The policy maps `write` to a set of resource types that includes `analytics_report`. Pass.
+2. Is the requested action `export_csv` in the tool's declared actions? Yes. Pass.
+3. Does the `export_csv` rule require budget? The rule states `daily_budget_remaining > 500`. Current value is 320. Fail.
+
+Result: 403 with a machine-readable reason. The agent receives the denial, sees that budget is the constraint, and can tell the user the export is unavailable until the budget resets — rather than silently retrying four times and timing out.
+
+Now change one input: `daily_budget_remaining: 750`. The same call passes. This is the behavior a static manifest cannot produce, because the decision depends on state that does not exist at manifest-write time.
+
+The arithmetic here is worth stating plainly: if a single export costs an illustrative $0.40 in compute and API calls, a budget of 500 units at one unit per dollar permits roughly 1,250 exports before the gate closes. The exact numbers depend on your pricing; the point is that the gate is a number you choose and can audit, not a hope.
+
+## Implementation skeleton
+
+The following is a minimal working shape. It uses Python 3.11, FastAPI for the service layer, and OPA as the policy engine. Treat it as a scaffold to adapt, not a drop-in library.
+
+### 1. Tool metadata
+
+Each tool exports its own permissions. If a tool cannot describe what it does, it should not be callable by an agent.
 
 ```python
 # tools/analytics.py
@@ -44,18 +70,18 @@ def get_permissions() -> Dict[str, Any]:
         "actions": ["read", "export_csv"],
         "sensitive_data": True,
         "cost_tier": "medium",
-        "description": "Run analytics and export CSV"
+        "description": "Run analytics queries and export CSV",
     }
 ```
 
-### 2. Register tools with a tool registry
+### 2. Tool registry
 
-We use a simple singleton registry that maps tool names to their metadata and implementation. The registry is lazy-loaded to avoid import-time side effects.
+A registry maps names to handlers plus metadata. Lazy loading avoids import-time side effects.
 
 ```python
 # registry.py
 from typing import Dict, Callable, Any
-from .tools.analytics import analytics_tool
+from tools.analytics import analytics_tool
 
 class ToolRegistry:
     def __init__(self):
@@ -66,33 +92,33 @@ class ToolRegistry:
         self.register(
             name="analytics",
             handler=analytics_tool,
-            permissions=analytics_tool.get_permissions()
+            permissions=analytics_tool.get_permissions(),
         )
 
     def register(self, name: str, handler: Callable, permissions: Dict[str, Any]):
         self._tools[name] = {"handler": handler, "permissions": permissions}
 
-    def get_tool(self, name: str) -> Dict[str, Any]:
+    def get_tool(self, name: str) -> Dict[str, Any] | None:
         return self._tools.get(name)
 
 registry = ToolRegistry()
 ```
 
-### 3. Write an OPA policy in Rego
+### 3. Policy in Rego
 
-The policy file (`policies/agent_perms.rego`) defines roles and conditions. We use OPA’s HTTP API to evaluate policies at runtime.
+The policy file defines roles and the conditions under which an action is allowed. Note the default deny.
 
 ```rego
 package agent.perms
 
 default allow = false
 
-# Roles
-role["read_only_agent"] { input.agent.role == "read_only" }
-role["write_agent"] { input.agent.role == "write" }
-role["admin_agent"] { input.agent.role == "admin" }
+# Roles are derived from the agent's declared role.
+role["read_only"] { input.agent.role == "read_only" }
+role["write"]     { input.agent.role == "write" }
+role["admin"]     { input.agent.role == "admin" }
 
-# Conditions for analytics_report
+# Read access to analytics reports.
 allow {
     role[input.agent.role]
     input.resource_type == "analytics_report"
@@ -100,64 +126,71 @@ allow {
     input.agent.context.allow_reads == true
 }
 
+# CSV export requires write role and remaining budget.
 allow {
-    role[input.agent.role]
+    role["write"]
     input.resource_type == "analytics_report"
     input.action == "export_csv"
-    input.agent.context.daily_budget_remaining > 500  # USD
+    input.agent.context.daily_budget_remaining > 500
 }
 ```
 
-### 4. Build the FastAPI dependency
+One subtlety: the `role` set is built from `input.agent.role` rather than being a fixed lookup, which means an unknown role string produces an empty set and every rule referencing it fails closed. That is the intended behavior.
 
-The dependency checks the policy before every tool call. We batch the OPA evaluation to reduce latency spikes.
+### 4. The permission check
+
+The check runs before the handler is invoked. It builds the policy input from tool metadata plus conversation context.
 
 ```python
 # dependencies.py
-from fastapi import Depends, HTTPException, Request
-from opa_client import Client as OpaClient
-from registry import registry
+from fastapi import HTTPException, Request
 from typing import Dict, Any
+from registry import registry
 
+# Assume a client wrapper around the OPA HTTP API.
+from opa_client import Client as OpaClient
 opa = OpaClient(url="http://opa:8181")
 
 async def check_tool_permission(
     request: Request,
     tool_name: str,
     agent_role: str,
-    context: Dict[str, Any]
+    context: Dict[str, Any],
 ):
     tool = registry.get_tool(tool_name)
     if not tool:
         raise HTTPException(status_code=404, detail="Tool not found")
 
-    input_policy = {
+    action = context.get("requested_action", "read")
+
+    policy_input = {
         "agent": {"role": agent_role, "context": context},
         "resource_type": tool["permissions"]["resource_type"],
-        "action": "_call",  # generic action for all tools
+        "action": action,
         "sensitive_data": tool["permissions"].get("sensitive_data", False),
-        "cost_tier": tool["permissions"].get("cost_tier", "low")
+        "cost_tier": tool["permissions"].get("cost_tier", "low"),
     }
 
-    # Batch up to 50 calls into one OPA query
-    result = await opa.check(input_policy)
+    result = await opa.check(policy_input)
     if not result.get("allow", False):
         raise HTTPException(
             status_code=403,
-            detail=f"Tool call denied by policy: {tool_name}"
+            detail=f"Tool call denied by policy: {tool_name}/{action}",
         )
     return tool["handler"]
 ```
 
-### 5. Call tools with the dependency
+The original version of this pattern hard-coded `"action": "_call"` for every tool, which makes the action-level rules in the policy unreachable. Passing the actual requested action is what makes per-action rules meaningful.
 
-In your agent’s route, inject the permission check before invoking the tool.
+### 5. Wiring it into a route
+
+The dependency returns the handler only if the policy allows the call.
 
 ```python
 # routes.py
 from fastapi import APIRouter, Depends
 from dependencies import check_tool_permission
-from registry import registry
+from typing import Any, Dict
 
 router = APIRouter()
 
@@ -165,17 +198,17 @@ router = APIRouter()
 async def call_tool(
     tool_name: str,
     agent_role: str,
-    context: dict = {},  # e.g., {"allow_reads": true, "daily_budget_remaining": 750}
-    _handler = Depends(check_tool_permission)
+    context: Dict[str, Any],
+    handler = Depends(check_tool_permission),
 ):
-    handler = _handler
-    result = await handler()
-    return result
+    return await handler()
 ```
 
-### 6. Deploy OPA as a sidecar
+Note that `context` is now a required argument rather than a mutable default. Mutable defaults in Python are shared across calls, which in a policy context means one conversation's flags can bleed into the next — a security bug, not a style issue.
 
-We run OPA in a sidecar container (OPA 0.60.0, 128MB RAM, 0.5 vCPU) alongside the agent service. The agent talks to OPA over localhost, so latency is <1 ms. The sidecar is configured with a 100ms timeout to fail fast if OPA is overloaded.
+### 6. Running OPA
+
+OPA can run as a sidecar alongside the agent service, reachable over localhost, or in-process via the WASM target. The sidecar form is simpler to operate and keeps policy updates independent of application deploys.
 
 ```yaml
 # docker-compose.yml (simplified)
@@ -188,132 +221,79 @@ services:
       - opa
   opa:
     image: openpolicyagent/opa:0.60.0
-    command: run --server --log-level error
+    command: run --server --log-level error /policies
     ports:
       - "8181:8181"
-    mem_limit: 128m
-    cpu_count: 0.5
+    mem_limit: 256m
 ```
 
-## Performance numbers from a live system
+Set an explicit timeout on the OPA client so a slow evaluation fails closed rather than blocking the agent indefinitely. A timeout that returns "deny" is a safe default; a timeout that returns "allow" is not.
 
-We rolled this out to a production agent system handling 42k tool calls per day across 30 tools. The system runs on AWS EKS with Node.js 20 LTS for the frontend and Python 3.11 for the agent service. Here are the key metrics collected over 30 days:
+## How to measure whether this is working
 
-| Metric | Before | After | Change |
-|---|---|---|---|
-| Median tool call latency | 142 ms | 118 ms | -17% |
-| 95th percentile latency | 380 ms | 210 ms | -45% |
-| Policy evaluation latency | N/A | <1 ms | New |
-| Policy denied calls | 0 | 1,087 (2.6%) | New |
-| Agent timeout incidents | 14 | 2 | -86% |
-| Cost per 1k tool calls | $0.47 | $0.39 | -17% |
+Rather than quoting a benchmark, instrument the following and compare before/after on your own traffic:
 
-The biggest win wasn’t the latency drop; it was the **7x reduction in timeout incidents**. Before, agents would spin in retries because the planning loop kept calling `list_tools()` and hitting timeouts. After, the policy layer short-circuits invalid calls immediately, freeing up the agent to replan faster.
+- **Policy evaluation latency.** Emit a histogram from the OPA client. Watch p50 and p95. In-process evaluation is typically sub-millisecond; a sidecar over localhost adds a small constant. If p95 climbs into double-digit milliseconds, the policy has grown too complex or the bundle needs precompilation.
+- **Denied-call rate and reasons.** Count 403s grouped by rule. A sudden spike in one rule usually means a role mapping changed, not that agents got more malicious.
+- **Tool-call latency percentiles.** Compare p50 and p95 before and after. A well-scoped candidate set should reduce planning time, because the agent is choosing from fewer options.
+- **Timeout incidents per thousand turns.** This is the metric that matters most. If the policy layer is doing its job, agents stop burning turns on calls that were never going to succeed.
+- **Context leakage.** Add an assertion that the context object's conversation ID matches the request's conversation ID. Log any mismatch. This catches the failure mode below before it becomes an incident.
 
-We also saw a **37% drop in compute cost per 1k tool calls** because the agent spent less time waiting on network round-trips to the tool registry and more time executing useful work. The OPA sidecar added $0.02 per 1k calls to memory usage, but the overall bill went down because idle CPU dropped.
+Run each of these for at least a week of representative traffic before drawing conclusions. Small samples on agent systems are dominated by which tasks happened to arrive that day.
 
-A surprising outlier was the **cost gate**. We added a condition that blocks tool calls when the agent’s daily budget exceeds $500. In one incident, a misconfigured agent tried to run 1,200 analytics exports before midnight, hitting the gate and preventing a $1,400 bill spike. The policy layer caught it in 420 ms, before any actual exports ran.
+## Failure modes that appear after launch
 
-## The failure modes nobody warns you about
+### Context leaking between conversations
 
-### 1. The “context leak” between conversations
+If the policy context is stored in a module-level variable, a request-scoped cache, or a mutable default argument, flags from one conversation will be visible to another. A high-risk escalation in one session can grant elevated permissions to an unrelated read-only session. Fix: scope context to a conversation identifier, pass it explicitly through the call chain, and expire it after a defined idle period.
 
-Most agent frameworks isolate conversations at the session layer, but the policy context (agent role, budget, risk flags) often leaks between unrelated conversations. A high-risk escalation in one conversation can pollute the next, granting excessive permissions to an agent that should be read-only.
+### Policy evaluation timeouts under growth
 
-In our system, we fixed this by scoping the context to a conversation UUID and clearing it after 30 minutes of inactivity. Without this, we saw 4% of tool calls incorrectly allowed because the agent inherited stale high-risk context.
+OPA has a default evaluation timeout, and large policies with nested set operations can approach it. The symptom is intermittent denies that disappear on retry. The fix is to precompile the policy into a bundle in CI (`opa build`) and load the bundle at startup, rather than evaluating raw Rego on every request. Splitting a monolithic policy into modules also helps, because evaluation cost scales with the rules that must be considered.
 
-### 2. The Rego evaluation timeout
+### Tools that cannot describe themselves
 
-OPA’s default evaluation timeout is 500 ms. If your policy grows to 500+ lines or uses complex set operations, you can hit this timeout in production. We saw this when we added nested conditions for PCI-DSS compliance.
+Third-party or legacy tools often expose no metadata. Wrapping them in a shim that hard-codes permissions works, but the shim becomes a maintenance liability and drifts from the tool's real behavior. The defensible rule: a tool that cannot declare its resource type, actions and sensitivity does not get registered. Refactor it or exclude it.
 
-The fix was to split the policy into modules and pre-compile them. The `opa eval` command now runs `opa build` in CI, so the sidecar loads a pre-compiled bundle. This reduced evaluation latency from 420 ms to 8 ms in the worst case.
+### Memory growth from bundle size
 
-### 3. The tool handler signature mismatch
+Policy bundle size drives the sidecar's memory footprint. A bundle that grows to several megabytes can push a small container past its limit and trigger OOM kills under load. Mitigations: exclude unused policies from the bundle, split by domain, and set the container's memory limit with headroom rather than at the observed steady-state value.
 
-The policy evaluator expects every tool to export `get_permissions()`, but some third-party tools don’t expose that. In one case, a legacy tool was a raw SQL runner with no metadata. We had to wrap it with a shim that hard-codes the permissions, but that shim became a maintenance burden.
+### Role proliferation
 
-The lesson: if a tool can’t export its own permissions, don’t let it into the agent’s tool set. Either refactor the tool or reject it outright.
+Creating a role per use case feels precise and becomes unmaintainable. Teams that start with a dozen product-specific roles often end up with dozens within a quarter, and the policy file becomes something nobody reviews carefully. Consolidate to a small number of capability tiers (read, write, admin) and model edge cases with context flags. Fewer roles, more conditions, easier review.
 
-### 4. The sidecar memory cliff
+## When not to add a policy layer
 
-OPA’s memory usage scales with the size of the policy bundle. In our staging environment, a 2MB policy bundle caused the sidecar to use 800MB RAM. We had to cap the bundle size to 500KB and split the policy into smaller files.
+This is real complexity. It is not worth it everywhere.
 
-The fix was to use OPA’s `--bundle-ignore` flag to exclude unused policies. This brought memory usage down to 180MB, which fits comfortably in our 256MB limit.
+- **Fewer than about ten tools, all read-only.** The overhead of a policy engine outweighs the benefit. A simple allow-list in code is sufficient.
+- **No appetite for policy-as-code.** Rego is a declarative language with a different debugging model than Python. If nobody on the team will own it, the policy will rot and become a false sense of security.
+- **Very tight latency budgets.** The sidecar adds a small constant per call. If the system's median tool call is already near its budget, measure before adding anything.
+- **Memory-constrained runtimes.** A sidecar needs its own memory allocation. If the platform caps sidecar memory below what the policy engine needs, use the in-process WASM target or skip the layer.
 
-### 5. The agent role proliferation problem
+The threshold where the tradeoff flips is roughly when agents start performing write operations or touching sensitive data. At that point, an unenforced capability is a liability regardless of latency.
 
-Initially, we created a role for every use case: `billing_agent`, `support_agent`, `marketing_agent`. Within three months, we had 17 roles and the policy file became unmaintainable. We consolidated roles into three categories (read, write, admin) and used context flags to model edge cases. This cut the policy file from 420 lines to 90.
+## FAQ
 
-## Tools and libraries worth your time
+**How do I write policies for tools that don't expose metadata?**
+Wrap the tool in an adapter that implements the metadata interface and delegates to the original implementation. Then treat the adapter as the tool. Never register a tool the policy engine cannot describe, because the engine cannot enforce what it cannot see.
 
-| Tool/Library | Version | Why it matters |
-|---|---|---|
-| OPA (Open Policy Agent) | 0.60.0 | Reference implementation for policy evaluation. The Rego language is declarative and auditable, which matters for compliance. |
-| FastAPI | 0.109.0 | Dependency injection and async support make it easy to layer in policy checks without rewriting routes. |
-| pytest-opa | 1.2.0 | A pytest plugin that spins up an OPA mock for unit tests. Cuts test time by 40%. |
-| opa-rs | nightly-2026-03-15 | A Rust rewrite of OPA that reduces memory usage by 35% and latency by 40% in benchmarks. We’re running it in staging. |
-| OpenTelemetry + OPA | 1.22.0 | Adds policy evaluation spans to your traces, so you can see exactly where the 403s are happening. |
-| AWS IAM Policy Simulator | 2026-03-01 | Not OPA-specific, but useful for validating your policies against real AWS scenarios before deploying. |
+**Can I use cloud IAM instead of a dedicated policy engine?**
+Cloud IAM is coarse-grained and has no concept of conversation context or per-session budgets. It works for infrastructure-level roles. For per-call agent decisions that depend on runtime state, a policy engine that accepts arbitrary input is the better fit. Many systems use both: IAM for infrastructure, a policy engine for agent logic.
 
-If you’re on Node.js, the equivalent stack is OPA with `@open-policy-agent/opa-wasm` (v0.8.0) and Fastify (v4 LTS). The latency characteristics are similar, but Node’s event loop can introduce jitter if you don’t batch OPA calls.
+**What latency budget should the policy layer have?**
+Target single-digit milliseconds at p95. If the policy check is a meaningful fraction of the tool call's total time, either precompile the policy or move evaluation in-process. Measure with a histogram, not an average — averages hide the tail that causes retries.
 
-## When this approach is the wrong choice
+**How do I test policy changes without deploying?**
+Run the policy engine in-process during unit tests, load the policy file, and assert allow/deny outcomes for a table of inputs. Include cases for unknown roles, missing context fields, and boundary values on numeric conditions like budget. Boundary tests catch the off-by-one errors that produce either over-permission or spurious denies.
 
-This policy layer adds complexity and latency, so it’s not suitable for every system. Skip it if:
+## Do this in the next 30 minutes
 
-- Your agent only calls **fewer than 10 tools** and the tools are all read-only. The overhead of policy evaluation outweighs the benefit.
-- Your team **lacks policy-as-code expertise**. Writing and debugging Rego policies requires a different mindset than writing Python handlers. If your team is allergic to declarative languages, this will slow you down.
-- Your **latency budget is <50 ms per tool call**. The sidecar adds ~1 ms, but if your system is already at 40 ms median latency, that’s a 2.5% increase. In a high-frequency trading context, that could matter.
-- You’re running on **serverless with 128MB RAM**. The OPA sidecar needs at least 128MB to run comfortably, and some serverless platforms cap sidecar memory lower than that.
+List every tool currently registered to your agents and check which ones declare their resource type, actions, and whether they touch sensitive data:
 
-In those cases, consider a lighter-weight approach like capability-based permissions (e.g., `agent.can("read")`) or simple allow-lists in code. But once you cross 15 tools or start handling write operations, the complexity curve steepens fast.
-
-## My honest take after using this in production
-
-The biggest surprise was **how often the policy layer caught bugs before they reached production**. We had two incidents where engineers accidentally exposed a tool with a broad scope, and the policy layer blocked it before any real damage occurred. That level of safety is worth the 1 ms latency.
-
-The second surprise was **how much easier audits became**. SOC2 Type 2 audits used to take two weeks of manual log parsing. Now, the policy engine emits structured events, and we can generate an audit trail in minutes. The auditor’s favorite question—"Show me every denied call in the last 90 days"—is now a one-liner SQL query.
-
-The biggest regret is **not instrumenting the policy layer from day one**. We had to retrofit metrics and tracing, which took three engineer-weeks. If we’d built this into the MVP, we would have saved that time.
-
-On the whole, the system is **more predictable than the old permissive model**. The agent’s behavior is now bounded by policy, not by the whims of the engineer who last touched the tool manifest. That predictability shows up in lower p99 latency, fewer timeouts, and cleaner compliance reports.
-
-## What to do next
-
-Open your agent’s tool registry file and run this grep:
 ```bash
-# Check for tools that don’t export get_permissions()
-grep -L "def get_permissions" tools/**/*.py
+grep -L "get_permissions" tools/**/*.py
 ```
-If any tool is missing the function, block that tool from being called by the agent until it exports its permissions. That single check will prevent the most common production failure mode we saw.
 
-
-## Frequently Asked Questions
-
-**How do I write policies for tools that don’t expose metadata?**
-Wrap the tool with a thin adapter that hard-codes its permissions. The adapter should implement `get_permissions()` and delegate to the original tool. Never let a tool into production without explicit metadata; the policy layer can’t protect you if it doesn’t know what the tool does.
-
-
-**Can I use AWS IAM directly instead of OPA?**
-Yes, but you’ll lose the context-aware policies. AWS IAM is coarse-grained and doesn’t understand conversation context or budget constraints. It’s fine for static roles, but not for dynamic agent policies. If you need both, use IAM for infrastructure and OPA for agent logic.
-
-
-**What’s the latency budget for the policy layer in a high-frequency system?**
-Aim for <5 ms at p95. If your system’s median tool call latency is 20 ms, the policy layer can add up to 25% overhead before it becomes noticeable. Above 10 ms, you’ll start seeing retries and timeouts. Test with OPA in-process (using `opa eval`) before committing to a sidecar.
-
-
-**How do I unit test policy changes without deploying to staging?**
-Use pytest-opa to spin up an in-process OPA mock. Each test case can load a policy file and assert on the allow/deny outcome. We run these tests in CI and fail the build if any policy change reduces test coverage below 95%.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** August 2026
+Any tool that appears in the output is currently callable with no policy metadata, which means no policy engine can gate it. Either add a `get_permissions()` function to it, wrap it in an adapter, or remove it from the registry. Doing this first gives you the inventory you need before writing a single line of policy.

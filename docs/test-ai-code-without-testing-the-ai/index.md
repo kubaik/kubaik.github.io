@@ -1,41 +1,32 @@
 # Test AI code without testing the AI
 
-I ran into this write tests problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+AI assistants generate code quickly, and they generate plausible-looking bugs just as quickly. The failure mode is consistent: the generated code assumes a happy path that does not exist in production. It assumes every HTTP call returns `200` with a JSON array. It assumes `user.id` is an integer. It assumes CSV rows always have values in every column. The code compiles, the example in the prompt works, and the bug ships.
 
-## Why this list exists (what I was actually trying to solve)
+The instinctive response is to test the AI. Write tests that assert the model returns a particular snippet for a particular prompt. This is a trap. Model output varies across versions, sampling parameters, context windows, and cache state. Tests written against that variability are flaky by construction, and they validate the wrong artifact. What matters is not whether the model is consistent; it is whether the code that was merged into the repository behaves correctly.
 
-I spent three weeks debugging a pull request that passed all the tests but crashed in staging because the AI had silently swapped a SQL `WHERE` clause for a Python dictionary lookup that worked on small datasets but exploded on real traffic. The tests never touched the AI layer — they only checked outputs against fixed inputs. That’s when I realized: if your tests validate the AI’s behavior, you’re maintaining the AI, not your code.
+The strategy below treats AI output like any other external dependency: verify the inputs you accept, validate the outputs you produce, and measure behavior under conditions the generator never saw. None of these techniques require access to the model, and none of them change based on who or what wrote the code.
 
-This isn’t about rejecting AI tools. It’s about stopping the madness of treating AI-generated code as something that needs unit tests. AI assistants like GitHub Copilot, Cursor, and Amazon Q are glorified autocomplete on steroids. They’re fast at writing boilerplate, but they’re also fast at writing bugs that look correct until they blow up under load. The last thing you want is to be on call at 3 a.m. because your tests passed but the AI’s code silently assumed every API would return 200 OK with a JSON array — even when it gets rate-limited.
+## The core principle: test the artifact, not the author
 
-I wanted a testing strategy that treats AI output like any other external dependency: verify inputs, validate outputs, and measure behavior under real conditions. No mocking the AI. No testing its training data. No pretending our prompts are perfect. Just tests that tell us when the system we shipped is broken — regardless of who wrote the code.
+A useful litmus test for any test you write: if the AI were removed from the process tomorrow and a human wrote the same function, would the test still make sense? If yes, the test targets your code. If no — if the test only passes because a specific prompt produced a specific string — the test targets the model, and it will break for reasons unrelated to your system's correctness.
 
-The result? A set of patterns that have cut our production incidents by 60% over the last year without ever testing the AI itself. These methods work whether the AI wrote the code or a human did. They scale from small scripts to enterprise systems. And they force us to think about what our code *should* do — not what the AI *might* do wrong.
+This distinction matters because AI-generated code has a characteristic defect profile. It tends to be locally clean and globally fragile:
 
-## How I evaluated each option
+- It handles the documented case and ignores the undocumented one.
+- It assumes well-formed input.
+- It assumes external calls succeed.
+- It optimizes for readability over performance in hot paths.
+- It silently narrows types (an ID that is sometimes a string becomes an integer).
 
-I didn’t trust any “best practice” that came with a blog post. I ran a controlled experiment across three teams: one working on a Python FastAPI backend, another on a React frontend, and a third on a data pipeline in Go. Each team tried a different approach to testing AI-assisted code for 8 weeks. We measured:
+Each of these is testable without knowing anything about the model. The techniques below are ordered roughly by how broadly they apply.
 
-- False positive rate: tests passing when the code was actually broken
-- False negative rate: tests failing when the code was fine
-- Maintenance overhead: time spent updating tests when requirements changed
-- Production incident rate after deployment
+## 1. Property-based testing
 
-We used real AI output from Copilot 1.112 (2026), Cursor 0.24, and the built-in assistant in VS Code 1.92 with the GitHub Model switcher enabled. Every prompt was logged, and we tracked which lines of code were AI-generated using the `github-copilot-code-review` extension with a custom parser that adds a `// ai: true` comment to AI-generated lines.
+Instead of asserting `output == 42`, define invariants that must hold for all valid inputs: "the sum of line items equals the order total," "a balance never goes negative," "parsing then serializing a record is idempotent." The test framework generates inputs, shrinks failures to a minimal counterexample, and reports it.
 
-The winner wasn’t the prettiest or the most “modern.” It was the one that caught real bugs without needing constant updates when the AI changed its mind. The loser? The one that tried to test the AI’s intent — a rabbit hole that led to maintaining a prompt catalog as a test suite.
+This is the highest-leverage technique for AI-assisted code because it directly attacks the "assumed happy path" defect. The generator does not know which edge cases the model overlooked, so it explores them systematically.
 
-## How I write tests for AI-assisted code without testing the AI — the full ranked list
-
-### 1. Property-based testing: the only thing that works with AI output
-
-What it does: Instead of writing `assert output == 42`, you define invariants — rules that must always be true. For example, “the sum of all order totals must equal the sum of line items” or “a user’s balance should never be negative.”
-
-Strength: Catches edge cases the AI never considered and humans miss. It doesn’t care who wrote the code — only that the function behaves correctly.
-
-Weakness: Requires thinking in invariants, not examples. Takes 2–3x longer to write the first test suite. But once written, it rarely changes.
-
-Best for: Business logic, data transformations, financial calculations, and any code that must obey strict rules.
+The cost is real: writing invariants requires more thought than writing examples. A common rule of thumb is that the first property suite for a module takes two to three times longer to author than an equivalent example-based suite. In exchange, it rarely needs updating when implementation details change, because it asserts behavior rather than structure.
 
 ```python
 from hypothesis import given, strategies as st
@@ -44,31 +35,29 @@ from myapp.finance import calculate_balance
 @given(
     st.lists(
         st.tuples(
-            st.integers(min_value=-10000, max_value=10000),  # deposit
-            st.integers(min_value=0, max_value=10000)        # withdrawal
+            st.integers(min_value=0, max_value=10000),   # deposit
+            st.integers(min_value=0, max_value=10000)    # withdrawal
         ),
         min_size=1,
         max_size=100
     )
 )
-def test_balance_never_negative(deposits_withdrawals):
-    total_deposit = sum(d for d, _ in deposits_withdrawals)
-    total_withdrawal = sum(w for _, w in deposits_withdrawals)
+def test_balance_never_negative(transactions):
+    total_deposit = sum(d for d, _ in transactions)
+    total_withdrawal = sum(w for _, w in transactions)
     balance = calculate_balance(total_deposit, total_withdrawal)
     assert balance >= 0, f"Balance went negative: {balance}"
 ```
 
-I once caught a bug where the AI used `balance = deposit - withdrawal` instead of `balance = previous_balance + deposit - withdrawal`. The property test failed immediately. The unit test I’d written earlier passed — because it only checked the first withdrawal.
+A representative failure this catches: a generated implementation computes `balance = deposit - withdrawal` for a single transaction instead of accumulating a running balance. An example-based test that exercises one deposit and one withdrawal passes. The property test fails on the second generated case, because the invariant is stated over the whole sequence rather than one instance.
 
-### 2. Contract testing: verify APIs, not AI assumptions
+Note the shape of the assertion: it says something about the relationship between inputs and output, not about a literal value. That is what makes it portable across implementations.
 
-What it does: Define the expected shape, status codes, and response times of external APIs. Then verify that your code handles the contract correctly — retries, fallbacks, timeouts. Not the API’s actual behavior.
+## 2. Contract testing
 
-Strength: Prevents silent failures when APIs change or rate-limit. You’re not testing the AI’s assumption that the API always returns 200 — you’re testing your code’s resilience.
+Contract tests pin down the shape, status codes, and error behavior of an external API, then verify that your adapter code handles each documented case — including the ones the model never saw. The point is not to test the remote service. It is to test your code's response to a 404, a 429, a malformed body, and a timeout.
 
-Weakness: Requires mocking or service virtualization. Can get messy with complex payloads. But that’s a good thing — it forces you to write clean adapters.
-
-Best for: Microservices, frontend apps calling backend APIs, any system that depends on external services.
+Generated code frequently assumes the success path only. A contract test suite that includes rate limiting and error responses will fail immediately against such code, which is the desired outcome.
 
 ```javascript
 // contracts/user-api.contract.js
@@ -88,7 +77,7 @@ describe('User API contract', () => {
     expect(result).toEqual({ error: 'Not found', status: 404 });
   });
 
-  it('retries on 429 and falls back after 3 attempts', async () => {
+  it('retries on 429 and succeeds on the third attempt', async () => {
     const scope = nock('https://api.example.com')
       .get('/users/1')
       .times(2)
@@ -103,17 +92,15 @@ describe('User API contract', () => {
 });
 ```
 
-I was surprised that 40% of our “API failed” incidents were actually our code not handling rate limits correctly. The AI had never seen a 429 before, so it generated code that assumed 200 or bust.
+The second test is the important one. It encodes two facts about your system: retries happen, and the retry budget is bounded. If a generated retry loop is unbounded, or retries on 404 as well as 429, the test fails. That is a real defect, not a style preference.
 
-### 3. Fuzz testing: throw garbage at your code
+Contract tests require mocking or service virtualization, which some teams treat as overhead. The overhead is the point: it forces the network boundary into a small, explicit adapter rather than letting HTTP calls scatter through the codebase.
 
-What it does: Generate random, invalid, or malicious inputs and feed them to your functions. Check for crashes, panics, or security issues. Works great on AI-generated parsers and validators.
+## 3. Fuzz testing
 
-Strength: Exposes edge cases no human would think to test. AI code often assumes clean input — fuzzing breaks that assumption fast.
+Fuzzing feeds random, malformed, or adversarial input to a function and asserts only that it does not crash, hang, or violate a basic safety property. For generated parsers and validators, this is often the fastest route to a real bug.
 
-Weakness: Can be slow. Generating good fuzzers takes skill. But you don’t need a full fuzzing harness — even a simple loop with `random.randint` or `Math.random()` helps.
-
-Best for: Parsers, validators, authentication logic, any code that processes untrusted input.
+A full coverage-guided fuzzing harness is not always necessary. A bounded random loop catches a surprising amount:
 
 ```python
 import random
@@ -121,58 +108,55 @@ from myapp.parser import parse_csv_row
 
 def test_fuzz_csv_parsing():
     for _ in range(1000):
-        row = ','.join(str(random.randint(-1000, 1000)) for _ in range(random.randint(1, 10)))
+        fields = [str(random.randint(-1000, 1000))
+                  for _ in range(random.randint(1, 10))]
+        row = ','.join(fields)
         try:
             result = parse_csv_row(row)
             assert isinstance(result, list)
             assert all(isinstance(x, int) for x in result)
+        except ValueError:
+            pass  # rejected input is acceptable; crashing is not
         except Exception as e:
-            assert False, f"CSV parsing failed on: {row}
-Error: {e}"
+            raise AssertionError(f"Unexpected failure on {row!r}: {e}")
 ```
 
-We found a security flaw where the AI generated a CSV parser that crashed on empty columns. Fuzzing caught it in 5 minutes. The AI had never seen an empty field in its training data, so it assumed all rows had values.
+Two details make this useful rather than noisy. First, the loop allows a `ValueError` — a validator is permitted to reject input, but it is not permitted to raise an unexpected exception type. Second, the assertion message includes the offending input, so a failure is reproducible without a shrinking pass.
 
-### 4. Integration snapshots: freeze real API responses
+The classic defect this surfaces in generated code is an empty field. A parser written against examples where every column has a value will often index into an empty string or call `int("")` and raise `ValueError` where the caller expects a domain error. Fuzzing finds this in seconds.
 
-What it does: Instead of mocking APIs, record real responses once. Then replay them in tests. When the API changes, you update the snapshot — not the test logic.
+## 4. Integration snapshots
 
-Strength: Tests your code against real behavior, not idealized assumptions. AI code often assumes perfect data — snapshots expose when APIs return messy or inconsistent payloads.
+Snapshot testing records a real response once and replays it in subsequent runs. When the upstream API changes, the snapshot diff makes the change visible instead of silently breaking production.
 
-Weakness: Snapshots go stale. If the API changes, your tests fail — but that’s better than passing tests masking broken code.
-
-Best for: Frontends, mobile apps, any system that depends on real-world API responses.
+The value here is that snapshots capture real-world messiness — nullable fields, string-encoded numbers, inconsistent casing — that hand-written mocks tend to smooth over. A mock written by the same person who prompted the model is likely to share the model's assumptions. A recorded response does not.
 
 ```bash
-# Record snapshots once
-curl -X POST https://api.example.com/v1/users -H 'Content-Type: application/json' -d '{"name":"Alice"}' > tests/snapshots/users.post.json
-
-# Then assert against the snapshot in tests
-from snapshottest import assert_match_file
-
-def test_create_user_snapshot():
-    response = client.post('/users', json={'name': 'Alice'})
-    assert_match_file('tests/snapshots/users.post.json', response.json)
+# Record a real response once
+curl -s -X POST https://api.example.com/v1/users \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"Alice"}' > tests/snapshots/users.post.json
 ```
 
-We saved 15 hours a month by switching from handwritten mocks to snapshots. The AI kept generating code that assumed `user.id` would always be an integer — but the API returned a string. The snapshot caught it immediately.
+```python
+from snapshottest import assert_match_file
 
-### 5. E2E chaos: break your environment, not your tests
+def test_create_user_snapshot(client):
+    response = client.post('/users', json={'name': 'Alice'})
+    assert_match_file('tests/snapshots/users.post.json', response.json())
+```
 
-What it does: Run tests in a staging environment where you deliberately inject failures — latency, timeouts, 5xx errors, database disconnections. Measure how your code handles it.
+The failure mode to watch for is snapshot drift: a stale snapshot fails, someone regenerates it without reading the diff, and a real regression is laundered into the baseline. The mitigation is procedural — treat snapshot regeneration as a reviewed change, not a one-line command run reflexively.
 
-Strength: Exposes brittle error handling. AI code often assumes everything works — chaos testing forces it to handle real conditions.
+## 5. Chaos testing in a staging environment
 
-Weakness: Requires staging with real infrastructure. Not feasible for small projects. But if you’re shipping AI code to production, you need this.
-
-Best for: Backend services, databases, message queues, any system with external dependencies.
+Chaos testing injects latency, timeouts, 5xx responses, and dependency failures into a staging environment and observes whether the system degrades gracefully. It targets the assumption that everything works, which is the single most common assumption in generated error handling.
 
 ```yaml
-# chaos-experiment.yaml
 apiVersion: chaos-mesh.org/v1alpha1
 kind: PodChaos
 metadata:
-  name: pod-failure
+  name: payment-service-pod-failure
 spec:
   action: pod-failure
   mode: one
@@ -184,41 +168,42 @@ spec:
       app: payment-service
 ```
 
-After enabling chaos testing, we cut our production incidents by 40%. The AI had never seen a database connection drop — but our code did, because we tested it.
+This requires real infrastructure and is not appropriate for every project. The decision rule is straightforward: if the code path can page someone at 3 a.m., it deserves a chaos experiment in staging. If it is a CLI tool that runs on a laptop, it does not.
 
-### 6. Type-driven testing: rely on your type system
+## 6. Type-driven testing
 
-What it does: Use a strong type system (TypeScript, Rust, Go with interfaces) to encode invariants. Then write tests that verify the types are correct. No runtime assertions needed.
+A strict type system moves a class of defects from runtime to compile time. In TypeScript, enabling `strict` and avoiding `any` forces the generator to handle nullability and discriminated unions explicitly. In Rust, the type system enforces error handling through `Result`. In Go, interfaces and explicit error returns serve a similar role.
 
-Strength: Catches bugs at compile time. AI code often ignores edge cases — types force you to handle them.
-
-Weakness: Requires migrating to a typed language or adding types to dynamic code. Not always possible.
-
-Best for: New codebases, greenfield projects, teams already using TypeScript or Rust.
+The limitation is that types verify shape, not values. A `number` type does not tell you the number is positive, and a `string` type does not tell you it is a valid email. Types are a complement to property tests, not a replacement.
 
 ```typescript
 // types/order.ts
+export type OrderItem = {
+  productId: string;
+  quantity: number;
+  price: number;
+};
+
 export type Order = {
   id: string;
   total: number;
-  items: Array<{
-    productId: string;
-    quantity: number;
-    price: number;
-  }>;
+  items: OrderItem[];
   createdAt: Date;
 };
+```
 
+```typescript
 // tests/order.test.ts
 import { validateOrder } from '../src/validators/order';
+import type { Order } from '../types/order';
 
-test('total must equal sum of items', () => {
+test('rejects an order whose total does not match its line items', () => {
   const order: Order = {
     id: '123',
     total: 100,
     items: [
       { productId: 'p1', quantity: 2, price: 50 },
-      { productId: 'p2', quantity: 1, price: 0 }, // free item — AI missed this
+      { productId: 'p2', quantity: 1, price: 1 },
     ],
     createdAt: new Date(),
   };
@@ -226,54 +211,40 @@ test('total must equal sum of items', () => {
 });
 ```
 
-We reduced our test suite size by 30% by moving validation logic into types. The AI kept generating code that assumed `total === sum(items.map(i => i.price * i.quantity))` — but it never validated that `price` was positive. The type system caught it.
+The type system guarantees the fields exist and have the right primitive types. The test guarantees the cross-field invariant holds. Neither subsumes the other.
 
-### 7. Golden master testing: compare outputs across runs
+## 7. Golden master testing
 
-What it does: Run your program with known inputs, capture the output, and store it as a “golden master.” Then, on every test run, compare the current output to the golden master. If they differ, the test fails.
-
-Strength: Catches regressions without needing to know the expected output. Works even when the AI changes the implementation but the behavior stays the same.
-
-Weakness: Golden masters go stale. If requirements change, you must regenerate the master — which can hide real bugs.
-
-Best for: Data processing pipelines, report generators, any code that transforms data in predictable ways.
+Golden master testing captures the output of a program for a fixed input and compares future runs against it. It is well suited to data transformations, report generators, and any code with deterministic output where the expected result is tedious to express as assertions.
 
 ```python
-# tests/test_golden_master.py
-import os
 import json
 import subprocess
 from deepdiff import DeepDiff
 
-def test_golden_master():
-    # Run the program
+def test_report_matches_golden_master():
     result = subprocess.run(
         ['python', 'src/report.py', '--input', 'data/input.json'],
         capture_output=True,
-        text=True
+        text=True,
+        check=True,
     )
     output = json.loads(result.stdout)
 
-    # Load the golden master
     with open('tests/golden/master.json') as f:
         golden = json.load(f)
 
-    # Compare
     diff = DeepDiff(output, golden, ignore_order=True)
     assert not diff, f"Output differs from golden master:\n{diff}"
 ```
 
-We used golden master testing to catch a bug where the AI generated a report that sorted names case-sensitively — so “Alice” came after “bob.” The golden master failed, and we fixed it without needing to write a complex assertion.
+The classic defect this catches is a sort order that depends on locale or case sensitivity — a report where `"Alice"` sorts after `"bob"` because the comparison is byte-wise. That is not visible in a small example and is obvious in a golden diff.
 
-### 8. Performance regression testing: measure, don’t guess
+The weakness is the same as snapshots: a golden master encodes current behavior, including current bugs. Regenerating it without inspecting the diff erases the signal.
 
-What it does: Track latency, memory usage, and throughput across test runs. Flag any regression — even if the functionality is correct.
+## 8. Performance regression testing
 
-Strength: AI code often optimizes for readability, not performance. This catches silent performance cliffs.
-
-Weakness: Requires baseline metrics. Can be noisy in CI.
-
-Best for: APIs, data processing, any code that handles load.
+Generated code frequently favors readability over efficiency in hot paths — an append inside a loop where a comprehension would do, or a repeated linear scan where a set lookup belongs. Functional tests will not catch this. A benchmark comparison will.
 
 ```yaml
 # .github/workflows/perf.yml
@@ -286,29 +257,35 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
       - run: pip install pytest pytest-benchmark
       - run: pytest tests/perf/ --benchmark-only --benchmark-save=baseline
       - run: pytest tests/perf/ --benchmark-compare=baseline
 ```
 
-We caught a 3x latency spike in an AI-generated CSV parser. The AI had used `list.append()` in a loop instead of a list comprehension. Performance regression testing flagged it in 2 minutes.
+Shared CI runners are noisy, so absolute thresholds produce flaky failures. Compare against a stored baseline on the same runner class, and set the regression threshold wide enough to absorb variance — a factor of two, not ten percent. The goal is to catch cliffs, not jitter.
 
-### 9. Behavioral testing: test the user journey, not the code
+### How to establish a baseline without inventing one
 
-What it does: Write tests that simulate real user actions — form submissions, API calls, UI interactions — and verify the end result. Not the intermediate steps.
+Rather than trusting any published number, measure your own. A minimal procedure:
 
-Strength: Catches bugs that only appear in real usage. AI code often assumes perfect user input — behavioral tests expose that.
+1. Pick one hot function — a parser, a serializer, a request handler.
+2. Write a benchmark that runs it on a fixed, representative input.
+3. Run it on your CI runner class at least ten times and record the median and the spread.
+4. Set the regression threshold at several times the observed spread.
+5. Commit the baseline alongside the benchmark.
 
-Weakness: Requires a running environment. Slower than unit tests.
+The threshold is now derived from your hardware and your workload rather than borrowed from someone else's environment.
 
-Best for: Frontends, mobile apps, APIs with complex workflows.
+## 9. Behavioral (end-to-end) testing
+
+Behavioral tests drive the system the way a user does and assert on the observable outcome. They are slow, they need a running environment, and they catch the class of bug that only appears when real input meets real state.
 
 ```javascript
 // tests/behavioral/checkout.test.js
 import { test, expect } from '@playwright/test';
 
-test('checkout flow with out-of-stock item', async ({ page }) => {
+test('checkout rejects a quantity larger than available stock', async ({ page }) => {
   await page.goto('/products');
   await page.click('text=Add to cart');
   await page.click('text=Checkout');
@@ -318,202 +295,74 @@ test('checkout flow with out-of-stock item', async ({ page }) => {
 });
 ```
 
-We reduced our frontend bug reports by 50% by switching from unit tests to behavioral tests. The AI had never seen a user try to buy 100 items at once — but our behavioral tests caught it.
+The generated code that this catches typically validates the quantity is a positive integer and stops there. It never checks the quantity against inventory, because the example in the prompt used a quantity of one.
 
+## Choosing a method
 
-## The top pick and why it won
+| Situation | Primary method | Secondary method | Effort |
+|---|---|---|---|
+| Business logic, financial calculations | Property-based | Type-driven | Medium |
+| Code that calls external APIs | Contract | Integration snapshots | Medium–High |
+| Parsers and validators for untrusted input | Fuzz | Property-based | Low–Medium |
+| Data pipelines and report generators | Golden master | Property-based | Low |
+| Performance-sensitive hot paths | Benchmark regression | Property-based | Medium |
+| User-facing workflows | Behavioral | Contract | High |
+| Services that page someone on failure | Chaos | Contract | High |
 
-Property-based testing won. Not because it’s the most modern or the most “AI-friendly,” but because it’s the only method that consistently catches real bugs without needing constant updates when the AI changes its mind.
+Start with the row that matches the code you are most afraid of. Do not adopt every row at once. A single well-chosen property suite on the payment path is worth more than five shallow suites spread across the codebase.
 
-Over 8 weeks, property-based tests had the lowest false positive rate (2%) and false negative rate (1%) across all teams. They caught bugs the AI introduced that no one else would have thought to test. And they required almost no maintenance — once written, they rarely changed.
+## Patterns that do not work
 
-The runner-up was contract testing, with a 5% false positive rate. But it required more setup and only worked for API-bound code. Property-based testing worked everywhere.
+**Mocking the model layer.** Writing tests that stub a code-generation call and assert on its output couples the suite to model behavior. Output varies with version, sampling parameters, and context. The suite becomes flaky, and its failures carry no information about your system.
 
-We also measured maintenance overhead: property-based tests took 3 hours to write for a new feature, but only 15 minutes to update when requirements changed. Unit tests written for AI code took 2 hours to write and 2 hours to update — because the AI kept changing its mind about parameter names.
+**Asserting on prompt-to-output pairs.** A test that asserts a given prompt yields a given snippet is testing the model, not the code. It will break on a model upgrade for reasons unrelated to correctness, and it will pass when the model produces the right string for the wrong reason.
 
-Most importantly, property-based tests forced us to think about what our code *should* do — not what the AI *might* do wrong. That’s the real win.
+**Generic static analysis as a substitute.** Linters and code-quality scanners catch surface-level smells — long functions, too many parameters. Generated code often passes these cleanly while containing a logic error. Static analysis is a useful gate; it is not a correctness check.
 
+**Style rules aimed at "AI artifacts."** Rules that ban specific imports or comment lengths do not catch defects, because generated code is usually stylistically indistinguishable from human code. The signal is not in the formatting.
 
-## Honorable mentions worth knowing about
+## A worked decision example
 
-### Pact for contract testing (v4.4.0)
+Suppose a service has a function that parses a currency string from a payment provider's webhook and returns an integer number of cents. The function was generated by an assistant from a prompt that included two examples: `"10.00"` and `"0.99"`.
 
-What it does: A tool for contract testing between services. Instead of mocking APIs, you define a pact — a shared contract — and verify both producer and consumer.
+The invariant is: for any valid decimal string with at most two fractional digits, the parsed integer equals the value in cents, and parsing is exact — no floating-point rounding.
 
-Strength: Prevents drift between services. Works well in microservices.
+That statement suggests three tests, none of which mention the model:
 
-Weakness: Requires both services to run. Can be heavy for small teams.
+1. A property test generating random amounts with two decimal places and asserting `parse(format(n)) == n` for a range of `n`.
+2. A fuzz test feeding malformed strings — empty, `"1.234"`, `"abc"`, `"-1.00"`, strings with thousands separators — and asserting a domain error rather than an unexpected exception.
+3. A golden master over a fixture file of real webhook payloads, asserting the parsed output matches the recorded expectation.
 
-Best for: Teams using microservices with frequent deployments.
+The likely generated defect is a float round-trip: `int(float(s) * 100)`, which returns `999` for `"9.99"` on some inputs due to binary representation. Test one catches it immediately, because the property is stated in terms of exact equality, not approximate equality. No knowledge of the model is required to write or interpret the failure.
+
+## FAQ
+
+**How can I tell whether a test is testing the model or my code?**
+
+Remove the model from the scenario. If the test still expresses a meaningful requirement about your system's behavior, it targets your code. If it only makes sense in terms of a specific generation event, it targets the model.
+
+**Should AI-generated code be tested differently from human-written code?**
+
+No. The techniques are the same. The emphasis shifts, because generated code more often assumes well-formed input and successful dependencies, so property and fuzz tests tend to pay off sooner. But the standard is identical.
+
+**What if generated code changes on every commit?**
+
+Use property-based or golden master tests. Both assert on behavior rather than implementation, so a rewrite that preserves behavior passes. A rewrite that changes behavior fails, which is the correct outcome.
+
+**Should the model run inside CI?**
+
+Test the code the model produced, not the model. If the model is used at build time to generate code, the generated code is reviewed and committed like any other change, and CI tests that artifact. Running the model in CI makes the build nondeterministic for no correctness benefit.
+
+**How many property tests are enough?**
+
+Start with the invariants that, if violated, would cause data loss or incorrect money movement. Typically three to five properties cover the core of a module. Add more when a specific bug class escapes.
+
+## Start here
+
+Pick one function in your codebase that handles money, identity, or user-supplied input — the kind of code where a silent wrong answer is expensive. Open it, and write down two invariants it must satisfy for *all* inputs, not just the examples in your head. Then add `hypothesis` to that project's test dependencies and write the first property test against the first invariant.
 
 ```bash
-# Install Pact CLI
-brew install pact-ruby
-
-# Generate pact
-pact-provider-verifier --provider-base-url=http://localhost:8080 --pact-url=./pacts/consumer-service.json
+pip install hypothesis
 ```
 
-I tried Pact early on. It caught a bug where our frontend assumed the API would return `user.email` as a string, but the backend returned `null`. The AI had never seen a nullable field before, so it generated code that assumed `email` was always a string.
-
-### Hypothesis for property-based testing (v6.92.2)
-
-What it does: A Python library for property-based testing. Generates inputs automatically.
-
-Strength: Easy to use, integrates with pytest.
-
-Weakness: Only works in Python.
-
-Best for: Python backends and data pipelines.
-
-```python
-from hypothesis import given, strategies as st
-from myapp.validators import is_valid_email
-
-@given(st.text())
-def test_email_validation_never_crashes(email):
-    try:
-        is_valid_email(email)
-    except Exception as e:
-        assert False, f"Email validation crashed on: {email}\nError: {e}"
-```
-
-I was surprised that 30% of AI-generated email validators crashed on empty strings or Unicode. Hypothesis caught them all.
-
-### FastAPI + pytest (Python 3.11, FastAPI 0.109, pytest 7.4)
-
-What it does: FastAPI’s test client and pytest make it easy to write integration tests that verify API behavior.
-
-Strength: Fast, easy, works with pytest fixtures.
-
-Weakness: Only works for APIs.
-
-Best for: REST APIs, GraphQL servers.
-
-```python
-from fastapi.testclient import TestClient
-from myapp.main import app
-
-client = TestClient(app)
-
-def test_create_user():
-    response = client.post('/users', json={'name': 'Alice'})
-    assert response.status_code == 201
-    assert response.json()['name'] == 'Alice'
-```
-
-We reduced our API test suite from 500 lines to 200 by using FastAPI’s test client and pytest fixtures. The AI had generated a lot of redundant assertions — the test client let us focus on behavior.
-
-
-## The ones I tried and dropped (and why)
-
-### Unit testing AI-generated code directly
-
-I tried writing unit tests that mocked the AI layer — for example, testing that a function called `copilot.generate_code()` with a specific prompt. This was a disaster.
-
-False positive rate: 85%. The AI would return different code for the same prompt depending on its mood, cache state, or model version. Tests passed when the AI was “lucky,” failed when it wasn’t. Maintenance overhead: 4 hours per test when the AI changed its output format.
-
-Result: We deleted all these tests within 2 weeks.
-
-### Testing prompt accuracy
-
-I tried writing tests that verified the AI’s output matched a golden prompt. For example, “when given `sum(1, 2)`, the AI should return `3`.”
-
-This assumed the AI understood the prompt perfectly — which it often didn’t. The AI would return `result = 3` but with a comment that said “this is wrong.” The test passed because the output was `3`, but the AI’s intent was wrong.
-
-Result: We burned 3 weeks on this before realizing it was a fool’s errand.
-
-### Static analysis with SonarQube (v10.2)
-
-I tried using SonarQube to catch AI-generated anti-patterns — for example, functions longer than 50 lines or too many parameters.
-
-Strength: Catches obvious code smells.
-
-Weakness: AI code often looks clean but is structurally fragile. SonarQube doesn’t catch logic errors.
-
-Result: We caught 5 code smells but missed 12 real bugs. Maintenance overhead: 2 hours per PR to silence false positives.
-
-### AI-specific linting rules
-
-I tried adding linting rules like “no `import copilot`” or “no inline comments longer than 50 characters.”
-
-Strength: Prevents obvious AI artifacts.
-
-Weakness: AI code often looks like human code. These rules caught nothing useful.
-
-Result: We deleted the rules within a week.
-
-
-## How to choose based on your situation
-
-| Situation | Best method | Why | Effort | Tools to use |
-|-----------|-------------|-----|--------|--------------|
-| You’re writing business logic in Python/Go/Rust | Property-based testing | Catches edge cases without testing AI | Medium | Hypothesis, quickcheck, go-fuzz |
-| You depend on external APIs | Contract testing | Verifies API contracts, not AI assumptions | High | Pact, WireMock, VCR |
-| You process untrusted input | Fuzz testing | Breaks fragile parsers | Low-Medium | AFL++, libFuzzer, custom fuzzers |
-| You need to verify real API responses | Integration snapshots | Freezes real behavior | Low | Jest snapshots, VCR, mockoon |
-| You run in production under load | E2E chaos | Tests resilience | Very High | Chaos Mesh, Gremlin, Toxiproxy |
-| You use TypeScript/Rust/Go | Type-driven testing | Catches bugs at compile time | Medium | TypeScript strict, Rust clippy, Go vet |
-| You transform data | Golden master testing | Compares outputs across runs | Low | ApprovalTests, custom scripts |
-| You care about performance | Performance regression | Measures latency/memory | Medium | pytest-benchmark, k6, JMH |
-| You build user-facing apps | Behavioral testing | Tests real user journeys | High | Playwright, Cypress, Selenium |
-
-Don’t over-engineer. If you’re a solo dev shipping a CLI tool, start with property-based testing and behavioral tests. If you’re a team shipping a SaaS product, add contract testing and chaos testing.
-
-The key is to focus on *your* code’s behavior — not the AI’s. The AI is a tool, not a teammate. Treat it like a junior dev who sometimes writes clever code and sometimes writes garbage. Test the result, not the author.
-
-
-## Frequently asked questions
-
-**How do I know if my test is testing the AI and not my code?**
-
-Look for prompts, model calls, or AI-specific assertions in your tests. If your test says `assert ai_output == "expected"`, you’re testing the AI. If it says `assert result.total == sum(item.price * item.quantity)`, you’re testing your code. The litmus test: can you remove the AI and the test still makes sense? If yes, you’re testing your code. If no, you’re testing the AI.
-
-**Should I test AI-generated code differently from human-generated code?**
-
-No. Treat AI output like any other external dependency. If the AI writes a function, test it the same way you’d test a function written by a human. The only difference is that AI code may need more property-based or fuzzing tests because it tends to make brittle assumptions.
-
-**How do I handle AI code that changes with every commit?**
-
-Use golden master or property-based tests. Golden masters compare outputs across runs, so if the AI changes the implementation but not the behavior, the test still passes. Property-based tests don’t care about the implementation — only the invariants.
-
-**What if the AI is part of my CI pipeline?**
-
-Don’t test the AI in CI. Test the code it generates. If you’re using AI to write tests, run the tests — not the AI. The goal is to verify that the code you ship is correct, not that the AI is consistent.
-
-
-## Final recommendation
-
-Adopt property-based testing as your default strategy. Start with one module — for example, your payment processor or user validator. Write 3–5 property tests that define the invariants your code must uphold. Then run them in CI.
-
-If you’re working on an API-heavy system, add contract testing with Pact. If you’re parsing user input, add fuzzing. If you’re shipping to production, add chaos testing.
-
-Stop writing tests that validate the AI’s output. Start writing tests that validate your system’s behavior.
-
-Now: open your terminal and run this command to add property-based testing to your project today:
-
-```bash
-hypothesis quickstart
-```
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 01, 2026
+That single test, written in the next thirty minutes, will tell you more about the real quality of your generated code than a week of asserting on model output.

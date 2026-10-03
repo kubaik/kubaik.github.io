@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>APIs must die in 2026 - Kubai Kevin</title>
-        <meta name="description" content="Cut API failure rates 85% by ditching REST in 2026 — idempotency keys, HTTP/3, and callback queues that survive 250 ms latency and 15% packet loss.">
+        <meta name="description" content="Why stateless REST breaks under high latency, packet loss and callback mandates, and how to design durable-by-default APIs with idempotency keys and queues.">
         <meta name="keywords" content="ApiDesign2026, FintechRegulationsAfrica, IdempotencyKeys, Http3Africa, DurableApiDesign, CbnApiRules, GhanaInteroperability, NetworkReliabilityAfrica, Apis">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T06:47:12.021665">
-        <meta property="article:modified_time" content="2026-09-21T12:04:29.671396">
+        <meta property="article:modified_time" content="2026-10-03T12:42:44.325576+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="APIs must die in 2026">
-        <meta property="og:description" content="Cut API failure rates 85% by ditching REST in 2026 — idempotency keys, HTTP/3, and callback queues that survive 250 ms latency and 15% packet loss.">
+        <meta property="og:description" content="Why stateless REST breaks under high latency, packet loss and callback mandates, and how to design durable-by-default APIs with idempotency keys and queues.">
         <meta property="og:url" content="https://kubaik.github.io/apis-must-die-in-2026/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="APIs must die in 2026">
-        <meta name="twitter:description" content="Cut API failure rates 85% by ditching REST in 2026 — idempotency keys, HTTP/3, and callback queues that survive 250 ms latency and 15% packet loss.">
+        <meta name="twitter:description" content="Why stateless REST breaks under high latency, packet loss and callback mandates, and how to design durable-by-default APIs with idempotency keys and queues.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/apis-must-die-in-2026.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/apis-must-die-in-2026/#article",
       "headline": "APIs must die in 2026",
-      "description": "Cut API failure rates 85% by ditching REST in 2026 — idempotency keys, HTTP/3, and callback queues that survive 250 ms latency and 15% packet loss.",
+      "description": "Why stateless REST breaks under high latency, packet loss and callback mandates, and how to design durable-by-default APIs with idempotency keys and queues.",
       "datePublished": "2026-06-12T06:47:12+00:00",
-      "dateModified": "2026-09-21T12:04:29+00:00",
-      "wordCount": 2961,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-10-03T12:42:44+00:00",
+      "wordCount": 2422,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">APIs must die in 2026</h1>
                 
-                <p class="post-lead">Cut API failure rates 85% by ditching REST in 2026 — idempotency keys, HTTP/3, and callback queues that survive 250 ms latency and 15% packet loss.</p>
+                <p class="post-lead">Why stateless REST breaks under high latency, packet loss and callback mandates, and how to design durable-by-default APIs with idempotency keys and queues.</p>
                 
                 
                 <div class="tags">
@@ -259,212 +259,151 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2961 words
+                        12 min read
+                        &nbsp;·&nbsp; 2422 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-21
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
-<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>For years we’ve been told APIs should be stateless, idempotent, and versioned with clear contracts. REST over HTTP, OpenAPI specs, and JSON over TCP—this stack shipped products used by millions in Lagos, Nairobi, and Accra. It worked, until it didn’t.</p>
-<p>In 2026, African fintech regulations turned this stack into a liability. The Central Bank of Nigeria’s 2026 “API Interoperability Rule” and Ghana’s 2026 “Digital Payments Interoperability Framework” don’t just add requirements—they force us to abandon core assumptions we’ve treated as gospel.</p>
-<p>The standard advice says: use stateless HTTP, cache aggressively, and version APIs with headers. That advice was written for Chrome on fibre. It assumes a steady 50 Mbps connection, zero latency spikes, and a user base that can afford to retry failed requests. None of these assumptions hold in most of Africa. A connection pool issue that consumes three days of debugging is usually a single misconfigured timeout.</p>
-<p>Regulators didn’t set out to break API design—they wanted to stop fraud and enable real-time payments. But their rules codify a reality we’ve ignored: intermittent connectivity, high latency, and low-end devices are not edge cases—they’re the default. The CBN rule mandates end-to-end encryption for every API call, which breaks HTTP/2 server push and forces roundtrips. Ghana’s framework requires asynchronous callbacks for failed transactions, which breaks the REST idempotency model. These aren’t new features; they’re new constraints that invalidate the assumptions we baked into every integration.</p>
-<p>The mental model we’ve used since 2015—“build an API, version it, document it”—is now a liability. The fact that most of us still ship APIs expecting clients to retry on 5xx shows how deeply we internalized the “good enough for Chrome on fibre” bar.</p>
-<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
-<p>A team in Nairobi followed the standard REST playbook for an M-Pesa integration in early 2026. They used FastAPI 0.109 with Pydantic 2.6, Redis 7.2 for rate limiting, and OpenAPI 3.1 specs. They hit production in March 2026, just as Ghana’s interoperability rules went live.</p>
-<p>The first surprise: 12% of callback URLs failed during peak load because their load balancer kept resetting TLS sessions. The logs showed 200 OK responses with empty bodies—our client retried on 5xx only, so the requests hung until timeouts. The team added retry logic on 200 OK with empty bodies, but that broke idempotency: duplicate callbacks triggered duplicate payouts. Two weeks of rollbacks and manual refunds before they pinned the root cause to a misconfigured keep-alive timeout on the load balancer.</p>
-<p>The second surprise: the Ghana Interbank Payment System (GHIPSS) requires asynchronous callbacks for failed transactions, but the REST model assumes synchronous responses. To comply, the team wrapped every callback in a saga pattern with compensating transactions. The saga orchestrator added 45 ms latency per transaction and doubled the error rate when the orchestrator itself failed. They ended up building a bespoke queue system on RabbitMQ 3.13 that they called “the callback morgue”—a dead-letter queue with exponential backoff. The honest answer is that REST’s synchronous model doesn’t survive asynchronous compliance requirements.</p>
-<p>The third surprise: the CBN encryption rule forces TLS 1.3 with mutual authentication, but mutual TLS breaks connection pooling. The FastAPI client kept opening new TLS sessions, adding 80 ms per request in Lagos during peak hours. The team pinned the culprit to Python’s urllib3 connection pool defaulting to 10 connections with a 5-second timeout—far too low for Lagos traffic. They tuned the pool to 200 connections with a 30-second timeout, but that increased memory usage by 300 MB per pod. The final trade-off: they dropped connection pooling entirely and moved to HTTP/3 with QUIC, trading memory for latency.</p>
-<p>In the end, the team shipped a system that looked nothing like the original REST design. They added custom headers for CBN compliance, built a saga engine for Ghana callbacks, and replaced Redis rate limiting with a bespoke queue that throttles by device fingerprint. The standard advice didn’t just fail—it forced them to rebuild the entire integration from scratch.</p>
-<h2 id="a-different-mental-model">A different mental model</h2>
-<p>Forget stateless HTTP. Forget synchronous callbacks. The new mental model is “durable by default.” Every API call should assume the network will drop, the server will reset, and the client will retry. Every response must be idempotent even if the client retries, and every failure must be traceable without logs.</p>
-<p>Start with the assumption that the network is unreliable. In 2026, the median mobile connection in Nairobi is 1.8 Mbps with 250 ms latency and 12% packet loss during peak hours. In Lagos, it’s 1.2 Mbps with 420 ms latency and 18% packet loss. These aren’t edge cases—they’re the baseline. If your API design doesn’t tolerate these conditions, it will fail.</p>
-<p>The durable-by-default model means:</p>
+                <h2 id="the-conventional-wisdom-and-where-it-stops-holding">The conventional wisdom and where it stops holding</h2>
+<p>The standard guidance for HTTP APIs has been stable for a decade: keep handlers stateless, make writes idempotent, version the contract explicitly, and return synchronous responses. That guidance produced a large amount of working software, and it is still the right default for many systems.</p>
+<p>It is also scoped to an environment that many teams do not actually operate in. The advice implicitly assumes a client that can hold a connection open, retry a failed request cheaply, and receive a response within a timeout window measured in single-digit seconds. When any of those assumptions break, the failure is rarely graceful. A single misconfigured keep-alive timeout can consume days of debugging because the symptom appears as an application-level error while the cause lives in the transport layer.</p>
+<p>Two forces push against the classic model at once:</p>
 <ul>
-<li>Every API call is an asynchronous operation with a unique idempotency key. The server stores the key and the result so retries are safe.</li>
-<li>Every response includes a timestamp, a server-generated correlation id, and a retry-after header. Clients must respect retry-after even on 200 OK.</li>
-<li>Every callback is queued, not synchronous. The queue must survive restarts and must not lose messages.</li>
-<li>Every encryption handshake must be resumable. TLS 1.3 session tickets must be cached client-side with a 30-second lifetime.</li>
+<li><strong>Network conditions.</strong> Mobile connections in many markets combine high round-trip latency, meaningful packet loss during peak hours, and intermittent connectivity. Under those conditions, synchronous request/response with client-side retries produces duplicate work, hung requests, and timeouts that are indistinguishable from server errors.</li>
+<li><strong>Regulatory requirements.</strong> Payment regulators increasingly mandate end-to-end encryption, auditable per-call records, and asynchronous notification of failed transactions. Asynchronous notification is fundamentally incompatible with a design that assumes the client is still connected when the outcome is known.</li>
 </ul>
-<p>This model breaks REST conventions but aligns with the real constraints of African networks. It also aligns with the new regulations: end-to-end encryption survives restarts, asynchronous callbacks are baked in, and idempotency keys prevent duplicate transactions.</p>
-<p>A durable-by-default model actually reduced code complexity. The team spent less time debugging retries and more time tuning the queue.</p>
-<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
-<p>Let’s look at four real systems that adopted this model in 2026:</p>
-<table>
-<thead>
-<tr>
-<th>System</th>
-<th>Location</th>
-<th>Traffic (req/s)</th>
-<th>Error rate</th>
-<th>Median latency</th>
-<th>Regulation</th>
-<th>Adaptation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Paystack Checkout</td>
-<td>Lagos</td>
-<td>12,400</td>
-<td>1.1%</td>
-<td>290 ms</td>
-<td>CBN API rules</td>
-<td>Added idempotency keys, moved to HTTP/3</td>
-</tr>
-<tr>
-<td>M-Pesa Daraja</td>
-<td>Nairobi</td>
-<td>8,900</td>
-<td>1.8%</td>
-<td>380 ms</td>
-<td>Central Bank of Kenya</td>
-<td>Built saga engine, replaced Redis with RabbitMQ</td>
-</tr>
-<tr>
-<td>Flutterwave Rave</td>
-<td>Accra</td>
-<td>6,200</td>
-<td>0.9%</td>
-<td>240 ms</td>
-<td>Ghana Interoperability Framework</td>
-<td>Queued callbacks, enforced TLS 1.3 resumption</td>
-</tr>
-<tr>
-<td>Kuda Bank Core</td>
-<td>Abuja</td>
-<td>15,300</td>
-<td>2.3%</td>
-<td>420 ms</td>
-<td>CBN Payment Switch</td>
-<td>Idempotency keys, UDP fallback for callbacks</td>
-</tr>
-</tbody>
-</table>
-<p>The Paystack team started with FastAPI 0.109 and Redis 7.2 for rate limiting. After the CBN rules, they rebuilt the checkout flow using idempotency keys and HTTP/3. The change added 80 lines of code but cut the error rate from 6% to 1.1%. The median latency dropped from 720 ms to 290 ms because HTTP/3 eliminated head-of-line blocking.</p>
-<p>The M-Pesa team initially used Node 20 LTS with axios and Redis for caching. When Kenya’s new rules required asynchronous callbacks, they built a saga engine that orchestrates compensating transactions. The saga added 45 ms latency per transaction but reduced duplicate payouts from 3% to 0.1%. The error rate fell from 8% to 1.8% because the saga engine retried failed steps without duplicating transactions.</p>
-<p>The Flutterwave team faced the Ghana framework’s callback requirements. They replaced synchronous callbacks with a RabbitMQ 3.13 queue that survives restarts. The queue added 12 ms latency but eliminated lost callbacks. The error rate dropped from 5% to 0.9% because the queue buffered spikes and retried with exponential backoff.</p>
-<p>The Kuda Bank team had the toughest integration: CBN’s Payment Switch requires UDP fallback for callbacks when TCP fails. They built a custom UDP listener on Node 20 LTS that validates checksums and retries with TCP. The UDP fallback added 8 ms latency but reduced callback loss from 12% to 1.5%. The median latency stayed at 420 ms because UDP avoids TCP’s retransmission delays.</p>
-<p>In all four cases, the teams initially followed the standard REST advice. They all hit production, passed compliance audits, and then faced failures under real traffic. The durable-by-default model wasn’t optional—it was the only way to meet both performance and regulatory requirements.</p>
-<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
-<p>There are still cases where the standard advice holds. If your users are on fibre in Sandton or you’re building an internal tool for a bank’s staff, REST, stateless HTTP, and synchronous callbacks are still the right choice. The conventional wisdom isn’t wrong—it’s just incomplete.</p>
-<p>The cases where the standard advice works:</p>
-<ul>
-<li>Internal tools used by bank staff on wired connections with &lt;10 ms latency.</li>
-<li>Systems that serve high-end devices on uncapped fibre in major cities like Johannesburg or Cape Town.</li>
-<li>Systems that don’t need end-to-end encryption or asynchronous callbacks.</li>
-</ul>
-<p>In these cases, REST, stateless HTTP, and synchronous callbacks remain the simplest and most maintainable design. The overhead of idempotency keys, saga engines, callback queues—isn’t worth it when the network is reliable.</p>
-<p>A durable-by-default model was overkill for a staff-facing tool used by 200 bank employees in Sandton. They added idempotency keys and HTTP/3, which added 15 lines of code and 8 ms latency per request. The error rate stayed at 0.1%, but the complexity cost wasn’t justified. They rolled back to REST within two weeks.</p>
-<p>The honest answer is that the conventional wisdom isn’t wrong—it’s just scoped too narrowly. It works when the network is reliable and the compliance requirements are simple. But when the network is unreliable and the regulations are strict, it becomes a liability.</p>
-<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
-<p>Use this decision table to choose between the conventional REST model and the durable-by-default model:</p>
-<table>
-<thead>
-<tr>
-<th>Criteria</th>
-<th>REST model (standard advice)</th>
-<th>Durable-by-default model</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>User base location</td>
-<td>Users on fibre in major cities (latency &lt;50 ms)</td>
-<td>Users on mobile networks (latency &gt;200 ms, packet loss &gt;10%)</td>
-</tr>
-<tr>
-<td>Device profile</td>
-<td>High-end smartphones, stable power</td>
-<td>Low-end Android devices, intermittent power</td>
-</tr>
-<tr>
-<td>Compliance requirements</td>
-<td>Basic PCI-DSS, no CBN/Ghana rules</td>
-<td>CBN API rules, Ghana Interoperability Framework, end-to-end encryption</td>
-</tr>
-<tr>
-<td>Traffic pattern</td>
-<td>Steady load, low spikes</td>
-<td>Spiky load, high retry rates</td>
-</tr>
-<tr>
-<td>Team size</td>
-<td>Small team, limited DevOps capacity</td>
-<td>Larger team, dedicated DevOps/SRE</td>
-</tr>
-<tr>
-<td>Error tolerance</td>
-<td>&lt;1% error rate acceptable</td>
-<td>&lt;0.1% error rate required</td>
-</tr>
-</tbody>
-</table>
-<p>If two or more criteria in the left column are false, adopt the durable-by-default model. If most are true, the REST model is fine.</p>
-<p>For example, a fintech in Kigali serving Rwanda’s mobile money users will likely adopt durable-by-default because Rwanda’s mobile networks average 350 ms latency and 15% packet loss during peak hours. A corporate banking app used by 500 staff in Kigali’s CBD, however, can use REST because the users are on fibre and the compliance requirements are lighter.</p>
-<p>Another example: a wealth management app targeting high-net-worth individuals in Accra can use REST because the users have stable fibre connections and the compliance requirements are minimal. But the same app if targeted at mass-market users in Accra’s informal settlements must use durable-by-default because the networks are unreliable and the compliance rules are strict.</p>
-<p>A mass-market savings app in Nairobi initially used REST, but beta tests showed 22% failure rates during peak hours. After switching to durable-by-default, the failure rate dropped to 1.3% and the app’s NPS rose from 28 to 45. The REST model was the wrong choice for the user base.</p>
-<h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
-<p><strong>“Durable-by-default adds too much complexity.”</strong> REST adds complexity too—just in a different place. REST’s simplicity is an illusion when the network fails. In 2026, the complexity of debugging failed transactions under load is higher than the complexity of idempotency keys and saga engines. Teams commonly spend weeks debugging callback loss under load—adding a durable queue would have saved them time.</p>
-<p><strong>“HTTP/3 and QUIC add too much overhead.”</strong></p>
-<p>Not compared to the overhead of retries and timeouts. In Lagos, HTTP/3 cut median latency from 720 ms to 290 ms and reduced error rates from 6% to 1.1%. The overhead of TLS session resumption is negligible compared to the cost of failed transactions and manual refunds.</p>
-<p><strong>“Our clients can’t handle idempotency keys.”</strong></p>
-<p>Most mobile SDKs in Africa already support idempotency keys. Flutterwave’s Android SDK 3.12, Paystack’s Flutter SDK 2.8, and M-Pesa’s Java SDK 1.13 all support idempotency keys. If your client doesn’t, it’s a sign you’re targeting the wrong user base.</p>
-<p><strong>“The regulations will change again.”</strong></p>
-<p>True, but the durable-by-default model is regulation-proof. It aligns with the core requirement of idempotency, encryption, and asynchronous callbacks—requirements that are unlikely to disappear. The model is future-proof because it’s built on the constraints of unreliable networks, not on today’s regulatory quirks.</p>
-<h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
-<p>If I started a fintech integration from scratch in 2026, here’s the playbook I’d follow:</p>
+<p>The important point is not that REST is wrong. It is that a synchronous, connection-coupled contract encodes assumptions that a regulated, high-latency environment violates by default. The rest of this article describes a design posture that survives those conditions, when it is worth the cost, and how to measure whether you need it.</p>
+<h2 id="failure-modes-that-appear-when-you-follow-the-standard-advice">Failure modes that appear when you follow the standard advice</h2>
+<p>The following are recurring failure patterns, not incidents. Each one has a diagnosis path and a design response.</p>
+<h3 id="1-success-responses-that-carry-no-useful-body">1. Success responses that carry no useful body</h3>
+<p>A load balancer or proxy resets a TLS session mid-response. The client receives a <code>200 OK</code> with an empty or truncated body. If the client only retries on <code>5xx</code>, the request hangs until a timeout fires, and the caller has no way to distinguish "succeeded, response lost" from "never processed."</p>
+<p>The naive fix — retry on empty <code>200</code> — immediately introduces duplicate writes, because the server may have committed the transaction before the response was lost. This is the core argument for idempotency keys: without one, the client cannot safely retry, and with retries disabled, the client cannot recover.</p>
+<p><strong>Diagnosis:</strong> instrument the response body length and the time between request send and response completion. A cluster of short bodies with long completion times points at the proxy or load balancer, not the application.</p>
+<h3 id="2-synchronous-contracts-versus-asynchronous-mandates">2. Synchronous contracts versus asynchronous mandates</h3>
+<p>When a regulator requires that failed transactions be reported via callback, the outcome of a request may not be known at the time the HTTP response is written. A synchronous handler has to either block until the outcome is known (holding a connection for an unbounded time) or return a provisional status and reconcile later.</p>
+<p>Teams that keep the synchronous shape typically bolt on a saga or orchestration layer with compensating transactions. That works, but the orchestrator becomes a new single point of failure, and every compensating step must itself be idempotent. The honest summary: a synchronous contract plus asynchronous requirements means you build the asynchronous machinery anyway, but you build it in the least convenient place.</p>
+<h3 id="3-mutual-tls-versus-connection-pooling">3. Mutual TLS versus connection pooling</h3>
+<p>Mutual TLS is a common requirement for end-to-end encryption. It also interacts badly with naive connection pooling, because each new TLS session requires a full handshake. If the pool is too small or the idle timeout is too short, the client pays a handshake cost on most requests.</p>
+<p>The relevant defaults are worth knowing. In Python's <code>urllib3</code>, <code>HTTPConnectionPool</code> defaults to <code>maxsize=1</code> and <code>block=False</code>, meaning excess connections are discarded rather than queued; the <code>Retry</code> object defaults to <code>total=10</code> and <code>backoff_factor=0</code>, so retries happen with no delay. Those defaults are tuned for low-latency, low-error environments. Raising <code>maxsize</code> and setting a non-zero <code>backoff_factor</code> is usually the first corrective step, and it costs memory per connection.</p>
+<p><strong>How to measure this:</strong> record the TLS handshake duration separately from the request duration. If handshake time is a meaningful fraction of total latency, the pool is the problem, not the network.</p>
+<h3 id="4-callback-loss-under-load">4. Callback loss under load</h3>
+<p>Dead-letter queues exist precisely because callbacks fail. A queue that survives process restarts and retries with exponential backoff converts "lost callback" into "delayed callback," which is a fundamentally different and much cheaper failure. The design question is not whether to queue callbacks but how long to retain them and how to alert when the dead-letter depth grows.</p>
+<h2 id="a-durable-by-default-mental-model">A durable-by-default mental model</h2>
+<p>The posture that survives the conditions above can be summarized as: <strong>assume the network drops, and make every operation safely repeatable.</strong></p>
+<p>That yields four design rules:</p>
 <ol>
-<li><strong>Assume the network is unreliable.</strong> Benchmark your API under 250 ms latency and 15% packet loss. If it fails, redesign before shipping.</li>
-<li><strong>Adopt idempotency keys from day one.</strong> Every API call must accept an idempotency key. Store keys in Redis 7.2 with a 24-hour TTL. Use UUID v4 keys to avoid collisions.</li>
-<li><strong>Use HTTP/3 with QUIC.</strong> Node 20 LTS and Python 3.11 both support HTTP/3 via the aioquic and quiche libraries. The latency gains outweigh the complexity.</li>
-<li><strong>Queue callbacks, don’t call back.</strong> Use RabbitMQ 3.13 with mirrored queues and dead-letter exchanges. Buffer spikes and retry with exponential backoff.</li>
-<li><strong>Enforce TLS 1.3 resumption.</strong> Cache session tickets client-side with a 30-second lifetime. Use Node 20 LTS’s built-in TLS session cache.</li>
-<li><strong>Log everything with correlation ids.</strong> Every log line must include a server-generated correlation id. Store logs in Loki 2.9 for fast querying.</li>
-<li><strong>Test under real conditions.</strong> Use a network emulator like Toxiproxy 2.18 to simulate 250 ms latency and 15% packet loss. If your API fails, fix it before shipping.</li>
+<li><strong>Every mutating call carries a client-supplied idempotency key.</strong> The server stores the key alongside the result. A retry with the same key returns the stored result rather than re-executing. Keys should be scoped to the operation and the client, and stored with a TTL long enough to cover the client's retry window.</li>
+<li><strong>Every response carries a correlation id and an explicit retry hint.</strong> A server-generated correlation id lets you trace a request across services and logs without relying on client-supplied identifiers. If the server is shedding load, say so with <code>Retry-After</code> rather than returning a generic error.</li>
+<li><strong>Long-running work returns <code>202 Accepted</code> plus a status resource.</strong> The client polls a <code>GET</code> endpoint (or subscribes to a callback) to learn the outcome. This decouples the client's connection lifetime from the operation's duration.</li>
+<li><strong>Callbacks are queued and retried, not fired once.</strong> A durable queue with exponential backoff and a dead-letter destination converts transient failures into delays.</li>
 </ol>
-<p>I made two mistakes when I started fresh in Q1 2026. First, I assumed HTTP/2 would be enough. It wasn’t—head-of-line blocking still killed us under load.</p>
-<p>The durable-by-default model isn’t optional—it’s the only way to meet both performance and regulatory requirements in 2026. The conventional wisdom is a trap for teams that haven’t measured their real network conditions.</p>
+<p>The trade-off is real: this model adds storage for idempotency keys, a queue, and a status resource. It removes the class of bugs where a client cannot tell whether its request took effect.</p>
+<h3 id="a-worked-example-idempotent-payment-initiation">A worked example: idempotent payment initiation</h3>
+<p>Suppose a client initiates a payment. The goal is that retrying the same logical request never produces two payments.</p>
+<p><strong>Request:</strong></p>
+<pre><code class="language-http">POST /v1/payments HTTP/1.1
+Idempotency-Key: 6f1c2b7e-3a4d-4f0e-9c1a-2b8d5e6f7a90
+Content-Type: application/json
+
+{ &quot;amount_minor&quot;: 150000, &quot;currency&quot;: &quot;NGN&quot;, &quot;destination&quot;: &quot;acct_123&quot; }
+</code></pre>
+<p><strong>Server logic, in order:</strong></p>
+<ol>
+<li>Look up the idempotency key in the store. If a record exists and is complete, return the stored response with the original status code.</li>
+<li>If a record exists but is in progress, return <code>409 Conflict</code> with <code>Retry-After</code>.</li>
+<li>If no record exists, insert a record in the <code>in_progress</code> state, then execute the operation.</li>
+<li>On success, update the record to <code>complete</code> with the response body and status, then return it.</li>
+<li>On failure that is safe to retry, update the record to <code>failed_retryable</code> and return <code>503</code> with <code>Retry-After</code>.</li>
+</ol>
+<p>The critical detail is step 3: the record must be inserted <em>before</em> the side effect, and the insert must be atomic. A common bug is to check-then-insert without a uniqueness constraint, which loses the race under concurrent retries. A unique index on the idempotency key plus an insert that fails on conflict closes that gap.</p>
+<p><strong>Response:</strong></p>
+<pre><code class="language-http">HTTP/1.1 202 Accepted
+Location: /v1/payments/pay_8f3a2c
+Retry-After: 2
+
+{ &quot;id&quot;: &quot;pay_8f3a2c&quot;, &quot;status&quot;: &quot;pending&quot; }
+</code></pre>
+<p>The client then polls <code>GET /v1/payments/pay_8f3a2c</code> until the status is terminal. If the client retries the original <code>POST</code> with the same idempotency key, it receives the same <code>202</code> and the same payment id — no duplicate.</p>
+<p><strong>Storage sizing, worked from stated assumptions.</strong> Suppose the service handles 500 payment initiations per second at peak, and idempotency records are retained for 24 hours. That is:</p>
+<pre><code>500 requests/second × 86,400 seconds = 43,200,000 records
+</code></pre>
+<p>At roughly 200 bytes per record (key, status, response reference, timestamps), that is about 8.6 GB before index overhead. This is illustrative arithmetic, not a benchmark — substitute your own peak rate and retention window. The point is that idempotency storage is a capacity-planning input, not a free abstraction.</p>
+<h2 id="when-the-classic-model-is-the-right-choice">When the classic model is the right choice</h2>
+<p>Durable-by-default is not universally better. It adds a queue, a key store, and a status resource, and those have operational costs. The classic synchronous model remains the better choice when:</p>
+<ul>
+<li>Clients are on reliable, low-latency links where a dropped connection is genuinely exceptional.</li>
+<li>Operations are short and the outcome is known before the response is written.</li>
+<li>No regulator requires asynchronous notification or per-call audit records.</li>
+<li>The team does not have the operational capacity to run a durable queue and monitor its depth.</li>
+</ul>
+<p>Adding idempotency keys and a status resource to a staff-facing internal tool used over a wired network is usually unjustified complexity. The correct move is to match the contract to the environment, not to adopt the most resilient pattern everywhere.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Use the following to decide which posture fits. Treat it as a checklist, not a score.</p>
+<p><strong>Adopt durable-by-default if any of these are true:</strong></p>
+<ul>
+<li>A regulator requires asynchronous notification of failed transactions.</li>
+<li>A regulator requires per-call audit records that survive client disconnection.</li>
+<li>Measured packet loss on your client population exceeds roughly 5% during peak hours.</li>
+<li>Measured round-trip latency exceeds roughly 300 ms for a meaningful share of clients.</li>
+<li>Duplicate transactions have a direct financial cost.</li>
+<li>Clients are low-end devices that may be killed mid-request.</li>
+</ul>
+<p><strong>Stay with the classic synchronous model if all of these are true:</strong></p>
+<ul>
+<li>Clients are on reliable links with low latency.</li>
+<li>Operations complete quickly and synchronously.</li>
+<li>No asynchronous notification mandate applies.</li>
+<li>Duplicate writes are cheap or impossible.</li>
+<li>You cannot operate a durable queue reliably.</li>
+</ul>
+<p><strong>Hybrid, which is often correct:</strong></p>
+<ul>
+<li>Keep synchronous reads.</li>
+<li>Make writes idempotent and return <code>202</code> for anything slow.</li>
+<li>Queue callbacks.</li>
+<li>Skip the full saga machinery unless a regulator explicitly requires compensating transactions.</li>
+</ul>
+<h2 id="how-to-measure-whether-you-need-this">How to measure whether you need this</h2>
+<p>Do not adopt this posture on intuition. Instrument the following, then decide:</p>
+<ol>
+<li><strong>Client-side latency distribution.</strong> Record p50, p95, and p99 round-trip time from real clients, segmented by network type. A p99 that is an order of magnitude above p50 indicates tail latency that synchronous timeouts will handle badly.</li>
+<li><strong>Retry rate and duplicate rate.</strong> Count requests that are retried and, separately, count operations that executed more than once for the same logical action. If duplicates are non-zero, idempotency keys are already overdue.</li>
+<li><strong>Callback failure rate.</strong> Log every callback attempt and its outcome. A failure rate above a fraction of a percent justifies a durable queue.</li>
+<li><strong>TLS handshake share of latency.</strong> Measure handshake duration as a fraction of total request duration. A large share points at connection pooling, not the network.</li>
+<li><strong>Dead-letter depth over time.</strong> If you already have a queue, alert on its depth. A growing dead-letter queue is the earliest signal that your retry policy is wrong.</li>
+</ol>
+<p>A simple way to reproduce adverse conditions locally is a network emulator that can inject latency, jitter, and packet loss between your client and server. Run your integration tests through it and assert that retries produce exactly one side effect. That single test catches most of the failure modes described above.</p>
+<h2 id="common-objections">Common objections</h2>
+<p><strong>"This adds too much complexity."</strong> It relocates complexity rather than removing it. The alternative is debugging duplicate payouts and lost callbacks in production, which is more expensive than storing idempotency keys. The question is where you want the complexity to live.</p>
+<p><strong>"Our clients cannot send idempotency keys."</strong> Most mature mobile and server SDKs can attach a header. If a client genuinely cannot, that is a constraint worth documenting explicitly, along with the duplicate risk it creates.</p>
+<p><strong>"The regulations will change."</strong> They will. But idempotency, auditable correlation ids, and asynchronous notification are requirements that tend to persist because they address fraud and reconciliation, not fashion. A design built on unreliable-network constraints is robust to regulatory churn.</p>
+<p><strong>"HTTP/3 will solve it."</strong> A newer transport reduces head-of-line blocking and can improve latency, but it does not make a non-idempotent write safe to retry. Transport improvements and application-level idempotency solve different problems.</p>
 <h2 id="summary">Summary</h2>
-<p>The standard API advice—REST, stateless HTTP, synchronous callbacks—was written for Chrome on fibre. It doesn’t survive African fintech regulations or African networks. The new reality is that APIs must be durable by default: idempotent, asynchronous, and resilient to network failures.</p>
-<p>The evidence from real systems is clear: teams that rebuilt their APIs with durable-by-default cut error rates from 6% to 1%, reduced median latency from 720 ms to 290 ms, and passed compliance audits without drama. Teams that clung to REST spent weeks debugging callback loss and manual refunds.</p>
-<p>The cases where REST still works are narrow: internal tools, high-end users, and simple compliance. For everyone else, the durable-by-default model is the only viable path.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How does durable-by-default affect API versioning?</strong></p>
-<p>Versioning becomes simpler because every endpoint can accept an idempotency key and a correlation id. You don’t need to version headers or paths—just include a version in the payload or query string. This aligns with the CBN rule that every API call must be auditable, so versioning is baked into the request itself. The only risk is collision if you reuse the same idempotency key across versions, so include the version in the key or payload.</p>
-<p><strong>What’s the simplest durable-by-default pattern to start with?</strong></p>
-<p>Start with idempotency keys and HTTP/3. Add a single endpoint that accepts POST /v1/payments with an X-Idempotency-Key header. Store the key in Redis 7.2 with a 24-hour TTL. Return a 202 Accepted with a Location header pointing to a GET /v1/payments/{id} endpoint that returns the payment status. This pattern is simple, aligns with the durable-by-default model, and meets the CBN’s auditing requirements.</p>
-<p><strong>How do I handle rate limiting in a durable-by-default model?</strong></p>
-<p>Use a local rate limiter with a sliding window algorithm. Store the window in memory with a 60-second TTL. For distributed systems, use Redis 7.2 with a Lua script to atomically increment and expire the counter. The rate limiter should reject requests with a 429 Too Many Requests and include a Retry-After header. This pattern is simple, aligns with the durable-by-default model, and meets the CBN’s rate limiting requirements.</p>
-<p><strong>What’s the best way to handle errors in a durable-by-default model?</strong></p>
-<p>Use a dead-letter queue with exponential backoff. The queue should store the request, the error, and the retry count. The consumer should retry the request with a delay that grows exponentially. If the retry count exceeds a threshold, the request should be moved to a manual review queue. This pattern is simple, aligns with the durable-by-default model, and meets the CBN’s error handling requirements.</p>
-<h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ndpr-2026-broke-fintech-apis/">NDPR 2026 broke fintech APIs</a></li>
-<li><a href="https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/">Regulations forced better APIs: the 2026 fintech</a></li>
-<li><a href="https://kubaik.github.io/bank-apis-broke-under-african-2g/">Bank APIs broke under African 2G</a></li>
+<li>The classic REST model assumes a reliable, low-latency client and a synchronous outcome. Those assumptions fail under high packet loss and under regulations that mandate asynchronous notification.</li>
+<li>The recurring failure modes are lost success responses, synchronous contracts against asynchronous mandates, mutual TLS versus connection pooling, and callback loss under load.</li>
+<li>A durable-by-default posture — idempotency keys, correlation ids, <code>202</code> plus a status resource, and queued callbacks — addresses all four.</li>
+<li>The cost is real: a key store, a queue, and a status resource. Adopt it when the checklist says so, not by default.</li>
+<li>Measure before you migrate: latency distribution, duplicate rate, callback failure rate, handshake share, and dead-letter depth.</li>
 </ul>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
-<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
-<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
-<li><a href="https://developer.flutterwave.com/docs">Flutterwave documentation</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>Where should idempotency records live?</strong>
+Any store with a unique constraint on the key and atomic insert. A relational table with a unique index is the simplest correct choice. A key-value store works if it supports conditional writes. The requirement is atomicity, not a specific product.</p>
+<p><strong>How long should idempotency records be retained?</strong>
+Long enough to cover the client's maximum retry window, plus a margin. If clients retry for up to an hour, retaining records for 24 hours is comfortable. Retaining forever is a capacity problem; retaining too briefly reintroduces duplicate risk.</p>
+<p><strong>Should reads be idempotent too?</strong>
+Reads are naturally idempotent. The rule applies to mutating operations. That said, caching reads aggressively is often the cheapest latency win available, and it is independent of the write-side design.</p>
+<p><strong>How do I handle rate limiting alongside idempotency?</strong>
+Rate limit before the idempotency lookup, so a retry of an already-accepted request does not consume new quota. Return <code>429</code> with <code>Retry-After</code>. A sliding-window counter in a shared store is sufficient for most services.</p>
+<p><strong>What if the queue itself fails?</strong>
+That is why the queue must be durable and why dead-letter depth must be alerted on. A queue that loses messages is worse than no queue, because it hides the failure. Persist before acknowledging.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick your highest-value mutating endpoint and add a unique constraint on a client-supplied idempotency key, with an atomic insert before the side effect. Write one integration test that sends the same request twice through a network emulator with injected packet loss, and assert that exactly one side effect occurred. That test is the smallest possible proof that your write path is safe to retry.</p>
                 
                 
             </div>

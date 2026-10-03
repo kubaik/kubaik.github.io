@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>LLM output metrics that actually move the needle - Kubai Kevin</title>
-        <meta name="description" content="Cut LLM costs 40% and improve fact accuracy 9% with four production metrics — p95 latency, cost per 1000, structured correctness, and user retention delta.">
+        <meta name="description" content="A layered approach to measuring LLM output quality in production: structured validation, p95 latency, cost per request, and retention signals.">
         <meta name="keywords" content="LlmEvaluationMetrics, Pydantic, LlmLatencyP95, LlmRetentionDelta, Llm, Generativeai">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T19:13:43.403773">
-        <meta property="article:modified_time" content="2026-09-19T08:27:14.190931+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:54:37.256842+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM output metrics that actually move the needle">
-        <meta property="og:description" content="Cut LLM costs 40% and improve fact accuracy 9% with four production metrics — p95 latency, cost per 1000, structured correctness, and user retention delta.">
+        <meta property="og:description" content="A layered approach to measuring LLM output quality in production: structured validation, p95 latency, cost per request, and retention signals.">
         <meta property="og:url" content="https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="LLM output metrics that actually move the needle">
-        <meta name="twitter:description" content="Cut LLM costs 40% and improve fact accuracy 9% with four production metrics — p95 latency, cost per 1000, structured correctness, and user retention delta.">
+        <meta name="twitter:description" content="A layered approach to measuring LLM output quality in production: structured validation, p95 latency, cost per request, and retention signals.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/llm-output-metrics-that-actually-move-the-needle.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/#article",
       "headline": "LLM output metrics that actually move the needle",
-      "description": "Cut LLM costs 40% and improve fact accuracy 9% with four production metrics — p95 latency, cost per 1000, structured correctness, and user retention delta.",
+      "description": "A layered approach to measuring LLM output quality in production: structured validation, p95 latency, cost per request, and retention signals.",
       "datePublished": "2026-06-26T19:13:43+00:00",
-      "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2589,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-03T12:54:37+00:00",
+      "wordCount": 1956,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">LLM output metrics that actually move the needle</h1>
                 
-                <p class="post-lead">Cut LLM costs 40% and improve fact accuracy 9% with four production metrics — p95 latency, cost per 1000, structured correctness, and user retention delta.</p>
+                <p class="post-lead">A layered approach to measuring LLM output quality in production: structured validation, p95 latency, cost per request, and retention signals.</p>
                 
                 
                 <div class="tags">
@@ -259,306 +259,159 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2589 words
+                        10 min read
+                        &nbsp;·&nbsp; 1956 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
-<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Almost every LLM tutorial you read starts with perplexity or ROUGE scores. Those metrics are great in research papers, but in production they tell you nothing about whether your system is actually saving money or making users happier.</p>
-<p>The marketing team loved the demo because the model sounded fluent in Swahili and English. Six weeks later the support tickets piled up: users complained summaries were leaving out loan amounts and repayment dates. Our ROUGE-L score hadn’t moved — it only cares about n-gram overlap, not facts. That’s when I learned that production LLM quality needs a completely different yardstick.</p>
-<p>What actually matters at scale is:
-1. <strong>Fact accuracy</strong> – not fluency. 2. <strong>Latency at p95</strong> – because users abandon if the page hangs longer than 2 seconds. 3. <strong>Cost per 1000 requests</strong> – because the model API bill can explode overnight. 4. <strong>User retention</strong> – if summaries are wrong, users stop using the feature.</p>
-<p>Most teams never measure these four things until it’s too late. They trust the docs and stop there. Don’t be that team.</p>
-<h2 id="how-evaluating-llm-output-quality-at-scale-the-metrics-that-actually-matter-actually-works-under-the-hood">How Evaluating LLM output quality at scale: the metrics that actually matter actually works under the hood</h2>
-<p>LLM quality is not a single number. It’s a layered system:</p>
-<p>Layer 1 – <strong>Token-level quality</strong>
-- Perplexity, ROUGE, BLEU: useful only for model selection, not for runtime decisions. - Embedding similarity (e.g., cosine similarity between prompt and response embeddings with <code>sentence-transformers 3.0.1</code>) can catch semantic drift early.</p>
-<p>Layer 2 – <strong>Structured correctness</strong>
-- For finance or healthcare, build an extractor that pulls out entities (dates, amounts, IDs) and validate them against a schema. - Use <code>spaCy 3.8</code> with custom rules or <code>Pydantic 2.9</code> validators to map raw text to a structured object.</p>
-<p>Layer 3 – <strong>User impact</strong>
-- <strong>Latency p95</strong>: measure from client call to first byte returned. Anything above 2000 ms in Nairobi is noticeable. - <strong>Cost per 1000 requests</strong>: if your prompt is 10k tokens and the model costs $0.03 per 1000 tokens, you’re already at $0.30 per call — scale that to 100k daily calls and you’re looking at a $30k monthly bill. - <strong>User retention delta</strong>: compare feature adoption 7 days before and after the new model. A drop of 7% in retention usually means wrong answers.</p>
-<p>Under the hood, most teams build a feedback loop that writes these metrics to CloudWatch (or Prometheus) every minute. We use AWS Lambda with arm64, Python 3.12, and <code>boto3 1.34</code>. The lambda pulls the last 1000 responses from DynamoDB, runs validators, and pushes metrics to CloudWatch Metrics. Real-time dashboards in Grafana show p95 latency, cost per 1000, and error counts. That’s the stack that moves the needle.</p>
-<p>What surprised me was how often the wrong metric masked real problems. Only when we added a Pydantic validator that checked every extracted amount against the loan table did we see the drop. Lesson: if your metric isn’t tied to a business rule, it’s noise.</p>
-<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
-<p>Here’s how we implemented the three-layer system in a live service. We’ll focus on a summarization endpoint that extracts key numbers from bank statements.</p>
-<h3 id="1-structured-extraction-with-pydantic-29">1. Structured extraction with Pydantic 2.9</h3>
-<pre><code class="language-python">from pydantic import BaseModel, ValidationError, validator
+                <p>Most LLM evaluation documentation focuses on offline metrics: perplexity, ROUGE, BLEU. Those are useful for model selection in research settings, but they say very little about whether a deployed system is producing correct answers, staying within latency budgets, or holding on to users. This article describes a layered measurement approach that teams commonly adopt once an LLM feature has real traffic, and it explains the failure modes that show up when only one layer is instrumented.</p>
+<h2 id="why-offline-metrics-are-not-enough-in-production">Why offline metrics are not enough in production</h2>
+<p>A typical failure mode looks like this. A summarization feature is demoed and judged on fluency. The offline ROUGE-L score is stable across releases. Weeks later, support tickets accumulate because summaries omit specific facts — a loan amount, a repayment date, an account identifier. ROUGE measures n-gram overlap with a reference, not factual correctness. A model can score well while dropping the one number the user needed.</p>
+<p>The practical consequence is that production quality needs a different yardstick than research quality. The four signals that tend to matter most are:</p>
+<ol>
+<li><strong>Fact accuracy</strong> — whether extracted or generated values match ground truth.</li>
+<li><strong>Latency at p95</strong> — because tail latency, not mean latency, determines whether users abandon a feature.</li>
+<li><strong>Cost per request</strong> — because token-based pricing scales linearly with prompt size and traffic.</li>
+<li><strong>Retention or adoption delta</strong> — because a feature that is fast, cheap, and wrong still loses users.</li>
+</ol>
+<p>Each of these is measurable, but each requires instrumentation that offline evaluation does not provide.</p>
+<h2 id="the-three-layers-of-production-llm-quality">The three layers of production LLM quality</h2>
+<p>Treat quality as a layered system rather than a single number.</p>
+<p><strong>Layer 1 — Token-level quality.</strong> Perplexity, ROUGE, and BLEU are appropriate for comparing candidate models on a fixed dataset. They are not appropriate as runtime gates. Embedding similarity between a prompt and its response can catch semantic drift, but it cannot confirm that a specific field is correct.</p>
+<p><strong>Layer 2 — Structured correctness.</strong> For domains such as finance or healthcare, the useful signal is whether extracted entities (dates, amounts, IDs) match a schema and match a source of truth. This is where schema validation and business rules belong.</p>
+<p><strong>Layer 3 — User impact.</strong> Latency, cost, and retention translate model behavior into product outcomes. A model change that improves Layer 1 and Layer 2 can still fail Layer 3.</p>
+<p>The key insight is that a metric not tied to a business rule is decoration. If a validator cannot state what "correct" means in code, the metric cannot drive a rollback decision.</p>
+<h2 id="implementing-structured-extraction-with-pydantic">Implementing structured extraction with Pydantic</h2>
+<p>Pydantic v2 provides field-level constraints and custom validators that map raw model output to a typed object. The example below defines a schema for a bank statement summary.</p>
+<pre><code class="language-python">from pydantic import BaseModel, Field, field_validator
 from typing import List, Optional
-import re
 
 class StatementSummary(BaseModel):
-    account_number: str = Field(..., regex=r'^\d{10}$')
-    statement_date: str = Field(..., regex=r'^\d{4}-\d{2}-\d{2}$')
+    account_number: str = Field(..., pattern=r'^\d{10}$')
+    statement_date: str = Field(..., pattern=r'^\d{4}-\d{2}-\d{2}$')
     total_balance: float = Field(..., gt=-1_000_000, lt=1_000_000)
     transactions_count: int = Field(..., ge=0)
     high_risk_transactions: Optional[List[str]] = []
 
-    @validator('total_balance')
-    def check_balance_format(cls, v):
+    @field_validator('total_balance')
+    @classmethod
+    def check_balance_range(cls, v: float) -&gt; float:
         if abs(v) &gt; 1_000_000:
             raise ValueError('Balance out of expected range')
         return v
 </code></pre>
-<p>This schema forces the LLM to output only valid account numbers, dates within expected ranges, and balances that make sense for a Kenyan bank. Any deviation is caught before it reaches the user.</p>
-<h3 id="2-latency-and-cost-tracking-with-fastapi-opentelemetry-and-aws-lambda">2. Latency and cost tracking with FastAPI, OpenTelemetry, and AWS Lambda</h3>
-<p>We run the summarizer behind a FastAPI endpoint deployed on AWS Lambda (Python 3.12, arm64). The endpoint wraps the LLM call with OpenTelemetry traces so we can measure p95 latency.</p>
-<pre><code class="language-python">def lambda_handler(event, context):
-    from opentelemetry import trace
-    from opentelemetry.sdk.trace import TracerProvider
-    from opentelemetry.sdk.trace.export import BatchSpanProcessor
-    from opentelemetry.exporter.cloudwatch import CloudWatchSpanExporter
-
-    trace.set_tracer_provider(TracerProvider())
-    cloudwatch_exporter = CloudWatchSpanExporter(
-        namespace=&quot;LLMQuality&quot;,
-        metric_name=&quot;LatencyMs&quot;
-    )
-    trace.get_tracer_provider().add_span_processor(
-        BatchSpanProcessor(cloudwatch_exporter)
-    )
-
-    tracer = trace.get_tracer(__name__)
-    with tracer.start_as_current_span(&quot;summarize_statement&quot;):
-        # ... call LLM ...
-        latency_ms = trace.get_current_span().end()
-        return {&quot;summary&quot;: summary}
-</code></pre>
-<p>The CloudWatch exporter pushes p95 latency every minute.</p>
-<h3 id="3-cost-control-with-token-budgeting">3. Cost control with token budgeting</h3>
-<p>We cap the prompt size to 5000 tokens (about 3500 words) and enforce a max_tokens=500 on the response. That keeps the average token cost under $0.01 per call at the model’s $0.005 per 1000 tokens rate. For 100k daily calls, that’s $1000/month instead of $5000 if we didn’t cap.</p>
-<p>A quick script to check daily spend:</p>
-<pre><code class="language-bash"># run this in cron every day at 06:00
-DAILY_TOKENS=$(aws dynamodb query \
+<p>Two notes on correctness. In Pydantic v2 the field constraint keyword is <code>pattern</code>, not <code>regex</code>, and validators use <code>@field_validator</code> with <code>@classmethod</code> rather than the v1 <code>@validator</code> decorator. The validator here is redundant with the field constraint, which is fine for illustration but should be removed in production to avoid duplicated logic.</p>
+<p>This schema rejects malformed account numbers, dates outside the expected format, and balances outside a plausible range before the value reaches a user. The business rule — a balance range for the target institution — is what makes the validator meaningful.</p>
+<h2 id="measuring-latency-and-cost">Measuring latency and cost</h2>
+<p>Latency should be measured from the client's perspective, not from inside the model call. Server-side timing misses queueing, cold starts, and network transit. The metric to track is p95 end-to-end latency, because the mean hides the tail that users actually experience.</p>
+<p>Cost should be computed from token counts, not estimated from request counts. Given a prompt of 10,000 tokens at $0.03 per 1,000 tokens, the prompt alone costs $0.30 per call. At 100,000 calls per day that is $30,000 per month. This arithmetic is illustrative; substitute the actual per-token price for the model in use. The point is that prompt size is a first-class cost variable, and it should be capped.</p>
+<p>A token budget works as follows: cap the prompt at a fixed size, cap the response with a <code>max_tokens</code> parameter, and reject responses that exceed the cap at the gateway. If the average call uses 2,000 tokens at $0.005 per 1,000 tokens, the average cost is $0.01 per call. At 100,000 daily calls that is $1,000 per month. Doubling the prompt without a cap doubles the bill.</p>
+<p>To measure cost daily, query the response table for token counts over the previous 24 hours and multiply by the per-token rate. The query below is illustrative and assumes a DynamoDB table with <code>prompt_tokens</code> and <code>completion_tokens</code> attributes:</p>
+<pre><code class="language-bash"># Run daily. Replace the timestamp with yesterday's date.
+aws dynamodb scan \
   --table-name LLMResponses \
-  --select COUNT \
-  --filter-expression &quot;#ts &gt;= :yesterday&quot; \
+  --filter-expression &quot;#ts &gt;= :since&quot; \
   --expression-attribute-names '{&quot;#ts&quot;: &quot;timestamp&quot;}' \
-  --expression-attribute-values '{&quot;:yesterday&quot;: &quot;2026-06-01T00:00:00Z&quot;}' \
+  --expression-attribute-values '{&quot;:since&quot;: {&quot;S&quot;: &quot;2026-06-01T00:00:00Z&quot;}}' \
   --projection-expression &quot;prompt_tokens, completion_tokens&quot; \
-  --query &quot;Items[*].{p:prompt_tokens, c:completion_tokens}&quot; \
-  --output json | jq -r '[.[].p,.[]?.c] | add')
-
-COST=$(echo &quot;scale=2; ($DAILY_TOKENS / 1000) * 0.005&quot; | bc)
-echo &quot;Daily token cost: $$COST&quot;
+  --output json \
+| jq '[.Items[] | (.prompt_tokens.N | tonumber) + (.completion_tokens.N | tonumber)] | add'
 </code></pre>
-<p>If the cost exceeds $800, we switch to a smaller model via feature flags.</p>
-<h3 id="4-user-retention-delta-in-mixpanel">4. User retention delta in Mixpanel</h3>
-<p>We log a custom event in Mixpanel every time a user opens the summary feature. The event includes a <code>model_version</code> property. At the end of each week we run:</p>
+<p>Note that <code>scan</code> with a filter reads the full table and is expensive at scale; a production implementation should use a query on a partition key and a secondary index on the timestamp. The output is a total token count, which is then multiplied by the per-token price to get the daily cost.</p>
+<h2 id="measuring-retention-delta">Measuring retention delta</h2>
+<p>Retention measurement requires logging a custom event each time the feature is used, tagged with the model version. At the end of a comparison window, count distinct users per model version and compute the percentage change. The pseudocode below illustrates the shape of the check:</p>
 <pre><code class="language-python">import pandas as pd
-from mixpanel import Mixpanel
 
-mp = Mixpanel('YOUR_MIXPANEL_TOKEN')
+# df has columns: distinct_id, model_version, event_date
+retention = df.groupby('model_version')['distinct_id'].nunique()
+delta = retention.pct_change()
 
-week_start = '2026-05-26'
-week_end = '2026-06-01'
-
-df = pd.DataFrame(mp.request(['events'], params={
-    'event': ['[Summarize] opened'],
-    'from_date': week_start,
-    'to_date': week_end
-}))
-
-retention_7d = df.groupby('model_version')['distinct_id'].nunique()
-retention_delta = retention_7d.pct_change()
-
-if retention_delta.iloc[-1] &lt; -0.05:
-    trigger_rollback(model_version=retention_delta.index[-1])
+if delta.iloc[-1] &lt; -0.05:
+    trigger_rollback(model_version=delta.index[-1])
 </code></pre>
-<p>If retention drops more than 5% week-over-week, we roll back to the last stable model.</p>
-<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>Here are the numbers that mattered:</p>
+<p>Two cautions apply. First, retention is noisy; a 5% week-over-week threshold will fire on seasonality as well as regressions. Normalize by total feature opens and account for known seasonal patterns before acting. Second, retention is a lagging indicator. By the time it moves, users have already had a bad experience. It is a backstop, not a primary signal.</p>
+<h2 id="how-to-measure-fact-accuracy">How to measure fact accuracy</h2>
+<p>Fact accuracy is the metric most teams skip because it requires ground truth. Three approaches are practical:</p>
+<ul>
+<li><strong>Schema validation</strong> — confirm that extracted values are well-formed and within plausible ranges. This catches format errors but not wrong values.</li>
+<li><strong>Cross-checking against a source of truth</strong> — for a loan amount, compare the extracted value to the value in the loan table. This catches wrong values but requires a join.</li>
+<li><strong>Sampled human review</strong> — label a random sample of outputs weekly and track the error rate over time. This is the only method that catches errors the other two miss, such as a plausible but incorrect date.</li>
+</ul>
+<p>A useful instrument is to log both the raw model output and the validated object, then run a daily job that joins validated values against the source table and counts mismatches. The mismatch rate is the fact accuracy metric.</p>
+<h2 id="failure-modes-to-plan-for">Failure modes to plan for</h2>
+<p><strong>Schema drift across model upgrades.</strong> Model versions differ in output formatting. A date that was emitted as <code>YYYY-MM-DD</code> may appear as <code>DD/MM/YYYY</code> after an upgrade, breaking a strict validator. Mitigation: include a <code>model_version</code> field in the schema and allow format variants conditionally, or normalize formats before validation.</p>
+<p><strong>Prompt injection.</strong> User-supplied text can instruct the model to ignore extraction rules. Mitigation: treat all user input as untrusted, separate instructions from data in the prompt structure, and validate outputs against the schema regardless of what the prompt requested. A web application firewall may reduce known patterns but does not replace output validation.</p>
+<p><strong>Cold-start latency in serverless deployments.</strong> A cold start can add hundreds of milliseconds to the first request after an idle period. If a meaningful fraction of requests are cold starts, p95 latency reflects the cold path, not the model. Mitigation: measure cold-start rate separately, keep functions warm, or use a runtime feature that reduces initialization time.</p>
+<p><strong>Cost creep from prompt edits.</strong> Adding a paragraph to a prompt adds tokens to every request. A 150-token addition at 50,000 daily calls and $0.005 per 1,000 tokens costs about $37.50 per month. That figure is illustrative; the point is that prompt edits have a recurring cost and should be reviewed like code.</p>
+<p><strong>Metric drift from user behavior.</strong> Retention and adoption metrics move with seasonality and marketing, not only with model quality. Mitigation: normalize by total feature usage and compare against a control group where possible.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before adopting a layered measurement system, check the following:</p>
+<ul>
+<li>Is there a code-expressible definition of "correct" for this feature? If not, structured validation is not possible.</li>
+<li>Is the request volume high enough that the instrumentation cost is justified? Below roughly 1,000 requests per day, manual sampling may be sufficient.</li>
+<li>Is the use case factual or creative? Creative outputs should be evaluated on user ratings, not schema adherence.</li>
+<li>Can the model be rolled back quickly? Metrics without a rollback path do not reduce risk.</li>
+<li>Are there regulatory approval constraints on model changes? If so, the rollback mechanism must fit the approval process.</li>
+</ul>
+<p>If the answer to the first question is no, or the answer to the fourth is no, a simpler approach — latency, cost, and periodic manual review — is the better choice.</p>
+<h2 id="tools-by-category">Tools by category</h2>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Model A (baseline)</th>
-<th>Model B (new)</th>
-<th>Threshold</th>
-<th>Pass/Fail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>p95 latency</td>
-<td>1800 ms</td>
-<td>950 ms</td>
-<td>2000 ms</td>
-<td>Pass</td>
-</tr>
-<tr>
-<td>Cost per 1000 requests</td>
-<td>$3.40</td>
-<td>$2.10</td>
-<td>$3.00</td>
-<td>Pass</td>
-</tr>
-<tr>
-<td>Fact accuracy (loan amount correct)</td>
-<td>92%</td>
-<td>97%</td>
-<td>95%</td>
-<td>Pass</td>
-</tr>
-<tr>
-<td>User retention 7d</td>
-<td>+1.2%</td>
-<td>-2.1%</td>
-<td>0%</td>
-<td>Fail</td>
-</tr>
-<tr>
-<td>Token overrun alerts</td>
-<td>42/day</td>
-<td>5/day</td>
-<td>10/day</td>
-<td>Pass</td>
-</tr>
-</tbody>
-</table>
-<p>The surprise was the retention drop. Model B was faster and cheaper, but it hallucinated repayment dates 3% of the time. Users noticed — support tickets jumped from 12 to 45 per day within a week. We rolled back to Model A within 2 hours because the retention delta alarm fired. The lesson: cost and latency aren’t enough; correctness must be validated against user impact.</p>
-<p>Another surprise: the token overrun alerts. Model B occasionally produced responses longer than 500 tokens, pushing our cost above $3 per 1000. The p95 latency stayed under 2000 ms, but the cost spike was immediate. We added a hard stop in the API gateway to reject responses longer than 500 tokens, which cut alerts from 42 to 5 per day.</p>
-<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
-<h3 id="1-schema-drift-over-time">1. Schema drift over time</h3>
-<p>LLM outputs change subtly as the model weights drift or as the prompt wording evolves. Your Pydantic schema may start rejecting valid outputs after a model update. We saw this when we upgraded from <code>gpt-4-0125-preview</code> to <code>gpt-4-0613</code>. The new model occasionally output dates in <code>DD/MM/YYYY</code> instead of <code>YYYY-MM-DD</code>, breaking our validator. Fix: add a <code>model_version</code> field to the schema and allow both formats conditionally.</p>
-<h3 id="2-prompt-injection-in-production">2. Prompt injection in production</h3>
-<p>LLM prompts can be manipulated by users to bypass safety rules. In one incident, a user pasted a prompt that asked the model to ignore extraction rules and output raw text. Fix: sanitize user input before passing to the model; use AWS WAF with OWASP rules to block prompt injection attempts.</p>
-<h3 id="3-cold-start-latency-in-serverless">3. Cold start latency in serverless</h3>
-<p>Our Lambda function has a cold start of ~600 ms. With 50k daily calls, about 15% are cold starts. That pushes p95 latency to 1800 ms even though the in-function latency is 200 ms. Fix: use Lambda SnapStart with Java 21 runtime. After enabling, cold start dropped to 200 ms and p95 latency fell to 950 ms.</p>
-<h3 id="4-cost-creep-from-long-prompts">4. Cost creep from long prompts</h3>
-<p>We added a disclaimer paragraph to the prompt to improve tone. The paragraph added 150 tokens. With 50k daily calls, that’s an extra $37.50 per month. Multiply by 12 months and 3 models and you’re at $1350 per year for a single sentence. Fix: trim the prompt to the essential rules; use dynamic few-shot examples instead of static paragraphs.</p>
-<h3 id="5-metric-drift-in-user-behavior">5. Metric drift in user behavior</h3>
-<p>Our retention delta assumed users would open the summary feature at a constant rate. But during school fee season in Kenya, usage spikes 30% week-over-week. The retention delta alarm fired even though the model was stable. Fix: normalize retention by total feature opens, not absolute numbers, and add seasonality adjustments.</p>
-<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Purpose</th>
-<th>Version we use</th>
+<th>Category</th>
+<th>What to look for</th>
 <th>Why it matters</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>FastAPI</td>
-<td>API endpoint</td>
-<td>0.111</td>
-<td>Built-in OpenAPI, async, small footprint</td>
+<td>Schema validation</td>
+<td>Field constraints, custom validators, typed output</td>
+<td>Catches malformed and out-of-range values before they reach users</td>
 </tr>
 <tr>
-<td>Pydantic</td>
-<td>Structured validation</td>
-<td>2.9</td>
-<td>Validates against business rules, not just types</td>
+<td>Tracing and metrics</td>
+<td>OpenTelemetry-compatible exporter, p95 aggregation</td>
+<td>Measures end-to-end latency including queueing and cold starts</td>
 </tr>
 <tr>
-<td>OpenTelemetry</td>
-<td>Metrics and traces</td>
-<td>1.25</td>
-<td>Standard way to export p95 latency and cost</td>
+<td>Cost accounting</td>
+<td>Per-request token counts, daily aggregation</td>
+<td>Turns token usage into a reviewable cost figure</td>
 </tr>
 <tr>
-<td>AWS Lambda (arm64)</td>
-<td>Serverless compute</td>
-<td>Python 3.12</td>
-<td>20% cheaper than x86, faster cold starts with SnapStart</td>
+<td>Product analytics</td>
+<td>Custom events tagged with model version</td>
+<td>Ties model changes to retention and adoption</td>
 </tr>
 <tr>
-<td>CloudWatch Metrics</td>
-<td>Real-time dashboards</td>
-<td>2026.06</td>
-<td>Native integration with Lambda, no extra cost</td>
-</tr>
-<tr>
-<td>Mixpanel</td>
-<td>User behavior</td>
-<td>2026.05</td>
-<td>Custom events for retention delta</td>
-</tr>
-<tr>
-<td>spaCy</td>
 <td>Entity extraction</td>
-<td>3.8</td>
-<td>Faster than regex for Swahili/English mixed text</td>
+<td>Multilingual tokenization, custom rules</td>
+<td>Reduces false positives when text mixes languages</td>
 </tr>
 <tr>
-<td>sentence-transformers</td>
-<td>Embedding similarity</td>
-<td>3.0.1</td>
-<td>Catches semantic drift early</td>
-</tr>
-<tr>
-<td>AWS WAF</td>
-<td>Prompt injection</td>
-<td>2026.03</td>
-<td>Blocks malicious prompts before they hit the model</td>
-</tr>
-<tr>
-<td>CodePipeline</td>
-<td>Model rollback</td>
-<td>2026.06</td>
-<td>One-click rollback when metrics breach thresholds</td>
+<td>Rollback control</td>
+<td>Versioned deploys, feature flags</td>
+<td>Converts a metric breach into a reversible action</td>
 </tr>
 </tbody>
 </table>
-<p>The standout surprise was spaCy 3.8. Regex kept matching English substrings inside Swahili words, causing extra validation steps.</p>
-<p>Another surprise: OpenTelemetry’s CloudWatch exporter. It’s not well documented, but once configured it pushes metrics every minute without extra Lambda invocations. We went from polling every 5 minutes to real-time and caught latency spikes within 60 seconds.</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
-<p>This layered approach adds complexity. Don’t use it if:</p>
+<p>The layered approach adds operational complexity. It is not appropriate when:</p>
 <ol>
-<li>
-<p>You only have a handful of daily requests (&lt;1000). The overhead of metrics, validators, and rollback pipelines outweighs the benefits. A simple ROUGE score on a single model is enough.</p>
-</li>
-<li>
-<p>Your use case is pure creativity (e.g., ad copy, poetry). Users forgive inaccuracies if the output is novel. Focus on user ratings instead of structured correctness.</p>
-</li>
-<li>
-<p>You don’t have a clear business rule to validate against. If you can’t define what “correct” means in code, structured validation is impossible. Use human review or embeddings similarity instead.</p>
-</li>
-<li>
-<p>You’re in a regulated industry without approval workflows. Some banks require model change approvals that take weeks. Layered metrics won’t help if you can’t roll back quickly.</p>
-</li>
+<li>Request volume is very low. The overhead of validators, dashboards, and rollback pipelines exceeds the benefit.</li>
+<li>The use case is purely creative. Users judge novelty, not factual accuracy; ratings are the better signal.</li>
+<li>No business rule can be expressed in code. Without a definition of correctness, structured validation has nothing to check.</li>
+<li>Model changes require lengthy approval. If rollback takes weeks, real-time metrics cannot act on their findings.</li>
 </ol>
-<p>In those cases, keep it simple. Measure latency and cost, and sample-check outputs manually. Don’t over-engineer until the numbers justify it.</p>
-<h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>I thought we’d spend most of our time tuning the model. In reality, 70% of the effort went into building the metrics pipeline and the rollback mechanism. The model itself is just one component; the system around it is what keeps users happy.</p>
-<p>The biggest mistake I made was trusting the vendor’s benchmark numbers. They quoted a 99.2% accuracy on a synthetic dataset. In production, with real users and messy Swahili/English prompts, accuracy fell to 87%. That’s when we built the structured validator and started measuring fact accuracy, not just ROUGE.</p>
-<p>Another surprise: the retention delta metric is noisy but indispensable. A 2% drop in retention can mean hundreds of thousands in lost revenue for a Nairobi fintech. It’s worth the noise because it’s directly tied to revenue.</p>
-<p>Finally, the cost control script saved us $24k in three months. We caught two model upgrades that would have increased our bill by 40% without improving user outcomes. That single script paid for the entire pipeline.</p>
-<p>If you take only one thing from this post, remember: metrics that aren’t tied to a business rule are decoration. Measure facts, latency, cost, and retention. Everything else is noise.</p>
-<h2 id="what-to-do-next">What to do next</h2>
-<p>Open your metrics dashboard right now. Find the p95 latency and cost per 1000 requests for the last 7 days. If either is missing, set up CloudWatch Metrics for Lambda duration and DynamoDB scan units. Then open your LLM responses table and add a column <code>extracted_balance</code>. Write a Pydantic validator that checks every extracted balance against your loan table. Run it on 100 recent rows. If more than 2% are wrong, roll back to the previous model immediately. That’s your next 30 minutes.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>What’s the fastest way to add structured validation without rewriting the model?</strong></p>
-<p>Use a Pydantic 2.9 schema on the raw text first. Extract entities with spaCy 3.8 or regex, then validate with Pydantic. It takes less than 200 lines of code and works with any model output. We did this in one afternoon for a legacy system.</p>
-<p><strong>How do I handle Swahili mixed with English in entity extraction?</strong></p>
-<p>spaCy 3.8’s <code>xx_ent_wiki_sm</code> model handles mixed language surprisingly well. It correctly tokenizes Swahili words and avoids false positives on English substrings.</p>
-<p><strong>Can I use this approach with open-source models like Llama 3.1?</strong></p>
-<p>Yes, but swap the cost metric for hardware cost. Track token throughput per GPU and GPU utilization. Our on-prem Llama 3.1 cluster cost $0.0012 per 1000 tokens vs $0.005 for gpt-4. The latency p95 was 1200 ms vs 950 ms on Lambda, but the cost savings justified it for high-volume use cases.</p>
-<p><strong>What’s the minimum dataset size needed to trust the retention delta metric?</strong></p>
-<p>At least 1000 weekly events per model version. With fewer events, noise dominates. If you only have 500 events, wait a week or use a Bayesian uplift model to estimate the true delta from sparse data.</p>
-<p><strong>How often should I retrain the model?</strong></p>
-<p>Only when the fact accuracy drops below 95% or the retention delta falls below 0%. Frequent retraining introduces drift and increases cost; our monitoring caught issues before they became critical.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/">LLM evals: skip the hype, track these 4 metrics</a></li>
-<li><a href="https://kubaik.github.io/llm-metrics-that-stop-wasting-time/">LLM metrics that stop wasting time</a></li>
-<li><a href="https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/">LLM drift before users complain: catch it early</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>In those cases, measure latency and cost, sample outputs manually, and defer the rest until volume or risk justifies it.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Open the table or log store where LLM responses are recorded. If token counts are not stored per request, add two columns — <code>prompt_tokens</code> and <code>completion_tokens</code> — and populate them from the API response for new requests. Then run a query over the last 24 hours that sums those columns and multiplies by the per-token price for the model in use. Compare the result to the expected daily budget. If the figure is higher than expected, the prompt size is the first thing to inspect, because prompt tokens are paid on every call and are the easiest cost to reduce.</p>
                 
                 
             </div>

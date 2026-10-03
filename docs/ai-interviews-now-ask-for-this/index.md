@@ -1,125 +1,290 @@
 # AI interviews now ask for this
 
-The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.
+## What actually changed in AI-assisted engineering interviews
 
-## The gap between what the docs say and what production needs
+The shift in technical interviews is not that candidates are asked to write code with an AI assistant. It is that they are asked to debug, audit, and critique code that an AI assistant produced. The distinction matters. Generating code is cheap; understanding why generated code fails under load, leaks data, or passes tests that should have failed is the skill employers are now filtering for.
 
-In 2026, every engineering team adopted some form of AI-assisted development. By mid-2026, the feedback loop had fully rewritten what hiring managers expect in interviews. The change wasn’t subtle — it was abrupt.
+The reason is structural, not fashionable. AI code generators are trained to produce plausible code, and plausible code is usually code that works on the happy path. The failure modes that matter in production — ordering assumptions, shared mutable state, unbounded logging, over-broad exception handling, wildcard permissions — are exactly the ones a model has no strong signal to avoid. So teams that ship AI-assisted code accumulate a specific class of defects, and interviewers have started testing for the ability to find them.
 
-I first noticed this when interviewing at three Nairobi fintech companies within a month. The first two asked for classic system design. The third interviewer opened their laptop, spun up a live environment, and said, *"Fix this flaky test in the next 20 minutes, then explain why it failed."* I bombed. Not because I couldn’t fix the test, but because I’d never been asked to debug a test that was *designed to be flaky* — one that passed locally but failed 1 in 10 times on CI. That test was a side effect of a 2026 migration from pytest 7.4 to pytest 8.1 with `--random-order` enabled by default. No one had rolled back the flag, and no one had written a seed file to make the shuffle deterministic. The flakiness wasn’t a bug — it was a hidden requirement.
+This article covers the four areas where this shows up: test reliability, observability cost, secrets and credential rotation, and auditing generated code itself. Each section describes the failure mode, how to reproduce it, how to measure it, and what a defensible fix looks like.
 
-Hiring managers now assume you’ve worked in environments where tests are unreliable by design. They’re not wrong. In our production systems at [redacted fintech], we saw a 37% increase in flaky tests after migrating to pytest 8.1 in Q3 2026. The culprit? `--random-order` and a lack of seed control. The fix? A custom plugin to pin the seed per run, but no one on the team knew it existed until we hired a senior engineer who’d dealt with the same issue at a previous job. That’s the new baseline: you’re expected to know that flakiness is a feature, not a bug, and that reproducibility is a discipline, not a default.
+## Flaky tests and the reproducibility problem
 
-The second gap is around observability. In 2026, AWS rolled out CloudWatch Lambda Insights v1.4 with custom metrics support. Teams started instrumenting everything — not just requests, but the *latency of the instrumentation itself*. Hiring managers now ask candidates to walk through a flame graph that includes the overhead of emitting metrics. I was surprised when a candidate at my company traced a 45ms p99 latency spike to the Prometheus client in Node 20 LTS adding 8ms of overhead per request. No one had optimized the client for high-cardinality labels. The candidate deleted the custom histogram and moved to OpenTelemetry 1.30, cutting overhead to 1.2ms. That’s the new standard: you’re not just expected to debug code — you’re expected to debug the *cost* of debugging.
+A flaky test is one that passes or fails without any change to the code under test. The most common mechanical cause in Python projects is test-order dependence: a test that assumes it runs first, or assumes a database starts empty, or asserts on an auto-incrementing identifier.
 
-The third gap is around security assumptions. In 2026, most teams have moved from environment variables to AWS Secrets Manager with IAM-based rotation. But the interview question has shifted: *"Show me how you’d rotate a secret without dropping traffic below 99.9% availability."* Candidates are expected to know that Secrets Manager’s rotation lambda can fail mid-rotation, leaving the old secret in memory but invalid in the DB. The fix? Dual-write with a grace period. But no one teaches that in tutorials. I learned it the hard way when a rotation script failed on a Friday at 5 PM. We dropped 0.3% of transactions, but a post-mortem revealed that the failure mode was predictable — the lambda timeout was set to 60 seconds, but the DB write could take 90 seconds under load. The fix was to set the timeout to 120 seconds and add a retry with exponential backoff. That’s the new baseline: you’re expected to know that secrets rotation is a distributed systems problem, not a configuration problem.
+Two separate things get conflated here, and interviewers often probe the distinction:
 
-The final gap is around AI-specific skills. In 2026, most teams use GitHub Copilot Enterprise with a custom model fine-tuned on their codebase. The interview question now includes: *"Take this prompt, run it through the model, and explain why the generated code might introduce a race condition under load."* Candidates are expected to know that Copilot Enterprise v3.1 tends to inline constants into hot paths, which can cause JIT deoptimization in V8. I ran into this when a candidate pointed out that a Copilot-generated API gateway handler was using `const MAX_RETRIES = 3` inside the handler function. Under load, V8 would optimize the constant into the loop, but the retry logic relied on mutating the constant. The fix? Move the constant to module scope. That’s the new baseline: you’re expected to know that AI-generated code has its own performance quirks, and you need to audit them like any other code.
+1. **Nondeterministic ordering.** Plugins such as `pytest-random-order` shuffle test execution to surface hidden inter-test dependencies. If a suite only passes in one order, that is a real defect the shuffle has exposed.
+2. **Nondeterministic state.** Even with a fixed order, a test that asserts `response.json()["id"] == 1` is asserting on state that depends on how many rows exist. That assertion is wrong regardless of ordering.
 
-Hiring managers are no longer asking about algorithms or system design in isolation. They’re asking about the *edge cases* that only emerge in production systems that use AI tools, observability stacks, and security practices that didn’t exist two years ago.
-
-## How AI changed what hiring managers are looking for in engineering interviews actually works under the hood
-
-The shift isn’t just about tools — it’s about the *feedback loop* between AI assistance and production systems. In 2026, teams adopted AI for code generation and review. By 2026, they realized that AI-generated code introduced new failure modes — not just bugs, but *patterns* of instability that only appear under load or in edge cases. Hiring managers now treat interviews as a way to probe for those patterns.
-
-The first change is in *test design*. AI tools like GitHub Copilot Enterprise v3.1 and GitLab Duo Code v2.5 tend to generate tests that are either too narrow (checking only happy paths) or too broad (asserting everything, including internal state). Hiring managers now ask candidates to *critique* a test suite generated by AI. I was surprised when a candidate at my company pointed out that a Copilot-generated test for a payment endpoint was asserting the exact value of a UUID, which would fail if the database auto-generated a different UUID under load. The test wasn’t wrong — it was brittle. The fix was to assert the *format* of the UUID, not the value. That’s the new baseline: you’re expected to know that AI-generated tests can be brittle, and you need to make them resilient.
-
-The second change is in *observability design*. AI tools like Amazon CodeWhisperer v3.2 and Cursor v1.12 generate code that logs aggressively — not just for debugging, but for generating training data. Hiring managers now ask candidates to explain how they’d *filter* these logs to avoid leaking PII or sensitive business data. I ran into this when a candidate pointed out that a Copilot-generated Lambda handler was logging the entire request body, including credit card numbers. The fix was to use a structured logger with redaction rules. That’s the new baseline: you’re expected to know that AI-generated code can leak data, and you need to audit the logging strategy.
-
-The third change is in *security design*. AI tools like Sourcegraph Cody v1.8 and Amazon Q Developer v2.3 generate code that uses third-party libraries without checking for vulnerabilities. Hiring managers now ask candidates to *audit* a dependency tree generated by AI. I was surprised when a candidate at my company pointed out that a Copilot-generated API client was using `axios` v1.6.0, which had a known prototype pollution vulnerability (CVE-2026-31241). The fix was to pin `axios` to v1.6.8. That’s the new baseline: you’re expected to know that AI-generated code can pull in vulnerable dependencies, and you need to audit the dependency tree.
-
-The fourth change is in *performance design*. AI tools like Replit Ghostwriter v2.9 and Amazon CodeWhisperer v3.2 generate code that assumes infinite memory and CPU. Hiring managers now ask candidates to *profile* AI-generated code under memory constraints. I ran into this when a candidate pointed out that a Copilot-generated event processor was using a `Map` to store all events in memory, which caused OOM errors under load. The fix was to use a streaming approach with a fixed-size buffer. That’s the new baseline: you’re expected to know that AI-generated code can be memory-hungry, and you need to profile it under constraints.
-
-The fifth change is in *cost design*. AI tools like GitHub Copilot Enterprise v3.1 and Amazon Q Developer v2.3 generate code that makes expensive API calls — not just for generation, but for runtime. Hiring managers now ask candidates to *estimate* the cost of running AI-assisted code in production. I was surprised when a candidate at my company pointed out that a Copilot-generated analytics pipeline was making 10 API calls per request, each costing $0.0001. Under 1M requests/day, that’s $100/day — $3,000/month. The fix was to cache the results of the API calls. That’s the new baseline: you’re expected to know that AI-assisted code can be expensive, and you need to estimate the cost before deploying.
-
-Under the hood, the shift is about *feedback loops*. AI tools generate code, which generates new failure modes, which require new tests, observability, security, performance, and cost considerations. Hiring managers now treat interviews as a way to probe for candidates who can *close the loop* — who can take AI-generated code, identify its failure modes, and design systems to mitigate them.
-
-## Step-by-step implementation with real code
-
-Let’s walk through a real example: debugging a flaky test generated by Copilot Enterprise v3.1 in a Python 3.11 service using pytest 8.1.
-
-### Step 1: Reproduce the flakiness
-
-The test in question was a simple API endpoint test:
-
-```python
-from fastapi.testclient import TestClient
-from main import app
-
-client = TestClient(app)
-
-def test_create_user():
-    response = client.post("/users", json={"name": "Alice", "email": "alice@example.com"})
-    assert response.status_code == 201
-    assert response.json()["id"] == 1
-```
-
-Under load, the test failed about 1 in 10 times with:
-
-```
-assert response.json()["id"] == 1
-AssertionError: assert 2 == 1
-```
-
-The issue wasn’t the test — it was the database. The endpoint was using SQLite in-memory for tests, and the auto-increment ID was being reused across test runs because pytest 8.1 shuffles the test order by default.
-
-### Step 2: Fix the test order issue
-
-The fix was to pin the test order using a seed. We added a `pytest.ini` file:
+The fix for ordering is to pin a seed so runs are reproducible while still exercising shuffle:
 
 ```ini
+# pytest.ini
 [pytest]
+# pytest-random-order reads this option; pin it so CI failures are reproducible.
 random_order_seed = 42
 ```
 
-But that wasn’t enough. The test still failed because SQLite’s auto-increment ID resets when the in-memory DB is recreated. The fix was to use a file-based SQLite DB and reset it explicitly:
+The fix for state dependence is to stop asserting on values the test does not control. Assert on the shape and constraints of the response instead:
 
 ```python
-import pytest
-import sqlite3
+def test_create_user(client):
+    response = client.post(
+        "/users", json={"name": "Alice", "email": "alice@example.com"}
+    )
+    assert response.status_code == 201
+    body = response.json()
+    assert isinstance(body["id"], int)
+    assert body["name"] == "Alice"
+```
+
+### Reproducing and measuring flakiness
+
+A single failing run tells you nothing useful. What you want is a failure rate over many runs, plus the seed that produces the failure.
+
+```bash
+# Run the suite 50 times with different seeds, stop on first failure, keep the seed.
+for i in $(seq 1 50); do
+  pytest -p no:randomly -q --random-order-seed=$i || { echo "failed at seed $i"; break; }
+done
+```
+
+If the suite uses `pytest-random-order`, the seed is reported in the failure output; capture it and re-run with that exact seed to get a deterministic reproduction. Instrument by logging the seed and the test order to CI output — without that, a failure at 3 a.m. is unreproducible.
+
+A useful metric to track is **failures per thousand CI runs** for the suite as a whole, segmented by whether a fixed seed reproduces the failure. A failure that reproduces under a fixed seed is a code or test defect. A failure that does not reproduce under any seed is usually an infrastructure or timing issue and belongs in a different bucket.
+
+### The database-state fixture
+
+If tests share a database, the fixture must put it in a known state and tear it down. Using a file-based SQLite database and deleting it before and after the module is one approach:
+
+```python
 import os
+import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from main import Base
 
 @pytest.fixture(scope="module", autouse=True)
 def setup_db():
     db_path = "./test.db"
     if os.path.exists(db_path):
         os.remove(db_path)
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
-    cursor.execute("""
-        CREATE TABLE users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            email TEXT
-        )
-    """)
-    conn.commit()
-    yield conn
-    conn.close()
+    engine = create_engine(f"sqlite:///{db_path}")
+    Base.metadata.create_all(bind=engine)
+    yield
+    engine.dispose()
     if os.path.exists(db_path):
         os.remove(db_path)
 ```
 
-### Step 3: Audit the Copilot-generated code
+Two caveats worth stating plainly. First, SQLite in-memory databases are per-connection; if the application opens a new connection per request, each request sees an empty database. That alone produces the "id is 1, then id is 2" class of failure. Second, `scope="module"` means the fixture runs once per module, not once per test — tests within the module still share state. Use `scope="function"` if isolation matters more than speed.
 
-The endpoint was generated by Copilot Enterprise v3.1:
+## Observability overhead and high-cardinality metrics
+
+Instrumentation is not free. Every span, log line, and metric emission consumes CPU, allocation, and network. The failure mode that shows up in interviews is a candidate who instruments everything, then cannot explain why p99 latency rose after the change.
+
+The specific trap is **high-cardinality labels**. A metric labelled by user ID, request ID, or full URL path will create one time series per distinct value. Most metrics backends charge per active time series and degrade in query performance as cardinality grows. A metric labelled by `http.route` (bounded) is fine; the same metric labelled by `http.target` (unbounded) is not.
+
+### How to measure instrumentation overhead
+
+You cannot reason your way to the overhead number; you have to measure it. The procedure:
+
+1. Run a fixed load profile against the service with instrumentation disabled. Record p50, p95, p99 latency and CPU utilization.
+2. Enable instrumentation with the same load profile. Record the same numbers.
+3. Subtract. The difference is the overhead, expressed in milliseconds at each percentile.
+
+For a local profile of a Python service, `py-spy` samples the running process without code changes:
+
+```bash
+py-spy top --pid <pid> --duration 10
+```
+
+For a Node.js service, use the built-in profiler or `--cpu-prof`. For any service, the cleanest comparison is the same load generator against two builds that differ only in whether the instrumentation SDK is initialized.
+
+The documented trade-off is that distributed tracing typically adds low single-digit milliseconds per request when sampling is enabled and the exporter batches asynchronously. If the exporter is synchronous or sampling is at 100% under high throughput, the overhead can be much larger. The instrumentation itself is rarely the dominant cost; the export path usually is.
+
+### Reducing cardinality
+
+The fix is to constrain label values before they reach the metric backend:
 
 ```python
-from fastapi import FastAPI, HTTPException
+from opentelemetry import metrics
+
+meter = metrics.get_meter(__name__)
+
+# Bounded label: the route template, not the resolved path.
+request_counter = meter.create_counter(
+    "http.server.requests",
+    description="Count of HTTP requests by route and status.",
+)
+
+def record_request(route_template: str, status_code: int) -> None:
+    # route_template is e.g. "/users/{user_id}", never "/users/12345".
+    request_counter.add(1, {"http.route": route_template, "http.status_code": status_code})
+```
+
+The rule: any label whose number of distinct values grows with traffic must not be a metric label. Put it in a trace attribute or a log field instead, where the backend is designed for high cardinality.
+
+## Secrets rotation as a distributed systems problem
+
+Rotating a credential without dropping traffic is a coordination problem, not a configuration change. The interview question — "how would you rotate a secret without a gap in availability" — is testing whether the candidate understands that two systems (the secret store and the application) hold the credential at different times.
+
+The failure mode is straightforward. A rotation process updates the credential in the secret store and in the backing service. Between those two writes, one side has the new value and the other has the old. Any request that reads the secret in that window fails authentication.
+
+### The dual-write pattern
+
+The standard mitigation is to accept both old and new credentials for a grace period:
+
+1. Generate the new credential. Store it alongside the old one, marked as the new active value but with the old value still accepted.
+2. Update the backing service (database, third-party API) to accept both.
+3. Roll the application to read the new value. Because the old value is still accepted, instances that have not yet picked up the new value continue to work.
+4. After the grace period — long enough for every running instance to have restarted or refreshed — revoke the old value.
+
+The grace period must exceed the maximum time any instance can hold a stale secret. If secrets are cached for 15 minutes and instances restart on a rolling schedule over 10 minutes, a 30-minute grace period is a reasonable starting point. That is arithmetic, not a magic number: `grace_period > cache_ttl + rollout_duration + clock_skew_margin`.
+
+### Handling rotation failures
+
+Rotation lambdas and scripts fail. The failure mode that matters is a partial rotation: the new secret is written to the store but the backing service still expects the old one, or vice versa. The application must not crash on a failed refresh — it should keep using the last known-good value and retry.
+
+```python
+import time
+import logging
+
+logger = logging.getLogger(__name__)
+
+def refresh_secret_with_retry(fetch, current, max_attempts=5, base_delay=1.0):
+    """Fetch a new secret, falling back to the previous value on failure."""
+    for attempt in range(max_attempts):
+        try:
+            return fetch()
+        except Exception as exc:
+            delay = base_delay * (2 ** attempt)
+            logger.warning(
+                "secret refresh attempt %d failed: %s; retrying in %.1fs",
+                attempt + 1, exc, delay,
+            )
+            time.sleep(delay)
+    logger.error("secret refresh exhausted retries; keeping previous value")
+    return current
+```
+
+The important property is the return of `current` on total failure. A rotation system that raises on failure and takes the service down is worse than one that keeps serving with a soon-to-expire credential.
+
+## Auditing AI-generated code: a checklist
+
+The interview exercise is usually: here is a generated function or module, find what is wrong. The following checklist covers the categories that generated code most often gets wrong. Each item is a question to ask of the code, not a rule to apply blindly.
+
+### Correctness under concurrency
+
+- Does the code hold a lock or transaction across an `await` or a network call? If so, it can hold the lock far longer than intended.
+- Are there two `commit()` calls in one logical operation? Nested or repeated commits are a common source of partial writes and, under load, deadlocks.
+- Does the code read a value, then write it back based on the read (read-modify-write)? Without a transaction or a compare-and-swap, that is a lost-update race.
+
+```python
+# Generated code with a repeated commit inside one logical operation.
+def create_user(db, user_data):
+    user = User(**user_data)
+    db.add(user)
+    db.commit()          # first commit: user row exists
+    # ... more operations that may fail ...
+    db.commit()          # second commit: partial state if the first succeeded
+```
+
+The fix is to make the operation atomic: one transaction, one commit, roll back on failure.
+
+### Error handling
+
+- Is there a bare `except:` or `except Exception:` that swallows the error and returns a success-shaped response? That masks failures and makes incidents invisible.
+- Does the handler log the exception with enough context to diagnose it, or does it log only that something went wrong?
+
+```python
+from fastapi import HTTPException
+
+@app.post("/process")
+def process(payload: dict):
+    try:
+        result = do_work(payload)
+        return {"status": "ok", "result": result}
+    except ValueError as exc:
+        # Expected, client-caused failure.
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as exc:
+        # Unexpected: log with context, return a generic message.
+        logger.exception("unexpected failure processing payload")
+        raise HTTPException(status_code=500, detail="internal error")
+```
+
+### Logging and data exposure
+
+- Does the code log an entire request or event object? Request objects routinely contain credentials, tokens, and personal data.
+- Are there fields that should be redacted before any log write? Redaction must happen at the logging boundary, not be assumed to happen downstream.
+
+```javascript
+const winston = require('winston');
+
+const logger = winston.createLogger({
+  format: winston.format.combine(
+    winston.format.json()
+  ),
+  transports: [new winston.transports.Console()],
+});
+
+// Redact before logging, not after.
+function safeLog(event) {
+  const { cardNumber, cvv, ...rest } = event;
+  logger.info(rest);
+}
+```
+
+### Permissions and infrastructure
+
+- Does an IAM policy, service account, or role use a wildcard action or resource? Generated infrastructure code frequently does, because it is the shortest path to "it works."
+- Can the permission be scoped to the specific resource and the specific actions the code performs?
+
+```yaml
+Policies:
+  - Effect: Allow
+    Action:
+      - 'dynamodb:GetItem'
+      - 'dynamodb:PutItem'
+    Resource: !GetAtt MyTable.Arn
+```
+
+### Dependencies
+
+- Does the generated code add a dependency? If so, is it pinned to a range, and has it been checked for known vulnerabilities?
+
+```bash
+pip-audit --desc
+```
+
+Dependency auditing is a routine CI step, not a one-time review. The point of the checklist item is that generated code introduces dependencies silently, and an unpinned or unvetted dependency is a supply-chain risk.
+
+### Performance assumptions
+
+- Does the code assume the dataset fits in memory? Generated code often does, because the training examples did.
+- Does the code make a network call inside a loop? That turns an O(n) operation into O(n) round trips.
+- Does the code allocate a buffer sized by user input? That is a denial-of-service vector.
+
+## A worked example: auditing one generated function
+
+Consider this generated endpoint, of the kind a code assistant produces for a FastAPI service:
+
+```python
+from fastapi import FastAPI
 from pydantic import BaseModel
 from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 app = FastAPI()
-DATABASE_URL = "sqlite:///./test.db"
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+engine = create_engine("sqlite:///./app.db")
+SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String)
     email = Column(String, unique=True)
 
@@ -139,362 +304,106 @@ def create_user(user: UserCreate):
     return db_user
 ```
 
-The code was correct, but the test was brittle. The fix was to update the test to use the same DB setup:
+Walking the checklist:
+
+**Correctness.** The session is never closed. Under sustained load this exhausts the connection pool. The fix is a dependency that yields a session and closes it, or a context manager. The `unique=True` constraint on `email` means a duplicate insert raises `IntegrityError`, which is not handled — so the endpoint returns a 500 for a client error that should be a 409.
+
+**Error handling.** No handling at all. A duplicate email produces an unhandled exception.
+
+**Logging.** No logging, so failures are invisible except in the framework's default error output.
+
+**Performance.** `create_engine` with SQLite is synchronous and, for a write-heavy endpoint, serializes on the database file. That is fine for a demo and wrong for production, but the more transferable point is that the generated code chose the simplest database configuration without any comment acknowledging the trade-off.
+
+**Dependencies.** SQLAlchemy is a real dependency with a version range; the generated code does not pin one. Whether the installed version has a known vulnerability is a question for `pip-audit`, not for inspection.
+
+The rewritten version addresses the concrete defects:
 
 ```python
-from fastapi.testclient import TestClient
-from main import app, SessionLocal
-import pytest
-import os
+from fastapi import Depends, FastAPI, HTTPException
+from pydantic import BaseModel
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import declarative_base, sessionmaker, Session
 
-client = TestClient(app)
+app = FastAPI()
+engine = create_engine("sqlite:///./app.db")
+SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
+Base = declarative_base()
 
-@pytest.fixture(scope="module", autouse=True)
-def setup_db():
-    db_path = "./test.db"
-    if os.path.exists(db_path):
-        os.remove(db_path)
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
-    from main import Base
-    engine = create_engine("sqlite:///./test.db")
-    Base.metadata.create_all(bind=engine)
-    yield
-    if os.path.exists(db_path):
-        os.remove(db_path)
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String, unique=True)
 
-def test_create_user(setup_db):
-    response = client.post("/users", json={"name": "Alice", "email": "alice@example.com"})
-    assert response.status_code == 201
-    assert "id" in response.json()
-```
+Base.metadata.create_all(bind=engine)
 
-The key change was removing the brittle assertion on the ID and using a fixture to ensure the DB was in a known state.
+class UserCreate(BaseModel):
+    name: str
+    email: str
 
-### Step 4: Profile the AI-generated code
-
-The endpoint was using SQLAlchemy, which can be slow under load. We profiled it using `py-spy` 0.4.0:
-
-```bash
-py-spy top --pid <pid> --duration 10
-```
-
-We found that the `SessionLocal()` call was taking 2ms per request, and the DB commit was taking 5ms. The fix was to use connection pooling and async SQLAlchemy:
-
-```python
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker
-
-DATABASE_URL = "sqlite+aiosqlite:///./test.db"
-async_engine = create_async_engine(DATABASE_URL)
-AsyncSessionLocal = sessionmaker(
-    bind=async_engine, class_=AsyncSession, expire_on_commit=False
-)
-
-@app.post("/users")
-async def create_user(user: UserCreate):
-    async with AsyncSessionLocal() as db:
-        db_user = User(name=user.name, email=user.email)
-        db.add(db_user)
-        await db.commit()
-        await db.refresh(db_user)
-        return db_user
-```
-
-Under load, the async version reduced latency from 7ms to 3ms.
-
-### Step 5: Audit the dependencies
-
-The Copilot-generated code used SQLAlchemy 2.0.7. We ran `pip-audit` 2.7.0:
-
-```bash
-pip-audit --desc --format json
-```
-
-We found a medium-severity vulnerability in SQLAlchemy 2.0.7 (CVE-2024-22118), which allowed SQL injection via crafted input. The fix was to pin SQLAlchemy to 2.0.15.
-
-```bash
-pip install "sqlalchemy>=2.0.15,<3.0.0"
-```
-
-## Performance numbers from a live system
-
-We deployed the fixed endpoint to production and measured the results over two weeks.
-
-| Metric | Before | After | Change |
-|--------|--------|-------|--------|
-| Flaky test rate | 12% | 0.1% | -99.2% |
-| API p99 latency | 18ms | 9ms | -50% |
-| DB connection time | 2ms | 0.8ms | -60% |
-| Cost per 1M requests | $0.45 | $0.18 | -60% |
-
-The biggest surprise was the cost savings. The async SQLAlchemy change reduced the number of DB connections, which cut our RDS costs by 40%. The flaky test rate drop was expected, but the latency improvement was a bonus.
-
-I ran into a surprise when we enabled OpenTelemetry 1.30 in the endpoint. The tracing added 1.2ms to the p99 latency, but the traces revealed that the remaining 9ms was spent in the DB. The fix was to add a Redis cache for frequent users:
-
-```python
-from redis.asyncio import Redis
-
-redis = Redis(host="redis", port=6379, decode_responses=True)
-
-@app.post("/users")
-async def create_user(user: UserCreate):
-    cache_key = f"user:{user.email}"
-    cached = await redis.get(cache_key)
-    if cached:
-        return {"id": int(cached)}
-    async with AsyncSessionLocal() as db:
-        db_user = User(name=user.name, email=user.email)
-        db.add(db_user)
-        await db.commit()
-        await db.refresh(db_user)
-        await redis.set(cache_key, str(db_user.id), ex=3600)
-        return db_user
-```
-
-Under load, the cache cut DB calls by 70%, reducing p99 latency to 4ms. The tracing overhead was now 30% of the total latency, which was acceptable.
-
-## The failure modes nobody warns you about
-
-### 1. AI-generated tests can hide real bugs
-
-I was surprised when a Copilot-generated test for a payment endpoint passed all checks but failed in production because it didn’t account for a race condition in the payment gateway. The test used a mock that returned success immediately, but the real gateway had a 500ms delay. The fix was to add a delay to the mock:
-
-```python
-import time
-
-@pytest.fixture
-def mock_payment_gateway(monkeypatch):
-    def mock_charge(*args, **kwargs):
-        time.sleep(0.5)  # Simulate real gateway delay
-        return {"status": "success", "id": "mock-123"}
-    monkeypatch.setattr("payment.gateway.charge", mock_charge)
-```
-
-The lesson: AI-generated tests can be too optimistic. Always validate them against real behavior.
-
-### 2. AI-generated observability code can leak data
-
-A Copilot-generated Lambda handler in Node 20 LTS was logging the entire event object, including credit card numbers. The fix was to use a structured logger:
-
-```javascript
-const { createLogger, transports, format } = require('winston');
-const redact = require('redact-secrets')(['cardNumber', 'cvv']);
-
-const logger = createLogger({
-  format: format.combine(
-    format.json(),
-    redact()
-  ),
-  transports: [new transports.Console()]
-});
-```
-
-The lesson: AI-generated code assumes you’ll handle logging manually. Always audit the logs.
-
-### 3. AI-generated database code can cause deadlocks
-
-A Copilot-generated endpoint in Python 3.11 used nested transactions with SQLAlchemy:
-
-```python
-@db_session
-def create_user(user_data):
-    user = User(**user_data)
-    db.add(user)
-    db.commit()
-    # More operations...
-    db.commit()  # Nested commit
-```
-
-Under load, this caused deadlocks. The fix was to flatten the transactions:
-
-```python
-@db_session
-def create_user(user_data):
-    user = User(**user_data)
-    db.add(user)
-    db.commit()
-```
-
-The lesson: AI-generated code can introduce nested transactions that break under load.
-
-### 4. AI-generated error handling can mask failures
-
-A Copilot-generated endpoint swallowed all exceptions:
-
-```python
-@app.post("/process")
-def process():
+def get_db():
+    db = SessionLocal()
     try:
-        # Do work
-        return {"status": "ok"}
-    except:
-        return {"status": "error"}  # Too broad
-```
+        yield db
+    finally:
+        db.close()
 
-The fix was to catch specific exceptions:
-
-```python
-@app.post("/process")
-def process():
+@app.post("/users", status_code=201)
+def create_user(user: UserCreate, db: Session = Depends(get_db)):
+    db_user = User(name=user.name, email=user.email)
+    db.add(db_user)
     try:
-        # Do work
-        return {"status": "ok"}
-    except ValueError as e:
-        logger.error(f"Invalid input: {e}")
-        raise HTTPException(400, detail=str(e))
-    except Exception as e:
-        logger.error(f"Unexpected error: {e}")
-        raise HTTPException(500, detail="Internal error")
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=409, detail="email already registered")
+    db.refresh(db_user)
+    return {"id": db_user.id, "name": db_user.name, "email": db_user.email}
 ```
 
-The lesson: AI-generated error handling can hide real issues.
+The changes are: session lifecycle managed by a dependency, duplicate-email handled as a client error, explicit 201 status, and a response shape the test can assert on without depending on a specific database-assigned value.
 
-### 5. AI-generated infrastructure code can break IAM policies
+## Decision checklist before shipping generated code
 
-A Copilot-generated CloudFormation template used a wildcard IAM policy:
+Use this as a review gate. Each question has a concrete artifact that answers it.
 
-```yaml
-Policies:
-  - Effect: Allow
-    Action: '*'
-    Resource: '*'
+| Question | Artifact that answers it |
+|---|---|
+| Do the tests pass in a shuffled order, repeatedly? | CI job running the suite N times with different seeds |
+| Are metric labels bounded? | Metric definitions with label allow-lists |
+| Is instrumentation overhead measured, not assumed? | Latency comparison with SDK on and off |
+| Can secrets rotate without a gap? | Dual-write documented with a grace period longer than cache TTL + rollout |
+| Is every failure path logged with context? | Code review of exception handlers |
+| Are permissions scoped to specific actions and resources? | IAM policy diff against a wildcard baseline |
+| Are new dependencies pinned and audited? | `pip-audit` (or equivalent) output in CI |
+| Is there a test that fails if the happy-path assumption breaks? | At least one negative test per endpoint |
+
+## FAQ
+
+**Does this mean candidates should refuse to use AI assistants?**
+No. The interview tests whether the candidate can evaluate generated output critically. Using the assistant is expected; trusting it without review is what the questions are designed to catch.
+
+**Are flaky tests always the test's fault?**
+No. Flakiness can come from the test, the code under test, or the environment. The first step is always to determine which by reproducing with a fixed seed and fixed environment. Only then does the fix become obvious.
+
+**How much observability overhead is acceptable?**
+There is no universal number. The right approach is to measure it for the specific service and decide whether the diagnostic value exceeds the cost. What is not acceptable is not knowing the number.
+
+**Is dual-write the only way to rotate secrets safely?**
+It is the most general. Some systems support overlapping credential validity natively; others use a short-lived token exchange. The underlying requirement is always the same: at no point may there be a window where one side expects a value the other side has stopped sending.
+
+**Should every generated function be rewritten?**
+No. The point of the checklist is to find the small fraction of generated code that carries a real failure mode. Most generated code is fine. The skill is in identifying the code that is not.
+
+## One thing to do in the next 30 minutes
+
+Pick one test suite in a repository you have access to and run it 20 times with different random-order seeds, capturing the seed on each failure:
+
+```bash
+for i in $(seq 1 20); do
+  pytest -q --random-order-seed=$i || echo "FAILED at seed $i"
+done
 ```
 
-The fix was to scope the policy:
-
-```yaml
-Policies:
-  - Effect: Allow
-    Action:
-      - 'dynamodb:GetItem'
-      - 'dynamodb:PutItem'
-    Resource: !GetAtt MyTable.Arn
-```
-
-The lesson: AI-generated IAM policies are dangerous. Always scope them.
-
-## Tools and libraries worth your time
-
-| Tool | Version | Use case | Why it’s worth it |
-|------|---------|----------|-------------------|
-| GitHub Copilot Enterprise | v3.1 | Code generation | Fine-tuned on your codebase, integrates with VS Code |
-| pytest | 8.1 | Testing | Random order, fixtures, async support |
-| py-spy | 0.4.0 | Profiling | Low-overhead CPU and memory profiling |
-| OpenTelemetry | 1.30 | Observability | Vendor-neutral tracing and metrics |
-| pip-audit | 2.7.0 | Security | Scans for vulnerable dependencies |
-| SQLAlchemy | 2.0.15 | ORM | Async support, connection pooling |
-| Redis | 7.2 | Caching | High-performance key-value store |
-| AWS Secrets Manager | 2026 | Secrets | IAM-based rotation, dual-write support |
-
-### GitHub Copilot Enterprise v3.1
-
-Copilot Enterprise is the only AI tool I trust for code generation now. It’s fine-tuned on your codebase, so it generates code that matches your style and patterns. It’s not perfect — it still generates brittle tests and unsafe IAM policies — but it’s the best tool we’ve found for accelerating development without sacrificing quality.
-
-The integration with VS Code is seamless. The only downside is the cost: $39/month per user. But we saved that in the first month by reducing context switching and boilerplate.
-
-### pytest 8.1
-
-pytest 8.1 introduced `--random-order` by default, which broke a lot of tests. But it also introduced better async support and fixture scoping. The new `random_order_seed` config is a lifesaver for reproducible test runs.
-
-We use pytest with `pytest-asyncio` 0.23 and `pytest-random-order` 1.1.
-
-### py-spy 0.4.0
-
-py-spy is the only profiler I trust for production systems. It’s low-overhead, works with async code, and doesn’t require code changes. We use it to profile Lambda functions and ECS tasks.
-
-The only downside is that it doesn’t support Windows, but we don’t run anything on Windows.
-
-### OpenTelemetry 1.30
-
-OpenTelemetry 1.30 is the de facto standard for observability. We use it with AWS X-Ray for tracing and Prometheus for metrics. The instrumentation is automatic for most libraries, but we still need to manually instrument custom code.
-
-The biggest surprise was the overhead. The Node 20 LTS client added 1.2ms to each request, but the traces revealed bottlenecks we couldn’t see otherwise.
-
-### pip-audit 2.7.0
-
-pip-audit is the easiest way to scan for vulnerable dependencies. We run it in CI and as a pre-commit hook. The JSON output is easy to parse and integrate with our security tools.
-
-The only downside is that it doesn’t catch all CVEs, but it’s better than nothing.
-
-### SQLAlchemy 2.0.15
-
-SQLAlchemy 2.0.15 introduced async support, which cut our DB latency by 60%. The connection pooling is excellent, and the ORM is still the best in Python.
-
-The only downside is the learning curve. Async SQLAlchemy is different from the synchronous version.
-
-### Redis 7.2
-
-Redis 7.2 is the best cache we’ve found. We use it for session storage, rate limiting, and caching frequent queries. The performance is unbeatable — we’ve seen 1ms p99 latency under load.
-
-The only downside is that it’s not a drop-in replacement for Memcached. We had to rewrite some code to use Redis’ data structures.
-
-### AWS Secrets Manager
-
-AWS Secrets Manager with IAM-based rotation is the only secrets management tool we trust now. The rotation lambda is simple to write, and the dual-write pattern ensures zero downtime.
-
-The only downside is the cost. We pay $0.40 per secret per month, plus $0.05 per 10,000 API calls. But it’s worth it for the security and reliability.
-
-## When this approach is the wrong choice
-
-This approach isn’t for every team. Here are the cases where it fails:
-
-### 1. Teams without production-grade AI tools
-
-If your team isn’t using GitHub Copilot Enterprise or a similar tool, the interview questions won’t reflect your reality. The shift in hiring expectations is driven by teams that have adopted AI tools. If you’re still using manual code review, you’re optimizing for the wrong skills.
-
-### 2. Teams without observability maturity
-
-If your team doesn’t have distributed tracing or structured logging, the interview questions about observability overhead will confuse candidates. Observability is a prerequisite for the new interview style.
-
-### 3. Teams without security automation
-
-If your team doesn’t scan for vulnerable dependencies or rotate secrets automatically, the interview questions about security audits will feel irrelevant. Security automation is a prerequisite.
-
-### 4. Teams without async or distributed systems experience
-
-If your team doesn’t use async code or distributed databases, the interview questions about race conditions and deadlocks will feel forced. Async and distributed systems experience is a prerequisite.
-
-### 5. Teams with legacy infrastructure
-
-If your team is still running on bare metal or monolithic apps, the interview questions about Lambda cold starts, connection pooling, and cache stampedes won’t apply. Cloud-native architecture is a prerequisite.
-
-### 6. Teams without a feedback loop
-
-If your team doesn’t measure and act on performance, cost, and reliability data, the interview questions about profiling and cost estimation will feel theoretical. A data-driven culture is a prerequisite.
-
-If any of these apply to your team, focus on building the prerequisites before adopting this interview style. Otherwise, you’ll end up with questions that don’t reflect your reality — and candidates who can’t answer them.
-
-## My honest take after using this in production
-
-I’ve interviewed 47 engineers in the last six months using this approach. The results surprised me.
-
-The first surprise was that *junior* engineers often outperformed *senior* engineers in debugging AI-generated flakiness. Juniors were more likely to question brittle tests and suggest fixes. Seniors were more likely to assume the tests were correct and blame the system.
-
-The second surprise was that *remote* candidates were more likely to succeed. Remote candidates were more comfortable with async debugging and distributed systems concepts. On-site candidates were more likely to get stuck on local setup issues.
-
-The third surprise was that *diverse* candidates were more likely to catch edge cases. Candidates from non-traditional backgrounds were more likely to notice that AI-generated code assumed Western date formats or English error messages. They also caught race conditions that Western candidates missed.
-
-The fourth surprise was that *culture fit* was harder to assess. The new
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 10, 2026
+If any run fails, you have found a real defect that a single run would have hidden — and you now have the exact seed to reproduce it.

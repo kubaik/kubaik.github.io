@@ -1,240 +1,267 @@
-# AI ops vs human ops: the incidents that broke them
+# AI-First vs Human-First Incident Response
 
-I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.
+## The core distinction
 
-## Why this comparison matters right now
+Two architectural patterns dominate AI-assisted incident response. They differ in exactly one place: who is allowed to take a mutating action without a human in the loop.
 
-Oncall in 2026 is a different beast: distributed traces span 17 services, p99 latency slides from 80 ms to 4 s inside one Kubernetes pod restart, and the alerting channel receives 47 PagerDuty webhooks every minute during a region failover. I learned this the hard way when a single missing index in PostgreSQL 16.2 caused a cascade that burned 12 hours of eng time because our AI responder kept suggesting vacuum-full commands as the root cause.
+**Human-first ops with AI triage.** The AI reads alerts, correlates them, ranks probable causes, and drafts a timeline. A human acknowledges, decides, and executes every remediation. The AI never pages anyone, never rolls back a deployment, and never closes an incident.
 
-The promise of AI ops is seductive: fewer pages, faster MTTR, reduced fatigue. But in practice it’s easy to end up with a system that silently silences alerts that matter or surfaces 20 false positives for every real incident. The tools we choose now will define how much we trust the system during the next outage when the humans are offline.
+**AI-first autonomous response.** An orchestrator ingests the alert, gathers context, selects a remediation from a policy set, executes it, verifies recovery, and closes the incident. Humans are paged only when no policy matches, when the action is classified irreversible, or when verification fails.
 
-This comparison focuses on two concrete paths teams actually took in 2026:
+Everything else — the alert router, the chat ops layer, the observability stack — is largely shared between the two. The decision is not "which vendor" but "which action boundary."
 
-• Option A: Human-first ops augmented by AI triage (Incident.io + PagerDuty AI Copilot). • Option B: AI-first incident response with autonomous agents that can page, remediate and close incidents (Rootly + Opsgenie + AICore 3.2).
+That boundary determines your failure modes. A human-first system fails by being slow. An AI-first system fails by being confidently wrong at machine speed. Both are real, and they require different mitigations.
 
-Both run on AWS with Node 20 LTS lambda runtimes and Python 3.11 agents. I’ll show where each shines, where each implodes, and the raw numbers that separate hope from reality.
+## Human-first architecture
 
-## Option A — how it works and where it shines
+A typical human-first stack:
 
-Human-first ops augmented by AI triage keeps humans in the loop while offloading repetitive cognitive load. The stack I’ve seen teams run successfully in 2026 looks like this:
+- **Alert routing:** a paging service with on-call schedules and escalation policies.
+- **Incident coordination:** a chat-ops bot that opens a channel, assigns roles, and appends events to a timeline.
+- **Triage layer:** an AI assistant that consumes historical incident data and surfaces ranked hypotheses plus candidate runbooks.
 
-• Primary alert router: PagerDuty or Opsgenie with dynamic schedules. • Incident commander: Incident.io Slack bot that opens a private incident channel, runs a war room, and auto-documents timelines. • AI triage layer: PagerDuty AI Copilot (build 2026.6.1) that surfaces likely causes, suggests playbooks, and suppresses noise based on past incidents.
+The triage layer is the only novel component. It is usually a retrieval system over past incidents plus a summarization model, not an autonomous agent. It has read access to observability APIs and write access to one thing: the incident channel.
 
-In practice, the AI Copilot ingests every past incident via the PagerDuty Events API v2 and trains a lightweight LLM locally on 30 GB of anonymized JSON logs. It surfaces a ranked list of probable root causes within 1.8 seconds of the first alert, while the human oncall still owns the final call. Teams that switched to this model in 2026 cut their mean time to acknowledge (MTTA) by 34% and reduced pages per engineer per month by 21%.
-
-The architecture is intentionally shallow: no autonomous agents paging ops at 3 a.m., no drift between what the AI says and what the monitoring stack sees. Instead, the AI acts like a well-trained junior engineer that never gets tired. It surfaces the same top-3 causes 92% of the time on synthetic incidents we ran in our chaos lab.
-
-Where it shines
-• Hybrid incidents: outages that mix infra (Kubernetes 1.29) and app (Node 20 LTS) layers benefit from the AI’s ability to correlate pod restarts with Node GC spikes. • Noisy alert sources: when Datadog throws 123 alerts in 5 minutes for the same underlying issue, AI Copilot groups them into one incident thread and ranks the severity correctly 89% of the time.
-
-Typical playbooks look like this:
+A minimal webhook handler that opens an incident channel looks like this:
 
 ```javascript
-// Incident.io webhook handler that auto-opens a Slack war room
+// Webhook handler: open an incident channel from a paging event
 const axios = require('axios');
-const INCIDENT_IO_TOKEN = process.env.INCIDENT_IO_TOKEN;
+const INCIDENT_TOKEN = process.env.INCIDENT_TOKEN;
 
 module.exports = async (req, res) => {
-  const { incident_key, dedup_key, alert_url } = req.body;
-  const response = await axios.post(
-    'https://api.incident.io/v1/incidents',
-    {
-      name: `Outage ${incident_key}`,
-      severity: 'high',
-      commander: 'oncall-slack-handle',
-      status: 'investigating'
-    },
-    { headers: { Authorization: `Bearer ${INCIDENT_IO_TOKEN}` } }
-  );
-  res.json(response.data);
+  const { incident_key, title, severity, service } = req.body;
+
+  if (!incident_key || !severity) {
+    return res.status(400).json({ error: 'missing incident_key or severity' });
+  }
+
+  try {
+    const response = await axios.post(
+      'https://api.example-incident-tool.com/v1/incidents',
+      {
+        name: title || `Incident ${incident_key}`,
+        severity,
+        service,
+        status: 'investigating'
+      },
+      {
+        headers: { Authorization: `Bearer ${INCIDENT_TOKEN}` },
+        timeout: 5000
+      }
+    );
+    return res.json({ id: response.data.id });
+  } catch (err) {
+    // Never fail closed on incident creation: log and let the pager retry.
+    console.error('incident create failed', err.message);
+    return res.status(502).json({ error: 'upstream failure' });
+  }
 };
 ```
 
-Cost profile (2026 AWS us-east-1, 100 engineers):
-• PagerDuty AI Copilot: $18 per engineer per month
-• Incident.io: $29 per incident channel per month (unlimited seats)
-• Lambda compute for glue: ~$11 / month
+Two details matter more than they look. First, the handler returns 502 rather than 200 on failure, so the pager's retry policy actually fires. Second, it validates input before calling upstream — a malformed payload that reaches the incident tool can create a duplicate channel that nobody closes.
 
-Total marginal cost per engineer: $58 / month — trivial compared to a single engineer’s salary.
+### Where it works well
 
-Weaknesses
-• Still human-driven: the AI can’t page itself, so if the oncall is asleep, pages still go unanswered. • Playbook drift: when teams tweak Kubernetes manifests, the AI’s static playbooks can lag, causing it to suggest outdated remediation steps. • Alert fatigue is only reduced, not eliminated; some teams report the AI surfaces 12 extra hypotheses per incident that are never validated.
+**Mixed-layer incidents.** When a symptom spans infrastructure and application layers, correlation is genuinely hard. A human who can see that a pod restart and a garbage-collection pause share a timestamp will beat a policy engine that only knows "restart → roll back."
 
-## Option B — how it works and where it shines
+**Noisy alert sources.** When one underlying fault produces dozens of alerts in minutes, grouping them into a single incident is the highest-value thing triage does. This is a clustering problem, and it is well within what a retrieval-plus-ranking system can do.
 
-AI-first incident response flips the script: the system can autonomously page, investigate, remediate, and close incidents without human approval in 68% of cases we tested in our lab. The stack I’ve seen in production uses:
+**Regulated or high-blast-radius environments.** If every production change requires a named human approver, an autonomous remediation path is not a shortcut — it is a compliance problem.
 
-• Alert source: Opsgenie with custom alert routing. • AI orchestrator: Rootly (v3.4.2) running a Python 3.11 agent with AICore 3.2 runtime. • Remediation engine: Terraform Cloud agents and Argo CD ApplicationSets for safe rollback. • Human loop: a 30-minute SLA window where a human must review any non-reversible change.
+### Where it breaks
 
-In production at a Series B SaaS company, the system handled 412 incidents in Q1 2026 and autonomously resolved 280 of them (68%). The remaining 132 required human escalation. Mean time to resolution (MTTR) dropped from 2.3 hours to 28 minutes for the auto-resolved set, with a 97% success rate on remediation tasks like scaling deployments or rolling back feature flags.
+**Latency floor.** The system cannot resolve anything faster than a human can be woken, read context, and act. For a fault that compounds — a connection pool exhaustion, a retry storm — that floor is the whole cost.
 
-The agent architecture is event-driven: every Opsgenie alert fires a Lambda (Node 20 LTS) that calls Rootly’s REST API v2. Rootly then spins up a temporary Kubernetes pod (1 vCPU, 2 GB RAM) that runs the Python agent. The agent:
+**Playbook drift.** Static runbooks go stale when manifests, service names, or deploy tooling change. The AI will confidently suggest a remediation step that references a resource that no longer exists. Mitigation: version runbooks alongside the code they describe and fail the triage response if the referenced resource is absent.
 
-1. Pulls the alert context from Datadog, CloudWatch, and Git. 2. Runs a 30-second drift analysis against the Terraform state bucket. 3. Executes canary rollbacks via Argo CD and measures p99 latency. 4. If the system stabilizes within 5 minutes, it auto-closes the incident and posts a timeline to Slack.
+**Unvalidated hypotheses.** A ranked list of probable causes is not the same as a correct one. If the list is long, it adds reading time rather than removing it. Track how often the top-ranked hypothesis is confirmed in the postmortem; if that number is low, the ranking is decoration.
 
-Sample agent code (simplified):
+## AI-first architecture
+
+A typical AI-first stack:
+
+- **Alert source:** paging service with routing rules that fan out to an orchestrator.
+- **Orchestrator:** a service that holds remediation policies and executes them.
+- **Remediation engine:** declarative deploy tooling (GitOps sync, infrastructure-as-code apply) plus a feature-flag or traffic-shifting API.
+- **Verification:** a health check that decides whether the action worked.
+- **Human gate:** a mandatory review window for actions classified as irreversible.
+
+The orchestrator is event-driven. An alert triggers a function that fetches context, evaluates policy, and either executes or escalates.
 
 ```python
-# Rootly agent that auto-rolls back a deployment
-import boto3, requests, os, time
+# Orchestrator: evaluate policy, execute, verify, escalate on failure
+import os
+import time
+import requests
 
-class RollbackAgent:
+class RemediationAgent:
+    IRREVERSIBLE = {"delete_database", "drop_table", "rotate_root_credentials"}
+
     def __init__(self):
-        self.rootly_token = os.getenv('ROOTLY_TOKEN')
-        self.tf_bucket = 'tf-state-2026-us-east-1'
-        self.argocd_token = os.getenv('ARGOCD_TOKEN')
+        self.orchestrator_token = os.getenv("ORCHESTRATOR_TOKEN")
+        self.deploy_token = os.getenv("DEPLOY_TOKEN")
+        self.verify_url = os.getenv("VERIFY_URL")
+        self.max_verify_seconds = int(os.getenv("MAX_VERIFY_SECONDS", "300"))
 
-    def run(self, alert):
-        # 1. Fetch current state from Terraform
-        s3 = boto3.client('s3')
-        state = s3.get_object(Bucket=self.tf_bucket, Key='prod/terraform.tfstate')['Body'].read()
-        # 2. Find last good version
-        last_good = self.find_last_good_version(state)
-        # 3. Sync Argo CD to last_good
-        headers = {'Authorization': f'Bearer {self.argocd_token}'}
-        r = requests.post(
-            'https://argocd.example.com/api/v1/applications/rollbacks',
-            json={'name': 'api-gateway', 'revision': last_good},
-            headers=headers
+    def handle(self, alert):
+        action = self.select_action(alert)
+        if action is None:
+            return self.escalate(alert, reason="no matching policy")
+
+        if action["name"] in self.IRREVERSIBLE:
+            return self.request_human_gate(alert, action)
+
+        result = self.execute(action)
+        if not result["ok"]:
+            return self.escalate(alert, reason=result["error"])
+
+        if self.verify():
+            return self.close(alert, action)
+
+        # Verification failed: do not retry the same action blindly.
+        return self.escalate(alert, reason="verification failed")
+
+    def select_action(self, alert):
+        # Policies are keyed by alert signature, not free-text reasoning.
+        policies = {
+            "deployment_5xx_spike": {"name": "rollback_deployment"},
+            "hpa_max_replicas": {"name": "raise_replica_ceiling"},
+            "feature_flag_error_rate": {"name": "disable_flag"},
+        }
+        return policies.get(alert.get("signature"))
+
+    def execute(self, action):
+        try:
+            r = requests.post(
+                "https://deploy.example.com/api/v1/actions",
+                json=action,
+                headers={"Authorization": f"Bearer {self.deploy_token}"},
+                timeout=30,
+            )
+            r.raise_for_status()
+            return {"ok": True}
+        except requests.RequestException as e:
+            return {"ok": False, "error": str(e)}
+
+    def verify(self):
+        deadline = time.time() + self.max_verify_seconds
+        while time.time() < deadline:
+            try:
+                r = requests.get(self.verify_url, timeout=5)
+                if r.status_code == 200 and r.json().get("healthy"):
+                    return True
+            except requests.RequestException:
+                pass
+            time.sleep(15)
+        return False
+
+    def escalate(self, alert, reason):
+        requests.post(
+            "https://pager.example.com/v2/enqueue",
+            json={"event_action": "trigger", "payload": {"summary": f"{alert['id']}: {reason}"}},
+            timeout=10,
         )
-        # 4. Wait and verify
-        time.sleep(300)
-        if self.verify_recovery():
-            self.close_incident(auto=True)
-        else:
-            self.escalate()
+
+    def request_human_gate(self, alert, action):
+        self.escalate(alert, reason=f"human approval required for {action['name']}")
+
+    def close(self, alert, action):
+        requests.post(
+            "https://orchestrator.example.com/v1/incidents/close",
+            json={"alert_id": alert["id"], "resolved_by": action["name"]},
+            headers={"Authorization": f"Bearer {self.orchestrator_token}"},
+            timeout=10,
+        )
 ```
 
-Cost profile (same 100 engineers, 500 incidents/month):
-• Opsgenie: $25 per user per month
-• Rootly v3.4.2: $299 / month flat
-• Lambda compute (Node 20 LTS): ~$42 / month
-• Argo CD agents & EKS pods: ~$187 / month
+Three design choices in that code carry most of the safety:
 
-Total marginal cost per incident: ~$0.98, or ~$490 / month for the stack. That’s cheaper than one extra engineer for most Series B companies.
+**Policy selection is keyed by alert signature, not by model reasoning.** A free-text "what should I do?" prompt is the single largest source of wrong actions. Map a known signature to a known action; escalate everything else.
 
-Where it shines
-• Time-critical outages: when a database node dies at 2 a.m., the agent can page, detect the failure, and roll back a deployment in under 3 minutes — faster than any human oncall. • Repetitive incidents: weekly cache stampedes, cron job timeouts, and autoscaling storms are handled autonomously, cutting pages by 84% in our dataset.
+**Irreversible actions are enumerated, not inferred.** The `IRREVERSIBLE` set is explicit and reviewed. A model that decides for itself whether an action is reversible will eventually be wrong.
 
-Weaknesses
-• Autonomous risk: a buggy rollback script once deleted 12 production pods before the human loop caught it (we fixed it by adding a 2-minute delay and a human approval gate). • Tooling sprawl: teams need Terraform Cloud, Argo CD, and Rootly all configured correctly; misconfigurations cause silent failures. • Alert fatigue paradox: the system pages humans anyway for irreversible changes, so the net reduction in pages is only 68%.
+**Verification failure escalates rather than retries.** Retrying the same action after a failed health check is how a single bad deploy becomes a rollback loop.
 
-## Head-to-head: performance
+### Where it works well
 
-We ran the same 100 synthetic incidents through both stacks on a Kubernetes 1.29 cluster with Node 20 LTS workers. Each incident was a mix of infra and app failures: pod OOM, Node GC spikes, database connection leaks, and feature flag misconfigurations. We measured:
+**Time-critical, well-understood faults.** If the signature is known and the remediation is a rollback to a known-good revision, the machine is faster than any human, and speed is the entire value.
 
-| Metric                                    | Human-first + AI Copilot | AI-first + autonomous agent |
-|-------------------------------------------|--------------------------|----------------------------|
-| Mean time to acknowledge (MTTA)           | 2.1 min                  | 0.7 min                    |
-| Mean time to resolution (MTTR)            | 28 min                   | 5 min                      |
-| Autonomous resolution rate                | 0%                       | 68%                        |
-| False positive rate during incidents      | 12%                      | 8%                         |
-| Human escalation rate                     | 22%                      | 32%                        |
-| PagerDuty noise reduction                 | 34%                      | 68%                        |
-| Cost per incident (AWS + SaaS)            | $1.27                    | $0.98                      |
+**Repetitive faults.** Cache stampedes, scheduled job timeouts, and autoscaling ceiling hits recur with the same shape. These are the highest-confidence automation candidates.
 
-The AI-first stack won on raw speed and cost, but the human-first stack kept false positives lower and required fewer post-incident fixes. In one test, the autonomous agent rolled back a deployment that was already stable, causing a 15-minute blip; the human team caught it via the war room and manually reverted — a scenario the human-first stack avoided completely.
+**Off-hours coverage.** The gap between "alert fires" and "human is awake" is where autonomous remediation earns its keep — provided the policy set is small and the verification is strict.
 
-Latency breakdown for the agent stack
-• API call from Opsgenie → Lambda: 180 ms (Node 20 LTS, arm64)
-• Rootly agent start-up & context fetch: 2.3 s (Python 3.11, 512 MB RAM)
-• Terraform drift scan: 1.1 s (remote state bucket)
-• Argo CD sync & verification: 180 s (including 2-minute human gate)
+### Where it breaks
 
-Total wall-clock time: ~3 minutes, well inside the 5-minute SLA we set for critical incidents.
+**App-layer faults are not rollback-shaped.** A race condition, a feature-flag misconfiguration, or a data-dependent bug does not resolve by reverting a deployment. An agent that treats every 5xx spike as a deploy problem will roll back healthy releases and make things worse.
 
-## Head-to-head: developer experience
+**Silent misconfiguration.** If the orchestrator's credentials expire, or a policy references a renamed resource, the failure is quiet. The alert fires, the agent does nothing, and nobody notices until the next incident review.
 
-Human-first ops feels like pairing with a tireless junior engineer. The AI Copilot surfaces likely causes ranked by confidence, but the oncall still owns the final call. Onboarding is trivial: engineers already know PagerDuty and Slack. The friction is low because the AI never tries to close incidents on its own.
+**The escalation paradox.** Every irreversible action still requires a human. If most of your incidents touch irreversible paths, the net reduction in pages is small, and you have added a system to maintain.
 
-AI-first ops feels like handing the pager to a robot. Engineers must:
-1. Learn Rootly’s DSL for defining remediation policies. 2. Write Python agents that safely roll back infrastructure. 3. Add human loops for destructive operations. 4. Monitor the agent’s decisions in real time via a custom dashboard.
+**Automation-induced incidents.** An agent with broad write access is itself a production risk. A bug in the remediation path can cause the outage it was meant to fix.
 
-The learning curve is steep: our Series B team spent 14 engineer-days writing and testing rollback policies before they trusted the system in production. During that period, pages actually increased because engineers were debugging both the incidents and the agent logic.
+## A worked failure analysis
 
-Tooling ergonomics comparison
-| Aspect                    | Human-first + AI Copilot | AI-first + autonomous agent |
-|---------------------------|--------------------------|----------------------------|
-| Onboarding time           | 1–2 hours                | 3–5 days                   |
-| Debugging visibility      | Slack + PagerDuty        | Custom dashboard + logs    |
-| Agent code required       | 0 lines                  | 200–500 lines              |
-| Human override needed     | Always                   | 32% of incidents           |
-| Incident documentation    | Auto-generated           | Auto-generated             |
-| Mean policy change time   | 5 min                    | 30 min                     |
+Consider a service that starts returning 5xx after a config change. Walk the same scenario through both architectures.
 
-The human-first stack wins on developer happiness because engineers spend time shipping features, not debugging agents. The AI-first stack wins when the team is willing to pay the upfront cost to build and maintain the agent layer.
+**Human-first.** Alert fires. Triage groups the 5xx spike with a simultaneous latency increase and a config-change event, and ranks "recent config change" first. On-call confirms, reverts the config, verifies. Elapsed time: minutes to tens of minutes, dominated by human wake-up and confirmation.
 
-## Head-to-head: operational cost
+**AI-first, policy keyed to the wrong signature.** The alert signature is `deployment_5xx_spike`, which maps to `rollback_deployment`. The agent rolls back the deployment. But the fault was the config change, which is not part of the deployment artifact. The rollback succeeds, the health check still fails, verification times out, and the agent escalates — now with a rollback that removed unrelated fixes and a confusing timeline.
 
-Cost isn’t just SaaS subscriptions; it’s the hidden tax of human escalations, incident war rooms, and post-mortems. We modeled two scenarios:
+The lesson is not "autonomy is bad." It is that **alert signature and root cause are different things**, and a policy engine that conflates them will take confident wrong actions. The mitigation is to make the verification step authoritative: if health does not recover, escalate immediately and do not attempt a second action.
 
-Scenario 1: 100 engineers, 500 incidents/month
-Scenario 2: 10 engineers, 50 incidents/month (bootstrapped)
+## How to measure both stacks
 
-| Cost element                     | Human-first (Scenario 1) | AI-first (Scenario 1) | Human-first (Scenario 2) | AI-first (Scenario 2) |
-|----------------------------------|--------------------------|-----------------------|--------------------------|-----------------------|
-| PagerDuty + AI Copilot           | $1,800                   | $2,500                | $180                     | $250                  |
-| Incident.io / Rootly             | $2,900                   | $299                  | $290                     | $299                  |
-| AWS Lambda (Node 20 LTS)         | $11                      | $42                   | $11                      | $42                   |
-| EKS agents / Terraform Cloud     | $0                       | $187                  | $0                       | $187                  |
-| Human escalation cost*           | $3,000                   | $1,200                | $300                     | $120                  |
-| Total monthly cost               | $7,711                   | $4,278                | $781                     | $798                  |
-| Cost per incident                | $15.42                   | $8.56                 | $15.62                   | $15.96                |
+Do not trust published benchmarks for this. Instrument your own system. For each incident record:
 
-*Human escalation cost is 2 hours of senior engineer time ($150/hr) per escalation, multiplied by the escalation rate from the table above.
+- **Time to acknowledge:** timestamp of first alert to timestamp of first human or agent acknowledgment.
+- **Time to resolution:** first alert to health check passing.
+- **Action attribution:** which action resolved it, and whether the postmortem confirmed that action was causal.
+- **Escalation rate:** fraction of incidents that reached a human, and why.
+- **False action rate:** actions taken that the postmortem judged unnecessary or harmful.
+- **Repeat rate:** fraction of incidents matching a previously seen signature.
 
-Surprise finding: for bootstrapped teams, the cost difference between stacks is negligible (~$17/month), but the human-first stack still yields better MTTR and fewer false positives. For larger teams, AI-first saves ~$3,400/month, but the ROI depends entirely on how many incidents the system can auto-resolve without human help.
+The two numbers that decide the architecture question are **repeat rate** and **false action rate**. High repeat rate plus low false action rate is the only combination that justifies autonomy. Low repeat rate means your policy set will rarely match, and you will pay the maintenance cost for nothing.
 
-## The decision framework I use
+To measure false action rate you need postmortem discipline: every incident must record whether the automated action was causal. Without that, you are optimizing on speed alone.
 
-I use a 5-question rubric when teams ask for my recommendation. Each question is binary yes/no; if any answer is no, I lean human-first.
+## Cost modeling without invented numbers
 
-1. Can the team tolerate 30 minutes of human review for destructive changes? – If no → AI-first is risky.
+Cost comparisons in this space are usually fabricated. Build yours from three inputs you can actually observe:
 
-2. Does the team have at least one engineer who can write Python agents and debug Terraform state? – If no → human-first.
+1. **Per-seat or per-incident SaaS pricing** — read your contract, not a blog post.
+2. **Compute cost of the orchestration path** — count invocations per incident, multiply by your provider's published per-invocation price, and add the verification polling calls.
+3. **Human time** — escalation rate × average minutes per escalation × your loaded hourly cost.
 
-3. Are incidents mostly infra-layer (Kubernetes, RDS, cache stampedes)? – If yes → AI-first can auto-resolve 70% of them.
+A worked illustration with stated assumptions: suppose 200 incidents per month, an escalation rate of 30%, and 45 minutes of senior engineer time per escalation at a loaded cost of $120/hour. Human escalation cost is 200 × 0.30 × 0.75 hours × $120 = $5,400 per month. If autonomy cuts the escalation rate to 15%, the saving is $2,700 per month — before subtracting the engineering time to build and maintain the policy layer. If that layer costs one engineer-day per month to maintain, the saving is smaller than it looks.
 
-4. Is oncall fatigue the primary pain point, not MTTR? – If yes → human-first + AI Copilot surfaces fewer false positives and feels safer.
+These figures are illustrative. Substitute your own incident count, escalation rate, and loaded hourly cost. The arithmetic is the point, not the numbers.
 
-5. Is the engineering culture comfortable with opaque decisions from an algorithm? – If no → human-first keeps humans in the loop.
+## Decision checklist
 
-Teams that answer yes to 4 or 5 out of 5 tend to choose AI-first; the rest stay human-first. In practice, 60% of teams I’ve advised in 2026 chose the human-first path because the autonomous risk wasn’t worth the speed gain.
+Work through these in order. The first "no" is usually decisive.
 
-## My recommendation (and when to ignore it)
+1. **Do you have at least 20 incidents with a recorded signature and a confirmed causal action?** Without this history, you cannot write reliable policies.
+2. **Is the repeat rate high?** If fewer than roughly half of incidents match a previously seen signature, autonomy will rarely fire.
+3. **Are the recurring incidents infrastructure-shaped?** Rollback-shaped faults automate well; race conditions and data bugs do not.
+4. **Can you enumerate irreversible actions exhaustively?** If you cannot list them, you cannot gate them.
+5. **Does a health check exist that reliably distinguishes recovered from not-recovered?** Weak verification turns autonomy into guesswork.
+6. **Is there an owner for the policy layer?** Unmaintained policies drift and fire on stale assumptions.
+7. **Does the team accept that the agent will sometimes be wrong in production?** If not, the human gate will be applied to everything, and the automation buys nothing.
 
-Recommendation: start with human-first ops augmented by AI triage (Incident.io + PagerDuty AI Copilot) unless you meet all three of these:
+If you answer yes to all seven, an AI-first design is defensible. If you answer no to any of the first five, build the human-first stack first and collect the incident history that would let you revisit the question.
 
-1. Your incidents are >70% infra-layer and repeat weekly. 2. You have at least one engineer who can write and test Python agents. 3. Your team is willing to accept 30-minute human review gates for destructive changes.
+## FAQ
 
-If those conditions are true, switch to AI-first (Rootly + Opsgenie + AICore 3.2).
+**Does AI triage replace on-call?** No. It reduces the time to form a hypothesis. Someone still has to confirm and act.
 
-Where I got it wrong
+**Can I run both patterns at once?** Yes, and it is common: autonomy for a small set of high-confidence signatures, human-first for everything else. The risk is that two paths create two timelines that disagree during an incident. Keep one system of record.
 
-In Q4 2026 I recommended an AI-first stack to a bootstrapped team with three engineers. They spent two weeks wiring Rootly to Argo CD and Terraform Cloud, but their incidents were 60% app-layer (feature flag misconfigurations, race conditions in Node 20 LTS services). The agent kept proposing rollbacks of stable deployments, which caused 12 extra pages. We rolled back to human-first after 18 days and cut pages by 40% in the next month.
+**What is the biggest cause of autonomous remediation failures?** Policy selection keyed to alert signature rather than root cause, combined with weak verification that cannot tell a fixed system from a still-broken one.
 
-The lesson: infra-layer incidents are easier to auto-resolve than app-layer ones. Don’t assume your stack fits the pattern.
+**How do I roll autonomy back safely?** Start with actions that are trivially reversible and observable, keep the human gate on everything else, and track false action rate from the first incident. If it rises, disable the policy rather than tuning it live during an outage.
 
-## Final verdict
+## Do this in the next 30 minutes
 
-If your team ships mostly infrastructure and you have the engineering bandwidth to maintain agents, the AI-first stack (Rootly v3.4.2 + Opsgenie + AICore 3.2) is the clear winner: it reduces MTTR from 28 minutes to 5 minutes and cuts costs by ~$3,400/month at scale. But if your incidents mix app and infra layers, or you don’t have agent-writing muscle on the team, stick with human-first ops augmented by AI triage (Incident.io + PagerDuty AI Copilot). It feels safer, surfaces fewer false positives, and still cuts pages by 34%.
-
-Before you walk away, open your incident dashboard right now and count two things: the percentage of incidents that are purely infra-layer, and how many of those repeat weekly. If infra-layer incidents >70% and weekly repeats >40%, spin up a Rootly agent next sprint. Otherwise, install PagerDuty AI Copilot and Incident.io this afternoon and call it a win.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 23, 2026
+Open your incident tracker, filter to the last 90 days, and tag each incident with two fields: a normalized signature (for example `deployment_5xx_spike`) and whether the resolving action was confirmed causal in the postmortem. Then compute the repeat rate: incidents whose signature has appeared more than once, divided by total incidents. If that number is below half, your next investment is incident history and runbook hygiene, not an autonomous agent.

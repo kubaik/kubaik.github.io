@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>LLM evals: skip the hype, track these 4 metrics - Kubai Kevin</title>
-        <meta name="description" content="Cut hallucinations 74% and latency 52% using 4 production metrics — not BLEU or perplexity. Real code, real AWS services, real ROI.">
+        <meta name="description" content="A practical guide to production LLM evaluation: four metric classes, code for deterministic validators, and how to detect prompt drift and scorer decay.">
         <meta name="keywords" content="LlmEvaluationMetrics, ProductionLlmScoring, Ai, Vllm0.5.3Benchmarks, Langsmith, Llm, Vllm053benchmarks">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-22T01:49:01.376460">
-        <meta property="article:modified_time" content="2026-09-19T08:27:14.177957+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:40:54.793877+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM evals: skip the hype, track these 4 metrics">
-        <meta property="og:description" content="Cut hallucinations 74% and latency 52% using 4 production metrics — not BLEU or perplexity. Real code, real AWS services, real ROI.">
+        <meta property="og:description" content="A practical guide to production LLM evaluation: four metric classes, code for deterministic validators, and how to detect prompt drift and scorer decay.">
         <meta property="og:url" content="https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="LLM evals: skip the hype, track these 4 metrics">
-        <meta name="twitter:description" content="Cut hallucinations 74% and latency 52% using 4 production metrics — not BLEU or perplexity. Real code, real AWS services, real ROI.">
+        <meta name="twitter:description" content="A practical guide to production LLM evaluation: four metric classes, code for deterministic validators, and how to detect prompt drift and scorer decay.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/llm-evals-skip-the-hype-track-these-4-metrics.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/#article",
       "headline": "LLM evals: skip the hype, track these 4 metrics",
-      "description": "Cut hallucinations 74% and latency 52% using 4 production metrics — not BLEU or perplexity. Real code, real AWS services, real ROI.",
+      "description": "A practical guide to production LLM evaluation: four metric classes, code for deterministic validators, and how to detect prompt drift and scorer decay.",
       "datePublished": "2026-06-22T01:49:01+00:00",
-      "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2759,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-10-03T12:40:54+00:00",
+      "wordCount": 2004,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">LLM evals: skip the hype, track these 4 metrics</h1>
                 
-                <p class="post-lead">Cut hallucinations 74% and latency 52% using 4 production metrics — not BLEU or perplexity. Real code, real AWS services, real ROI.</p>
+                <p class="post-lead">A practical guide to production LLM evaluation: four metric classes, code for deterministic validators, and how to detect prompt drift and scorer decay.</p>
                 
                 
                 <div class="tags">
@@ -259,96 +259,52 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2759 words
+                        10 min read
+                        &nbsp;·&nbsp; 2004 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
-<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Most LLM evaluation guides start with perplexity scores or cosine similarity between embeddings. That’s fine for research papers, but in production you care about two things: <strong>whether users notice the difference and whether the cost is sustainable</strong>. I learned this the hard way when our Nairobi fintech team rolled out a new loan-approval assistant last year. We spent weeks tuning the prompt, benchmarking against HumanEval, and even paid for a third-party “AI quality score” service. Users complained anyway because the assistant hallucinated repayment terms that didn’t match Kenyan law. The service gave us a 92% score; reality was 42% acceptance accuracy.</p>
-<p>The root issue isn’t measurement technique — it’s <strong>scope</strong>. Research metrics optimize for language similarity. Production metrics must optimize for <strong>business outcomes</strong> under real traffic and cost constraints. If your evaluation pipeline doesn’t include:
-- a latency SLO tied to user drop-off,
-- a cost-per-request ceiling, and
-- a ground-truth alignment test that uses your actual business data,
-then you’re optimizing for noise, not signal.</p>
-<p>Teams that skip this step usually fall into one of two traps:
-1. Over-indexing on automatic metrics (BLEU, ROUGE, BERTScore) that correlate weakly with user satisfaction (historical correlation study from 2024 showed 0.31 for BERTScore vs. human preference). 2. Running expensive human evaluations monthly instead of continuous lightweight checks that alert within minutes.</p>
-<p>The gap isn’t between good and bad metrics — it’s between <strong>metrics that tell you something useful now</strong> and metrics that tell you something interesting in a month.</p>
-<h2 id="how-evaluating-llm-output-quality-at-scale-the-metrics-that-actually-matter-actually-works-under-the-hood">How Evaluating LLM output quality at scale: the metrics that actually matter actually works under the hood</h2>
-<p>At the core, production LLM evaluation is a <strong>feedback loop</strong>: generate candidate outputs, score them with cheap automated checks, and feed the winners back into fine-tuning or prompt iteration. The magic happens in the scoring layer, where you trade statistical rigor for speed and cost. Here’s the stack we ended up with after two redesigns:</p>
-<table>
-<thead>
-<tr>
-<th>Layer</th>
-<th>Purpose</th>
-<th>Tool/version</th>
-<th>Cost per 1M calls (2026)</th>
-<th>Latency (p95)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Candidate generation</td>
-<td>Run inference with latest model</td>
-<td>vLLM 0.5.3 + NVIDIA H100</td>
-<td>$18.20</td>
-<td>240 ms</td>
-</tr>
-<tr>
-<td>Automated scoring</td>
-<td>Rule-based, factual consistency, toxicity</td>
-<td>LangSmith 0.3.16 + regex + openai-embeddings 1.20.0</td>
-<td>$3.10</td>
-<td>80 ms</td>
-</tr>
-<tr>
-<td>Metric aggregation</td>
-<td>Compute per-request scores and rollups</td>
-<td>Prometheus 2.50 + Grafana 11.3</td>
-<td>$0.04</td>
-<td>5 ms</td>
-</tr>
-<tr>
-<td>Alerting</td>
-<td>Trigger rollback or retraining</td>
-<td>AWS SNS + CloudWatch Alarms</td>
-<td>$0.12</td>
-<td>120 ms</td>
-</tr>
-</tbody>
-</table>
-<p>The key insight is to <strong>avoid human annotation during the automated loop</strong>. Instead, we use three classes of checks:</p>
+                <p>Most LLM evaluation documentation is written for research: perplexity, BLEU, ROUGE, embedding cosine similarity. Those metrics optimize for language similarity. Production systems need to optimize for two different things: whether users notice a regression, and whether the cost per request stays sustainable. The gap between those two goals is where most evaluation pipelines quietly fail.</p>
+<h2 id="why-research-metrics-miss-production-failures">Why research metrics miss production failures</h2>
+<p>A typical failure mode: a team spends weeks tuning a prompt, benchmarks against a public coding eval, and buys a third-party "AI quality score." Users still complain, because the assistant invents policy details that contradict the jurisdiction it operates in. The external score can be high while task accuracy is low, because the score is measuring fluency, not correctness against the business's own ground truth.</p>
+<p>The root issue is not measurement technique. It is scope. If an evaluation pipeline does not include:</p>
+<ul>
+<li>a latency SLO tied to user drop-off,</li>
+<li>a cost-per-request ceiling,</li>
+<li>and a ground-truth alignment test built from your own business data,</li>
+</ul>
+<p>then it is optimizing for noise. Two common traps:</p>
 <ol>
-<li><strong>Deterministic validators</strong>: regex for IDs, Kenyan mobile-money formats, currency symbols. These are O(1) and catch 68% of the errors our users actually complain about. 2. <strong>Statistical validators</strong>: embedding similarity against a ground-truth corpus of 12k approved loan terms. We use <code>text-embedding-3-large</code> with cosine threshold 0.87. This catches another 22% of misalignments, especially subtle ones like interest rate formatting. 3. <strong>Policy validators</strong>: a lightweight JSON schema that encodes Kenyan Central Bank rules. If the assistant returns a repayment schedule that violates the usury cap, it fails immediately — no human needed.</li>
+<li>Over-indexing on automatic similarity metrics (BLEU, ROUGE, BERTScore). These correlate weakly with human preference on open-ended generation tasks; the correlation is task-dependent and should be measured on your own data before you trust it.</li>
+<li>Running expensive human evaluation monthly instead of lightweight continuous checks that can alert within minutes.</li>
 </ol>
-<p>The fourth class, <strong>user impact</strong>, is measured via A/B rollouts with a 1% traffic split and a 24-hour dwell-time window. We watch for:
-- success rate (loan application completion)
-- time-to-decision
-- user-reported issues via Zendesk tickets</p>
-<p>This loop runs every 30 minutes. When any metric degrades by more than 5 percentage points compared to the 7-day rolling median, we trigger an automatic rollback and a Slack alert to the on-call engineer. The rollback takes 90 seconds because we use canary deployments with AWS Lambda aliases and CodeDeploy.</p>
-<p>The surprising part? The embedding similarity validator (class 2) gave us the worst signal-to-noise ratio. We ended up replacing it with a smaller, domain-specific classifier fine-tuned on our own data using <code>sentence-transformers</code> 2.4.0. That cut false positives by 73% and saved us $1.4k/month in wasted retraining runs.</p>
-<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
-<p>Here’s the minimal viable loop we deploy in our Nairobi staging account. It’s written in Python 3.11 and runs in an AWS ECS Fargate task with 2 vCPUs and 4 GB memory. The full repo is open-source under Apache-2.0.</p>
+<p>The useful distinction is between metrics that tell you something actionable now and metrics that tell you something interesting in a month.</p>
+<h2 id="the-four-metric-classes">The four metric classes</h2>
+<p>Production LLM evaluation is a feedback loop: generate candidate outputs, score them with cheap automated checks, and feed results back into prompt iteration or fine-tuning. The scoring layer trades statistical rigor for speed and cost. Four classes of checks cover most production needs.</p>
+<p><strong>1. Deterministic validators.</strong> Regex and schema checks for IDs, phone formats, currency symbols, date ranges, and numeric bounds. These are O(1), cheap, and catch the mechanically wrong outputs. They will not catch subtle misalignment, but they catch a large share of the errors users actually report.</p>
+<p><strong>2. Statistical validators.</strong> Embedding similarity against a ground-truth corpus, or a small domain-specific classifier. Useful for detecting paraphrase-level drift, but prone to false positives when the ground truth is narrow. Measure the false-positive rate on a labeled sample before trusting the threshold.</p>
+<p><strong>3. Policy validators.</strong> A JSON schema or rule set that encodes hard constraints (regulatory caps, required disclosures, forbidden claims). A response that violates a policy fails immediately, no human needed. These are the highest-value checks in regulated domains because they are auditable.</p>
+<p><strong>4. User impact.</strong> A/B rollouts with a small traffic split, watching task completion rate, time-to-decision, and support ticket volume. This is the only class that measures what users actually experience.</p>
+<p>No single class is sufficient. A portfolio is required, because each class fails in a different direction.</p>
+<h2 id="a-minimal-loop-in-code">A minimal loop in code</h2>
+<p>The examples below are illustrative and use placeholder model and endpoint names. Substitute your own inference server, embedding model, and moderation endpoint.</p>
 <h3 id="1-candidate-generation">1. Candidate generation</h3>
-<p>We use vLLM 0.5.3 in async mode to batch-generate responses. The prompt template is stored in S3 and versioned with Git SHA.</p>
 <pre><code class="language-python">import asyncio
 from vllm import AsyncLLMEngine
 from vllm.sampling_params import SamplingParams
 
-MODEL_ID = &quot;meta-llama/Meta-Llama-3-8B-Instruct&quot;
+MODEL_ID = &quot;your-model-id&quot;
 ENGINE = AsyncLLMEngine.from_engine_args(
     engine_args={
         &quot;model&quot;: MODEL_ID,
         &quot;tensor_parallel_size&quot;: 1,
         &quot;gpu_memory_utilization&quot;: 0.90,
         &quot;max_model_len&quot;: 4096,
-        &quot;disable_log_stats&quot;: True,
     }
 )
 
@@ -358,50 +314,42 @@ async def generate(prompt: str, max_tokens: int = 512) -&gt; str:
     return result.outputs[0].text
 </code></pre>
 <h3 id="2-automated-scoring">2. Automated scoring</h3>
-<p>We run three scorers in parallel using <code>asyncio.gather</code> to keep latency low. Each scorer returns a dict of metrics.</p>
+<p>Run scorers concurrently so total scoring latency is bounded by the slowest one.</p>
 <pre><code class="language-python">import re
 from sentence_transformers import SentenceTransformer
-from openai import OpenAI
 
 # Load once at startup
 FACT_CHECKER = SentenceTransformer(&quot;all-MiniLM-L6-v2&quot;, device=&quot;cpu&quot;)
-OPENAI_CLIENT = OpenAI()
 
 RULES = {
     &quot;id_format&quot;: r&quot;^KEN[A-Z0-9]{6}$&quot;,
     &quot;currency&quot;: r&quot;KES\s*\d{1,3}(?:,\d{3})*(?:\.\d{2})?&quot;,
-    &quot;rate_cap&quot;: 0.24,  # 24% usury cap
 }
 
+RATE_CAP = 0.24  # illustrative policy cap
+
 async def score_response(prompt: str, response: str) -&gt; dict:
-    # Rule-based
     rule_score = 1.0
     for name, pattern in RULES.items():
-        if name == &quot;rate_cap&quot;:
-            rate_match = re.search(r&quot;(\d{1,3}(?:\.\d{2})?)%&quot;, response)
-            if rate_match:
-                rate = float(rate_match.group(1)) / 100
-                rule_score *= 1.0 if rate &lt;= RULES[&quot;rate_cap&quot;] else 0.0
-        else:
-            if not re.search(pattern, response):
-                rule_score *= 0.0
+        if not re.search(pattern, response):
+            rule_score = 0.0
 
-    # Factual consistency
+    rate_match = re.search(r&quot;(\d{1,3}(?:\.\d{2})?)%&quot;, response)
+    if rate_match:
+        rate = float(rate_match.group(1)) / 100
+        if rate &gt; RATE_CAP:
+            rule_score = 0.0
+
     embeddings = FACT_CHECKER.encode([prompt, response], convert_to_tensor=True)
     semantic_score = float(embeddings[0] @ embeddings[1].T)
-
-    # Toxicity (using OpenAI’s moderation API)
-    mod = OPENAI_CLIENT.moderations.create(input=response)
-    toxic = any(cat.flagged for cat in mod.results[0].categories)
 
     return {
         &quot;rule_score&quot;: rule_score,
         &quot;semantic_score&quot;: semantic_score,
-        &quot;toxic&quot;: toxic,
     }
 </code></pre>
-<h3 id="3-metric-aggregation-and-alerting">3. Metric aggregation and alerting</h3>
-<p>We expose a <code>/metrics</code> endpoint that Prometheus scrapes every 15 seconds. Each scorer writes to a shared Redis 7.2 cluster with <code>redis-py</code> 4.8.1.</p>
+<h3 id="3-metric-aggregation">3. Metric aggregation</h3>
+<p>Expose a Prometheus endpoint and write per-request scores to a shared store for dashboards.</p>
 <pre><code class="language-python">from prometheus_client import start_http_server, Counter, Gauge
 import redis.asyncio as redis
 
@@ -411,19 +359,16 @@ SCORE_COUNTER = Counter(&quot;llm_eval_score_total&quot;, &quot;Total LLM eval s
 FAILURE_GAUGE = Gauge(&quot;llm_eval_failures&quot;, &quot;Current failure rate&quot;)
 
 async def record_metrics(request_id: str, scores: dict):
-    # Write to Redis for dashboards
     await REDIS.hset(f&quot;scores:{request_id}&quot;, mapping=scores)
-    # Update Prometheus
     for k, v in scores.items():
         SCORE_COUNTER.labels(metric=k).inc(v)
     FAILURE_GAUGE.set(scores[&quot;rule_score&quot;] &lt; 1.0)
 
-# Expose metrics
 start_http_server(8000)
 </code></pre>
-<h3 id="4-canary-deployment-and-rollback">4. Canary deployment and rollback</h3>
-<p>We use AWS CodeDeploy with a traffic shift of 1% for 15 minutes. If the error rate (defined as any score &lt; 0.9) exceeds 5% of the baseline, CodeDeploy rolls back automatically.</p>
-<pre><code class="language-yaml"># appspec.yml
+<h3 id="4-canary-rollout">4. Canary rollout</h3>
+<p>A time-based canary shifts a small percentage of traffic, waits, then promotes or rolls back. The exact percentage and bake time depend on your traffic volume; the point is that rollback must be automatic and fast.</p>
+<pre><code class="language-yaml"># appspec.yml (illustrative)
 version: 0.0
 Resources:
   - TargetService:
@@ -439,13 +384,12 @@ Hooks:
   - AfterAllowTraffic: LambdaValidationFunction
 </code></pre>
 <h3 id="5-fine-tuning-trigger">5. Fine-tuning trigger</h3>
-<p>When the 7-day rolling average of semantic_score drops below 0.88, we trigger a SageMaker fine-tuning job using LoRA on our private dataset. The job takes 42 minutes on a single ml.g5.2xlarge instance and costs $12.80.</p>
-<pre><code class="language-python"># train.py
-import torch
+<p>When a rolling average of the semantic score drops below a threshold, trigger a fine-tuning job. Keep the threshold configurable; a fixed threshold will not survive model or data drift.</p>
+<pre><code class="language-python">import torch
 from peft import LoraConfig, get_peft_model
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-MODEL_NAME = &quot;meta-llama/Meta-Llama-3-8B-Instruct&quot;
+MODEL_NAME = &quot;your-base-model&quot;
 
 def train_lora(train_data: list[dict], output_dir: str):
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
@@ -457,192 +401,111 @@ def train_lora(train_data: list[dict], output_dir: str):
         target_modules=[&quot;q_proj&quot;, &quot;v_proj&quot;],
         lora_dropout=0.05,
         bias=&quot;none&quot;,
-        task_type=&quot;CAUSAL_LM&quot;
+        task_type=&quot;CAUSAL_LM&quot;,
     )
     model = get_peft_model(model, lora_config)
 
     # ... training loop ...
     model.save_pretrained(output_dir)
 </code></pre>
-<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>We’ve run this pipeline for 11 months on our Nairobi loan-approval assistant. Here are the numbers that actually moved the needle:</p>
+<h2 id="how-to-measure-the-four-metrics">How to measure the four metrics</h2>
+<p>Do not copy benchmark numbers from another team. Instrument your own system and compare against your own baseline. What to record:</p>
+<ul>
+<li><strong>Deterministic validator pass rate.</strong> Log every rule name and pass/fail per request. Compare the daily rate against a 7-day rolling median.</li>
+<li><strong>Semantic score distribution.</strong> Log the raw score, not just the mean. Watch the 5th percentile; a mean that holds steady while the tail degrades is a common failure pattern.</li>
+<li><strong>Policy violation count.</strong> Count violations by rule. Any nonzero count on a hard policy rule is a page-worthy event.</li>
+<li><strong>User impact.</strong> Run an A/B split, then compare task completion rate, time-to-decision, and support ticket volume between arms. Use a fixed observation window and compute the difference relative to the control arm's variance, not to a fixed percentage.</li>
+</ul>
+<p>A worked example with stated assumptions: suppose a service handles 100,000 requests per day. If a scorer adds 50 ms of CPU work at a cost of $0.000001 per request-millisecond, that is 100,000 × 50 × $0.000001 = $5 per day, or roughly $150 per month. At 5,000,000 requests per day, the same scorer costs roughly $7,500 per month. The point is not the specific figures, which are illustrative, but the arithmetic: cost scales linearly with traffic, so a scorer that is negligible at low volume can dominate the bill at high volume. Recompute after every traffic milestone.</p>
+<h2 id="failure-modes-worth-planning-for">Failure modes worth planning for</h2>
+<p><strong>Prompt drift under version control.</strong> Prompts do not behave like code. Adding a single line to a system prompt can shift the semantic score materially on the same input set. Require a semantic diff between prompt versions and a mandatory bake time before promotion. Without it, a prompt change can silently degrade output for hours before anyone notices.</p>
+<p><strong>Cold-start scoring latency.</strong> The first call to an embedding model in a fresh container can take seconds. If your SLO is under 500 ms p95, account for this explicitly: pre-warm the model, use provisioned concurrency, or move scoring off the request path.</p>
+<p><strong>Cost feedback loop inflation.</strong> Adding a scorer increases cost per request, which may push you to reduce sampling, which reduces signal quality, which forces you to add more expensive checks. Track cost per metric, not just cost per request.</p>
+<p><strong>Metric poisoning by edge cases.</strong> A validator that matches the wrong region's ID format will pass while users receive wrong identifiers. Test validators against real user inputs, not synthetic ones. A regex that looks correct on paper often fails on production data.</p>
+<p><strong>Alert fatigue from noisy baselines.</strong> A fixed threshold below a rolling median will fire on normal weekday/weekend variation. Exclude non-working days from the baseline or use a seasonal decomposition before alerting.</p>
+<h2 id="tool-categories-and-what-to-check-before-adopting">Tool categories and what to check before adopting</h2>
+<p>Rather than naming specific products, evaluate tools by category:</p>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Baseline (2026-06)</th>
-<th>After full loop (2026-05)</th>
-<th>Delta</th>
+<th>Category</th>
+<th>What it must do</th>
+<th>What to check</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>User acceptance rate</td>
-<td>78%</td>
-<td>91%</td>
-<td>+13%</td>
+<td>Inference server</td>
+<td>Batch and stream generation</td>
+<td>p95 latency under your load; does it expose Prometheus stats</td>
 </tr>
 <tr>
-<td>P95 latency</td>
-<td>1.2 s</td>
-<td>0.58 s</td>
-<td>-52%</td>
+<td>Prompt/version store</td>
+<td>Diff prompts and scorers</td>
+<td>Semantic diff support; rollback speed</td>
 </tr>
 <tr>
-<td>Cost per 1000 requests</td>
-<td>$0.42</td>
-<td>$0.18</td>
-<td>-57%</td>
+<td>Metrics backend</td>
+<td>Store per-request scores</td>
+<td>Cardinality limits; retention cost</td>
 </tr>
 <tr>
-<td>Hallucination rate (user-reported)</td>
-<td>8.2%</td>
-<td>2.1%</td>
-<td>-74%</td>
+<td>Cache</td>
+<td>Store ground truths and embeddings</td>
+<td>p99 lookup latency; async client support</td>
 </tr>
 <tr>
-<td>False positive rate (automated scorer)</td>
-<td>18%</td>
-<td>5%</td>
-<td>-72%</td>
+<td>Fine-tuning platform</td>
+<td>LoRA or full fine-tune</td>
+<td>Checkpoint behavior on spot instances</td>
+</tr>
+<tr>
+<td>Test framework</td>
+<td>Test validators and scorers</td>
+<td>Async test support; fixture reuse</td>
+</tr>
+<tr>
+<td>Moderation endpoint</td>
+<td>Policy and toxicity checks</td>
+<td>Rate limits; whether it logs inputs</td>
+</tr>
+<tr>
+<td>Deployment tooling</td>
+<td>Canary and rollback</td>
+<td>Rollback time; whether rollback is automatic</td>
 </tr>
 </tbody>
 </table>
-<p>The latency drop came from two changes: switching from synchronous Hugging Face pipelines to vLLM’s async engine, and caching ground-truth loan terms in Redis with a 5-minute TTL. The cost drop came from reducing inference calls by 40% via prompt caching and reusing embeddings for scoring.</p>
-<p>The most surprising result was the hallucination rate. The policy validator (Kenyan usury checks) caught 52%, and user tickets caught the rest. That taught us that <strong>no single scorer is enough</strong> — you need a portfolio.</p>
-<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
-<ol>
-<li>
-<p><strong>Prompt drift under version control</strong>
-   We use LangSmith 0.3.16 to version prompts and scorers. The first surprise: prompt versions don’t behave like code versions. A small change in the system prompt (e.g., adding a line about Kenyan law) can swing the semantic_score by 0.27 in one commit. We now require semantic diffing between versions and a mandatory 30-minute bake time before promotion to production. Without it, we once rolled out a prompt that doubled the hallucination rate for 4 hours.</p>
-</li>
-<li>
-<p><strong>Cold-start scoring latency spikes</strong>
-   The first call to <code>text-embedding-3-large</code> in a new Lambda container takes 2.1 seconds on arm64. We mitigated this by pre-warming the model in a <code>/tmp/embeddings</code> directory and using a Lambda provisioned concurrency of 5. Still, every cold start logs a 2.1s spike. If your SLO is &lt; 500 ms p95, you must account for this.</p>
-</li>
-<li>
-<p><strong>Cost feedback loop inflation</strong>
-For 50k daily requests, that’s $6/month — annoying, but acceptable. For 5M daily requests, that’s $600/month. <strong>Always recalculate cost per metric after traffic growth.</strong></p>
-</li>
-<li>
-<p><strong>Metric poisoning by edge cases</strong>
-   We had a bug where the regex for Kenyan IDs matched South African IDs too. For two weeks, our rule_score stayed at 1.0 because the scorer passed, but users got wrong loan IDs. The fix was to add a country-specific prefix check. Lesson: <strong>test your validators against real user inputs, not just synthetic ones.</strong></p>
-</li>
-<li>
-<p><strong>Alert fatigue from noisy baselines</strong>
-   We set our alert threshold at 5 percentage points below the 7-day rolling median. The next day, the baseline was 0.92, and a minor drop to 0.91 triggered 14 false alerts. We now use a rolling baseline that excludes weekends and holidays.</p>
-</li>
-</ol>
-<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Purpose</th>
-<th>Version</th>
-<th>Why it matters</th>
-<th>Gotcha</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>vLLM</td>
-<td>High-throughput LLM inference</td>
-<td>0.5.3</td>
-<td>Cuts latency 40% vs. HF pipelines</td>
-<td>Disable <code>disable_log_stats=False</code> if you need Prometheus stats</td>
-</tr>
-<tr>
-<td>LangSmith</td>
-<td>Prompt versioning, scoring, collaboration</td>
-<td>0.3.16</td>
-<td>Replaces manual spreadsheets</td>
-<td>Free tier limits to 10k traces/month — upgrade before you hit it</td>
-</tr>
-<tr>
-<td>Prometheus + Grafana</td>
-<td>Metrics aggregation and alerting</td>
-<td>2.50 + 11.3</td>
-<td>Real-time dashboards with 5ms latency</td>
-<td>Grafana Cloud’s free tier caps at 10k metrics — self-host if you grow</td>
-</tr>
-<tr>
-<td>Redis 7.2</td>
-<td>Caching ground truths and scorers</td>
-<td>7.2</td>
-<td>1 ms p99 for simple lookups</td>
-<td>Use <code>redis-py</code> 4.8.1 for async support</td>
-</tr>
-<tr>
-<td>SageMaker</td>
-<td>Fine-tuning and LoRA</td>
-<td>2.215</td>
-<td>GPU acceleration for LoRA</td>
-<td>Spot instances cut cost 70%, but you lose checkpointing</td>
-</tr>
-<tr>
-<td>pytest 7.4</td>
-<td>Testing validators and scorers</td>
-<td>7.4</td>
-<td>Catches regex drift early</td>
-<td>Use <code>pytest-asyncio</code> for async scorer tests</td>
-</tr>
-<tr>
-<td>OpenAI Moderation API</td>
-<td>Toxicity and policy checks</td>
-<td>2026-03-01 API</td>
-<td>Simple JSON-in, JSON-out</td>
-<td>Rate limit is 100 req/s — throttle your scorer</td>
-</tr>
-<tr>
-<td>AWS CodeDeploy</td>
-<td>Canary rollouts</td>
-<td>2026-04-15</td>
-<td>90-second rollback</td>
-<td>Lambda aliases must be versioned for rollback to work</td>
-</tr>
-</tbody>
-</table>
-<p>Avoid the temptation to build a custom scorer from scratch. The open-source ecosystem has matured enough that you can assemble a production-grade loop with 2k lines of Python. The exception: if your domain is highly regulated (e.g., medical, legal), consider building a custom classifier with <code>transformers</code> 4.40.0 — but even then, start with a fine-tuned open model like <code>llama-3-8b-instruct</code> before training from scratch.</p>
+<p>A custom scorer is rarely worth building from scratch unless the domain is highly regulated. Start with a fine-tuned open model before training from scratch.</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
-<p>This pipeline is <strong>not</strong> for every use case. Skip it if:</p>
+<p>Skip the full loop if:</p>
 <ol>
-<li><strong>Your users are internal and low-volume</strong> (fewer than 1k requests/day). A simple prompt template and manual review are faster and cheaper. 2. <strong>Your LLM is a research prototype</strong> with no business SLA. Academic metrics (perplexity, BLEU) are sufficient. 3. <strong>Your model changes daily</strong> (e.g., during rapid experimentation). The overhead of maintaining validators and scorers outweighs the benefit. 4. <strong>You lack ground truth data</strong> for scoring. If you can’t define what a “correct” response looks like, automated scoring is meaningless. 5. <strong>Regulatory requirements demand human sign-off</strong> (e.g., medical diagnosis). In that case, build a human-in-the-loop loop with clear escalation paths.</li>
+<li><strong>Users are internal and volume is low</strong> (roughly under 1,000 requests per day). A prompt template and manual review are faster and cheaper.</li>
+<li><strong>The LLM is a research prototype</strong> with no business SLA. Academic metrics are sufficient.</li>
+<li><strong>The model changes daily.</strong> The maintenance overhead of validators and scorers outweighs the benefit.</li>
+<li><strong>There is no ground truth.</strong> If a correct response cannot be defined, automated scoring is meaningless.</li>
+<li><strong>Regulation requires human sign-off.</strong> Build a human-in-the-loop process with clear escalation paths instead.</li>
 </ol>
-<p>The scorer cost $180/month, but the chatbot’s accuracy was already 94% from prompt engineering. The evaluation loop added no user-visible improvement and increased latency by 120 ms.</p>
-<h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>A single misplaced parenthesis in a regex can cause a 5% jump in false negatives. We now treat scorers like production code: they live in the same repo as the prompt, have 100% test coverage, and are reviewed in pull requests. The second surprise: <strong>users don’t care about your metrics</strong>. They care about their task completion time and accuracy. Our highest user-satisfaction scores came from reducing the average loan-approval time from 3.2 minutes to 1.1 minutes — not from improving semantic_score from 0.89 to 0.93.</p>
-<p>The biggest win wasn’t technical — it was <strong>process</strong>. Before this loop, our prompt changes went through a 2-week manual review by three people. Now, we merge a prompt change, run the canary for 15 minutes, and ship if the metrics are green. That cut our prompt iteration cycle from 14 days to 2 hours. The cost? We had to hire one extra engineer to maintain the scorer infrastructure. Worth it.</p>
-<p>The lesson: <strong>evaluation isn’t a one-time checklist — it’s a product you ship every day.</strong> If you treat it like a side project, it will fail. If you treat it like core infrastructure, it pays off.</p>
-<h2 id="what-to-do-next">What to do next</h2>
-<p>Open your prompt file right now and ask: <em>What is the minimal set of rules that would catch 80% of the errors my users complain about?</em></p>
-<p>Then, in your terminal:</p>
-<pre><code class="language-bash">pip install langsmith==0.3.16 redis==4.8.1 pytest==7.4
+<p>A common mistake is adding an evaluation loop to a system that already meets its quality bar. If accuracy is acceptable and latency is the binding constraint, an added scorer can increase p95 latency without improving user-visible outcomes. Measure before adding.</p>
+<h2 id="treat-scorers-as-production-code">Treat scorers as production code</h2>
+<p>A single misplaced character in a regex can cause a measurable jump in false negatives. Scorers should live in the same repository as the prompt, have test coverage, and go through pull request review. They are infrastructure, not a side project.</p>
+<p>The bigger lesson is about process. Manual prompt review cycles measured in weeks do not scale. A canary with automated rollback can cut iteration time from weeks to hours, at the cost of maintaining the scorer infrastructure. That trade is usually worth making once traffic is high enough to justify it.</p>
+<p>Users do not care about your metrics. They care about task completion time and accuracy. The most reliable improvements come from reducing time-to-decision and eliminating wrong answers, not from moving a similarity score from 0.89 to 0.93.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How much data is needed to start scoring?</strong>
+For rule-based validators, a few dozen labeled examples are enough to bootstrap. For a semantic scorer or classifier, start with at least 100 labeled examples and expand as traffic accumulates.</p>
+<p><strong>Why not use human evaluation for everything?</strong>
+Human evaluation is slow and expensive per label. It is best used to calibrate automated scorers periodically, not for continuous monitoring.</p>
+<p><strong>What latency budget should the scorer have?</strong>
+Budget the scorer so total p95 stays within your user-facing SLO. If the SLO is 500 ms, keep scorer overhead well under that, and measure cold-start behavior separately.</p>
+<p><strong>How do you handle model updates without breaking validators?</strong>
+Pin scorer model versions, run a semantic diff between old and new scorers on a fixed input set, and pause the canary if the score delta exceeds a threshold you define.</p>
+<h2 id="one-action-to-take-in-the-next-30-minutes">One action to take in the next 30 minutes</h2>
+<p>Open your prompt file and list the rules that would catch the most common errors your users report. Then write a test for each one:</p>
+<pre><code class="language-bash">pip install pytest pytest-asyncio
 python -m pytest tests/test_validators.py -v
 </code></pre>
-<p>If any validator fails the test, fix it before merging. That’s the 30-minute action that prevents 70% of downstream fires.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How much data do I need to start scoring LLM outputs?</strong>
-You need at least 100 ground-truth examples to bootstrap a semantic scorer. For rule-based validators, 50 examples are enough. We bootstrapped with a CSV of 120 approved loan terms and 80 user complaints. If you don’t have ground truth, start with a small human-labeled set (50 examples) and expand as you collect more traffic data.</p>
-<p><strong>Why not use human evaluation for everything?</strong>
-Human evaluation is expensive and slow. In our system, a single human label costs $0.40 and takes 3 minutes. At 10k daily requests, that’s $400/day — unsustainable. Human eval is best for calibrating automated scorers, not for day-to-day monitoring. Use it monthly to validate your automated loop, not hourly.</p>
-<p><strong>What’s the minimum latency SLO I should target?</strong>
-Aim for p95 &lt; 500 ms for interactive use cases. If your scorer adds &gt; 200 ms, you’ll start seeing user drop-off. In our Nairobi system, we target 300 ms p95 for the scorer layer. Anything over 500 ms triggers a rollback.</p>
-<p><strong>How do I handle model updates without breaking validators?</strong>
-Pin your scorer model versions and run semantic diffing between old and new scorers. We use LangSmith’s <code>compare_traces</code> feature. If the semantic_score delta exceeds 0.1, we pause the canary and trigger a human review. This caught a prompt change that would have doubled hallucination rates last quarter.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/">LLM output metrics that actually move the needle</a></li>
-<li><a href="https://kubaik.github.io/llm-metrics-that-stop-wasting-time/">LLM metrics that stop wasting time</a></li>
-<li><a href="https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/">LLM drift before users complain: catch it early</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>If any validator fails, fix it before merging. That single step catches a large share of downstream incidents before they reach users.</p>
                 
                 
             </div>

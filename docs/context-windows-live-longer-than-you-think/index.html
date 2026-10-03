@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Context windows live longer than you think - Kubai Kevin</title>
-        <meta name="description" content="Context window management for agents that run hours or days — stop hallucinating names and blowing budgets with these concrete strategies and code you can run…">
+        <meta name="description" content="Long-running agents exhaust context windows through unbounded history growth. Covers pruning, summarisation, retrieval, and retention policies with code.">
         <meta name="keywords" content="LongRunningAgents, Context, LlmTokenLimits, SupportAgentTokens, OpenaiTokenUsage, RedisContext, Agent, Llm, Generativeai, Redis">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-25T13:43:38.060125">
-        <meta property="article:modified_time" content="2026-09-16T09:17:02.499836+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:50:51.762895+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Context windows live longer than you think">
-        <meta property="og:description" content="Context window management for agents that run hours or days — stop hallucinating names and blowing budgets with these concrete strategies and code you can run…">
+        <meta property="og:description" content="Long-running agents exhaust context windows through unbounded history growth. Covers pruning, summarisation, retrieval, and retention policies with code.">
         <meta property="og:url" content="https://kubaik.github.io/context-windows-live-longer-than-you-think/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Context windows live longer than you think">
-        <meta name="twitter:description" content="Context window management for agents that run hours or days — stop hallucinating names and blowing budgets with these concrete strategies and code you can run…">
+        <meta name="twitter:description" content="Long-running agents exhaust context windows through unbounded history growth. Covers pruning, summarisation, retrieval, and retention policies with code.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/context-windows-live-longer-than-you-think.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/context-windows-live-longer-than-you-think/#article",
       "headline": "Context windows live longer than you think",
-      "description": "Context window management for agents that run hours or days — stop hallucinating names and blowing budgets with these concrete strategies and code you can run…",
+      "description": "Long-running agents exhaust context windows through unbounded history growth. Covers pruning, summarisation, retrieval, and retention policies with code.",
       "datePublished": "2026-07-25T13:43:38+00:00",
-      "dateModified": "2026-09-16T09:17:02+00:00",
-      "wordCount": 2626,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-03T12:50:51+00:00",
+      "wordCount": 2476,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Context windows live longer than you think</h1>
                 
-                <p class="post-lead">Context window management for agents that run hours or days — stop hallucinating names and blowing budgets with these concrete strategies and code you can run…</p>
+                <p class="post-lead">Long-running agents exhaust context windows through unbounded history growth. Covers pruning, summarisation, retrieval, and retention policies with code.</p>
                 
                 
                 <div class="tags">
@@ -259,29 +259,26 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2626 words
+                        12 min read
+                        &nbsp;·&nbsp; 2476 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-16
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The default configuration is fine right up until it isn't. Here's what actually worked, and why.</p>
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>If your agent runs for hours or days, its context window isn’t just another token bucket you refill every few minutes — it’s a live ledger that grows without bounds until it collapses under its own weight. The fix wasn’t bigger models or longer prompts; it was to treat the context window like a database that needs indexing, backups, and a retention policy. This post shows how to do that with concrete code and trade-offs you can test today.</p>
+                <p>The default configuration works right up until it doesn't. A context window that never gets pruned turns into an ever-growing liability: cost, latency, and hallucination risk all scale with history length. The practical fix is not a bigger model or a longer prompt — it is treating the context window as a managed store with a retention policy, an eviction rule, and a summarisation step.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>They talk about truncation, summarization, and keep-it-short rules that work fine when your session ends by lunch. But when your agent is a background worker handling support tickets across São Paulo, Bogotá, and Mexico City, the context window becomes a growing scar tissue: every token you keep is a token you’ll pay for, a prompt you’ll inject, and a hallucination you might ship. I’ve seen teams burn 30–40% more on inference costs because they treated the context window like a scratchpad instead of an audit trail that needs active management.</p>
-<p>The confusion starts with the word “window.” It sounds like a frame you slide, but in long-running agents it’s more like a ledger that never closes — until it does, and then it’s too late. You’ll see examples where teams set a 32k token limit and call it “enough,” only to discover that after 24 hours the agent is re-reading the same boilerplate policies for every ticket because the pruning logic couldn’t keep up with the growing tail of irrelevant context.</p>
-<p>Another trap is assuming the LLM will naturally forget. It won’t. It will keep quoting stale references, customer IDs, and internal jargon that no longer applies. I once had a customer in Mexico complain that the agent kept asking for their “previous order ID from last month” — even though that order had been refunded and the agent had already closed the ticket. The problem wasn’t the agent’s memory; it was the agent’s refusal to forget.</p>
-<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of the context window as a live database table with three columns: <strong>relevant</strong>, <strong>stale</strong>, and <strong>toxic</strong>. Your job isn’t to keep the table small; it’s to keep the <strong>relevant</strong> column large while shrinking the others as fast as possible. The <strong>stale</strong> column is yesterday’s news, the <strong>toxic</strong> column is PII or toxic content you must redact, and the <strong>relevant</strong> column is what the agent needs right now to answer the current ticket.</p>
-<p>The simplest strategy is to age out stale rows: anything older than N minutes gets summarised and archived, and anything older than M hours gets dropped entirely. The tricky part is deciding what “old” means. A support ticket from 24 hours ago might still reference a customer’s recurring issue, but a policy change from last week might be obsolete.</p>
-<p>Another mental shift: treat the context window as a cache, not a ledger. You don’t need to keep every token; you need to keep enough tokens to answer the current question. I once tried to keep the full chat history for every customer “just in case,” only to hit the token limit after 6 hours and have the agent start omitting critical details from earlier in the same chat. The fix was to move from a “keep everything” cache to a “keep the last 20 messages or 16k tokens, whichever is smaller” policy.</p>
+<p>Most guidance about truncation, summarisation, and "keep it short" assumes sessions that end within a working day. That assumption breaks for background agents: workers that handle support tickets, monitor infrastructure, or run multi-day workflows. In those cases the context window behaves less like a frame you slide and more like a ledger that only closes when the process dies.</p>
+<p>Three failure modes show up repeatedly:</p>
+<p><strong>Unbounded growth.</strong> Every turn appends a user message and an assistant reply. Without eviction, token count rises monotonically until the provider either truncates from the front or the request is rejected for exceeding the limit. Front-truncation is especially dangerous because the dropped tokens are the oldest and often the most load-bearing — the original problem statement, the customer's tier, the constraints agreed at the start.</p>
+<p><strong>Stale context.</strong> A model does not forget on its own. If a refunded order ID stays in the window, the model will keep referencing it. If last week's policy is still in the system prompt, the model will apply it. Staleness is not a memory problem; it is a retention-policy problem.</p>
+<p><strong>Cost and latency creep.</strong> Prompt tokens are billed per call and processed per call. A window that grows to tens of thousands of tokens makes every subsequent turn slower and more expensive, even when the extra tokens are irrelevant to the current question.</p>
+<p>The word "window" invites the wrong mental model. A window suggests a fixed frame. In practice, the useful model is a table with three columns: <strong>relevant</strong>, <strong>stale</strong>, and <strong>restricted</strong> (PII, secrets, or content that must be redacted). The job is to keep <strong>relevant</strong> large while shrinking the other two as fast as possible.</p>
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Let’s walk through a real agent that handles support tickets for a SaaS company in Latin America. The agent uses OpenAI’s gpt-4o-mini-2024-07-18 with a 128k token context window, running inside a Kubernetes pod in São Paulo on Node 20 LTS. The agent is written in TypeScript and uses Redis 7.2 for fast cache lookups and PostgreSQL 16 for persistent storage.</p>
+<p>Consider a support agent handling tickets for a SaaS product. The agent is written in TypeScript, runs on Node 20 LTS, uses a chat-completions API with a 128k-token context window, and stores hot state in Redis with persistent storage in PostgreSQL. The numbers below are illustrative — substitute your own measured token counts.</p>
 <h3 id="step-1-the-naive-approach">Step 1: the naive approach</h3>
 <pre><code class="language-typescript">// naive-context.ts
 import { OpenAI } from 'openai';
@@ -297,13 +294,10 @@ class NaiveAgent {
   private messages: ChatMessage[] = [];
 
   async handleTicket(ticketId: string, userQuery: string) {
-    // Always append new user message
     this.messages.push({ role: 'user', content: userQuery });
 
-    // Add system prompt
     const systemPrompt = `You are a support agent for SaaS-X. Current ticket: ${ticketId}.`;
 
-    // Call LLM with full history
     const response = await openai.chat.completions.create({
       model: 'gpt-4o-mini-2024-07-18',
       messages: [{ role: 'system', content: systemPrompt }, ...this.messages],
@@ -315,11 +309,11 @@ class NaiveAgent {
   }
 }
 </code></pre>
-<p>Within 6 hours, this agent’s token count exploded. A typical ticket is 300 tokens, but after 12 hours of back-and-forth, the context ballooned to 45k tokens — and the agent started truncating the oldest messages automatically because the 128k window filled up. The result: the agent forgot the customer’s subscription tier and started offering discounts that were no longer valid.</p>
-<h3 id="step-2-add-a-sliding-window-with-summarisation">Step 2: add a sliding window with summarisation</h3>
+<p>The bug is structural: <code>this.messages</code> is never bounded. Every turn adds tokens, and the only ceiling is the model's context limit. When that ceiling is reached, the provider drops the oldest messages from the front of the array — including the system prompt and the original problem statement. The agent then behaves as if the ticket's constraints were never stated.</p>
+<h3 id="step-2-sliding-window-with-summarisation">Step 2: sliding window with summarisation</h3>
 <pre><code class="language-typescript">// smart-context.ts
 import { OpenAI } from 'openai';
-import { Redis } from 'ioredis'; // Redis 7.2
+import { Redis } from 'ioredis';
 import { summarizeText } from './summarizer.js';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_KEY });
@@ -333,27 +327,23 @@ interface ChatMessage {
 
 class SmartAgent {
   private messages: ChatMessage[] = [];
-  private readonly MAX_TOKENS = 64000; // Leave room for system prompt
-  private readonly SUMMARY_INTERVAL_MINUTES = 240; // Summarise every 4 hours
+  private readonly MAX_TOKENS = 64000;
+  private readonly SUMMARY_INTERVAL_MINUTES = 240;
+  private readonly MIN_MESSAGES = 20;
 
   async handleTicket(ticketId: string, userQuery: string) {
     const now = Date.now();
-
-    // Add new user message
     this.messages.push({ role: 'user', content: userQuery, timestamp: now });
 
-    // Prune old messages if we're over budget
-    while (this.tokenCount() &gt; this.MAX_TOKENS &amp;&amp; this.messages.length &gt; 1) {
-      await this.pruneOldest();
+    while (this.tokenCount() &gt; this.MAX_TOKENS &amp;&amp; this.messages.length &gt; this.MIN_MESSAGES) {
+      await this.pruneOldest(ticketId);
     }
 
-    // Summarise every 4 hours
     const lastSummary = await redis.get(`summary:${ticketId}`);
-    if (!lastSummary || now - parseInt(lastSummary) &gt; this.SUMMARY_INTERVAL_MINUTES * 60 * 1000) {
+    if (!lastSummary || now - parseInt(lastSummary, 10) &gt; this.SUMMARY_INTERVAL_MINUTES * 60 * 1000) {
       await this.summariseHistory(ticketId);
     }
 
-    // Build prompt
     const systemPrompt = `You are a support agent for SaaS-X. Current ticket: ${ticketId}.`;
     const promptMessages = [{ role: 'system', content: systemPrompt }, ...this.messages];
 
@@ -363,54 +353,63 @@ class SmartAgent {
       max_tokens: 4000,
     });
 
-    this.messages.push({ role: 'assistant', content: response.choices[0].message.content!, timestamp: now });
+    this.messages.push({
+      role: 'assistant',
+      content: response.choices[0].message.content!,
+      timestamp: now,
+    });
     return response.choices[0].message.content;
   }
 
   private tokenCount(): number {
-    // Approximate token count for demo; use tiktoken in prod
+    // Approximation only. Use a real tokenizer in production.
     return this.messages.reduce((sum, msg) =&gt; sum + Math.ceil(msg.content.length / 4), 0);
   }
 
-  private async pruneOldest(): Promise&lt;void&gt; {
-    const oldest = this.messages.shift()!;
-    // Keep at least the last 20 messages
-    if (this.messages.length &gt; 20) {
-      await redis.lpush(`old-messages:${oldest.timestamp}`, oldest.content);
-    }
+  private async pruneOldest(ticketId: string): Promise&lt;void&gt; {
+    const oldest = this.messages.shift();
+    if (!oldest) return;
+    await redis.lpush(`old-messages:${ticketId}`, JSON.stringify(oldest));
   }
 
   private async summariseHistory(ticketId: string): Promise&lt;void&gt; {
-    // Use a summarisation model like gpt-4o-mini to condense history
     const summary = await summarizeText(this.messages.map(m =&gt; m.content).join('\n'));
-    this.messages = [{ role: 'system', content: `Previous conversation summary: ${summary}` }];
-    await redis.set(`summary:${ticketId}`, Date.now().toString(), 'EX', 86400 * 7); // Keep summary for 7 days
+    this.messages = [{ role: 'system', content: `Previous conversation summary: ${summary}`, timestamp: Date.now() }];
+    await redis.set(`summary:${ticketId}`, Date.now().toString(), 'EX', 86400 * 7);
   }
 }
 </code></pre>
-<p>With this change, the agent’s context window never exceeded 55k tokens, and the agent never forgot the customer’s subscription tier. The trade-off: we moved from “keep everything” to “keep the last 20 messages plus a 2-sentence summary,” which is enough for most tickets but loses some nuance in long-running disputes.</p>
-<h3 id="performance-numbers">Performance numbers</h3>
+<p>Three changes matter here, and each fixes a specific bug from the naive version:</p>
+<ol>
+<li><strong>The eviction loop has a floor.</strong> <code>MIN_MESSAGES</code> prevents the loop from emptying the window when a single message is enormous. In the naive version, a single 100k-token paste would exceed the budget and force the loop to strip everything.</li>
+<li><strong>Pruned messages are persisted, not discarded.</strong> <code>lpush</code> to a per-ticket Redis list keeps the audit trail recoverable. The naive version lost them permanently.</li>
+<li><strong>The summary replaces history rather than appending to it.</strong> This is the key distinction from truncation: truncation drops tokens silently; summarisation replaces them with a bounded, intentional representation.</li>
+</ol>
+<p>Note that <code>tokenCount</code> uses a character-to-token ratio. That is a placeholder. In production, use a tokenizer that matches the model you are calling, because the ratio varies with language and content type. A Spanish-language support ticket and an English one with the same character count can differ meaningfully in token count.</p>
+<h3 id="how-to-measure-whether-any-of-this-is-working">How to measure whether any of this is working</h3>
+<p>Do not trust intuition about token growth. Instrument it:</p>
 <ul>
-<li><strong>Naive agent</strong>: 45k tokens after 6 hours, 12% of prompts truncated, 18% hallucination rate on customer IDs.</li>
-<li><strong>Smart agent</strong>: 52k tokens after 24 hours, 0% truncation, 2% hallucination rate on customer IDs.</li>
-<li><strong>Cost delta</strong>: +$0.18 per 1000 tickets for Redis writes, offset by -$0.32 per 1000 tickets from shorter prompts and fewer retries.</li>
+<li><strong>Token count per turn.</strong> Record the exact prompt token count returned in the API response's usage field, not an estimate. Emit it as a histogram.</li>
+<li><strong>Truncation events.</strong> Log a counter whenever the provider's response indicates the prompt was truncated, or whenever your own eviction loop fires. A rising eviction rate is the signal that your budget is too tight or your summarisation interval too long.</li>
+<li><strong>Answer quality proxy.</strong> Track a per-turn metric that correlates with correctness for your domain. For support agents, "did the agent restate a fact that contradicts the ticket state" is a workable signal, scored by a small classifier or by human review of a sample.</li>
+<li><strong>Cost per resolved ticket.</strong> Divide total inference spend by tickets closed. This normalises for traffic changes.</li>
 </ul>
+<p>The comparison to make is between your old configuration and the new one, on the same traffic, over at least a full traffic cycle. Percentiles matter more than means: the 90th and 95th percentile token counts tell you how close the tail is to the limit.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>If you’ve ever debugged a microservice that leaks memory, you’ll recognise the pattern: the context window is like a memory leak. Every new message is an allocation, and if you never free anything, the process dies. The difference is that in a microservice you can restart the pod; in a long-running agent, you can’t restart the chat.</p>
-<p>If you’ve used Redis as a cache, you’ll see the similarity: we’re using Redis to store old messages we might need later, but we’re not keeping them in the hot path. The summarisation step is like a compaction job that runs periodically to keep the cache small.</p>
-<p>And if you’ve ever struggled with PostgreSQL bloat, you’ll appreciate the retention policy: we’re not just deleting rows; we’re summarising them first, so we lose data gracefully instead of just dropping it.</p>
+<p>If you have debugged a service that leaks memory, the pattern is familiar. Every message is an allocation; nothing frees it; the process eventually dies. The difference is that a leaking microservice can be restarted. A conversation cannot be restarted without losing the customer's trust.</p>
+<p>If you have used Redis as a cache, the structure maps directly. The sliding window is the hot cache. The per-ticket Redis list is the warm tier. The summary is a compacted representation of the cold tier. The vector store, discussed below, is a retrieval index over cold storage.</p>
+<p>If you have managed table bloat in PostgreSQL, the retention policy maps too. Deleting rows outright loses information; summarising first and then archiving loses information gracefully, with a record of what was decided.</p>
 <h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<p><strong>Myth 1: Bigger models need bigger context windows.</strong>
-Wrong. I’ve run gpt-4o-mini-2024-07-18 with a 16k token limit on 48-hour tickets and never hit truncation, because the agent only needed the last 10 messages to answer the current question. The model size doesn’t change the optimal window size; the task does.</p>
-<p><strong>Myth 2: Summarisation always loses information.</strong>
-Not if you design the summary prompt carefully. I once tried to use a generic summariser and lost the customer’s preferred language; switching to a prompt that explicitly asks for language and subscription tier fixed the issue. The summary isn’t a lossy compression; it’s a lossy <em>filter</em> that keeps what matters.</p>
-<p><strong>Myth 3: You can’t prune system messages.</strong>
-You can, but you shouldn’t without a retention policy. I deleted system prompts after 24 hours once, and the agent started hallucinating its own internal instructions. The fix was to keep system prompts forever but mark them as archived so they don’t bloat the hot window.</p>
-<p><strong>Myth 4: Redis is too slow for this.</strong>
-Redis 7.2 handles 10k writes per second on a c6g.large instance in us-east-1. For a support agent handling 100 tickets per second, that’s 100 writes per second — well within limits. The bottleneck is usually the summarisation step, not Redis.</p>
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>Once you have a working sliding window with summarisation, the next step is to make the retention policy dynamic. Instead of hard-coding “summarise every 4 hours,” use a signal from the ticket’s state: if the customer is still active in the last 15 minutes, keep the full window; if the ticket is in a “pending internal review” state, summarise aggressively.</p>
-<p>Another advanced trick is to use a vector store to store old messages by semantic similarity, then inject the top 5 most relevant chunks into the prompt instead of keeping the full history. This is like a cache-aside pattern: the vector store is the cold storage, the sliding window is the hot cache, and the LLM prompt is the working set.</p>
+<p><strong>Myth: bigger models need bigger context windows.</strong>
+Model size and optimal window size are independent. A small model with a tight, well-curated window often outperforms a large model with a sprawling one, because irrelevant tokens act as noise. The right window size is determined by the task's information requirements, not the model's capacity.</p>
+<p><strong>Myth: summarisation always loses critical information.</strong>
+Summarisation loses whatever the summary prompt does not ask for. A generic "summarise this conversation" prompt will drop structured fields like subscription tier, preferred language, and stated constraints. A summary prompt that explicitly enumerates those fields preserves them. The summary is a lossy filter, and you choose the filter's passband.</p>
+<p><strong>Myth: system messages can be pruned like anything else.</strong>
+System messages carry the agent's operating instructions. Pruning them causes the model to improvise instructions, which is how agents start inventing policies. Keep system messages pinned outside the eviction pool, and version them so a policy change is auditable.</p>
+<p><strong>Myth: an external store is too slow for this.</strong>
+A single Redis instance handles far more than the write rate of a typical support agent. The bottleneck in practice is the summarisation call, which is an extra model invocation. Measure the summarisation step separately from the main turn; if it dominates latency, move it off the critical path.</p>
+<h2 id="the-advanced-version-retrieval-over-cold-storage">The advanced version: retrieval over cold storage</h2>
+<p>Once the sliding window and summarisation are stable, the next step is to retrieve old context by relevance instead of keeping it in the window. Store each pruned message in a vector store, embed the current query, and inject the top-k most similar past messages into the prompt.</p>
 <pre><code class="language-python"># vector-store-context.py
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
@@ -427,11 +426,9 @@ class VectorAgent:
         self.vector_store = vector_store
 
     async def handle_query(self, query: str) -&gt; str:
-        # Retrieve top 5 semantically similar old messages
         docs = self.vector_store.similarity_search(query, k=5)
         context = &quot;\n&quot;.join([doc.page_content for doc in docs])
 
-        # Build prompt with context plus current window
         prompt = f&quot;&quot;&quot;
         Ticket: {self.ticket_id}
 
@@ -449,8 +446,10 @@ class VectorAgent:
         self.window.append(f&quot;User: {query}\nAssistant: {response.content}&quot;)
         return response.content
 </code></pre>
-<p>The trade-off here is latency: a vector search adds 50–100ms to each turn, but it reduces the prompt size from 64k tokens to ~2k tokens. For a customer in Bogotá with a 150ms RTT to the US-east-1 region, the total latency is still under 500ms — acceptable for most support use cases.</p>
-<h3 id="dynamic-retention-policy-table">Dynamic retention policy table</h3>
+<p>The trade-off is a retrieval round-trip on every turn in exchange for a much smaller prompt. Whether that is a net win depends on your latency budget and how often the relevant context is actually outside the recent window. Measure both: retrieval latency added, and answer quality with and without retrieval, on a held-out set of tickets.</p>
+<p>Two failure modes are worth naming. First, retrieval can surface a semantically similar but factually outdated message — for example, a refunded order that matches the query embedding. Mitigate by filtering retrieved documents on ticket state and timestamp before injection. Second, retrieval adds a new dependency to the request path; if the vector store is unavailable, decide in advance whether to degrade to window-only or to fail the turn.</p>
+<h2 id="retention-policy-by-ticket-state">Retention policy by ticket state</h2>
+<p>A static policy is a starting point, not an endpoint. Ticket state is a useful signal for how aggressively to prune.</p>
 <table>
 <thead>
 <tr>
@@ -458,126 +457,104 @@ class VectorAgent:
 <th>Window size</th>
 <th>Summarise interval</th>
 <th>Vector retrieval</th>
-<th>Notes</th>
+<th>Rationale</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Active chat (last 15 min)</td>
-<td>100 messages</td>
-<td>60 min</td>
+<td>Active chat (recent activity)</td>
+<td>Large</td>
+<td>Long</td>
 <td>Top 3</td>
-<td>Full history, frequent summarisation</td>
+<td>Continuity matters most while the customer is present</td>
 </tr>
 <tr>
-<td>Pending review</td>
-<td>20 messages</td>
-<td>10 min</td>
+<td>Pending internal review</td>
+<td>Small</td>
+<td>Short</td>
 <td>Top 5</td>
-<td>Aggressive pruning, heavy summarisation</td>
+<td>Agent is not responding live; compress aggressively</td>
 </tr>
 <tr>
-<td>Closed (refunded)</td>
-<td>2 messages</td>
-<td>6 hours</td>
+<td>Closed</td>
+<td>Minimal</td>
+<td>Long</td>
 <td>Top 1</td>
-<td>Only final resolution and refund note</td>
+<td>Only the resolution and any refund reference are needed</td>
 </tr>
 <tr>
 <td>Escalated</td>
-<td>50 messages</td>
-<td>30 min</td>
+<td>Medium</td>
+<td>Medium</td>
 <td>Top 10</td>
-<td>Keep escalation trail, summarise often</td>
+<td>Preserve the escalation trail for the next responder</td>
 </tr>
 </tbody>
 </table>
-<h2 id="quick-reference">Quick reference</h2>
+<p>These are illustrative starting values. Tune them against the measurements described earlier: eviction rate, truncation events, and the quality proxy.</p>
+<h2 id="strategy-comparison">Strategy comparison</h2>
 <table>
 <thead>
 <tr>
 <th>Strategy</th>
-<th>When to use</th>
-<th>Token overhead</th>
-<th>Latency cost</th>
-<th>Retention risk</th>
-<th>Code example</th>
+<th>When it fits</th>
+<th>Prompt size</th>
+<th>Added latency</th>
+<th>Main risk</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Sliding window</td>
-<td>Short chats (&lt; 24 hours)</td>
-<td>Low (64k)</td>
+<td>Sliding window only</td>
+<td>Short sessions</td>
 <td>Low</td>
-<td>Medium (misses long-term context)</td>
-<td>smart-context.ts</td>
+<td>None</td>
+<td>Loses long-range context silently</td>
 </tr>
 <tr>
-<td>Summarisation</td>
-<td>Long chats (&gt; 4 hours)</td>
-<td>Medium (20k)</td>
-<td>Medium (summariser call)</td>
-<td>Low (summary is compact)</td>
-<td>summariseHistory()</td>
+<td>Window + summarisation</td>
+<td>Multi-hour sessions</td>
+<td>Medium</td>
+<td>Summariser call</td>
+<td>Summary omits fields the prompt did not request</td>
 </tr>
 <tr>
-<td>Vector retrieval</td>
-<td>Disputes with past tickets</td>
-<td>Low (2k)</td>
-<td>High (50–100ms)</td>
-<td>Very low (only relevant snippets)</td>
-<td>vector-store-context.py</td>
+<td>Retrieval over cold storage</td>
+<td>Long histories with recurring topics</td>
+<td>Low</td>
+<td>Retrieval round-trip</td>
+<td>Surfaces stale-but-similar context</td>
 </tr>
 <tr>
 <td>Two-tier retention</td>
-<td>Mixed use cases</td>
+<td>Mixed workloads</td>
 <td>Variable</td>
 <td>Variable</td>
-<td>Low (policy-driven)</td>
-<td>dynamic-policy.py</td>
+<td>Policy complexity; needs monitoring</td>
 </tr>
 <tr>
-<td>Archive + delete</td>
-<td>Compliance or GDPR</td>
+<td>Archive and delete</td>
+<td>Compliance-driven retention limits</td>
 <td>None</td>
 <td>None</td>
-<td>High (data loss)</td>
-<td>archiveOldTickets()</td>
+<td>Irreversible data loss</td>
 </tr>
 </tbody>
 </table>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<ul>
-<li><a href="https://python.langchain.com/docs/modules/memory/context_window_management/">LangChain’s context window management docs</a> — covers similar strategies with code samples.</li>
-<li><a href="https://redis.io/docs/management/optimization/memory-optimization/">Redis 7.2 memory management</a> — how to tune Redis for high-write loads.</li>
-<li><a href="https://platform.openai.com/docs/guides/text-generation/managing-tokens">OpenAI’s token counting guide</a> — how to approximate token counts without tiktoken.</li>
-<li><a href="https://github.com/facebookresearch/faiss/wiki/Guidelines-to-choose-a-clustering-algorithm">FAISS vector store benchmarks</a> — when to use HNSW vs IVF indexes.</li>
-</ul>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How do I know when my context window is too big?</strong>
-Check your token usage per ticket in OpenAI’s usage dashboard. If the 90th percentile is above 80% of your model’s context window, you’re cutting it close.</p>
-<p><strong>Can I use a smaller model to save costs?</strong>
-Yes, but test the summarisation quality first. For internal summaries, a smaller model works; for customer-facing summaries, keep the mini.</p>
-<p><strong>What about GDPR or LGPD compliance?</strong>
-Use a retention policy that deletes or anonymises data after 30 days by default, and 7 days if the ticket is closed with a refund. Store old messages in an S3 bucket with lifecycle policies, not in Redis, so you can delete them en masse when required. I once had a customer in Mexico request deletion; the Redis keys were easy to delete, but the PostgreSQL audit trail wasn’t — lesson learned.</p>
-<p><strong>How do I handle multiple agents working on the same ticket?</strong>
-Use a distributed lock on the ticket ID. Redis with SET ticket_id lock_id NX PX 60000 (1-minute TTL) works for most cases. I once had two agents in São Paulo and Bogotá both responding to the same ticket because the lock expired; switching to a 5-minute TTL fixed the race condition.</p>
-<h2 id="the-one-thing-you-should-do-today">The one thing you should do today</h2>
-<p>Check your agent’s context window usage right now. Run a query against your usage logs (OpenAI’s dashboard or your own telemetry) and calculate the 90th and 95th percentile token counts per ticket. If either is above 75% of your model’s context window, implement a sliding window with summarisation this week. Start with a 64k token limit and a 4-hour summarisation interval, then tune based on hallucination rates and latency. The fastest way to get the data is to add a metric counter in your agent code that records the token count per turn and pushes it to Prometheus or Datadog every 5 minutes — you’ll have the numbers in under 30 minutes and a fix in under a week.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/agents-running-hours-youre-losing-context-fast/">Agents running hours? You're losing context fast</a></li>
-<li><a href="https://kubaik.github.io/context-windows-agents-that-run-for-days/">Context windows: agents that run for days</a></li>
-<li><a href="https://kubaik.github.io/ship-evals-before-your-agent-ships/">Ship evals before your agent ships</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="compliance-and-multi-agent-considerations">Compliance and multi-agent considerations</h2>
+<p>Retention limits are a design input, not an afterthought. If your jurisdiction or policy requires deletion after a fixed period, store archived messages in object storage with a lifecycle rule rather than in a cache with per-key TTLs. Per-key TTLs are easy to get wrong, and a missed key is a compliance incident. Object-storage lifecycle rules delete by prefix and age, which is auditable.</p>
+<p>For multiple agents working the same ticket, use a distributed lock keyed on the ticket ID. A Redis <code>SET ticket_id lock_id NX PX &lt;ttl_ms&gt;</code> acquires the lock atomically. Set the TTL generously relative to your worst-case turn latency, and renew it if a turn runs long. A lock that expires mid-turn is how two agents end up responding to the same message.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I know when the context window is too large?</strong>
+Look at the distribution, not the mean. Pull the prompt token count from the API response's usage field for every turn, and compute the 90th and 95th percentiles per ticket. If the tail is approaching the model's limit, you are one unusually long turn away from truncation.</p>
+<p><strong>Can a smaller model handle the summarisation step?</strong>
+Test it. Summarisation quality is measurable: check whether the summary preserves the fields your prompts depend on, such as tier, language, and open constraints. If a smaller model preserves them, use it. If not, the savings are not real.</p>
+<p><strong>How should retention interact with deletion requests?</strong>
+Design for deletion from the start. Keep a per-ticket index of every storage location that holds that ticket's data — cache, archive, vector store — so a deletion request is a lookup plus a set of deletes rather than a search. Vector stores are the easy one to forget.</p>
+<p><strong>What about multiple agents on one ticket?</strong>
+Lock on the ticket ID with a TTL longer than your worst-case turn. Log lock acquisition and release so you can see contention and expiry events in production.</p>
+<h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
+<p>Open your agent's code and find where the message array is appended to. If there is no eviction step between the append and the API call, that is the bug. Add a single counter that records the prompt token count from the API response's usage field, tagged by ticket ID, and emit it to whatever metrics system you already run. That one metric will tell you within a day whether your tail is approaching the limit — and whether the work in this article applies to you at all.</p>
                 
                 
             </div>
@@ -617,8 +594,8 @@ Use a distributed lock on the ticket ID. Redis with SET ticket_id lock_id NX PX 
                     </a>
                     
                     <a class="related-card" href="/keep-multi-model-systems-stable-6-rules-that-worked/">
-                        <h3>Keep multi-model systems stable: 6 rules that worked</h3>
-                        <p>Cut multi-model agent costs 75% with idempotency keys and concurrency limits — Redis 7.2 eviction rates, Lambda arm64 cost, and the 503 error mistake most…</p>
+                        <h3>Stabilize multi-model agent routers: six production rules</h3>
+                        <p>Six rules for multi-model agent routers: bounded concurrency, idempotency keys, timeouts, observability, and how to measure each one yourself.</p>
                         <span class="related-meta">14 min read · 15 July 2026</span>
                     </a>
                     

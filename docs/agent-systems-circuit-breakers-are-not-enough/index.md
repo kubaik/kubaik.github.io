@@ -1,195 +1,217 @@
 # Agent Systems: Circuit Breakers Are Not Enough
 
-The conventional advice [on circuit breakers](/ai-agents-need-circuit-breakers-in-2026/) is incomplete in one specific, costly way. This is the version of the write-up that includes the part that broke. Nobody mentions the failure mode until it's already cost someone a bad night.
+Circuit breakers and bulkheads are the standard resilience playbook, inherited from the microservices era. They work well when failures are binary: a dependency is up or down, fast or slow. Agent systems break that assumption in three specific ways, and a naive port of the microservices playbook leaves teams with a false sense of security and cascades that are harder to diagnose than the original outage.
 
-The tech industry loves a good hype cycle. We've seen it with blockchain's promise of decentralized utopia, then serverless's vision of infinite scalability with zero ops, followed by microservices as the panacea for all architectural woes. Each time, the marketing machine spun up, grand claims were made, and then, slowly, reality set in. We learned what these technologies *actually* do, what they *really* cost, and precisely where they break under load. Now, it's AI agents. The narrative is familiar: autonomous entities, intelligent orchestration, solving complex problems. But behind the shiny demos and venture capital pitches, the same fundamental engineering challenges persist, especially when it comes to failure.
+This article covers the failure modes that circuit breakers miss, what to add instead, and how to measure whether the additions actually help. The code examples use .NET, but the patterns apply to any language with a policy library.
 
-My take? The standard playbook for resilience—circuit breakers and bulkheads, borrowed from the microservices era—is largely insufficient for the dynamic, often unpredictable nature of interconnected agent [systems. Applying these patterns](/7-patterns-for-systems-that-wont-die-when-networks/) without deep consideration for agent autonomy, statefulness, and recursive interaction patterns often leaves you with a false sense of security, only to discover cascade failures that are harder to diagnose and recover from. The part that trips people up is the
+## Why the microservices playbook is incomplete for agents
 
----
+A classic circuit breaker trips when a downstream call fails or times out repeatedly. That model assumes failures are *resource-shaped*: the dependency is overloaded, unreachable, or slow. When the breaker opens, the system stops hammering a struggling dependency and gives it room to recover. When the dependency recovers, the breaker closes.
 
-### 1. Advanced Edge Cases I Ran Into (and How They Blew Up the System)
+Agent systems violate three of the assumptions underneath that model:
 
-When you move from a static microservice mesh to a swarm of AI agents that can spin up, terminate, and re‑wire themselves on the fly, a handful of edge cases surface that no textbook circuit‑breaker tutorial covers. Below are three concrete scenarios I observed in production‑grade deployments (all running on GKE‑Autopilot 1.27 in March 2026).
+1. **Failures can be logical, not resource-shaped.** An agent can return a well-formed, fast, HTTP 200 response that is semantically wrong — a malformed plan, a request routed back to the sender, a "no data" result that is actually a validation error. A circuit breaker that only inspects status codes and latency will never trip on these, and a breaker that trips on *any* error will open on expected outcomes and stay open.
+2. **Agents are stateful.** In-process caches, short-term memory, and per-agent context mean that a bulkhead sized for a stateless handler will saturate for reasons that have nothing to do with downstream load. Cache churn, eviction thrash, and lock contention all consume the same thread pool that the bulkhead is trying to protect.
+3. **Agents call each other recursively.** A single user request can fan out into a tree of sub-tasks, and the number of concurrent downstream calls can grow multiplicatively with depth. A circuit breaker on the leaf service will trip, but by then the tail latency of the original request has already been destroyed by the fan-out itself.
 
-**a. “Self‑Referential Feedback Loops”**  
-Agent A receives a request, decides it needs a data‑enrichment step, and forwards the request to Agent B. Agent B, after a quick lookup, determines the original request is malformed and forwards it back to Agent A for “re‑validation”. The naïve circuit breaker on Agent A sees a fast‑failing call (the round‑trip takes < 5 ms) and opens, but because the failure is *logical* rather than *resource‑exhaustion* it never cools down. The result: every subsequent external request is instantly rejected, even though the underlying services are healthy. The fix required a *semantic* circuit breaker that inspects error codes (e.g., `INVALID_INPUT`) and treats them as “non‑tripping” failures. This pattern is documented in the 2026 Resilience‑AI Working Group report (RFC 2025‑03).
+Each of these has a specific fix. None of them is a circuit breaker.
 
-**b. “State‑Leak Bulkhead Saturation”**  
-Our agents maintain a short‑lived in‑memory cache of the last 10 k embeddings. Bulkhead isolation was applied per‑agent using a fixed thread‑pool of size 8. When a burst of 10 k concurrent queries arrived (a typical pattern when a new product launch triggers mass personalization), the cache eviction policy (LRU) started thrashing, causing each request to spend ~ 30 ms just on cache churn. Because the bulkhead’s queue depth was capped at 32, the 8‑thread pool saturated and the bulkhead opened, rejecting 70 % of traffic. The underlying cause was the *stateful* nature of the cache, something a classic stateless bulkhead model does not anticipate. The solution was to externalize the cache to a Redis 7.2 cluster with a TTL, turning the bulkhead into a pure compute limiter. This change is corroborated by the 2026 Cloud Native Edge‑Case Survey (Section 4.2).
+## Failure mode 1: self-referential feedback loops
 
-**c. “Recursive Dependency Explosion”**  
-Agent X delegates a sub‑task to Agent Y, which in turn spawns three helper agents (Y1, Y2, Y3). Each helper contacts a shared knowledge‑graph service. Under normal load, the knowledge‑graph service can handle ~ 2 k RPS. However, when the recursion depth hits 4 (a rare but reproducible scenario when a user asks for a multi‑step plan), the number of concurrent calls grows exponentially: 1 → 3 → 9 → 27 → 81. The circuit breaker on the knowledge‑graph service trips after 5 seconds of latency, but because the failure propagates back up the recursion chain, the original request experiences a *tail‑latency* of > 20 seconds. The fix was to impose a *max recursion depth* guard (configurable via environment variable `AGENT_MAX_RECURSION=3`) and to add a *fallback* that returns a partial plan rather than waiting for the full graph. The behavior matches the findings of the 2026 “Recursive Failure Modes in Autonomous Systems” whitepaper (doi:10.1109/AI-2026‑1234).
+Consider two agents, A and B. A receives a request, decides it needs enrichment, and forwards to B. B inspects the payload, decides it is malformed, and forwards it back to A for re-validation. A sees a fast round-trip (a few milliseconds) and, depending on how the breaker is configured, either ignores it or trips immediately.
 
-These three cases illustrate why a blunt “circuit breaker + bulkhead” recipe is brittle. The patterns you need are *semantic error handling*, *state externalization*, and *guardrails on recursion*. All three are now codified in the open‑source `agent‑resilience‑kit` v0.9.2 (GitHub @kubai/agent‑resilience‑kit, released July 2026).
+The pathological case is the second one. If the breaker trips on any error, it opens on a *logical* failure and never cools down, because the underlying services are healthy and there is nothing to recover. Every subsequent external request is rejected instantly. The system looks down while every dependency is up.
 
----
+The fix is a **semantic circuit breaker**: inspect the error payload, not just the status code, and classify failures into two buckets.
 
-### 2. Integration with Real‑World Tools (Versions) + Working Code Snippet
+- **Tripping failures**: timeouts, connection errors, 5xx responses, rate-limit responses. These indicate the dependency is unhealthy. Count them toward the breaker threshold.
+- **Non-tripping failures**: validation errors, "no data" results, business-rule rejections. These are expected outcomes. Log them, return them to the caller, but do not count them toward the breaker.
 
-Below is a minimal but production‑ready example that wires together three widely‑adopted 2026 tools:
-
-| Tool | Version (2026) | Role |
-|------|----------------|------|
-| **Polly.NET** | 8.2.0 | Policy‑based circuit breaker and bulkhead |
-| **Redis** | 7.2.1 (Azure Cache for Redis) | External state store for agent caches |
-| **OpenTelemetry** | 1.12.0 (OTel .NET SDK) | Distributed tracing to spot cascade failures |
-
-The snippet shows an ASP.NET Core 8.0 endpoint that:
-
-1. Checks a Redis‑backed cache (`CacheService`) before invoking a heavyweight LLM call (`LLMClient`).
-2. Wraps the LLM call in a Polly bulkhead (max 4 concurrent calls, queue 16) and a circuit breaker (break after 3 failures, 30‑second reset).
-3. Emits OpenTelemetry spans so you can see, in Jaeger 1.7, exactly where the latency spikes.
+In practice this means a predicate on the response body. With Polly, `HandleResult` can inspect the deserialized payload:
 
 ```csharp
-using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis;
-using Polly;
-using Polly.Bulkhead;
-using Polly.CircuitBreaker;
-using OpenTelemetry.Trace;
-using OpenTelemetry.Resources;
-using System.Net.Http;
-
-// ---------- 1. Bootstrap Redis ----------
-var redis = ConnectionMultiplexer.Connect(
-    new ConfigurationOptions
-    {
-        EndPoints = { "myredis.cache.windows.net:6380" },
-        Password = Environment.GetEnvironmentVariable("REDIS_PASSWORD"),
-        Ssl = true,
-        AbortOnConnectFail = false
-    });
-IDatabase cacheDb = redis.GetDatabase();
-
-// ---------- 2. Define Polly policies ----------
-AsyncBulkheadPolicy<HttpResponseMessage> bulkhead = Policy
-    .BulkheadAsync<HttpResponseMessage>(maxParallelization: 4, maxQueuingActions: 16,
-        onBulkheadRejectedAsync: ctx =>
-        {
-            // Log rejection for observability
-            Console.WriteLine($"Bulkhead rejected: {ctx.OperationKey}");
-            return Task.CompletedTask;
-        });
-
-AsyncCircuitBreakerPolicy<HttpResponseMessage> circuitBreaker = Policy
-    .HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
+AsyncCircuitBreakerPolicy<LlmResult> breaker = Policy
+    .HandleResult<LlmResult>(r =>
+        r.IsTransientFailure ||          // timeout, 5xx, rate limit
+        r.StatusCode >= 500)
     .CircuitBreakerAsync(
-        handledEventsAllowedBeforeBreaking: 3,
-        durationOfBreak: TimeSpan.FromSeconds(30),
-        onBreak: (outcome, breakDelay) =>
-        {
-            Console.WriteLine($"Circuit opened due to: {outcome.Result.StatusCode}");
-        },
-        onReset: () => Console.WriteLine("Circuit closed")
-    );
-
-// ---------- 3. OpenTelemetry setup ----------
-using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("agent‑service"))
-    .AddAspNetCoreInstrumentation()
-    .AddHttpClientInstrumentation()
-    .AddJaegerExporter(o =>
-    {
-        o.AgentHost = "jaeger.monitoring.svc.cluster.local";
-        o.AgentPort = 6831;
-    })
-    .Build();
-
-// ---------- 4. LLM client ----------
-static async Task<HttpResponseMessage> CallLLMAsync(string prompt, HttpClient http)
-{
-    var payload = new { model = "gpt‑4‑turbo‑2026", prompt };
-    var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(payload),
-                                   System.Text.Encoding.UTF8,
-                                   "application/json");
-    return await http.PostAsync("https://api.openai.com/v1/completions", content);
-}
-
-// ---------- 5. ASP.NET Core endpoint ----------
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddHttpClient("llm", client =>
-{
-    client.DefaultRequestHeaders.Add("Authorization",
-        $"Bearer {Environment.GetEnvironmentVariable("OPENAI_API_KEY")}");
-});
-var app = builder.Build();
-
-app.MapPost("/agent/plan", async ([FromBody] string userPrompt,
-                                 IHttpClientFactory httpFactory) =>
-{
-    // 5a. Try cache first
-    var cacheKey = $"plan:{userPrompt.GetHashCode():X}";
-    var cached = await cacheDb.StringGetAsync(cacheKey);
-    if (cached.HasValue) return Results.Ok(cached);
-
-    // 5b. Execute LLM under policies
-    var http = httpFactory.CreateClient("llm");
-    var policyWrap = Policy.WrapAsync(bulkhead, circuitBreaker);
-    HttpResponseMessage llmResponse = await policyWrap.ExecuteAsync(() => CallLLMAsync(userPrompt, http));
-
-    if (!llmResponse.IsSuccessStatusCode)
-        return Results.StatusCode((int)llmResponse.StatusCode);
-
-    var plan = await llmResponse.Content.ReadAsStringAsync();
-
-    // 5c. Store in Redis with 5‑minute TTL
-    await cacheDb.StringSetAsync(cacheKey, plan, TimeSpan.FromMinutes(5));
-
-    return Results.Ok(plan);
-});
-
-app.Run();
+        handledEventsAllowedBeforeBreaking: 5,
+        durationOfBreak: TimeSpan.FromSeconds(30));
 ```
 
-**Why this works in an agent ecosystem**
+The predicate is the whole point. A breaker without one is a coin flip on whether a logical error takes down the service.
 
-* **Semantic failure handling** – The circuit breaker only trips on non‑2xx HTTP responses, not on logical validation errors that the LLM may embed in the payload. You can extend the `HandleResult` predicate to inspect the JSON body for an `error_code` field, keeping the breaker from opening on expected “no‑data” responses.
-* **Externalized state** – The Redis cache eliminates in‑process memory pressure that would otherwise cause bulkhead queues to fill up during spikes.
-* **Observability** – OpenTelemetry traces expose the *exact* point where latency spikes, allowing you to see if the bulkhead queue length, the circuit‑breaker state, or the Redis latency is the culprit. In a real‑world run (see Section 3) the Jaeger UI showed a consistent 12 ms Redis latency versus a 250 ms LLM latency when the bulkhead was saturated.
+There is a second-order problem: a feedback loop between two agents can bounce a request back and forth indefinitely without ever producing a tripping failure. Add a **hop counter** to the request envelope and reject any request that exceeds it. This is cheap and catches the loop before it becomes a latency problem.
 
-All three libraries are stable, LTS‑supported in 2026, and have extensive community‑driven benchmarks (Polly’s own 2026 “Polly vs. Resilience4j” benchmark, Redis Labs performance charts, and the OpenTelemetry 2026 “Tracing Overhead” study). Using them together gives you a concrete, measurable foundation for the higher‑level resilience patterns discussed earlier.
+## Failure mode 2: state-leak bulkhead saturation
 
----
+Bulkheads isolate a dependency by capping concurrent calls to it. The classic model assumes the handler is stateless: a thread is either waiting on the downstream call or it is not.
 
-### 3. Before / After Comparison (Numbers, Latency, Cost, Code)
+Agents are not stateless. A typical agent holds an in-process cache of recent embeddings, tool results, or conversation context. When traffic spikes, the cache eviction policy starts thrashing: every request spends time evicting and re-fetching instead of doing useful work. The bulkhead's thread pool fills with threads that are *not* waiting on the downstream dependency — they are waiting on the cache. The bulkhead opens and rejects traffic even though the downstream service is healthy.
 
-To prove that the added guardrails actually move the needle, I ran an A/B test on a production‑grade agent orchestration service that handles ~ 150 k requests per day (≈ 1.7 RPS on average, but with bursts up to 3 k RPS during marketing campaigns). The test ran for two weeks in June 2026 on identical GKE‑Autopilot node pools (e2‑standard‑8, 32 GiB RAM). The “Before” variant used a naïve circuit breaker (open‑after‑5 failures, 10‑second reset) and an in‑process bulkhead (max 10 threads, no queue). The “After” variant is the code from Section 2, plus the semantic error handling and Redis cache.
+This is a state-leak: mutable state inside the protected region consumes the same capacity that the bulkhead is trying to ration.
 
-| Metric | Before (baseline) | After (enhanced) | Δ |
-|--------|-------------------|------------------|---|
-| **99th‑percentile latency** | 1 842 ms | 423 ms | **‑77 %** |
-| **Mean latency** | 312 ms | 87 ms | **‑72 %** |
-| **Circuit‑breaker trips per hour** | 23 | 2 | **‑91 %** |
-| **Bulkhead queue length (p95)** | 28 (blocked) | 4 (idle) | **‑86 %** |
-| **Redis cache hit rate** | N/A (in‑process) | 68 % | — |
-| **CPU usage (node‑level)** | 78 % avg | 42 % avg | **‑46 %** |
-| **Memory pressure events** | 12 per day (OOM‑kill warnings) | 0 | **‑100 %** |
-| **Monthly GCP cost** | $2 842 | $1 967 | **‑30 %** |
-| **Lines of code (C#)** | 312 (hand‑rolled retry + bulkhead) | 348 (Polly + Redis + OTEL) | **+11 %** |
-| **Time to deploy (CI/CD)** | 4 min (no tests) | 5 min (unit + integration tests) | **+25 %** |
+The fix is to **externalize mutable state** so the bulkhead protects only compute and I/O, not memory management. Move the cache to a shared store with a TTL:
 
-**Interpretation**
+```csharp
+public class CacheService
+{
+    private readonly IDatabase _db;
+    private readonly TimeSpan _ttl;
 
-* **Latency** – The biggest win comes from eliminating the cache‑thrash bulkhead saturation (see Edge Case b). By moving the cache to Redis, each request avoids the 30 ms churn, and the bulkhead never fills, keeping the tail latency under 500 ms even during 3 k RPS bursts.
-* **Cost** – CPU savings translate directly into a lower GKE‑Autopilot bill. The extra $875 saved per month is largely due to the reduced need for autoscaling to a higher node count during peak hours.
-* **Reliability** – Trips per hour dropped from 23 to 2 because the circuit breaker now distinguishes between *transient* HTTP errors (e.g., 502) and *semantic* failures (e.g., “no‑plan”). The system stays open longer only when the LLM truly misbehaves.
-* **Operational overhead** – Lines of code grew modestly (by ~ 36 lines) because Polly’s fluent API replaces boilerplate retry loops. The extra minute in CI/CD is offset by the safety net of automated integration tests that catch recursion‑depth regressions before they hit prod.
-* **Observability** – With OpenTelemetry enabled, the engineering team could pinpoint that the remaining 2 trips per hour originated from an external DNS timeout, not from internal agent logic. This level of insight was impossible in the baseline where all failures were aggregated under “circuit‑breaker open”.
+    public CacheService(IConnectionMultiplexer redis, TimeSpan ttl)
+    {
+        _db = redis.GetDatabase();
+        _ttl = ttl;
+    }
 
-**Bottom line:** Adding *semantic* circuit‑breaker predicates, externalizing mutable state, and instrumenting the whole stack does not merely “tick a box”. It yields measurable reductions in latency, cost, and failure frequency, while only modestly increasing code size and CI time. For developers in Lagos, London, Manila, or Montreal, the trade‑off is clear: a few extra lines of well‑tested, library‑driven code buys you a system that survives the next cascade failure without blowing the budget.
+    public async Task<string?> GetAsync(string key) =>
+        await _db.StringGetAsync(key);
 
----
+    public async Task SetAsync(string key, string value) =>
+        await _db.StringSetAsync(key, value, _ttl);
+}
+```
 
+Two details matter. First, the TTL must be set on every write, not just at the store level, so that a burst of writes cannot evict unrelated entries. Second, the cache key must be deterministic and stable — if it depends on a hash of an object whose serialization order varies, hit rates collapse and the cache becomes pure overhead.
 
----
+Once state is externalized, the bulkhead behaves as designed: it caps concurrent calls to the LLM, and cache lookups that hit do not consume a bulkhead slot at all. A cache hit should short-circuit before the policy wrap, not inside it.
 
-### About this article
+## Failure mode 3: recursive dependency explosion
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
+A single agent request can delegate to a sub-agent, which delegates to three helpers, each of which calls a shared service. If depth grows linearly, the number of concurrent leaf calls grows multiplicatively. At depth 1 there is 1 call; depth 2, 3 calls; depth 3, 9; depth 4, 27; depth 5, 81. The arithmetic is exact and the growth is the problem: a shared service sized for a few thousand requests per second can be overwhelmed by a handful of deep requests.
 
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
+The circuit breaker on the shared service will eventually trip, but it trips *after* the fan-out has already happened. The original request has already spawned its tree, and the tail latency experienced by the user is the sum of the slowest path through that tree, not the latency of any single call.
 
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
+Two guards are needed, and they are complementary:
 
-**Last generated:** September 2026
+1. **A max recursion depth.** Reject any delegation that would exceed a configured depth. This is a hard cap, not a heuristic. It is the only thing that bounds the fan-out.
+2. **A fallback that returns partial results.** When the depth cap is hit, return what has been computed so far with an explicit marker that the result is partial. A user who gets a partial plan in 200 ms is better served than one who gets a full plan in 20 seconds or a timeout.
+
+```csharp
+public record AgentRequest(string Prompt, int Depth = 0);
+
+public const int MaxDepth = 3;
+
+public async Task<Plan> HandleAsync(AgentRequest request)
+{
+    if (request.Depth >= MaxDepth)
+        return Plan.Partial(request.Prompt, "max recursion depth reached");
+
+    var subRequests = Decompose(request.Prompt)
+        .Select(p => new AgentRequest(p, request.Depth + 1));
+
+    var results = await Task.WhenAll(subRequests.Select(HandleAsync));
+    return Plan.Merge(results);
+}
+```
+
+The depth cap is not a substitute for the circuit breaker. It is what keeps the breaker from being the *first* line of defense against a problem that has already propagated.
+
+## Putting the three fixes together
+
+A resilient agent handler applies all three fixes in a specific order. The order matters because each fix removes work from the layers below it.
+
+1. **Check the cache first.** A cache hit never enters the policy wrap. This is the cheapest possible outcome and should be the most common one for repeated prompts.
+2. **Enforce the recursion guard.** Reject or truncate before any downstream call is made. This bounds the fan-out at the source.
+3. **Apply the semantic circuit breaker around the LLM call.** Count only tripping failures toward the threshold.
+4. **Apply the bulkhead around the same call.** With state externalized, the bulkhead now bounds only concurrent LLM calls.
+
+```csharp
+app.MapPost("/agent/plan", async (
+    [FromBody] string userPrompt,
+    CacheService cache,
+    IHttpClientFactory httpFactory,
+    AsyncBulkheadPolicy<HttpResponseMessage> bulkhead,
+    AsyncCircuitBreakerPolicy<HttpResponseMessage> breaker) =>
+{
+    var cacheKey = $"plan:{StableHash(userPrompt)}";
+    var cached = await cache.GetAsync(cacheKey);
+    if (cached is not null)
+        return Results.Ok(cached);
+
+    var http = httpFactory.CreateClient("llm");
+    var policyWrap = Policy.WrapAsync(bulkhead, breaker);
+
+    HttpResponseMessage response;
+    try
+    {
+        response = await policyWrap.ExecuteAsync(
+            () => CallLlmAsync(userPrompt, http));
+    }
+    catch (BrokenCircuitException)
+    {
+        return Results.StatusCode(503);
+    }
+    catch (BulkheadRejectedException)
+    {
+        return Results.StatusCode(429);
+    }
+
+    if (!response.IsSuccessStatusCode)
+        return Results.StatusCode((int)response.StatusCode);
+
+    var plan = await response.Content.ReadAsStringAsync();
+    await cache.SetAsync(cacheKey, plan);
+    return Results.Ok(plan);
+});
+```
+
+Two things to note. First, `StableHash` must be a deterministic hash — `string.GetHashCode()` is randomized per process in modern .NET and will produce cache misses across restarts and across instances. Use a cryptographic hash or a stable non-cryptographic hash such as FNV-1a. Second, the `BrokenCircuitException` and `BulkheadRejectedException` are caught separately so the caller can distinguish "dependency is down" (503) from "we are overloaded" (429). Collapsing them into one status code makes debugging harder.
+
+## How to measure whether any of this helps
+
+The published benchmarks for policy libraries measure the libraries, not your system. The only measurement that matters is the one taken against your own workload. Here is what to instrument and what to compare.
+
+**Instrument these four things:**
+
+- **Circuit breaker state transitions**, with the triggering error class attached. If the breaker opens, you want to know whether it opened on a timeout, a 5xx, or a logical error that slipped through the predicate.
+- **Bulkhead queue depth and rejection count.** Queue depth rising toward the cap is an early warning; rejections are the late warning.
+- **Cache hit rate and cache latency.** A hit rate below roughly half usually means the key is unstable or the TTL is too short.
+- **Tail latency of the original request**, not just the leaf call. This is the number the user experiences, and it is the one that recursive fan-out destroys.
+
+**Then run two configurations against the same traffic:**
+
+- **Baseline:** circuit breaker on status codes only, in-process cache, no recursion cap.
+- **Enhanced:** semantic predicate, externalized cache, recursion cap with partial-result fallback.
+
+Compare p50, p95, and p99 latency, breaker trips per hour, bulkhead rejections per hour, and node CPU. Run for long enough to cover a full traffic cycle — at least one weekday and one weekend for a consumer workload, or several business days for an internal tool. A short test will miss the burst patterns that trigger the failures you are trying to fix.
+
+If the enhanced configuration does not reduce breaker trips, the predicate is probably still counting logical errors. If it does not reduce tail latency, the recursion cap is probably set too high to matter. If it does not reduce CPU, the cache is probably not being hit — check the key stability first.
+
+## A decision checklist
+
+Before adopting the standard circuit-breaker-and-bulkhead playbook for an agent system, answer these:
+
+- Does the breaker predicate inspect the response body, or only the status code and latency?
+- Is there a hop counter on the request envelope to catch agent-to-agent loops?
+- Is any mutable state held inside the bulkhead's protected region?
+- Is the cache key deterministic across processes and restarts?
+- Is there a hard cap on recursion depth, and does the cap return a partial result rather than an error?
+- Are cache hits short-circuited before the policy wrap, so they consume no bulkhead slot?
+- Are "dependency down" and "we are overloaded" reported as distinct status codes?
+- Is the tail latency of the *original* request measured, not just the leaf call?
+
+A "no" on any of the first five means the system has a failure mode that the circuit breaker will not catch. A "no" on either of the last three means the failure, when it happens, will be harder to diagnose than it needs to be.
+
+## FAQ
+
+**Does a semantic circuit breaker require parsing every response body?**
+
+No. In most systems, the tripping failures (timeouts, connection errors, 5xx) are identifiable before the body is read. Only successful responses need body inspection, and only to distinguish "expected empty result" from "unexpected payload." The cost is one deserialization per successful call, which is usually already happening.
+
+**Can the recursion cap be replaced by a timeout?**
+
+No. A timeout bounds how long a request runs, not how much work it spawns. A deep fan-out can consume downstream capacity for the full duration of the timeout and still return nothing useful. The cap bounds the work; the timeout bounds the wait. They solve different problems.
+
+**Is an external cache always better than an in-process cache?**
+
+No. An in-process cache is faster and has no network hop. It is the right choice when the working set is small, the process is long-lived, and the bulkhead is not the bottleneck. It becomes the wrong choice when cache churn consumes the same capacity the bulkhead is trying to ration. Measure the time spent on cache operations as a fraction of request time; if it is more than a few percent under load, externalize it.
+
+**What if the LLM provider already has its own rate limiting?**
+
+Provider-side rate limiting protects the provider, not your system. It surfaces as 429 responses, which your breaker should count as tripping failures — but by the time you see them, your bulkhead queue is already full. Client-side bulkheading is what keeps you from reaching that point.
+
+## Take action in the next 30 minutes
+
+Open the file that configures your circuit breaker and read the predicate. If it only checks status codes and latency, add a body inspection that classifies at least one logical error as non-tripping. Then add a hop counter to your request envelope and reject requests above a small fixed limit. Those two changes are a few lines each and close the two failure modes that a circuit breaker cannot see.

@@ -1,294 +1,282 @@
 # Agent context: short-term vs long-term memory
 
-I've seen the same context engineering mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.
+## The mistake this article is about
 
-## Why this comparison matters right now
+A common context-engineering failure in agent systems is treating context as a cache when the application's correctness depends on it being a ledger. The code usually looks reasonable: a JSON blob keyed by agent ID, a TTL to bound growth, a read-modify-write on every step. It passes tests because tests run on fast, stable networks and short sessions. It fails in production because the failure mode is silent — the agent does not error out when context goes missing. It proceeds with whatever it can reconstruct, which is often nothing, and generates a plausible-sounding action that never happened.
 
-Most agent systems today are built like chatbots that forget the conversation after 5 minutes. That works fine for customer support, but falls apart when you need a long-running agent that remembers context across days, restarts, and partial outages. In 2026, teams shipping agents for billing disputes, loan applications, or supply chain tracking are discovering that the gap between "it works in the lab" and "it works in Nigeria on 3G at 2 AM" is not just about latency — it’s about context persistence.
+This article compares two families of approaches to agent context:
 
-I ran into this when a fraud detection agent we shipped to a Kenyan bank kept hallucinating about transactions that had already been reversed. The agent was stateless, rehydrating context from a JSON blob in DynamoDB every 30 seconds. On stable Wi-Fi in Nairobi, it looked fine. But when a customer on Safaricom 3G reconnected after a dropped call, the context blob had been truncated during a partial write, and the agent invented a transaction that never happened. I spent a week debugging only to realize the real issue wasn’t the model — it was how we stored and retrieved context.
+- **Short-term memory:** fast key-value storage of the current context document, with a TTL and an append-only change log. The canonical implementation is a cache like Redis with a JSON-capable data type.
+- **Long-term memory:** an append-only event log in a relational database, with optional vector embeddings for semantic retrieval over history. The canonical implementation is PostgreSQL with a vector extension and, if you need time-series rollups, a time-series extension.
 
-This isn’t just an edge case. In 2026, 78% of long-running agents in East Africa run on intermittent connections with data caps and frequent restarts due to load shedding or battery-saver modes. The question isn’t whether your agent can remember — it’s how it remembers when everything else forgets.
+The point is not that one is universally correct. The point is that the choice is a durability decision, and durability decisions should be made by identifying what the agent must never forget, not by benchmarking read latency on a laptop.
 
-We’re comparing two approaches to context engineering for long-running agents: **short-term memory with fast retrieval (using Redis 7.2 with RedisJSON)** versus **long-term memory with structured logs (using PostgreSQL 16 with pgvector and TimescaleDB for time-series context)**. Neither is perfect. One sacrifices durability for speed; the other sacrifices latency for persistence. The choice isn’t academic — it affects hallucination rates, operational costs, and your ability to debug when things go wrong.
+## What "context" actually means for an agent
 
-## Option A — how it works and where it shines
+Before comparing storage, separate the things people lump under "context." They have different durability requirements.
 
-Short-term memory agents treat context like a cache: fast to write, fast to read, and acceptable to lose if the system restarts. We’re using **Redis 7.2 with RedisJSON** to store agent context as JSON documents with millisecond-level read/write times. The pattern here is simple: every agent action appends to a context key, and the agent reads the full context on each step. We set a TTL of 1 hour to prevent unbounded growth, and we use Redis streams to log every change so we can replay if needed.
+**Working state.** The current turn's scratchpad: the user's latest message, the tool calls in flight, the intermediate reasoning. This is genuinely ephemeral. Losing it means retrying one step.
 
-Why this works: on good connections, Redis gives us sub-millisecond access. In 2026, Redis 7.2 supports RedisJSON, which allows us to store and query nested JSON without denormalization. We use a hash structure like `agent:1234:context` with fields like `state`, `history`, `entities`, and `last_updated`. The agent fetches the entire document on every step, updates it in memory, and writes it back with a new timestamp.
+**Conversation history.** The ordered record of what the user and agent said. Usually needed for the current session, sometimes needed across sessions.
 
-But the magic isn’t in the storage — it’s in the retrieval strategy. We use a **sliding window cache** in front of Redis: if the agent hasn’t interacted with a customer in 30 minutes, we drop the context to save memory and bandwidth. When the customer reconnects, we rebuild context from the last full snapshot plus recent events in the Redis stream. This reduces Redis memory usage by 60% during low-traffic periods while keeping warm contexts available.
+**Durable facts and commitments.** The user's account number, the transaction the agent already initiated, the promise it made, the approval it received. Losing this is not a retry — it is a correctness violation. An agent that forgets it already submitted a refund may submit a second one.
 
-This approach shines when:
-- You need to support thousands of concurrent agents with minimal latency
-- Your agents run in regions with intermittent connectivity and frequent restarts
-- You’re okay with occasional context loss (e.g., if the Redis node crashes before replication completes)
+**Audit record.** What the agent did, when, why, and with what inputs. Needed for debugging, dispute resolution, and compliance. This must survive restarts and must not be mutable.
 
-Code-wise, it looks like this:
+A short-term store is appropriate for the first two categories. A long-term store is required for the last two. Most production incidents attributed to "the agent hallucinated" are actually failures in the third category: the agent lost a durable fact and confabulated a replacement.
+
+## Option A: short-term memory in a fast key-value store
+
+The pattern: store the agent's context as a single JSON document under a key like `agent:{id}:context`. Every step reads the whole document, mutates it in memory, and writes it back. A TTL bounds memory growth. An append-only stream records each write so the document can be rebuilt if it is evicted or lost.
 
 ```python
+import os
 import redis
-from datetime import datetime, timedelta
 
 r = redis.Redis(
-    host='redis-agent-cache.internal',
+    host=os.environ["REDIS_HOST"],
     port=6379,
-    password=os.getenv('REDIS_PASSWORD'),
-    decode_responses=True
+    password=os.environ.get("REDIS_PASSWORD"),
+    decode_responses=True,
 )
 
-def load_context(agent_id):
-    # Try to get full context first
+CONTEXT_TTL_SECONDS = 3600
+STREAM_MAXLEN = 1000
+
+def load_context(agent_id: str) -> dict:
     ctx = r.hgetall(f"agent:{agent_id}:context")
     if ctx:
         return ctx
-    # If not found, rebuild from stream
+    # Fall back to replaying the change log.
     events = r.xrevrange(f"agent:{agent_id}:stream", count=100)
     return rebuild_context_from_events(events)
 
-def save_context(agent_id, context):
-    # Update full document
+def save_context(agent_id: str, context: dict) -> None:
     r.hset(f"agent:{agent_id}:context", mapping=context)
-    r.expire(f"agent:{agent_id}:context", 3600)  # 1 hour TTL
-    # Append to stream
-    r.xadd(f"agent:{agent_id}:stream", {"event": "update", "data": str(context)})
+    r.expire(f"agent:{agent_id}:context", CONTEXT_TTL_SECONDS)
+    r.xadd(
+        f"agent:{agent_id}:stream",
+        {"event": "update", "data": serialize(context)},
+        maxlen=STREAM_MAXLEN,
+        approximate=True,
+    )
 ```
 
-We’ve seen this pattern reduce agent loop time from 450ms to 42ms on AWS m6g.large with Redis 7.2 in us-east-1. But it’s not all roses. When Redis memory pressure spikes due to evictions, agents start seeing stale or missing context, which directly increases hallucination rates. In one incident, a misconfigured maxmemory-policy caused 18% of agents to hallucinate a transaction reversal that never occurred. That’s not acceptable for financial agents.
+Two details in that snippet matter more than they look.
 
-Still, for agents that don’t need audit-grade durability — like internal triage bots or low-stakes customer support — this is a pragmatic win. It’s simple, fast, and cheap. In Ghana, where data costs are high and networks are patchy, this means lower latency and fewer retries. On a 2G connection with 100KB/s throughput, RedisJSON compresses context blobs to ~2KB per agent, which fits comfortably in the bandwidth budget.
+First, `maxlen` on the stream is not optional. An unbounded append-only log inside a cache will eventually consume the memory you were trying to save. Trimming is what keeps this pattern viable.
 
-## Option B — how it works and where it shines
+Second, `rebuild_context_from_events` can only reconstruct what the stream still contains. If the stream was trimmed and the context document was evicted, the reconstruction is incomplete. The agent has no way to know this unless you make it check — and a check requires knowing what the correct state was, which is exactly the information you lost.
 
-Long-term memory agents treat context like a ledger: every event is written once, never overwritten, and queries are append-only. We’re using **PostgreSQL 16 with pgvector and TimescaleDB** to store agent context as structured events with vector embeddings for semantic search. The agent never reads a full context document — instead, it queries for relevant events using similarity search, filters by time, and reconstructs context on the fly.
+### Where this pattern is genuinely good
 
-Why this works: durability. PostgreSQL 16 with TimescaleDB can handle 100,000 events per second with compression, and pgvector gives us semantic search without leaving the database. We don’t lose context on restart. We don’t lose context on Redis node failure. And we can replay or audit any step.
+- High concurrency with a latency budget measured in single-digit milliseconds per step.
+- Sessions short enough that the TTL never fires mid-session.
+- Context that is reconstructible from an external source of truth (the user's message, an upstream API) if it is lost.
+- Internal tooling where a wrong answer costs a retry, not a refund.
 
-The pattern here is event sourcing with CQRS. Every agent action generates an event: `AgentStep`, `ToolCall`, `UserMessage`, `ToolResult`. We store these in a TimescaleDB hypertable partitioned by time. We add a vector column using pgvector to store embeddings of the event payload, so we can later ask: *‘Show me all events in the last 7 days where the agent discussed “transaction reversal”.’*
+### Where it breaks
 
-This approach shines when:
-- You need full auditability and replayability
-- Your agents handle sensitive data (financial, medical, legal)
-- You expect long-running sessions with months of history
-- You need to search or cluster context semantically
+The characteristic failure is **eviction under memory pressure**. When the store hits its memory limit, the configured eviction policy decides what to drop. If that policy is not `noeviction`, the store will happily discard live agent contexts to make room. The agent then reads an empty or partial document and proceeds.
 
-Code-wise, it looks like this:
+A second failure is **partial writes**. A read-modify-write cycle on a JSON document is not atomic unless you make it atomic. Two concurrent steps on the same agent can interleave and produce a document that reflects neither step's intent. In a cache this is easy to miss because the write succeeds — it just writes the wrong thing.
+
+A third is **TTL expiry during a long step**. If a step takes longer than expected (a slow tool call, a retry loop), the context can expire between the read and the write-back. The write-back then recreates the key with a partial document and a fresh TTL, silently discarding the prior state.
+
+None of these produce an exception. They produce an agent that confidently acts on a state that never existed.
+
+## Option B: long-term memory as an append-only event log
+
+The pattern: never overwrite context. Instead, append immutable events — `UserMessage`, `ToolCall`, `ToolResult`, `CommitmentMade` — and derive the current context by folding over the relevant events. Add a vector column so history can be retrieved by semantic similarity rather than only by time.
 
 ```python
-from datetime import datetime
+import os
+from datetime import datetime, timezone
+
 import psycopg2
 from pgvector.psycopg2 import register_vector
 
 conn = psycopg2.connect(
-    host='postgres-memory.internal',
+    host=os.environ["PG_HOST"],
     port=5432,
-    dbname='agent_context',
-    user=os.getenv('PG_USER'),
-    password=os.getenv('PG_PASSWORD')
+    dbname=os.environ["PG_DATABASE"],
+    user=os.environ["PG_USER"],
+    password=os.environ["PG_PASSWORD"],
 )
 register_vector(conn)
 
-def add_event(agent_id, event_type, payload):
-    embedding = generate_embedding(payload)  # Using text-embedding-3-small
+def add_event(agent_id: str, event_type: str, payload: str) -> None:
+    embedding = generate_embedding(payload)
     with conn.cursor() as cur:
         cur.execute(
             """
             INSERT INTO agent_events (agent_id, event_type, payload, embedding, ts)
             VALUES (%s, %s, %s, %s, %s)
             """,
-            (agent_id, event_type, payload, embedding, datetime.utcnow())
+            (agent_id, event_type, payload, embedding, datetime.now(timezone.utc)),
         )
-        conn.commit()
+    conn.commit()
 
-def get_relevant_context(agent_id, query, limit=10):
+def get_relevant_context(agent_id: str, query: str, limit: int = 10):
     embedding = generate_embedding(query)
     with conn.cursor() as cur:
         cur.execute(
             """
-            SELECT payload, ts, similarity(embedding, %s) as score
+            SELECT payload, ts, embedding <=> %s AS distance
             FROM agent_events
-            WHERE agent_id = %s AND ts > NOW() - INTERVAL '7 days'
-            ORDER BY score DESC
+            WHERE agent_id = %s
+              AND ts > NOW() - INTERVAL '7 days'
+            ORDER BY distance
             LIMIT %s
             """,
-            (embedding, agent_id, limit)
+            (embedding, agent_id, limit),
         )
-        return [row[0] for row in cur.fetchall()]
+        return cur.fetchall()
 ```
 
-We benchmarked this setup on a t3.xlarge instance in AWS us-east-1 with PostgreSQL 16, pgvector 0.7.0, and TimescaleDB 2.14.2. Querying for relevant context takes 120ms to 250ms depending on the embedding size and filter complexity. But the real win is durability: even after a full database restart, we can reconstruct agent context from the event log with no data loss. During a simulated Redis node failure in our staging environment, agents using PostgreSQL continued without interruption, while Redis agents hallucinated missing context in 12% of sessions.
+Note the operator: pgvector's distance operators are `<=>` (cosine), `<->` (L2), and `<#>` (negative inner product). Ordering ascending by `<=>` gives nearest-first. A `similarity()` function does not exist in pgvector; using one is a common copy-paste error.
 
-The trade-off? Cost and complexity. In 2026, a PostgreSQL 16 instance with 1TB of provisioned IOPS and TimescaleDB compression costs about $1,200/month in AWS. A comparable Redis 7.2 cluster with replication and persistence costs $450/month. That’s a 2.7x premium for durability.
+### Why append-only matters
 
-We also hit a surprise wall with pgvector: embedding generation adds 300ms to each agent step. We mitigated it by caching embeddings per unique payload, but for high-volume agents, the cost adds up. In Ghana, where compute costs are high and GPUs are scarce, this matters.
+The value of this pattern is not the database. It is the invariant: **an event, once written, is never modified or deleted.** That invariant gives you three things a cache cannot.
 
-Still, for agents handling loan applications or supply chain disputes, the audit trail is non-negotiable. One Nigerian bank using this pattern reduced fraud-related customer complaints by 42% in 6 months — not because the model got smarter, but because the context was never lost and disputes could be replayed exactly.
+1. **Reconstruction is exact.** The current state is a pure function of the event log. If a projection is wrong, you recompute it — you do not have to guess what was lost.
+2. **Audit is free.** The log *is* the audit record. You do not need a separate pipeline to answer "what did the agent do and why."
+3. **Idempotency is enforceable.** Before performing a side effect, check whether an event recording that side effect already exists. This is how you prevent the double-refund class of bug, which no amount of cache tuning fixes.
 
-## Head-to-head: performance
+### Where this pattern is genuinely good
 
-Let’s put numbers to the trade-offs. We ran a 7-day load test simulating 10,000 concurrent agents in Nigeria, Ghana, and Kenya. Agents performed 5 actions per minute on average, with 30% of actions triggering a tool call. We measured latency, memory usage, and hallucination rates under three network conditions: stable Wi-Fi, Safaricom 3G (average 1.5 Mbps, 300ms RTT), and Airtel 4G (average 8 Mbps, 80ms RTT).
+- Any agent that touches money, identity, medical data, or legal commitments.
+- Sessions that span hours or days, where TTL-based expiry is not an option.
+- Systems that need to answer retrospective questions ("which agents discussed X last month").
+- Systems where you expect to change the agent's logic and want to replay history against the new logic.
 
-| Metric | Redis 7.2 + RedisJSON | PostgreSQL 16 + pgvector + TimescaleDB | Winner |
-|---|---|---|---|
-| Avg agent loop latency (Wi-Fi) | 42ms | 180ms | Redis |
-| Avg agent loop latency (3G) | 120ms | 250ms | Redis |
-| Avg agent loop latency (4G) | 45ms | 210ms | Redis |
-| 95th percentile latency (3G) | 320ms | 580ms | Redis |
-| Memory per agent (warm) | 1.8KB | 2.1KB (event log) + 0.3KB (cache) | Redis |
-| Memory per agent (cold) | 120KB (stream) | 0.3KB (cache only) | PostgreSQL |
-| Hallucination rate (financial agents) | 1.8% | 0.1% | PostgreSQL |
-| Cost per 1M agent steps (AWS us-east-1) | $0.04 | $0.18 | Redis |
+### Where it breaks
 
-What jumps out? Redis wins on latency across all network conditions. On 3G, Redis agents complete loops in 120ms vs 250ms for PostgreSQL. That’s the difference between a user feeling like the agent is responsive and one who thinks the connection is stuck. But PostgreSQL wins on reliability: its hallucination rate is 18x lower because it never loses context.
+The characteristic failure is **retrieval quality**, not durability. Semantic search over an event log returns the nearest events by embedding distance, which is not the same as the most relevant events. If the fold that reconstructs context is wrong, the agent gets a coherent but incorrect picture. Durability guarantees the data is there; it does not guarantee the agent looks at the right part of it.
 
-The surprise came in memory usage. We expected Redis to blow up because of the stream append-only log. But with Redis 7.2’s active defragmentation and stream trimming, memory stayed flat at 1.8KB per agent during warm sessions. When agents went cold (no activity for 30 minutes), Redis dropped the full context and kept only the stream tail, reducing memory to 120KB per agent. PostgreSQL, by contrast, kept 2.1KB per agent in the event log plus 0.3KB in the cache, which is actually less — but don’t let the bytes fool you. The real cost is in I/O and CPU for pgvector similarity search.
+The second failure is **write amplification and cost**. Every step writes an event plus an embedding. Embedding generation is a per-call cost and a per-call latency. At high step volumes this dominates the bill, and it is the line item teams most often forget to model.
 
-Another surprise: on Airtel 4G, PostgreSQL latency dropped to 210ms, but 12% of queries still timed out at 500ms because of embedding similarity computation. We had to add a Redis cache in front of pgvector to store recent embeddings, which brought latency down to 140ms — but then we were back to running two systems.
+The third is **schema evolution**. Adding a field to an event payload is easy. Changing the meaning of an existing field is not, because old events cannot be rewritten. Version your event types from day one.
 
-So performance isn’t just about raw numbers. It’s about how the system behaves when the network is bad, the database is under load, or the agent restarts. Redis is faster until it isn’t. PostgreSQL is slower until it isn’t. The inflection point is usually around session length and data volume. If your agent needs to remember more than 100 events, or if sessions last longer than 24 hours, PostgreSQL starts to pull ahead in reliability.
+## A worked example: the double refund
 
+Consider an agent that processes refund requests. The user asks for a refund of $240. The agent validates, calls the payment API, and confirms.
 
-## Head-to-head: developer experience
+**Short-term memory path.** Step 1 writes `{refund_pending: 240}` to the context key. Step 2 calls the payment API. Step 3 writes `{refund_completed: 240}`. If the process crashes between step 2 and step 3, the context still says `refund_pending`. On restart, the agent sees a pending refund and retries the API call. The user is refunded twice. The context store was never wrong about what it knew — it simply never learned about the side effect.
 
-Developer experience isn’t just about writing code — it’s about debugging when the agent hallucinates, the network drops, or the user yells at the support chat. With Redis, the context is a single JSON blob. You can `GET agent:123:context` in redis-cli and see exactly what the agent sees. That’s invaluable for reproducing bugs. We once had a Tanzanian agent inventing a transaction that never occurred. With Redis, we pulled the context blob, saw a malformed `reversal_flag`, and fixed the bug in 10 minutes. With PostgreSQL, we had to query three tables and join events to reconstruct context. That took an hour.
+**Long-term memory path.** Step 2 writes a `RefundInitiated` event with a client-generated idempotency key before calling the API. Step 3 writes `RefundCompleted`. On restart, the agent folds the log, sees `RefundInitiated` without a matching `RefundCompleted`, and queries the payment provider for the status of that idempotency key rather than blindly retrying. The duplicate is prevented by the log, not by the cache's availability.
 
-But PostgreSQL shines when you need to answer complex questions: *‘Show me all agents that discussed “MPesa reversal” in the last 30 days.’* With Redis, you’d need to scan every agent’s stream — which is slow and expensive. With PostgreSQL and pgvector, it’s a single query with a vector similarity filter. We used this to audit a fraud pattern across 5,000 agents in Kenya and found a correlation between reversal requests and SIM swap attacks.
+The lesson generalizes: **the moment your agent performs a side effect it cannot undo, the record of that side effect must be durable before the side effect happens.** This is the write-ahead logging rule, and it applies to agents exactly as it applies to databases.
 
-Tooling matters too. Redis has built-in persistence, replication, and failover. PostgreSQL 16 with TimescaleDB has compression, continuous aggregates, and time-series optimizations. But PostgreSQL’s ecosystem for observability is richer: pgBadger, pganalyze, and TimescaleDB’s built-in monitoring give us query plans, slow query logs, and embedding cache hit rates. With Redis, we rely on RedisInsight or manual log scraping.
+## How to measure your own system
 
-The real pain point with PostgreSQL is schema evolution. When we added a new field to agent events, we had to backfill it for 3 months of history — a 2-hour operation that locked tables and spiked CPU. With Redis, we just added the field to the JSON blob. No migrations, no downtime.
+Do not adopt a benchmark from an article. Measure the two things that actually decide this: context loss rate and step latency under your real conditions.
 
-So the developer experience trade-off:
-- **Redis**: simpler to debug, faster to iterate, easier to understand. Best for agents that change frequently and need quick fixes.
-- **PostgreSQL**: better for analytics, audit, and long-running sessions. Best for agents that need to scale and prove compliance.
+**Context loss rate.** Instrument a counter that increments whenever the agent reads a context that fails a validity check you define (for example, a monotonic sequence number that should never go backwards, or a required field that is missing). Log the agent ID and the step. After a week of normal traffic, the ratio of loss events to total steps is your loss rate. If it is not zero, the short-term store is losing state, and no amount of latency tuning compensates.
 
-In 2026, most teams I talk to start with Redis for speed and move to PostgreSQL when they hit 10,000 agents or need audit trails. The migration isn’t fun — it involves replaying event logs and rehydrating context — but it’s manageable if you design the event schema upfront.
+**Step latency distribution.** Record the wall-clock time of each step, from context read to context write, and keep the full distribution — not just the mean. The relevant question is the tail: p95 and p99 under load, not the median on an idle machine.
 
-
-## Head-to-head: operational cost
-
-Cost isn’t just the bill — it’s the cost of failure. A hallucinating agent can cost a bank millions in disputed transactions. But even in non-critical systems, cost compounds.
-
-Here’s a 2026 cost breakdown for 50,000 agents running 1M steps per day, 30 days:
-
-| Cost Item | Redis 7.2 + RedisJSON | PostgreSQL 16 + pgvector + TimescaleDB |
-|---|---|---|
-| Instance (t3.xlarge) | $1,080/month | $1,200/month |
-| Storage (EBS gp3) | $60/month (200GB) | $150/month (500GB + TimescaleDB compression) |
-| Embedding generation (text-embedding-3-small) | $0 (local) | $180/month (1M embeddings @ $0.18 per 1k) |
-| MemoryDB for Redis (optional HA) | $270/month (3x m6g.large) | $0 |
-| PostgreSQL HA (Multi-AZ) | $0 | $450/month (Multi-AZ RDS) |
-| **Total (30 days)** | **$1,620** | **$3,990** |
-
-PostgreSQL costs 2.5x more, but the real cost isn’t the bill — it’s the cost of context loss. In one incident, a Redis agent hallucinated a reversal of a $2,400 transaction. The bank had to refund the customer and absorb the loss. The direct cost was $2,400. The indirect cost was brand damage and customer churn. With PostgreSQL, that incident never happens.
-
-But not all systems need that level of durability. For internal tools, chatbots, or low-stakes support agents, Redis is the clear cost winner. For financial agents, dispute resolution, or regulatory reporting, PostgreSQL pays for itself quickly.
-
-We also measured operational overhead. In 2026, a junior engineer at a Lagos fintech can debug a Redis issue in 30 minutes. The same engineer takes 2 hours to debug a PostgreSQL issue involving pgvector or TimescaleDB. That’s a real cost in a market where senior engineers bill $80/hour.
-
-So the cost verdict:
-- Use Redis 7.2 if you’re building agents for internal tools, triage, or low-stakes customer support — and can tolerate occasional context loss.
-- Use PostgreSQL 16 if you’re building agents for financial transactions, dispute resolution, or compliance — where durability and auditability are non-negotiable.
-
-
-## The decision framework I use
-
-I don’t want to give you another checklist. I want to give you a framework that forces you to confront the real constraints: network quality, data sensitivity, and operational maturity.
-
-Here’s how I evaluate an agent system today:
-
-1. **What’s the data sensitivity?**
-   - If the agent touches PII, financial data, or legal documents, default to PostgreSQL. The audit trail is mandatory.
-   - If it’s internal triage or knowledge base search, Redis is fine.
-
-2. **What’s the network reliability?**
-   - If your users are on 2G/3G with frequent drops, design for idempotency and replay. PostgreSQL wins.
-   - If your users are on 4G/Wi-Fi with occasional drops, Redis with TTLs and stream replay is acceptable.
-
-3. **What’s the session length?**
-   - If agents run for hours or days, use PostgreSQL. Redis evictions or crashes will cause data loss.
-   - If agents run for minutes, Redis is simpler.
-
-4. **What’s your team’s operational maturity?**
-   - Can you debug pgvector slow queries? Can you manage TimescaleDB compression? If not, Redis is safer.
-   - Do you have a DBA or SRE on call? PostgreSQL is fine.
-
-5. **What’s the hallucination tolerance?**
-   - Can your system tolerate 2% hallucinations without financial or legal impact? Use Redis.
-   - Can you not? Use PostgreSQL.
-
-6. **What’s the cost sensitivity?**
-   - In West Africa, data costs matter. A 2KB Redis context blob costs less to transmit than a 120ms pgvector query. On 3G, that’s a real user-visible difference.
-   - But a lost $2,400 transaction costs more than $200/month in PostgreSQL bills.
-
-I once rejected PostgreSQL for a Ghanaian microloan agent because the CFO said, *“We can’t afford $1,200/month.”* Six months later, after 18 disputed loans totaling $18,000, the same CFO approved the migration. The cost of context loss was higher than the cost of durability.
-
-So the framework isn’t about features — it’s about risk. Map your system to these constraints, assign weights, and choose.
-
-
-## My recommendation (and when to ignore it)
-
-I recommend **PostgreSQL 16 with pgvector and TimescaleDB for long-running agents in 2026**, with a few caveats.
-
-Why? Because hallucination rates are the primary failure mode for agents, and durability is the only way to prevent them. In our production systems, 92% of hallucinations traced back to lost or truncated context — not model errors. PostgreSQL never loses context. Redis does, especially under load or network partitions.
-
-But I ignore this recommendation when:
-- The agent is stateless by design (e.g., a weather bot)
-- The data is non-sensitive (e.g., internal knowledge base search)
-- The team is small and can’t manage PostgreSQL tuning
-- The network is reliable and users are on Wi-Fi or 4G
-- The cost of PostgreSQL is prohibitive for the expected ROI
-
-In those cases, Redis 7.2 with RedisJSON and careful TTL management is the pragmatic choice. But I add safeguards: stream replay, idempotent actions, and a Redis memory monitor that alerts when evictions spike. These mitigate the worst failures.
-
-I also hybridize when needed. For example, we use Redis for fast retrieval of recent context (last 100 events) and PostgreSQL for durable storage and audit. The agent fetches recent context from Redis, but falls back to PostgreSQL if Redis misses. This gives us 99% of the latency benefit with 99% of the durability benefit. The cost is 1.3x a pure Redis setup, but it’s worth it.
-
-The one mistake I still see teams make is assuming context is just a cache. It’s not. It’s the agent’s memory. And when memory fails, the agent hallucinates. I learned this the hard way when a Tanzanian agent invented a customer’s PIN because the context blob was truncated during an eviction storm. That incident cost us a partnership and forced us to rebuild our entire context system.
-
-So my recommendation is conditional: use PostgreSQL unless the constraints above rule it out. And if you use Redis, design for failure — assume the cache will go down, the stream will truncate, and the context will be lost.
-
-
-## Final verdict
-
-Use **PostgreSQL 16 with pgvector and TimescaleDB** for long-running agents in 2026 unless you meet all of these conditions:
-- Your agent is internal or low-stakes
-- Your users are on reliable 4G/Wi-Fi
-- You can tolerate 2% hallucination rates
-- You can’t afford $1,200/month for durability
-
-Even then, add safeguards: stream replay in Redis, idempotent actions, and monitoring for evictions. Context loss isn’t a minor bug — it’s a systemic failure that compounds over time.
-
-I once thought Redis was enough. I was wrong. The cost of being wrong was 18 disputed transactions in 30 days, each requiring manual review. The fix? Rebuilding the entire context system in PostgreSQL. It took two weeks. It cost $1,800 in engineering time and $600 in infra. It saved the company $42,000 in disputed transactions in the next quarter.
-
-So the final step? **Check your agent’s context system today.** If it’s a single JSON blob in a cache with a TTL, assume it will fail. Add a durability layer: either switch to PostgreSQL or implement stream replay with idempotent actions. Measure your hallucination rate for the next 7 days. If it’s above 0.5%, the context system is your problem.
-
-Run this command to check your current context size and TTL:
 ```bash
-du -sh /var/lib/redis/dump.rdb  # Redis size
-echo "TTL for agent:123:context: $(redis-cli TTL agent:123:context)"
+# Redis: is anything being evicted?
+redis-cli INFO stats | grep -E "evicted_keys|keyspace_hits|keyspace_misses"
+
+# Redis: how close is this key to expiring?
+redis-cli TTL agent:1234:context
+
+# Redis: how large is the keyspace?
+redis-cli INFO memory | grep used_memory_human
+
+# Postgres: how much of the query time is the vector index?
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT payload, ts, embedding <=> '[...]' AS distance
+FROM agent_events
+WHERE agent_id = '1234' AND ts > NOW() - INTERVAL '7 days'
+ORDER BY distance LIMIT 10;
 ```
 
-If the TTL is less than your longest session or the size is growing without bound, you’re one network drop away from a hallucination. Fix it now.
+A non-zero `evicted_keys` on a store holding live agent context is the signal that matters most. It means the store has already decided which agents to forget.
 
+## A comparison that is actually a comparison
 
----
+The table below compares the two patterns by property, not by invented measurement. "Higher" and "lower" are relative to each other, not to a benchmark.
 
-### About this article
+| Property | Short-term (cache) | Long-term (event log) |
+|---|---|---|
+| Read latency for current state | Lower | Higher |
+| Write latency per step | Lower | Higher |
+| Survives process restart | Only if persistence is configured and fsync is not deferred | Yes, by construction |
+| Survives store eviction | No | Yes |
+| Exact reconstruction after loss | No | Yes |
+| Audit trail | Requires a separate pipeline | Inherent |
+| Idempotency enforcement | Manual, racy | Natural |
+| Schema evolution | Trivial (schemaless document) | Requires versioned events |
+| Per-step cost at high volume | Storage and network only | Storage, network, plus embedding generation |
+| Operational surface | Small | Larger (indexes, vacuum, query plans) |
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+The two rows that decide most cases are "survives store eviction" and "idempotency enforcement." Everything else is a tuning problem.
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+## A hybrid that is usually the right answer
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+The two patterns are not mutually exclusive, and the common production shape is both:
 
-**Last reviewed:** July 09, 2026
+- The **event log is the source of truth.** Every state-changing action is appended before it is performed.
+- The **cache is a derived projection** of recent events, rebuilt from the log on a miss, and safe to lose at any moment.
+
+The critical property is that the cache is *never* authoritative. If it disagrees with the log, the log wins and the cache is rebuilt. This turns the cache's failure modes from correctness bugs into latency blips.
+
+```python
+def load_context(agent_id: str) -> dict:
+    cached = r.hgetall(f"agent:{agent_id}:context")
+    if cached and int(cached.get("log_offset", -1)) == latest_log_offset(agent_id):
+        return cached
+    # Cache is missing or stale: rebuild from the authoritative log.
+    events = fetch_events_since(agent_id, cached.get("log_offset") if cached else None)
+    context = fold_events(events)
+    save_context(agent_id, context, log_offset=latest_log_offset(agent_id))
+    return context
+```
+
+The `log_offset` field is what makes this safe. Without it, a stale cache entry is indistinguishable from a fresh one, and the agent acts on yesterday's state.
+
+## Decision checklist
+
+Work through these in order. The first "yes" that applies to a durable fact ends the discussion.
+
+1. Does the agent perform any irreversible side effect — a payment, a message sent, a record created? If yes, the record of that side effect must be durable before the effect occurs.
+2. Would a user be harmed if the agent forgot something it previously committed to? If yes, that commitment is a durable fact.
+3. Does any regulation or contract require you to reconstruct what the agent did? If yes, you need an immutable log.
+4. Do sessions routinely outlive a reasonable TTL? If yes, TTL-based expiry is not viable, and the cache cannot be the source of truth.
+5. Can the context be reconstructed from an external system of record on demand? Only if the answer is an unambiguous yes may the cache be authoritative.
+6. Is your team able to operate a relational database — backups, index maintenance, query-plan debugging? If not, that is a real constraint, and it argues for starting with the log in the simplest possible form (a single table, no vector column) rather than for skipping durability.
+
+If none of the first five apply, a cache-only design is defensible. Add an eviction monitor and treat any eviction as a page-worthy event.
+
+## FAQ
+
+**Can I use the cache as the source of truth if I enable persistence?**
+Persistence protects against process restart, not against eviction, memory pressure, or a corrupted snapshot. The failure mode you are worried about — the agent acting on missing state — is not addressed by persistence alone.
+
+**Do I need vector search at all?**
+No. The durability property comes from the append-only log, not from embeddings. Many systems start with a plain table of events ordered by time and add vector search only when "most recent N events" proves insufficient. That is a cheaper and simpler starting point.
+
+**How do I bound the size of the event log?**
+Archive old events to cold storage on a schedule, but keep the invariant that archived events are immutable and retrievable. Never delete events that record an irreversible side effect. If an event must be removed for privacy reasons, replace it with a tombstone that preserves the fact that something happened, even if the payload is gone.
+
+**Is the cache ever worth keeping?**
+Yes, as a projection. The cost of the cache is small compared to the cost of a wrong action, and it removes the log read from the hot path for the common case.
+
+**What about time-series extensions for rollups?**
+They are useful when you need continuous aggregates over high-volume event streams — for example, per-hour counts of tool calls. They are an optimization on top of the log, not a substitute for it. Add them when a specific query is too slow, not preemptively.
+
+## One thing to do in the next 30 minutes
+
+Pick one agent in your system and answer this question with evidence, not memory: **if the context store were wiped right now, which of this agent's actions would it repeat?**
+
+To find out, check whether the store is evicting anything:
+
+```bash
+redis-cli INFO stats | grep evicted_keys
+```
+
+If that number is non-zero, the store has already been discarding live contexts. Then grep your agent code for the side-effecting calls — payment, email, record creation — and check whether each one is guarded by a durable record written *before* the call. Any unguarded call is a duplicate-action bug waiting for a restart. Write the guard, or move the record to a log, before you tune anything else.

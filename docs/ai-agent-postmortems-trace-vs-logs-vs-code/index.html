@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI agent postmortems: trace vs logs vs code - Kubai Kevin</title>
-        <meta name="description" content="Cut AI agent postmortem time 70% with the right tool — evaluation logs vs tracing in 2026 with concrete numbers, costs, and code samples.">
+        <meta name="description" content="Traces, evaluation logs, and code debugging reveal different AI agent failures. Compare overhead, cost, and coverage, then pick the right tool.">
         <meta name="keywords" content="AiAgentPostmortem, LlmEvaluationLogs, AiAgentTracing, AiObservability2026, PostmortemAiAgents, AiAgentEvaluation, Ai, Artificialintelligence">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-14T02:06:40.789398">
-        <meta property="article:modified_time" content="2026-09-16T09:55:29.334366+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:54:02.496007+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI agent postmortems: trace vs logs vs code">
-        <meta property="og:description" content="Cut AI agent postmortem time 70% with the right tool — evaluation logs vs tracing in 2026 with concrete numbers, costs, and code samples.">
+        <meta property="og:description" content="Traces, evaluation logs, and code debugging reveal different AI agent failures. Compare overhead, cost, and coverage, then pick the right tool.">
         <meta property="og:url" content="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI agent postmortems: trace vs logs vs code">
-        <meta name="twitter:description" content="Cut AI agent postmortem time 70% with the right tool — evaluation logs vs tracing in 2026 with concrete numbers, costs, and code samples.">
+        <meta name="twitter:description" content="Traces, evaluation logs, and code debugging reveal different AI agent failures. Compare overhead, cost, and coverage, then pick the right tool.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-agent-postmortems-trace-vs-logs-vs-code.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/#article",
       "headline": "AI agent postmortems: trace vs logs vs code",
-      "description": "Cut AI agent postmortem time 70% with the right tool — evaluation logs vs tracing in 2026 with concrete numbers, costs, and code samples.",
+      "description": "Traces, evaluation logs, and code debugging reveal different AI agent failures. Compare overhead, cost, and coverage, then pick the right tool.",
       "datePublished": "2026-06-14T02:06:40+00:00",
-      "dateModified": "2026-09-16T09:55:29+00:00",
-      "wordCount": 2776,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-10-03T12:54:02+00:00",
+      "wordCount": 2465,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI agent postmortems: trace vs logs vs code</h1>
                 
-                <p class="post-lead">Cut AI agent postmortem time 70% with the right tool — evaluation logs vs tracing in 2026 with concrete numbers, costs, and code samples.</p>
+                <p class="post-lead">Traces, evaluation logs, and code debugging reveal different AI agent failures. Compare overhead, cost, and coverage, then pick the right tool.</p>
                 
                 
                 <div class="tags">
@@ -259,340 +259,212 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2776 words
+                        12 min read
+                        &nbsp;·&nbsp; 2465 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-16
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
-<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>AI agent failures don’t look like regular incidents. A 500 ms latency spike in a microservice leaves a clear trace in logs and metrics. An AI agent that starts hallucinating product recommendations after a model update doesn’t. The symptoms show up as business metrics: 8% lower conversion, 12% more support tickets, or a customer churn notice in Slack. The logs said everything was fine. The traces showed normal latency. Only the business metrics told the real story.</p>
-<p>Regular postmortems focus on uptime, latency, and error rates. AI agent postmortems must also track consistency, correctness, and drift. A single prompt template change can cascade into thousands of hallucinations without touching any observable system metric. The tools we use for regular incidents—logs, dashboards, alerts—are necessary but not sufficient for AI agents. You need to add evaluation traces, consistency checks, and business metric correlation to the mix.</p>
-<p>This post compares three approaches teams use to diagnose AI agent failures in 2026: tracing frameworks, evaluation logs, and code-level debugging. Not all failures are visible in the same place, and the wrong tool can waste days chasing ghosts. I’ll show you where each approach shines, where it fails, and how to combine them for a real diagnosis.</p>
-<h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
-<p>Tracing frameworks like <strong>OpenTelemetry with AI Semantic Conventions (v1.2.0)</strong> and <strong>LangSmith (v0.15.0)</strong> instrument the entire agent lifecycle. They capture inputs, intermediate steps, model calls, tool invocations, and outputs in a structured way. A trace for a recommendation agent might include: user query, retrieved product IDs, similarity scores, LLM output chunks, tool calls to inventory API, final recommendation list, and confidence scores. Each span carries metadata: model version, temperature, top-k, retrieval backend, and response time per step.</p>
-<p>Where this shines is in <strong>causal tracing</strong>. If inventory data is stale, the trace will show the retrieval span failing to fetch updated stock with a 404, then the LLM span generating recommendations based on old data. Without tracing, you’d only see a mismatch between recommended and available items in the final output. With tracing, you see the exact step that introduced the error. I once spent a week debugging a recommendation drift until I added tracing—only to realize a supplier API was returning cached responses with a 15-minute TTL that lagged behind real stock.</p>
-<p>Tracing also enables <strong>consistency checks</strong>. You can compare outputs across similar inputs to detect hallucinations. If 10 users ask for the same out-of-stock item, the agent should recommend alternatives consistently. A trace-based consistency checker can flag when one user gets “Item A (in stock)” while another gets “Item A (out of stock)” for identical queries. This isn’t visible in logs or code; it requires semantic comparison of outputs across traces.</p>
-<p>The main weakness? <strong>Overhead</strong>. Tracing every agent interaction adds 15–20% latency and increases storage by 30–40% for high-volume systems. If you’re running 10k agent calls/day, you’re suddenly storing 1.3M+ spans per day. Costs can jump from $80 to $250/month on trace storage alone with commercial backends like Honeycomb or Datadog. This is why teams often sample traces (e.g., 10% of requests) or truncate older spans, which reduces diagnostic power when you need it most.</p>
-<p>Here’s a minimal OpenTelemetry setup in Python 3.11 to trace an agent step:</p>
+                <p>AI agent failures rarely look like ordinary incidents. A latency spike in a microservice shows up in logs and metrics. An agent that starts recommending out-of-stock products after a prompt or model change often does not. The system is up, latency is normal, error rates are flat, and yet conversion drops or support tickets climb. The observable signals that worked for request/response services are necessary but not sufficient here.</p>
+<p>This article compares three diagnostic surfaces teams use for AI agent postmortems: distributed tracing, evaluation logs, and code-level debugging. Each one exposes a different class of failure. Choosing the wrong one is a common way to lose days chasing a symptom that lives somewhere else.</p>
+<h2 id="why-agent-postmortems-differ-from-service-postmortems">Why agent postmortems differ from service postmortems</h2>
+<p>A conventional postmortem asks: what broke, when, and why? For an agent, "broke" is ambiguous. There are at least four distinct failure classes, and they surface in different places:</p>
+<ul>
+<li><strong>Availability failures</strong> — the agent errors, times out, or the upstream model API returns 429/5xx. Visible in logs and metrics.</li>
+<li><strong>Data failures</strong> — retrieval returns stale, empty, or wrong documents. Visible in traces, invisible in aggregate metrics.</li>
+<li><strong>Reasoning failures</strong> — the model produces a plausible but incorrect or unfaithful answer given correct inputs. Visible only through output comparison or evaluation.</li>
+<li><strong>Behavioral drift</strong> — outputs change gradually after a model version bump, prompt edit, or index rebuild. Visible only when you compare outputs over time on a fixed input set.</li>
+</ul>
+<p>Logs answer the first class well. Traces answer the second. Evaluation logs answer the third and fourth. Code debugging answers the question of which of your own branches produced the bad input in the first place. A postmortem that only inspects logs will systematically miss reasoning and drift failures.</p>
+<p>The practical consequence: before opening any tool, classify the failure. The rest of this article describes what each surface can and cannot show.</p>
+<h2 id="tracing-causal-chains-across-agent-steps">Tracing: causal chains across agent steps</h2>
+<p>Tracing instruments the agent lifecycle as a tree of spans. For a retrieval-augmented agent, a single request typically produces spans for: input parsing, embedding, vector search, reranking, prompt assembly, the model call, any tool invocations, and output post-processing. Each span carries attributes — model name, token counts, retrieval hit counts, similarity scores, latency per step.</p>
+<p>The strength of tracing is causal localization. If retrieval returns zero documents and the model then answers from parametric memory, the trace shows an empty retrieval span immediately upstream of a model span with no retrieved context in its input. That is a five-second diagnosis in a trace and a multi-hour hunt in logs, because the final output looks like a normal answer.</p>
+<p>Tracing also supports cross-request comparison. If the same query produces different answers at different times, comparing the two traces shows whether the retrieval results, the prompt, or the model version differed. That comparison is what makes drift attributable rather than merely observable.</p>
+<p>The cost of tracing is proportional to request volume and span cardinality. Two failure modes are common:</p>
+<ul>
+<li><strong>Span explosion.</strong> A loop that retries a failed export, or a tool that emits one span per item in a large list, can multiply span count by orders of magnitude. A retrying exporter that never succeeds will buffer and re-send indefinitely.</li>
+<li><strong>Sampling blind spots.</strong> To control volume, teams sample, often at 10%. Sampling is fine for latency percentiles and coarse error rates. It is bad for rare reasoning failures, because the request that failed may not have been sampled.</li>
+</ul>
+<p>A minimal OpenTelemetry setup for an agent step looks like this. Note that the exporter endpoint and headers depend on your backend; the values below are placeholders.</p>
 <pre><code class="language-python">from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.sdk.resources import Resource
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
-from opentelemetry.instrumentation.anthropic import AnthropicInstrumentor
-from opentelemetry.semconv_ai import SpanAttributes
 
-# Setup
-provider = TracerProvider()
+resource = Resource.create({&quot;service.name&quot;: &quot;recommendation-agent&quot;})
+provider = TracerProvider(resource=resource)
 trace.set_tracer_provider(provider)
-provider.add_span_processor(BatchSpanProcessor(ConsoleSpanExporter()))
 
-# Export to Honeycomb (v2.1.0)
-exporter = OTLPSpanExporter(endpoint=&quot;https://api.honeycomb.io&quot;, headers={&quot;x-honeycomb-team&quot;: &quot;YOUR_KEY&quot;})
+# Point this at your collector or vendor endpoint.
+exporter = OTLPSpanExporter(
+    endpoint=&quot;https://your-collector.example/v1/traces&quot;,
+    headers={&quot;authorization&quot;: &quot;Bearer YOUR_TOKEN&quot;},
+)
 provider.add_span_processor(BatchSpanProcessor(exporter))
 
-# Instrument Anthropic (Claude 3.5 Sonnet 2026)
-AnthropicInstrumentor().instrument()
-
-# Trace an agent step
 tracer = trace.get_tracer(__name__)
-with tracer.start_as_current_span(&quot;recommend_products&quot;):
-    with tracer.start_as_current_span(&quot;retrieve_inventory&quot;):
-        products = get_inventory_from_api()
-        span = trace.get_current_span()
-        span.set_attribute(SpanAttributes.AI_INPUT, &quot;user_query&quot;)
-        span.set_attribute(&quot;ai.retrieval.items&quot;, len(products))
-    with tracer.start_as_current_span(&quot;llm_generate&quot;):
-        response = call_llm(&quot;recommend items from inventory&quot;, products)
-        span.set_attribute(&quot;ai.output.length&quot;, len(response))
+
+def recommend(user_query: str):
+    with tracer.start_as_current_span(&quot;recommend_products&quot;) as root:
+        with tracer.start_as_current_span(&quot;retrieve_inventory&quot;) as span:
+            products = get_inventory_from_api(user_query)
+            span.set_attribute(&quot;retrieval.items&quot;, len(products))
+            span.set_attribute(&quot;retrieval.backend&quot;, &quot;vector&quot;)
+        with tracer.start_as_current_span(&quot;llm_generate&quot;) as span:
+            response = call_llm(user_query, products)
+            span.set_attribute(&quot;llm.output.length&quot;, len(response))
+            span.set_attribute(&quot;llm.model&quot;, &quot;your-model-id&quot;)
+        root.set_attribute(&quot;agent.recommendation.count&quot;, len(response))
 </code></pre>
-<p>This code captures semantic details that logs can’t: the exact model call, input/output lengths, retrieval counts, and attributes aligned with AI conventions. The span names and attributes become queryable in tracing backends, letting you group failures by model version, retrieval backend, or prompt template.</p>
-<h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
-<p>Evaluation logs focus on <strong>structured test results</strong> and <strong>business metric correlation</strong>. Instead of tracing every user interaction, you run agents through a suite of tests and log the outputs, scores, and outcomes. Tools like <strong>DeepEval (v0.2.3)</strong>, <strong>Ragas (v0.2.1)</strong>, and <strong>custom evaluation harnesses</strong> generate logs that include: test case ID, input, expected output, actual output, correctness score, hallucination score, relevance score, and business metric delta (e.g., conversion lift after recommendation).</p>
-<p>Where this shines is in <strong>reproducible failure detection</strong>. If a new prompt template causes hallucinations, a test suite can flag it immediately. For example, a regression test that checks “all recommended items are in stock” can fail with 87% hallucination rate after a model update. This is faster than waiting for a customer to complain or for business metrics to degrade. I once caught a hallucination bug in 2 hours using a DeepEval test suite that would have taken 3 days to surface in production logs.</p>
-<p>Evaluation logs also enable <strong>A/B correlation</strong>. You can log which model version, prompt template, and retrieval strategy were used for each test run, then correlate that with business metrics. A table might look like:</p>
-<table>
-<thead>
-<tr>
-<th>Run ID</th>
-<th>Model</th>
-<th>Prompt</th>
-<th>Retrieval</th>
-<th>Correctness</th>
-<th>Conversion Lift</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>gpt-4.1-2026-03</td>
-<td>v1</td>
-<td>vector</td>
-<td>0.92</td>
-<td>+8%</td>
-</tr>
-<tr>
-<td>2</td>
-<td>gpt-4.1-2026-03</td>
-<td>v2</td>
-<td>vector</td>
-<td>0.65</td>
-<td>-12%</td>
-</tr>
-<tr>
-<td>3</td>
-<td>gpt-4.1-2026-04</td>
-<td>v1</td>
-<td>hybrid</td>
-<td>0.88</td>
-<td>+5%</td>
-</tr>
-</tbody>
-</table>
-<p>This table reveals that prompt v2 caused a 17-point correctness drop and a 20-point conversion loss. Without evaluation logs, you’d only see the conversion drop and waste time debugging inventory or recommendation logic.</p>
-<p>The main weakness? <strong>Test coverage gaps</strong>. If your test suite doesn’t include edge cases like ambiguous queries or rare product categories, the evaluation logs won’t catch those failures. A comprehensive suite for a recommendation agent might require 300+ test cases to cover 80% of real-world scenarios. That’s a lot of upfront work, especially if the agent evolves weekly.</p>
-<p>Here’s a minimal evaluation harness in Python 3.11 using DeepEval to log results:</p>
-<pre><code class="language-python">from deepeval import evaluate
-from deepeval.test_case import LLMTestCase
-from deepeval.metrics import AnswerRelevancyMetric, FaithfulnessMetric
-from deepeval.dataset import EvaluationDataset
-
-def build_test_suite():
-    dataset = EvaluationDataset()
-    # Add test cases
-    dataset.add_test_case(LLMTestCase(
-        input=&quot;Recommend a gaming laptop under $1500&quot;,
-        actual_output=&quot;Gaming Laptop X is $1499 and in stock&quot;,
-        expected_output=[&quot;Gaming Laptop X&quot;, &quot;$1499&quot;, &quot;in stock&quot;]
-    ))
-    dataset.add_test_case(LLMTestCase(
-        input=&quot;Show me a laptop under $500&quot;,
-        actual_output=&quot;Budget Laptop Y is $499&quot;,
-        expected_output=[&quot;Budget Laptop Y&quot;, &quot;$499&quot;]
-    ))
-    return dataset
-
-def run_evaluation():
-    dataset = build_test_suite()
-    results = evaluate(
-        dataset=dataset,
-        metrics=[AnswerRelevancyMetric(threshold=0.8), FaithfulnessMetric(threshold=0.9)],
-        write_results_to_file=True,
-        log_to_file=&quot;eval_logs.jsonl&quot;
-    )
-    print(f&quot;Correctness: {results[0].metrics[0].score:.2f}, Faithfulness: {results[0].metrics[1].score:.2f}&quot;)
-
-if __name__ == &quot;__main__&quot;:
-    run_evaluation()
-</code></pre>
-<p>This logs structured JSONL files with per-test metrics, making it easy to query for failures. You can then correlate these logs with production metrics using tools like Metabase or Grafana to spot patterns.</p>
-<h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>Let’s compare the two approaches on a real-world agent handling 10k requests/day with 100k product SKUs.</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Tracing (OpenTelemetry + Honeycomb)</th>
-<th>Evaluation Logs (DeepEval + custom)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Latency per request (P95)</td>
-<td>45 ms (with tracing)</td>
-<td>2 ms (only during test runs)</td>
-</tr>
-<tr>
-<td>Storage per day</td>
-<td>1.3 GB (100% sampling)</td>
-<td>200 KB (only test runs)</td>
-</tr>
-<tr>
-<td>Query time to diagnose</td>
-<td>2–3 minutes</td>
-<td>10–30 seconds</td>
-</tr>
-<tr>
-<td>Cost per month (cloud)</td>
-<td>$250 (Honeycomb Pro 10k spans/day)</td>
-<td>$12 (S3 + Athena queries)</td>
-</tr>
-<tr>
-<td>False positives</td>
-<td>High (noisy spans)</td>
-<td>Low (controlled test cases)</td>
-</tr>
-<tr>
-<td>Real-time detection</td>
-<td>Yes (live traces)</td>
-<td>No (batch runs)</td>
-</tr>
-<tr>
-<td>Overhead on agent runtime</td>
-<td>15–20% CPU, 200–300ms added latency</td>
-<td>0% (only during tests)</td>
-</tr>
-</tbody>
-</table>
-<p>The tracing approach adds measurable runtime overhead because it instruments every user request. In high-traffic systems, this can require scaling up agents or using sampling (e.g., 10% of requests), which reduces diagnostic power. The evaluation logs approach has near-zero runtime overhead but only detects failures during test runs, not in real time.</p>
-<p>I once deployed tracing on a client’s agent handling 50k requests/day. The latency spike was immediately visible, but diagnosing the root cause took hours because the noisy spans made it hard to correlate business metrics. Switching to evaluation logs reduced diagnosis time by 70% for known failure modes.</p>
-<p>For <strong>real-time detection</strong>, tracing wins. You can set alerts on specific spans (e.g., retrieval failures or high hallucination scores) and get notified within seconds. For <strong>cost efficiency</strong>, evaluation logs win. You only pay for storage during test runs, not every user request.</p>
-<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
-<p>Tracing requires <strong>instrumentation discipline</strong>. You must add spans for every agent step: retrieval, LLM calls, tool invocations, and output formatting. If you miss a span, the trace becomes incomplete, and diagnosing a failure becomes guesswork. I’ve seen teams instrument only the LLM call and miss a retrieval failure that caused the hallucination. The trace showed a successful LLM response, but the input data was wrong.</p>
-<p>Evaluation logs require <strong>test design discipline</strong>. You need to write test cases that cover edge cases, ambiguous queries, and rare product categories. A shallow test suite (e.g., 50 test cases) will miss most real-world failures. Teams often underestimate the effort to build a robust evaluation suite. One client spent 3 weeks writing tests only to realize they missed 60% of edge cases that later caused production failures.</p>
-<p>Both approaches benefit from <strong>tooling integration</strong>. Tracing integrates with APM tools like Datadog, Honeycomb, and Lightstep. Evaluation logs integrate with CI/CD pipelines and can trigger rollbacks when regressions are detected. In 2026, most teams use both: tracing for real-time debugging and evaluation logs for regression testing.</p>
-<p>Here’s a comparison of tooling maturity:</p>
-<table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>Tracing Tools</th>
-<th>Evaluation Tools</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Maturity</td>
-<td>4/5 (OpenTelemetry v1.2.0 stable)</td>
-<td>3/5 (DeepEval v0.2.3 experimental)</td>
-</tr>
-<tr>
-<td>Learning curve</td>
-<td>Steep (semantic conventions)</td>
-<td>Moderate (test design)</td>
-</tr>
-<tr>
-<td>Community support</td>
-<td>Strong (CNCF ecosystem)</td>
-<td>Growing (AI eval niche)</td>
-</tr>
-<tr>
-<td>Debugging speed</td>
-<td>5/5 (causal chains)</td>
-<td>4/5 (controlled tests)</td>
-</tr>
-<tr>
-<td>Maintenance effort</td>
-<td>4/5 (span explosion risk)</td>
-<td>3/5 (test suite churn)</td>
-</tr>
-</tbody>
-</table>
-<p>I recommend starting with evaluation logs for new agents because the learning curve is gentler. Once the agent stabilizes, add tracing for real-time debugging and drift detection.</p>
-<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
-<p>Let’s break down the costs for a mid-sized agent (10k requests/day, 200k product SKUs) in 2026.</p>
-<table>
-<thead>
-<tr>
-<th>Cost Component</th>
-<th>Tracing (OpenTelemetry + Honeycomb)</th>
-<th>Evaluation Logs (DeepEval + S3)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Instrumentation code</td>
-<td>$0 (open source)</td>
-<td>$0 (open source)</td>
-</tr>
-<tr>
-<td>Cloud storage</td>
-<td>$250/month (Honeycomb Pro 10k spans)</td>
-<td>$12/month (S3 + Athena)</td>
-</tr>
-<tr>
-<td>Querying (daily)</td>
-<td>$80/month (Honeycomb queries)</td>
-<td>$20/month (Athena scans)</td>
-</tr>
-<tr>
-<td>Agent scaling (CPU)</td>
-<td>+15% CPU overhead</td>
-<td>0%</td>
-</tr>
-<tr>
-<td>Total monthly cost</td>
-<td>$330</td>
-<td>$32</td>
-</tr>
-<tr>
-<td>Break-even point</td>
-<td>10 days (vs no observability)</td>
-<td>30 days (vs no observability)</td>
-</tr>
-</tbody>
-</table>
-<p>The evaluation logs approach is 10x cheaper for storage and querying. The tracing approach adds CPU overhead that may require scaling up agents or using more powerful instances (e.g., AWS EC2 m6i.large instead of t4g.micro). In regions with expensive compute (e.g., São Paulo or Bogotá), this can add $50–$100/month in instance costs.</p>
-<p>However, the real cost of tracing isn’t just cloud bills. It’s the <strong>time cost</strong> of instrumenting, maintaining, and querying traces. A single misconfigured span processor can flood your tracing backend with duplicate spans, costing hours to debug. I once had to delete 500k spans from Honeycomb because a span processor was retrying failed exports in a loop.</p>
-<p>For evaluation logs, the main cost is <strong>test maintenance</strong>. If your agent changes weekly (new models, new product categories), you’ll spend 5–10 hours/week updating tests. One client’s evaluation suite grew from 50 to 300 tests in 3 months, adding $1.2k in engineering time.</p>
-<p>Bottom line: use evaluation logs for cost-sensitive teams and early-stage agents. Add tracing when you need real-time debugging or have mature agents with stable prompts.</p>
-<h2 id="the-decision-framework-i-use">The decision framework I use</h2>
-<p>I use a simple framework to decide which approach to use for a given agent:</p>
+<p>Two notes on correctness. First, set attributes on the span object returned by <code>start_as_current_span</code>; calling <code>trace.get_current_span()</code> inside a nested block can return an unexpected span if the context has been re-entered. Second, avoid high-cardinality attributes such as raw user queries or full outputs on every span unless your backend is priced and indexed for it — these are the most common cause of cost surprises.</p>
+<h3 id="how-to-measure-tracing-overhead-before-committing">How to measure tracing overhead before committing</h3>
+<p>Do not estimate overhead from blog posts. Measure it:</p>
 <ol>
-<li><strong>Agent maturity</strong>: Is the agent stable or evolving weekly?</li>
-<li>Evolving → Start with evaluation logs (DeepEval/Ragas).</li>
-<li>
-<p>Stable → Add tracing (OpenTelemetry) for real-time debugging.</p>
-</li>
-<li>
-<p><strong>Failure mode</strong>: Are failures visible in business metrics or hidden in data quality?</p>
-</li>
-<li>Business metrics (conversion, churn) → Evaluation logs + correlation.</li>
-<li>
-<p>Data quality (retrieval failures, hallucinations) → Tracing + semantic checks.</p>
-</li>
-<li>
-<p><strong>Traffic volume</strong>: How many requests/day?</p>
-</li>
-<li>&lt;5k → Tracing is fine (storage cost negligible).</li>
-<li>5k–50k → Use sampling (10–20%) with tracing + evaluation logs.</li>
-<li>
-<blockquote>
-<p>50k → Focus on evaluation logs + sampling for tracing.</p>
-</blockquote>
-</li>
-<li>
-<p><strong>Team skills</strong>: Does the team know APM tools or test design?</p>
-</li>
-<li>APM tools → Tracing first.</li>
-<li>
-<p>Testing/QA background → Evaluation logs first.</p>
-</li>
-<li>
-<p><strong>Budget</strong>: Cloud costs vs. engineering time?</p>
-</li>
-<li>Tight budget → Evaluation logs.</li>
-<li>Budget for APM → Tracing + evaluation logs.</li>
+<li>Instrument a single agent path behind a feature flag.</li>
+<li>Run a fixed load (for example, 500 requests at steady state) with the flag off, then on.</li>
+<li>Compare p50, p95, and p99 latency, and CPU utilization, between the two runs.</li>
+<li>Record span count per request and bytes per span from your collector's own metrics.</li>
+<li>Multiply span count by your backend's per-span ingest price to get a real monthly figure at your actual volume.</li>
 </ol>
-<p>I’ve used this framework to guide clients in Brazil, Colombia, and Mexico. One client in Bogotá started with evaluation logs for their agent handling 8k requests/day and saved $300/month in cloud costs compared to a tracing-only approach. After 3 months, they added tracing when they introduced a new model that caused sporadic hallucinations.</p>
-<h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
-<p><strong>Recommendation</strong>: Start with <strong>evaluation logs</strong> (DeepEval/Ragas) for new agents or agents under active development. Add <strong>tracing</strong> (OpenTelemetry with AI Semantic Conventions) once the agent stabilizes or when you need real-time debugging. Use both for mission-critical agents handling &gt;10k requests/day.</p>
-<p><strong>Why</strong>: Evaluation logs catch 80% of failures during test runs, with minimal runtime overhead and cost. Tracing catches the remaining 20% of failures that only appear in production, but with higher overhead and cost. Combining both gives you the best of both worlds: fast regression detection and real-time debugging.</p>
-<p><strong>When to ignore this</strong>:
-- <strong>Low-risk agents</strong>: If the agent’s failures can’t impact business metrics (e.g., a toy demo), skip both and rely on logs. - <strong>Legacy agents</strong>: If the agent is stable, unchanged for 6+ months, and has no test suite, evaluation logs may not be worth the setup time. - <strong>Regulated environments</strong>: If you need audit trails for every user interaction (e.g., healthcare or finance), tracing is mandatory even for early-stage agents.</p>
-<p>I ignored this recommendation once for a client in Mexico. They had a new agent handling 3k requests/day for a banking chatbot. I went straight to tracing to “be thorough.” The tracing backend cost $180/month, and the engineering team spent 2 weeks instrumenting spans. Only then did we realize we needed evaluation logs to catch prompt regressions before they hit production. We ended up using both, but the delay cost us $900 in cloud bills and 3 weeks of engineering time.</p>
-<h2 id="final-verdict">Final verdict</h2>
-<p>Use <strong>evaluation logs first</strong> for most agents in 2026. They are cheaper, faster to set up, and catch 80% of failures during test runs. Add <strong>tracing</strong> when you need real-time debugging or when your agent is mission-critical (&gt;10k requests/day).</p>
-<p>If you only use one approach, start with evaluation logs. If you’re already using logs for regular incidents, evaluation logs will feel familiar but focused on AI outputs and business metrics.</p>
-<p><strong>Actionable next step</strong>: Open your agent’s test suite (or create one if it doesn’t exist) and add 10 test cases covering edge cases like out-of-stock items, ambiguous queries, and rare product categories. Run the suite locally using DeepEval 0.2.3 and log the results to <code>eval_results.jsonl</code>. Check for any failures and correlate them with business metrics if available.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>The numbers that matter are yours: span cardinality per request, sampling rate, retention window, and your vendor's ingest pricing. Any table of dollar figures that does not come from those four inputs is not a forecast.</p>
+<h2 id="evaluation-logs-reproducible-failure-detection">Evaluation logs: reproducible failure detection</h2>
+<p>Evaluation logs are structured records of running the agent against a fixed set of inputs with expected properties. A typical record contains: test case ID, input, expected output or expected properties, actual output, metric scores, model version, prompt version, retrieval configuration, and timestamp.</p>
+<p>The strength of evaluation logs is reproducibility and regression detection. If a prompt change degrades faithfulness, a test suite run before deployment catches it. This is fundamentally different from tracing: tracing tells you what happened to real users; evaluation tells you what happens to a controlled input set, on demand, before users are affected.</p>
+<p>A second strength is correlation. Because each run records the model version, prompt version, and retrieval configuration, you can join evaluation results to business metrics by deployment window. That join is what turns "conversion dropped 12%" into "conversion dropped 12% after prompt v2 shipped, and prompt v2 also dropped faithfulness from 0.92 to 0.65 on the regression suite."</p>
+<p>The weakness is coverage. Evaluation logs only catch what your test cases exercise. A suite of 50 cases on a product catalog with thousands of SKUs will miss rare categories, ambiguous queries, and adversarial inputs. Coverage gaps are invisible: a green suite is not evidence of correctness, only of correctness on the cases you wrote.</p>
+<p>Two metric categories are worth distinguishing, because they fail differently:</p>
 <ul>
-<li><a href="https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/">AI agent postmortem: human loop vs blind replay</a></li>
-<li><a href="https://kubaik.github.io/debug-ai-agent-failures-differently/">Debug AI agent failures differently</a></li>
-<li><a href="https://kubaik.github.io/ai-agent-postmortems-the-three-surprises/">AI agent postmortems: the three surprises</a></li>
+<li><strong>Reference-based metrics</strong> compare the output to a known-good answer. They are precise but require labeled data and do not generalize to open-ended generation.</li>
+<li><strong>Reference-free metrics</strong> (relevance, faithfulness to retrieved context, format compliance) use a model or heuristic to score the output. They scale to open-ended tasks but are themselves probabilistic and can be gamed by verbose or hedged answers.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>A minimal evaluation harness using a common open-source evaluation library:</p>
+<pre><code class="language-python">import json
+from dataclasses import dataclass, asdict
+
+@dataclass
+class Case:
+    case_id: str
+    input: str
+    expected_properties: dict
+
+CASES = [
+    Case(&quot;oos-1&quot;, &quot;Recommend a gaming laptop under $1500&quot;,
+         {&quot;in_stock&quot;: True, &quot;price_max&quot;: 1500}),
+    Case(&quot;amb-1&quot;, &quot;Show me something good&quot;,
+         {&quot;asks_clarifying_question&quot;: True}),
+]
+
+def check(output: str, props: dict) -&gt; dict:
+    &quot;&quot;&quot;Replace with your own checks or an eval library's metrics.&quot;&quot;&quot;
+    results = {}
+    if &quot;in_stock&quot; in props:
+        results[&quot;in_stock&quot;] = &quot;out of stock&quot; not in output.lower()
+    if &quot;price_max&quot; in props:
+        results[&quot;price_max&quot;] = True  # parse the price and compare
+    if &quot;asks_clarifying_question&quot; in props:
+        results[&quot;asks_clarifying_question&quot;] = output.strip().endswith(&quot;?&quot;)
+    return results
+
+def run(agent, path=&quot;eval_results.jsonl&quot;):
+    with open(path, &quot;w&quot;) as f:
+        for case in CASES:
+            output = agent(case.input)
+            scores = check(output, case.expected_properties)
+            record = {
+                &quot;case_id&quot;: case.case_id,
+                &quot;input&quot;: case.input,
+                &quot;output&quot;: output,
+                &quot;scores&quot;: scores,
+                &quot;passed&quot;: all(scores.values()),
+                &quot;model_version&quot;: agent.model_version,
+                &quot;prompt_version&quot;: agent.prompt_version,
+            }
+            f.write(json.dumps(record) + &quot;\n&quot;)
+</code></pre>
+<p>Log the model and prompt versions on every record. Without them, a regression cannot be attributed to a change, and the log becomes a historical curiosity rather than a diagnostic instrument.</p>
+<h3 id="how-to-measure-evaluation-coverage">How to measure evaluation coverage</h3>
+<p>Coverage is measurable, and it is worth measuring before trusting a green suite:</p>
+<ol>
+<li>Sample a week of real production inputs.</li>
+<li>Cluster them by intent or category (manually or with embeddings).</li>
+<li>For each cluster, check whether at least one test case exercises it.</li>
+<li>Track the percentage of production traffic covered by at least one test case.</li>
+</ol>
+<p>If a cluster representing 15% of traffic has no test case, your suite has a 15% blind spot regardless of how many total tests it contains. Total test count is a vanity metric; traffic-weighted coverage is the useful one.</p>
+<h2 id="code-level-debugging-when-the-bug-is-yours">Code-level debugging: when the bug is yours</h2>
+<p>Code debugging is the right tool when the failure originates in your own logic rather than the model's reasoning or the retrieval data. Classic examples:</p>
+<ul>
+<li>A prompt template that silently drops a variable because of a formatting bug, so the model never sees the retrieved context.</li>
+<li>A retry wrapper that catches an exception and returns an empty list, which the model interprets as "no products available."</li>
+<li>A caching layer with a TTL that serves stale inventory, so the model reasons correctly over wrong data.</li>
+<li>A token-truncation step that cuts the retrieved context before the model call, so the answer is unfaithful to documents the trace shows were retrieved.</li>
+</ul>
+<p>These failures are invisible in evaluation logs if the test cases do not trigger the code path, and they look like model problems in traces unless you read the span attributes carefully. The diagnostic move is to compare what the trace says was retrieved with what the prompt actually contained. If those differ, the bug is in your code, not the model.</p>
+<h2 id="choosing-between-them">Choosing between them</h2>
+<p>The three surfaces are complementary, not competing. The decision is about which to build first and where to invest depth.</p>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Best at</th>
+<th>Blind to</th>
+<th>Overhead profile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tracing</td>
+<td>Causal localization, cross-request comparison, production ground truth</td>
+<td>Reasoning quality, rare failures under sampling</td>
+<td>Per-request; scales with span count and retention</td>
+</tr>
+<tr>
+<td>Evaluation logs</td>
+<td>Regression detection, version attribution, pre-deploy gating</td>
+<td>Anything outside the test set</td>
+<td>Zero at request time; cost is test maintenance</td>
+</tr>
+<tr>
+<td>Code debugging</td>
+<td>Bugs in prompt assembly, caching, retries, truncation</td>
+<td>Model reasoning, data quality</td>
+<td>None; effort is human time</td>
+</tr>
+</tbody>
+</table>
+<p>A practical ordering for most teams:</p>
+<ol>
+<li><strong>Start with evaluation logs</strong> if the agent is changing frequently. The setup cost is low and the payoff — catching regressions before deployment — is immediate.</li>
+<li><strong>Add tracing</strong> when you need production ground truth: failures that only occur with real inputs, or drift that only appears over time.</li>
+<li><strong>Keep code debugging in the loop</strong> for every postmortem. Before blaming the model, verify that the prompt the model received matches the data the trace says was retrieved.</li>
+</ol>
+<p>Signals that you have chosen wrong:</p>
+<ul>
+<li>You are reading traces to debug a reasoning failure. Traces show inputs and outputs, not why the model chose an output. Use evaluation.</li>
+<li>You are reading evaluation logs to debug a production-only failure. If the failure does not reproduce on your test set, the test set is the problem, not the log.</li>
+<li>You are adding spans to fix a bug in your prompt assembly. That bug is in code; a debugger or a print of the assembled prompt is faster.</li>
+</ul>
+<h2 id="a-worked-example">A worked example</h2>
+<p>Suppose a recommendation agent's conversion rate drops 12% over three days. Walk the surfaces in order of cost.</p>
+<p><strong>Step 1 — check evaluation logs.</strong> Did any regression suite run in the window? If prompt v2 shipped on day one and the suite shows faithfulness dropping from 0.92 to 0.65, the cause is likely the prompt. If no suite ran, you have no pre-deploy signal and must go to production data.</p>
+<p><strong>Step 2 — check traces.</strong> Filter to the deployment window. Compare the distribution of retrieval hit counts and model versions before and after. If retrieval hit counts are unchanged and the model version is unchanged, the change is in the prompt or in the data itself.</p>
+<p><strong>Step 3 — check the data.</strong> If the retrieval index was rebuilt in the window, compare a sample of retrieved documents before and after. A stale or partially rebuilt index produces correct-looking traces with wrong content.</p>
+<p><strong>Step 4 — check the code.</strong> Diff the prompt assembly path. If a template variable was renamed and the formatter silently dropped it, the model received a prompt without retrieved context. The trace shows the retrieval succeeded; only the assembled prompt reveals the bug.</p>
+<p>The point of the ordering is cost: evaluation logs are cheapest to check, traces are next, and reading code is the most expensive in human time. Walk them in that order rather than starting with the most thorough-looking tool.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Do I need all three?</strong> No. Most teams need evaluation logs plus one of tracing or code debugging, depending on whether failures are reproducible offline. Add the third when you have a specific failure class the first two cannot see.</p>
+<p><strong>How much should I sample traces?</strong> Sample as much as your budget allows for the failure you are chasing, and no more. For latency and error-rate monitoring, low single-digit percentages are usually sufficient. For rare reasoning failures, sampling is the wrong tool — use evaluation logs instead.</p>
+<p><strong>Can evaluation metrics be trusted?</strong> Reference-based metrics can, within the scope of their labeled data. Reference-free metrics are themselves model outputs and should be treated as noisy signals, not ground truth. Calibrate them against a human-labeled sample before gating deployments on them.</p>
+<p><strong>What should a trace span always carry?</strong> Model version, prompt version, retrieval configuration, and token counts. Without version attributes, a trace cannot attribute a change to a cause, which is the whole point of tracing in a postmortem.</p>
+<p><strong>What is the most common instrumentation mistake?</strong> Putting high-cardinality data — raw queries, full outputs — on every span, then discovering the cost only after volume grows. Start with low-cardinality attributes and add detail only where you have a specific diagnostic need.</p>
+<h2 id="next-step">Next step</h2>
+<p>Pick one agent you own and write ten test cases covering its known edge cases: ambiguous inputs, empty retrieval results, out-of-stock items, and inputs in a second language if you support one. Run them against the current agent, log each result as JSON with the model version and prompt version, and note which cases fail. That gives you a baseline regression suite, a measured coverage number, and a concrete list of failures to classify as data, reasoning, or code — which is the input the rest of this article's decision framework needs.</p>
                 
                 
             </div>
@@ -626,9 +498,9 @@ if __name__ == &quot;__main__&quot;:
                     </a>
                     
                     <a class="related-card" href="/fix-ai-agent-failures-postmortem-guide/">
-                        <h3>Fix AI agent failures: postmortem guide</h3>
-                        <p>Catch AI agent failures 90% faster — human playbook vs agent-aware tools with concrete costs, drift thresholds, and regional gotchas for 2026.</p>
-                        <span class="related-meta">14 min read · 29 June 2026</span>
+                        <h3>Postmortems for AI agents: drift, cost, replay</h3>
+                        <p>How to run postmortems on AI agents: capture prompts and model versions, measure drift and cost per session, and choose between log-based and instrumented pipelines.</p>
+                        <span class="related-meta">11 min read · 29 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/debug-ai-agent-failures-differently/">

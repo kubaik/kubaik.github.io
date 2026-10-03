@@ -1,195 +1,197 @@
 # 7 ways to measure prompt platform ROI in 2026
 
-I ran into this measure platform problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+## The problem: prompts are a second control plane
 
-## Why this list exists (what I was actually trying to solve)
+When an application moves from a handful of model calls to thousands per day, the cost model changes shape. Lambda duration, request counts and CPU time no longer explain the bill, because the dominant cost is now tokens, and the dominant source of value is now developer time that is saved or lost depending on how prompts behave.
 
-Early in 2026 I hit the same wall every solo founder hits when AI features go from 10% of requests to 90%: all my old metrics were useless. We had built a small agent orchestrator on AWS Lambda with Node 20 LTS that handled our ETL jobs, but by March we were running 12,000 prompts per day instead of 1,200. My Grafana dashboard still tracked Lambda duration, but the real cost was token-level, and the real value was in prompt cache hits I couldn’t see. I spent three weeks trying to retrofit CloudWatch Logs Insights queries before realizing the entire mental model was backwards. Prompts aren’t just new endpoints—they’re a second control plane sitting on top of the first. What I needed was a way to answer three questions I couldn’t get from the old stack:
+A common failure mode is a dashboard that tracks infrastructure health while the token spend grows unobserved. The old stack answers "is the service up?" The new layer has to answer three different questions:
 
 1. Which prompts actually save developer time?
-2. Which agent graphs leak dollars instead of saving them?
-3. How do I prove the new layer is worth the complexity tax?
+2. Which agent graphs leak money instead of saving it?
+3. Is the new layer worth its complexity tax?
 
-That led me down a rabbit hole of prompt logging, agent graph tracing, and cost attribution that most indie stacks ignore. The tools that exist today are either enterprise-grade observability suites that charge $500/month for 10k traces or toy notebooks that log nothing to disk. I had to stitch together my own pipeline. This list is the distillation of that work—what worked, what missed, and what I’d do again.
+The tooling landscape splits into three categories: pure prompt logging, full agent graph tracing, and hybrid approaches that attempt both. The rest of this article covers how to evaluate each category, what to instrument, and how to decide.
 
-## How I evaluated each option
+## Evaluation criteria that survive contact with production
 
-Every tool or pattern I tested fell into one of three buckets: pure prompt logging, full agent graph tracing, or hybrid approaches that tried to do both. I scored each on five metrics I actually measured in production:
+Before comparing tools, fix the criteria. Vague criteria produce vague vendor comparisons. Five that hold up:
 
-- **Token-level cost attribution** – Can I see which prompt tokens map to which AWS bill line items?
-- **Latency impact** – Did adding this layer add more than 50 ms on average?
-- **Developer time saved** – Did it cut debugging time for prompt regressions by at least 30%?
-- **Hard-reversal cost** – Could I rip it out in under 30 minutes if it backfired?
-- **Solo-founder overhead** – Did the setup and maintenance fit in my 10-hour weekly dev budget?
+- **Token-level cost attribution** — can a given prompt token be mapped to a specific line item on the cloud bill?
+- **Latency impact** — what does the instrumentation layer add, measured on both warm and cold paths?
+- **Developer time saved** — does the layer reduce the time to diagnose a prompt regression?
+- **Hard-reversal cost** — how long does it take to remove the layer if it backfires?
+- **Operational overhead** — does setup and maintenance fit the team's actual capacity?
 
-I ran each candidate in a staging environment that mirrored our live prompt volume (around 15k prompts/day) for 14 days. I measured end-to-end latency using AWS X-Ray with Node 20 LTS and Lambda Powertools, and I used OpenTelemetry Collector v0.95 with Python 3.11 for trace export. The worst offenders added 120 ms on cold starts and required a full weekend to unwind. The best ones added 8 ms and could be toggled off with a single feature flag.
+Two of these deserve elaboration because they are usually measured badly.
 
-I also ran a parallel cost experiment: I compared the AWS bill for a week with no prompt logging vs. with each tool enabled. The tool that claimed 2% overhead actually cost 18% more once I factored in the extra Lambda invocations it triggered. That surprise taught me to distrust any vendor that quotes “negligible” overhead without naming their measurement window.
+**Latency impact.** Vendor claims of "negligible overhead" are meaningless without a stated measurement window and a stated baseline. A span processor that adds 3 ms on a warm invocation can add 100 ms or more on a cold start, because cold starts pay for module initialization and connection setup. Measure both:
 
-## How we measure platform value when half the 'code' is now prompts and agent graphs — the full ranked list
+- Warm: run the agent runner in a loop for a few minutes and compare p50 and p99 end-to-end latency with the instrumentation enabled and disabled.
+- Cold: force cold starts (for example, by redeploying or by using a runtime that recreates the execution environment) and compare the first invocation's latency across both configurations.
 
-Below is the ranked list of approaches I actually deployed, with the raw numbers I measured. Each entry includes the concrete outcome, the one edge case that broke it, and who should use it.
+If a tool cannot be toggled with a feature flag or environment variable, cold-start comparison becomes expensive, which is itself a signal.
 
-### 1. OpenTelemetry + Prompt tokens in context
+**Hard-reversal cost.** A layer that takes a weekend to unwind will be kept long past its usefulness. Prefer instrumentation that can be disabled at runtime. A span processor can typically be gated by an environment variable; a forked SDK cannot.
 
-What it does: Injects a custom span attribute called `prompt_token_count` into every trace emitted by your agent runner. Uses OpenTelemetry Collector v0.95 with the `otlp` exporter and a custom processor that parses the `generation` span from your LLM SDK.
+## The approaches, ranked by how much they actually tell you
 
-Strength: Cost attribution becomes trace-scoped. I can export traces to Jaeger, then join them to the AWS Cost and Usage Report via the `line_item_line_item_description` field that contains the trace ID. The join lets me split the Lambda bill into prompt vs. non-prompt costs down to the cent. Latency overhead is 3–8 ms on warm runs, and the collector runs as a sidecar in the same pod as the agent runner, so no extra infra.
+### 1. OpenTelemetry spans with prompt token attributes
 
-Weakness: The custom processor assumes your LLM SDK emits a span named `generation` with a `prompt_tokens` attribute. If you’re using the raw AWS Bedrock SDK without instrumentation, you have to fork it or patch it at runtime. I wasted a day trying to parse the Bedrock response body before I realized the SDK just wasn’t emitting the span.
+**What it does.** A custom span processor reads the model response object emitted by the LLM SDK and writes token counts onto the span as attributes, for example `llm.prompt_tokens` and `llm.completion_tokens`. The spans flow through an OpenTelemetry Collector to whatever backend is already in use.
 
-Best for: Solo founders who control the agent runtime and can patch their SDK once.
+**Strength.** Cost attribution becomes trace-scoped. Because each span carries the token counts and the trace carries the request identity, the infrastructure bill can be split into prompt and non-prompt costs per request. The processor runs in-process, so there is no extra network hop.
 
-### 2. LangSmith prompt logging (self-hosted) with Redis 7.2
+**Weakness.** The processor depends on the SDK emitting a span with the expected attribute names. If the SDK is used raw, without instrumentation, the attributes are absent and the processor silently produces nothing. This is the most common way this approach fails: the spans exist, the dashboard looks healthy, and every token count is zero.
 
-What it does: LangSmith’s open-source runner (python 3.11) logs every prompt, completion, and metadata to Redis 7.2 with TTL 30d. You point the runner at your own Redis cluster instead of the SaaS endpoint.
+**Best for.** Teams that control the agent runtime and can patch or wrap the SDK once.
 
-Strength: The Redis schema is flat and queryable. I can run `FT.SEARCH` on `prompt:hash` keys to find all prompts that hit a specific temperature setting, then compute the average cost per prompt for that cohort. The overhead is 2–5 ms per prompt and the Redis memory footprint is ~150 bytes per prompt, so a 10k/day workload needs ~1.5 GB over 30 days.
+### 2. Self-hosted prompt logging backed by Redis
 
-Weakness: The open-source runner expects a running Redis instance with the RediSearch module. If you’re on a managed Redis (like ElastiCache), you must enable the module—some regions still don’t support it. I spent half a day debugging a 500 error until I noticed the module wasn’t loaded.
+**What it does.** A logging runner writes every prompt, completion and metadata record to a Redis instance that the team operates, rather than to a vendor endpoint.
 
-Best for: Founders who want a SaaS-like UX without SaaS pricing.
+**Strength.** The schema is typically flat and queryable, and the storage cost is predictable. As an illustrative calculation: at roughly 150 bytes per prompt record, a workload of 10,000 prompts per day produces about 1.5 MB per day, or roughly 45 MB over a 30-day retention window. Adjust the per-record estimate to the actual payload size before relying on it.
 
-### 3. OpenLLMetry with agent graph tracing
+**Weakness.** Self-hosted runners often expect specific Redis modules (for example, a search module) that managed offerings do not always enable in every region. Verify module availability before committing.
 
-What it does: OpenLLMetry (v1.2) instruments agent graphs at the routing layer. It emits a span for each agent invocation, plus a parent span for the entire graph. You can visualize the graph in Grafana Tempo or Jaeger and compute “agent hop cost” as the sum of child spans.
+**Best for.** Teams that want a searchable prompt log without per-seat or per-trace SaaS pricing.
 
-Strength: You can answer “which agent in my graph leaks dollars?” directly. In one week I found a summarization agent that used 4x the tokens of the upstream agent and added zero value. I refactored it to pull only the fields it needed and cut 18% of the token bill.
+### 3. Agent graph tracing
 
-Weakness: OpenLLMetry adds 15–20 ms on cold starts because it traces every hop. If your graph has 5+ agents, the first request can hit 250 ms. I mitigated this by caching the graph topology in Redis 7.2 so the tracer only runs on cache misses.
+**What it does.** Each agent invocation emits a span, and the whole graph emits a parent span. The graph can be visualized in a tracing backend, and the cost of a graph can be computed as the sum of its child spans.
 
-Best for: Graphs larger than 3 agents where the cost of tracing is outweighed by the savings.
+**Strength.** This is the only approach that directly answers "which agent in the graph leaks money?" Without per-hop spans, a five-agent graph is a single opaque cost.
 
-### 4. Prompt caching with Redis 7.2 and Lua
+**Weakness.** Tracing every hop adds overhead, and the overhead is worst on cold starts, where each hop may pay initialization cost. A graph with several agents can see first-request latency well above the warm-path figure. Measure the cold path before adopting.
 
-What it does: A Redis 7.2 Lua script that hashes the prompt text and stores responses with a TTL. The agent runner checks the cache before invoking the LLM.
+**Best for.** Graphs with more than a few agents, where the cost of tracing is smaller than the cost of not knowing which hop is expensive.
 
-Strength: Cache hit ratio directly maps to token savings. My cache hit ratio peaked at 68% after I normalized whitespace and trimmed trailing newlines in prompt strings. That saved ~30% of the token spend in a week.
+### 4. Prompt caching keyed by normalized prompt text
 
-Weakness: Prompt drift breaks the cache. If the upstream service changes a field name, the prompt hash changes and the cache misses. I added a 5-minute sliding window that re-evaluates cache keys, but that increased memory by 2x. The Lua script is 120 lines and hard to unit test—any syntax error in the script returns a 500 to the agent runner.
+**What it does.** The runner hashes the prompt text and stores the response with a TTL. Before invoking the model, it checks the cache.
 
-Best for: Static prompts that don’t change often.
+**Strength.** Cache hit ratio maps directly to token savings, and the mapping is arithmetic rather than estimated. If the cache serves a fraction *h* of requests, token spend on those requests drops to zero, so the saving is proportional to *h* times the cached-request token cost.
 
-### 5. AWS Cost Explorer + Custom tagging
+**Weakness.** Prompt drift breaks the cache. If an upstream service renames a field, or a timestamp is embedded in the prompt, the hash changes and the cache misses on every request. A cache that silently stops hitting looks identical to a cache that was never effective.
 
-What it does: Tag every Lambda function that runs an agent with `llm:prompt_type` and `llm:agent_id`. Then use Cost Explorer to group by tag and compute cost per prompt type.
+**Best for.** Prompts that are genuinely static, with normalization applied deliberately.
 
-Strength: No code changes. The tagging is done in Terraform with `aws_lambda_function.tags`. I can see the cost of every prompt variant in 10 minutes.
+### 5. Cloud billing tags
 
-Weakness: Tags don’t propagate to the detailed line items if the Lambda is invoked by another Lambda. I had to add a second tagging layer in the orchestrator Lambda that forwards the tags to the child invocation. That added 10 lines of boilerplate.
+**What it does.** Tag the compute resources that run agents (for example, with `llm:prompt_type` and `llm:agent_id`) and group the bill by tag.
 
-Best for: Founders who want zero instrumentation and accept coarse attribution.
+**Strength.** No code changes. The tagging is declarative infrastructure configuration.
 
-### 6. Langfuse prompt scoring
+**Weakness.** Tags do not always propagate to detailed line items when one function invokes another, so attribution is coarse. It answers "which service costs more" but not "which prompt costs more."
 
-What it does: Langfuse (self-hosted v2.5) logs prompts and lets you attach a score (1–5) to each run. It computes a “prompt score” metric that correlates with developer time saved.
+**Best for.** Teams that want zero instrumentation and accept coarse attribution.
 
-Strength: You can correlate prompt score with bug tickets. In my dataset, prompts with score <3 had 2x the regression tickets. That gave me a concrete threshold to prioritize refactors.
+### 6. Human-scored prompt evaluation
 
-Weakness: The scoring is manual. I had to build a small React admin to let my non-technical co-founder label prompts, which added 5 hours of dev time. Without that labeling, the metric is meaningless.
+**What it does.** Each run is logged and a reviewer attaches a score. The score is then correlated with downstream outcomes such as regression tickets.
 
-Best for: Teams with a non-technical reviewer who can label prompts weekly.
+**Strength.** A human score is the only signal that captures "was this output actually good," which no token metric captures.
 
-### 7. Prometheus + custom exporter for token metrics
+**Weakness.** The scoring is manual. Without sustained labeling capacity the metric decays into noise, and a stale score is worse than no score because it looks authoritative.
 
-What it does: A Prometheus exporter (Python 3.11) scrapes `/metrics` from your agent runner and exposes `llm_tokens_prompt_total`, `llm_tokens_completion_total`, and `llm_cost_usd`. The exporter parses the LLM SDK’s response object.
+**Best for.** Teams with a reviewer who can label on a regular cadence.
 
-Strength: You can alert on token growth rate. I set an alert at 5% week-over-week increase in `llm_tokens_prompt_total` and caught a prompt regression 24 hours before it hit production.
+### 7. Metrics exporter for token counters
 
-Weakness: The exporter breaks when the SDK response format changes. I had to pin the SDK version to avoid silent breakage. The alerting is only as good as your scrape interval—if you scrape every 30s you might miss a 2-minute spike.
+**What it does.** An exporter scrapes an endpoint on the agent runner and exposes counters such as prompt tokens, completion tokens and estimated cost.
 
-Best for: Founders who live in Prometheus and want alerting.
+**Strength.** Token growth rate becomes alertable, which catches runaway loops before the bill does.
 
+**Weakness.** The exporter parses the SDK response object, so any change to that object's shape breaks it. Pin the SDK version and add a health check that alerts on parse errors rather than on absence of data.
 
-## The top pick and why it won
+**Best for.** Teams already running a metrics stack that want alerting on token growth.
 
-OpenTelemetry + prompt tokens in context is the winner. It gives me token-level cost attribution without adding more than 8 ms on warm runs, and it integrates with the observability stack I already run (Jaeger + Grafana). The hard-reversal cost is near zero: I can disable the span processor with a feature flag and the rest of the system keeps working.
+## How to measure each criterion
 
-Here’s the concrete delta I measured over 30 days:
+This section replaces any benchmark table, because a benchmark from one environment does not transfer to another. Measure on the target system.
 
-| Metric | Baseline (no logging) | With OTel + prompt tokens | Delta |
-|---|---|---|---|
-| Lambda duration (p99) | 210 ms | 218 ms | +8 ms |
-| Token cost attribution accuracy | 0% | 99% | +99% |
-| Debugging time for prompt regressions | 45 minutes | 12 minutes | -73% |
-| Monthly AWS bill impact | $0 | $0.45 | +1.2% |
+**Token-level cost attribution.** Instrument the runner to emit per-request token counts, then join those records to the billing export on a request identifier. The join key must be present in both datasets; if the billing export does not carry the identifier, attribution is impossible and the tool category is wrong for the use case. Compare the sum of attributed token cost against the total model spend for the same period. A large gap means unattributed traffic exists.
 
-The $0.45/month is the cost of shipping spans to Jaeger in the same region. If I had shipped to a remote Jaeger instance, the latency would have jumped to 25 ms and the cost to $12/month—so locality matters.
+**Latency impact.** Run the same workload with instrumentation enabled and disabled. Compare p50 and p99 for warm runs, then force cold starts and compare first-invocation latency. Record the measurement window and the workload shape alongside the numbers, because both change the result.
 
-I also got a surprise benefit: the prompt token count let me compute a “prompt efficiency score” for each agent. Agents with score >0.8 (tokens used / tokens saved) were kept; the rest were refactored. That alone saved 14% of the token bill.
+**Developer time saved.** Time how long it takes to diagnose a deliberately introduced prompt regression — for example, a prompt that omits a required field — with and without the instrumentation. The difference is the per-incident saving. Multiply by the observed incident rate to get a monthly figure.
 
-If you’re running a Node 20 LTS agent runner on AWS Lambda and you control the SDK, this is the path of least resistance. The only prerequisite is a single line to patch the SDK’s span emitter:
+**Hard-reversal cost.** Disable the layer in a staging environment and note how long the system takes to return to a known-good state. If disabling requires a code change rather than a configuration change, treat the reversal cost as high.
 
-```javascript
-// patch-bedrock.js
-const { patchBedrock } = require('@opentelemetry/instrumentation-aws-sdk');
-patchBedrock();
-```
+**Operational overhead.** Track the hours spent maintaining the layer over a month. Include upgrade work when the SDK or backend changes.
 
-Run that once in your Lambda handler and you’re done.
+## Joining traces to the cloud bill
 
-## Honorable mentions worth knowing about
+The join is the part most teams underestimate. The procedure:
 
-LangSmith self-hosted is a close second. If you’re already running Redis 7.2 for caching, the marginal cost is just the Redis memory. The UI is clunky compared to Jaeger, but it gives you a searchable prompt log out of the box. I used it for two weeks before switching to OpenTelemetry because I needed the graph topology.
+1. Export traces to a tracing backend that retains trace identifiers for at least as long as the billing period.
+2. Query the backend for the trace identifiers in the period of interest, along with their token attributes.
+3. Load the billing export and locate the field that carries the request identifier.
+4. Join on that identifier and aggregate cost by the dimensions you care about, such as prompt type or agent.
 
-OpenLLMetry is worth it if your agent graph has more than 3 hops. The visualization in Grafana Tempo is the clearest way to see where the latency or cost leaks are. The 15–20 ms overhead is painful on cold starts, but you can mitigate it by caching the graph topology in Redis.
+If the billing export does not carry a request identifier, the join cannot be done from billing data alone. In that case, allocate cost by token share: compute each prompt type's share of total tokens, then apply that share to the total model spend for the period. This is an approximation, and it should be labelled as one.
 
-Prompt caching with Redis 7.2 is the cheapest way to cut token spend, but it’s fragile. Only use it if your prompts are static and you’re willing to normalize them. I normalized whitespace, trimmed trailing newlines, and added a 5-minute sliding TTL to handle prompt drift.
+## A worked example
 
-## The ones I tried and dropped (and why)
+Suppose an agent runner handles 10,000 prompts per day. Assume, for illustration only, that the average prompt is 1,000 tokens and the average completion is 300 tokens, and that input tokens cost $3 per million and output tokens cost $15 per million. These are illustrative unit prices, not current published rates.
 
-**Datadog APM** – I tried the Datadog Node 20 LTS tracer with custom tags for prompt tokens. It added 40 ms on warm runs and cost $120/month for 10k traces. The attribution was good, but the latency hit was unacceptable for a solo stack. I ripped it out after 48 hours.
+- Input tokens per day: 10,000 × 1,000 = 10,000,000 tokens = 10 million tokens.
+- Input cost per day: 10 × $3 = $30.
+- Output tokens per day: 10,000 × 300 = 3,000,000 tokens = 3 million tokens.
+- Output cost per day: 3 × $15 = $45.
+- Total per day: $75. Per 30-day month: $2,250.
 
-**Honeycomb** – The BubbleUp feature looked promising, but the free tier capped at 5k spans/day. Once I hit that, the sampling rate destroyed the attribution accuracy. I burned a week trying to tune the sampling before giving up.
+Now suppose a cache is added and, measured over a week, it serves 40% of requests. If cached requests are evenly distributed across prompt types, the model spend on those requests falls to zero, so the monthly model spend becomes $2,250 × 0.6 = $1,350. The saving is $900 per month, before accounting for cache storage and the engineering time to maintain normalization.
 
-**Langfuse SaaS** – At $299/month for 100k prompts, the pricing was fine, but the latency added 25 ms because it shipped spans to Germany. I switched to the self-hosted version and still hated the React admin.
+That last clause matters. If normalization requires two days of engineering per quarter and a regression every quarter, the saving may be smaller than it appears. The arithmetic above is the easy part; the maintenance cost is the part that is usually omitted.
 
-**Astra Assistants API logging** – The Assistants API doesn’t emit OpenTelemetry spans, so I had to fork the SDK. The fork broke the streaming API and I spent a day debugging JSON parse errors. Never again.
+## Failure modes to plan for
 
-**Custom CloudWatch Logs Insights queries** – I tried to parse prompt tokens from raw logs. The query took 6 seconds to run and cost $0.03 per 1k logs. Once I hit 12k prompts/day, the bill exploded. I switched to traces the same day.
+**Silent zero attribution.** The span processor runs, spans are emitted, but the attribute names do not match what the SDK produces, so every token count is zero. Detect it with an assertion: if the sum of attributed tokens for a period is zero while model spend is non-zero, alert.
 
+**Cache that never hits.** Prompt drift changes the hash. Detect it by tracking hit ratio as a first-class metric and alerting when it falls below a threshold rather than when it reaches zero.
 
-## How to choose based on your situation
+**Exporter breakage on SDK upgrade.** The response object shape changes and the exporter raises an error. Pin the SDK version and add a health check that alerts on parse failures.
 
-Your choice depends on three variables: control over the agent runtime, tolerance for latency overhead, and whether you have a non-technical reviewer.
+**Sampling that destroys attribution.** If the tracing backend samples spans, token totals computed from traces will undercount. Either disable sampling for the token spans or scale the totals by the known sampling rate and label the result as an estimate.
 
-If you run the agent runtime yourself and can patch the SDK, start with OpenTelemetry + prompt tokens. It’s the only option that gives you token-level attribution without adding more than 8 ms. The patch is one line and the collector runs as a sidecar.
+**Tag propagation gaps.** Compute resources invoked by other compute resources may not inherit tags on detailed billing lines. Verify with a small test before relying on tag-based attribution.
 
-If you’re already running Redis 7.2 for caching, LangSmith self-hosted is the easiest path. The memory footprint is predictable (~150 bytes per prompt) and you get a searchable log for free. The UI is clunky, but it works.
+## Decision checklist
 
-If your agent graph has more than 3 agents, OpenLLMetry is worth the 15–20 ms overhead because it visualizes the graph topology. The Grafana Tempo view is the clearest way to see cost leaks.
+Work through these in order.
 
-If your prompts are static and you want to cut token spend, add prompt caching with Redis 7.2 and a Lua script. Normalize whitespace and trim trailing newlines, or the cache will miss on every drift. The Lua script is 120 lines and fragile—unit test it.
+1. Do you control the agent runtime and can you wrap or patch the SDK? If yes, start with OpenTelemetry spans carrying token attributes. If no, go to step 3.
+2. Can you gate the instrumentation with a configuration flag? If no, reduce the blast radius before proceeding, because reversal will be expensive.
+3. Do you already operate a Redis instance with the required modules? If yes, self-hosted prompt logging is the lowest marginal-cost option.
+4. Does the agent graph have more than a few hops? If yes, graph tracing is likely worth its overhead; measure the cold path first.
+5. Are the prompts genuinely static? If yes, caching is the cheapest token reduction available. If no, fix normalization before adding a cache.
+6. Do you have sustained labeling capacity? If yes, human scoring adds a signal no metric provides. If no, skip it.
+7. Do you need alerting on token growth rate? If yes, add a metrics exporter and pin the SDK version.
+8. Is coarse attribution acceptable? If yes, billing tags require no code changes.
 
-If you have a non-technical reviewer who can label prompts weekly, Langfuse prompt scoring gives you a concrete metric to prioritize refactors. The scoring is manual, so only use it if you have the labeling capacity.
+## Verifying an OpenTelemetry token attribute end to end
 
-If you live in Prometheus and want alerting, the custom Prometheus exporter is the lightest option. It breaks when the SDK format changes, so pin the SDK version. Set the scrape interval to 10s to catch spikes.
-
-If you just need coarse attribution and zero instrumentation, tag your Lambdas with `llm:prompt_type` and use AWS Cost Explorer. The attribution is coarse, but it’s free and requires no code.
-
-
-## Frequently asked questions
-
-**How do I add prompt tokens to OpenTelemetry spans in Python 3.11?**
-
-Patch the LLM SDK to emit a `generation` span with `prompt_tokens` and `completion_tokens`. In Python, use `opentelemetry.instrumentation.openai` if you’re on the OpenAI SDK. Then inject the tokens into the span attributes:
+A minimal processor that copies token counts from a model span onto a normalized attribute:
 
 ```python
-from opentelemetry import trace
 from opentelemetry.sdk.trace import SpanProcessor
+
 
 class PromptTokenSpanProcessor(SpanProcessor):
     def on_end(self, span):
         if span.name == "generation":
             prompt_tokens = span.attributes.get("gen_ai.prompt_tokens")
-            span.set_attribute("llm.prompt_tokens", prompt_tokens)
-
-tracer_provider.add_span_processor(PromptTokenSpanProcessor())
+            if prompt_tokens is not None:
+                span.set_attribute("llm.prompt_tokens", prompt_tokens)
 ```
 
-**What’s the easiest way to normalize prompts for Redis caching?**
+Register it on the tracer provider, then confirm the attribute appears on the exported span. The verification step is the important part: a processor that runs but writes nothing is indistinguishable from a processor that works, until someone looks at the data.
 
-Trim trailing newlines, collapse multiple whitespace, and lowercase the entire string. Use a Lua script in Redis 7.2 to compute the hash:
+To verify, emit a single request, export the trace, and inspect the `generation` span for the `llm.prompt_tokens` attribute. If the attribute is missing, check the SDK's actual attribute names against the ones the processor reads.
+
+## Normalizing prompts before hashing
+
+Normalization is where most cache implementations quietly fail. A Lua script that lowercases, collapses whitespace and trims the ends:
 
 ```lua
 local prompt = ARGV[1]
@@ -198,47 +200,14 @@ local key = "prompt:" .. normalized
 return redis.call("HSET", key, "value", ARGV[2], "ttl", 300)
 ```
 
-**How do I join OpenTelemetry traces to AWS Cost and Usage Report?**
+Two cautions. First, lowercasing changes semantics for prompts where case matters, so apply it only when it is safe. Second, the script should be unit tested against representative prompts, including ones with embedded identifiers, because those will never hit the cache and should be excluded from it rather than hashed.
 
-Export traces to Jaeger, then use the Jaeger API to fetch trace IDs. Join the trace ID to the `line_item_line_item_description` field in the Cost and Usage Report via a Python script. The join key is the trace ID embedded in the description. Expect ~5 minutes of setup per region.
+## The short version
 
-**Why did my Prometheus exporter break when the SDK format changed?**
+If the agent runtime is under direct control, start with OpenTelemetry spans carrying token attributes, gated by a configuration flag so the layer can be removed cheaply. If it is not, self-hosted prompt logging backed by an existing Redis instance is the next lowest-friction option. Add graph tracing when the graph is large enough that per-hop cost is unknown. Add caching when prompts are static and normalization is deliberate. Add human scoring only when labeling capacity exists. Add a metrics exporter when alerting on token growth matters more than attribution precision.
 
-The exporter parses the SDK’s response object. If the SDK adds or removes fields, the exporter throws a KeyError. Pin the SDK version in your requirements.txt and add a health check that alerts on parse errors. The exporter itself is 80 lines—unit test it with mock responses.
+Whatever is chosen, measure the four things that matter — attribution coverage, warm and cold latency, time to diagnose a regression, and reversal cost — on the real system, and record the measurement window alongside the number.
 
+## Do this in the next 30 minutes
 
-## Final recommendation
-
-Pick OpenTelemetry with prompt tokens in context if you control the agent runtime. It’s the only option that gives you token-level cost attribution without adding more than 8 ms on warm runs. The patch is one line, the collector runs as a sidecar, and you can rip it out with a feature flag if it backfires.
-
-If you’re not patching the SDK, fall back to LangSmith self-hosted with Redis 7.2. It’s the next easiest option and gives you a searchable prompt log.
-
-Run this command in your agent runner to verify the patch works:
-
-```bash
-yarn add @opentelemetry/instrumentation-openai@1.2 && node patch-bedrock.js
-```
-
-Then export the traces to Jaeger and check the `llm.prompt_tokens` attribute on the `generation` span. If you see the attribute, you’re done.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 08, 2026
+Pick one prompt in a staging environment, log its token counts to a span attribute, export the trace, and confirm the attribute is present and non-zero. If it is zero or missing, the attribute name mismatch is the most likely cause, and finding it now costs minutes rather than a billing cycle.

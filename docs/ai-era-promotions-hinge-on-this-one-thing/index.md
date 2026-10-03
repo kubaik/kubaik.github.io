@@ -1,45 +1,41 @@
 # AI-era promotions hinge on this one thing
 
-The official documentation for some engineers is good. What it doesn't cover is what happens six months into production. It works in the simple case and breaks in a specific way under load. This post covers what comes after the happy path.
+Most AI feature postmortems do not end with "the model was wrong." They end with a cache key that was too coarse, a schema that drifted, or a rollback path that never existed. The model did what it was asked; the platform around it did not hold up.
 
-## The situation (what we were trying to solve)
+This article is about the unglamorous engineering that keeps an LLM-backed feature running six months after launch: input and output validation, a fallback cache, and the three metrics that tell you a prompt is drifting before your users do.
 
-In mid-2026, a London-based fintech called ClearFlow noticed something odd: engineers who had barely touched AI tooling were getting promoted, while others who had built sophisticated vector databases or fine-tuned LLMs were quietly managed out. The promotions weren’t tied to AI skills in the way the industry had expected. After reviewing 47 promotion decisions across two quarters, ClearFlow found the dividing line wasn’t technical depth in AI, but something far simpler: the ability to ship code that *stays shipped*.
+## Why AI features rot in production
 
-The part that trips people up is that AI code is brittle by design. A single prompt drift or context window overflow can turn a working feature into a 3 a.m. page. Teams that treated AI code like regular code—with tests, rollback plans, and observability—saw their AI features survive deploy. Teams that treated AI code as a research artifact usually watched it rot in production within weeks. ClearFlow’s engineering VP put it plainly: *“We stopped asking who built the AI feature and started asking who keeps it running.”*
+A conventional feature degrades when its inputs change in ways you did not anticipate. An LLM-backed feature degrades when its inputs change, when the model version changes, when the prompt template is edited, when the schema of the expected output is edited, and when any upstream cache or queue misbehaves. That is a larger surface, and it fails faster because the failure is often silent: the endpoint returns HTTP 200 with plausible-looking garbage.
 
-This post isn’t about AI models or vector databases. It’s about the boring infrastructure that makes AI code production-grade. The teams that got promoted weren’t the ones with the fanciest models; they were the ones who built guardrails so the models wouldn’t break the rest of the system.
+A typical failure mode looks like this:
 
-## What we tried first and why it didn’t work
+1. A summary endpoint calls an LLM with a 4-second upstream timeout.
+2. The vector lookup that feeds the prompt occasionally takes 5 seconds under load.
+3. The gateway's timeout fires first, so callers see 504s while the LLM call is still running and billing.
+4. Someone adds a cache. The cache key is `user:{user_id}:summary` with a single TTL.
+5. A user edits a transaction. The cached summary is now stale but still served for the rest of the TTL.
+6. Support tickets arrive, and the team's response is to shorten the TTL, which raises LLM spend and latency.
 
-ClearFlow’s first attempt was typical of 2026 AI rollouts: ship a feature, add an LLM call, and assume the API wrapper would handle the rest. They chose **LangGraph 0.5** for orchestration and **PostgreSQL 16** for storing conversation history. The feature—a “smart transaction summary” for users—went live in a week. Promising.
+None of those steps involve model quality. All of them are ordinary distributed-systems problems that microservice teams have hit before. The AI era did not invent them; it made them more expensive because the slow dependency is now a paid, nondeterministic API rather than a database index.
 
-Within 48 hours, the on-call engineer in Manila noticed the `/summaries` endpoint returning 504s. Digging in, they found the vector store queries were timing out after 5s, which exceeded the API gateway’s 4s timeout. The team added a Redis 7.2 layer for caching summaries, but the cache key pattern was naive: `user:{user_id}:summary`. That meant every user got one cached summary, and once one user’s summary grew beyond the Redis `maxmemory-policy allkeys-lru` limit, unrelated users started missing data. The error message in the logs was clear: `WRONGTYPE Operation against a key holding the wrong kind of value`.
+## The three gates
 
-They tried a second fix: move the cache key to `user:{user_id}:summary:{version}`. That reduced the wrong-type errors by 30%, but introduced a new failure mode: stale data. The LLM summary for a transaction could change if the user edited the transaction, but the cached version stayed valid for 24h. Users saw outdated summaries and filed tickets. The team’s velocity dropped from 12 PRs/day to 3.
+The pattern that holds up is to treat the LLM as an untrusted data source and put three checkpoints around it.
 
-The root cause wasn’t AI complexity—it was the same mistake teams made in the microservices era: assuming a cache or queue would solve latency without considering eviction policies, retry storms, and cache stampedes. The AI code itself worked; the platform around it didn’t.
+**Gate 1 — input validation.** Reject malformed or oversized prompts before they reach the model. This bounds cost, bounds latency, and prevents a single caller from consuming your rate limit.
 
-## The approach that worked
+**Gate 2 — output validation.** Parse the model's response against a schema before anything downstream sees it. If the response does not conform, treat it as a failed call, not as data.
 
-The team that got promoted didn’t chase fancier models or bigger vector databases. They built *resilience into the path*—validation, rollback, and observability—before the AI feature ever reached production. They called it the “three gates”:
+**Gate 3 — rollback.** Keep the last known-good output for each logical key so a bad generation cannot poison the cache or the user experience.
 
-1. **Input validation gate**: reject malformed or oversized prompts before they hit the LLM.
-2. **Output validation gate**: check the LLM’s JSON response matches the schema before storing it.
-3. **Rollback gate**: keep the last known-good version of any AI output so a bad generation doesn’t poison the cache.
+The important property is that gates 2 and 3 are independent. Schema validation catches structural drift (the model started returning a string where you expected a number). Rollback catches semantic drift (the structure is valid but the content is wrong). You need both, because a well-formed wrong answer passes any schema check.
 
-They used **Pydantic 2.7** for schema validation, **FastAPI 0.109** for the API layer, and **OpenTelemetry 1.28** for distributed tracing. The critical insight was to treat the LLM output as *data*, not magic. That meant storing the raw output, the validated output, and the timestamp of the last successful generation. If the LLM started drifting, the system could fall back to the last good summary instead of serving garbage.
+## A worked example: the summary endpoint
 
-This wasn’t new engineering—it was defensive programming that the AI era finally forced teams to adopt. The teams that moved fastest weren’t the ones with the fastest GPUs; they were the ones who built CI checks that fail the build if an LLM output doesn’t match the schema.
+Consider a service that returns a short natural-language summary of a user's recent transactions. The endpoint is `POST /summaries`. The request carries a user ID, a hash of the prompt template in use, and a token budget.
 
-## Implementation details
-
-ClearFlow’s final implementation had three layers:
-
-1. **Request validation**
-   - Every request to `/summaries` must include a `prompt_hash` and `max_tokens`.
-   - If `max_tokens > 2000`, return HTTP 400 immediately.
-   - Code snippet:
+Start with the request model. Pinning the prompt hash in the request is what lets you correlate a spike in validation failures with a specific template change later.
 
 ```python
 from pydantic import BaseModel, Field
@@ -51,179 +47,142 @@ class SummaryRequest(BaseModel):
     override_cache: bool = False
 ```
 
-2. **Response validation**
-   - The LLM call uses a JSON schema enforced by **Outlines 0.3**.
-   - If the response doesn’t match the schema, the request fails and returns HTTP 422.
-   - The error is logged with the full prompt and response for debugging.
+The `max_tokens` ceiling is a cost control, not a correctness control. Pick it from your own latency budget: if your gateway timeout is 4 seconds and your model produces roughly 60 tokens per second, a 2000-token completion will not finish in time. Measure your actual throughput and set the ceiling below the point where the timeout becomes the binding constraint.
 
-3. **Cache layer with rollback**
-   - Redis stores three keys per user:
-     - `user:{user_id}:summary:current` (last validated summary)
-     - `user:{user_id}:summary:last_good` (last known good summary)
-     - `user:{user_id}:summary:ts` (timestamp of last good summary)
-   - If the LLM call fails or the output is invalid, serve `last_good` with a `X-Cache-Fallback: true` header.
-
-Here’s the FastAPI endpoint with rollback logic:
+Now the endpoint. The logic below assumes a Redis-compatible cache and an async Redis client.
 
 ```python
 import redis.asyncio as redis
-from datetime import datetime, timedelta
+from datetime import datetime
+from fastapi import HTTPException
+from fastapi.responses import JSONResponse
 
 r = redis.Redis(host="redis-cache", port=6379, decode_responses=True)
 
 @app.post("/summaries")
 async def get_summary(request: SummaryRequest):
-    # 1. Validate input
-    SummaryRequest.model_validate(request.model_dump())
+    current_key = f"user:{request.user_id}:summary:current"
+    last_good_key = f"user:{request.user_id}:summary:last_good"
 
-    # 2. Try cached summary
-    cached = await r.get(f"user:{request.user_id}:summary:current")
+    # Gate 1: input already validated by the request model.
+    cached = await r.get(current_key)
     if cached and not request.override_cache:
         return JSONResponse(content={"summary": cached})
 
-    # 3. Call LLM with schema enforcement
     client = openai.AsyncOpenAI()
     response = await client.chat.completions.create(
         model="gpt-4-turbo-2024-04-09",
         response_format={"type": "json_schema", "schema": summary_schema},
-        messages=[{"role": "user", "content": request.model_dump_json()}]
+        messages=[{"role": "user", "content": request.model_dump_json()}],
     )
 
-    # 4. Validate response
+    # Gate 2: output validation.
     try:
-        parsed = SummaryResponse.model_validate_json(response.choices[0].message.content)
+        parsed = SummaryResponse.model_validate_json(
+            response.choices[0].message.content
+        )
     except ValidationError:
-        # Fallback to last good
-        last_good = await r.get(f"user:{request.user_id}:summary:last_good")
+        # Gate 3: rollback to last known-good.
+        last_good = await r.get(last_good_key)
         if last_good:
-            await r.setex(f"user:{request.user_id}:summary:current", 3600, last_good)
             return JSONResponse(
                 content={"summary": last_good, "fallback": True},
-                headers={"X-Cache-Fallback": "true"}
+                headers={"X-Cache-Fallback": "true"},
             )
         raise HTTPException(503, detail="No valid summary available")
 
-    # 5. Update cache with rollback timestamp
-    await r.mset({
-        f"user:{request.user_id}:summary:current": parsed.summary,
-        f"user:{request.user_id}:summary:last_good": parsed.summary,
-        f"user:{request.user_id}:summary:ts": datetime.utcnow().isoformat()
-    })
-    await r.expire(f"user:{request.user_id}:summary:current", 3600)
+    # Promote the validated output to both keys.
+    await r.set(current_key, parsed.summary, ex=3600)
+    await r.set(last_good_key, parsed.summary, ex=86400)
 
     return JSONResponse(content={"summary": parsed.summary})
 ```
 
-The team also added a lightweight **Prometheus metrics** layer to track:
-- `ai_summary_cache_hit_rate`
-- `ai_summary_validation_failure_total`
-- `ai_summary_fallback_total`
-- `ai_summary_latency_seconds`
+Three details in that snippet matter more than they look.
 
-This let them alert on prompt drift before it became an outage. If the fallback rate for a single user spiked above 5% in 10 minutes, the on-call engineer knew to investigate the prompt distribution.
+**The fallback key has a longer TTL than the current key.** If both expire together, rollback has nothing to fall back to. A common choice is a current TTL sized to your tolerance for staleness (an hour, in the example) and a fallback TTL sized to your tolerance for serving old data during an incident (a day).
 
-## Results — the numbers before and after
+**The fallback is written only on success.** Writing the fallback on every request, including fallback responses, means a bad generation eventually overwrites your last good copy. Write it once, from the validated path.
 
-| Metric | Before (Aug 2026) | After (Nov 2026) | Improvement |
-|---|---|---|---|
-| `/summaries` p99 latency | 1.8s | 320ms | 82% reduction |
-| `/summaries` error rate (5xx) | 4.2% | 0.3% | 93% reduction |
-| On-call pages for AI feature | 12 / week | 2 / week | 83% reduction |
-| Time to first deploy for new AI feature | 5 days | 2 days | 60% reduction |
-| Promotions tied to AI feature ownership | 2 out of 7 | 7 out of 9 | 23% increase |
+**The fallback response is marked in a header.** Without `X-Cache-Fallback`, you cannot distinguish "the feature is healthy" from "the feature has been silently degraded for three days." That header is the cheapest observability you will ever add.
 
-The most surprising number was the promotion rate. Engineers who had shipped AI features with rollback gates were promoted 78% faster than those who had shipped cutting-edge models without resilience layers. The difference wasn’t AI skill—it was the ability to keep code running.
+### What the earlier attempt got wrong
 
-## What we'd do differently
+The instructive version of this story is the one where the team skips straight to caching. The first cache key is usually `user:{user_id}:summary` with one TTL and one value. That design has three defects that only appear under real traffic:
 
-1. **Start with observability, not models**
-   We wasted two weeks tuning prompts before realizing the real problem was cache stampedes and schema drift. If we’d instrumented the Redis cache and API latency from day one, we’d have caught the issues in hours.
+- **Staleness.** The summary is derived from mutable data. Any TTL is a bet that the underlying data will not change within it. For transaction data, that bet loses.
+- **No recovery path.** When the LLM call fails, the only options are an error or a stale value. There is no third option, because no previous good value was retained separately.
+- **Unbounded key growth with no versioning.** If the prompt template changes, every cached value is invalid but indistinguishable from a valid one.
 
-2. **Use feature flags for AI toggles**
-   We hardcoded the LLM model version in the codebase. When GPT-4.5 dropped in November 2026, updating the model required a full deploy. Next time, we’ll use **LaunchDarkly** to toggle models without redeploying.
+Adding a version component to the key (`...:summary:{version}`) fixes the third defect and creates a new problem: old versions linger until they expire, and nothing tells you which version is being served. The two-key design — `current` and `last_good` — is simpler and makes the rollback semantics explicit.
 
-3. **Simulate prompt drift in CI**
-   We only tested happy-path prompts in staging. A 2026 **Locust** load test that injects malformed JSON and oversized prompts would have caught the validation gaps early.
+## What to instrument
 
-4. **Treat AI outputs as data**
-   We stored the LLM output directly in Redis without versioning. When the schema changed, old caches became invalid. Now we store the raw JSON and the validated JSON separately, with a `version` field in the key.
+Four counters and one histogram cover most of what you need:
 
-5. **Budget for rollback storage**
-   The rollback cache (`last_good`) added 15% to Redis memory usage. We initially capped it at 1GB, which meant we evicted old rollbacks too aggressively. Next time, we’ll budget 30% headroom or use a tiered storage approach with **Dragonfly 1.14** for hot data and S3 for cold.
+- `ai_summary_cache_hit_total` and `ai_summary_cache_miss_total` — the hit rate tells you whether the cache is doing anything.
+- `ai_summary_validation_failure_total` — labelled by `prompt_hash`. A rise concentrated on one hash means that template changed or the model's behavior shifted for that input distribution.
+- `ai_summary_fallback_total` — labelled by `user_id` bucket. A spike for one user means their data now produces unparseable output; a spike across all users means something systemic.
+- `ai_summary_latency_seconds` — a histogram, not an average. You care about p95 and p99 against your gateway timeout, and averages hide exactly the tail that causes 504s.
 
-## The broader lesson
+The alert that earns its keep is a ratio, not a raw count: fallback responses divided by total responses, over a short window. The threshold depends on your tolerance, but the shape of the alert is the same everywhere — if the fallback rate exceeds your chosen bound for ten consecutive minutes, page someone. A raw count of fallbacks is useless because it scales with traffic.
 
-The AI era didn’t create new failure modes—it amplified the old ones. A missing index, a misconfigured cache eviction policy, or a missing rollback path will break AI code just like it broke microservices code. The difference is that AI code fails louder and faster, so the cost of ignoring resilience is higher.
+To establish a baseline before you have production traffic, replay a fixed set of recorded prompts through the endpoint in staging and record the validation failure rate. That number is your reference. If production drifts above it, you have a real signal rather than a guess.
 
-Promotions in the AI era go to engineers who treat AI code like *data pipelines*, not research notebooks. That means:
-- Schema validation on every LLM output
-- Rollback paths for bad generations
-- Observability on cache hits, prompt drift, and fallback rates
-- CI checks that fail the build if a prompt doesn’t match the schema
+## Choosing where validation lives
 
-It’s not about building the best model—it’s about building the system that keeps the model from breaking the rest of the stack. The teams that get this right aren’t the ones with the fanciest AI stack; they’re the ones who remember that production is the real test.
+There is a real trade-off between validating in your application and relying on the model provider's structured-output mode. Both are legitimate.
 
-## How to apply this to your situation
+| Approach | Strength | Cost |
+|---|---|---|
+| Provider-enforced JSON schema | Fewer malformed responses reach your code | Ties you to one provider's feature set; still requires a semantic check |
+| Application-side schema validation | Provider-agnostic; testable without network calls | Every response pays the parse cost; you own the schema |
+| Both | Structural failures caught at the edge, semantic failures caught locally | Two schemas to keep in sync |
 
-If you’re shipping an AI feature this quarter, run this checklist today:
+The third row is the common production choice, and the sync problem is real: if the provider's schema and your local model drift apart, you get failures that only reproduce in one environment. Generate both from a single source of truth if your tooling allows it.
 
-1. **Add schema validation**
-   Pick a library—**Pydantic**, **Zod**, or **Zanzibar schemas**—and enforce it on every LLM input and output. If the schema changes, fail the build, not the user.
+## Failure modes to design against
 
-2. **Build a rollback cache**
-   Store the last known good version of every AI output. Keys should include a version field so you can roll back to a specific snapshot.
+**Cache stampede.** When a popular key expires, every concurrent request misses and calls the LLM simultaneously. The standard mitigations are a short lock around the regeneration, or serving the stale value while one request refreshes in the background. The `last_good` key makes the second option easy: serve it, mark the response with the fallback header, and refresh asynchronously.
 
-3. **Instrument three metrics**
-   - Cache hit rate
-   - Validation failure rate
-   - Fallback rate
-   Set alerts if any spike above 5% in 10 minutes.
+**Retry storms.** A retry on a timeout multiplies load on a dependency that is already slow. Cap retries at one, add jitter, and never retry a request that failed schema validation — that failure is deterministic and will fail again.
 
-4. **Use feature flags for model toggles**
-   Don’t hardcode the model version. Use **Unleash** or **LaunchDarkly** to switch models without redeploying.
+**Silent schema drift.** The provider updates a model or you change a prompt, and the output shape changes in a way that still parses. This is why the `prompt_hash` label matters: it lets you compare failure rates across template versions instead of staring at an aggregate.
 
-5. **CI check: prompt drift simulation**
-   Add a **Locust** test that injects malformed prompts and oversized tokens. If the test fails, block the merge.
+**Unbounded fallback storage.** The `last_good` key roughly doubles the number of keys per user. Size it before you ship: keys times average value size, plus headroom. If the fallback TTL is a day and your active user count is large, that is a real memory line item, not a rounding error.
 
-Do these five things before you ship the feature, and you’ll avoid the fate of the teams that got managed out. The code that survives production is the code that gets promoted.
+## A decision checklist
 
-## Resources that helped
+Before shipping an LLM-backed endpoint, confirm:
 
-- **Pydantic 2.7**: Structured outputs from LLMs. [docs](https://docs.pydantic.dev/2.7/)
-- **Outlines 0.3**: JSON schema enforcement for LLM outputs. [GitHub](https://github.com/outlines-dev/outlines)
-- **FastAPI 0.109**: Async API layer with OpenAPI support. [docs](https://fastapi.tiangolo.com/)
-- **OpenTelemetry 1.28**: Distributed tracing for AI endpoints. [docs](https://opentelemetry.io/docs/)
-- **Locust 2.20**: Load testing with malformed prompts. [docs](https://locust.io/)
-- **Unleash 5.4**: Feature flags for AI model toggles. [docs](https://docs.getunleash.io/)
-- **Dragonfly 1.14**: Redis-compatible cache with tiered storage. [GitHub](https://github.com/dragonflydb/dragonfly)
+1. Every request is validated against a schema with explicit bounds on size and cost.
+2. Every response is parsed against a schema, and a parse failure is treated as a failed call.
+3. A last-known-good value is retained separately from the current value, with a longer TTL.
+4. Fallback responses are marked so they can be counted.
+5. Cache hit rate, validation failure rate (by prompt hash), fallback rate, and latency percentiles are all exported.
+6. The model identifier and prompt template version are configuration, not literals in the request path.
+7. A retry policy exists, and it does not retry deterministic failures.
+8. The fallback storage has a sizing estimate.
 
-## Frequently Asked Questions
+If any item is missing, that is the next thing to build — not a better prompt.
 
-**Why do teams still ship AI features without validation gates?**
-Most teams treat AI code like a research artifact instead of a production component. They assume the LLM will “just work,” but prompt drift, context window limits, and schema changes break features faster than regular code. The teams that get promoted are the ones who treat AI outputs like data and validate them before storing.
+## FAQ
 
-**What’s the simplest way to add rollback to an existing AI feature?**
-Add a Redis key for `user:{id}:summary:last_good` and serve it if the current summary is invalid. Start with a 24h TTL on the rollback cache so it doesn’t grow forever. The hardest part is remembering to store the raw output, not just the summary.
+**Does this require a vector database?**
+No. Vector stores solve retrieval, not resilience. The failures described here come from validation, caching and rollback, and they appear in features that use no embeddings at all.
 
-**Do I need a vector database to make AI features production-grade?**
-No. Vector databases solve semantic search, not resilience. The brittleness in AI features usually comes from prompt drift, cache stampedes, or schema mismatches—not from the vector store itself. Focus on input/output validation and rollback paths before optimizing embeddings.
+**Can schema validation be skipped if the provider guarantees JSON output?**
+No. Provider-enforced structure prevents malformed JSON; it does not prevent a well-formed response with the wrong content, a missing field your downstream code assumes, or a value outside the range you expected. The semantic check is yours to own.
 
-**How do I simulate prompt drift in CI without a real LLM?**
-Use a **Locust** test that injects malformed JSON, oversized prompts, or unexpected fields. If your CI pipeline runs these tests, you’ll catch validation gaps before they hit production. The goal isn’t to test the LLM—it’s to test your validation logic.
+**How should the prompt hash be computed?**
+Hash the template text plus the model identifier, and store the mapping from hash to template in version control. The hash then identifies an exact configuration, which is what makes it useful as a metric label.
 
-## Next step: measure your AI feature’s brittleness
+**What if a user has no last-good value yet?**
+Return an explicit error rather than an empty summary. A 503 with a clear body is better than a plausible-looking blank, because the blank will be cached by clients and reported as a content bug rather than an availability bug.
 
-Open your AI feature’s endpoint in a browser or curl it. Check the response headers for `X-Cache-Fallback` or `X-Validation-Failure`. If you see either header in more than 1% of requests, your feature is already brittle. Add a rollback cache and schema validation before the next deploy. Start with a 30-minute spike: add Pydantic validation to the LLM output and log any failures. That’s the first step to keeping the feature—and your promotion prospects—alive.
+**Is a 24-hour fallback TTL always right?**
+No. It is a starting point. The correct value is the longest staleness your users will tolerate without filing tickets, which is a product question, not an infrastructure one.
 
+## Next step
 
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** August 2026
+Open your LLM-backed endpoint and make one request with `curl -i`. Look at the response headers. If there is no header that tells you whether the response came from the model, from the cache, or from a fallback, you cannot measure the health of the feature at all. Add that header today, then add the counter that increments when it is set. That single change turns an invisible failure mode into a number you can alert on.

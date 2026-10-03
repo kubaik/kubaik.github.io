@@ -1,31 +1,31 @@
 # AI ops: PagerDuty vs Opsgenie — which burns your team
 
-I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.
+## The real failure mode: tooling that adds cognitive load
 
-## Why this comparison matters right now
+The most common way an AI-assisted incident tool makes on-call worse is not an outage. It is a slow erosion of trust. A team adds an AI layer that groups alerts, summarizes threads, or suggests next steps. Within weeks, responders start ignoring the suggestions because they are wrong often enough to be noise, and the tool becomes another surface to triage. The paging volume does not drop; it just moves.
 
-The tool cost $12/user/month, but the real cost was the cognitive overhead: engineers stopped trusting anything that wasn’t a direct page from the system itself.
+That failure mode is worth understanding before comparing platforms, because the two major approaches to AI-assisted incident response fail in different ways. One leans on dense machine data and clustering. The other leans on natural-language conversation and templates. Neither is universally better; they fit different signal densities, team cultures, and incident profiles.
 
-That’s not unique. In 2026, 74% of SRE teams report at least one AI incident response tool in their stack, but only 32% say those tools reduce mean time to acknowledge (MTTA) more than 15%. The rest see MTTA drift upward because of alert fatigue and false positives. The tools either save time or steal it — there’s no middle ground.
+This article compares PagerDuty with its AIOps module and Atlassian Opsgenie with its Incident AI add-on, explains how each mechanism works, and gives a decision framework plus a measurement plan. It avoids vendor-reported benchmarks, because those numbers rarely transfer between organizations. Instead, where a figure would normally appear, you will find what to instrument and how to compare.
 
-This comparison looks at two platforms that dominate the space: PagerDuty with its AIOps module (v3.2 in 2026) and Atlassian Opsgenie with its Incident AI add-on (v2.8 in 2026). I’ll break down how each works, where they shine, and where they actively make on-call worse. I’ll use real latency numbers, cost comparisons, and a concrete decision framework you can apply today.
+## Option A: event grouping and root-cause suggestions
 
-## Option A — how it works and where it shines
+PagerDuty AIOps is built around three capabilities: event grouping, noise filtering, and root-cause suggestions. The platform ingests metrics, logs, and events through a unified event API, then applies clustering to group related alerts into a single incident.
 
-PagerDuty AIOps (v3.2, 2026) runs on three pillars: event grouping, noise filtering, and root-cause suggestions. It ingests metrics, logs, and events (via PagerDuty’s unified event API), then applies a proprietary clustering algorithm to group related incidents. The algorithm is based on dynamic time warping with a 5-minute sliding window; events within 30 seconds of each other and with at least 70% metric similarity get merged. That’s surprisingly effective for microservices with high fan-out (think 200 services on Kubernetes).
+The clustering logic is the core differentiator. Events that arrive close together in time and share similar metric signatures are merged rather than paged separately. This matters most in microservice environments with high fan-out, where a single upstream failure can trigger dozens of downstream alerts. Without grouping, each alert becomes its own page.
 
-The noise filter uses a supervised ML model trained on your historical incidents. It’s not plug-and-play: you need at least 100 labeled incidents to get above 85% precision. We onboarded with 80 labeled incidents and hit 78% precision; it took two weeks of daily labeling to cross 90%. Once it stabilizes, though, the filter drops 42% of non-actionable alerts in a typical SaaS stack (our 2026 telemetry across 12 teams).
+The noise filter is a supervised model trained on your historical incident labels. This is the part teams underestimate. A supervised filter needs labeled examples to learn what "actionable" means in your environment. Without a meaningful volume of labeled incidents, precision stays low and the filter either suppresses too little or suppresses the wrong things.
 
-Root-cause suggestions run after grouping and filtering. PagerDuty exposes a REST endpoint (`/suggestions/v1/incidents/{id}`) that returns a ranked list of suspected services with a confidence score. The suggestions update every 30 seconds while the incident is open. We found the top-3 suggestions were correct 68% of the time on first pass, but only 45% after 15 minutes — the model drifts as new metrics arrive. That’s why we added a human-in-the-loop step: engineers still need to validate, but the suggestions cut investigation time by roughly 22%.
+Root-cause suggestions run after grouping. The platform returns a ranked list of suspected services with a confidence score, and the list updates while the incident is open. The quality of these suggestions depends directly on the density and structure of the input signal. Rich, regularly scraped metrics produce better suggestions than sparse or intermittent telemetry.
 
-Where it shines: high-scale teams with structured incident labels and a dedicated SRE rotation. If you already pay for PagerDuty and your MTTA is above 30 minutes, AIOps gives you a clear ROI path.
+Where this approach shines: teams with structured incident labels, dense metrics, and a dedicated reliability rotation. If paging volume is high and mean time to acknowledge (MTTA) is long, grouping alone can reduce the number of distinct incidents a responder must triage.
 
-Where it underperforms: teams without labeled incidents or those running serverless edge functions where metrics are sparse. The clustering model needs a dense signal to work; sparse metrics (like Lambda cold starts) often get missed entirely.
+Where it underperforms: teams without labeled incidents, and environments where metrics are sparse, such as serverless functions with intermittent invocation. Clustering needs a dense signal to correlate. When metrics are thin, related alerts may not merge, and suggestions may be confidently wrong.
 
-Example: We run a Node 20 LTS service on AWS Fargate behind an ALB. PagerDuty AIOps grouped 47 related 5xx errors into a single incident in 20 seconds, but the root-cause suggestion was “increase Lambda concurrency.” The actual cause was an ALB target group health check misconfiguration. The suggestion was wrong, but the grouping saved us from opening four separate incidents.
+A typical failure mode: an AIOps layer groups a burst of HTTP 5xx errors into one incident correctly, but the root-cause suggestion points at the wrong service. Grouping still saved the team from opening several incidents, but the suggestion sent the first responder down the wrong path. The lesson is that grouping and root-cause inference should be evaluated separately; one can be valuable even when the other is not.
 
 ```python
-# Example PagerDuty AIOps event ingestion using Python 3.11
+# Ingesting an event into a PagerDuty-style unified event API (Python 3.11)
 import requests
 import json
 
@@ -54,21 +54,21 @@ response = requests.post(EVENT_API_URL, headers=HEADERS, data=json.dumps(payload
 print(response.status_code, response.json())
 ```
 
-## Option B — how it works and where it shines
+## Option B: conversation-driven suggestions
 
-Opsgenie Incident AI (v2.8, 2026) is built on Atlassian’s Data Lake and uses a different approach: it treats every incident as a conversation thread. When an alert fires, Opsgenie spins up a Jira Service Management incident and attaches a Slack channel. Incident AI listens to the channel, extracts entities (service names, error codes), and suggests follow-up actions in real time. It’s less about root-cause inference and more about orchestrating the human response.
+Opsgenie Incident AI takes a different approach. Rather than clustering metrics, it treats each incident as a conversation thread. When an alert fires, the platform opens an incident in Jira Service Management and attaches a chat channel. The AI layer reads the channel, extracts entities such as service names and error codes, and suggests follow-up actions in real time.
 
-The AI uses a fine-tuned BERT model on Jira comments and Slack messages (privacy-compliant, no raw logs). It surfaces templates like “Escalate to DB team” or “Check cache cluster” when it detects keywords such as “timeout” and “MySQL.” The templates are customizable via a YAML config file (`incident_ai_templates.yaml`). The model refreshes weekly with new labeled incidents; our onboarding took one week to reach 82% template accuracy.
+The model behind this is typically fine-tuned on incident comments and chat messages rather than raw logs, which keeps sensitive telemetry out of the model's input. Suggestions appear as templates, such as "escalate to the database team" or "check the cache cluster," triggered by keywords like "timeout" or a specific database name. Templates are configurable, usually through a YAML file.
 
-Where it shines: teams that rely on tribal knowledge and Slack-driven war rooms. If your on-call rotation already lives in Slack and your incidents are chronic (e.g., cache stampedes, DNS flakes), Opsgenie’s templates cut coordination time by 28% in our tests.
+Where this approach shines: teams whose incident response already lives in chat, and whose incidents are chronic and follow recognizable scripts, such as cache stampedes or DNS flakiness. In those cases, a well-tuned template can cut coordination time because the first responder does not have to rediscover the playbook.
 
-Where it underperforms: teams that need deep metric correlation or automated remediation. Opsgenie doesn’t cluster events the way PagerDuty does; each alert becomes its own incident thread unless you manually merge them. We saw MTTA increase by 8% on average when we used Opsgenie without manual grouping.
+Where it underperforms: teams that need deep metric correlation or automated remediation. This approach does not cluster events the way a metrics-based system does. Each alert generally becomes its own incident thread unless a human merges them. That means a single upstream failure can still produce many parallel threads, and the coordination cost that grouping would have removed is paid by the responders instead.
 
-Example: We had a Redis 7.2 cluster running on a 5-node R5.large cluster in us-east-1. Opsgenie Incident AI detected the phrase “slow queries” in Slack and suggested “Check Redis memory usage.” The suggestion was correct, but it didn’t surface the underlying cause: a misconfigured maxmemory-policy that caused evictions. The human still had to run `INFO memory` and correlate with application logs.
+A typical failure mode: the AI correctly detects the phrase "slow queries" and suggests checking cache memory usage. The suggestion is directionally right but does not surface the underlying cause, such as a misconfigured eviction policy. The responder still has to run diagnostic commands and correlate with application logs. The template accelerated the first step but not the diagnosis.
 
 ```yaml
-# Example Opsgenie Incident AI template config (v2.8)
-version: 2.8
+# Example incident template config (structure varies by version)
+version: 2
 triggers:
   - keyword: "timeout"
     severity: high
@@ -78,41 +78,41 @@ triggers:
   - keyword: "slow queries"
     severity: medium
     actions:
-      - "Check Redis memory usage"
+      - "Check cache memory usage"
       - "Review cache hit ratio"
 ```
 
-## Head-to-head: performance
+## How to compare them without vendor benchmarks
 
-We ran a 30-day comparison on two production stacks: a Node 20 LTS API cluster (120 pods) and a Python 3.11 async worker pool (80 pods). Both stacks ran on AWS EKS with Prometheus metrics scraped every 15 seconds. We simulated 2,400 synthetic incidents: 600 cache stampedes, 600 5xx spikes, 600 dependency timeouts, and 600 memory leaks. The results are below.
+Published benchmark tables are almost never transferable. Incident mixes, metric density, and team culture differ enough that a headline number from one organization tells you little about yours. The honest approach is to measure both tools against your own incidents.
 
-| Metric                                | PagerDuty AIOps v3.2 | Opsgenie Incident AI v2.8 |
-|---------------------------------------|-----------------------|--------------------------|
-| Mean time to acknowledge (MTTA)       | 12 min                | 16 min                   |
-| Mean time to resolution (MTTR)        | 48 min                | 55 min                   |
-| Alert noise reduction                 | 42%                   | 21%                      |
-| False positive rate                   | 8%                    | 15%                      |
-| Top-3 root-cause accuracy (first pass)| 68%                   | 42%                      |
-| Cost per 1,000 incidents (USD)        | $3.20                 | $2.40                    |
+Set up a pilot with a defined incident set. If you cannot wait for real incidents, generate synthetic ones that mirror your real failure modes: cache stampedes, upstream 5xx spikes, dependency timeouts, memory leaks. Run both tools against the same set and instrument the following.
 
-PagerDuty wins on MTTA and root-cause accuracy, but at a higher dollar cost. Opsgenie is cheaper and simpler, but the higher false positive rate and lack of event grouping hurt MTTA.
+| What to measure | How to instrument it |
+|---|---|
+| Mean time to acknowledge (MTTA) | Timestamp of alert creation vs. first human acknowledgment, per incident |
+| Mean time to resolution (MTTR) | Incident open vs. resolved timestamps, grouped by failure type |
+| Alert noise reduction | Count of raw alerts vs. distinct incidents presented to a responder |
+| False positive rate | Suggestions or groupings that responders mark as wrong, divided by total |
+| Top-3 root-cause accuracy | Whether the correct service appears in the first three suggestions |
+| Cost per incident | License cost plus overage, divided by incidents in the period |
 
-After 30 days, the template accuracy only climbed to 84% despite 600 new labeled incidents. The model seems to plateau when incidents follow predictable scripts; it struggles with novel failure modes like sudden upstream rate limiting.
+Two cautions. First, MTTA and MTTR are only meaningful when grouped by failure type; a tool can look good on average while doing badly on your most common incident. Second, false positive rate matters more than raw accuracy. A tool that is right 90% of the time but wrong on the incidents that matter will lose responder trust quickly, and lost trust is hard to recover.
 
-PagerDuty’s clustering model, in contrast, improved from 78% to 92% precision over the same period. The difference is in the signal: PagerDuty ingests raw metrics (Prometheus, CloudWatch), while Opsgenie ingests natural language (Slack, Jira). Metrics are denser and more structured, so the ML has more to work with.
+The comparison that matters is not which tool wins on a single metric. It is which tool reduces MTTA without increasing cognitive load. Those two goals can conflict, and the conflict is where most AI-assisted incident rollouts fail.
 
-## Head-to-head: developer experience
+## Developer experience and automation surface
 
-PagerDuty AIOps v3.2
-- Pros: Unified event API, strong clustering, good REST interface for automation. Engineers can write a Python 3.11 script to suppress alerts during deployments without touching the UI. - Cons: Steep learning curve. The clustering algorithm needs tuning (window size, similarity threshold). The documentation is fragmented across REST, UI, and CLI tools. - Debugging tip: Use the `/incidents/{id}/alerts` endpoint to see how events were grouped. It returns a trace ID you can correlate with your Prometheus logs.
+The two platforms diverge most sharply in how much they expect you to automate.
 
-Opsgenie Incident AI v2.8
-- Pros: Tight Slack integration, visual timeline in Jira Service Management, low setup effort. Non-technical team members can customize templates without code. - Cons: No event clustering; each alert becomes a separate incident thread. The AI suggestions sometimes feel like spam (“Check logs” is the default template). - Debugging tip: Use the incident AI analytics dashboard to see which templates fire most often. If “Check Redis memory usage” fires 50 times in a week, it’s time to tune the keyword list.
+PagerDuty AIOps exposes a REST interface that lets teams suppress alerts during deployments, query how events were grouped, and script responses without touching the UI. That automation surface is a force multiplier for teams that already treat incident response as code. The cost is a steeper learning curve: clustering parameters such as time window and similarity threshold need tuning, and documentation is spread across REST, UI, and CLI references.
 
-Code example: a PagerDuty suppression script that uses the Events API to mute alerts during blue-green deployments (Python 3.11, aiohttp 3.9).
+Opsgenie Incident AI is lighter to set up. Chat integration is strong, the visual timeline in Jira Service Management is useful for post-incident review, and non-engineers can customize templates without writing code. The trade-off is less programmatic control. There is generally no per-alert suppression API, so muting during a deployment tends to be coarser, such as muting an entire service. Teams that need finer control often end up writing their own integration against the REST API, which is fragile because it is not an officially supported workflow.
+
+One practical debugging technique for either platform: inspect how alerts were grouped or which templates fired most often. If a single template fires dozens of times in a week, the keyword list needs tuning. If events that should have merged did not, the clustering window or similarity threshold is likely mismatched to your metric scrape interval.
 
 ```python
-# PagerDuty alert suppression during deployments
+# Suppressing alerts during a deployment via a unified event API (Python 3.11, aiohttp 3.9)
 import aiohttp
 import asyncio
 
@@ -142,86 +142,54 @@ if __name__ == "__main__":
     asyncio.run(suppress_alerts(dedup_keys, routing_key))
 ```
 
-Opsgenie, in contrast, doesn’t expose a suppression API for individual alerts. You can mute an entire service via the UI, but that’s a blunt instrument. We ended up writing a small Go service (Go 1.22) that calls the Opsgenie REST API to tag incidents during deployments, but it’s fragile and not officially supported.
+## Cost: sticker price versus hidden overhead
 
-Developer UX is where the tools diverge most sharply. PagerDuty is for teams that want to automate everything; Opsgenie is for teams that want to coordinate humans. If your on-call rotation includes non-engineers (e.g., product managers on PagerDuty rotation), Opsgenie’s Slack-first approach feels more natural.
+License pricing varies by contract, seat count, and negotiation, so any specific figure should be treated as illustrative. The structural difference matters more than the number.
 
-## Head-to-head: operational cost
+A metrics-based AIOps platform typically prices per user plus an incident overage tier. A conversation-based platform is often cheaper per seat and per incident, and requires less training time because the interface is chat and the templates are simple.
 
-We modeled costs over 12 months for a 50-person engineering org with an average of 400 incidents per month. PagerDuty AIOps v3.2 costs $15/user/month for base license plus $0.008 per incident after 1,000 incidents/month. Opsgenie Incident AI v2.8 is $12/user/month with $0.006 per incident after 800 incidents/month.
+The hidden cost is where the comparison usually flips. If a platform does not group events, responders must merge incidents manually. Manual merging has a real time cost per incident, and that cost scales with incident volume. Over a year, the accumulated time can exceed the training time saved by choosing the simpler tool.
 
-| Cost category               | PagerDuty AIOps      | Opsgenie Incident AI  |
-|-----------------------------|----------------------|-----------------------|
-| Base license (50 users)     | $9,000/year          | $7,200/year           |
-| Incident overage (4,800)    | $38.40               | $28.80                |
-| Training hours (engineers)  | 16 hours             | 4 hours               |
-| On-call rotation overhead   | 22% reduction        | 8% reduction          |
-| Total cost (12 months)      | $9,514               | $7,369                |
+Vendor lock-in is the second hidden cost. A proprietary clustering model is hard to export; if you switch platforms, you rebuild the grouping logic. Template files are portable, so migration is easier. Neither is free, but the asymmetry is worth weighing explicitly.
 
-Opsgenie wins on sticker price and training time, but the real cost is the hidden overhead: extra Slack threads, Jira tickets, and the cognitive load of ungrouped incidents. PagerDuty’s 22% reduction in on-call rotation overhead (measured by reduced off-hours pages) offsets part of the license cost.
+A worked example with illustrative assumptions: suppose a team handles 400 incidents per year, and manual merging adds 15 minutes per incident because events are not grouped. That is 400 × 15 = 6,000 minutes, or 100 hours per year. If the simpler platform saved 12 hours of training compared to the more complex one, the manual merging cost outweighs the training saving by roughly 88 hours. The exact numbers will differ, but the method is the point: estimate the per-incident manual cost, multiply by volume, and compare it to the training and license difference.
 
-I made a mistake early on by assuming Opsgenie’s simplicity would translate to lower operational cost. It didn’t. The lack of event grouping meant engineers still had to manually merge incidents, which added 15 minutes per incident on average. Over 400 incidents, that’s 100 hours of extra work — more than the training time saved.
+## A decision framework
 
-Another hidden cost: vendor lock-in. PagerDuty’s clustering model is proprietary and hard to export. If we ever want to switch, we’d need to rebuild the grouping logic from scratch. Opsgenie’s templates are just YAML files, so migration is trivial.
+Three axes separate the two approaches.
 
-## The decision framework I use
+**Signal density.** How structured and regularly sampled is your telemetry? Dense metrics scraped at short intervals favor a clustering-based platform. Sparse or intermittent signals, or an environment where most context lives in chat, favor a template-based platform.
 
-I use a three-axis framework when evaluating AI incident response tools:
+**On-call culture.** Is the rotation entirely engineers, or does it include product managers and other non-engineers? A technical rotation can exploit a rich API and clustering. A mixed rotation benefits from a chat-first interface where templates are editable without code.
 
-1. Signal density: How dense and structured is your monitoring data? - High density (Prometheus metrics, CloudWatch logs): PagerDuty wins. - Low density (Slack messages, Jira comments): Opsgenie wins.
+**Incident profile.** Are incidents chronic and scripted, or novel and unpredictable? Chronic incidents that follow known patterns suit templates. Novel failure modes that do not match any keyword suit clustering, which adapts to the data rather than to a keyword list.
 
-2. On-call culture: Is your team technical or mixed (engineers + PMs)? - Technical: PagerDuty’s API and clustering are a force multiplier. - Mixed: Opsgenie’s Slack-first templates reduce coordination friction.
+Apply the framework to a few teams as a thought exercise:
 
-3. Incident profile: Are your incidents chronic or novel? - Chronic (cache stampedes, DNS flakes): Opsgenie templates shine. - Novel (new failure modes, sudden rate limiting): PagerDuty’s clustering adapts better.
+- A team running microservices with dense Prometheus metrics and a technical rotation will likely benefit from clustering, because grouping reduces the number of distinct incidents and the API supports automation.
+- A team whose telemetry is sparse and whose incidents are chronic will likely benefit from templates, because the playbooks are already known and the bottleneck is coordination, not diagnosis.
+- A team with a mixed rotation will likely prefer the chat-first platform even if its metric correlation is weaker, because the interface matches how the team already works.
 
-We applied this framework to three teams:
+The framework is not perfect. A team can misclassify itself, especially on signal density, because sparse telemetry may not be obvious until false positives appear. A pilot is the corrective.
 
-- Team Alpha (Node 20 microservices, 200 pods, Prometheus metrics): PagerDuty AIOps cut MTTA from 22 to 12 minutes, saving ~$3,200/year in on-call overhead despite the higher license cost. - Team Beta (Python async workers, 80 pods, CloudWatch logs): PagerDuty AIOps reduced MTTA from 28 to 15 minutes, but the false positive rate (12%) created new noise. We rolled back after two weeks and switched to Opsgenie for the Slack integration. - Team Gamma (legacy monolith, Jira + Slack): Opsgenie Incident AI cut coordination time by 28% because the team wasn’t deep into metrics. The templates were a perfect fit for their chronic DNS issues.
+## When to choose which
 
-The framework isn’t perfect. We misclassified Team Beta initially because their CloudWatch logs were sparse, but the false positives made us pivot. Always run a 30-day pilot with synthetic incidents before committing.
+Choose a clustering-based platform when your team already uses it, you have dense structured metrics, MTTA is long enough that grouping would help, you can label enough incidents to train a filter, and you want to automate suppression and responses.
 
-## My recommendation (and when to ignore it)
+Avoid it when incidents are mostly chronic and tribal, when you cannot commit to labeling incidents, or when the incident overage cost is hard to justify.
 
-Recommend PagerDuty AIOps v3.2 if:
-- Your team already uses PagerDuty and pays for AIOps. - You have dense, structured metrics (Prometheus, CloudWatch, Datadog). - Your MTTA is above 20 minutes and you can label at least 100 incidents for training. - You want to automate as much as possible, including alert suppression during deployments.
+Choose a template-based platform when your team lives in chat and a service-management tool, incidents are chronic and scripted, setup effort must be low, and you accept manual merging and a higher false positive rate.
 
-Ignore PagerDuty if:
-- Your incidents are mostly chronic and tribal (e.g., “the API times out when Maria is on call”). Opsgenie’s templates handle tribal knowledge better. - You don’t have labeled incidents or can’t commit to labeling. The noise filter won’t improve without data. - Your budget is tight and you can’t justify the $3.20 per 1,000 incidents cost.
+Avoid it when MTTA is already low, when you run serverless or edge functions with sparse metrics, or when you need deep root-cause inference or automated remediation.
 
-Recommend Opsgenie Incident AI v2.8 if:
-- Your team uses Slack and Jira Service Management for incidents. - Your incidents are chronic and follow predictable scripts (cache stampedes, DNS flakes). - You want low setup effort and minimal training. - You’re okay with manual incident merging and higher false positives.
+Two findings from real deployments are worth repeating because they are easy to miss. First, data quality dominates model quality. A clustering window shorter than your metric scrape interval cannot group events reliably; if the scrape interval is longer than the window, events that should merge will not. Second, the human factor dominates everything. Responders ignore suggestions from a tool they perceive as spamming them, and they trust suggestions that come with structured evidence attached. Tuning keywords and adding quiet hours is not optional polish; it is what keeps the tool in use.
 
-Ignore Opsgenie if:
-- Your MTTA is already low (<15 minutes). The marginal gain from templates won’t justify the overhead. - You run serverless or edge functions with sparse metrics. Opsgenie’s natural-language model will underperform. - You need deep root-cause inference or automated remediation. Opsgenie doesn’t do that.
+## A 30-day pilot plan
 
-I’ve used both tools in production and the biggest surprise was how much the data quality matters. PagerDuty’s clustering model is only as good as your metrics; if your Prometheus scrape interval is 30 seconds, the algorithm can’t cluster events within 30 seconds. We had to drop the scrape interval to 15 seconds to get the 30-second clustering window to work reliably.
+Run both platforms against the same incident set for 30 days. Use synthetic incidents if real volume is too low, and mirror your actual failure modes. Record MTTA, MTTR, noise reduction, false positive rate, top-3 root-cause accuracy, and cost per incident, grouped by failure type. Collect responder feedback weekly, because perceived usefulness and measured usefulness can diverge.
 
-Another surprise: the human factor. Engineers ignored Opsgenie’s suggestions when they felt the tool was “spamming” them. We had to tune the template keywords aggressively and add a “quiet hours” window to avoid burnout. PagerDuty’s suggestions were more trusted because they came with structured evidence (metric graphs attached to the incident).
+At the end, keep the tool that reduced MTTA without increasing cognitive load. If neither did, the honest answer is that the tool is not the bottleneck.
 
-## Final verdict
+## Your next 30 minutes
 
-Use PagerDuty AIOps v3.2 if your stack is metrics-heavy and your on-call rotation is technical. The clustering, root-cause suggestions, and REST API give you measurable gains: 48% MTTR reduction and 42% noise reduction in our tests. The higher cost is justified if you can label incidents and tune the model.
-
-Use Opsgenie Incident AI v2.8 if your incidents are chronic, tribal, and your team lives in Slack. The templates cut coordination time by 28%, but the lack of event grouping and higher false positives mean MTTA can drift upward. It’s the better choice for mixed teams or teams with sparse metrics.
-
-If you’re on the fence, run a 30-day pilot with 500 synthetic incidents. Measure MTTA, false positives, and engineer feedback. The tool that reduces MTTA without increasing cognitive load is the one to keep.
-
-Check your Prometheus scrape interval first. If it’s above 15 seconds, PagerDuty AIOps won’t cluster events effectively. Open your Prometheus config (`prometheus.yml`) and change `scrape_interval: 15s`. Then restart the Prometheus server and verify the scrape duration is below 10 seconds. If not, you’ll need to optimize your metrics pipeline before evaluating either tool.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 29, 2026
+Open your metrics configuration and check the scrape interval. If it is longer than the clustering window you intend to use, a clustering-based platform cannot group events reliably. For a Prometheus setup, that means inspecting `prometheus.yml`, confirming `scrape_interval` is short enough for your grouping window, and verifying that scrape duration stays well below the interval so scrapes are not routinely missing their deadline. If the interval is too long or scrapes are timing out, fix the metrics pipeline before evaluating either tool, because no AI layer can cluster signals it never receives.

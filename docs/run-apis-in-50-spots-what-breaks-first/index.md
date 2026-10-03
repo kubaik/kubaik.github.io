@@ -1,46 +1,94 @@
 # Run APIs in 50 spots: what breaks first
 
-The short version: the conventional advice on edgenative backends is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.
+Running an API across many edge locations is not a deployment problem. It is a data-model problem. The network layer is the easy part: pushing a worker to fifty points of presence is a config change. What breaks afterward is everything that assumed a single writer, a single clock, and a single connection pool. This article walks through the failure modes in the order they usually appear, and gives you the instrumentation to confirm each one on your own system.
 
-## The one-paragraph version (read this first)
+## The mental model: an edge tier is a cache that can compute
 
-Running your API in 50 edge locations isn’t just deploying to 50 servers—it’s rewriting your entire backend design. Most teams start with a naive port of their monolith and hit latency cliffs before they even notice. The first thing to break is usually the database: a single slow query in Ashburn can cascade into 49 timeouts across the globe while your Chicago origin looks fine. Cache invalidation becomes a distributed systems nightmare, and suddenly you’re debugging a cache stampede from a coffee shop in Berlin. At 50 locations, clock drift between nodes becomes a real problem for distributed locks and leader election. Expect your bill to double if you ignore egress costs, and your observability stack to collapse under the firehose of logs from 50 data planes. The mental shift is from “scale out” to “scale in place”: your API must tolerate being sharded before it even hits the edge. The tools that win in 2026 are the ones built for partial failure: CRDTs over strong consistency, eventual consistency baked into the SDK, and a telemetry pipeline that can survive a regional outage without melting. If you treat the edge like a CDN instead of a compute tier, you’ll pay for it in latency, money, or both.
+A CDN caches bytes. An edge compute tier caches *decisions* and sometimes *state*. That distinction matters because state at the edge implies you now own reconciliation between many copies of the truth.
 
-I once shipped a user profile endpoint to 10 edge locations and watched the 95th percentile jump from 45ms to 1.2 seconds because I forgot to set `maxmemory-policy noeviction` on the edge Redis clusters — this post is what I wish I’d had the week I rolled it back.
+A useful framing: treat the origin as the root of a tree and each edge location as a leaf. Leaves serve reads locally. Writes travel toward the root. When a leaf is partitioned, it must have a defined degradation policy — serve stale reads, queue writes, or return a cached error — and that policy must be a deliberate product decision, not an accident of which exception your code throws first.
 
+The analogy of ants returning food to a nest is common but slightly misleading. Ants converge on a single nest; edge writes converge on an origin *and* must be idempotent, because retries after a timeout are indistinguishable from new writes unless you design for it.
 
-## Why this concept confuses people
+## Failure mode 1: the database round trip dominates everything
 
-Most developers think “edge” means “closer to the user” and leave it at that. That mental model works for static assets and simple caching, but it collapses as soon as your API has state, writes, or any cross-service coordination. I’ve seen teams burn weeks optimizing their origin for 50ms p95 only to realize their edge workers were spending 300ms on a single database round trip because they reused the same connection pool. Another trap is assuming global consensus is cheap: once you add leader election or distributed transactions, the edge turns from a latency win into a distributed systems exam you didn’t sign up for.
+The first symptom teams notice is that p99 latency at the edge is far worse than p50, and the gap does not correlate with CPU or network throughput. It correlates with write commit latency to the origin.
 
-The confusion peaks when you introduce “origin failover.” If your edge worker can’t reach the origin, what should it do? Serve stale data? Block the request? Fail open? Every choice has a cost: stale data breaks user trust, blocking breaks UX, and failing open can cascade into data loss. Teams also underestimate clock skew: at 50 locations, NTP drift can reach hundreds of milliseconds, which breaks leases, locks, and any algorithm that assumes synchronized clocks.
+To confirm this on your own system, instrument three separate timings rather than one end-to-end number:
 
-Cost is the silent landmine. A single read-heavy endpoint replicated to 50 locations can quadruple your egress bill if you stream full responses over the wire instead of caching identifiers. And observability? Most APM tools weren’t built for 50 independent data planes. You’ll drown in partial traces that drop mid-flight when a regional outage hits.
+1. Time spent in the edge worker before the first outbound call.
+2. Round-trip time from the edge location to the origin, measured per location.
+3. Time from "write accepted by origin" to "write visible to a subsequent read from the same edge location."
 
+If (3) is the large number, you have a commit-lag problem, not a compute problem. A useful illustrative example of the shape of this: if origin p95 is 35 ms and edge p95 without writes is 65 ms, the extra 30 ms is one round trip plus local overhead. If edge p99 with writes is 420 ms, the additional ~355 ms is queue depth and commit lag, not CPU. Those figures are illustrative only — substitute your own measurements.
 
-## The mental model that makes it click
+The lesson is that user-perceived latency and write-durability latency are different metrics and must be tracked separately.
 
-Think of the edge as a **cache that can also compute**, not a CDN that can’t. Your API at the edge isn’t just a reversed proxy; it’s a shard of your application that must survive being disconnected from the rest of the world. 
+## Failure mode 2: connection pooling multiplies
 
-Imagine a graph where the origin is the root and the 50 edge locations are leaves. Every leaf can serve reads locally, but writes must eventually converge back to the root. If a leaf is cut off, it should degrade gracefully: serve stale reads, queue writes, or return a cached error page. The hard part is defining “eventual” in a way that doesn’t create a stampede when the network heals.
+At the origin, a pool of N connections serves all traffic. At fifty edge locations, each running its own pool, the origin sees up to 50 × N connections. A pool of 10 per location is 500 connections against the origin — often more than a small database will accept.
 
-Analogy: a distributed database is like a swarm of ants carrying food back to the nest. Each ant (edge worker) can forage locally, but if the trail is blocked, it drops the crumb temporarily instead of starving. When the trail reopens, the crumbs (writes) flow back in bulk without trampling the nest (origin). That’s eventual consistency with bounded staleness.
+Mitigations, in order of preference:
 
-Concrete numbers from my last project:
-- Origin p95: 35ms
-- Edge p95 without writes: 65ms
-- Edge p99 with writes: 420ms (due to commit-lag to origin)
+- Route writes through a small number of regional aggregators rather than directly from every location.
+- Use a connection proxy that multiplexes many client connections onto few server connections.
+- Cap pool size per location explicitly and set a short idle timeout so that idle locations release capacity.
 
-The gap wasn’t CPU or network; it was the round-trip time from edge to origin plus the queue depth of pending writes. Once we capped the write queue to 100ms, p99 dropped to 210ms. Lesson: measure round-trip commit latency, not just user-perceived latency.
+The failure mode when you get this wrong is not a clean error. It is connection starvation: requests queue at the pool, timeouts cascade, and the origin looks healthy on CPU while the edge looks broken.
 
+## Failure mode 3: cache invalidation races with writes
 
-## A concrete worked example
+A naive invalidation — delete the key after a write, then let the next read repopulate — has a well-known race. Between the delete and the repopulate, a concurrent read can fetch stale data from a replica and write it back into the cache, where it persists until the next invalidation.
 
-Let’s rebuild a simple “create order” endpoint that runs in 50 edge locations with a single PostgreSQL origin in us-east-1. We’ll use Cloudflare Workers (2026 stable) with Durable Objects for stateful shards and Redis 7.2 for edge caching.
+At a single origin this race is rare. Across fifty locations it is routine, because the window is longer and the number of concurrent readers is larger.
 
-### Step 1: Schema at the edge
+A write-through pattern with a monotonically increasing version is one fix:
 
-We can’t replicate the entire orders table to every edge, so we store only what we need for fast path decisions:
+```typescript
+// On the origin, after a successful write:
+await env.ORIGIN_DB.prepare(
+  'UPDATE orders SET status = ?, version = version + 1, updated_at = now() WHERE id = ?'
+).bind(newStatus, orderId).run();
+
+// Read path at the edge:
+const cached = await env.KV.get(`order:${orderId}`);
+const parsed = cached ? JSON.parse(cached) : null;
+if (parsed && parsed.version >= expectedVersion) {
+  return parsed;
+}
+// Otherwise fall through to origin, then write back with the version included.
+```
+
+The version field lets a stale read be rejected rather than overwritten. If the origin write fails, the edge keeps serving the older version — stale, but internally consistent.
+
+## Failure mode 4: clock drift breaks anything with a lease
+
+NTP-synchronized clocks across many locations can diverge by tens to hundreds of milliseconds depending on network conditions and host load. Any algorithm that assumes two nodes agree on "now" — leases, lock expiry, last-write-wins by timestamp — is unsafe under that drift.
+
+Two practical responses:
+
+- Use hybrid logical clocks (HLCs), which combine a physical timestamp with a logical counter so that causality is preserved even when physical clocks disagree.
+- Avoid last-write-wins on wall-clock timestamps entirely. Prefer per-field version counters or CRDTs whose merge function does not depend on synchronized time.
+
+If you must use leases, make the lease duration much larger than the expected drift, and treat a lease as advisory rather than authoritative.
+
+## Failure mode 5: the observability firehose
+
+Fifty data planes emitting traces, logs, and metrics is not a linear cost increase if you emit one trace per request per location. It is roughly fifty times the span volume of a single region, and most APM vendors price per span.
+
+Before scaling out, decide what you actually need:
+
+- Aggregate metrics (counts, histograms) at the edge and ship only aggregates.
+- Sample traces at the edge with a consistent sampling key so that a single user's journey is either sampled everywhere or nowhere.
+- Emit structured logs with a location tag so that a regional outage is visible as a gap in a series rather than as an absence you have to notice.
+
+A concrete way to check whether your pipeline is viable: take your current span volume per second, multiply by the number of locations, and compare against your vendor's ingestion limit and per-span price. If the product exceeds your budget, reduce span count before you reduce locations.
+
+## A worked example: a "create order" endpoint
+
+Consider an endpoint that accepts an order and must be reachable from many locations with a single origin database.
+
+The edge table stores only what the fast path needs:
 
 ```sql
 -- origin schema
@@ -48,300 +96,123 @@ CREATE TABLE orders (
   id bigserial PRIMARY KEY,
   user_id bigint NOT NULL,
   product_id bigint NOT NULL,
-  status text NOT NULL, -- 'pending', 'paid', 'shipped'
+  status text NOT NULL,
+  version bigint NOT NULL DEFAULT 1,
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now()
 );
 
--- edge schema (per location)
+-- edge-local staging table
 CREATE TABLE local_orders (
   id bigserial PRIMARY KEY,
   user_id bigint NOT NULL,
   product_id bigint NOT NULL,
   status text NOT NULL,
   edge_created_at timestamptz NOT NULL DEFAULT now(),
-  origin_id bigint, -- NULL until sync succeeds
-  sync_status text NOT NULL DEFAULT 'pending' -- 'pending', 'synced', 'failed'
+  origin_id bigint,
+  sync_status text NOT NULL DEFAULT 'pending'
 );
 ```
 
-The edge table is tiny: ~50 bytes per row vs ~200 bytes in the origin. We’ll batch-sync to origin every 100ms to keep staleness low.
+The staging row is smaller than the origin row, which reduces local storage and serialization cost. Writes are batched to the origin on a short interval to keep staleness bounded.
 
+The reasoning behind the design, step by step:
 
-### Step 2: Worker code (TypeScript 5.4, ES2026 modules)
+1. Accept the write locally and assign a local id. This keeps the user-facing latency independent of origin round-trip time.
+2. Mark the row `pending` and record the local creation time.
+3. A background flush sends pending rows to the origin in a batch, using an idempotency key derived from the local id so that a retry after a timeout does not create a duplicate.
+4. On success, record the origin id and mark the row `synced`.
+5. On repeated failure, apply backoff and eventually surface a `failed` status rather than retrying forever.
 
-```typescript
-// worker.ts
-import { DurableObject } from 'cloudflare:workers';
-import { Redis } from '@upstash/redis/2026'; // edge Redis via Upstash
-
-interface Env {
-  USER_CACHE: KVNamespace;
-  ORIGIN_DB: D1Database;
-  ORDER_SHARD: DurableObjectNamespace;
-}
-
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-    const userId = url.searchParams.get('user_id');
-    if (!userId) return new Response('Missing user_id', { status: 400 });
-
-    // Fast path: cached order list
-    const cached = await env.USER_CACHE.get(`orders:${userId}`);
-    if (cached) {
-      return new Response(cached, {
-        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'max-age=30' }
-      });
-    }
-
-    // Slow path: fetch from origin via Durable Object shard
-    const shard = env.ORDER_SHARD.idFromName(userId);
-    const stub = env.ORDER_SHARD.get(shard);
-    const res = await stub.fetch(request);
-    if (!res.ok) return res;
-
-    const body = await res.json();
-    // Cache the response for 30 seconds
-    await env.USER_CACHE.put(`orders:${userId}`, JSON.stringify(body), { expirationTtl: 30 });
-    return new Response(JSON.stringify(body), {
-      headers: { 'Content-Type': 'application/json' }
-    });
-  }
-};
-
-// Durable Object for order shard
-export class OrderShard {
-  state: DurableObjectState;
-  env: Env;
-
-  constructor(state: DurableObjectState, env: Env) {
-    this.state = state;
-    this.env = env;
-  }
-
-  async fetch(request: Request): Promise<Response> {
-    const { pathname, searchParams } = new URL(request.url);
-    if (pathname === '/orders') {
-      return this.listOrders(searchParams);
-    }
-    if (pathname === '/orders' && request.method === 'POST') {
-      return this.createOrder(await request.json());
-    }
-    return new Response('Not found', { status: 404 });
-  }
-
-  async listOrders(params: URLSearchParams): Promise<Response> {
-    const userId = params.get('user_id');
-    if (!userId) return new Response('Missing user_id', { status: 400 });
-
-    // Try local cache first
-    const local = await this.env.USER_CACHE.get(`local_orders:${userId}`);
-    if (local) {
-      return new Response(local, {
-        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'max-age=5' }
-      });
-    }
-
-    // Fallback to origin
-    const stmt = this.env.ORIGIN_DB.prepare(
-      'SELECT id, product_id, status, created_at FROM orders WHERE user_id = ?'
-    ).bind(userId);
-    const { results } = await this.env.ORIGIN_DB.exec(stmt);
-    return new Response(JSON.stringify(results), {
-      headers: { 'Content-Type': 'application/json' }
-    });
-  }
-
-  async createOrder(payload: { user_id: string; product_id: string }): Promise<Response> {
-    const { user_id, product_id } = payload;
-
-    // Insert into local table
-    const edgeId = await this.state.storage.transaction(async (txn) => {
-      const row = {
-        user_id: BigInt(user_id),
-        product_id: BigInt(product_id),
-        status: 'pending',
-        edge_created_at: new Date(),
-        sync_status: 'pending'
-      };
-      await txn.storage.put('local_order', row);
-      return txn.storage.get<number>('next_id') || 1n;
-    });
-
-    // Enqueue sync to origin every 100ms
-    await this.state.storage.setAlarm(Date.now() + 100);
-    return new Response(JSON.stringify({ id: edgeId }), { status: 201 });
-  }
-}
-```
-
-Key details that bite teams:
-- Durable Objects are per-user shards, so one hot user can DOS the shard. We cap concurrency with a per-shard rate limiter (not shown).
-- The `setAlarm` call schedules a 100ms sync batch. If the origin is down, the alarm keeps firing every 100ms and can exhaust Durable Object CPU quotas (50ms per 100ms burst). We added a backoff: first retry at 100ms, then 200ms, 400ms, capped at 2s.
-- The local cache (`USER_CACHE`) is a Cloudflare KV namespace scoped to the worker, not the edge location. That means every location shares the same cache namespace—great for global hits, terrible for global misses that flood the origin. We added a per-location bloom filter to reduce origin load when the global cache is cold.
-
-
-## How this connects to things you already know
-
-If you’ve used Redis Cluster or DynamoDB Global Tables, you already know partial failure and eventual consistency. The edge just scales that model to 50 locations instead of 3–5. The difference is latency: in a single region, a 100ms commit lag is annoying; at 50 locations, it becomes part of the user experience.
-
-Connection pooling is another familiar concept that explodes in complexity. At the edge, each location runs its own pool to the origin. If you size the pool too small, you get connection starvation under load; too large, and you hit origin CPU limits. We settled on a pool of 10 connections per edge worker with a 2-second idle timeout. That gave us ~95% cache hit rate and ~150 concurrent writes per location before we saw timeouts.
-
-Circuit breakers also translate directly. If the origin is down, you don’t want your edge workers to melt trying to reconnect. We used a simple exponential backoff with jitter:
+The backoff schedule should be bounded and jittered. A common shape is exponential growth from a small base with a maximum, plus random jitter to avoid synchronized retries across locations:
 
 ```javascript
 class Backoff {
-  private base = 100;
-  private max = 5000;
-  private attempts = 0;
+  constructor(base = 100, max = 5000) {
+    this.base = base;
+    this.max = max;
+    this.attempts = 0;
+  }
 
-  next(): number {
-    const delay = Math.min(this.base * Math.pow(2, this.attempts), this.max);
+  next() {
+    const delay = Math.min(this.base * 2 ** this.attempts, this.max);
     this.attempts++;
-    return delay + Math.floor(Math.random() * 100); // jitter
+    return delay + Math.floor(Math.random() * 100);
   }
 }
 ```
 
-The twist is that you need two breakers: one for the origin (remote), and one for the local cache (local). A local cache miss shouldn’t trigger the remote breaker.
+Two breakers are needed, not one: a remote breaker for the origin and a local breaker for the cache. A local cache miss should not open the remote breaker, or you will shed traffic during a purely local event.
 
+## Where CRDTs help, and where they do not
 
-## Common misconceptions, corrected
+For data that converges naturally — a catalog price, a counter, a set of tags — a CRDT avoids coordination entirely. The merge function must be commutative, associative, and idempotent, so that messages arriving out of order or twice produce the same result.
 
-**Myth 1: “Edge means no origin.”**
-
-Correction: The origin is still the source of truth. The edge is a read-through cache with bounded staleness. If you try to run your entire application at the edge without an origin, you’re building a static site, not an API.
-
-**Myth 2: “Strong consistency at the edge is possible.”**
-
-Correction: Strong consistency across 50 locations requires either a consensus protocol (Paxos/Raft) with 50ms+ latency, or a single leader that becomes the bottleneck. Both choices kill the latency win. Eventual consistency with bounded staleness (e.g., 200ms) is the only practical path.
-
-**Myth 3: “Cache invalidation is the same as at the origin.”**
-
-Correction: At the edge, invalidation must be idempotent and resilient to network partitions. A naive cache flush can race with a user’s concurrent write and cause data loss. We use a write-through pattern with a version vector:
+A simplified last-writer-wins register keyed by node:
 
 ```typescript
-// When writing to origin:
-await env.ORIGIN_DB.exec(
-  'UPDATE orders SET status = ?, updated_at = now() WHERE id = ?',
-  [newStatus, orderId]
-);
-
-// Increment version in edge cache
-await env.USER_CACHE.put(
-  `orders:${userId}:v2`,
-  JSON.stringify(order),
-  { expirationTtl: 60 }
-);
-```
-
-The `v2` key tells the worker to ignore older versions. If the origin write fails, the edge version stays old and the user sees stale data—but no inconsistency.
-
-**Myth 4: “Observability scales linearly with locations.”**
-
-Correction: It doesn’t; it scales exponentially if you treat every location as a separate trace. In 2026, most APM vendors charge per trace span, so 50 locations * 1000 requests/sec * 10 spans = 50k spans/sec = $8k/month just for ingestion. We moved to a sampling-first model: send full traces from 1% of requests, and aggregate counters (error rate, latency) per location. That cut our observability bill from $8k to $1.2k/month without losing signal.
-
-
-## The advanced version (once the basics are solid)
-
-Once you’ve shipped a basic read-through cache with bounded staleness, the real fun begins: **multi-write fan-out**. Imagine an e-commerce catalog where prices change every minute. You want every edge location to serve the latest price, but you can’t afford a global write lock. The trick is to use **CRDTs (Conflict-Free Replicated Data Types)** for the catalog state.
-
-Example: a price CRDT in TypeScript (simplified):
-
-```typescript
-interface PriceCRDT {
-  value: number;
+interface VersionedValue<T> {
+  value: T;
   timestamp: number;
-  nodeId: string; // unique per edge location
+  nodeId: string;
 }
 
-class PriceGrowOnlySet {
-  private state: PriceCRDT[] = [];
-
-  merge(other: PriceCRDT[]): void {
-    other.forEach(item => {
-      const existing = this.state.find(it => it.nodeId === item.nodeId);
-      if (!existing || item.timestamp > existing.timestamp) {
-        this.state = this.state.filter(it => it.nodeId !== item.nodeId);
-        this.state.push(item);
-      }
-    });
+function mergeLWW<T>(a: VersionedValue<T>, b: VersionedValue<T>): VersionedValue<T> {
+  if (a.timestamp !== b.timestamp) {
+    return a.timestamp > b.timestamp ? a : b;
   }
-
-  getHighest(): number {
-    return Math.max(...this.state.map(it => it.value));
-  }
+  // Tie-break deterministically on node id.
+  return a.nodeId > b.nodeId ? a : b;
 }
 ```
 
-Every edge location pushes its local price to the CRDT. When two locations merge, the highest timestamp wins. No locks, no leader, just eventual convergence. The downside is that you can’t delete prices—only supersede them. For most catalogs, that’s acceptable.
+This works for prices and similar values where the latest write is genuinely the one you want. It does not work for anything requiring an invariant across fields — an inventory count that must never go negative, for example. For those, either route writes to a single leader region or use a CRDT that encodes the invariant (a counter that supports decrement with a floor, for instance).
 
-Another advanced pattern is **edge-origin co-processing**: offload heavy computation (image resizing, PDF generation) to the edge worker while keeping only the final asset URL in the origin. We used Cloudflare’s `wrangler` 3.10 to bundle WASM modules for image processing. The latency win was 400ms → 80ms for a 2MB upload, but the cost win was bigger: $0.04 per 1000 images at the edge vs $0.22 at the origin.
+The trade-off is explicit: CRDTs buy availability and latency at the cost of merge complexity and the inability to express arbitrary constraints.
 
-If you go multi-region instead of single-origin, you introduce **conflict-free replicated databases** like CockroachDB 23.2 or YugabyteDB 2.20. They handle clock skew, network partitions, and automatic sharding. The catch: cross-region latency is still 100–200ms, so your application must tolerate that lag for writes. We ran a 3-region experiment and saw p95 write latency of 165ms—fine for background jobs, terrible for checkout flows. We ended up splitting: checkout writes go to a single leader region, while product catalog uses CRDTs.
+## Decision checklist before you scale out
 
+Answer these before adding locations. If any answer is "unknown," that item is your next measurement, not your next deployment.
 
-## Quick reference
+- What is the measured round-trip commit latency from each candidate location to the origin?
+- What is your origin's maximum connection count, and what does 50 × pool size equal?
+- For each write path, is the operation idempotent under retry? What is the idempotency key?
+- What is the defined behavior when a location is partitioned: stale reads, queued writes, or errors?
+- Which fields use wall-clock timestamps for conflict resolution, and can those be replaced with version counters or HLCs?
+- What is your current span volume per second, and what does it become at N locations?
+- What is the cache hit rate on the endpoints you intend to move, and what is the cost per origin miss?
 
-| Concept | What it is | When it breaks | How to fix | 2026 tool/library |
-|---|---|---|---|---|
-| Edge shard | A Durable Object or Lambda@Edge per user/request | Hot user overloads shard | Rate limit, shard by hash, fallback to origin | Cloudflare Durable Objects 2026, AWS Lambda@Edge 2.2 |
-| Bounded staleness | Data is stale but within a time window | Users see outdated prices | Use version vectors, cache TTL, and write-through | Redis 7.2 `maxmemory-policy noeviction` |
-| Origin fan-out | Write to origin from multiple edges | Origin throttling, timeouts | Batch writes, exponential backoff, circuit breaker | Cloudflare Queues 2026, AWS SQS FIFO |
-| Clock drift | NTP skew across locations | Distributed locks, leases fail | Use hybrid logical clocks (HLC) or vector clocks | `hlc` npm package 2.1 |
-| Cache stampede | Many requests miss cache at once | Origin overload | Probabilistic early refresh, background refresh | Cloudflare KV 2026, Redis 7.2 `lazyfree-lazy-expire` |
-| Multi-region DB | CockroachDB or YugabyteDB | Cross-region latency | Split writes (single leader) vs reads (CRDT) | CockroachDB 23.2, YugabyteDB 2.20 |
-| Egress cost | Bandwidth from edge to origin | Bill shock | Cache identifiers, not full bodies | Cloudflare Cache Rules 2026, Fastly Compute@Edge 2026 |
+## Comparison: single-region vs. edge tier
 
+| Dimension | Single region | Edge tier |
+|---|---|---|
+| Read latency | Depends on user distance | Low for cache hits, origin-bound for misses |
+| Write latency | One round trip to region | One round trip plus queue and commit lag |
+| Consistency | Easy to reason about | Requires bounded staleness and versioning |
+| Connection load on origin | One pool | One pool per location unless aggregated |
+| Observability cost | Linear | Multiplies with location count |
+| Failure surface | Origin outage | Origin outage plus per-location partition |
 
-## Further reading worth your time
+Neither column is universally better. The choice depends on whether your traffic is read-heavy and cacheable or write-heavy and consistency-sensitive.
 
-- [Cloudflare Workers Durable Objects documentation 2026](https://developers.cloudflare.com/workers/learning/using-durable-objects/) — the canonical guide for stateful edge compute.
-- [Upstash Redis 7.2 edge caching patterns](https://upstash.com/docs/redis) — how to size TTLs and eviction policies across 50 locations.
-- [CockroachDB 23.2 multi-region deployments](https://www.cockroachlabs.com/docs/stable/multi-region-overview.html) — the hard parts of distributed SQL at scale.
-- [Google’s CRDT paper (2026) but still the best intro](https://arxiv.org/abs/2005.10866) — skip the math, focus on the merge semantics.
+## FAQ
 
+**How do I know if my endpoint is a good candidate for the edge?**
 
-## Frequently Asked Questions
+Measure the cache hit rate for that endpoint over a representative period. If a large majority of requests can be served from a cached response with bounded staleness, it is a candidate. If most requests mutate state or require cross-record invariants, keep them in a region.
 
-**What’s the smallest change I can make to test edge-native backends?**
+**What is the smallest useful first step?**
 
-Start with a read-only endpoint that caches responses in a KV store at the edge. Use Cloudflare Workers or AWS Lambda@Edge with a single region origin. Measure p95 latency from 5 global vantage points before and after. Expect 30–60% improvement for cacheable content. If you see origin load drop by >50%, you’re on the right track.
+Pick one read-only endpoint. Put a cache in front of it at the edge. Instrument hit rate and origin request rate. Compare p95 latency from a few geographic vantage points before and after. If origin request rate does not drop, the cache is not doing useful work and the endpoint is not a good candidate.
 
-**How do I handle cache invalidation when the origin changes?**
+**How do I handle a location that loses connectivity to the origin?**
 
-Use a write-through pattern with version vectors. When the origin updates a record, it increments a version number and writes the new payload. The edge worker caches the new version and ignores older ones. For high-churn data, add a probabilistic refresh: 1% of requests bypass cache to check for updates. Tools: Redis 7.2 with `maxmemory-policy noeviction` and Cloudflare Cache Rules 2026.
+Decide in advance: serve stale reads with a clear staleness indicator, or fail the write with a retryable error. Queueing writes is viable only if you have an idempotency key and a bounded queue with a defined overflow behavior.
 
-**Is it cheaper to run at the edge or in a single region?**
+**Do I need a globally distributed SQL database?**
 
-It depends on traffic patterns. For read-heavy, cacheable content, edge wins: 70% lower egress and 40% lower compute. For write-heavy or low-cache-hit-rate traffic, a single region with connection pooling is cheaper. In our 2026 benchmark, an edge deployment with 80% cache hit rate cost $0.08 per 1000 requests vs $0.12 in a single region. The break-even point was ~65% cache hit rate.
+Only if your write patterns genuinely require multi-region write availability and your application can tolerate the cross-region commit latency. Many systems are better served by a single-leader write path with edge read replicas and bounded staleness.
 
-**What happens if an edge location loses network to the origin?**
+## Action for the next 30 minutes
 
-Two choices: serve stale data (risk user trust) or block writes (risk UX). We chose serve stale for reads and queue writes with exponential backoff. The queue depth is capped at 1000 items per edge worker; beyond that, we return 503. The origin, when reachable, drains the queue at 200 writes/sec per worker. Tools: Cloudflare Queues 2026 for write buffering and SQS FIFO for fallback.
-
-
-I once tried to run a GraphQL API at 50 locations without caching and watched the origin CPU hit 100% within 10 minutes because every edge worker forwarded every request. The fix was to cache the query plan and result for 5 seconds—cut origin CPU by 85% and p95 latency from 320ms to 75ms.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 19, 2026
+Pick one endpoint you are considering moving to the edge. Add three timers to it: time before the first outbound call, round-trip time to the origin, and time from write-acknowledged to read-visible. Run it from a single non-local vantage point and record the three numbers. Those three numbers will tell you which of the failure modes above you will hit first — and whether the edge is the right move at all.

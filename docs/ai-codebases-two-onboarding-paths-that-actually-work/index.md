@@ -1,280 +1,236 @@
 # AI codebases: two onboarding paths that actually work
 
-I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.
+## The problem: AI code passes tests and still breaks production
 
-## Why this comparison matters right now
+A recurring failure mode in repositories that contain AI-generated code has nothing to do with syntax or unit tests. The generated file compiles, the linter is quiet, the test suite is green, and the code still breaks in staging or production because the assumptions baked into the generation prompt did not match the surrounding system.
 
-In 2026, 78% of new codebases at mid-size tech companies are born with at least one AI-generated commit—usually buried in the first five. None of the AI-generated files failed tests, but half broke in staging because the assumptions baked into the prompts didn’t match our infra. That’s the trap: AI code passes tests written for humans; it doesn’t pass the hidden contracts your CI, secrets management, and observability layers enforce.
+The mismatch is usually semantic, not syntactic. A generated endpoint returns a paginated object while the frontend expects a flat list. A generated migration assumes an empty table. A generated cron job assumes a dry-run mode that does not exist. A generated config file hardcodes a connection string that was meant as a placeholder.
 
-Most onboarding guides still treat AI like a glorified Stack Overflow. That misses the real pain point: AI is already in the repo, so we need a process that treats it like any other dependency—versioned, audited, and rolled back when it misbehaves. The two paths below split on a simple axis: do we treat AI as a black box we test around, or do we treat AI as a first-class citizen we version and lint?
+The reason this is hard to catch: tests are written against the same mental model that produced the code. If the prompt said "return user data," the test asserts that user data comes back. Neither the prompt nor the test encodes the contract that the frontend, the CI pipeline, the secrets manager, or the observability layer actually enforces. That contract lives in the rest of the repo, and it is exactly what generated code tends to miss.
 
-## Option A — how it works and where it shines
+This article compares two onboarding and governance models for repositories that already contain AI-generated code. Both are real patterns teams use. Neither is universally correct. The goal is to give enough detail to pick one deliberately rather than by default.
 
-Option A is the **“AI-as-dependency”** model. You run an AI code audit on every PR, but you don’t change the onboarding docs. New hires still clone the repo, `npm ci`, and run `pytest`. The difference is a GitHub Action that flags AI-generated files above a confidence threshold and posts a diff to a `#ai-audit` Slack channel. The action uses a small Python 3.11 service called `ai-linter` that ships with a curated prompt set from the 2026 Anthropic code-review benchmark. It doesn’t block merges—it just surfaces the confidence score and a link to the prompt used to generate the code.
+## Two models, one axis
 
-Where it shines
-- **Zero rewrite cost**: works with any existing onboarding flow. - **Low maintenance**: the linter runs in 350ms on average and costs $0.02 per 1,000 files on GitHub Actions. - **Fast adoption**: teams already know GitHub Actions; no new UX to learn.
+The two approaches split on a single question: **is AI-generated code treated as an opaque input you test around, or as a versioned artifact you reproduce?**
 
-Typical file it catches
-```python
-# confidence: 0.92, prompt: "write a fastapi endpoint that returns user data"
-@app.get("/user/{user_id}")
-async def get_user(user_id: int):
-    user = db.execute("SELECT * FROM users WHERE id = ?", [user_id])
-    return user
-```
+- **Option A — AI-as-dependency.** Generated files live wherever they were committed. A scanning step in CI flags likely AI-generated content and surfaces it for review. Nothing about the onboarding flow changes.
+- **Option B — AI-as-artifact.** Generated files are segregated, pinned to a prompt and model version, and regenerated deterministically as part of the build. Onboarding gains a step that reproduces those artifacts.
 
-The query above uses positional parameters, which is safe. But 30% of the AI-generated SQL in our codebase used string formatting, so we added a SQL injection rule to the linter. The rule is a one-line regex that flags any f-string inside an execute call.
+Everything below follows from that split.
 
-The weakness
-This model catches obvious mistakes, but it can’t catch semantic drift. One team shipped an AI-generated FastAPI route that returned a paginated response—except the frontend expected a flat list. The linter saw no red flags; the frontend tests caught it in staging. That’s why Option A works best when your test coverage is already >80%.
+## Option A: AI-as-dependency
 
-## Option B — how it works and where it shines
+In this model, the repository is unchanged. New contributors clone it, install dependencies, and run the existing test command. The only addition is a CI job that inspects diffs for likely AI-generated content and posts a summary.
 
-Option B is the **“AI-as-first-class artifact”** model. You treat AI-generated files the same way you treat third-party libraries: they get a `gen/` prefix, a version file (`gen/requirements-ai.txt`), and a dedicated test suite (`tests/ai/`). New hires install the same repo, but the README has a new step: `make gen-install`. That command pulls the pinned AI artifacts from Git LFS and runs a deterministic build step that re-runs the generation with the exact same prompt and seed used in prod.
+A typical implementation uses a small scanner service plus a CI workflow. The scanner does not block merges; it annotates the pull request with a confidence score and, where available, the prompt that produced the file.
 
-Where it shines
-- **Reproducible builds**: we can re-generate the same file six months later and diff it against prod. - **Semantic audits**: the `ai/` test suite runs property-based tests that check invariants (e.g., “every paginated endpoint returns a next_cursor field”). - **Rollback safety**: if a gen file causes an incident, we can pin the previous artifact version like any other dependency.
+A minimal workflow looks like this:
 
-Typical setup
 ```yaml
-# .github/workflows/gen-verify.yml
-name: gen-verify
-on: [push]
-jobs:
-  verify:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-      - run: pip install -r gen/requirements-ai.txt
-      - run: pytest tests/ai/ -v
-```
-
-The weakness
-This model adds cognitive load. Developers must learn `gen/` conventions, and the deterministic build step adds 1.2 seconds to every fresh clone. The build step is non-trivial: it requires Docker 25.0, Node 20 LTS, and a `.gen-config.yaml` that pins model version, temperature, and seed. One team forgot to pin the seed and spent a week debugging non-deterministic test failures.
-
-## Head-to-head: performance
-
-| Metric                     | Option A (AI-as-dependency) | Option B (AI-as-artifact) |
-|----------------------------|-----------------------------|--------------------------|
-| Onboarding time            | 12 min                      | 23 min                   |
-| CI queue size              | 18 files                    | 8 files                  |
-| Incident rollback time     | 30 min (manual revert)      | 5 min (pin artifact)     |
-| Lint overhead per file     | 350 ms                      | 1.2 s                    |
-| Storage growth per 1k files| 0 MB (in-repo)              | 47 MB (Git LFS)          |
-
-I benchmarked both on a repo with 2,341 AI-generated files. Option A’s linter added 350ms per PR; Option B’s build step added 1.2s per fresh clone. The difference matters when you have a team of ten new hires cloning the repo every morning. Option A’s model wins on raw speed, but Option B’s model wins on incident recovery—rolling back an AI artifact is a one-line change in `.gen-config.yaml`, while Option A requires reverting a merge commit and re-running CI.
-
-## Head-to-head: developer experience
-
-Developer experience is not about speed; it’s about predictability. Option A’s model feels like a linter that occasionally yells about AI files. Option B’s model feels like a build step that occasionally fails because the AI artifact didn’t re-generate deterministically. In a 2026 internal survey, 62% of developers preferred Option A for day-to-day work, but 78% said they slept better knowing Option B existed for incident response.
-
-The friction points
-- Option A: “Why did the linter flag this file? The prompt looks safe.”
-- Option B: “Why did the deterministic build fail? The seed changed.”
-
-Both friction points are real, but Option A’s friction is visible only in PR comments, while Option B’s friction is visible in the first five minutes of onboarding. That visibility matters: new hires form their mental model of the codebase in the first hour. If the first thing they see is a failing build, they assume the repo is broken—not that the AI artifact needs a re-generation.
-
-Tooling comparison
-- Option A uses `ai-linter` (Python 3.11) + GitHub Actions. The linter ships with 12 built-in rules from the 2026 Anthropic benchmark. - Option B uses `gen-toolkit` (Go 1.22) + Docker 25.0 + Git LFS. The toolkit pins model version, temperature, and seed in `.gen-config.yaml`.
-
-## Head-to-head: operational cost
-
-Operational cost isn’t just money; it’s cognitive load and incident MTTR. Option A costs $0.02 per 1,000 files on GitHub Actions and adds 18 seconds to average PR time. Option B costs $0.08 per 1,000 files for Git LFS storage and adds 1.2 seconds to fresh clones. In a team of 25 developers, Option A’s extra PR time adds up to 2.3 developer-days per month; Option B’s storage adds $4.20 per month.
-
-But the real cost is incident recovery. In the last six months, Option B teams recovered from AI-related incidents in 5 minutes on average, while Option A teams took 30 minutes. That’s a 6x difference in MTTR, which translates to fewer pages and happier engineers.
-
-Cost table (2026 pricing)
-| Cost factor                | Option A       | Option B      |
-|----------------------------|----------------|---------------|
-| GitHub Actions minutes     | $0.02 / 1k    | $0.02 / 1k    |
-| Git LFS storage            | $0             | $0.08 / 1k    |
-| Developer onboarding time  | 12 min         | 23 min        |
-| Incident MTTR              | 30 min         | 5 min         |
-
-## The decision framework I use
-
-I use a three-axis framework: **coverage**, **reproducibility**, and **team maturity**.
-
-1. Coverage
-   If your test suite covers <80% of critical paths, choose Option A. The linter will catch obvious mistakes, and the cognitive load of Option B will slow down onboarding without adding much safety.
-
-2. Reproducibility
-   If your AI artifacts are generated from canonical prompts stored in a repo (e.g., `prompts/endpoint-generation.yaml`), choose Option B. Deterministic regeneration is only useful if you can re-run it with the same inputs.
-
-3. Team maturity
-   If your team has <5 developers or <1 year of AI-generated code in prod, choose Option A. Option B’s complexity is overkill until you have enough AI artifacts to justify the cognitive load.
-
-I’ve seen this framework fail once: a team with 90% test coverage but no prompt versioning chose Option B. Six weeks later, they discovered their prompts had drifted because the AI vendor updated the model. They spent two weeks rewriting prompts to match the new model’s output format. Version your prompts.
-
-## My recommendation (and when to ignore it)
-
-Recommendation: **Use Option B if you have >100 AI-generated files in prod and >80% test coverage; otherwise use Option A.**
-
-Option B’s deterministic build and artifact pinning give you rollback safety and semantic audits, which are worth the extra 11 minutes of onboarding time once you cross the 100-file threshold. Below that, Option A’s linter is enough to catch the obvious mistakes without adding the cognitive load of Git LFS and deterministic builds.
-
-When to ignore the recommendation
-- If your infra team refuses to support Git LFS or Docker 25.0, choose Option A. - If your AI artifacts are mostly one-liners (e.g., `gen/healthcheck.py` with a single endpoint), the overhead of Option B outweighs the benefits. - If you’re in a regulated industry (e.g., fintech, healthcare) and your auditor requires deterministic builds, choose Option B even for small repos.
-
-I once recommended Option B to a team with 42 AI-generated files and 67% test coverage. They ran into deterministic build failures every other day for two weeks. They eventually reverted to Option A and added a manual prompt review step. The lesson: don’t over-engineer for artifacts you can’t reproduce.
-
-## Final verdict
-
-Pick **Option B (AI-as-artifact)** if you want rollback safety and semantic audits, but only if you can support Git LFS and Docker 25.0. Pick **Option A (AI-as-dependency)** if you want zero rewrite cost and low maintenance.
-
-The decision hinges on one question: can you re-generate the AI artifacts deterministically? If yes, Option B is the safer path. If no, Option A is the pragmatic choice.
-
-Open `.gen-config.yaml` or `.github/workflows/ai-lint.yml` in your repo and check whether it exists. If neither file exists, run `npx @ai-linter/cli init` for Option A or `npx @gen-toolkit/cli init` for Option B. Do this in the next 30 minutes.
-
----
-
-### Advanced edge cases you personally encountered
-
-1. **The Silent Prompt Drift**
-In Q1 2026, our team upgraded from `claude-3.7-sonnet-20250307` to `claude-3.7-sonnet-20250912`. The change was buried in a "minor model update" email from Anthropic. Our `.gen-config.yaml` had no pinned version—just `model: "claude-3.7-sonnet"`. The new model started returning JSON fields in a different order, breaking frontend deserialization. The linter (Option A) saw no red flags because the code still compiled and passed tests. We caught it in production when Sentry lit up with `KeyError: 'next_cursor'`. The fix required a full regression test suite run and two weeks of manual prompt refinement. Lesson: never trust "latest" model aliases in production configs.
-
-2. **The Docker-in-Docker Nightmare**
-Option B’s deterministic build step requires Docker 25.0 to re-generate artifacts. One team ran their CI on self-hosted runners using Docker 24.0. The `gen-toolkit` container image pulled `docker:25.0-dind` as a sidecar. The build failed silently because the sidecar didn’t have `binfmt_misc` support for multi-arch builds. We spent three days debugging why the re-generated files were 4KB smaller than the originals—turns out the new model binaries were being stripped in the 24.0 environment. The fix required upgrading all runners to Docker 25.0, which took a week of infra coordination.
-
-3. **The Git LFS Quota Bomb**
-We once stored 12,000 AI-generated files in Git LFS, each averaging 180KB. The repo size ballooned to 2.1GB, triggering GitHub’s 5GB soft limit. Pushes started failing with `LFS: batch request failed`. The cleanup process was brutal: we had to re-generate 80% of the files with smaller model outputs (e.g., `gpt-4o-mini` instead of `gpt-4o`), reducing average file size to 45KB. Total time lost: 14 engineer-hours. The lesson? Set a hard limit in your `gen-toolkit` config: `max_file_size: 100KB`.
-
-4. **The Non-Deterministic Seed Leak**
-A junior developer accidentally committed a `.gen-config.yaml` with `seed: null` because they copy-pasted from a tutorial. For weeks, the deterministic build passed locally but failed in CI because the CI runner used a different random seed. The issue manifested as flaky tests—sometimes the re-generated file matched prod, sometimes it didn’t. We wasted two sprints debugging why our "deterministic" builds were producing different outputs. The fix was simple (pin the seed), but the debugging process highlighted how fragile Option B’s model is when basic assumptions are violated.
-
-5. **The Secret Leak in Prompts**
-Our AI prompts included hardcoded database connection strings for "example purposes." One developer copied a generated file verbatim into a PR, and the connection string leaked to a public repo. The incident response team had to rotate every secret in the file, even though the file was technically "AI-generated" and not human-written. This exposed a gap in Option A’s linter: it checks for SQL injection patterns but not for hardcoded secrets. We added a new rule to the linter that scans for `password=`, `api_key=`, and similar patterns in AI-generated files.
-
----
-
-### Integration with real tools (2026)
-
-1. **GitHub Advanced Security + Anthropic Code Review Benchmark (2026.03)**
-We combined GitHub Advanced Security’s new `ai-code-scanning` feature (released March 2026) with Anthropic’s updated benchmark rules. The integration runs a multi-stage scan:
-- Stage 1: `ai-code-scanning` flags AI-generated files with confidence scores. - Stage 2: A custom rule set (`anthropic-2026-rules.yaml`) checks for semantic issues like paginated responses without `next_cursor`. - Stage 3: A post-scan script generates a `SECURITY.md` diff highlighting files that introduced new secrets.
-
-Installation snippet:
-```yaml
-# .github/workflows/ai-security.yml
-name: ai-security-scan
-on: [push, pull_request]
+# .github/workflows/ai-scan.yml
+name: ai-scan
+on: [pull_request]
 
 jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: github/codeql-action/init@v3
         with:
-          languages: python,javascript
-          config-file: .github/codeql-config.yml
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install anthropic-code-review==2026.03.0
+      - run: pip install -r tools/ai-scan/requirements.txt
       - run: |
-          python -m anthropic_code_review \
-            --config .github/anthropic-rules.yml \
+          python -m ai_scan \
+            --base "${{ github.event.pull_request.base.sha }}" \
+            --head "${{ github.event.pull_request.head.sha }}" \
             --output ai-audit.json
-      - uses: github/codeql-action/analyze@v3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ai-audit
+          path: ai-audit.json
 ```
 
-Cost: $0.04 per 1,000 files (GitHub Advanced Security tier). Overhead: ~450ms per file.
+The scanner itself is usually a thin wrapper around pattern rules. A common rule catches string interpolation inside SQL execution, which is a genuine injection risk:
 
-2. **Gen-Toolkit + Docker 25.0 + Ollama Local Model**
-For teams that prefer local model runs (e.g., fintech with compliance restrictions), we integrated `gen-toolkit` with Ollama’s 2026 release (`ollama/llama3.2-40b-instruct:latest`). The setup pins the model in Docker and runs deterministic generation without hitting external APIs.
+```python
+# Flagged: interpolated SQL
+cursor.execute(f"SELECT * FROM users WHERE id = {user_id}")
 
-```bash
-# Dockerfile for gen-toolkit
-FROM gen-toolkit:2.1.0-go1.22
-
-RUN apt-get update && apt-get install -y ollama
-COPY ollama-model.json /app/models/llama3.2.json
-COPY .gen-config.yaml /app/
-
-CMD ["gen-toolkit", "regen", "--model", "ollama/llama3.2-40b-instruct"]
+# Not flagged: parameterized query
+cursor.execute("SELECT * FROM users WHERE id = ?", [user_id])
 ```
 
-Usage:
+The second form is safe because the driver binds the parameter. The rule is deliberately narrow: it flags f-strings and `%` formatting inside `execute` calls, not the presence of SQL.
+
+### Where Option A works well
+
+- **No migration cost.** Existing onboarding docs, scripts, and CI config stay as they are.
+- **Low operational surface.** The scanner is a stateless job. There is no artifact store, no build step, no new dependency for contributors to install.
+- **Familiar tooling.** The workflow is ordinary CI. Contributors do not need to learn a new convention.
+
+### Failure mode
+
+Option A catches local, pattern-shaped mistakes. It does not catch semantic drift, because semantic drift is not visible in the diff. A generated handler that returns the wrong shape, a generated query that assumes the wrong index, a generated retry policy that conflicts with an upstream timeout — none of these trip a regex.
+
+A representative incident: a generated FastAPI route returns a paginated envelope, the frontend expects a flat array, and the mismatch surfaces only when a staging environment exercises the real frontend. The scanner saw nothing. The unit tests passed because they were written against the same assumption.
+
+Option A therefore depends on test coverage being strong enough to encode the real contracts. If critical paths are not covered, the scanner provides a false sense of safety.
+
+## Option B: AI-as-artifact
+
+In this model, generated code is treated like a third-party dependency. It is segregated, versioned, and reproduced.
+
+The conventions vary, but the shape is consistent:
+
+- Generated files live under a reserved path, commonly `gen/`.
+- A lockfile records the exact model identifier, temperature, seed, and prompt hash for each artifact.
+- A build step regenerates the artifacts from those inputs and fails if the output differs from what is committed.
+- A dedicated test suite under `tests/ai/` asserts the invariants the generated code is supposed to satisfy.
+
+A verification workflow looks like this:
+
+```yaml
+# .github/workflows/gen-verify.yml
+name: gen-verify
+on: [push, pull_request]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r gen/requirements-ai.txt
+      - run: python -m gen_toolkit regen --config .gen-config.yaml --check
+      - run: pytest tests/ai/ -v
+```
+
+The `--check` flag is the important part: it regenerates and diffs rather than overwriting, so a mismatch fails the build instead of silently changing the tree.
+
+The config that makes this reproducible must pin every input that affects output:
+
 ```yaml
 # .gen-config.yaml
 model:
-  type: ollama
-  name: llama3.2-40b-instruct
-  temperature: 0.3
+  name: <pinned-model-identifier>   # never a floating "latest" alias
+  temperature: 0.0
   seed: 42
-  endpoint: http://localhost:11434
+prompts:
+  root: prompts/
+  hash_algorithm: sha256
+limits:
+  max_file_size_kb: 100
 ```
 
-Latency: ~2.8s per file (local model). Storage: 1.2GB for the model image. This is viable only for repos with <500 AI files due to model size.
+### Where Option B works well
 
-3. **Sentry + AI Artifact Monitoring**
-We extended Sentry’s 2026 release to track AI-generated files by adding a `ai_artifact_id` tag to every error. When a crash occurs, Sentry links to the exact prompt, model version, and seed used to generate the file. The integration required a custom Sentry plugin (`sentry-ai-monitor==1.2.0`).
+- **Reproducibility.** Given the pinned inputs, the same artifact can be regenerated later and diffed against what is deployed.
+- **Semantic auditing.** The `tests/ai/` suite can assert invariants that pattern rules cannot express, such as "every paginated endpoint includes a `next_cursor` field."
+- **Rollback by version pin.** Reverting a bad artifact is a change to the lockfile, not a revert of a merge commit and a full CI cycle.
 
-```python
-# sentry_ai_monitor.py
-import sentry_sdk
-from sentry_sdk import capture_exception
+### Failure mode
 
-def track_ai_artifact(error, prompt_id, model_version):
-    sentry_sdk.set_tag("ai_artifact_id", prompt_id)
-    sentry_sdk.set_context("ai_model", {
-        "version": model_version,
-        "prompt_id": prompt_id
-    })
-    capture_exception(error)
+Option B adds a build step, a lockfile, and a convention that contributors must learn. More importantly, it only delivers its benefits if the inputs are genuinely pinned. A floating model alias, a null seed, or an unpinned prompt root silently converts the deterministic build into a non-deterministic one, and the failure appears as flaky CI rather than as a clear error.
+
+A representative incident: a config uses a floating model alias. The provider updates the model behind that alias. The regenerated output differs in field ordering, the diff check fails intermittently depending on which backend serves the request, and the team spends days attributing the flakiness to the CI runner before finding the alias.
+
+## Measuring the tradeoff yourself
+
+Published benchmark numbers for this comparison are not meaningful, because the result depends entirely on repository size, test coverage, model, and infrastructure. The honest approach is to measure in your own repo. The instrumentation is straightforward.
+
+**Onboarding time.** Time a fresh clone through first passing test run, on a clean machine, for three new contributors. Record wall-clock time and the step where each one stalls. Do not measure on a machine with a warm cache.
+
+**Scanner or build overhead.** In CI, record the duration of the scan or regeneration step across at least 50 runs. Report the median and the 95th percentile, not the mean — the tail is what developers notice.
+
+**Storage growth.** Run `git count-objects -vH` before and after a month of normal commits. For Git LFS, `git lfs ls-files | wc -l` and the total size reported by your host give the real figure.
+
+**Incident recovery time.** For each incident traced to generated code, record the time from detection to the point where the fix is deployed. Classify by recovery method: revert, pin, or patch. This is the metric that most often decides the choice, and it is the one teams rarely instrument.
+
+**False positive and false negative rates.** For the scanner, sample 100 flagged files and 100 unflagged generated files, and have a reviewer classify each. The unflagged sample is the important one; it estimates what the scanner misses.
+
+Once these five numbers exist for your repository, the decision usually becomes obvious without reference to anyone else's data.
+
+## Comparing the two models
+
+| Dimension | Option A (dependency) | Option B (artifact) |
+|---|---|---|
+| Onboarding change | None | Adds a regeneration step |
+| Reproducibility | Not provided | Provided, if inputs are pinned |
+| Semantic drift detection | Relies on existing tests | Dedicated invariant suite |
+| Rollback mechanism | Revert commit, re-run CI | Change version pin |
+| New conventions | None | Reserved path, lockfile, test dir |
+| Failure mode | Silent semantic drift | Non-determinism from unpinned inputs |
+| Prerequisite | Strong test coverage | Pinned model, seed, prompts |
+
+The table is a decision aid, not a benchmark. The actual numbers depend on your repository.
+
+## A worked example of the cost math
+
+Assume a team of 20 developers, each cloning the repository twice per day, and a regeneration step that adds 2 seconds per clone. That is:
+
+```
+20 developers × 2 clones/day × 2 s = 80 s/day
+80 s/day × 20 working days = 1,600 s/month
+1,600 s ÷ 3,600 = ~0.44 developer-hours/month
 ```
 
-When a new hire onboarded and triggered a crash, the error report included:
+Under half a developer-hour per month. That is almost never the deciding factor.
+
+Now assume the same team has one AI-related incident per month, and the recovery time differs by 25 minutes between the two models:
+
 ```
-ai_artifact_id: prompts/2026-03-14/user-endpoint-generation.yaml
-ai_model:
-  version: claude-3.7-sonnet-20250912
-  seed: 42
+1 incident/month × 25 min saved = 25 min/month
 ```
 
-This reduced mean time to resolution (MTTR) for AI-related incidents from 30 minutes to 7 minutes in our largest repo.
+Still small in isolation. The decision only becomes significant when the incident rate is higher, when the recovery difference is larger, or when the incident has customer-visible impact. The point of doing this arithmetic is to avoid choosing a model based on a latency difference that does not matter, while ignoring the recovery difference that might.
 
----
+## Decision checklist
 
-### Before/after comparison with actual numbers
+Work through these in order. The first question that resolves to a clear answer usually settles the choice.
 
-We migrated a 4,200-file monorepo from Option A to Option B in Q2 2026. The repo had 1,842 AI-generated files (44% of total). Here’s the raw comparison:
+1. **Can you pin every input that affects generation?** Model identifier, temperature, seed, and prompt content. If any of these cannot be pinned — for example, the provider only offers a floating alias — Option B's core benefit is unavailable and Option A is the better fit.
+2. **Are your critical paths covered by tests that encode real contracts?** If coverage is thin, Option A's scanner will not compensate, and the repository is exposed either way. Fix coverage first.
+3. **Do you have more than roughly a hundred generated files in production?** Below that, the convention overhead of Option B rarely pays for itself. Above it, manual review stops scaling.
+4. **Is rollback speed a real constraint?** If a bad generated artifact can cause customer-visible damage within minutes, version pinning is worth the setup cost. If generated code only touches internal tooling, it usually is not.
+5. **Will your infrastructure support the artifact store?** If Git LFS or an equivalent is unavailable or unsupported, Option B is not viable regardless of the other answers.
+6. **Are you in a regulated environment that requires reproducible builds?** If so, Option B is effectively mandatory for the artifacts in scope, even at small scale.
 
-| Metric                          | Option A (Before)       | Option B (After)        | Delta          |
-|---------------------------------|-------------------------|--------------------------|----------------|
-| Onboarding time (new hire)      | 18 min                  | 31 min                   | +13 min        |
-| PR merge queue size             | 22 files                | 9 files                  | -13 files      |
-| Incident MTTR (AI-related)      | 32 min                  | 4 min                    | -28 min        |
-| Storage growth (per month)      | 120MB (in-repo)         | 890MB (Git LFS)          | +770MB         |
-| Lint time per 1,000 files       | 350ms                   | 1.4s                     | +1.05s         |
-| Deterministic build time        | N/A                     | 2.1s (per file)          | N/A            |
-| Cost (GitHub Actions)           | $0.03 / 1k files        | $0.03 / 1k files         | $0             |
-| Cost (Git LFS)                  | $0                      | $0.09 / 1k files         | +$0.09 / 1k    |
-| Cost (Compute for builds)       | $0                      | $0.12 / 1k files         | +$0.12 / 1k    |
-| Developer satisfaction (survey) | 3.2/5                   | 4.1/5                    | +0.9           |
-| Incident frequency (AI-related) | 4 / month               | 0 / month                | -4             |
+## Integration points that matter
 
-Key observations:
-- **Semantic drift vanished**: After migrating, we had zero incidents caused by AI-generated code breaking frontend assumptions. The `tests/ai/` suite caught a paginated response mismatch within minutes of generation. - **Rollback efficiency**: When a gen file caused a memory leak, rolling back took 3 minutes (pin the artifact) instead of 35 minutes (revert merge commit + re-run CI). - **Storage pain**: Git LFS storage hit our GitHub org’s soft limit (5GB) within three months. We had to aggressively prune old artifacts, reducing the repo to 620MB of active AI files. - **Build step latency**: The 2.1s deterministic build step became a bottleneck for new hires. We mitigated this by caching the build output in CI and serving it via a shared volume for clones.
+Regardless of which model you choose, three integration points determine whether governance actually works.
 
-The tipping point for the migration was an incident where an AI-generated cron job deleted 200GB of old logs because the prompt assumed `DELETE FROM logs WHERE created_at < NOW() - INTERVAL '30 days'` would run in dry-run mode. The rollback took 45 minutes (Option A). After migrating to Option B, the same incident would have been rolled back in 3 minutes. The storage and latency costs were worth it.
+**Secrets scanning.** Pattern-based scanners that look for injection risks typically do not look for credentials. Add a dedicated secrets scan over generated files, and treat a hit as a release blocker rather than a warning. Generated code is more likely than hand-written code to contain placeholder credentials copied from a prompt.
 
----
+**Error tracking with artifact provenance.** Attach the artifact identifier, model identifier, and prompt hash to error reports for generated files. When an incident occurs, this turns "some generated code broke" into "this prompt, this model version, this seed." The instrumentation is a few lines at the point where the artifact is loaded, and it is the single highest-value addition for reducing recovery time.
 
-### About this article
+**Prompt versioning.** Prompts are inputs. If they are edited in place, the artifact lockfile no longer describes what is deployed. Store prompts in version control under a dedicated directory and hash them as part of the build. A prompt change should be a reviewable diff, not an untracked edit.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+## Common failure modes to guard against
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+**Floating model aliases.** A config that names a model alias rather than a pinned version will produce different output when the provider updates the alias. Always pin.
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+**Null or absent seeds.** A missing seed makes generation non-deterministic, which turns the diff check into a source of flaky failures. Validate the config at build time and fail loudly if the seed is unset.
 
-**Last reviewed:** June 15, 2026
+**Unbounded artifact growth.** Generated artifacts accumulate. Set a size limit per file and a retention policy per artifact, and prune on a schedule rather than when the storage quota is reached.
+
+**Scanner rules that do not match the real risk.** A rule that flags every use of string formatting in a logging call will be ignored within a week. Rules should target specific, demonstrable risks, and each rule should have a test case in both directions.
+
+**Treating generated code as exempt from review.** The provenance of a file does not change its behavior in production. Generated code should pass the same review bar as hand-written code, with the added check that its inputs are pinned.
+
+## Where the two models converge
+
+In practice, mature repositories end up with elements of both. A lightweight scanner runs on every pull request to catch pattern-shaped mistakes quickly and cheaply. A smaller set of high-risk artifacts — anything touching payments, authentication, data deletion, or external contracts — is versioned and regenerated deterministically. The scanner handles breadth; the artifact pipeline handles the cases where a silent semantic error is expensive.
+
+That combination is usually the right target. The question is not which model to adopt permanently, but which to adopt first given the current state of the repository.
+
+## Next 30 minutes
+
+Open your repository and check two things. First, list every file in the last 90 days of commits that was produced by a code generation tool, and count them. Second, open the config or prompt that produced the highest-risk one and check whether the model identifier, temperature, and seed are all explicitly pinned.
+
+If the count is above roughly a hundred and any of those three inputs is unpinned, pin them now — that single change converts an unreproducible artifact into a reproducible one and is the prerequisite for everything else in this article.

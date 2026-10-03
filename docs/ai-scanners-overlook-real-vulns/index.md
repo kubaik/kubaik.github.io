@@ -1,53 +1,47 @@
 # AI scanners overlook real vulns
 
-The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.
+AI-powered vulnerability scanners are effective at finding typos, missing braces, and dependencies with known CVEs. They routinely miss the bugs that cause incidents: logic flaws, authentication bypasses, and race conditions. The practical response is to treat an AI scanner as a first pass and combine it with deterministic checks, targeted fuzzing, and runtime monitoring.
 
-## The one-paragraph version (read this first)
+## The one-paragraph version
 
-AI-powered vulnerability scanners are great at finding typos, missing braces, and library versions with known CVEs, but they often miss the real bugs that matter: logic flaws, authentication bypasses, and race conditions. In 2026, top teams treat AI scanners as a first pass, not a final check, and combine them with targeted fuzzing, property-based testing, and manual code review. The tools that actually reduce incidents are those that integrate AI with deterministic checks—like using CodeQL 2.14 with AI-assisted query suggestions or Semgrep Pro’s AI-driven rule generation—then layering in runtime protection like eBPF-based anomaly detection. The result: 35–45% fewer critical issues escaping to production compared to relying on scanners alone.
+AI scanners excel at pattern matching and version lookups but struggle with application context—the "why" behind a piece of code. A typical failure mode is a scan that reports dozens of findings, most of them false positives, while a subtle data race or token-reuse flaw sits unflagged. Teams that reduce escaped defects treat AI as one layer among several: AI-assisted rule drafting, deterministic static analysis for invariants, fuzzing for edge cases, and runtime monitoring for what slips through. The rest of this article explains why the layers differ, shows a worked example of finding a file-upload bypass, and gives a checklist for combining them without drowning in noise.
 
-## Why this concept confuses people
+## Why "AI-powered" doesn't mean "smarter"
 
-Most developers think that if a scanner uses AI, it must be smarter than a rule-based scanner. That’s only partially true. AI scanners shine at pattern matching and version lookups, but they struggle with context—the “why” behind a piece of code. I ran into this when I used GitHub Advanced Security’s AI-powered code scanning on a legacy microservice. It flagged 47 issues, but 39 were false positives. Only 6 were real bugs, and none were the subtle data race that caused a production outage a month later.
+The intuition is that an AI scanner must reason about code better than a rule-based one. That is only partly true. An LLM-backed scanner is guessing based on patterns in its training data. It does not model your application's state transitions, your authentication boundaries, or the invariants your code is supposed to hold.
 
-The confusion comes from marketing language. Tools like Snyk AI and DeepCode promise “AI-powered security,” but under the hood, they’re often just combining static analysis with LLM suggestions. The LLM isn’t reasoning about your system—it’s guessing based on patterns it saw in training data. That’s useful, but not sufficient for defense.
+Consider a scanner that flags 47 issues. Suppose 39 are false positives, 6 are real but low-severity, and the subtle data race that later causes an outage is not among them. That distribution is common. The scanner is not broken; it is doing what pattern matching does. It recognizes shapes it has seen before and fails on shapes it has not.
 
-Another trap is assuming AI scanners catch everything. In 2026 surveys show that 68% of security teams still miss zero-day logic flaws because AI scanners don’t model application state transitions. You can feed the scanner every known CVE pattern, but it won’t notice that your password reset token isn’t invalidated after a second reset—until someone abuses it.
+Marketing language compounds the confusion. Products described as "AI-powered security" often combine conventional static analysis with LLM-generated suggestions. The LLM portion is useful for drafting rules and summarizing findings, but it is not reasoning about your system. It is pattern-completing.
 
-## The mental model that makes it click
+A second trap is assuming the scanner catches everything. AI scanners do not model application state transitions, so they tend to miss flaws that only appear across a sequence of requests—for example, a password reset token that is not invalidated after a second reset. You can feed the scanner every known CVE pattern, and it still will not notice that.
 
-Think of AI scanners like a spellchecker that flags typos but doesn’t understand grammar. It catches missing semicolons and obvious errors, but it won’t tell you your sentence is logically inconsistent. Now layer in a grammar checker—deterministic rules that enforce structure—and suddenly you have something closer to a real editor.
+## The mental model: spellchecker versus grammar checker
 
-Apply that to security:
+Think of an AI scanner as a spellchecker. It catches typos—misused functions, outdated libraries, obvious mistakes—but it does not understand whether a sentence is logically consistent.
 
-- **AI as spellcheck**: finds typos (misused functions, outdated libraries)
-- **Deterministic rules (grammar)**: enforce invariants (null checks, auth boundaries)
-- **Fuzzing (unit tests)**: probe edge cases beyond rules
-- **Runtime monitoring (runtime)**: catch what slips through
+Now add a grammar checker: deterministic rules that enforce structure. Suddenly you have something closer to a real editor. Map that onto security:
 
-In practice, this means using AI to generate candidate rules or queries—like asking an LLM to suggest CodeQL queries for your API’s input validation—but then validating those queries with real examples from your codebase. I’ve seen teams save 2 weeks of tuning by letting an LLM draft initial rules, but the real wins came when they tested those rules against their own data.
+- **AI as spellcheck**: finds typos (misused functions, outdated libraries).
+- **Deterministic rules (grammar)**: enforce invariants (null checks, auth boundaries, CSRF token presence).
+- **Fuzzing (unit tests)**: probe edge cases beyond what rules describe.
+- **Runtime monitoring (production behavior)**: catch what slips through the first three layers.
 
-## A concrete worked example
+In practice, AI is most useful for generating candidate rules or queries—for example, asking an LLM to suggest static-analysis queries for your API's input validation—which you then validate against real examples from your codebase. The LLM can draft; the codebase decides whether the draft is correct.
 
-Let’s walk through a real scenario: a Node.js API handling user uploads. We’ll use three tools—GitHub Copilot CLI (AI-assisted), CodeQL 2.14 (deterministic), and AFL++ (fuzzer)—to find a file upload bypass that turns into a remote code execution (RCE) vector.
+## A worked example: file-upload bypass
+
+Walk through a Node.js API that handles user uploads. The goal is to find a file-upload bypass that could become a remote code execution (RCE) vector. Three layers are used: an AI-assisted analyzer, a deterministic query engine, and a fuzzer.
 
 ### Step 1: AI-assisted rule generation
 
-I used Copilot CLI to analyze the upload handler:
+A typical AI-assisted analyzer might suggest a rule along the lines of: "Check if the file extension is in the allowed list." That is a reasonable starting point, but it is not sufficient. An attacker can bypass a naive extension check with a double extension (`file.png.php`) or a null byte (`file.jpg\0.php`).
 
-```bash
-# Install Copilot CLI v1.12.3 (2026)
-npm install -g @github/copilot-cli@1.12.3
+The AI suggestion is a draft. It needs to be turned into something deterministic and testable.
 
-# Analyze the upload route
-copilot analyze --path src/routes/upload.js --format sarif > upload.sarif
-```
+### Step 2: Turn the suggestion into a deterministic rule
 
-The tool suggested a rule: _“Check if file extension is in allowed list.”_ That’s a good start, but it’s not enough. A real attacker can bypass this by using a double extension (`file.png.php`) or a null byte (`file.jpg\0.php`).
-
-### Step 2: Turn AI suggestions into deterministic rules
-
-I translated the AI’s suggestion into a CodeQL query:
+Using a CodeQL-style query language, the suggestion becomes an explicit check:
 
 ```ql
 import javascript
@@ -57,25 +51,24 @@ where handler.getFileExtension().notIn(["jpg", "png", "gif"])
 select handler, "File type not allowed: " + handler.getFileExtension()
 ```
 
-But I added a twist: I also checked for path traversal by scanning for `../` in the filename. That’s the grammar step—enforcing structure that the AI alone wouldn’t catch.
+Add a second rule for path traversal, which the AI suggestion did not cover:
 
 ```ql
+from UploadHandler handler
 where handler.getFileName().matches("%../%")
 select handler, "Path traversal detected in filename"
 ```
 
-I ran this in GitHub Advanced Security with CodeQL 2.14. It caught 12 issues in 5 minutes—including a file named `../../../etc/passwd.jpg` that the AI scanner had missed because it wasn’t in the training data.
+The second rule catches filenames like `../../../etc/passwd.jpg` that a pattern-matching scanner may miss because the exact shape was not in its training data. The point is not that the query language is magic—it is that the rule is explicit, auditable, and reproducible. Anyone can read it and argue about whether it is correct.
 
 ### Step 3: Fuzz the edge cases
 
-Next, I used AFL++ 4.08 to fuzz the upload endpoint. I set up a minimal harness:
+Deterministic rules cover what you thought to describe. Fuzzing covers what you did not. A minimal harness for the upload endpoint:
 
 ```javascript
 // upload.harness.js
-const { fork } = require('child_process');
 const http = require('http');
 
-// Start the API server
 const server = http.createServer((req, res) => {
   if (req.url === '/upload' && req.method === 'POST') {
     let body = '';
@@ -92,38 +85,36 @@ server.listen(3000, () => {
 });
 ```
 
-Then I compiled the harness with AFL++:
+Note that this harness is deliberately minimal: it echoes the body size and does not actually persist the upload. That is fine for a first pass, because the goal is to exercise the parsing and handling path, not the storage layer. When a crash appears, replace the echo with the real handler to confirm.
 
-```bash
-afl-gcc -o upload_harness upload.harness.js
-AFL_SKIP_CPUFREQ=1 afl-fuzz -i seeds -o findings -- ./upload_harness
-```
+A fuzzer such as libFuzzer or a general-purpose mutation fuzzer can then be pointed at the harness. A plausible finding is a crash when the filename contains a very large number of null bytes—a pathological case that no pattern-matching scanner would guess. That crash may be a memory-exhaustion bug and a denial-of-service vector.
 
-Within 20 minutes, AFL++ triggered a crash when I sent a filename with 10,000 null bytes. That’s not something any AI scanner would guess—it’s a pathological case. But it revealed a memory exhaustion bug that could be leveraged for DoS. Total time: 2 hours. Cost: $0 (ran on a t3.medium EC2 instance, $0.042/hour in 2026).
+The important discipline is scoping. Do not fuzz the entire application. Fuzz the attack surface: parsers, uploads, authentication handlers. A targeted campaign on a single endpoint can run in minutes, not weeks.
 
-## How this connects to things you already know
+## What each layer is actually good at
 
-You already know that unit tests catch edge cases. AI scanners are like unit tests for security—but they’re generated by an LLM instead of written by you. The same way you wouldn’t trust a single unit test to cover your entire API, you shouldn’t trust a single AI scan to cover your security posture.
+| Layer | Strength | Weakness | Where it fits |
+|---|---|---|---|
+| AI-assisted scanner | Fast, broad coverage of known patterns | High false positives, weak on context | First pass, triage |
+| Deterministic static analysis | Precise, auditable, reproducible rules | Requires writing and maintaining rules | Invariants, auth boundaries |
+| Fuzzing | Finds pathological inputs and crashes | Slow on large codebases, needs harnesses | Parsers, uploads, auth handlers |
+| Runtime monitoring | Sees actual behavior in staging/production | Reactive; needs tuning to avoid noise | Detecting what static analysis missed |
 
-You also know that linters catch style issues. CodeQL is the linter for security rules. It enforces invariants—like “every API endpoint must validate a CSRF token”—in a way that’s deterministic and auditable. AI can help write those rules, but it can’t enforce them.
-
-And you know that chaos engineering stresses systems to find weak points. Fuzzing is chaos engineering for inputs. The difference is that chaos engineering is usually manual; fuzzing is automated and repeatable.
-
-The key insight is that AI scanners are fast but shallow, while deterministic tools and fuzzing are slow but deep. Combine them like layers in a cake: AI on top, rules in the middle, fuzzing at the bottom.
+The layers are complementary, not competing. AI is fast but shallow. Deterministic rules and fuzzing are slower but deeper. Runtime monitoring is the backstop.
 
 ## Common misconceptions, corrected
 
-**Misconception 1: AI scanners replace manual review**
+**Misconception 1: AI scanners replace manual review.**
 
-In 2026, 72% of teams still believe AI scanners reduce the need for manual review. Wrong. AI scanners are great at finding low-hanging fruit, but they miss context. I saw a team skip a code review because GitHub Advanced Security flagged nothing. Two weeks later, a junior dev introduced a logic flaw in the JWT validation that allowed token reuse. The scanner never saw it because it wasn’t in the training data and didn’t match any rule.
+They reduce the volume of low-hanging fruit but they do not replace context. A logic flaw in JWT validation that allows token reuse will not match a known pattern and will not be caught by a rule that does not exist yet. Manual review—or a deliberately written rule—is still required for logic that spans requests.
 
-**Misconception 2: Fuzzing is too slow for most teams**
+**Misconception 2: Fuzzing is too slow to be practical.**
 
-Some developers think fuzzing takes weeks. In practice, a targeted fuzz campaign on a single endpoint can run in under an hour with AFL++ or libFuzzer. I’ve found DoS vectors in under 10 minutes by fuzzing file parsers with malformed ZIP headers. The trick is to scope it: don’t fuzz your entire app—fuzz the attack surface (parsers, uploads, auth handlers).
+A targeted campaign on a single endpoint can run in under an hour. The trick is scope: fuzz the attack surface, not the whole app. Start with one endpoint per sprint and run it nightly.
 
-**Misconception 3: AI-generated rules are always safe**
+**Misconception 3: AI-generated rules are always safe.**
 
-Teams often treat AI-generated CodeQL queries as gospel. But LLMs hallucinate. I once used an LLM to generate a CodeQL query to check for SQL injection. It suggested:
+LLMs hallucinate. An AI-drafted query such as:
 
 ```ql
 from SqlQuery q
@@ -131,7 +122,7 @@ where q.getText().contains("SELECT")
 select q
 ```
 
-This flagged every SELECT statement—even in safe ORM calls. I had to rewrite it to check for string concatenation:
+will flag every SELECT statement, including safe ORM calls. A more useful shape is:
 
 ```ql
 from SqlQuery q
@@ -139,145 +130,105 @@ where q.getText().matches("%'% + %") and not q.isPrepared()
 select q
 ```
 
-Always audit AI-generated rules with real code.
+Even that needs auditing against real code. The rule is a hypothesis; the codebase is the test.
 
-**Misconception 4: Runtime protection is only for production**
+**Misconception 4: Runtime protection is only for production.**
 
-you can run eBPF-based anomaly detection in staging too. Tools like Pixie or Falco can monitor system calls and network traffic in a staging environment, catching behavior that’s invisible to static analysis. I caught a container escape in staging by running Falco 0.37 with a custom rule that alerted on `unshare` syscalls. Cost: $12/month on a small Kubernetes cluster.
+Runtime monitoring can run in staging. Tools that observe system calls and network traffic in a staging cluster can catch behavior invisible to static analysis, at the cost of some tuning to keep alert volume manageable.
 
-## The advanced version (once the basics are solid)
+## How to measure whether your layers are working
 
-Once you’re comfortable with the basics—AI-assisted rule generation, deterministic queries, and targeted fuzzing—you can go deeper with property-based testing and symbolic execution.
+Claims about "fewer incidents" are easy to make and hard to verify. If you want to know whether a layered approach is helping, instrument the following and compare over time:
 
-### Property-based testing with fast-check and custom invariants
+- **Findings by layer**: how many issues each layer reports, and how many are confirmed real. Track the false-positive ratio per layer.
+- **Escaped defects**: issues found in production that a layer should have caught. For each one, record which layer missed it and why.
+- **Time to first finding**: how long after a code change each layer reports something.
+- **Rule churn**: how often deterministic rules are added, modified, or retired. High churn suggests the rules are not capturing the right invariants.
 
-In a Go service, I used fast-check (v5.0.0) to generate random inputs and assert invariants. For example, I tested that a password reset token is always invalidated after a second reset:
+A simple starting point: pick a recent incident or a public CVE from the last six months. Try to reproduce the vulnerability against your scanner. If the scanner does not flag it, you have found a gap. Record the gap and decide which layer should close it.
+
+## Decision checklist for combining layers
+
+Use this when deciding what to add next:
+
+- [ ] Do you have at least one deterministic rule per authentication boundary?
+- [ ] Does every parser or upload handler have a fuzz harness?
+- [ ] Are AI-generated rules reviewed against real code before being enabled in CI?
+- [ ] Is there a documented process for triaging false positives, rather than disabling rules?
+- [ ] Is runtime monitoring running in staging, not only production?
+- [ ] For each escaped defect, is the responsible layer identified and improved?
+
+If most boxes are unchecked, adding more AI scanning will not help. The gap is in the layers that require explicit rules and harnesses.
+
+## Advanced layers, once the basics are solid
+
+Once AI-assisted rule drafting, deterministic queries, and targeted fuzzing are in place, two further techniques are worth considering.
+
+### Property-based testing
+
+Property-based testing generates random inputs and asserts invariants that should hold for all of them. For example, a test could assert that a password reset token is invalidated after a second reset:
 
 ```go
-import (
-	"testing"
-	"github.com/dubzzz/fast-check-go/pkg/fastcheck"
-)
-
 func TestTokenInvalidation(t *testing.T) {
-	fc := fastcheck.New(t)
-	fc.Property("token invalidated on second reset", func(tc *fastcheck.T) {
-		token1 := generateToken()
-		resetToken(token1)
-		assert.True(t, isTokenInvalid(token1))
+    token1 := generateToken()
+    resetToken(token1)
+    if !isTokenInvalid(token1) {
+        t.Fatal("token1 should be invalid after reset")
+    }
 
-		token2 := generateToken()
-		resetToken(token2)
-		assert.True(t, isTokenInvalid(token2))
+    token2 := generateToken()
+    resetToken(token2)
+    if !isTokenInvalid(token2) {
+        t.Fatal("token2 should be invalid after reset")
+    }
 
-		// This should also invalidate token1 if implemented correctly
-		resetToken(token1)
-		assert.True(t, isTokenInvalid(token1))
-	})
+    // A second reset of token1 should also leave it invalid.
+    resetToken(token1)
+    if !isTokenInvalid(token1) {
+        t.Fatal("token1 should remain invalid after second reset")
+    }
 }
 ```
 
-Running this caught a race condition where two concurrent resets didn’t invalidate the first token. Total time to write: 1 hour. Total issues found: 1 critical.
+This kind of test can surface race conditions where two concurrent resets fail to invalidate the first token. The invariant is the point: "a token is invalid after reset" must hold regardless of order or concurrency.
 
-### Symbolic execution with KLEE and custom constraints
+### Symbolic execution
 
-For C/C++ code, symbolic execution tools like KLEE 3.1 can explore all possible paths. I used it on a custom authentication library:
-
-```bash
-# Compile with KLEE support
-clang -emit-llvm -g -c auth.c -o auth.bc
-klee --max-tests=10000 auth.bc
-```
-
-KLEE found a path where a null pointer dereference occurred when a malformed JWT signature was processed. The tool generated 12,487 test cases in 3 minutes. The AI scanner never saw this path because it wasn’t in the training data.
+Symbolic execution explores paths through a program by treating inputs as symbolic values and solving constraints. It is most useful for small, critical code—cryptographic parsers, authentication primitives—where exhaustive path coverage matters. The cost is setup complexity and potential state explosion; it is not a general-purpose replacement for the other layers.
 
 ### Runtime SBOM and drift detection
 
-Advanced teams also track runtime SBOMs (Software Bill of Materials) and detect drift between what’s running and what’s in the registry. Tools like Snyk Runtime SBOM or Anchore’s runtime scanner can alert if a container loads a library that wasn’t in the build-time SBOM. I caught a supply-chain attack in production when a CI pipeline accidentally pulled a patched version of `libcurl` that introduced a new CVE. The runtime scanner flagged it within 5 minutes.
-
-### The cost of going advanced
-
-The tools aren’t free. KLEE requires LLVM expertise. Fast-check needs Go knowledge. Symbolic execution can explode in memory use. But the ROI is real. Teams that combine property-based testing with runtime monitoring reduce incident response time by 40% and cut critical CVEs by 35% compared to AI-only scans.
+Runtime SBOM tooling compares what is actually loaded at runtime against what was recorded at build time. A container that loads a library not present in the build-time SBOM is a signal worth investigating. This is a narrow but useful check, and it belongs alongside the other runtime monitoring.
 
 ## Quick reference
 
-| Tool/Purpose              | Strengths                          | Weaknesses                     | When to use                     | Cost (2026)       |
-|---------------------------|------------------------------------|--------------------------------|---------------------------------|-------------------|
-| GitHub Advanced Security (AI) | Fast, covers many CVE patterns     | High false positives, misses context | First pass, quick scans         | $19/user/mo       |
-| CodeQL 2.14               | Precise, auditable rules           | Requires QL expertise          | Mid-tier checks, logic flaws    | Free (GHAS)       |
-| Semgrep Pro               | Fast, easy to write custom rules   | Limited to pattern matching    | Custom rule generation          | $29/user/mo       |
-| AFL++ 4.08                | Finds edge cases, DoS vectors      | Slow on large codebases        | Attack surface fuzzing          | Free              |
-| Falco 0.37                | Runtime anomaly detection           | Needs rule tuning              | Staging/production monitoring   | $0 (open source)  |
-| fast-check 5.0.0          | Generates thousands of test cases  | Language-specific (Go/Java)    | Property-based testing           | Free              |
-| KLEE 3.1                  | Explores all code paths             | Complex setup                  | Critical C/C++ libraries         | Free              |
-| Pixie (eBPF)              | Low-overhead runtime visibility    | Limited to Kubernetes          | Debugging in staging             | $25/cluster/mo    |
+| Layer | Purpose | Cost profile |
+|---|---|---|
+| AI-assisted scanner | Broad first pass | Usually subscription-based |
+| Deterministic static analysis | Enforce invariants | Free or bundled; requires rule-writing time |
+| Fuzzing | Find pathological inputs | Free; requires harness-writing time |
+| Runtime monitoring | Detect actual behavior | Free or subscription; requires tuning |
+| Property-based testing | Assert invariants over random inputs | Free; requires test-writing time |
+| Symbolic execution | Exhaustive path coverage on small code | Free; high setup cost |
 
-## Further reading worth your time
-
-- [GitHub’s guide to CodeQL 2.14 with AI-assisted queries](https://codeql.github.com/docs/writing-codeql/ai-assisted-query-generation/)
-- [AFL++ 4.08 documentation: practical fuzzing techniques](https://aflplus.plus/docs/)
-- [Semgrep’s 2026 report on AI-generated rules vs. manual rules](https://semgrep.dev/papers/ai-rules-2026)
-- [OWASP’s guide to property-based testing in security](https://owasp.org/www-project-property-based-testing/)
-- [KLEE’s 2026 paper on symbolic execution for C/C++](https://klee.github.io/papers/klee-2026.pdf)
-
-
-## Frequently Asked Questions
+## FAQ
 
 **How do I know if my AI scanner is missing real bugs?**
 
-Start by auditing its false negatives. Pick a recent incident in your org or a public CVE from the past 6 months. Try to trigger the same vulnerability using the scanner. If it doesn’t flag it, you’ve found a gap. In one team I worked with, our AI scanner missed a race condition in a session store because it wasn’t in the training data. We caught it by writing a custom CodeQL rule that checked for concurrent writes to the same key.
-
+Audit its false negatives. Pick a recent incident or a public CVE from the last six months. Try to reproduce the vulnerability against the scanner. If it is not flagged, you have found a gap. Then decide which layer should close it—usually a deterministic rule or a fuzz harness.
 
 **Is it safe to use AI-generated security rules in production?**
 
-Only if you validate them. Run the rules against your own codebase first. Use a small staging environment to test them. I once deployed an AI-generated CodeQL rule that flagged every use of `JSON.parse()` as a prototype pollution risk—because the model was trained on outdated patterns. It caused 47 false-positive PRs in a week. Always audit and refine.
+Only after validating them against your own codebase in a non-blocking mode first. Run the rule, inspect the findings, and refine it before enabling it in CI. A rule that flags too broadly will be disabled by frustrated engineers, which is worse than no rule.
 
+**What's the best way to introduce fuzzing without slowing down CI?**
 
-**What’s the best way to introduce fuzzing without slowing down CI?**
-
-Start with targeted fuzzing on one endpoint per sprint. Use lightweight harnesses and run them nightly. For example, fuzz your password reset endpoint by generating random tokens and checking for crashes. Tools like libFuzzer integrate with CMake and can run in under 2 minutes. I’ve seen teams cut fuzzing time by 70% by scoping it to high-risk paths only.
-
+Start with one endpoint per sprint, run the campaign nightly rather than on every commit, and keep the harness small. The goal is to find crashes, not to achieve exhaustive coverage on day one.
 
 **Can runtime monitoring replace static analysis?**
 
-No. Runtime monitoring catches what’s already happening; static analysis prevents it from happening. I ran a pilot where we disabled static analysis and relied only on Falco in production. We caught 8 incidents in 30 days—but 3 of them could have been prevented with a simple CodeQL rule. Runtime is reactive; static is proactive. Use both.
+No. Runtime monitoring is reactive: it catches what is already happening. Static analysis is proactive: it prevents issues from reaching production. Use both. When a runtime alert fires, ask which static rule or fuzz harness would have caught it earlier, and add it.
 
+## Your next 30 minutes
 
-## Close the gap today
-
-Here’s your action for the next 30 minutes: open your most critical API endpoint in your IDE. Run Semgrep Pro with the AI rule generation flag enabled:
-
-```bash
-# Install Semgrep Pro v1.60.0
-pip install semgrep-pro==1.60.0
-
-# Generate AI-assisted rules for your endpoint
-semgrep --config=auto --lang=javascript --generate-config src/routes/api.js > rules.yaml
-
-# Review the generated rules for obvious mistakes
-cat rules.yaml
-```
-
-Then, run one of the rules against your codebase and see how many issues it flags. If you find a false positive, fix the rule. If you find a real issue, file it. Do this today, even if it’s just one endpoint. That’s how you start turning AI scanners from noise into signal.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 02, 2026
+Open your most critical API endpoint and write one deterministic rule that encodes an invariant it must satisfy—for example, that every state-changing request validates a CSRF token, or that every file upload rejects path separators in the filename. Run it against your codebase, inspect the findings, and refine the rule until every hit is either a real issue or a documented exception. That single rule is the first layer of the grammar checker your AI scanner is missing.

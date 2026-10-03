@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Survive network drops: agentic workflows that keep running - Kubai Kevin</title>
-        <meta name="description" content="Cut approval workflow downtime 90% with durable command logs — works on $6 DigitalOcean droplets, survives 90-minute 3G drops, no Kafka or Step Functions…">
+        <meta name="description" content="Design agentic workflows as state machines over an append-only log so retries replay deterministically instead of duplicating work.">
         <meta name="keywords" content="Agentic, Durable, Network, SqliteCommandLog, Idempotent, Agenticai">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-04T12:14:28.758125">
-        <meta property="article:modified_time" content="2026-09-26T16:04:30.139157+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:51:12.757840+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Survive network drops: agentic workflows that keep running">
-        <meta property="og:description" content="Cut approval workflow downtime 90% with durable command logs — works on $6 DigitalOcean droplets, survives 90-minute 3G drops, no Kafka or Step Functions…">
+        <meta property="og:description" content="Design agentic workflows as state machines over an append-only log so retries replay deterministically instead of duplicating work.">
         <meta property="og:url" content="https://kubaik.github.io/survive-network-drops-agentic-workflows-that-keep-running/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Survive network drops: agentic workflows that keep running">
-        <meta name="twitter:description" content="Cut approval workflow downtime 90% with durable command logs — works on $6 DigitalOcean droplets, survives 90-minute 3G drops, no Kafka or Step Functions…">
+        <meta name="twitter:description" content="Design agentic workflows as state machines over an append-only log so retries replay deterministically instead of duplicating work.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/survive-network-drops-agentic-workflows-that-keep-running.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/survive-network-drops-agentic-workflows-that-keep-running/#article",
       "headline": "Survive network drops: agentic workflows that keep running",
-      "description": "Cut approval workflow downtime 90% with durable command logs — works on $6 DigitalOcean droplets, survives 90-minute 3G drops, no Kafka or Step Functions…",
+      "description": "Design agentic workflows as state machines over an append-only log so retries replay deterministically instead of duplicating work.",
       "datePublished": "2026-07-04T12:14:28+00:00",
-      "dateModified": "2026-09-26T16:04:30+00:00",
-      "wordCount": 2592,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-03T12:51:12+00:00",
+      "wordCount": 2935,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Survive network drops: agentic workflows that keep running</h1>
                 
-                <p class="post-lead">Cut approval workflow downtime 90% with durable command logs — works on $6 DigitalOcean droplets, survives 90-minute 3G drops, no Kafka or Step Functions…</p>
+                <p class="post-lead">Design agentic workflows as state machines over an append-only log so retries replay deterministically instead of duplicating work.</p>
                 
                 
                 <div class="tags">
@@ -259,43 +259,47 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2592 words
+                        15 min read
+                        &nbsp;·&nbsp; 2935 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-26
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on agentic workflows is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>In Africa, network partitions aren’t edge cases—they’re daily reality. Teams lose weeks debugging workflows that hang forever when a single hop fails. The patterns that survive these partitions rely on a simple idea: <strong>treat every agent as a state machine with an append-only log</strong>, store that log durably, and let the system replay from the last known good state when connectivity returns. This design keeps billing reminders, delivery confirmations, and multi-party approvals running even when MTN or Safaricom drops packets for 90 minutes. It’s not about fancy AI agents—it’s about durable execution, idempotent commands, and deterministic retries. If your workflow can’t survive a 3G tower collapse, it won’t survive a 500ms latency spike in AWS us-east-1.</p>
+                <p>The conventional advice on agentic workflows — retry with backoff, use a queue, wrap it in a transaction — works in the simple case and breaks in a specific way under load. This article explains the failure mode and the pattern that avoids it.</p>
+<h2 id="the-one-paragraph-version">The one-paragraph version</h2>
+<p>Teams operating where connectivity is intermittent lose days debugging workflows that hang forever when a single hop fails. The patterns that survive partitions rest on one idea: <strong>treat every agent as a state machine with an append-only log</strong>, store that log durably, and replay from the last known good state when connectivity returns. This keeps billing reminders, delivery confirmations, and multi-party approvals running across long outages. It is not about sophisticated AI agents — it is about durable execution, idempotent commands, and deterministic retries. If a workflow cannot survive a tower outage, it will not survive a 500ms latency spike in a cloud region either.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most engineers start with the wrong mental model: they treat agents like stateless microservices that retry on failure. That leads to exponential backoff storms, duplicate invoices, and database deadlocks when the network hiccups. We used Node 20 LTS with a simple REST retry loop. After a routine fiber cut in Dar es Salaam, approvals piled up for 73 minutes. When the link came back, Node’s retry logic fired 1,247 simultaneous requests to our PostgreSQL 15 cluster. The result: 34 duplicate disbursements and a compliance audit nightmare. The lesson: retries are not enough—you need <strong>deterministic replay</strong> from a durable log.</p>
-<p>Another common trap is over-engineering with Kafka Streams or AWS Step Functions. These tools shine for high-throughput pipelines, but they add 150ms latency per hop and cost $800/month for a 3-node cluster. For a bootstrapped fintech on a $200 DigitalOcean droplet, that’s a non-starter. We wasted two weeks trying to shoehorn Kafka into a workflow that only needed 120 approvals per day.</p>
-<p>Confusion also comes from conflating two problems: <strong>network partitions</strong> (temporary loss of connectivity) and <strong>permanent failures</strong> (a server burning down). The patterns for each are different. If your agent can’t tell the difference between a flaky 3G tower and a dead EC2 instance, it will never behave correctly under real African conditions.</p>
+<p>Most engineers start with the wrong mental model: they treat agents like stateless microservices that retry on failure. That leads to backoff storms, duplicate invoices, and database contention when the network hiccups.</p>
+<p>A typical failure mode looks like this. A REST retry loop fires on every timeout. A fiber cut or tower outage lasts an hour. When the link returns, every pending retry fires at once against a database that was sized for steady-state traffic. The result is duplicate side effects — double disbursements, double SMS charges — and a reconciliation problem that costs more to clean up than the outage itself. The lesson: retries alone are not enough. You need <strong>deterministic replay</strong> from a durable log.</p>
+<p>A second trap is over-engineering. Distributed stream processors and managed workflow services are excellent for high-throughput pipelines, but they add per-hop latency and a fixed monthly cost that is hard to justify for a workflow processing a few hundred events per day. A team can spend a week trying to fit a streaming platform into a workload that only needed a table and a loop.</p>
+<p>A third source of confusion is conflating two different problems: <strong>network partitions</strong> (temporary loss of connectivity) and <strong>permanent failures</strong> (a host is gone for good). The correct responses differ. If an agent cannot distinguish a flaky link from a dead instance, it will misbehave under real conditions: it will retry forever against a host that will never come back, or it will give up on a command that would have succeeded thirty seconds later.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of your agent as a <strong>deterministic state machine</strong> with three layers:</p>
+<p>Think of the agent as a <strong>deterministic state machine</strong> with three layers:</p>
 <ol>
-<li><strong>Command log</strong> (append-only, durable storage)</li>
-<li><strong>Executor</strong> (runs commands idempotently)</li>
-<li><strong>Supervisor</strong> (monitors progress and retries deterministically)</li>
+<li><strong>Command log</strong> — append-only, durable storage</li>
+<li><strong>Executor</strong> — applies commands idempotently</li>
+<li><strong>Supervisor</strong> — monitors progress and retries deterministically</li>
 </ol>
-<p>The log is your source of truth. Every command—"send SMS to user 42 for approval"—is appended to the log with a monotonically increasing sequence number. The executor reads the log and applies each command exactly once, even if the network drops. When connectivity returns, the supervisor resumes from the last committed sequence, skipping already-applied commands. This is the same pattern Kafka uses internally, but you can implement it with SQLite 3.45 and a cron job.</p>
-<p>Analogy: imagine a bank teller with a carbon-copy ledger. When the power flickers, the teller closes the ledger, waits, then picks up where they left off—no double entries, no missing transactions. That’s durable execution.</p>
-<p>Here’s the key insight: <strong>idempotency keys are not enough</strong>. If your idempotency key is just a UUID, two retries can still collide. You need a <strong>sequence number tied to the log position</strong>, so retries are deterministic and collisions impossible.</p>
+<p>The log is the source of truth. Every command — "send SMS to user 42 for approval" — is appended with a monotonically increasing sequence number. The executor reads the log and applies each command at most once. When connectivity returns, the supervisor resumes from the last committed sequence, skipping already-applied commands. This is the same pattern log-structured systems use internally, but it can be implemented with a local embedded database and a polling loop.</p>
+<p>Analogy: a bank teller with a carbon-copy ledger. When the power flickers, the teller closes the ledger, waits, then picks up where they left off — no double entries, no missing transactions. That is durable execution.</p>
+<p>The key insight: <strong>idempotency keys alone are not enough</strong>. If the key is a random UUID generated per attempt, two retries produce two different keys and both effects land. The key must be derived from the log position — the sequence number — so that a retry of sequence N is indistinguishable from the original attempt at sequence N.</p>
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Let’s build a minimal approval workflow for a Kenyan logistics company. Requirements:
-- Accept a delivery request
-- Send SMS to the driver for approval
-- If approved, update the delivery status in PostgreSQL 15
-- Handle 3G drops, SMS gateway timeouts, and occasional power outages</p>
-<p>We’ll use Python 3.11, SQLite 3.45, and Redis 7.2 for coordination. Total cost: ~$12/month on a 2GB DO droplet.</p>
+<p>A minimal approval workflow for a delivery operation. Requirements:</p>
+<ul>
+<li>Accept a delivery request</li>
+<li>Send an SMS to the driver for approval</li>
+<li>If approved, update the delivery status in PostgreSQL</li>
+<li>Survive intermittent mobile data, SMS gateway timeouts, and occasional power loss</li>
+</ul>
+<p>Stack: Python 3.11, SQLite (WAL mode), Redis for pub/sub coordination.</p>
 <h3 id="step-1-the-command-log">Step 1: The command log</h3>
 <pre><code class="language-python"># log.py
 import sqlite3
+import pickle
 from dataclasses import dataclass
 
 @dataclass
@@ -307,6 +311,8 @@ class Command:
 class CommandLog:
     def __init__(self, path=&quot;commands.db&quot;):
         self.conn = sqlite3.connect(path)
+        self.conn.execute(&quot;PRAGMA journal_mode=WAL&quot;)
+        self.conn.execute(&quot;PRAGMA synchronous=NORMAL&quot;)
         self.conn.execute(
             &quot;&quot;&quot;
             CREATE TABLE IF NOT EXISTS commands (
@@ -322,20 +328,29 @@ class CommandLog:
     def append(self, cmd: Command):
         self.conn.execute(
             &quot;INSERT INTO commands (seq, name, payload, status) VALUES (?, ?, ?, ?)&quot;,
-            (cmd.seq, cmd.name, pickle.dumps(cmd.payload), &quot;pending&quot;)
+            (cmd.seq, cmd.name, pickle.dumps(cmd.payload), &quot;pending&quot;),
         )
         self.conn.commit()
 
-    def get_until(self, seq: int):
+    def pending_upto(self, seq: int):
         cur = self.conn.cursor()
-        cur.execute(&quot;SELECT seq, name, payload FROM commands WHERE seq &lt;= ? AND status = 'pending'&quot;, (seq,))
+        cur.execute(
+            &quot;SELECT seq, name, payload FROM commands &quot;
+            &quot;WHERE seq &lt;= ? AND status IN ('pending', 'failed') ORDER BY seq&quot;,
+            (seq,),
+        )
         return [Command(r[0], r[1], pickle.loads(r[2])) for r in cur.fetchall()]
+
+    def mark(self, seq: int, status: str):
+        self.conn.execute(&quot;UPDATE commands SET status = ? WHERE seq = ?&quot;, (status, seq))
+        self.conn.commit()
 </code></pre>
+<p>Two details matter here. First, the primary key on <code>seq</code> makes duplicate appends impossible: a repeated insert with the same sequence number fails loudly rather than silently duplicating. Second, <code>synchronous=NORMAL</code> under WAL is a deliberate durability trade-off — it survives process crashes and most power loss, but a hard power cut can lose the last few committed transactions. If that is unacceptable, use <code>synchronous=FULL</code> and accept the write latency.</p>
 <h3 id="step-2-the-executor">Step 2: The executor</h3>
 <pre><code class="language-python"># executor.py
 import subprocess
 import time
-import redis  # Redis 7.2
+import redis
 
 r = redis.Redis(host=&quot;localhost&quot;, port=6379, db=0)
 
@@ -344,45 +359,38 @@ class Executor:
         self.log = log
 
     def run(self):
-        max_seq = self.log.conn.execute(&quot;SELECT MAX(seq) FROM commands&quot;).fetchone()[0] or 0
-        pending = self.log.get_until(max_seq)
-        for cmd in pending:
+        max_seq = self.log.conn.execute(
+            &quot;SELECT COALESCE(MAX(seq), 0) FROM commands&quot;
+        ).fetchone()[0]
+        for cmd in self.log.pending_upto(max_seq):
             try:
                 if cmd.name == &quot;send_sms&quot;:
-                    # Use Africa’s IsendSMS API with 30s timeout
                     result = subprocess.run(
-                        [&quot;curl&quot;, &quot;-m&quot;, &quot;30&quot;, &quot;https://isendsms.co.ke/api/send&quot;, 
-                         &quot;-d&quot;, f&quot;phone={cmd.payload['phone']}&amp;msg={cmd.payload['msg']}&quot;],
+                        [
+                            &quot;curl&quot;, &quot;-m&quot;, &quot;30&quot;,
+                            &quot;https://sms-gateway.example/api/send&quot;,
+                            &quot;-d&quot;, f&quot;phone={cmd.payload['phone']}&quot;,
+                            &quot;-d&quot;, f&quot;msg={cmd.payload['msg']}&quot;,
+                            &quot;-d&quot;, f&quot;idem={cmd.seq}&quot;,
+                        ],
                         capture_output=True,
                         text=True,
-                        timeout=35
+                        timeout=35,
                     )
                     if result.returncode == 0:
-                        self.log.conn.execute(
-                            &quot;UPDATE commands SET status = 'done' WHERE seq = ?&quot;,
-                            (cmd.seq,)
-                        )
-                        self.log.conn.commit()
-                        r.publish(&quot;approvals&quot;, f&quot;approved:{cmd.payload['delivery_id']}&quot;)
+                        self.log.mark(cmd.seq, &quot;done&quot;)
+                        r.publish(&quot;approvals&quot;, f&quot;sent:{cmd.payload['delivery_id']}&quot;)
                     else:
-                        # Mark as failed; supervisor will retry
-                        self.log.conn.execute(
-                            &quot;UPDATE commands SET status = 'failed' WHERE seq = ?&quot;,
-                            (cmd.seq,)
-                        )
-                        self.log.conn.commit()
-            except Exception as e:
-                self.log.conn.execute(
-                    &quot;UPDATE commands SET status = 'failed' WHERE seq = ?&quot;,
-                    (cmd.seq,)
-                )
-                self.log.conn.commit()
+                        self.log.mark(cmd.seq, &quot;failed&quot;)
+            except Exception:
+                self.log.mark(cmd.seq, &quot;failed&quot;)
                 time.sleep(1)
 </code></pre>
+<p>The <code>idem={cmd.seq}</code> parameter is the crucial line. A well-behaved SMS gateway that honours an idempotency token will collapse duplicate submissions of the same sequence number into a single delivered message. If the gateway does not support idempotency tokens, the sequence number still gives you a stable key you can deduplicate against in your own records after the fact.</p>
 <h3 id="step-3-the-supervisor">Step 3: The supervisor</h3>
 <pre><code class="language-python"># supervisor.py
 import time
-from log import CommandLog, Command
+from log import CommandLog
 from executor import Executor
 
 class Supervisor:
@@ -393,7 +401,9 @@ class Supervisor:
 
     def poll(self):
         while True:
-            max_seq = self.log.conn.execute(&quot;SELECT MAX(seq) FROM commands&quot;).fetchone()[0] or 0
+            max_seq = self.log.conn.execute(
+                &quot;SELECT COALESCE(MAX(seq), 0) FROM commands&quot;
+            ).fetchone()[0]
             if max_seq &gt; self.last_seq:
                 self.executor.run()
                 self.last_seq = max_seq
@@ -404,32 +414,46 @@ if __name__ == &quot;__main__&quot;:
 </code></pre>
 <h3 id="how-it-survives-a-partition">How it survives a partition</h3>
 <ol>
-<li>You append a command to the log with <code>seq=1</code>. 2. The supervisor picks it up and tries to send SMS via IsendSMS. 3. The 3G tower drops mid-request. The subprocess times out after 35s. 4. The executor marks the command as <code>failed</code> and commits. 5. The supervisor sleeps 2s, then polls again. It sees <code>seq=1</code> as <code>failed</code>, so it retries deterministically. 6. When connectivity returns, the SMS eventually succeeds, and the command is marked <code>done</code>.</li>
+<li>A command is appended with <code>seq=1</code> and status <code>pending</code>.</li>
+<li>The supervisor picks it up and attempts the SMS send.</li>
+<li>The link drops mid-request. The subprocess times out after 35 seconds.</li>
+<li>The executor marks the command <code>failed</code> and commits.</li>
+<li>The supervisor sleeps, then polls again. It sees <code>seq=1</code> as <code>failed</code> and retries.</li>
+<li>When connectivity returns, the send succeeds and the command is marked <code>done</code>.</li>
 </ol>
-<p>No duplicates. No lost state. Total cost: ~$0.02 per 1,000 commands.</p>
-<p>In one pilot, we saw 87% of approvals complete within 60s even with 3G outages lasting 45 minutes. The bottleneck wasn’t the log or the executor—it was the SMS gateway’s rate limits. Our naive retry loop would have melted the gateway. With the command log, retries are spaced by the supervisor’s 2s sleep, so we stayed within the gateway’s 10 req/min limit.</p>
+<p>No duplicate side effects, no lost state. Note that step 5 retries the <em>same</em> sequence number, which is what makes the retry safe: the downstream system sees the same idempotency token it saw before.</p>
+<h2 id="measuring-whether-the-pattern-is-actually-working">Measuring whether the pattern is actually working</h2>
+<p>Claims about durability are only meaningful if they are measured. Instrument these four counters in the supervisor and expose them on a <code>/metrics</code> endpoint:</p>
+<ul>
+<li><code>commands_appended_total</code> — should equal the number of user-initiated actions</li>
+<li><code>commands_applied_total</code> — should equal <code>commands_appended_total</code> once the backlog drains</li>
+<li><code>commands_failed_total</code> — a rising value with a flat <code>applied</code> value means a persistent downstream fault, not a transient one</li>
+<li><code>replay_lag_seconds</code> — the age of the oldest pending command</li>
+</ul>
+<p>The invariant to alert on is <code>commands_applied_total - commands_appended_total</code>. It should be zero at steady state and should return to zero within one outage window after connectivity is restored. If it grows monotonically, the executor is not making progress; if it goes negative, you have a duplicate-application bug and the idempotency key is not doing its job.</p>
+<p>For the SMS gateway specifically, compare your <code>commands_applied_total</code> against the gateway's own delivery report count over the same window. A mismatch in either direction is the signal you need: more deliveries than commands means duplicates, fewer means silent drops.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>If you’ve used Kafka Consumer Groups, you’ve already used durable execution. Kafka’s log is an append-only command store, and the consumer group’s offset is the sequence number. The difference is scale and cost: Kafka costs $800+/month; our SQLite + Redis solution costs $12.</p>
-<p>If you’ve built a Celery 5.3 pipeline with retries, you’ve fought the same problem. Celery’s task_id is an idempotency key, but it’s not sequence-based. Two workers can pick up the same task_id and both succeed, creating duplicates. Celery’s <code>acks_late</code> helps, but it doesn’t give you deterministic replay from a clean state.</p>
-<p>If you’ve used AWS Step Functions, you’ve used a state machine. Step Functions’ execution history is an append-only log. But Step Functions costs $0.025 per 1,000 state transitions. For 120 approvals/day, that’s $90/month. Our command log costs $0.01/month for the same workload.</p>
-<p>The pattern also applies to frontend state. Think of Redux Toolkit’s reducer as the executor and the store as the log. When the browser reloads, the reducer replays from the last committed state. That’s durable execution in the small.</p>
+<p>If you have used consumer groups in a log-based broker, you have already used durable execution. The broker's log is an append-only command store, and the consumer offset is the sequence number. The difference is scale and operational cost: a broker cluster is the right tool when you need many consumers, retention policies, and cross-team fan-out. A single-node embedded database is the right tool when you have one writer and a few hundred commands a day.</p>
+<p>If you have built a task queue pipeline with retries, you have fought the same problem. A task ID is an idempotency key, but it is usually generated per attempt rather than per logical action. Two workers can therefore pick up the same logical action under different IDs and both succeed, creating duplicates. Late acknowledgement helps with at-least-once delivery, but it does not give you deterministic replay from a clean state.</p>
+<p>If you have used a managed state-machine service, you have used a state machine. Its execution history is an append-only log. The trade-off is cost per state transition and vendor coupling versus the operational burden of running your own log. For low-volume workflows, the per-transition pricing can dominate the bill; for high-volume ones, it is often cheaper than the engineering time to build and operate the equivalent.</p>
+<p>The pattern also applies to frontend state. A Redux-style reducer is the executor and the store is the log. When the browser reloads, the reducer replays from the last committed state. That is durable execution in the small.</p>
 <h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<p><strong>Misconception 1: “Just use exponential backoff.”</strong>
-Exponential backoff doesn’t solve idempotency. If two agents retry the same command, both can succeed. In our Tanzanian pilot, we saw 18 duplicate approvals because the backoff timings aligned. Sequence-based retries avoid this.</p>
-<p><strong>Misconception 2: “A message queue like RabbitMQ 3.13 solves this.”</strong>
-Queues are great for decoupling, but they don’t give you deterministic replay. If a queue consumer crashes, the message is lost unless you enable publisher confirms and consumer acknowledgments. With a command log, the message (command) is always in the log, so replay is automatic.</p>
-<p><strong>Misconception 3: “Use a database transaction to make it atomic.”</strong>
-Transactions help with atomicity, but not durability across partitions. If the database connection drops, the transaction rolls back, and the command is lost. The command log keeps the command durable even if the connection dies.</p>
-<p><strong>Misconception 4: “Serverless is simpler.”</strong>
-AWS Lambda with 1-minute timeout might seem easier, but cold starts and VPC egress costs kill you in Africa. Our Lambda-based prototype cost $220/month for 120 approvals/day. The DO droplet cost $12. Serverless is not always simpler.</p>
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>Once your command log is reliable, you can layer on more sophistication:</p>
+<p><strong>Misconception 1: "Just use exponential backoff."</strong>
+Backoff reduces load but does not solve idempotency. If two agents retry the same logical command, both can succeed. Backoff also has a synchronisation failure mode: retries that start at the same time and double at the same rate stay aligned, so they arrive in bursts rather than spreading out. Adding jitter helps with the burst; only sequence-based identity fixes the duplication.</p>
+<p><strong>Misconception 2: "A message queue solves this."</strong>
+Queues are excellent for decoupling producers from consumers. They do not by themselves give you deterministic replay. If a consumer crashes after taking a message but before acknowledging it, the message is redelivered — which is correct at-least-once behaviour, but it means your handler must be idempotent anyway. The command log makes the same guarantee explicit and gives you a total order to replay from.</p>
+<p><strong>Misconception 3: "A database transaction makes it atomic."</strong>
+Transactions give you atomicity within a database. They do not give you durability across a partition between your process and that database. If the connection drops mid-transaction, the transaction rolls back and the intent is lost unless it was recorded somewhere durable first. The command log is that somewhere.</p>
+<p><strong>Misconception 4: "Serverless is simpler."</strong>
+Serverless removes host management but introduces cold starts, per-invocation timeouts, and egress costs that are easy to underestimate. For a workflow that runs continuously and polls a local database, a small always-on instance is often both cheaper and easier to reason about. Serverless is the better choice when traffic is genuinely bursty and you can tolerate cold-start latency.</p>
+<h2 id="the-advanced-version">The advanced version</h2>
+<p>Once the command log is reliable, these layers add capability without changing the core model.</p>
 <h3 id="1-event-sourcing-with-snapshots">1. Event sourcing with snapshots</h3>
-<p>Instead of storing every command, store a snapshot of the agent’s state every N commands. On restart, replay only the last M commands. This reduces replay time from 60s to 1s for agents with 10,000 commands. We use SQLite’s WAL mode and a cron-triggered snapshot every 1,000 commands. Cost: ~$0.50/month extra.</p>
-<h3 id="2-distributed-supervisors-with-raft-consensus">2. Distributed supervisors with Raft consensus</h3>
-<p>If you need high availability across regions, replace the single supervisor with a Raft cluster (e.g., etcd 3.5 or Consul 1.18). Each supervisor runs the executor, but only the leader appends to the log. Followers replay from the log and take over if the leader fails. We’ve run this in Nigeria with 3 DO droplets in Lagos, Abuja, and Port Harcourt. Leader failover takes &lt;2s. Cost: ~$36/month.</p>
-<h3 id="3-rate-limiting-with-tokens">3. Rate limiting with tokens</h3>
-<p>Instead of sleeping 2s between retries, use a token bucket with Redis 7.2. Each supervisor gets 10 tokens per minute. When the bucket is empty, it waits. This keeps us within SMS gateway limits without manual sleeps. Code:</p>
+<p>Instead of replaying every command from the beginning, store a snapshot of derived state every N commands and replay only from the snapshot. This bounds restart time as the log grows. The trade-off is snapshot storage and the complexity of keeping the snapshot format compatible across code changes. A common approach is to snapshot every few thousand commands and to keep the snapshot schema versioned alongside the code.</p>
+<h3 id="2-distributed-supervisors">2. Distributed supervisors</h3>
+<p>For high availability, run multiple supervisors and elect a single leader that appends to the log. Followers replay from the log and take over if the leader fails. Consensus systems such as etcd or Consul provide the leader election primitive. The cost is operational: you now run a quorum of nodes and must reason about split-brain scenarios. This is worth it when the workflow is business-critical and a single node is a single point of failure; it is not worth it for a workflow where a few minutes of downtime is acceptable.</p>
+<h3 id="3-rate-limiting-with-token-buckets">3. Rate limiting with token buckets</h3>
+<p>Instead of a fixed sleep between retries, use a token bucket so retries are spaced to match the downstream rate limit. This keeps the workflow within gateway limits without hard-coding a sleep interval that is either too slow or too fast.</p>
 <pre><code class="language-python">import time
 from redis import Redis
 
@@ -437,123 +461,88 @@ r = Redis(host=&quot;localhost&quot;, port=6379, db=0)
 
 def throttle(key, max_tokens, refill_sec):
     now = time.time()
-    tokens = r.get(key) or max_tokens
-    last_refill = r.get(f&quot;{key}:ts&quot;) or now
+    tokens = float(r.get(key) or max_tokens)
+    last_refill = float(r.get(f&quot;{key}:ts&quot;) or now)
     elapsed = now - last_refill
-    new_tokens = min(max_tokens, tokens + int(elapsed / refill_sec))
-    if new_tokens &gt; 0:
-        r.set(key, new_tokens - 1)
+    tokens = min(max_tokens, tokens + elapsed / refill_sec)
+    if tokens &gt;= 1:
+        r.set(key, tokens - 1)
         r.set(f&quot;{key}:ts&quot;, now)
         return True
     return False
 </code></pre>
-<h3 id="4-dead-letter-queue-for-poison-pills">4. Dead letter queue for poison pills</h3>
-<p>If a command keeps failing (e.g., an invalid phone number), move it to a dead letter queue after N retries. This prevents the supervisor from spinning forever. We use Redis Streams as a dead letter queue with a separate consumer that emails ops. Cost: ~$0.10/month.</p>
-<h3 id="5-metrics-and-observability">5. Metrics and observability</h3>
-<p>Expose Prometheus metrics from the supervisor: commands_total, retries_total, avg_replay_time_ms. We use Grafana Cloud free tier and alert on replay_time &gt; 5s. This caught a bug where a supervisor was stuck replaying 10,000 commands after a disk full error. Alert fired in 30s; we fixed it in 5 minutes.</p>
-<h2 id="quick-reference">Quick reference</h2>
+<p>Note the fix from the naive version: <code>tokens</code> must be a float and the refill must be proportional to elapsed time, otherwise the bucket either never refills or refills in whole-token jumps that do not match the intended rate.</p>
+<h3 id="4-dead-letter-queue-for-poison-commands">4. Dead letter queue for poison commands</h3>
+<p>If a command keeps failing — an invalid phone number, a malformed payload — retrying forever wastes capacity and hides the bug. After a bounded number of attempts, move the command to a separate table or stream and alert. The supervisor should skip dead-lettered sequences on subsequent polls.</p>
+<h3 id="5-observability">5. Observability</h3>
+<p>Expose the counters from the measurement section above and alert on <code>replay_lag_seconds</code> exceeding a threshold that reflects your acceptable staleness. A lag that climbs steadily is the earliest signal that the executor is wedged, well before users notice missing approvals.</p>
+<h2 id="choosing-an-approach">Choosing an approach</h2>
 <table>
 <thead>
 <tr>
-<th>Pattern</th>
-<th>When to use</th>
-<th>Cost</th>
-<th>Latency</th>
-<th>Tools</th>
-<th>Complexity</th>
+<th>Approach</th>
+<th>Fits when</th>
+<th>Ordering guarantee</th>
+<th>Operational burden</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Command log + executor</td>
-<td>Daily workflows &lt;1k/day, need durability</td>
-<td>$0.01–$12/month</td>
-<td>2–60s</td>
-<td>SQLite 3.45, Redis 7.2, Python 3.11</td>
-<td>Low</td>
+<td>One writer, hundreds to low thousands of commands/day</td>
+<td>Total order via sequence number</td>
+<td>Low: one embedded database</td>
 </tr>
 <tr>
-<td>Kafka Streams</td>
-<td>High-throughput pipelines &gt;10k/day</td>
-<td>$800+/month</td>
-<td>50–200ms</td>
-<td>Kafka 3.7, Java 21</td>
-<td>High</td>
+<td>Log-based broker</td>
+<td>Many consumers, high throughput, cross-team fan-out</td>
+<td>Per-partition total order</td>
+<td>High: cluster to run and tune</td>
 </tr>
 <tr>
-<td>AWS Step Functions</td>
-<td>Enterprise workflows, AWS ecosystem</td>
-<td>$90+/month</td>
-<td>100–300ms</td>
-<td>Step Functions, Lambda</td>
+<td>Managed state machine</td>
+<td>Low-volume workflows already in that cloud</td>
+<td>Per-execution total order</td>
+<td>Low, but per-transition cost</td>
+</tr>
+<tr>
+<td>Task queue with retries</td>
+<td>Background jobs where at-least-once is acceptable</td>
+<td>None by default</td>
 <td>Medium</td>
 </tr>
 <tr>
-<td>Celery with retries</td>
-<td>Background tasks, simple retries</td>
-<td>$15/month</td>
-<td>5–30s</td>
-<td>Celery 5.3, Redis 7.2</td>
-<td>Medium</td>
-</tr>
-<tr>
-<td>Serverless (Lambda)</td>
-<td>Occasional spikes, no VPC needed</td>
-<td>$220+/month</td>
-<td>1–10s</td>
-<td>Lambda, API Gateway</td>
-<td>Low</td>
-</tr>
-<tr>
-<td>Raft cluster</td>
-<td>Multi-region HA, strong consistency</td>
-<td>$36–$72/month</td>
-<td>2–5s</td>
-<td>etcd 3.5, Consul 1.18</td>
-<td>High</td>
+<td>Consensus-backed supervisors</td>
+<td>Business-critical, multi-node availability required</td>
+<td>Total order via leader</td>
+<td>High: quorum and failover</td>
 </tr>
 </tbody>
 </table>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<ul>
-<li><em>Designing Data-Intensive Applications</em> by Martin Kleppmann (2022) — read Chapter 5 on replication and Chapter 11 on stream processing. It’s the best explanation of durable execution I’ve found. - <em>Out of the Tar Pit</em> by Ben Moseley and Peter Marks (2006) — not new, but the chapter on mutable vs immutable state is gold. It changed how I think about logs. - <em>Idempotency in Distributed Systems</em> by Pat Helland (2019) — short, practical, and free. It explains why sequence numbers beat UUIDs. - <em>Building Event-Driven Microservices</em> by Adam Bellemare (2026) — O’Reilly, worth every page if you’re scaling beyond 1k/day. - The SQLite forum’s thread on WAL mode and durability — the maintainers are active and answer edge cases like power loss mid-commit.</li>
-</ul>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>how to prevent duplicate approvals when network drops and retries fire</strong></p>
-<p>Use a command log with sequence numbers and idempotent commands. Each approval command is appended once with a seq. The executor applies it once. Retries read the log and skip already-applied commands. If the approval SMS fails, the command stays pending and retries deterministically. We saw 0 duplicates in 6 months of running this in Kenya.</p>
-<p><strong>what’s the simplest durable execution pattern for a $200 droplet</strong></p>
-<p>SQLite 3.45 for the command log, Python 3.11 for the executor, and a cron job every 2s to run the supervisor. Total lines of code: ~120. We run this on a $6/month DO droplet in Nairobi with 99.9% uptime. The bottleneck is SQLite’s WAL mode sync, which we set to <code>NORMAL</code> to balance durability and speed.</p>
-<p><strong>why not just use a message queue like RabbitMQ</strong></p>
-<p>Queues don’t give you deterministic replay. If a consumer crashes, messages are lost unless you enable publisher confirms and consumer acks. With a command log, the command is always in the log, so replay is automatic. Queues are great for decoupling, but not for durability.</p>
-<p><strong>how to handle power outages in a microfinance agent</strong></p>
-<p>Use a UPS on the DO droplet. SQLite’s WAL mode survives power loss if the disk is intact. We use a 15-minute UPS on our Tanzanian server; the worst we saw was a 3-minute outage with no data loss. If the disk dies, restore from the last snapshot. We snapshot every 1,000 commands to S3-compatible storage (Backblaze B2) for $0.50/month.</p>
-<h2 id="next-step-do-this-now">Next step: do this now</h2>
-<p>Open your terminal and run:</p>
-<pre><code class="language-bash"># Create a new directory and install dependencies
-mkdir agentic-workflow &amp;&amp; cd agentic-workflow
+<p>The decision hinges on two questions. How many commands per day? If the answer is in the hundreds, an embedded database plus a polling loop is almost always the cheapest correct answer. How bad is a duplicate? If a duplicate disbursement is a compliance incident, the sequence-number identity is not optional regardless of which transport you choose.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do you prevent duplicate approvals when the network drops and retries fire?</strong>
+Derive the idempotency key from the log sequence number rather than generating a fresh one per attempt. Append the command once. On retry, re-send the same sequence number. Downstream systems that honour the token collapse the duplicates; systems that do not can be deduplicated against the log after the fact.</p>
+<p><strong>What is the simplest durable execution pattern for a small VM?</strong>
+An embedded database in WAL mode for the command log, a short polling loop for the supervisor, and a single executor process. Keep the command handler idempotent and derive keys from sequence numbers. This is a few hundred lines of code and one process to operate.</p>
+<p><strong>Why not just use a message queue?</strong>
+A queue solves decoupling and delivery, not identity. Redelivery after a crash is expected behaviour, so the handler must still be idempotent. A command log gives you the same at-least-once delivery plus a total order to replay from, which makes recovery reasoning much simpler.</p>
+<p><strong>How do you handle power loss?</strong>
+Use WAL mode with <code>synchronous=NORMAL</code> for a balance of durability and write latency, or <code>FULL</code> if losing the last few transactions is unacceptable. Snapshot derived state periodically to separate storage so a disk failure does not require replaying the entire history. A short-lived UPS reduces the frequency of hard cuts but does not remove the need for the durability setting to be correct.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Create the log, append one command, run the supervisor, kill it mid-flight, and restart it. Then verify two things: the command was applied exactly once, and the sequence number in the log matches the idempotency token your downstream service received. That single test tells you whether your retry path is deterministic or whether it is quietly duplicating work.</p>
+<pre><code class="language-bash">mkdir agentic-workflow &amp;&amp; cd agentic-workflow
 python -m venv venv &amp;&amp; source venv/bin/activate
-pip install redis==7.2 sqlite3-binary prometheus-client
-echo &quot;SELECT sqlite_version();&quot; | sqlite3 commands.db
+pip install redis prometheus-client
+python -c &quot;import sqlite3; print(sqlite3.sqlite_version)&quot;
 </code></pre>
-<p>Then paste the <code>log.py</code>, <code>executor.py</code>, and <code>supervisor.py</code> files from the worked example into the directory. Run <code>python supervisor.py</code> and append a test command:</p>
+<p>Paste the three files above into the directory, start Redis, and run <code>python supervisor.py</code>. In a second terminal:</p>
 <pre><code class="language-python">from log import CommandLog, Command
 log = CommandLog()
-log.append(Command(seq=1, name=&quot;send_sms&quot;, payload={&quot;phone&quot;: &quot;+254712345678&quot;, &quot;msg&quot;: &quot;Approve? Reply YES&quot;}))
+log.append(Command(seq=1, name=&quot;send_sms&quot;,
+                   payload={&quot;phone&quot;: &quot;+254712345678&quot;, &quot;msg&quot;: &quot;Approve? Reply YES&quot;}))
 </code></pre>
-<p>Watch the supervisor process the command. Kill it with Ctrl+C, restart it, and verify the command is still processed. That’s durable execution in 10 minutes. No Kafka, no Step Functions—just a log and a loop.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/agentic-workflows-surviving-network-partitions/">Agentic workflows: surviving network partitions</a></li>
-<li><a href="https://kubaik.github.io/agentic-finops-is-a-trap/">Agentic FinOps is a trap</a></li>
-<li><a href="https://kubaik.github.io/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<p>Watch the supervisor process it. Interrupt the supervisor with Ctrl+C while the send is in flight, restart it, and confirm the command still completes exactly once. That is durable execution in ten minutes, with no cluster and no managed service.</p>
                 
                 
             </div>

@@ -1,268 +1,232 @@
 # Store data once, serve everywhere: cheaper
 
-The official documentation for design multiregion is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.
+## What the multi-region docs leave out
 
-## The gap between what the docs say and what production needs
+Provider documentation covers the control plane well: latency-based DNS routing, global accelerators, CDN edge functions. What it covers poorly is the cost structure that appears once real traffic flows.
 
-Last year, my team launched a health-data API serving clinics in Nigeria, Kenya, and South Africa. The docs from every cloud provider promised multi-region setups with “a single click” and “no extra cost.” Reality hit when the CFO asked why the AWS bill jumped from $8,200 to $22,400 overnight. Turns out, the “single click” only replicated the compute, not the data—so every API call pulled a full patient record from Ohio, adding 240 ms of latency for Johannesburg users and inflating the egress bill.
+A common failure mode looks like this: a team replicates compute into three regions, points latency-based DNS at them, and ships. Each region's application still reads from the original database. Every request from a distant region becomes a cross-region round trip. Latency rises by the speed-of-light floor plus TLS and query time, and the egress line item grows with read volume, not write volume. Compute was cheap to duplicate; data access was not.
 
-Most multi-region guides focus on DNS or load-balancing tiers: Route 53 latency routing, Global Accelerator, CloudFront with Lambda@Edge. Those are necessary, but they ignore the hidden cost driver: data gravity. Once you move 10 GB of patient records into each region, you either pay for replication traffic or accept stale reads. The docs rarely mention that replicating 1 TB of SQL tables across three regions on AWS Aurora Global Database costs about $0.02 per GB per month in cross-region transfer plus $0.01 per million Aurora IO requests. Do the math: 1 TB × 3 regions × $0.02 = $60 per month just for keeping the data in sync, before you even serve a single request.
+The reason is data gravity. Replicating a database into N regions means paying for replication traffic continuously, whether or not anyone reads those replicas. Caching reads at the edge inverts that: you pay for data movement only on cache misses, and the miss rate is a tunable you control.
 
-The second surprise was the hidden egress. In AWS, cross-region data transfer within the same account is billed at $0.01–$0.02 per GB depending on direction. If 40% of your traffic is read-heavy queries from a single region to the other two, you can burn another $120–$240 per month on egress alone with only 10,000 daily active users. The marketing slide deck never shows that line item.
+The rest of this article works through a read-heavy API design that keeps one authoritative database and serves most reads from regional caches, including the invalidation logic that makes it safe.
 
-So the real problem isn’t spinning up VMs or containers in multiple AZs—it’s keeping the data warm, cheap, and consistent without turning your cloud bill into a three-digit horror story.
+## The two cost drivers nobody puts on the slide
 
-## How How to design multi-region backends without triple the infrastructure cost actually works under the hood
+**Replication transfer.** Managed cross-region replication is billed per GB transferred. Exact prices vary by provider, region pair, and direction, and they change. The relevant point is structural: replication cost scales with *dataset size × number of regions × time*, independent of traffic. A 1 TB dataset replicated to three regions moves roughly 1 TB per region on initial sync, then incremental changes thereafter. If you want a real number, pull the current per-GB cross-region rate from your provider's pricing page and multiply by your dataset size and region count. Treat any figure you see quoted in a blog post (including this one) as stale until you verify it.
 
-The cheapest multi-region stack treats data as ephemeral unless it’s hot. You keep a single authoritative source of truth (usually PostgreSQL 15 on RDS in us-east-1) and cache aggressively at the edge. When a user in Cape Town hits the API, CloudFront fetches the user object from the origin, stores it in an edge cache (Redis 7.2 Cluster) for 30 seconds, and serves it from Johannesburg. The trick is making the cache behave like a mini-region without replicating the whole database.
+**Read egress.** When application servers in region B query a database in region A, the response bytes cross a region boundary and are billed. This cost scales with *read volume × response size*. It is the one that surprises teams, because it looks like normal database traffic in application code.
 
-Under the hood, this works because HTTP caching headers (Cache-Control, ETag, Vary) become your region selector. You set `Cache-Control: max-age=30, s-maxage=30` on user profiles and `Vary: Accept-Language, X-Region-Preference` so South African users get cached copies that match their language and region. The origin still holds the master record, but 80–90% of reads hit the edge cache, so you only pay for the occasional cache miss or write.
+A useful measurement exercise: instrument your database client to log response bytes per query, tagged with the region of the caller and the region of the database. Aggregate by day. If cross-region bytes dominate, caching is the lever. If write volume dominates, it is not.
 
-The second lever is write-behind caching. When a clinic in Lagos updates a patient record, the API writes directly to PostgreSQL and invalidates the edge cache keys that include that patient ID. Invalidating a single key is O(1) in Redis, so the whole operation adds 2–3 ms to the write path while keeping the cache consistent. You trade a tiny latency penalty on writes for massive savings on reads and replication.
+## How regional caching actually works
 
-What surprised me was how little bandwidth the cache actually uses. In our pilot with 5,000 users, the edge cache served 1.2 million requests in one week while transferring only 4.3 GB of data. That’s 3.6 KB per request on average—well under the free tier of most CDNs. The real cost killer was the 10,000 cache misses that required a round-trip to Ohio, each costing 240 ms and $0.01 in egress. A 10 ms cache hit at the edge is both faster and cheaper than a cross-region query.
+The design has four moving parts.
 
-The third trick is regional fan-out writes. Instead of replicating the whole database, you fan out small write events (user updates, prescription changes) to regional Redis Streams or Amazon SQS FIFO queues. Each region runs a lightweight consumer that writes to a local cache and an async job that eventually syncs back to the master. This keeps the master write load flat while giving each region a warm cache of recent activity.
+**One authoritative database.** All writes go to a single primary. This keeps consistency reasoning simple and avoids multi-master conflict resolution, which is a much harder problem than most teams want to take on.
 
-Finally, you need a fallback. If the edge cache misses or the origin is down, you serve stale-but-safe data from a read replica in the same region. The key is to set `stale-while-revalidate=60` so the client gets a response in 20 ms while the background job refreshes the cache. This turns a failure scenario into a graceful degradation instead of a 500 error.
+**A cache in each serving region.** The cache holds serialized read results keyed by resource ID and any dimension that affects the response (locale, region preference, API version). TTLs are short — seconds to minutes — so staleness is bounded by design rather than by invalidation correctness alone.
 
-Put together, these mechanisms let you serve 85% of traffic from regional caches while keeping the infrastructure footprint close to single-region: one RDS instance, a Redis 7.2 Cluster per region (we run t4g.small in each AWS region, $29/month), and CloudFront caching at the edge. The total extra cost is about $90/month for three regions, not $14k.
+**Explicit invalidation on write.** After a successful write, the application deletes the affected cache keys in every region. Deletion, not update, so the next read repopulates from the source of truth.
 
-## Step-by-step implementation with real code
+**A stale-serving fallback.** If the cache misses and the origin is slow or unavailable, serve a stale copy with a short revalidation window. This converts an outage into degraded freshness.
 
-Let’s build a minimal multi-region backend for a health-data API. We’ll use FastAPI 0.111, PostgreSQL 15 on RDS us-east-1, and Redis 7.2 Cluster in each region (Johannesburg, Lagos, Nairobi). The goal is to serve user profiles with 20 ms p99 latency in each region while keeping infra cost under $150/month.
+The correctness argument: a read is either a cache hit (bounded staleness, at most the TTL) or a miss (fresh from the primary). A write invalidates all cached copies before returning. The window where a client can read stale data after a write is the gap between the write committing and the invalidation completing — which is why invalidation should be synchronous in the write path, not queued.
 
-### 1. Origin setup (PostgreSQL + FastAPI)
+## Worked example: when caching beats replication
+
+State the assumptions explicitly, because the answer flips if they change.
+
+Assume a read-heavy API with:
+- 1 TB of relational data
+- Three serving regions
+- 100 reads per second per region, average response 4 KB
+- 1 write per second per region
+
+**Option A: replicate the database to all three regions.**
+Replication transfer is roughly dataset size per region on initial sync, plus incremental change traffic. Steady-state cost scales with write volume and dataset size. Read egress is zero, because reads are local. But you now operate three database clusters, three backup schedules, three upgrade paths, and a replication topology.
+
+**Option B: one primary, regional caches.**
+Cross-region traffic occurs only on cache misses. At a 90% hit rate, cross-region read volume is 10 reads/sec/region × 4 KB = 40 KB/sec/region, or about 3.4 GB/day/region. Writes still cross regions for invalidation, but invalidation messages are tiny — a key name, not a payload.
+
+The arithmetic that matters here is the ratio, not the dollar figure: Option B moves roughly (1 − hit rate) × read volume across region boundaries, while Option A moves a function of dataset size and write volume. For read-heavy workloads with a high hit rate, B moves far less data. Plug in your provider's current per-GB rate to get a number; do not trust a number from an article.
+
+The break-even point is a write-heavy workload with a low cache hit rate. If most requests are writes, or if cache keys are so diverse that hit rates stay low, Option B pays invalidation overhead for little benefit.
+
+## Implementation: origin, cache, and invalidation
+
+A minimal FastAPI service with a single PostgreSQL primary and a per-region Redis cache.
 
 ```python
 # main.py
-from fastapi import FastAPI, Header
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import psycopg2, redis, os, time
+import psycopg2
+import redis
+import os
+import time
 
 app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["*"])
 
-DB_URL = os.getenv("DATABASE_URL")  # e.g. postgresql://user:pass@us-east-1.rds.amazonaws.com:5432/healthdb
-REDIS_URL = os.getenv("REDIS_URL")  # redis://redis-7-2-cluster.cluster.online:6379
-
-def get_db():
-    conn = psycopg2.connect(DB_URL, connect_timeout=2)
-    return conn
+DB_URL = os.getenv("DATABASE_URL")
+REDIS_URL = os.getenv("REDIS_URL")
 
 r = redis.Redis.from_url(REDIS_URL, decode_responses=True, socket_timeout=5)
 
+
+def get_db():
+    return psycopg2.connect(DB_URL, connect_timeout=2)
+
+
 @app.get("/user/{user_id}")
-async def get_user(user_id: str, x_region: str = Header("X-Region", "us-east-1")):
+async def get_user(user_id: str, x_region: str = Header("us-east-1", alias="X-Region")):
     cache_key = f"user:{user_id}:{x_region}"
+
     cached = r.get(cache_key)
-    if cached:
+    if cached is not None:
         return {"user_id": user_id, "data": cached, "source": "cache"}
 
     start = time.time()
     conn = get_db()
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM users WHERE id = %s", (user_id,))
-    row = cur.fetchone()
-    conn.close()
-    latency = (time.time() - start) * 1000
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SELECT data FROM users WHERE id = %s", (user_id,))
+            row = cur.fetchone()
+    finally:
+        conn.close()
 
-    if not row:
-        return {"error": "not_found"}
+    if row is None:
+        raise HTTPException(status_code=404, detail="not_found")
 
-    r.set(cache_key, row[1], ex=30)  # 30s TTL
-    return {"user_id": user_id, "data": row[1], "latency_ms": round(latency, 2), "source": "origin"}
+    latency_ms = (time.time() - start) * 1000
+    r.set(cache_key, row[0], ex=30)
+    return {
+        "user_id": user_id,
+        "data": row[0],
+        "latency_ms": round(latency_ms, 2),
+        "source": "origin",
+    }
 ```
 
-Key points:
-- Single source of truth in us-east-1. - Redis 7.2 Cluster handles the cache keys per region using the `x_region` header. - We set a 30-second TTL and rely on cache invalidation for writes.
+Two things to note. The `Header` default is the actual value, with `alias` mapping the HTTP header name — the earlier form where the default was a header name was wrong. And the cache stores the column value, not the whole row tuple, so what you read back is what you wrote.
 
-### 2. Cache invalidation on write
+Invalidation on write, using `SCAN` rather than `KEYS`:
 
 ```python
 @app.post("/user/{user_id}")
-async def update_user(user_id: str, payload: dict, x_region: str = Header("X-Region", "us-east-1")):
+async def update_user(user_id: str, payload: dict):
     conn = get_db()
-    cur = conn.cursor()
-    cur.execute(
-        "UPDATE users SET data = %s WHERE id = %s",
-        (payload["data"], user_id),
-    )
-    conn.commit()
-    conn.close()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "UPDATE users SET data = %s WHERE id = %s",
+                (payload["data"], user_id),
+            )
+        conn.commit()
+    finally:
+        conn.close()
 
-    # Invalidate all regional cache keys for this user
     pattern = f"user:{user_id}:*"
-    keys = []
-    cursor = '0'
-    while cursor != 0:
-        cursor, batch = r.scan(cursor, pattern, count=100)
-        keys.extend(batch)
-    if keys:
-        r.delete(*keys)
+    cursor = 0
+    while True:
+        cursor, batch = r.scan(cursor=cursor, match=pattern, count=100)
+        if batch:
+            r.delete(*batch)
+        if cursor == 0:
+            break
 
     return {"updated": user_id}
 ```
 
-This is the part most guides skip. We scan for all regional keys (`user:{id}:{region}`) and delete them in one batch. On Redis 7.2, SCAN + DELETE in batches of 100 is O(keys) and adds ~5 ms in our tests.
+`SCAN` is safe to run against a live cache; `KEYS` blocks the server on large keyspaces. The loop terminates when the returned cursor is zero. Deleting in batches of 100 keeps each round trip bounded.
 
-### 3. Regional fan-out writes with Redis Streams
+## Regional fan-out for warm caches
 
-In each region, run a lightweight consumer that listens to a global stream and updates a local cache and replica.
+Invalidation deletes; it does not warm. After a write, the next read in each region is a miss. For frequently read records, that means a burst of cross-region reads right after every write.
+
+A durable queue per region solves this. The write path publishes a small event (user ID plus the new value) to each region's queue. A regional consumer writes the value into that region's cache. The cache is warm before the next read arrives.
+
+Redis Streams with consumer groups work for this, as do managed queues. The important properties are durability (the event survives a consumer restart) and at-least-once delivery (duplicate writes to a cache are idempotent, so this is fine).
 
 ```python
 # consumer.py
-import redis, json, os
+import json
+import os
+import redis
 
-r = redis.Redis.from_url(os.getenv("REDIS_URL"))  # local Redis 7.2 Cluster
-stream = "user_updates"
-consumer_group = "region_group"
-consumer_name = os.getenv("AWS_REGION")  # e.g. af-south-1
+r = redis.Redis.from_url(os.getenv("REDIS_URL"))
+
+STREAM = "user_updates"
+GROUP = "region_group"
+CONSUMER = os.getenv("AWS_REGION", "local")
 
 try:
-    r.xgroup_create(stream, consumer_group, mkstream=True)
+    r.xgroup_create(STREAM, GROUP, id="0", mkstream=True)
 except redis.exceptions.ResponseError:
-    pass
+    pass  # group already exists
 
 while True:
-    messages = r.xreadgroup(
-        consumer_group, consumer_name, {stream: ">"}, count=10, block=5000
-    )
-    for _, message_list in messages:
-        for msg_id, data in message_list:
-            user_id = data[b"user_id"].decode()
-            # Update local cache
-            cache_key = f"user:{user_id}:{consumer_name}"
-            r.set(cache_key, data[b"data"].decode(), ex=30)
-            # Optionally write to local replica (async job)
-            # ...
-            r.xack(stream, consumer_group, msg_id)
-            r.xdel(stream, msg_id)
+    response = r.xreadgroup(GROUP, CONSUMER, {STREAM: ">"}, count=10, block=5000)
+    if not response:
+        continue
+    for _stream_name, messages in response:
+        for msg_id, fields in messages:
+            user_id = fields[b"user_id"].decode()
+            data = fields[b"data"].decode()
+            r.set(f"user:{user_id}:{CONSUMER}", data, ex=30)
+            r.xack(STREAM, GROUP, msg_id)
 ```
 
-This consumer runs in every region and keeps the cache warm for recent writes. We use Redis Streams (not pub/sub) because it’s durable and supports consumer groups.
+Unlike pub/sub, a consumer group tracks which messages each consumer has acknowledged, so a restarted consumer resumes where it left off. The stream is trimmed separately by a scheduled job; deleting each message immediately after acknowledgment removes the durability benefit for any consumer that is temporarily offline.
 
-### 4. CloudFront caching policy
+## Measuring whether it worked
 
-Create a CloudFront cache policy with:
-- Query strings: whitelist `user_id`
-- Headers: whitelist `Accept-Language` and `X-Region`
-- TTL: 30 seconds (Origin and viewer)
+Do not trust a hit-rate number from anywhere, including this article. Measure your own.
 
-The policy ensures that a user in Nairobi with `Accept-Language: en-KE` and `X-Region: af-south-1` gets a cached copy specific to language and region, not the default us-east-1 copy.
+Instrument three counters at the cache client: `hits`, `misses`, and `bytes_returned_from_origin`. Emit them per region per minute. The hit rate is `hits / (hits + misses)`; the cross-region byte volume is the sum of `bytes_returned_from_origin` for regions that are not the primary's region.
 
-### 5. Deployment
+For latency, measure p50 and p99 at the edge, not in the application. A cache hit that still traverses a slow proxy is not a fast request. Compare the p99 of a region against the p99 of a single-region deployment serving the same endpoints; the difference is the cost of the topology, and it should be small.
 
-We deploy FastAPI on AWS Lambda with Python 3.11 arm64 (256 MB memory, 3s timeout). Each region has its own Lambda function pointing to the same RDS endpoint. Total cost: ~$12/month per region for 100k requests.
+For cost, pull the actual line items from your provider's billing export and separate cross-region transfer from intra-region. If cross-region transfer is not the dominant variable cost, caching is not your lever — look at compute or storage instead.
 
-Redis 7.2 Cluster runs on AWS ElastiCache t4g.small (2 vCPU, 4 GB) in each region: $29/month per node, $87 total for three regions.
+## Failure modes and how to handle each
 
-CloudFront caching: first 10 TB/month is free, so we stay under the free tier with 1.2 GB transferred in our pilot.
+**Cache stampede.** When a hot key expires, many concurrent requests miss simultaneously and hit the primary. Mitigate with a per-key lock: `SET lock:{key} 1 NX PX 5000`. The first request acquires the lock and refreshes; others serve the stale value or wait briefly. Alternatively, add jitter to TTLs so keys do not expire in lockstep.
 
-## Performance numbers from a live system
+**Invalidation gaps.** If the write commits but the invalidation call fails, the cache serves stale data until the TTL expires. Keep TTLs short enough that this window is acceptable, and log every failed invalidation. Do not retry invalidation in a background worker unless the TTL is longer than the retry window.
 
-We ran this setup for 4 weeks with 5,000 daily active users across Nigeria, Kenya, and South Africa. Here are the numbers:
+**Clock skew.** TTLs are enforced by the cache server's clock, not the application's. If cache nodes drift, effective TTLs vary. Run NTP on cache hosts and monitor drift. This is a real concern but a small one; the fix is operational, not architectural.
 
-| Metric | us-east-1 (origin) | af-south-1 (Johannesburg) | af-west-1 (Lagos) | eu-west-1 (Nairobi) |
-|---|---|---|---|---|
-| p99 latency | 240 ms | 18 ms | 22 ms | 19 ms |
-| cache hit ratio | 100% (single region) | 92% | 89% | 91% |
-| egress (GB/mo) | 0 | 0.5 | 0.7 | 0.6 |
-| infra cost (USD) | $85 | $118 | $119 | $117 |
+**Unbounded key spaces.** If every request produces a unique key — search queries with arbitrary parameters, paginated results — the cache fills with single-use entries and the hit rate collapses. Either normalize keys (drop irrelevant parameters, round pagination) or do not cache those endpoints.
 
-Total monthly spend: $439. Without caching, the same traffic would have required Aurora Global Database ($420/month) plus cross-region egress ($180/month) plus three RDS read replicas ($270/month), totaling $870—double the cost and 2x the latency.
+**Cold start after a region comes online.** A new region's empty cache sends every request to the primary. Pre-warm by replaying the top-N most-read keys before routing traffic to the region, or ramp traffic gradually so the cache fills at a rate the primary can absorb.
 
-What shocked me was the cache hit ratio. We expected 70% because health profiles are read-heavy but updated infrequently. The actual 91% tells me users revisit profiles within 30 seconds more often than we thought. The 8 ms difference between Johannesburg and Nairobi is mostly regional Lambda cold starts—warm containers keep it under 15 ms.
+**Memory growth.** Caches hold more than the sum of their values: per-key overhead, fragmentation, and connection buffers all count. Set a `maxmemory` policy and monitor eviction rate. If evictions climb while hit rate falls, your working set does not fit and you need a larger cache or a smaller TTL.
 
-Another surprise: the write path latency. Updating a user and invalidating the cache adds 5 ms on average, which is invisible to the client. But the scan + delete operation used to take 80 ms when we ran it with 10,000 keys. After switching to Redis 7.2 and batching deletes in groups of 100, it dropped to 5 ms. That change alone saved us from a support ticket queue.
+## When not to use this
 
-## The failure modes nobody warns you about
+**Strong cross-region consistency is required.** Financial ledgers, inventory with hard reservation semantics, and anything requiring serializable transactions across regions are poor fits. Use a database designed for it and accept the latency and cost.
 
-First, clock skew. When users travel across regions, their `X-Region` header might lag behind their physical location. We saw a 5% spike in cache misses when a doctor flew from Lagos to Nairobi—the browser still sent `X-Region: af-west-1` while the client was in `af-south-1`. The fix was to add a client-side geolocation check and override the header via JavaScript before the first request.
+**Writes dominate reads.** Caching helps reads. If your workload is 80% writes, the cache is overhead.
 
-Second, regional clock drift on cache TTLs. If your origin and edge clocks are off by 2 seconds, a cache entry can expire early or live longer than intended. We run `ntp` on every Lambda container and set the TTL to 30 seconds with a 2-second grace window (`Cache-Control: max-age=30, stale-while-revalidate=2`). This keeps clocks in sync within 100 ms.
+**Data residency rules forbid it.** Some jurisdictions require that personal data never leave the country. A shared primary in another region violates that regardless of caching. You need regional databases and a replication strategy that respects the boundary — caching does not solve a legal constraint.
 
-Third, partial writes during invalidation. If the Redis scan misses a single key due to network jitter, the cache gets stale for that user. We added a background job that revalidates cache entries every 6 hours for the top 10% of active users. The job runs a Lua script that atomically checks the origin and updates the cache if stale.
+**Your traffic is already regional.** If 95% of users are within one region, the operational cost of multi-region caching exceeds the benefit. One region plus a disaster-recovery replica is simpler.
 
-Fourth, Lambda concurrency limits. With 5,000 users, we hit the default 1,000 concurrent Lambda executions in one region, causing timeouts. We raised the concurrency limit to 2,000 and added a regional SQS queue as a backpressure valve. Any spike in requests gets queued and processed at 100 requests/second per Lambda, keeping latency under 200 ms even during peak load.
+## A decision checklist
 
-Fifth, Redis memory fragmentation. With 10,000 keys and 1 KB per value, we expected 10 MB usage. Reality: Redis 7.2 used 42 MB and hit the 50 MB warning after 3 weeks. We switched to Redis 7.2 Cluster with active defragmentation (`activedefrag yes`) and increased node memory to 4 GB. The lesson: always set memory limits and monitor eviction rates.
+Before committing to regional caching, answer these:
 
-Finally, the “cold cache avalanche.” When a new region goes live or after a cache flush, the first 100 requests miss the cache and hammer the origin. We mitigated this by pre-warming the cache with a cron job that reads the top 1,000 user IDs every 5 minutes and populates the cache. The job runs in a separate Lambda with a concurrency limit of 5 to avoid origin overload.
+- What is the read-to-write ratio on the endpoints you plan to cache?
+- What is the realistic cache hit rate given your key space? Estimate from request logs, not intuition.
+- What is the maximum staleness your product tolerates? That sets your TTL ceiling.
+- What is the current cross-region egress cost per month, from the billing export?
+- Can your write path tolerate a synchronous invalidation call? If not, what is the failure behavior?
+- What is the p99 latency from each target region today?
+- Do any compliance rules restrict where the data can be stored or processed?
 
-## Tools and libraries worth your time
+If the read-to-write ratio is high, the hit rate is estimable above roughly 80%, staleness of seconds is acceptable, and egress dominates your variable cost, caching is the right lever. Otherwise, replicate and pay for it deliberately.
 
-| Tool | Purpose | Version | Why it’s worth it |
-|---|---|---|---|
-| Redis 7.2 Cluster | Edge cache + Streams | 7.2.4 | Actively defragmented, SCAN + DELETE in batches is O(keys), Streams durable |
-| FastAPI | API framework | 0.111 | Automatic OpenAPI docs, async, easy to test |
-| AWS Lambda (Python 3.11 arm64) | Stateless compute | 3.11 | 20% cheaper than x86, 15 ms cold start with provisioned concurrency |
-| CloudFront | CDN + caching | 2026 | 10 TB free tier, supports cache keys by header and query string |
-| Aurora PostgreSQL | Single source | 15.4 | Read replicas cheap, cross-region replication built-in |
-| pytest | Testing | 7.4 | Async test client, fixtures for Redis and DB |
-| OpenTelemetry | Observability | 1.28 | Trace every cache miss and egress byte |
+## What to do in the next 30 minutes
 
-The biggest productivity win was FastAPI’s built-in OpenAPI schema. One command (`uvicorn main:app --reload`) gave us a Swagger UI that we used to validate cache keys and headers across regions. Without it, we would have spent days manually testing every endpoint.
-
-The surprise was pytest 7.4’s async test client. We wrote integration tests that spin up a real Redis 7.2 Cluster and Aurora PostgreSQL in GitHub Actions. Running the full stack in CI caught a race condition in the cache invalidation scan before it hit production.
-
-We also evaluated Dragonfly 1.0 as a Redis alternative. It promises 4x throughput and lower memory usage, but we hit a showstopper: no Streams support in the stable release. Without Streams, the regional fan-out writes become harder to implement. So we stuck with Redis 7.2 Cluster for now.
-
-## When this approach is the wrong choice
-
-First, if your data is write-heavy or globally consistent by design. A banking ledger that requires ACID across regions is a poor fit for edge caching. You’ll still need Aurora Global Database or CockroachDB multi-region, which costs $400–$800/month and adds 100–200 ms of cross-region latency. In that case, skip caching and replicate the whole database.
-
-Second, if your users are clustered in one region with rare cross-region travel. The overhead of managing regional caches and headers outweighs the savings. For example, a South African fintech with 95% users in Johannesburg only needs one region plus a read replica in Cape Town.
-
-Third, if your cache keys are unbounded. If every API request generates a unique cache key (e.g., `/search?q=diabetes&page=1000`), memory usage explodes. Redis 7.2 Cluster will evict keys aggressively, and your hit ratio collapses. In that case, use a TTL of 5 seconds and rely on the origin, or switch to a CDN with edge functions that compute responses on the fly.
-
-Finally, if your compliance rules require data residency in every region you serve. Some health regulations in Nigeria and Kenya mandate that patient data never leaves the country. In that case, you must replicate the whole database to a local RDS instance, and the cache becomes a read-through layer—not a data movement avoidance strategy.
-
-## My honest take after using this in production
-
-I thought the biggest risk would be stale data. Turns out, stale data is a non-issue for 95% of health-data use cases. Clinics update patient records once a day; users view them every few minutes. A 30-second stale cache is acceptable for most dashboards and API reads.
-
-The real pain was operational overhead. Managing three Redis 7.2 Clusters, Lambda functions, and CloudFront policies across regions is like herding cats. One misconfigured TTL or header whitelist can break the cache for an entire region. We ended up writing a Terraform module that deploys the whole stack in one command: `terraform apply -var region=af-south-1`. Without that, we would have lost weekends to manual drift.
-
-The cost savings were real but not as dramatic as the marketing slide implied. We saved $430/month versus a naive multi-region RDS setup, but the Terraform module, CloudWatch alarms, and extra Lambda concurrency added $80/month in hidden costs. Net savings: $350/month for 5,000 users. Still worth it, but not a 5x cut.
-
-The biggest win was latency. Serving 91% of requests under 20 ms improved user satisfaction scores by 12% in the Lagos pilot. That directly translated to higher prescription renewal rates—something the CFO could understand.
-
-The approach isn’t magic. It’s a trade-off: you accept eventual consistency and rare stale reads to save money and latency. If your product can tolerate that, it’s the cheapest way to go multi-region. If not, replicate the database and pay the price.
-
-## What to do next
-
-Open your API’s slowest endpoint. Measure the p99 latency from three regions (use AWS CloudWatch Synthetics or a simple curl script). If the slowest region is >150 ms, cache the response with Redis 7.2 Cluster and a 30-second TTL. Start with one region—Johannesburg or Lagos—and monitor cache hit ratio and egress. Once you hit 80% cache hits, duplicate the setup in the second region. Total time: under 30 minutes.
-
-
-## Frequently Asked Questions
-
-**How do I handle cache stampede when thousands of users request the same stale key?**
-Use a lock per key. In Redis 7.2, you can set `SET key value NX PX 30000` to acquire a 30-second lock. If the lock exists, return the stale value with `stale-while-revalidate=60`. This keeps the stampede off the origin while you refresh the cache in the background. We used this during a viral news cycle when 5,000 users loaded the same user profile in 60 seconds—zero origin overload.
-
-**What’s the maximum TTL I can set without violating health-data compliance?**
-Check your local regulations. HIPAA in the US allows 30 days for most records, but some African jurisdictions require deletion within 24 hours. A safe default is 5 minutes for cached user profiles and 1 hour for aggregated dashboards. Always add a `Cache-Control: no-store` header for PHI endpoints and log every cache miss for audit.
-
-**How do I test cache invalidation across regions without hitting production?**
-Use a feature branch with a dedicated Redis 7.2 Cluster and a synthetic user. In GitHub Actions, run `pytest tests/test_cache_invalidation.py -k "test_update_user_invalidates_all_regions"` which spins up three Lambda environments and verifies the keys are deleted in all regions. The test runs in 32 seconds and costs $0.08 in AWS fees.
-
-**Can I use this approach with DynamoDB Global Tables?**
-No. DynamoDB Global Tables replicate every write across regions with eventual consistency, so the cache becomes redundant. You pay for the replication traffic anyway. If you must use DynamoDB, skip caching and tune your DAX cluster for read performance. We tried this in a pilot and ended up with 180 ms p99 in Nairobi—worse than our PostgreSQL + Redis setup.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 25, 2026
+Pick your slowest endpoint and measure it from a region far from your database. Run a loop of 100 requests from a machine in that region, recording the response time of each, and compute the p99. Then check your provider's billing export for cross-region transfer on that same endpoint's traffic. If the p99 exceeds your target and cross-region transfer is a visible line item, you have the two numbers that justify a cache — and you can size the TTL from the staleness your product already tolerates.

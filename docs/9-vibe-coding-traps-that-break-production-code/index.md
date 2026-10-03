@@ -1,200 +1,140 @@
 # 9 Vibe coding traps that break production code
 
-The answers I found online were either wrong or skipped the parts that mattered.
+Vibe coding — prompting an assistant, pasting a snippet, and moving on when the happy path works — is genuinely effective for prototypes. It becomes expensive when the prototype is promoted to production without anyone examining the assumptions baked into the generated code. The traps below are not tool defects. They are recurring mismatches between what a snippet assumes and what a production runtime actually does.
 
-## Why this list exists (what I was actually trying to solve)
+## Why this list exists
 
-Early in my career I shipped a product in two weeks by stacking together GitHub Copilot snippets, Stack Overflow answers, and a bunch of `console.log` debugging. It worked. It even got users. Then the first production alert fired: 503s behind CloudFront because the Node 20 LTS Lambda runtime couldn’t keep up with 1000 RPS.
+The failure mode is consistent: code that passes a manual click-through test, ships, and then degrades under concurrency, cold starts, or schema change. Three representative shapes of that failure:
 
-Vibe coding feels fast until it isn’t. The same habits that make a 2-week MVP hum also turn a 6-month codebase into a ticking cost bomb. I’ve watched teams burn $45k/year on over-provisioned Redis clusters because they copied a stack overflow snippet that set `maxmemory-policy allkeys-lru` without understanding how eviction actually works. I’ve seen a single misplaced `await` in a Next.js 14.2.3 page turn a 40 ms render into a 3 s waterfall because React 19’s new Suspense boundaries didn’t play nice with the implicit hydration promise.
+- A Node runtime on a serverless platform whose memory ceiling is exceeded because a module-level cache or listener accumulates across invocations. The symptom is not a crash but rising billed memory and creeping latency as the event loop backs up.
+- A Python ASGI service that silently drops requests under load because the worker count was left at a default that assumes fewer CPU cores than the instance provides.
+- A React app where effects run without dependency arrays, causing redundant re-renders on every route change and inflating interaction latency.
 
-What separates a vibe-coded prototype from a maintainable system isn’t cleverness — it’s the boring details: connection limits, error budgets, and the fact that teams rarely budget time to refactor the “it works” mess into “it works and we can explain why”. This list ranks the tools, patterns, and even one database choice that look great when you’re solo and explode when you’re on-call.
+None of these require exotic tooling to detect. They require deciding, before you ship, what you will measure.
 
+## How to evaluate any tool or pattern
 
-## How I evaluated each option
+Rather than trust a ranking, instrument the four numbers that predict production pain:
 
-1. Memory leak in Node 20 LTS running on AWS Lambda arm64 that blew past the 1024 MB package limit and cost us $2.3k in extra memory tiers before we spotted the event loop delay. 2. A Python 3.11 FastAPI endpoint that silently dropped 12% of requests under 1500 RPS because the default `uvicorn` worker count assumed 1 CPU core but we were running on a 4 vCPU instance. 3. A React 18.2 codebase where every page had at least one `useEffect` that didn’t include the dependency array, causing 8–12 re-renders on every route change and adding 200–300 ms to the interaction to next paint.
+1. **Cold-start latency.** Deploy the smallest realistic handler and invoke it after a forced idle period. On AWS Lambda, compare `Init Duration` in CloudWatch Logs across memory settings and architectures. On container platforms, measure time from request receipt to first byte after a scale-to-zero event.
+2. **Error rate under concurrency.** Use a load tool such as k6 and ramp to a concurrency level above your expected peak. Watch for non-2xx responses and, more importantly, for responses that succeed but return stale or partial data.
+3. **Dependency and bundle cost.** For frontend code, run a bundle analyzer on the production build and record the parsed size of each chunk. For backend code, count transitive dependencies — a deep graph is a supply-chain and cold-start cost even when it is not a bundle cost.
+4. **On-call surface.** Count how many distinct alerts a component can fire. A tool that generates five infrastructure stacks per deploy multiplies the number of things that can page you.
 
-For each tool I measured:
-- Cold-start latency (ms) on AWS Lambda with 1024 MB memory (Node 20 LTS, Python 3.11, Go 1.22). - Error rate at 1000 concurrent users using k6 0.52.0. - Lines of code added per feature versus the size of the dependency graph. - On-call page count during a 30-day period after the feature shipped.
+Record these before and after adopting a tool. A change that improves developer velocity but doubles cold-start latency is a trade, not a win, and you should be able to state which side you chose.
 
-That number is embarrassingly high for some of these tools.
+## The traps
 
+### 1. Generated code with unexamined imports
 
-## Why vibe coding works for MVPs and fails for anything you need to maintain — the full ranked list
+**What it does:** An assistant generates a complete function, test, or infrastructure definition from a prompt, usually with idiomatic structure.
 
-### 1. GitHub Copilot (and Copilot Chat) – the ultimate shortcut engine
+**Where it breaks:** Generated snippets frequently import an entire SDK or utility library for a single function. On the server this inflates cold-start time and dependency surface; in a browser bundle it ships code the user never executes. The code passes review because it reads well, not because anyone audited the import graph.
 
-What it does: Generates whole functions, tests, and even Terraform from a prompt in your IDE.
+**What to do instead:** After accepting a generated file, run your bundle analyzer or dependency tree and confirm every import is used. Treat the import list as part of the review, not an afterthought.
 
-Strength: Ship a Next.js 14.2.3 page in 4 minutes instead of 40. The generated code is usually idiomatic enough to pass a junior review.
+### 2. Copy-pasted answers from stale threads
 
-Weakness: 37% of generated snippets import entire SDKs you don’t need, bloating your `node_modules` by 2–5 MB per file.
+**What it does:** Provides a ready-made snippet for an unfamiliar error message or API.
 
-Who it’s best for: Solo founders and 2-person teams building the first prototype in a greenfield domain where correctness can be validated by users, not tests.
+**Where it breaks:** Highly ranked answers are often written for runtimes several major versions old. A pattern that was correct for a callback-based API can be subtly wrong for a promise-based one, and the failure appears only under concurrency.
 
+**What to do instead:** Before adopting a snippet, check the answer date against your runtime version and read the current official documentation for that API. If the documentation contradicts the answer, the documentation wins.
 
-### 2. Stack Overflow copy-paste – the universal IDE
+### 3. Server components with client-side assumptions
 
-What it does: Provides dozens of ready-made snippets for every error message you’ve never seen before.
+**What it does:** Lets React components render on the server, reducing the JavaScript shipped to the browser.
 
-Strength: Solves the “undefined is not a function” problem in 2 minutes instead of 2 hours.
+**Where it breaks:** Streaming and suspense boundaries change when the client runtime becomes available. Third-party scripts that assume `document` or `window` exists at parse time fire too early, and analytics or tag managers silently lose events.
 
-Weakness: 58% of answers in the top result are outdated or wrong for modern runtimes.
+**What to do instead:** Load such scripts through the framework's script component with an explicit strategy, or move the logic into a server component. Verify by checking that your analytics tool records page views during a hard refresh, not just client-side navigation.
 
-Who it’s best for: Junior developers or new hires who need to unblock themselves without waiting for a review.
+### 4. ORMs that move cost from SQL to the bundle
 
+**What it does:** Generates a typed client from a database schema so queries can be written in the application language.
 
-### 3. Next.js App Router with Server Components – the sexy default
+**Where it breaks:** Two distinct problems get conflated. First, a generated client that is imported into client-side code can pull a large amount of code into the browser bundle even when only one model is used. Second, query patterns that look cheap in application code can produce N+1 queries or hydration waterfalls that dominate time-to-interactive on slow connections.
 
-What it does: Lets you write React components that render on the server, reducing client bundle size and improving first paint.
+**What to do instead:** Keep the ORM on the server. If client code needs data, expose a narrow endpoint. Measure the production bundle before and after, and log query counts per request in staging so N+1 patterns surface before they reach users.
 
-Strength: A single `app/page.tsx` can replace 5–7 files and cut initial JavaScript by 60% on a 500 KB page.
+### 5. Serverless databases with surprising branch semantics
 
-Weakness: The new Suspense boundaries and streaming architecture break every old analytics script that assumed synchronous rendering.
+**What it does:** Provides a managed database with branching, often used to create ephemeral environments for testing or previews.
 
-Who it’s best for: Teams that want to ship a marketing site or SaaS dashboard fast and don’t plan to heavily customize the framework’s data fetching behavior.
+**Where it breaks:** Branch behavior varies by product. Some branches are read-only; some replicate schema but not data. Tests that write to a branch then fail — sometimes silently, if the test asserts on a value that happened to be present.
 
+**What to do instead:** Read the branch documentation for the specific product and write one test that performs a write and asserts on the result. If writes are not supported, restructure the test to seed a separate database.
 
-### 4. Prisma ORM – the type-safe Swiss Army knife
+### 6. Vector databases adopted for novelty
 
-What it does: Auto-generates a TypeScript client from your database schema and lets you write queries in JavaScript instead of SQL.
+**What it does:** Provides managed similarity search over embeddings, typically for retrieval-augmented generation.
 
-Strength: Reduces hand-written SQL from 300 lines to 30 lines in a FastAPI codebase and cuts runtime errors from 8% to 1% under load.
+**Where it breaks:** Cost scales with stored vectors and query volume, and both grow silently. Increasing chunk count to improve retrieval quality multiplies storage; adding a reranking step multiplies queries. A prototype that costs little at a thousand vectors can become a recurring line item at a hundred thousand.
 
-Weakness: The generated client imports 400+ classes into your bundle, adding 150 KB to the client JavaScript even if you only use one model. The hydration waterfall in Next.js 14.2.3 adds another 800 ms TTI on mobile 3G.
+**What to do instead:** Instrument storage count and query volume from day one, and set a budget alert. Decide your chunking strategy before ingesting, because re-chunking means re-embedding and re-uploading the entire corpus.
 
-Who it’s best for: Startups that need to iterate on data models quickly and can afford 2–3 days of refactoring every time they change the schema.
+### 7. Edge functions treated as free latency
 
+**What it does:** Runs request handlers in data centers close to users.
 
-### 5. PlanetScale – the serverless MySQL you copy-paste into every README
+**Where it breaks:** Edge runtimes are frequently more constrained than regional serverless runtimes. Cold starts can be longer, execution time limits are often shorter, and the runtime environment may lack APIs your code assumes. A handler that runs in 400 ms regionally can behave very differently at the edge.
 
-What it does: Serverless MySQL with branching and instant schema changes.
+**What to do instead:** Measure cold and warm latency from a location far from your origin before committing. Check the runtime's supported APIs against your dependencies. Reserve edge deployment for read-heavy, stateless handlers.
 
-Strength: `pscale branch create staging` gives you a production-like database in 10 seconds, cutting local setup from 2 hours to 10 minutes.
+### 8. Caches with default eviction policies
 
-Weakness: Branches are read-only, so any data-dependent tests that need writes break silently.
+**What it does:** Serves frequently read data from memory, typically for sessions, rate limits, or hot lookups.
 
-Who it’s best for: Teams that want to move fast on schema changes but can tolerate occasional data-dependent test flakes.
+**Where it breaks:** Default eviction policies are chosen for general safety, not for your access pattern. A policy that evicts by recency can remove a hot key that is expensive to recompute, and concurrent requests then all recompute it at once — a cache stampede. The result is a latency spike and a burst of load on the backing database.
 
+**What to do instead:** Choose an eviction policy that matches your data. If keys have meaningful TTLs, a TTL-based policy avoids evicting keys that are still valid. Add jitter to TTLs so keys do not expire simultaneously, and consider request coalescing for expensive keys.
 
-### 6. Pinecone – the vector database you include because “everyone is doing RAG”
+### 9. Infrastructure-as-code that generates more infrastructure than you expect
 
-What it does: Managed vector similarity search for AI features.
+**What it does:** Lets you define cloud resources in a general-purpose language instead of a declarative template.
 
-Strength: `pinecone index upsert` with embeddings from `sentence-transformers 2.2.2` gets you a RAG prototype in 15 minutes.
+**Where it breaks:** Abstractions can expand into many underlying resources. Each deploy may create multiple stacks, each with its own roles and policies. Generated policies are often broader than necessary, widening the blast radius of a compromised function and making drift hard to reason about.
 
-Weakness: Pinecone 2026 charges $0.10 per 1k vectors stored and $0.25 per 1k queries. A single “improvement” that doubles your chunk count can add $450/month on a 100k vector index.
+**What to do instead:** After the first deploy, inspect the generated resources and policies directly in the cloud console. Compare the permissions granted against the permissions the function actually uses. Narrow them, and treat the generated output as a starting point rather than a finished artifact.
 
-Who it’s best for: Projects where AI features are the core value prop and the team can afford to audit usage weekly.
+## A worked example: diagnosing a rising-latency service
 
+Suppose a service on a serverless platform shows p99 latency climbing over several hours while request volume is flat. The reasoning path:
 
-### 7. Vercel Edge Functions – the serverless edge you didn’t configure
+1. **Rule out traffic.** Confirm request rate and payload size are unchanged. If they are, the change is internal.
+2. **Check memory and duration together.** If billed memory is rising while CPU time per request is stable, something is accumulating between invocations — a module-level map, an unbounded listener, or a cache with no eviction.
+3. **Look for event-loop delay.** A blocked event loop shows up as request duration growing while downstream call latency stays flat. Instrument the gap between when a request is received and when your handler begins.
+4. **Bisect by reverting.** If the growth started at a specific deploy, revert it and confirm the metric recovers. That converts a hypothesis into a fact.
+5. **Fix the root cause, not the symptom.** Raising the memory limit buys time and increases cost; it does not stop the accumulation. Add a bound to the structure that is growing, or move the state out of the process.
 
-What it does: Runs serverless functions at the edge, closer to users.
-
-Strength: Cuts latency from 120 ms to 35 ms for users in Tokyo when deployed on Vercel’s edge network.
-
-Weakness: Cold starts on the edge are measured in seconds, not milliseconds, because the runtime is isolated per request. A single mis-configured `maxDuration` can turn a 400 ms Lambda into a 4 s edge function when the runtime spins up.
-
-Who it’s best for: Marketing sites and static apps where the backend is read-heavy and the team can spend time tuning edge configs.
-
-
-### 8. Redis 7.2 (and Upstash) – the cache you forgot to tune
-
-What it does: In-memory cache for session tokens, rate limits, and real-time features.
-
-Strength: Cuts a 200 ms MySQL query to 1 ms Redis lookup at 5000 RPS.
-
-Weakness: The default `maxmemory-policy allkeys-lru` evicts keys randomly, causing cache stampede when a hot key is evicted and 1000 requests rebuild it simultaneously.
-
-Who it’s best for: Teams that can budget 2 hours to set `maxmemory-policy volatile-ttl` and monitor evictions.
-
-
-### 9. SST (Serverless Stack) – the IaC you wrote in TypeScript and regretted
-
-What it does: Writes AWS CDK under the hood but lets you use TypeScript instead of YAML.
-
-Strength: `sst deploy` spins up a full-stack app (Next.js + Lambda + DynamoDB) in 90 seconds.
-
-Weakness: SST 2.14.3 generates 5 CloudFormation stacks per deploy, and each stack has its own IAM roles. The generated IAM policy for a single Lambda includes 27 actions, many unnecessary, inflating the attack surface.
-
-Who it’s best for: Teams that want to move fast on infrastructure but can afford 1–2 days per month to audit IAM policies.
-
-
-## The top pick and why it won
-
-After 18 months of on-call rotations, the clear winner is **Prisma ORM** for teams that need to iterate on data models. It’s the only tool on this list that gives you a 10x reduction in hand-written SQL while keeping your bundle impact predictable (<200 KB client-side) and your error rate under 1%.
-
-| Stack | SQL lines | Runtime errors | P99 latency | Cold start | Bundle size |
-|---|---|---|---|---|---|
-| Raw SQL | 310 | 8.2% | 240 ms | 8 ms | 12 KB |
-| SQLModel | 120 | 4.1% | 190 ms | 12 ms | 85 KB |
-| Prisma | 30 | 0.8% | 160 ms | 10 ms | 150 KB |
-
-The numbers are from a 1000 RPS load test on AWS EC2 t3.small with Python 3.11. The raw SQL errors were mostly typos and missing indexes; SQLModel reduced them but still required hand-written joins; Prisma caught most of them at compile time and reduced the index tuning surface.
-
-Prisma also ships with a data browser that lets non-engineers inspect tables, cutting the back-and-forth on schema changes from 2 hours to 10 minutes. That alone paid for the $29/user/month Pro license on our 7-person team.
-
-
-## Honorable mentions worth knowing about
-
-- **tRPC 11.0.0** – Type-safe API layer that replaces REST and GraphQL. Strength: eliminates 40% of API versioning churn. Weakness: adds 45 KB to the client bundle and breaks every existing fetch polyfill. - **Drizzle ORM 0.30.0** – Lightweight SQL-first ORM. Strength: 60 KB bundle vs Prisma’s 150 KB. Weakness: No built-in migrations; you write SQL for every change. - **Fly.io** – VM-based hosting that feels like Heroku 2015. Strength: 2 GB RAM VM for $15/month beats Lambda on sustained CPU workloads. Weakness: Cold starts on Fly are 2–3 s, not ms. - **Turso (libSQL)** – SQLite at the edge. Strength: single binary, 0 config. Weakness: No foreign keys in distributed mode; your joins break silently.
-
-
-## The ones I tried and dropped (and why)
-
-- **Remix 2.8.1** – I loved the nested routing, but the data loaders run on the server and client simultaneously, adding 300 ms TTI on mobile 3G. Dropped after 3 weeks. - **Supabase 1.14.0** – Great for auth and Postgres, but the realtime channel count scales with active users, and at 5000 concurrent users we hit the 2000 channel limit and had to rewrite the pub/sub layer. - **Cloudflare Workers KV** – $5 per 100k writes is unbeatable, but the eventual consistency model broke a leaderboard feature that relied on atomic increments. Rewrote it in Durable Objects after 2 weeks of flaky tests. - **Pothos GraphQL 3.40.0** – Type-graphql successor. Strength: end-to-end type safety. Weakness: adds 180 KB to the client and requires a full schema rebuild on every model change. Dropped when the CI build time jumped from 45 s to 3 m 12 s.
-
+The same loop applies to the other traps: establish that the metric changed, isolate the component, and confirm the fix by measurement rather than intuition.
 
 ## How to choose based on your situation
 
-| Situation | Tool | Why | Cost of mistake |
-|---|---|---|---|
-| Solo founder, 4-week MVP | GitHub Copilot + Next.js App Router | Ship in days, iterate by user feedback | $19/user/month + possible 2–3 day refactor later |
-| 3–5 person team, 6–12 month roadmap | Prisma ORM + PlanetScale | Type-safe migrations, data browser for non-engineers | $29/user/month + 1–2 days/month for schema reviews |
-| High-scale API, 10k+ RPS | FastAPI + raw SQL + Redis 7.2 | Lowest latency, smallest bundle | 40% of time spent on index tuning |
-| Edge-heavy app, global users | Vercel Edge Functions + Turso | <50 ms latency everywhere | 2–3 s cold starts on edge, $150/month for concurrency |
-| AI feature, RAG prototype | Pinecone 2026 + sentence-transformers 2.2.2 | 15 min setup | $450/month if you forget to set retention |
+| Situation | Approach | Main risk to watch |
+|---|---|---|
+| Solo prototype, weeks not months | Assistant-generated code, managed hosting | Unaudited imports and unbounded state |
+| Small team, multi-month roadmap | Typed ORM on the server, managed database with branching | Bundle growth and N+1 queries |
+| High-throughput API | Explicit SQL, tuned cache, measured worker counts | Index tuning effort and cache stampede |
+| Global read-heavy app | Edge or CDN for static and cached content | Cold starts and runtime API gaps |
+| Retrieval-augmented feature | Managed vector store with budget alerts | Silent growth in stored vectors and queries |
 
-The table above assumes 2026 pricing and AWS Lambda on arm64. If you’re on x86, double the cold-start numbers.
+## FAQ
 
+**Why do streaming server-rendered pages break analytics scripts?** The client runtime becomes available after the initial HTML is streamed. Scripts that expect `document` at parse time run before hydration and lose events. Load them with an explicit strategy or move them server-side.
 
-## Frequently asked questions
+**How do I estimate vector database cost before committing?** Multiply your document count by your average chunks per document to get stored vectors, then estimate queries per user session times sessions per day. Both numbers grow as you tune retrieval quality, so set an alert on each rather than a one-time estimate.
 
-Why does Next.js App Router break analytics scripts? Next.js 14.2.3 streams the page before the client runtime hydrates, so any script that assumes `document` or `window` is available will fire too early. The fix is to move analytics to a server component or use the new `next/script` strategy.
+**Is raw SQL always cheaper than an ORM?** No. Raw SQL costs engineering time for schema changes and typos; an ORM costs bundle size and can hide inefficient query patterns. The right choice depends on whether your bottleneck is developer time or request latency.
 
-How much does Pinecone actually cost at scale? Pinecone 2026 charges $0.10 per 1k vectors stored and $0.25 per 1k queries. A 500k vector index costs $50/month for storage and $125/month for 500k queries. If you double the chunk size to 1000 chunks, you go to $100 storage and $250 queries. Teams usually underestimate this by 2–3x.
-
-What’s the real cost of using raw SQL versus Prisma? Raw SQL adds 4–8 hours per feature for schema changes and debugging typos. Prisma cuts that to 30–60 minutes but adds 150 KB to the client bundle and $29/user/month. On a 7-person team, the time savings pay for the license in 6 weeks; the bundle cost is negligible unless you’re shipping to low-end Android devices.
-
-Why does Redis 7.2 evict keys randomly and spike bills? The default `maxmemory-policy allkeys-lru` evicts the least recently used key, regardless of TTL. If you have a hot key that’s not in the top N recently used, it gets evicted, and 1000 requests rebuild it simultaneously, causing a stampede. The fix is to use `volatile-ttl` so only keys with an expiry are candidates for eviction.
-
+**Why does a cache evict the key I use most?** Eviction policies operate on the metadata they are given, not on your intuition about importance. If a policy evicts by recency and your hot key is not recently written, it becomes a candidate. Match the policy to your access pattern.
 
 ## Final recommendation
 
-Stop treating your prototype like a production system.
+Do not promote a prototype to production until you can state, for each external dependency, what happens under concurrency, cold start, and failure.
 
-1. Pick one tool from the “Honorable mentions” list that matches your scale and budget. 2. Run a load test with k6 0.52.0 on the smallest realistic dataset. 3. Measure cold starts, error rates, and bundle size. Anything that adds >200 ms TTI or >100 KB to the client bundle under 1000 RPS should be refactored or replaced.
+1. Pick the one component in your stack you understand least.
+2. Write a load test that ramps above your expected peak and record error rate, p99 latency, and cold-start time.
+3. Compare those numbers against the same test run with the component removed or replaced.
 
-Then, before you merge the PR, run `npm ls --all` and count the dependency graph depth. If it’s deeper than 5, schedule a tech-debt spike for the next sprint.
-
-Do this today: Open your project’s root directory, run `npx bundlephobia-cli size -p react`, and check the total KB. If it’s over 300 KB, delete one third-party library you copied from Stack Overflow last week and replace it with a native API or a smaller alternative.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 01, 2026
+**Action for the next 30 minutes:** open your project, run your production build with a bundle analyzer enabled, and list every dependency contributing more than 50 KB to a chunk the user downloads on first load. For each one, decide whether it is used on the critical path. Remove or defer at least one.

@@ -1,39 +1,43 @@
 # PR checklists are dead: AI agents do reviews now
 
-The short version: the conventional advice on code review is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.
+Most teams still run pull request checks as a flat list: lint, static analysis, secret scanning, dependency audit, coverage gate. The list grows, the runtime grows, and reviewers learn to ignore red X's. The problem is not the individual tools. It is that a static list has no way to distinguish a typo fix from a change that touches authentication, so everything gets the same treatment and the expensive human attention is spent on the wrong diffs.
 
-## The one-paragraph version (read this first)
+An agentic pipeline is a different arrangement of the same ingredients. Instead of one linear job that passes or fails, you define several narrow roles, each with one mandate, each able to either block, annotate, or propose a fix commit. A final step aggregates their verdicts and decides what a human actually needs to see. This article covers the mental model, a worked Python example, the failure modes that matter, and how to measure whether the pipeline is earning its keep.
 
-Most teams still run PR checklists—lint rules, static analyzers, security scanners—stacked in GitHub Actions like a house of cards. The problem isn’t the tools: it’s that humans keep adding items to the list when AI can already handle 70% of the work. By moving from brittle checklists to agentic pipelines that review, test, and approve changes autonomously, teams cut review time from hours to minutes and reduce escaped defects by 42% (measured on 12 repos at a Nairobi fintech in 2026). The switch isn’t about replacing developers; it’s about letting them focus on the 30% of reviews that actually need human judgment. This post shows how to build that pipeline end-to-end using only open-source tools, AWS services you already pay for, and 20 lines of YAML.
+## What "agentic" means here, and what it does not
 
-## Why this concept confuses people
+A checklist is a set of predicates evaluated against a diff. An agentic pipeline is a set of roles with scoped authority: some can only report, some can push commits, some can block a merge. The distinguishing property is not that an LLM is involved. It is that the pipeline can take actions on the change and iterate, rather than just emit a verdict.
 
-The biggest confusion is thinking this is just "AI copilot in a pipeline." It’s not. A PR checklist is a static list of rules you run every time. An agentic pipeline is a team of specialized sub-agents that negotiate, rerun tests, and revise the change before the human even sees it. Many engineers picture a single LLM reading a diff and saying yes/no; in reality, a pipeline orchestrates a squad of agents—security guard, test runner, dependency bot, style fixer—that interact, sometimes argue, and finally produce a clean diff ready for merge.
+Two clarifications matter, because they drive most of the confusion:
 
-Another red herring is cost. Teams fear AI agents will burn API credits like a crypto miner. In 2026, the median cost for a 100-line PR review across all agents is $0.0012 (AWS Bedrock + SageMaker endpoints on Graviton3), which is cheaper than running a single ESLint job on a t3.medium for 90 seconds. The real money sink is not the agents but the logging and observability you bolt on afterward.
+An LLM is optional per role. A dependency-audit role that bumps a pinned version and re-runs the install is agentic even if it calls no model. A style role that formats and force-pushes a fix commit is agentic. Reserve model calls for the roles that genuinely need judgment over natural language, such as summarizing a diff or classifying whether a change alters a public interface.
 
-Finally, there’s the governance panic. Security teams fear handing the keys to AI. The trick is to design agents as policy enforcers, not decision makers. Each agent has a narrow mandate ("reject if dependency has a GHSA"), logs every decision to an immutable trail in AWS QLDB, and surfaces only the edge cases that need human review.
+Autonomy is a policy decision, not a technical one. Whether a role may push commits, and to which paths, should be written down and reviewed like code. A role that can rewrite `src/billing/` is a different risk object from one that can only rewrite formatting.
 
-## The mental model that makes it click
+The practical payoff is triage. A flat checklist gives every diff the same latency and the same noise. A role-based pipeline can let a documentation-only change skip the integration suite, and route a change touching a migration to a stricter set of gates plus a named human reviewer.
 
-Think of a PR checklist as a chain of toll booths: every car must stop, pay, and show ID, even if it’s a police cruiser. That’s inefficient. An agentic pipeline is more like an airport immigration system: a pre-check desk scans your passport, runs a risk profile, and lets 80% of travelers skip the line while flagging the 20% that need deeper inspection. The key insight is that agents don’t just run checks—they negotiate with the change itself.
+## Roles worth defining
 
-Concretely, decompose review into roles:
+Start with a small set. Each role needs a written mandate, a defined output, and an explicit statement of what it may mutate. A useful default table:
 
-| Role | Mandate | Example output |
-|---|---|---|
-| Dependency Agent | Reject if any dependency has a CVE with score ≥7.0 | Adds a fix commit to bump package.json |
-| Style Agent | Reject if code violates Black 24.3 or ESLint stylistic rules | Returns a cleaned diff with auto-formatted code |
-| Test Agent | Reject if coverage <80% or if new tests fail | Runs pytest with pytest-cov 5.0.0 and reports diff |
-| Security Agent | Reject if any file matches a regex list of secrets or patterns | Scans with TruffleHog 3.41.0 and revokes any exposed tokens |
+| Role | Mandate | May mutate? | Escalates when |
+|---|---|---|---|
+| Dependency | Fail if a direct or transitive dependency has a known advisory above your severity threshold | Yes: bump pinned versions and re-lock | A fix requires a major version bump |
+| Style | Fail if the diff violates the repo's formatter or linter config | Yes: commit the formatted result | Formatter and linter disagree |
+| Test | Fail if new tests fail or coverage of changed lines drops below threshold | No | The same test flakes twice in a row |
+| Secret scan | Fail if a credential pattern matches, with entropy filtering | No | A match is in a binary or vendored file |
+| Impact classification | Label the diff by touched surface (public API, migration, infra) | No | The classifier's confidence is below threshold |
+| Aggregator | Combine verdicts and produce the final status and comment | No | Any role escalated, or roles disagree |
 
-These agents don’t just pass/fail—they can also mutate the change to fix issues. The Style Agent doesn’t say “your code is ugly”; it commits a formatting patch and reruns tests. That mutating behavior is what turns a static checklist into a dynamic negotiation.
+Two design rules keep this from becoming the checklist again. First, every role must be able to produce a machine-readable result, not just an exit code, so the aggregator can reason about partial failures. Second, a role that cannot explain itself in one sentence is doing too much; split it.
 
-## A concrete worked example
+The aggregator is where most implementations go wrong. If it is a model prompt that reads four statuses and emits APPROVE or REQUEST_CHANGES, you have moved the unreviewable decision into a black box. A more defensible design is a deterministic policy: the aggregator applies explicit rules, and a model is used only to write the human-facing summary. The verdict then has a traceable cause.
 
-Here’s a minimal agentic pipeline for a Python backend repo using GitHub Actions, AWS Bedrock (Sonnet 3.5), Python 3.11, and Redis 7.2 as a shared cache for test results.
+## A worked example
 
-Step 1: Define the agent contract in `.github/workflows/agentic-review.yml`:
+The following is a minimal pipeline for a Python repository. It uses only GitHub Actions, a pinned formatter and linter, and pytest. Model calls are shown separately so you can run the pipeline without them.
+
+Step 1: the workflow. Note that the style step commits only when it is allowed to, and that it does not push to the default branch.
 
 ```yaml
 name: Agentic PR Review
@@ -42,265 +46,193 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+permissions:
+  contents: write
+  pull-requests: write
+  checks: write
+
 jobs:
   review:
-    runs-on: ubuntu-latest-arm64
-    permissions:
-      contents: write
-      pull-requests: write
-      checks: write
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
           cache: 'pip'
-      - name: Install dependencies
+
+      - name: Install tooling
         run: |
-          pip install pytest pytest-cov black==24.3.0 ruff trufflehog==3.41.0 boto3==1.34.0
-      - name: Run Dependency Agent
-        id: dependency
-        run: |
-          python -m trufflehog filesystem --directory . --fail --json | tee dependency_report.json
-          python -m agents.dependency_agent --report dependency_report.json --pr ${{ github.event.pull_request.number }}
-        env:
-          AWS_DEFAULT_REGION: 'eu-west-1'
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: Run Style Agent
+          pip install -r requirements.txt
+          pip install ruff pytest pytest-cov
+
+      - name: Style role
         id: style
         run: |
-          black --check . || true
-          ruff check . || true
-          git diff --exit-code > /dev/null || git add -u && git commit -m "style: auto-format" && git push
-      - name: Run Test Agent
+          ruff format .
+          ruff check --fix .
+          if ! git diff --quiet; then
+            git config user.name "review-bot"
+            git config user.email "review-bot@users.noreply.github.com"
+            git add -u
+            git commit -m "style: apply formatter"
+            git push
+            echo "mutated=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "mutated=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Test role
         id: test
         run: |
-          pytest --cov=src --cov-report=xml --cov-fail-under=80 -n 4
-          export COVERAGE=$(python -c "import xml.etree.ElementTree as ET; r=ET.parse('coverage.xml').getroot(); print(float(r.attrib['line-rate']))")
-          if (( $(echo "$COVERAGE < 0.80" | bc -l) )); then exit 1; fi
-        env:
-          REDIS_URL: 'redis://localhost:6379/0'
-      - name: Run Security Agent
-        id: security
+          pytest --cov=src --cov-report=xml --cov-fail-under=80
+
+      - name: Aggregate
+        if: always()
         run: |
-          python -m agents.security_agent --diff "${{ github.event.pull_request.diff_url }}" --pr ${{ github.event.pull_request.number }}
-      - name: Final Decision Agent
-        id: final
-        run: |
-          python -m agents.final_agent --decisions dependency=${{ steps.dependency.outcome }} style=${{ steps.style.outcome }} test=${{ steps.test.outcome }} security=${{ steps.security.outcome }}
-        env:
-          BEDROCK_MODEL_ID: 'anthropic.claude-3-5-sonnet-20241022-v2:0'
-          AWS_REGION: 'us-east-1'
+          python -m ci.aggregate \
+            --style "${{ steps.style.outcome }}" \
+            --test "${{ steps.test.outcome }}" \
+            --mutated "${{ steps.style.outputs.mutated }}"
 ```
 
-Step 2: Agent implementations (all in `agents/`):
+Two details are easy to get wrong. The `if:` on the job prevents the workflow from pushing commits into a fork, which would otherwise fail or, worse, push to an unexpected remote. And the aggregate step runs with `if: always()` so it can report a partial result instead of leaving the PR with a missing status.
 
-`agents/dependency_agent.py`:
+Step 2: the aggregator. This is deliberately deterministic. It maps role outcomes to a final status and a human-readable reason, and it treats "a fix commit was pushed" as a signal that the run should be restarted rather than approved.
 
 ```python
-import json, os, subprocess
-from typing import Dict
+import argparse
+import json
+import sys
 
-class DependencyAgent:
-    def __init__(self, report_path: str):
-        with open(report_path) as f:
-            self.report = json.load(f)
+POLICY = {
+    "style": {"fail": "block", "success": "ok"},
+    "test": {"fail": "block", "success": "ok"},
+}
 
-    def run(self) -> Dict:
-        issues = [i for i in self.report if i.get('severity') >= 7.0]
-        if not issues:
-            return {'status': 'pass', 'fix_commits': []}
-        # Auto-generate fix commits
-        for issue in issues:
-            pkg = issue['detector_name'].split(':')[-1]
-            ver = issue['version']
-            cmd = f"pip install {pkg}=={ver}"
-            subprocess.run(cmd.split(), check=True)
-        return {'status': 'fail', 'fix_commits': ['dependency/fix']}
+def aggregate(outcomes: dict, mutated: bool) -> dict:
+    blockers = []
+    for role, outcome in outcomes.items():
+        rule = POLICY.get(role, {})
+        action = rule.get(outcome, "escalate")
+        if action == "block":
+            blockers.append(f"{role}: {outcome}")
 
-if __name__ == '__main__':
-    agent = DependencyAgent('dependency_report.json')
-    result = agent.run()
-    print(json.dumps(result))
+    if blockers:
+        return {"status": "block", "reasons": blockers}
+
+    if mutated:
+        # A fix commit invalidates the previous test run.
+        return {"status": "rerun", "reasons": ["style role pushed a commit"]}
+
+    return {"status": "pass", "reasons": []}
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--style", required=True)
+    parser.add_argument("--test", required=True)
+    parser.add_argument("--mutated", required=True)
+    args = parser.parse_args()
+
+    result = aggregate(
+        {"style": args.style, "test": args.test},
+        mutated=args.mutated.lower() == "true",
+    )
+    print(json.dumps(result, indent=2))
+    sys.exit(0 if result["status"] in ("pass", "rerun") else 1)
 ```
 
-`agents/final_agent.py`:
+The `rerun` status is the interesting one. If the style role pushed a commit, the test results you just collected describe the pre-fix tree, not the tree that will be merged. Treating that as a pass is a real correctness bug, and it is the kind of thing a flat checklist hides because the steps run once, in order, and nobody asks what the artifacts actually describe.
+
+Step 3, optional: a summary role. If you want a natural-language comment on the PR, keep it strictly additive. It reads the deterministic verdict and the diff, and writes prose. It must not be able to change the status.
 
 ```python
-import boto3, json
+import json
+import os
+import urllib.request
 
-client = boto3.client('bedrock-runtime', region_name='us-east-1')
+def summarize(verdict: dict, diff_stat: str) -> str:
+    # Replace with a call to your model provider of choice.
+    # The contract: given a verdict and a diff summary, return text only.
+    prompt = (
+        "Summarize this pull request review for the author. "
+        "Do not change the verdict. Be specific and brief.\n\n"
+        f"Verdict: {json.dumps(verdict)}\n\nDiff stat:\n{diff_stat}"
+    )
+    return prompt  # placeholder: send `prompt` to your provider
 
-PROMPT = """
-You are a senior engineer reviewing a PR. Here are the outcomes from sub-agents:
-Dependency: {dependency}
-Style: {style}
-Test: {test}
-Security: {security}
-
-Give a final verdict: APPROVE, REQUEST_CHANGES, or COMMENT.
-Respond with JSON only:
-{"verdict": "...", "comment": "..."}
-"""
-
-payload = {
-    "modelId": "anthropic.claude-3-5-sonnet-20241022-v2:0",
-    "contentType": "application/json",
-    "accept": "application/json",
-    "body": json.dumps({
-        "messages": [
-            {"role": "user", "content": [{"text": PROMPT.format(**locals())}]}
-        ],
-        "max_tokens": 1000,
-        "temperature": 0.0
-    })
-}
-
-response = client.invoke_model(**payload)
-decision = json.loads(response['body'].read().decode())
-print(json.dumps(decision))
+if __name__ == "__main__":
+    verdict = json.loads(os.environ["VERDICT_JSON"])
+    diff_stat = os.environ.get("DIFF_STAT", "")
+    print(summarize(verdict, diff_stat))
 ```
 
-When you open a PR, GitHub Actions spins up four agents. The Style Agent auto-formats and pushes a commit. The Dependency Agent bumps packages if CVEs are found. The Test Agent runs pytest with 4-way parallelism and fails the job if coverage drops below 80%. The Security Agent scans for secrets and revokes any exposed tokens. The Final Agent consults AWS Bedrock to render a final verdict that surfaces only to maintainers.
+## Failure modes to design against
 
-Total latency: 90 seconds for a 100-line change on a t4g.medium runner. Cost: $0.0012 per PR. Escape rate: 0.6% vs 3.2% on the old checklist system (data from 12 repos over 6 months).
+These are the ones that show up repeatedly when teams move from checklists to role-based pipelines.
 
-## How this connects to things you already know
+Unbounded mutation loops. A style role that pushes a commit triggers a new run, which pushes another commit. Cap the number of automated pushes per PR (a counter in a label or a comment works) and stop after the cap, escalating to a human. Without a cap, a formatter bug becomes an infinite commit loop.
 
-If you’ve ever used GitHub’s auto-merge or Renovate for dependency updates, you’ve touched the surface of agentic pipelines. The jump from auto-merge to full agents is just adding autonomy to every step of the review process.
+Stale artifacts. As shown above, any role that mutates the tree invalidates results computed before the mutation. The safe pattern is: mutate first, then run everything that reads the tree, or explicitly mark downstream results as stale and re-run.
 
-Think of GitHub Copilot in PR review mode: it’s already scanning your diff and suggesting fixes. Agents extend that by letting the AI commit fixes, rerun tests, and negotiate with the change until it’s safe to merge. The mental model is GitHub Actions 2.0: every job is now a micro-agent with a narrow skill and a clear mandate.
+Silent scope creep. A role that starts as a linter and grows into "also fixes imports" has quietly acquired write access to more of the codebase. Version the mandate alongside the code and require review on changes to it, the same way you would review a change to a permissions file.
 
-Another close cousin is canary deployments. In a canary, you route a subset of traffic to a new version and watch for errors. In an agentic pipeline, you route the PR to a squad of agents and watch for policy violations. The monitoring stack is the same: dashboards, logs, and alerts. The difference is that agents act instead of just alerting.
+Opaque verdicts. If the final status comes from a model prompt with no deterministic fallback, you cannot reproduce a decision after the fact. Keep the verdict deterministic and the explanation generated.
 
-## Common misconceptions, corrected
+Provider and credential exposure. Any role that calls an external model sends your diff somewhere. Decide explicitly whether that is acceptable, scope the credentials to the minimum, and prefer a gateway you control so that prompts and responses are logged in one place rather than scattered across workflow steps.
 
-Misconception 1: “Agents will rewrite my code arbitrarily.”
-Reality: Agents can mutate the change only if the mandate explicitly allows it. The Style Agent commits a formatting patch because the repo’s CODEOWNERS file grants it that right. The Security Agent can revoke tokens but cannot change business logic. Each agent’s scope is defined in a policy file versioned in the repo.
+Escalation that nobody sees. A role that escalates but posts nothing useful is worse than a hard failure, because the PR looks green. Make escalation produce a required review from a named team, not just a comment.
 
-Misconception 2: “Agents make it impossible to debug failures.”
-Reality: Every agent logs to AWS CloudWatch with structured JSON. You can trace a decision from the Final Agent back to the Security Agent’s scan in 3 clicks. The logs are immutable and searchable—something static checklists never provided.
+## Measuring whether it helps
 
-Misconception 3: “Agents cost more than checklists.”
-Reality: A single ESLint job on a t3.medium costs $0.0009 per run. AWS Bedrock Sonnet 3.5 on a 100-line diff costs $0.0012. When you factor in the human time saved (42% reduction in escaped defects), the ROI is positive within 30 days.
+Do not adopt this on the strength of a blog post, including this one. Measure it on your own repository. The metrics that matter are cheap to collect and hard to game if you define them before you start.
 
-Misconception 4: “Agents can’t handle private code.”
-Reality: Run the agents inside your VPC using SageMaker endpoints with VPC endpoints. The model never leaves your AWS account; the prompts are sanitized and scoped to the PR diff only. We did this at our Nairobi fintech and saw zero data leaks.
+Pick a window, for example the last 200 merged PRs, and compute a baseline:
 
-## The advanced version (once the basics are solid)
+- Time from PR opened to first human review, and to merge. Both medians and the 90th percentile.
+- Number of review rounds per PR, where a round is a push after the first review.
+- Escaped defects: issues or reverts linked to merged PRs within 30 days, per 100 merges.
+- CI minutes consumed per merged PR, split by job, so you can see what the new roles cost.
 
-Once your four core agents are stable, add a squad of specialist agents that negotiate with the change itself. Here are three patterns that moved the needle for us:
+Then run the pipeline in shadow mode: it reports but does not block. Compare the same metrics over the next comparable window. If the pipeline is working, you expect the median time to first human review to fall, the number of review rounds to fall, and CI minutes to rise modestly. If escaped defects rise, the roles are blocking the wrong things or the aggregator is too permissive; that is the signal to tighten policy, not to add more roles.
 
-1. The LLM Refactor Agent
-   - Mandate: Suggest structural refactors to reduce cognitive complexity. - Trigger: When cyclomatic complexity >10. - Output: A refactor diff that splits functions and adds type hints. - Tooling: Uses Codeium’s CLI agent (v1.42.0) behind a private SageMaker endpoint. - Result: Cut complexity by 35% in 4 repos without human input.
+For cost, instrument rather than estimate. Log token counts and wall-clock time per role, multiply by your provider's published per-token price, and add runner minutes at your plan's rate. The output is a per-PR cost you can compare against the review time saved, using your own loaded hourly rate. Any figure quoted without those inputs is a guess.
 
-2. The Performance Agent
-   - Mandate: Reject if any endpoint’s P95 latency increases >5%. - Trigger: When new endpoints are added. - Output: A benchmark diff and a regression report. - Tooling: Runs k6 0.51.0 against a staging environment, caches results in Redis 7.2. - Result: Caught 3 latency regressions before they hit production.
+## A decision checklist before you build
 
-3. The Cost Agent
-   - Mandate: Reject if the change introduces an AWS resource that costs >$50/month. - Trigger: When new Terraform files are added. - Output: A cost diff and a suggested cheaper alternative. - Tooling: Uses Infracost 0.10.26 and AWS Cost Explorer API. - Result: Saved $23k/year across 8 repos by catching unused NAT gateways.
+Use this to decide whether the pipeline is worth building at all, and where to start.
 
-To orchestrate these agents, switch from a linear GitHub Actions job to AWS Step Functions. Each agent becomes a state machine step with retry logic, timeout handling, and a fallback to human review when the agent fails. The state machine logs every transition to AWS QLDB, giving you a tamper-proof audit trail.
+- Is there a category of review work that is currently done by humans but is fully specified by a rule? That is your first role.
+- Does any current check produce a fix that a human applies by hand every time? That is your first mutating role.
+- Can you name the exact condition under which each role escalates? If not, the role is not ready.
+- Do you have a way to revert an automated commit quickly? If not, fix that first.
+- Is the final verdict deterministic and reproducible from logs? If not, redesign before adding roles.
+- Do you have a baseline for review latency and escaped defects? Without one you cannot tell whether anything improved.
 
-Here’s a minimal Step Functions definition (ASL):
+## FAQ
 
-```json
-{
-  "Comment": "Agentic Pipeline ASL",
-  "StartAt": "DependencyAgent",
-  "States": {
-    "DependencyAgent": {
-      "Type": "Task",
-      "Resource": "arn:aws:states:::lambda:startSyncExecution.waitForTaskToken",
-      "TimeoutSeconds": 60,
-      "Parameters": {
-        "FunctionName": "dependency-agent-lambda:1",
-        "Payload": {
-          "pr": "$.pr",
-          "token": "$.taskToken"
-        }
-      },
-      "Next": "ChoiceAfterDependency"
-    },
-    "ChoiceAfterDependency": {
-      "Type": "Choice",
-      "Choices": [
-        {
-          "Variable": "$.Payload.status",
-          "StringEquals": "pass",
-          "Next": "StyleAgent"
-        }
-      ],
-      "Default": "HumanReview"
-    },
-    "HumanReview": {
-      "Type": "Fail",
-      "Error": "HumanReviewRequired",
-      "Cause": "DependencyAgent flagged issue"
-    }
-  }
-}
-```
+**Does this require an LLM at all?**
+No. Most of the value comes from splitting checks into roles, giving each a clear mandate, and handling mutation and staleness correctly. Model calls are useful for summarization and classification, but the blocking logic should be deterministic.
 
-Cost of the Step Functions state machine: $0.000023 per execution (2026 pricing). That’s cheaper than a single GitHub Actions runner minute.
+**How is this different from just adding more CI jobs?**
+The difference is authority and aggregation. A CI job reports. A role can be granted the ability to mutate the change, and the aggregator reasons over partial results and staleness rather than treating the job list as an AND of exit codes.
 
-## Quick reference
+**What about repositories where contributors cannot push branches?**
+Restrict mutating roles to branches in the same repository, as the workflow above does with the `if:` condition, and have mutating roles open a separate fix-up PR against the contributor's branch instead of pushing directly.
 
-| Concept | Tool | Version | Cost per PR | Latency |
-|---|---|---|---|---|
-| Dependency Agent | TruffleHog | 3.41.0 | $0.0003 | 15s |
-| Style Agent | Black + Ruff | 24.3.0 | $0.0001 | 10s |
-| Test Agent | pytest + coverage | 8.1.1 | $0.0005 | 35s |
-| Security Agent | TruffleHog | 3.41.0 | $0.0003 | 12s |
-| Final Agent | AWS Bedrock | Sonnet 3.5 | $0.0012 | 20s |
-| Orchestrator | AWS Step Functions | 2026 | $0.000023 | 2s |
-| Cache | Redis | 7.2 | $0.0004 | 3ms |
+**How many roles should a small team start with?**
+Two: a style role that formats and a test role that blocks. Add a dependency role when you have a pinned lockfile and a clear severity threshold. Add anything model-based last, once the deterministic parts are stable.
 
-- Total median latency: 90s
-- Total median cost: $0.0012
-- Escape rate drop: 42%
-- Observability: CloudWatch + QLDB
-- Private code: SageMaker VPC endpoints
+**Can this run without sending code to a third party?**
+Yes, if you drop the model-based roles or route them through infrastructure you operate. The deterministic roles never need to leave your CI environment.
 
-## Further reading worth your time
+## Do this next
 
-- [AWS Step Functions ASL reference](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html) — the language you’ll use to wire agents together. - [TruffleHog 3.41.0 changelog](https://github.com/trufflesecurity/trufflehog/releases/tag/v3.41.0) — the agent that actually revokes secrets. - [Codeium CLI agent docs](https://docs.codeium.com/cli) — the agent that refactors code autonomously. - [Infracost 0.10.26 pricing guide](https://www.infracost.io/docs/pricing/) — the agent that saves you from surprise AWS bills.
+Open your repository's CI configuration and list every check that currently runs on a pull request. Next to each, write one sentence stating what it would do differently if it were allowed to fix the problem instead of only reporting it. That list is your candidate role set, and the ones where the sentence is easy to write are where you should start.
 
-## Frequently Asked Questions
-
-**Why not just use GitHub Copilot for code review?**
-Because Copilot doesn’t run tests, bump dependencies, or revoke secrets. It’s a pair programmer, not a reviewer. Agents are specialized workers that act autonomously; Copilot is a suggestion engine.
-
-**How do you prevent agents from making bad changes?**
-Each agent’s mandate is locked in a policy file committed to the repo. If an agent commits a change, it must be covered by a policy file that the CODEOWNERS have approved. We audit policy changes in the same PR process as code changes.
-
-Turned out the coverage library pytest-cov 5.0.0 had a bug that misreported coverage when pytest-xdist split tests across workers. Pinning to 5.0.2 fixed it and cut our flake rate from 8% to 0.5%.
-
-**How do you handle flaky tests introduced by agents?**
-We run the Test Agent twice: once on the PR diff, once on the auto-committed style fixes. If either run flakes, the pipeline fails and posts a GitHub comment with the flake link. We also cache test results in Redis 7.2 with a 5-minute TTL to avoid rerunning the same tests repeatedly.
-
-**Is this only for Python repos?**
-No. We run the same pipeline on a Node 20 LTS repo by swapping Black for Prettier and pytest for Jest. The agents are language-agnostic; only the tooling changes.
-
-## Closing step
-
-Open your repo’s `.github/workflows` directory. Create a file named `agentic-review.yml` and paste the YAML from the worked example. Commit it, open a PR, and watch the agents negotiate your change. In 30 minutes you’ll know whether this pipeline fits your team.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 14, 2026
+===END===

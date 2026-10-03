@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Claude Code after a year: daily wins - Kubai Kevin</title>
-        <meta name="description" content="Cut patch review time 74% with Claude Code in 2026 — real costs, rollback logic, and the one metric your team should watch first">
+        <meta name="description" content="Design an agentic Dependabot patcher that bumps a dependency, runs tests in a container, and opens a PR only when the suite passes.">
         <meta name="keywords" content="ClaudeCode2026, AgenticCodingTools, AutomatedPatchReview, DependabotAutomation, Dockerized, Ai, Coding, Docker, Containers">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T03:55:14.348158">
-        <meta property="article:modified_time" content="2026-09-28T19:27:04.606803+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:29:22.009009+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Claude Code after a year: daily wins">
-        <meta property="og:description" content="Cut patch review time 74% with Claude Code in 2026 — real costs, rollback logic, and the one metric your team should watch first">
+        <meta property="og:description" content="Design an agentic Dependabot patcher that bumps a dependency, runs tests in a container, and opens a PR only when the suite passes.">
         <meta property="og:url" content="https://kubaik.github.io/claude-code-after-a-year-daily-wins/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Claude Code after a year: daily wins">
-        <meta name="twitter:description" content="Cut patch review time 74% with Claude Code in 2026 — real costs, rollback logic, and the one metric your team should watch first">
+        <meta name="twitter:description" content="Design an agentic Dependabot patcher that bumps a dependency, runs tests in a container, and opens a PR only when the suite passes.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/claude-code-after-a-year-daily-wins.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/claude-code-after-a-year-daily-wins/#article",
       "headline": "Claude Code after a year: daily wins",
-      "description": "Cut patch review time 74% with Claude Code in 2026 — real costs, rollback logic, and the one metric your team should watch first",
+      "description": "Design an agentic Dependabot patcher that bumps a dependency, runs tests in a container, and opens a PR only when the suite passes.",
       "datePublished": "2026-06-25T03:55:14+00:00",
-      "dateModified": "2026-09-28T19:27:04+00:00",
-      "wordCount": 2646,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-03T12:29:22+00:00",
+      "wordCount": 2394,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Claude Code after a year: daily wins</h1>
                 
-                <p class="post-lead">Cut patch review time 74% with Claude Code in 2026 — real costs, rollback logic, and the one metric your team should watch first</p>
+                <p class="post-lead">Design an agentic Dependabot patcher that bumps a dependency, runs tests in a container, and opens a PR only when the suite passes.</p>
                 
                 
                 <div class="tags">
@@ -260,66 +260,59 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2646 words
+                        12 min read
+                        &nbsp;·&nbsp; 2394 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-28
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In late 2026, our team at a Berlin-based logistics startup decided to try every agentic coding assistant we could get our hands on. We tried GitHub Copilot Enterprise, Cursor, and a couple of in-house LLM wrappers. None of them stuck for more than a week.</p>
-<p>Then we tried Claude Code 3.5 (Sonnet) in January 2026. After twelve months of daily use, it’s the only tool that survived the churn. The assistant kept generating code that assumed we had a staging environment identical to production, but our staging runs on arm64 ECS Fargate while prod is x86_64 EC2. The first PR it generated passed all unit tests on CI but crashed in prod with a SIGILL. That mistake cost us €4,200 in rollback time and a weekend of on-call for the entire team.</p>
-<p>Claude Code isn’t perfect, but it’s the first agentic coding tool that actually respects boundaries: it reads your repo, it respects your tests, and it will not merge a PR until the tests pass. After a year of daily use, here’s what it gets right—and where it still trips up.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>This tutorial assumes you’re on macOS 14.6 or Ubuntu 24.04 LTS, with Node.js 20 LTS and Python 3.11. You’ll need:
-- Claude Code CLI v1.12.3 or later
-- Docker Desktop 4.30.0 with BuildKit enabled
-- AWS CLI v2.15.0 configured with a profile that has IAM permissions for ECR and ECS
-- A GitHub repository with at least one Node.js or Python service that runs tests in CI</p>
-<p>You’re going to build a tiny agentic patcher: a script that listens to GitHub Dependabot alerts, checks if the upgrade breaks your app in a containerized environment, and opens a PR only if the tests pass. It’s intentionally minimal so you can see the seams where Claude’s strengths and weaknesses meet.</p>
-<p>By the end, you’ll have a working patcher that runs in 12 seconds on average, costs less than $0.03 per scan, and keeps a log of every decision it makes. That’s fast enough to run on every Dependabot alert without blowing up your budget.</p>
-<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<p>First, install the official CLI.</p>
-<pre><code class="language-bash"># macOS
-curl -fsSL https://binaries.claude.ai/v1/install.sh | sh
-
-# Ubuntu
-curl -fsSL https://binaries.claude.ai/v1/install.sh | sudo sh
-</code></pre>
-<p>Verify the version.</p>
+                <p>Agentic coding assistants are most useful when they are scoped to a narrow, verifiable task. "Bump this dependency and prove the tests still pass" is exactly that kind of task: the success condition is mechanical, the blast radius is small, and a failing run costs nothing if the agent rolls back cleanly. This article walks through the design of a test-gated dependency patcher, the failure modes that show up in practice, and how to instrument it so you can tell whether it is actually working.</p>
+<h2 id="the-problem-with-ungated-automation">The problem with ungated automation</h2>
+<p>The common failure mode for dependency automation is not "the agent wrote bad code." It is "the agent opened a pull request before anything verified the change." A version bump that compiles locally can still break a container build, a lockfile check, or a test that depends on the old behavior. When the gate is missing, the cost is not the patch itself — it is the review queue, the failed CI minutes, and the on-call attention spent closing PRs nobody asked for.</p>
+<p>The design principle that follows is simple: <strong>the agent may propose, but only a passing test suite may publish.</strong> Everything below is in service of that.</p>
+<p>A second, subtler failure mode is environment drift. A patch validated on one architecture or base image can fail on another. If your CI runs on <code>arm64</code> and production runs on <code>x86_64</code>, a native module that builds fine in one place can crash in the other. The containerized test step is what catches this, provided the container image matches the target environment.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>The instructions below assume a Unix-like host (macOS or a recent Ubuntu LTS), Node.js 20 LTS, and Python 3.11. You will need:</p>
+<ul>
+<li>An agentic coding CLI that can read a repository and emit a unified diff.</li>
+<li>Docker with BuildKit enabled, so test containers start quickly.</li>
+<li>A GitHub repository with at least one service that runs tests in CI.</li>
+<li>A GitHub token with <code>repo</code> scope (or a fine-grained token with contents and pull-request write access).</li>
+</ul>
+<p>The patcher is intentionally small. Its value is in the seams: where the agent's output meets your test suite, your container runtime, and your version control.</p>
+<h2 id="step-1-environment-setup">Step 1 — environment setup</h2>
+<p>Install the CLI using whatever distribution channel your vendor documents, then confirm the version:</p>
 <pre><code class="language-bash">claude --version
-# Expected: claude-cli/1.12.3
 </code></pre>
-<p>Create a virtual environment and install the GitHub CLI.</p>
+<p>Create a virtual environment and install the Python dependencies:</p>
 <pre><code class="language-bash">python -m venv .venv &amp;&amp; source .venv/bin/activate
 pip install --upgrade pip
-pip install ghapi requests pydantic docker pytest pytest-asyncio
-brew install gh  # macOS
-sudo apt install gh -y  # Ubuntu
+pip install docker pydantic requests
 </code></pre>
-<p>Log in to the CLI so it can read your repo.</p>
-<pre><code class="language-bash">claude auth login
+<p>Install the GitHub CLI and authenticate it:</p>
+<pre><code class="language-bash">brew install gh          # macOS
+sudo apt install gh -y   # Ubuntu
+gh auth login
 </code></pre>
-<p>If you’re behind a corporate proxy, set the environment variables before starting.</p>
+<p>If you are behind a corporate proxy, export the standard variables before starting any process that needs network access:</p>
 <pre><code class="language-bash">export HTTPS_PROXY=http://proxy.example.com:8080
 export HTTP_PROXY=http://proxy.example.com:8080
 </code></pre>
-<p>Gotcha I hit: the CLI caches the GitHub token in plaintext in <code>~/.claude/tokens.json</code>. If you’re on a shared machine, move that file to a secure location or encrypt it with <code>age</code> before committing it.</p>
+<p>One operational note worth checking on your own machine: CLIs of this class often cache credentials in a dotfile under your home directory. Inspect the permissions on that file and, on shared hosts, either move it to an encrypted volume or restrict it to your user. Do not commit it.</p>
 <h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<p>Create a directory called <code>.claude-agent</code> and add <code>patcher.py</code>.</p>
+<p>Create a directory <code>.claude-agent</code> and add <code>patcher.py</code>.</p>
 <pre><code class="language-python">from pathlib import Path
 import asyncio
 import subprocess
 import json
-from typing import Dict, List
+from typing import List
 
 import docker
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel
 
 class Alert(BaseModel):
     dependency: str
@@ -334,19 +327,8 @@ class PatchResult(BaseModel):
     log: List[str]
     new_pr_url: str | None = None
 
-def list_files(root: str = &quot;.&quot;) -&gt; List[str]:
-    &quot;&quot;&quot;Return all files tracked by Git.&quot;&quot;&quot;
-    result = subprocess.run(
-        [&quot;git&quot;, &quot;ls-files&quot;],
-        cwd=root,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return result.stdout.splitlines()
-
 def run_tests(service_dir: str) -&gt; bool:
-    &quot;&quot;&quot;Run pytest or npm test inside a container.&quot;&quot;&quot;
+    &quot;&quot;&quot;Run the project's test command inside a container.&quot;&quot;&quot;
     client = docker.from_env()
     try:
         container = client.containers.run(
@@ -357,29 +339,26 @@ def run_tests(service_dir: str) -&gt; bool:
             remove=True,
             detach=True,
         )
-        logs = container.logs(stream=True, follow=True)
-        for chunk in logs:
+        for chunk in container.logs(stream=True, follow=True):
             print(chunk.decode(&quot;utf-8&quot;).strip())
-        exit_code = container.wait()[&quot;StatusCode&quot;]
-        return exit_code == 0
+        return container.wait()[&quot;StatusCode&quot;] == 0
     except Exception as e:
         print(f&quot;Test container failed: {e}&quot;)
         return False
 
 async def claude_plan(alert: Alert) -&gt; PatchResult:
-    &quot;&quot;&quot;Ask Claude to generate a safe patch.&quot;&quot;&quot;
+    &quot;&quot;&quot;Ask the agent for a minimal patch, apply it, and gate on tests.&quot;&quot;&quot;
     prompt = f&quot;&quot;&quot;
-You are an expert Node.js developer. The repo at {alert.manifest_path} 
-has a Dependabot alert upgrading {alert.dependency} from {alert.current_version} to {alert.new_version}.
+You are an expert Node.js developer. The repo at {alert.manifest_path}
+has a Dependabot alert upgrading {alert.dependency} from {alert.current_version}
+to {alert.new_version}.
 
-Write a minimal patch that bumps the dependency, runs the tests, and opens a PR only if the tests pass.
+Write a minimal patch that bumps the dependency and nothing else.
 Do not edit any other files. Output the patch as a unified diff.
 &quot;&quot;&quot;
 
     cmd = [
-        &quot;claude&quot;,
-        &quot;execute&quot;,
-        &quot;--model&quot;, &quot;claude-3-5-sonnet-20241022&quot;,
+        &quot;claude&quot;, &quot;execute&quot;,
         &quot;--max-turns&quot;, &quot;3&quot;,
         &quot;--input&quot;, prompt,
     ]
@@ -387,89 +366,88 @@ Do not edit any other files. Output the patch as a unified diff.
     result = subprocess.run(cmd, capture_output=True, text=True, check=True)
     diff = result.stdout.strip()
 
-    # Save the diff to a file so we can apply it later
     diff_path = Path(&quot;patches&quot;) / f&quot;{alert.dependency}-{alert.new_version}.patch&quot;
-    Path(&quot;patches&quot;).mkdir(exist_ok=True)
+    diff_path.parent.mkdir(exist_ok=True)
     diff_path.write_text(diff)
 
-    # Apply the patch and commit
     subprocess.run([&quot;git&quot;, &quot;apply&quot;, str(diff_path)], check=True)
     subprocess.run([&quot;git&quot;, &quot;add&quot;, &quot;.&quot;], check=True)
-    subprocess.run([&quot;git&quot;, &quot;commit&quot;, &quot;-m&quot;, f&quot;chore(deps): bump {alert.dependency} to {alert.new_version}&quot;], check=True)
+    subprocess.run(
+        [&quot;git&quot;, &quot;commit&quot;, &quot;-m&quot;,
+         f&quot;chore(deps): bump {alert.dependency} to {alert.new_version}&quot;],
+        check=True,
+    )
 
-    # Run tests inside a container
-    service_dir = alert.manifest_path.parent
+    service_dir = str(Path(alert.manifest_path).parent)
     success = run_tests(service_dir)
 
-    if success:
-        branch = f&quot;auto/dep-{alert.dependency}-{alert.new_version}&quot;
-        subprocess.run([&quot;git&quot;, &quot;push&quot;, &quot;origin&quot;, branch], check=True)
-        pr_url = subprocess.run(
-            [&quot;gh&quot;, &quot;pr&quot;, &quot;create&quot;, &quot;--title&quot;, f&quot;Bump {alert.dependency} to {alert.new_version}&quot;, &quot;--body&quot;, &quot;Auto-generated by Claude agent.&quot;],
-            capture_output=True,
-            text=True,
-            check=True,
-        ).stdout.strip()
-        return PatchResult(success=True, log=[diff], new_pr_url=pr_url)
-    else:
+    if not success:
         subprocess.run([&quot;git&quot;, &quot;reset&quot;, &quot;--hard&quot;, &quot;HEAD~1&quot;], check=True)
         return PatchResult(success=False, log=[diff, &quot;Tests failed.&quot;])
 
+    branch = f&quot;auto/dep-{alert.dependency}-{alert.new_version}&quot;
+    subprocess.run([&quot;git&quot;, &quot;checkout&quot;, &quot;-b&quot;, branch], check=True)
+    subprocess.run([&quot;git&quot;, &quot;push&quot;, &quot;origin&quot;, branch], check=True)
+    pr_url = subprocess.run(
+        [&quot;gh&quot;, &quot;pr&quot;, &quot;create&quot;,
+         &quot;--title&quot;, f&quot;Bump {alert.dependency} to {alert.new_version}&quot;,
+         &quot;--body&quot;, &quot;Auto-generated by the dependency patcher.&quot;],
+        capture_output=True, text=True, check=True,
+    ).stdout.strip()
+    return PatchResult(success=True, log=[diff], new_pr_url=pr_url)
+
 if __name__ == &quot;__main__&quot;:
-    # Simulate a Dependabot alert
     alert = Alert(
         dependency=&quot;express&quot;,
         current_version=&quot;4.18.2&quot;,
         new_version=&quot;4.19.0&quot;,
         ecosystem=&quot;npm&quot;,
-        manifest_path=Path(&quot;packages/api/package.json&quot;),
-        pr_url=&quot;https://github.com/dependabot/dependabot-core/issues/1234&quot;,
+        manifest_path=&quot;packages/api/package.json&quot;,
+        pr_url=&quot;https://github.com/example/repo/issues/1&quot;,
     )
     asyncio.run(claude_plan(alert))
 </code></pre>
-<p>Install the required Python packages.</p>
-<pre><code class="language-bash">pip install docker pydantic
-</code></pre>
-<p>Run the script once to make sure it works.</p>
+<p>Two details in that script matter more than the rest. First, the branch is created <strong>after</strong> the tests pass, so a failed run never leaves a remote branch behind. Second, the rollback is <code>git reset --hard HEAD~1</code>, which discards the agent's commit entirely. If your repository uses a different default branch or a rebase workflow, adjust the reset target accordingly — <code>HEAD~1</code> assumes exactly one commit was made.</p>
+<p>Run it once against a fixture repository to confirm the plumbing:</p>
 <pre><code class="language-bash">python .claude-agent/patcher.py
 </code></pre>
-<p>You should see:
-- A new branch created locally
-- A patch file written to <code>.claude-agent/patches/express-4.19.0.patch</code>
-- A GitHub PR opened (if the tests pass)
-- A log entry in memory</p>
-<p>If the tests fail, the script rolls back the commit and exits with an error. That rollback behavior is the single most important thing Claude Code gets right: it respects the boundaries of your repo and won’t leave dangling commits.</p>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>The first version of this script opened a PR even when the tests failed. That cost us €1,800 in wasted CI minutes and a dev who had to close 47 auto-generated PRs. The fix was simple: add a rollback on failure and log every decision.</p>
-<p>Add a retry loop for transient Docker errors.</p>
-<pre><code class="language-python">MAX_RETRIES = 3
+<p>Expected behavior on success: a patch file under <code>.claude-agent/patches/</code>, a new local branch, a pushed branch, and a PR URL on stdout. On failure: a hard reset and a <code>PatchResult</code> with <code>success=False</code>.</p>
+<h2 id="step-3-retries-rate-limits-and-circuit-breaking">Step 3 — retries, rate limits, and circuit breaking</h2>
+<p>The naive version treats any Docker error as a test failure. In practice, transient daemon errors are common enough that a single retry is worth adding.</p>
+<pre><code class="language-python">import asyncio
+
+MAX_RETRIES = 3
 RETRY_DELAY = 2
 
-for attempt in range(1, MAX_RETRIES + 1):
-    try:
-        container = client.containers.run(
-            image=&quot;node:20-alpine&quot;,
-            command=[&quot;npm&quot;, &quot;test&quot;],
-            volumes=[f&quot;{service_dir}:/app&quot;],
-            working_dir=&quot;/app&quot;,
-            remove=True,
-            detach=True,
-        )
-        exit_code = container.wait()[&quot;StatusCode&quot;]
-        if exit_code == 0:
-            return True
-    except docker.errors.APIError as e:
-        if &quot;network&quot; in str(e).lower() and attempt &lt; MAX_RETRIES:
-            print(f&quot;Network error, retrying in {RETRY_DELAY}s (attempt {attempt}/{MAX_RETRIES})&quot;)
-            await asyncio.sleep(RETRY_DELAY)
-            continue
-        raise
-return False
+async def run_tests_with_retry(service_dir: str) -&gt; bool:
+    client = docker.from_env()
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            container = client.containers.run(
+                image=&quot;node:20-alpine&quot;,
+                command=[&quot;npm&quot;, &quot;test&quot;],
+                volumes=[f&quot;{service_dir}:/app&quot;],
+                working_dir=&quot;/app&quot;,
+                remove=True,
+                detach=True,
+            )
+            if container.wait()[&quot;StatusCode&quot;] == 0:
+                return True
+            return False
+        except docker.errors.APIError as e:
+            if attempt &lt; MAX_RETRIES:
+                print(f&quot;Docker API error, retrying in {RETRY_DELAY}s &quot;
+                      f&quot;(attempt {attempt}/{MAX_RETRIES}): {e}&quot;)
+                await asyncio.sleep(RETRY_DELAY)
+                continue
+            raise
+    return False
 </code></pre>
-<p>Handle rate limits on the GitHub API.</p>
+<p>Note that only <code>APIError</code> is retried. A non-zero exit code from the test command is a real failure and should not be retried — retrying a deterministic failure just burns time.</p>
+<p>The GitHub API has documented rate limits, and a burst of Dependabot alerts can exhaust them. Handle the 403 response explicitly:</p>
 <pre><code class="language-python">from github import Github, GithubException
 
-g = Github(&quot;ghp_...&quot;)  # Use a fine-grained token with repo and write access
+g = Github(os.environ[&quot;GITHUB_TOKEN&quot;])
 repo = g.get_repo(&quot;your-org/your-repo&quot;)
 
 try:
@@ -481,21 +459,25 @@ try:
     )
 except GithubException as e:
     if e.status == 403 and &quot;rate limit&quot; in str(e).lower():
-        print(&quot;Rate limited. Waiting 60s.&quot;)
         await asyncio.sleep(60)
-        pr = repo.create_pull(...)  # retry
+        pr = repo.create_pull(
+            title=f&quot;Bump {alert.dependency} to {alert.new_version}&quot;,
+            body=&quot;Auto-generated patch.&quot;,
+            head=branch,
+            base=&quot;main&quot;,
+        )
     else:
         raise
 </code></pre>
-<p>Add a circuit breaker so the agent stops calling Docker if the daemon is unresponsive for more than 30 seconds.</p>
-<pre><code class="language-python">import socket
+<p>Add a circuit breaker so the agent stops calling Docker when the daemon is unresponsive rather than queueing work that will all fail:</p>
+<pre><code class="language-python">import time
 
 class DockerCircuitBreaker:
-    def __init__(self, max_failures=3, reset_timeout=30):
+    def __init__(self, max_failures: int = 3, reset_timeout: int = 30):
         self.max_failures = max_failures
         self.reset_timeout = reset_timeout
         self.failures = 0
-        self.last_failure = 0
+        self.last_failure = 0.0
 
     def allowed(self) -&gt; bool:
         if self.failures &gt;= self.max_failures:
@@ -504,35 +486,31 @@ class DockerCircuitBreaker:
             self.failures = 0
         return True
 
-    def record_failure(self):
+    def record_failure(self) -&gt; None:
         self.failures += 1
         self.last_failure = time.time()
-
-c = DockerCircuitBreaker()
-
-if not c.allowed():
-    raise RuntimeError(&quot;Docker unavailable, circuit breaker open.&quot;)
-
-try:
-    container = client.containers.run(...)
-except Exception:
-    c.record_failure()
-    raise
 </code></pre>
-<p>The circuit breaker reduced our false-positive PR rate from 12% to 0.4% over two weeks. The main failure mode wasn’t Docker itself—it was the CI runner running out of disk space and the Docker daemon hanging. The breaker catches that within seconds instead of waiting for a timeout.</p>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<p>Add structured logging and a metrics endpoint.</p>
+<p>The failure mode this addresses is not "Docker is down" — that is obvious. It is "Docker is partially degraded": the daemon accepts connections but hangs on container start, usually because the host has run out of disk or the layer cache is corrupted. Without a breaker, every queued alert waits for the same timeout. With one, the agent fails fast and pages a human.</p>
+<h2 id="step-4-observability-and-tests">Step 4 — observability and tests</h2>
+<p>Structured logs and a small metrics surface make the difference between "it seems to work" and "here is what it did."</p>
 <pre><code class="language-python">import logging
-import prometheus_client
 from fastapi import FastAPI
+import prometheus_client
 
-logging.basicConfig(level=logging.INFO, format=&quot;%(asctime)s %(levelname)s %(message)s&quot;)
-logger = logging.getLogger(&quot;claude-agent&quot;)
+logging.basicConfig(
+    level=logging.INFO,
+    format=&quot;%(asctime)s %(levelname)s %(message)s&quot;,
+)
+logger = logging.getLogger(&quot;dep-patcher&quot;)
 
 app = FastAPI()
 
-PATCHES_TOTAL = prometheus_client.Counter(&quot;patches_total&quot;, &quot;Total patch operations&quot;, [&quot;success&quot;])
-PATCH_LATENCY = prometheus_client.Histogram(&quot;patch_latency_seconds&quot;, &quot;Latency of a patch operation&quot;)
+PATCHES_TOTAL = prometheus_client.Counter(
+    &quot;patches_total&quot;, &quot;Total patch operations&quot;, [&quot;success&quot;],
+)
+PATCH_LATENCY = prometheus_client.Histogram(
+    &quot;patch_latency_seconds&quot;, &quot;Latency of a patch operation&quot;,
+)
 
 @app.post(&quot;/patch&quot;)
 async def patch_alert(alert: Alert):
@@ -540,201 +518,133 @@ async def patch_alert(alert: Alert):
         result = await claude_plan(alert)
     PATCHES_TOTAL.labels(success=&quot;true&quot; if result.success else &quot;false&quot;).inc()
     logger.info(
-        &quot;patch_result&quot;,
-        extra={
-            &quot;dependency&quot;: alert.dependency,
-            &quot;success&quot;: result.success,
-            &quot;duration_ms&quot;: PATCH_LATENCY._metrics[0].samples[0].value * 1000,
-        },
+        &quot;patch_result dependency=%s success=%s&quot;,
+        alert.dependency, result.success,
     )
     return result
+
+@app.get(&quot;/health&quot;)
+def health():
+    return {&quot;status&quot;: &quot;ok&quot;}
 </code></pre>
-<p>Add a pytest suite that runs in 1.4 seconds.</p>
+<p>Avoid reading internal histogram attributes to compute durations — read the value from the observed timer or log the wall-clock delta yourself. The <code>_metrics</code> attribute is a private implementation detail and its shape is not part of the client library's public contract.</p>
+<p>A test suite for the patcher itself should cover both branches:</p>
 <pre><code class="language-python">import pytest
-from .patcher import PatchResult, Alert
+from pathlib import Path
+from .patcher import Alert, claude_plan
 
 @pytest.mark.asyncio
-async def test_patch_success():
+async def test_patch_success(monkeypatch):
+    monkeypatch.setattr(&quot;patcher.run_tests&quot;, lambda _: True)
     alert = Alert(
         dependency=&quot;express&quot;,
         current_version=&quot;4.18.2&quot;,
         new_version=&quot;4.19.0&quot;,
         ecosystem=&quot;npm&quot;,
-        manifest_path=Path(&quot;tests/fixtures/package.json&quot;),
-        pr_url=&quot;https://github.com/dependabot/dependabot-core/issues/1234&quot;,
+        manifest_path=&quot;tests/fixtures/package.json&quot;,
+        pr_url=&quot;https://github.com/example/repo/issues/1&quot;,
     )
     result = await claude_plan(alert)
     assert result.success is True
-    assert result.new_pr_url.startswith(&quot;https://github.com&quot;)
 
 @pytest.mark.asyncio
-async def test_patch_failure():
+async def test_patch_failure_rolls_back(monkeypatch):
+    monkeypatch.setattr(&quot;patcher.run_tests&quot;, lambda _: False)
     alert = Alert(
         dependency=&quot;express&quot;,
         current_version=&quot;4.18.2&quot;,
-        new_version=&quot;99.9.9&quot;,  # impossible version
+        new_version=&quot;4.19.0&quot;,
         ecosystem=&quot;npm&quot;,
-        manifest_path=Path(&quot;tests/fixtures/package.json&quot;),
-        pr_url=&quot;https://github.com/dependabot/dependabot-core/issues/1234&quot;,
+        manifest_path=&quot;tests/fixtures/package.json&quot;,
+        pr_url=&quot;https://github.com/example/repo/issues/1&quot;,
     )
     result = await claude_plan(alert)
     assert result.success is False
     assert result.new_pr_url is None
 </code></pre>
-<p>Run the tests with pytest 7.4.</p>
+<p>Run them:</p>
 <pre><code class="language-bash">pip install pytest pytest-asyncio
 pytest .claude-agent/patcher_test.py -v
 </code></pre>
-<p>Add a health endpoint so your SRE can monitor the agent.</p>
-<pre><code class="language-python">@app.get(&quot;/health&quot;)
-def health():
-    return {&quot;status&quot;: &quot;ok&quot;}
+<p>Stubbing <code>run_tests</code> is deliberate. The unit test is verifying the control flow — that a failure produces a rollback and no PR — not the container runtime. Container behavior belongs in a separate integration test.</p>
+<h2 id="measuring-whether-it-works">Measuring whether it works</h2>
+<p>Any claim about this design improving a workflow has to be measured on your own repository. The instrumentation above gives you the raw material. What to collect:</p>
+<ul>
+<li><strong>Gate accuracy.</strong> Count patches where the test suite passed but the change later broke something (a false negative), and patches where the suite failed but the change was fine (a false positive). The first is a coverage problem in your tests; the second is usually an environment mismatch.</li>
+<li><strong>Time to merge.</strong> Compare the timestamp on the Dependabot alert to the merge timestamp on the resulting PR, before and after enabling the patcher.</li>
+<li><strong>Cost per scan.</strong> If you run the test container locally, cost is wall-clock time. If you run it in a cloud function, cost is <code>memory_GB × duration_seconds × the provider's GB-second rate</code>. Record the memory limit and the observed duration for each run; the arithmetic is then trivial and the rate is on the provider's pricing page.</li>
+<li><strong>Rollback rate.</strong> The fraction of runs that end in <code>git reset --hard</code>. A rising rollback rate is the earliest signal that your test suite or your container image has drifted.</li>
+</ul>
+<p>Compare two equal-length windows — for example, four weeks before and four weeks after — and report the deltas with the sample sizes. A change from 12 failed runs out of 100 to 1 out of 100 is meaningful; a change from 3 out of 25 to 2 out of 25 is noise.</p>
+<h2 id="failure-modes-to-expect">Failure modes to expect</h2>
+<p><strong>Scope creep.</strong> Agents asked to bump a version will sometimes reformat the whole file or "tidy" adjacent code. The mitigation is a prompt that states the constraint explicitly and a post-apply check that rejects diffs touching more than one file:</p>
+<pre><code class="language-python">changed = subprocess.run(
+    [&quot;git&quot;, &quot;diff&quot;, &quot;--name-only&quot;, &quot;HEAD~1&quot;],
+    capture_output=True, text=True, check=True,
+).stdout.split()
+if len(changed) &gt; 1:
+    subprocess.run([&quot;git&quot;, &quot;reset&quot;, &quot;--hard&quot;, &quot;HEAD~1&quot;], check=True)
+    return PatchResult(success=False, log=[&quot;Patch touched multiple files.&quot;])
 </code></pre>
-<p>Deploy the service behind an internal load balancer so other teams can call it without installing the CLI.</p>
-<pre><code class="language-yaml"># docker-compose.yml
-version: &quot;3.9&quot;
-services:
-  claude-agent:
-    image: python:3.11-slim
-    ports:
-      - &quot;8000:8000&quot;
-    volumes:
-      - .:/app
-      - /var/run/docker.sock:/var/run/docker.sock
-    working_dir: /app
-    command: uvicorn .claude-agent.patcher:app --host 0.0.0.0 --port 8000
+<p><strong>Architecture mismatch.</strong> If your CI and production run on different CPU architectures or base images, a containerized test on the wrong image gives false confidence. Pin the test image to match production and assert the architecture at runtime.</p>
+<p><strong>Lockfile drift.</strong> A dependency bump that updates <code>package.json</code> but not the lockfile will fail under <code>npm ci</code>. This is a <em>good</em> failure — it is the gate doing its job — but it means the agent's prompt should explicitly mention the lockfile, and the test command should be the same one CI runs.</p>
+<p><strong>Private registry authentication.</strong> The test container does not inherit your host's <code>~/.npmrc</code>. Mount it:</p>
+<pre><code class="language-python">volumes=[
+    f&quot;{service_dir}:/app&quot;,
+    f&quot;{Path.home()}/.npmrc:/root/.npmrc:ro&quot;,
+],
 </code></pre>
-<p>Run the health check every 30 seconds with a small Lambda.</p>
-<pre><code class="language-python">import boto3
-
-lambda_client = boto3.client(&quot;lambda&quot;, region_name=&quot;eu-central-1&quot;)
-
-def handler(event, context):
-    response = lambda_client.invoke(
-        FunctionName=&quot;claude-agent-health&quot;,
-        InvocationType=&quot;RequestResponse&quot;,
-        Payload=json.dumps({&quot;url&quot;: &quot;http://internal-alb/health&quot;}),
-    )
-    payload = json.load(response[&quot;Payload&quot;])
-    if payload.get(&quot;status&quot;) != &quot;ok&quot;:
-        raise Exception(&quot;Agent unhealthy&quot;)
-</code></pre>
-<p>We added this after the agent silently crashed for 4 hours during a Docker upgrade. The health check caught it within 30 seconds.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>We deployed the agent to our monorepo in February 2026. Over the last six months:</p>
+<p>The <code>:ro</code> suffix matters; the container has no reason to write to your credentials file.</p>
+<p><strong>Credential expiry mid-run.</strong> If the token used by the CLI is short-lived, a rotation failure will surface as an authentication error deep in the patch flow. Check token validity before starting work rather than after the diff has been applied.</p>
+<h2 id="choosing-your-gate">Choosing your gate</h2>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Before agent</th>
-<th>After agent</th>
-<th>Change</th>
+<th>Gate</th>
+<th>Catches</th>
+<th>Misses</th>
+<th>Cost</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Dependabot PRs merged per week</td>
-<td>32</td>
-<td>45</td>
-<td>+41%</td>
+<td>Lint only</td>
+<td>Syntax and style</td>
+<td>Runtime breakage</td>
+<td>Seconds</td>
 </tr>
 <tr>
-<td>Average time from alert to merge</td>
-<td>4.2 days</td>
-<td>1.1 days</td>
-<td>-74%</td>
+<td>Unit tests</td>
+<td>Logic regressions in covered code</td>
+<td>Integration and environment issues</td>
+<td>Seconds to minutes</td>
 </tr>
 <tr>
-<td>Failed CI runs from bad patches</td>
-<td>12%</td>
-<td>0.4%</td>
-<td>-97%</td>
+<td>Containerized test suite</td>
+<td>Environment, native modules, lockfile</td>
+<td>Untested code paths</td>
+<td>Minutes</td>
 </tr>
 <tr>
-<td>Cost per scan</td>
-<td>€2.10</td>
-<td>€0.02</td>
-<td>-99%</td>
-</tr>
-<tr>
-<td>Dev hours spent on Dependabot</td>
-<td>8 h/week</td>
-<td>2 h/week</td>
-<td>-75%</td>
+<td>Containerized suite + smoke test</td>
+<td>The above plus startup failures</td>
+<td>Subtle behavioral changes</td>
+<td>Minutes</td>
 </tr>
 </tbody>
 </table>
-<p>The cost dropped because we moved from a fleet of 8 EC2 t3.medium instances running in parallel to a single Lambda function that spins up a container per patch. Lambda charged us $0.0000166667 per GB-second and our patches average 250 MB RAM for 12 seconds, so each scan costs about $0.02. The old CI matrix cost €2.10 per alert.</p>
-<p>The time savings came from two things: the agent does the mechanical work (bumping the version, committing, opening the PR) in 12 seconds instead of 4 minutes, and it respects the test suite so we don’t merge broken code. The failed-patch rate dropped from 12% to 0.4% because the agent always rolls back on failure.</p>
-<p>The biggest surprise was how much our SRE team trusts the agent. They added it to the on-call rotation as a “canary” service. When the agent fails to apply a patch, it automatically pages the on-call engineer. That’s only happened 17 times in six months—mostly during Docker daemon upgrades. The alert includes the exact error and the patch diff, so the engineer can fix it in under two minutes.</p>
-<p>The agent also uncovered two latent issues in our test suite:
-- The integration tests for the payments service relied on a mocked Stripe API that returned 200 OK for every request. The agent’s containerized tests hit the real Stripe sandbox and exposed the mock mismatch. - Our build step used <code>npm ci</code> but the lockfile was out of sync with <code>package.json</code> in 8% of our services. The agent’s containerized build caught every mismatch.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<p><strong>How do you handle private dependencies that require authentication?</strong>
-Claude Code doesn’t automatically inherit your npmrc or pip.conf. In <code>.claude-agent/.npmrc</code> add:</p>
-<pre><code>//registry.npmjs.org/:_authToken=${NPM_TOKEN}
-@your-org:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-</code></pre>
-<p>Then mount the file into the container:</p>
-<pre><code class="language-python">volumes=[
-    f&quot;{service_dir}:/app&quot;,
-    f&quot;.claude-agent/.npmrc:/root/.npmrc&quot;,
-],
-</code></pre>
-<p>The fix was to bind-mount the config file.</p>
-<p><strong>Can you run the agent outside GitHub?</strong>
-Yes. We run a mirror of our main repo in GitLab for a vendor project. The agent uses the GitLab CLI instead of the GitHub CLI. Replace:</p>
-<pre><code class="language-python">subprocess.run([&quot;gh&quot;, &quot;pr&quot;, &quot;create&quot;, ...])
-</code></pre>
-<p>with:</p>
-<pre><code class="language-python">subprocess.run([&quot;glab&quot;, &quot;mr&quot;, &quot;create&quot;, ...])
-</code></pre>
-<p>You’ll need to install <code>glab</code> and authenticate it with a token that has <code>api</code> scope.</p>
-<p><strong>What if the agent generates a patch that changes more than the dependency?</strong>
-Claude Code 3.5 Sonnet has a tendency to refactor the entire file. To constrain it, add a prompt constraint:</p>
-<pre><code class="language-python">prompt = f&quot;&quot;&quot;
-You are an expert Node.js developer. Your task is to bump the version of {alert.dependency}
-from {alert.current_version} to {alert.new_version} in package.json.
-Do not change any other files, do not add comments, and do not reformat the file.
-Output a minimal unified diff that only changes the version line.
-&quot;&quot;&quot;
-</code></pre>
-<p>We added this constraint after the agent reformatted an entire 500-line YAML file just to bump a Node version. The constraint cut the “scope creep” from 34% of patches to 2%.</p>
-<p><strong>How do you audit the agent’s decisions?</strong>
-Every patch is saved as a diff file in <code>.claude-agent/patches/</code>. The agent also writes a JSON log to S3:</p>
-<pre><code class="language-json">{
-  &quot;alert&quot;: {&quot;dependency&quot;: &quot;express&quot;, &quot;new_version&quot;: &quot;4.19.0&quot;},
-  &quot;patch_file&quot;: &quot;patches/express-4.19.0.patch&quot;,
-  &quot;success&quot;: true,
-  &quot;pr_url&quot;: &quot;https://github.com/.../pull/1234&quot;,
-  &quot;duration_ms&quot;: 12400,
-  &quot;timestamp&quot;: &quot;2026-06-05T14:30:00Z&quot;
-}
-</code></pre>
-<p>We rotate logs every 30 days and keep them in an S3 bucket with SSE-KMS encryption. The bucket policy denies all access except to the security team’s IAM role. That gives us a tamper-evident audit trail for GDPR compliance.</p>
-<p><strong>What happens if the agent runs out of tokens?</strong>
-We set up a short-lived token rotation using AWS Secrets Manager. The token is refreshed every 6 hours and injected into the container via an environment variable. If the rotation fails, the agent stops processing new alerts and pages the on-call engineer. That’s only happened twice in six months.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>Take the patcher you built in Step 2 and run it on your own Dependabot alert. Open <code>.claude-agent/patcher.py</code>, change the <code>alert</code> object at the bottom to match a real alert in your repo, and run:</p>
-<pre><code class="language-bash">python .claude-agent/patcher.py
-</code></pre>
-<p>If the tests pass, the agent will open a PR. If they fail, it will roll back and log the failure. Do this once and you’ll see exactly where the seams are in your own repo—whether it’s a missing test, a mock that’s out of sync, or a Docker daemon that needs restarting.</p>
-<p>That single run will teach you more about agentic coding than any tutorial can. After you’ve done it, move the alert object into a real Dependabot webhook and deploy the service behind your internal load balancer. Once it’s live, check the Prometheus metrics endpoint at <code>http://localhost:8000/metrics</code> and verify that the <code>patch_latency_seconds</code> histogram is under 30 seconds. If it’s slower, check your Docker layer caching and your Lambda memory size.</p>
-<p>Do those two things within the next 30 minutes and you’ll have a working agentic patcher that respects your tests, your costs, and your on-call rotation.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/claude-code-after-365-days-what-actually-works/">Claude Code after 365 days: what actually works</a></li>
-<li><a href="https://kubaik.github.io/ai-codebase-onboarding-2-paths-tested/">AI codebase onboarding: 2 paths tested</a></li>
-<li><a href="https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/">AI interviews break systems: 5 real mistakes in 2026</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>Most teams should start at the containerized test suite and add a smoke test once the patcher runs reliably. Lint-only gating is not a gate at all for this purpose.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Can this run outside GitHub?</strong>
+Yes. The publish step is the only GitHub-specific part. Substitute the equivalent CLI or API call for your host — for example, a merge-request creation call — and keep the branch-created-after-tests-pass ordering.</p>
+<p><strong>What if the agent generates a patch that does not apply cleanly?</strong>
+<code>git apply</code> will fail and raise. Catch that before committing, log the diff, and skip the alert. Do not fall back to <code>patch --fuzz</code>; a fuzzy apply is exactly the kind of silent change the gate exists to prevent.</p>
+<p><strong>How do you audit decisions?</strong>
+Write one JSON record per run containing the alert, the diff path, the test exit code, the duration, and the resulting PR URL. Ship those records to append-only storage. The diff file plus the exit code is sufficient to reconstruct any decision.</p>
+<p><strong>Should the agent ever merge?</strong>
+Not automatically. The gate proves the tests pass; it does not prove the change is desirable. Keep a human in the loop on the merge.</p>
+<h2 id="do-this-next">Do this next</h2>
+<p>Pick one real Dependabot alert in a repository you own, set the <code>alert</code> object at the bottom of <code>patcher.py</code> to match it, and run the script once. Watch which step fails first — the diff apply, the container start, or the test command. That single run tells you more about your repository's readiness for agentic patching than any amount of reading, and it takes about thirty minutes including the container pull.</p>
                 
                 
             </div>

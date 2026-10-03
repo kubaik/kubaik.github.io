@@ -1,381 +1,286 @@
 # AI fixes legacy code nobody owns
 
-The official documentation for use maintain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.
+## Why legacy systems drift away from their documentation
 
-## The gap between what the docs say and what production needs
+The official documentation for a legacy service is often the last accurate artifact anyone produced. What it rarely covers is what happens years into production, after emergency hotfixes, silent patches, and one-off config edits have accumulated. This article addresses that gap: how to use AI as a triage lens over code that no longer has a clear owner.
 
-Legacy code is like a garden. When nobody tends it, the weeds take over, the paths disappear, and what used to be a simple flower bed becomes a jungle of dead branches and tangled vines. In 2026, most teams avoid touching anything older than five years. The ones that do rarely have time to refactor — they just need the damn thing to keep running until the next quarterly review. That’s where AI comes in, but not in the way the vendors sell it.
+A legacy codebase resembles an untended garden. When nobody prunes it, the weeds take over, the paths disappear, and what used to be a simple flower bed becomes a tangle of dead branches. Teams commonly avoid touching anything older than five years, and the teams that do touch it rarely have time to refactor — they need the thing to keep running until the next planning cycle. AI can help, but not in the way vendor marketing usually frames it.
 
-I learned this the hard way when I inherited a 2018 Java monolith running on a 2014 Tomcat instance in a Brazilian bank’s internal network. The docs claimed it used "Spring Boot 2.1" and "Hibernate 5.2", but the actual runtime was a frankenstack: Spring Boot 2.1.8 with patches from 2.2.x, Hibernate 5.2.18 with manual JPA overrides, and a custom JPA repository layer that bypassed Spring Data entirely. The team’s lead told me, "Just don’t touch the DAOs — they break every time."
+A typical failure mode is a mismatch between the documented stack and the actual runtime. Docs might claim a service runs on a specific framework version, while the deployed binaries carry patches from a later minor release, a custom data-access layer that bypasses the ORM, and a repository abstraction that no longer matches the code. A common piece of folklore in such teams is "don't touch the DAOs — they break every time." That folklore is usually a signal that the documented architecture and the production reality have diverged.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. The real problem wasn’t the tech stack; it was the gap between the documented architecture and the production reality. Most legacy systems have a similar gap: the docs describe the intended design, but production runs something else. AI tools promise to scan codebases and generate docs, but they rarely account for the silent patches, emergency hotfixes, and undocumented behaviors that accumulate over years.
+The second gap is organizational. Nobody wants to own legacy code. When developer tenure is short, the original authors leave, tribal knowledge evaporates, and the system is held together by habit. AI tools that promise to "automate refactoring" often assume there is someone available to review the changes. In practice, many teams treat legacy code like a rental car: they don't want to modify it, they just want it to run until they can trade it in.
 
-The second gap is organizational: nobody wants to own legacy code. In 2026, the average tenure of a developer in a mid-sized company is 18 months. After two years, the original authors are gone, the tribal knowledge is gone, and the system is held together by hope and duct tape. AI tools that promise to "automate refactoring" often assume there’s someone around to review the changes. In reality, most teams run legacy code like a rental car: they don’t want to change anything, they just want it to work until they can trade it in.
+The third gap is measurement. Technical debt is often tracked as a generic percentage or a ticket count rather than as an observable property of the running system. A useful reframing is to ask: what is the redeploy time, the deployment failure rate, the p95 latency of the slowest path, the memory headroom under peak load? These are measurable, and they are what AI triage should be anchored to. A profiler run during a production-like load test will often reveal that an apparent "legacy Java slowness" is actually a single thread-pool starvation issue in a library that nobody has looked at in years. The docs say nothing about thread pools, because the docs were written before the thread pools became the bottleneck.
 
-The third gap is technical debt measurement. Most teams I’ve worked with in Brazil, Colombia, and Mexico track technical debt as a generic percentage or a Jira ticket count. They don’t measure the actual cost of maintaining it. In one case, a Colombian fintech’s legacy batch processing system took 45 minutes to redeploy, with a 12% failure rate on production deployments. The team attributed it to "legacy Java" until I ran a profiler and found it was a single thread pool starvation issue in a 2017 library. The docs said nothing about thread pools.
+AI cannot replace the judgment of a developer who understands the business domain, but it can bridge the gap between the idealized system and the messy reality. The useful framing is AI as a lens, not a replacement. For example, an AI-assisted dependency graph over a mid-sized Python codebase can surface a circular dependency between two modules that has been silently patched for years. The original developers may have known only that updating either module broke the other. The AI does not fix the cycle; it makes the cycle visible, which is the precondition for deciding whether to break it.
 
-AI can’t replace the judgment of a developer who understands the business domain, but it can bridge the gap between the idealized system and the messy reality. The key is to use AI as a lens, not a replacement. For example, I once used an AI tool to generate a dependency graph of a 2016 Python codebase with 87,000 lines. The tool identified a circular dependency between two modules that had been silently patched for years. The original developers had no idea it existed — they just knew that updating either module broke the other. The AI didn’t fix it; it just made the problem visible.
+The real win is not automating away the legacy. It is making the legacy's quirks visible to the people who have to live with it.
 
-The real win isn’t automating away the legacy — it’s making the legacy’s quirks visible to the people who have to live with it. That’s what this approach is about.
+## How AI-assisted triage actually works
 
+Most AI tooling for legacy code falls into two categories: code generation and code analysis. Generation tools write new code or refactor existing code. Analysis tools scan a codebase and produce insights. Neither works well alone for a legacy system, because generation without context produces plausible-looking changes that break undocumented behavior, and analysis without runtime data produces a list of issues that may not correspond to anything users experience.
 
-## How AI for legacy codebases actually works under the hood
+The productive pattern is to use AI as a forcing function for documentation. Legacy systems accumulate undocumented behavior because nobody has time to write it down. AI can reverse-engineer some of that behavior from code, logs, and traces, but only if it is given the right context. The inputs that matter are: the code, the runtime traces, the error logs, and the deployment history.
 
-Most AI tools for legacy code use one of two strategies: code generation or code analysis. Generation tools like GitHub Copilot or Amazon CodeWhisperer promise to write new features or refactor old ones. Analysis tools like Sourcegraph Cody or Amazon Q Developer scan the codebase and generate insights. Neither works well alone for legacy systems, but together, they can cover the gaps.
+A workflow that holds up in practice:
 
-I’ve found that the key is to use AI as a forcing function for documentation. Legacy systems accumulate undocumented behaviors because nobody has time to write them down. AI tools can reverse-engineer those behaviors from the code itself, but only if you give them the right context. The trick is to feed the AI the right inputs: not just the code, but the runtime traces, the error logs, and the deployment history.
+1. **Static analysis first.** Run a static analysis tool over the codebase. Focus on security hotspots, performance anti-patterns, and unused dependencies. A common finding is a class using a deprecated API that was patched for a symptom but never migrated off the deprecated call. The deprecation warning persists across years of patches.
+2. **Runtime traces next.** Use a lightweight profiler — Java Flight Recorder for JVM services, `py-spy` for Python, `perf` for native binaries. Capture traces under a production-like load. Generate a flame graph and look for hot paths that are not documented. A frequent discovery is a service that is "supposed to be fast" but has a multi-hundred-millisecond delay caused by a nested loop introduced in a hotfix and never removed.
+3. **AI contextualization.** Feed the static analysis results and runtime traces into an LLM with a structured prompt: given these findings, what are the top three risks, what behaviors are likely to break in production, and what undocumented assumptions exist? Long-context models handle this well when the input is curated. The model is not authoritative, but it surfaces patterns a human reviewer might miss — for example, a single SQL query executed inside a loop across a dozen files, where the query itself is fast but the loop is the real problem.
+4. **Documentation generation.** Use the model to draft markdown that describes the behaviors it found. Treat the output as a first draft, not as truth. A draft that describes undocumented retry logic in a Node.js service is useful even if every sentence needs verification, because it gives reviewers something concrete to correct.
+5. **Human review and prioritization.** AI can surface risks; it cannot rank them by business impact. A risk-scoring pass — high (production outage likely), medium (performance degradation likely), low (minor) — should be adjusted by someone who knows which endpoints matter. A `SimpleDateFormat` usage in a rarely accessed admin endpoint is not the same risk as the same usage in a payment path.
 
-Here’s the workflow I’ve refined over the past year:
+The combination is what produces value. Static analysis finds structural issues. Runtime traces find performance issues. AI contextualization connects them and surfaces undocumented behavior. The result is not a refactored system — it is a system whose quirks are visible, which is the first step toward taming it.
 
-1. **Static analysis first**: Run a static analysis tool like SonarQube 10.6 or Semgrep 1.7.0 on the codebase. Focus on security hotspots, performance bottlenecks, and unused dependencies. In one system, this flagged a 2015 Java class using a deprecated `java.util.Date` method that had caused a production outage in 2026. The class had been patched three times since then, but the deprecation warning was never addressed.
-2. **Runtime traces next**: Use a lightweight profiler like Java Flight Recorder (JFR) for Java or Py-Spy for Python. Capture traces during a production-like load test. Generate a flame graph and look for hot paths that aren’t documented. In a Colombian e-commerce system, this revealed a 400ms delay in a 2019 Python microservice that was supposed to be "fast". The delay came from a nested loop that had been silently optimized in 2026 but never documented.
-3. **AI contextualization**: Feed the static analysis results and runtime traces into an AI model with the prompt: "Given these findings, what are the top 3 risks in this codebase? What behaviors are likely to break in production?" I use Claude 3.5 Sonnet for this because it handles long contexts (up to 200k tokens) and has good Java/Python support. The model isn’t perfect, but it surfaces patterns I wouldn’t notice otherwise. For example, it flagged a pattern in a 2018 PHP monolith where a single SQL query was executed in a loop across 12 files. The query was slow, but the real issue was the loop — it had been introduced in a 2021 hotfix and never removed.
-4. **Documentation generation**: Use the AI to generate markdown files that describe the behaviors it found. I don’t trust the AI to write perfect docs, but it’s great at generating first drafts. For instance, in a Brazilian logistics system, the AI generated a 15-page doc describing the undocumented retry logic in a 2017 Node.js service. The original team had no idea the service retried failed requests three times — they just knew it "sometimes worked."
+A concrete example of the combination working: static analysis flags a SQL injection vulnerability in a commit from several years ago. It misses that the same endpoint is also called from a background job under a different user context. When the runtime traces are fed to the model, the discrepancy is surfaced. The static analysis was correct but incomplete; the AI filled the gap.
 
-The magic happens when you combine these steps. Static analysis finds the structural issues, runtime traces find the performance issues, and AI contextualizes both to find the undocumented behaviors. The result isn’t a refactored system — it’s a system with visible quirks, which is the first step toward taming it.
+The other surprise for newcomers is how much context the model needs. A naive prompt like "analyze this codebase" produces useless output. Feeding the model the deployment topology changes its conclusions. A memory leak in a Python service looks different when the model knows the service runs in a Kubernetes pod with a 512 MB memory limit — the leak is still real, but the eviction policy becomes the more urgent concern. Context changes priority, not just accuracy.
 
-I was surprised to find that the AI often surfaces issues that static analysis misses. For example, in a 2016 Ruby on Rails app, Semgrep 1.7.0 flagged a SQL injection vulnerability in a 2018 commit, but it missed the fact that the same endpoint was called from a background job with a different user context. The AI, when fed the runtime traces, flagged the discrepancy. The static analysis was correct, but incomplete — and the AI filled the gap.
+## A worked example: Django monolith triage
 
-The other surprise was how much context the AI needs. A naive prompt like "analyze this codebase" produces useless output. I had to refine my prompts to include:
-- The tech stack and versions
-- The deployment environment (on-prem, cloud, hybrid)
-- The business domain (fintech, e-commerce, logistics)
-- The team’s known pain points (slow deploys, flaky tests, etc.)
+The workflow below uses a hypothetical Python/Django monolith as the subject. The numbers are illustrative, chosen to make the arithmetic explicit; they are not measurements from a specific system. The commands are real and runnable.
 
-Without this context, the AI hallucinates or misses critical issues. For example, in a Mexican SaaS product, the AI initially flagged a memory leak in a 2019 Python service. After I added the context that the service ran in a Kubernetes pod with a 512MB memory limit, the AI revised its analysis to focus on the pod’s eviction policies instead. The memory leak was real, but the context changed the priority.
+Assume the system is ~67,000 lines of code, has no tests, and has a reputation for being "unstable" despite running in production for years without a major incident. The stack is Python 3.8, Django 2.2, Celery 4.4, PostgreSQL 12, Redis 6.2, deployed on a single EC2 instance.
 
-The final piece is the human review. AI can surface risks, but it can’t prioritize them. I use a simple scoring system: high risk (production outage likely), medium risk (performance degradation likely), low risk (minor issue). The AI helps generate the initial scores, but I adjust them based on my domain knowledge. For example, in a Brazilian bank’s legacy core banking system, the AI flagged a 2015 Java class using `SimpleDateFormat` as high risk. I downgraded it to medium because the class was only used in a rarely accessed admin endpoint. The AI didn’t know the business context — I did.
+### Step 1: Static analysis
 
-This approach isn’t about automating away the legacy. It’s about making the legacy’s quirks visible so the people who have to maintain it can make informed decisions. That’s the real win.
-
-
-## Step-by-step implementation with real code
-
-Here’s the exact workflow I use to apply AI to legacy systems. I’ll use a 2018 Python/Django monolith running on AWS EC2 as an example. The system has 67,000 lines of code, no tests, and a reputation for being "unstable" — even though it’s been running in production for five years without major incidents.
-
-### Step 1: Static analysis with Semgrep and SonarQube
-
-First, run Semgrep 1.7.0 to catch security and performance issues:
+Run Semgrep with the auto and security-audit rulesets:
 
 ```bash
-pip install semgrep==1.7.0
+pip install semgrep
 semgrep --config=auto --config=p/security-audit --error --json --output=semgrep-results.json .
 ```
 
-This generates a JSON report with security hotspots, performance bottlenecks, and deprecated APIs. In this system, Semgrep flagged:
-- A 2019 Django view using `django.utils.timezone.now()` instead of `timezone.now()` (deprecated in Django 2.0)
+This produces a JSON report. Typical findings in a codebase of this age:
+
+- A Django view using `django.utils.timezone.now()` instead of `timezone.now()` (deprecated import path)
 - A raw SQL query concatenating user input (SQL injection risk)
-- A 2018 Celery task using `pickle.loads()` on untrusted data (arbitrary code execution risk)
+- A Celery task using `pickle.loads()` on data from a queue (arbitrary code execution risk if the queue is ever compromised)
 
-Next, run SonarQube 10.6 to get a broader view of code quality:
+For code-quality metrics such as duplication and complexity, a code-quality scanner in the Sonar-family category can be run in a container. The exact image tag and license terms change frequently, so pin whatever version your organization has approved rather than copying a tag from an article.
 
-```bash
-# Run SonarScanner
-docker run --rm -v $(pwd):/usr/src sonarsource/sonar-scanner-cli:5.0 sonarscanner \
-  -Dsonar.projectKey=legacy-django \
-  -Dsonar.sources=. \
-  -Dsonar.host.url=http://sonarqube:9000 \
-  -Dsonar.login=admin \
-  -Dsonar.password=admin
-```
+The combined output gives a baseline of structural issues. Structural issues are half the story; they do not tell you which paths are actually exercised in production.
 
-SonarQube reported:
-- 45% code duplication in the `models.py` file (a 2017 copy-paste job)
-- 12 critical security hotspots
-- 8 performance issues (mostly N+1 queries)
+### Step 2: Runtime profiling
 
-The combined results give a baseline of structural issues. But structural issues are only half the story — they don’t tell you which paths are actually hit in production.
-
-### Step 2: Runtime profiling with Py-Spy and AWS X-Ray
-
-Install Py-Spy to capture runtime traces:
+Install `py-spy` and capture a CPU profile from a running worker:
 
 ```bash
-pip install py-spy==0.3.14
-# Capture a 30-second CPU profile
+pip install py-spy
 py-spy top --pid <PID> --duration 30 --format speedscope > profile.json
 ```
 
-This generates a speedscope-compatible flame graph. In this system, the flame graph showed:
-- A 420ms hot path in a 2018 API endpoint (the endpoint should be <100ms)
-- A 150ms delay in a Celery task that was supposed to be "background"
-- A 200ms delay in a database query that was using `select *`
+The resulting flame graph typically reveals something like:
 
-Next, enable AWS X-Ray for distributed tracing:
+- A ~420 ms hot path in an API endpoint that should be under 100 ms
+- A ~150 ms delay in a Celery task that was assumed to be fully asynchronous
+- A ~200 ms delay in a database query using `SELECT *`
 
-```bash
-# Install the X-Ray SDK
-export AWS_XRAY_DAEMON_ADDRESS=xray-daemon:2000
-export AWS_XRAY_CONTEXT_MISSING=LOG_ERROR
+For distributed tracing, an OpenTelemetry-compatible collector or a managed APM can be used. The instrumentation pattern is the same regardless of vendor:
 
-# Instrument Django
-pip install aws-xray-sdk==2.12.0
+```python
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+
+provider = TracerProvider()
+provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter()))
+trace.set_tracer_provider(provider)
 ```
 
-X-Ray showed:
-- The slow API endpoint was called 12,000 times/day (20% of traffic)
-- The Celery task was actually synchronous in 8% of cases due to a race condition
-- The `select *` query was executed 45,000 times/day
+The traces tell you which issues matter in production. The static analysis tells you which issues exist in the code. Together they produce a prioritized list.
 
-The runtime traces tell you which issues matter in production. The static analysis tells you which issues exist in the code. Together, they give a prioritized list of risks.
+### Step 3: AI contextualization
 
-### Step 3: AI contextualization with Claude 3.5 Sonnet
-
-Now, feed the static analysis and runtime traces into an AI model. I use this prompt template:
+Feed the curated findings into a long-context model. A prompt template that works:
 
 ```
 You are an experienced software engineer specializing in legacy systems.
 
 Analyze the following findings from a codebase:
 - Tech stack: Python 3.8, Django 2.2, Celery 4.4, PostgreSQL 12, Redis 6.2
-- Environment: AWS EC2 (t3.medium), on-prem PostgreSQL, no containerization
+- Environment: single EC2 instance, no containerization
 - Business domain: B2B SaaS for logistics management
-- Known pain points: Slow API responses, flaky Celery tasks, frequent "mystery" outages
+- Known pain points: slow API responses, flaky Celery tasks, intermittent outages
 
 Static analysis results:
-[Paste Semgrep/SonarQube output]
+[Paste Semgrep output]
 
 Runtime traces:
-[Paste Py-Spy/X-Ray output]
+[Paste py-spy / tracing output]
 
-Answer the following:
-1. What are the top 3 risks in this codebase? Rank by likelihood and impact.
-2. Which behaviors are likely to break in production? List specific scenarios.
-3. What undocumented assumptions exist?
-4. What quick wins can we implement in the next two weeks?
+Answer:
+1. Top 3 risks, ranked by likelihood and impact.
+2. Specific production scenarios likely to break.
+3. Undocumented assumptions in the system.
+4. Quick wins implementable within two weeks.
 ```
 
-The AI’s output for this system was:
+A representative response for this kind of input:
 
-1. **Top 3 risks**:
-   - High: The `select *` query in the API endpoint (420ms hot path, 45k/day executions)
-   - High: The Celery task race condition (8% of cases run synchronously, blocking API)
-   - Medium: The SQL injection risk in the raw SQL query (only hit in admin UI, but high impact if exploited)
+1. **Top risks**: the `SELECT *` query on the hot path (420 ms, high call volume); the Celery race condition where some tasks run synchronously and block the API; the SQL injection in the raw query (low frequency, high impact).
+2. **Likely break scenarios**: latency spikes at peak hours; Celery task timeouts during bulk operations; connection pool exhaustion under N+1 query load.
+3. **Undocumented assumptions**: the Redis cache is used only for session storage, not query results; the Celery queue is assumed FIFO, but Redis does not guarantee ordering; the PostgreSQL connection pool is sized for average load, not peak.
+4. **Quick wins**: add indexes for the slow queries; replace `SELECT *` with explicit field lists; add caching for the hot endpoint.
 
-2. **Likely break scenarios**:
-   - API latency spikes during peak hours (12k calls/day at the hot path)
-   - Celery task timeouts during bulk operations (race condition triggers)
-   - Database connection pool exhaustion during high load (N+1 queries)
-
-3. **Undocumented assumptions**:
-   - The Redis cache is only used for session storage, not for query results
-   - The Celery queue is assumed to be FIFO, but Redis doesn’t guarantee order
-   - The PostgreSQL connection pool is sized for average load, not peak load
-
-4. **Quick wins**:
-   - Add query-specific indexes for the slow queries (estimated 2-day effort)
-   - Replace `select *` with explicit field selection (estimated 1-day effort)
-   - Add Redis caching for the hot API endpoint (estimated 3-day effort)
-
-The AI’s analysis matched my manual review, but it surfaced the undocumented assumptions — which were the real blockers to fixing the system. For example, I didn’t know the Redis cache wasn’t used for query results until the AI pointed it out.
+The model's analysis overlaps with what a careful manual review would find, but it surfaces the undocumented assumptions faster. The assumption about Redis not being used for query caching is the kind of detail that typically lives only in a departed engineer's memory.
 
 ### Step 4: Documentation generation
 
-Use the AI’s output to generate markdown files that describe the system’s quirks. I use a simple script to automate this:
+Turn the model's output into a living document. A small script is enough:
 
 ```python
 from pathlib import Path
 import json
 
-# Load AI output
-ai_output = json.load(Path("ai-analysis.json"))
+ai_output = json.loads(Path("ai-analysis.json").read_text())
 
-# Generate a markdown file
-doc = f"""
-# Legacy Django System: Known Quirks
+doc = f"""# Legacy Django System: Known Quirks
 
 ## Overview
-- Tech stack: Python 3.8, Django 2.2, Celery 4.4, PostgreSQL 12, Redis 6.2
-- Environment: AWS EC2 (t3.medium), on-prem PostgreSQL
-- Business domain: B2B SaaS for logistics management
+- Stack: Python 3.8, Django 2.2, Celery 4.4, PostgreSQL 12, Redis 6.2
+- Environment: single EC2 instance, external PostgreSQL
 
-## Top 3 Risks
+## Top Risks
 
-### 1. Slow API Endpoint (`/api/v1/shipments/`)
-- Hot path: 420ms (should be <100ms)
-- Executions: 12,000/day (20% of traffic)
-- Root cause: `select *` query + N+1 issues
-- Quick fix: Add query-specific indexes, replace `select *`
+### 1. Slow endpoint `/api/v1/shipments/`
+- Hot path: ~420 ms (target <100 ms)
+- Root cause: `SELECT *` plus N+1 queries
+- Fix: add covering indexes, replace `SELECT *`
 
-### 2. Celery Task Race Condition
-- Issue: 8% of tasks run synchronously, blocking API
-- Root cause: Redis queue not FIFO, connection pool exhaustion
-- Quick fix: Add task deduplication, increase Redis queue size
+### 2. Celery race condition
+- Symptom: a fraction of tasks run synchronously and block the API
+- Root cause: Redis queue is not FIFO; connection pool exhaustion
+- Fix: task deduplication, larger queue, explicit retry policy
 
-### 3. SQL Injection Risk
-- Issue: Raw SQL query concatenates user input
-- Impact: High (admin UI only)
-- Quick fix: Use parameterized queries
+### 3. SQL injection in raw query
+- Impact: high if the admin UI is reachable
+- Fix: parameterized queries
 
 ## Undocumented Assumptions
-
-- Redis cache is only used for sessions, not query results
-- Celery queue is assumed FIFO (Redis doesn't guarantee order)
-- PostgreSQL connection pool sized for average load, not peak
+- Redis is used only for sessions, not query results
+- Celery queue ordering is assumed but not guaranteed
+- PostgreSQL pool sized for average load, not peak
 """
 
 Path("LEGACY_QUIRKS.md").write_text(doc)
 ```
 
-This file becomes the team’s living documentation. It’s not perfect, but it’s better than nothing — and it’s grounded in the AI’s analysis of the actual system, not the docs.
+This file is not authoritative. It is a starting point that the team can correct, and the corrections are themselves valuable because they capture knowledge that was previously oral.
 
-### Step 5: Prioritization and quick wins
+### Step 5: Prioritization
 
-With the AI’s analysis in hand, I prioritize fixes using a simple scoring system:
-- **High**: Issues causing production pain (latency spikes, outages)
-- **Medium**: Issues causing technical debt (duplication, security hotspots)
-- **Low**: Issues that are minor or rare
+Prioritize by impact and effort, with the impact grounded in the traces:
 
-For this system, the priority order was:
-1. Replace `select *` with explicit fields (high impact, low effort)
-2. Add Redis caching for the hot API endpoint (high impact, medium effort)
-3. Fix the Celery race condition (medium impact, high effort)
-4. Add parameterized queries (low effort, but low risk)
+1. Replace `SELECT *` with explicit fields — high impact, low effort
+2. Add caching for the hot endpoint — high impact, medium effort
+3. Fix the Celery race condition — medium impact, high effort
+4. Parameterize the raw query — low frequency, but cheap to fix
 
-I implemented the first two in a week. The API latency dropped from 420ms to 80ms, and the hot path was called 12k/day instead of 12k/day. The team’s confidence in the system improved immediately — not because the system was refactored, but because the quirks were visible and fixable.
+After the first two items, a plausible outcome is that the hot path drops from ~420 ms to ~80 ms. This is an illustrative figure, not a measurement. The point of the exercise is that the team's confidence in the system improves because the quirks are visible and the fixes are bounded, not because the system was rewritten.
 
-This workflow isn’t about automating away the legacy. It’s about making the legacy’s quirks visible so the team can make informed decisions. That’s the real win.
+## What to instrument, and how to measure
 
+When this workflow is applied, the temptation is to report impressive-sounding numbers. Resist that. The honest approach is to define what to measure and how, then let the measurements speak.
 
-## Performance numbers from a live system
+For a service like the one above, the minimum instrumentation set is:
 
-I’ve applied this workflow to three legacy systems in 2026, with consistent results. Here are the numbers from the Django monolith I described earlier, plus two others: a 2017 Java monolith (Spring Boot 2.1) and a 2019 Node.js microservice (Express 4).
+- **Latency**: p50, p95, p99 per endpoint, exported from the tracing layer. Compare before and after a change on the same load profile.
+- **Error rate**: HTTP 5xx per endpoint, plus task failure rate for background workers.
+- **Queue depth and task duration**: from the broker's metrics, plus per-task timing.
+- **Database query counts and durations**: from `pg_stat_statements` or the equivalent for your database.
+- **Memory and CPU**: from the container or host metrics, sampled at the same interval as the load test.
+- **Deployment duration and failure rate**: from the CI/CD system, not from memory.
 
-| Metric | Before | After | Delta |
-| --- | --- | --- | --- |
-| Django (Python 3.8) | | | |
-| API p95 latency | 420ms | 80ms | -81% |
-| Celery task timeout rate | 8% | 2% | -75% |
-| SQL query executions/day | 45,000 | 18,000 | -60% |
-| Java (Spring Boot 2.1) | | | |
-| Deployment time | 45m | 15m | -67% |
-| Outage frequency | 3/month | 1/month | -67% |
-| Memory usage | 1.2GB | 800MB | -33% |
-| Node.js (Express 4) | | | |
-| Memory leak rate | 12% | 3% | -75% |
-| Cold start time | 800ms | 300ms | -62% |
+A load test should be run before and after each change, with the same request mix and the same concurrency. The comparison is only meaningful if the load profile is held constant. A useful command for a Python service is `py-spy record` over the duration of the load test, which produces a flame graph that can be diffed against the baseline.
 
-The Java system was the most surprising. The team assumed the slow deploys and frequent outages were due to the legacy stack, but the AI analysis revealed a single misconfigured thread pool in the 2017 Spring Boot patch. Fixing it reduced memory usage by 33% and deployment time by 67%. The team had been planning a full rewrite — now they’re just patching the thread pool.
+The reason to insist on this discipline is that AI-generated analyses are easy to over-trust. A model can produce a confident-sounding narrative about performance that has no basis in the traces. The traces are the ground truth; the model is a lens over them.
 
-The Node.js system had a memory leak that only appeared under load. The AI flagged a pattern in the logs: the leak occurred when the service processed more than 100 requests in 30 seconds. The leak was in a 2019 `express-rate-limit` middleware that wasn’t patched. Fixing it reduced the memory leak rate from 12% to 3% and cut cold start time by 62%.
+## Failure modes and how to avoid them
 
-The cost savings were significant. The Django system’s API latency drop reduced AWS EC2 costs by 15% (fewer instances needed to handle the same load). The Java system’s memory usage drop reduced cloud costs by 22%. The Node.js system’s memory leak fix reduced Kubernetes node count from 5 to 3, saving $1,200/month.
+AI is not a silver bullet for legacy systems. The following failure modes are common enough to plan for.
 
-I was surprised by how much the AI’s analysis reduced the effort required for fixes. In the Django system, the AI identified the top 3 risks in 30 minutes. Manually finding those risks would have taken days. The AI didn’t fix the issues — it just made them visible, which reduced the time to fix by 70%.
+### Hallucinated dependencies
 
-The other surprise was how the team’s perception of the system changed. Before the AI analysis, the Django system was seen as a liability. After, it was seen as a solvable problem. That’s the real win — not the performance numbers, but the shift in mindset.
-
-
-## The failure modes nobody warns you about
-
-AI is not a silver bullet for legacy systems. It’s a tool, and like all tools, it has failure modes. Here are the ones I’ve hit in production, and how to avoid them.
-
-### 1. Hallucinated dependencies
-
-AI models often hallucinate dependencies that don’t exist. In one system, the AI claimed a 2018 Python service depended on `numpy==1.19`, but the actual `requirements.txt` listed `numpy==1.16`. The hallucination happened because the AI saw `numpy` in the import statements and assumed the latest version.
-
-**How to avoid**: Always cross-check AI-generated dependency lists against `requirements.txt`, `package.json`, or `pom.xml`. Use a tool like `pipdeptree` or `npm ls` to verify.
+Models frequently invent dependency versions. A model may claim a service depends on a specific version of a library because it saw the import name and assumed the latest release. The fix is to cross-check any AI-generated dependency list against the actual manifest.
 
 ```bash
-pip install pipdeptree==2.13.0
+pip install pipdeptree
 pipdeptree -p numpy
 ```
 
-This will show the actual installed version, not the hallucinated one.
+This prints the installed version, which is the only version that matters for the running system.
 
-### 2. Context window exhaustion
+### Context window exhaustion
 
-Legacy systems are often large. A 2016 Java monolith can have 100k lines of code. AI models like Claude 3.5 Sonnet have a 200k token context window, but that’s not enough for a full codebase. If you feed the AI the entire codebase, it will truncate or hallucinate.
+Large codebases do not fit in a context window, even a long one. Feeding the entire codebase produces truncation or hallucination. Curate the input: only the files modified in the last year, or only the files with the highest issue counts from static analysis, or only the files that appear in the runtime traces. Reducing a 100k-line codebase to the 15 files with the highest issue counts often improves the accuracy of the analysis rather than degrading it.
 
-**How to avoid**: Use static analysis to extract the relevant parts of the codebase before feeding it to the AI. For example:
-- Only feed the AI the files modified in the last year
-- Only feed the AI the files with the most SonarQube issues
-- Only feed the AI the files with the most runtime traces
+### Over-reliance on AI-generated fixes
 
-In the Django system, I only fed the AI the 15 files with the highest SonarQube issue counts. This reduced the context size from 100k lines to 10k lines, and the AI’s analysis was accurate.
-
-### 3. Over-reliance on AI-generated fixes
-
-AI tools love to generate code fixes. In one system, the AI suggested replacing a 2017 Java class using `SimpleDateFormat` with Java 8’s `DateTimeFormatter`. The fix looked correct, but it broke a 2018 integration test that relied on the old behavior.
-
-**How to avoid**: Never apply AI-generated fixes without testing. Use the AI to generate a patch, then review it manually. In this case, the AI’s fix was correct, but the test needed to be updated to match the new behavior.
+Models generate plausible patches. A patch that replaces a legacy date formatter with a modern one may look correct but break a downstream consumer that depends on the old format. Never apply an AI-generated fix without running the existing tests, and if there are no tests, write a characterization test first that captures the current behavior.
 
 ```java
-// Original (2017)
+// Legacy
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 String dateStr = sdf.format(new Date());
 
-// AI-generated fix (2026)
+// Modern equivalent
 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 String dateStr = dtf.format(LocalDate.now());
 ```
 
-The fix was correct, but the integration test expected the old format. Updating the test fixed the issue.
+The two are not equivalent in all cases. `SimpleDateFormat` is not thread-safe and uses the default time zone; `LocalDate.now()` also uses the default time zone but is immutable. A characterization test should pin the expected output for a fixed clock and time zone before the change is made.
 
-### 4. False positives in security scans
+### False positives in security scans
 
-AI tools often flag security issues that don’t exist. In one system, the AI flagged a 2019 Python class using `pickle.loads()` as a high-risk arbitrary code execution vulnerability. The class was only used in a background job that processed trusted data, so the risk was low.
-
-**How to avoid**: Always validate AI-flagged security issues with a manual review. Use a tool like Bandit for Python or SpotBugs for Java to cross-check. In this case, Bandit confirmed the risk was low because the data was trusted.
+Static analysis and AI both produce false positives. A `pickle.loads()` call is a genuine risk only if the data source is untrusted. A second scanner in the same category can be used to cross-check, but the final decision is a human one. The output of the scan should be treated as a queue of items to investigate, not as a list of confirmed vulnerabilities.
 
 ```bash
-pip install bandit==1.7.8
+pip install bandit
 bandit -r .
 ```
 
-Bandit’s report confirmed the risk was low, so we downgraded it from high to medium.
+### Behaviors that are not in the code
 
-### 5. Undocumented behaviors that AI misses
+The hardest failure mode is behavior that exists only in the runtime environment: an nginx config that bypasses an auth check, a cron job that mutates state, a manual database patch. AI cannot find these because they are not in the repository. The mitigation is to audit the deployment surface explicitly: server configs, cron entries, systemd units, environment variables, and any manual change logs. This audit is part of the workflow, not an optional extra.
 
-AI tools are great at finding patterns, but they miss behaviors that aren’t in the code. For example, in a 2015 PHP monolith, the team relied on a 2020 hotfix that bypassed a security check in a 2018 login endpoint. The hotfix wasn’t in the codebase — it was a manual change on the server. The AI missed it because it wasn’t in the Git history.
+### Cost and data exposure
 
-**How to avoid**: Combine AI analysis with runtime traces and manual audits. In this case, we found the hotfix by auditing the server’s `/etc/nginx` configs and comparing them to the Git history. The hotfix was a single `if` statement in an nginx config file that bypassed the security check.
+LLM API calls have a cost, and sending proprietary code to a third-party endpoint has compliance implications. A common pattern is to use a local model for the first pass over the codebase, then a hosted model for the final contextualization over a curated subset. The local pass is cheap and keeps the bulk of the code on-premises; the hosted pass is limited to the files that matter. Before sending any code to an external endpoint, confirm that the endpoint's data retention terms are acceptable for the code in question.
 
-This failure mode is the hardest to avoid. AI can’t catch behaviors that aren’t in the code or the runtime traces. That’s why the workflow always includes manual audits of configs, cron jobs, and server setups.
+## Choosing tools
 
-### 6. Cost of AI tooling
+The tooling landscape changes quickly, so the useful output is a set of categories and selection criteria rather than a fixed list.
 
-AI tools aren’t free. In 2026, a Claude 3.5 Sonnet API call costs $0.10 per 1k tokens. For a 100k token codebase, that’s $10 per analysis. If you run it weekly, that’s $40/month — not much, but it adds up if you’re analyzing multiple systems.
+| Category | What it does | What to check before adopting |
+| --- | --- | --- |
+| Static analysis (security) | Finds injection, unsafe deserialization, deprecated APIs | Rule coverage for your language; false-positive rate on your codebase; CI integration |
+| Static analysis (quality) | Duplication, complexity, code smells | Whether the metrics map to anything you act on; license terms |
+| Profilers | CPU and memory flame graphs | Overhead under production load; ability to attach to a running process |
+| Distributed tracing | Cross-service latency and error attribution | Sampling strategy; storage cost; vendor lock-in |
+| Long-context LLMs | Contextualization over curated findings | Context window; data retention terms; cost per analysis |
+| Local LLMs | First-pass analysis without data egress | Quality on your language and code style; hardware requirements |
 
-**How to avoid**: Use open-source alternatives where possible. For example, use `llama.cpp` with a local model for initial analysis, then switch to a paid API for deeper contextualization. In the Django system, I used `llama.cpp` with a 7B parameter model for the first pass, then switched to Claude 3.5 Sonnet for the final analysis.
+The selection criterion that matters most is whether the tool produces output you will act on. A scanner that produces 500 issues nobody triages is worse than a scanner that produces 20 issues the team fixes.
 
-```bash
-# Run llama.cpp locally
-./llama-cli -m models/llama-3.2-7b-instruct.Q4_K_M.gguf -p "Analyze this codebase..."
-```
+## FAQ
 
-This reduced the cost from $10 to $0.50 per analysis.
+**Can AI refactor a legacy system automatically?**
+No. It can propose changes and surface risks, but the decision to change behavior in a system with undocumented dependencies requires human judgment. Treat AI output as a draft.
 
+**How large a codebase can be analyzed?**
+It depends on the model's context window and on how much you curate the input. Curating to the files that appear in traces or that have the highest issue counts is usually more effective than trying to fit everything.
 
-The key is to treat AI as a lens, not a replacement. It surfaces issues and generates insights, but it can’t replace human judgment. That’s the failure mode to avoid: thinking AI can do the work for you. It can’t.
+**Do I need a paid model?**
+Not necessarily. A local model is often sufficient for the first pass. A hosted long-context model helps for the contextualization step, where the input is a curated set of findings rather than the whole codebase.
 
+**What if there are no tests?**
+Write characterization tests first. They capture current behavior, including behavior that may be a bug, and they give you a safety net for any subsequent change. This is the highest-value work you can do before applying AI-suggested fixes.
 
-## Tools and libraries worth your time
+**How do I know the AI's analysis is correct?**
+Cross-check it against the traces and against the code. Any claim that is not supported by a trace, a log line, or a specific code location should be treated as a hypothesis, not a finding.
 
-Not all AI tools are created equal. Some are overhyped, some are underpowered, and some are just wrong for the job. Here’s the toolkit I’ve refined over the past year, with version numbers and why I use each one.
+## Action for the next 30 minutes
 
-| Tool | Purpose | Version | Why it’s worth it |
-| --- | --- | --- | --- |
-| **Semgrep** | Static analysis | 1.7.0 | Fast, open-source, supports 2
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 27, 2026
+Pick one legacy service you have access to, run `py-spy top --pid <PID> --duration 30` (or the equivalent profiler for your runtime) against it during a period of normal load, and save the output. Then open the three files that appear hottest in the profile and check whether any of them have been modified in the last year. That single pass will tell you whether the system's real hotspots match the parts of the codebase your team actually understands — which is the precondition for any further triage.

@@ -1,42 +1,45 @@
 # Claude code review: wins and blind spots
 
-The short version: the conventional advice on use claude is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.
+LLM code review works in the simple case and fails in a specific, predictable way. This article covers where the approach earns its keep, where it quietly breaks down, and how to measure both for your own repository instead of trusting someone else's numbers.
 
-## The one-paragraph version (read this first)
+## The one-paragraph version
 
-Using Claude for code review saves me ~1.5 hours per PR when it works, but it’s not a replacement for human eyes. It catches obvious bugs, typos, and style drift faster than a tired teammate at 3 AM, yet it still hallucinates import paths, invents non-existent APIs, and misses race conditions that only show up under load. I run it on every pull request in our Python 3.11 monorepo with 260k lines across 45 services, and it flags about 40% of the issues a senior reviewer would. The trick is treating it like a junior teammate: ask it specific questions, sanity-check its answers, and never let it commit directly. The cost is $8 per 1000 files reviewed; the benefit is fewer context switches for me.
+An LLM reviewer applied to a pull request diff can catch surface-level problems quickly: missing docstrings, unused imports, absent timeouts on new async functions, endpoints that skip required metadata. It will also hallucinate import paths, invent APIs that do not exist, and miss race conditions, because it does not execute code or simulate concurrent load. The practical posture is to treat it as a narrow, prompt-driven linter rather than a reviewer: scope it to the diff, ask it specific questions, require structured output, and never let it commit or block a merge on its own authority.
 
-## Why this concept confuses people
+## Why the concept confuses people
 
-Most developers think AI code review is either a silver bullet or a scam. The truth is in the middle, but the middle is messy. I’ve seen teams burn $12k/month on GitHub Copilot Enterprise only to realize the suggestions were 60% irrelevant after running a blind A/B review on 500 PRs. The confusion comes from two places: first, marketing that frames AI as a “co-pilot” when it’s more like a “chaotic intern”; second, the gap between what the models claim to do and what they actually do when plugged into a real repository with 1000+ files and 3 years of legacy code.
+Two forces push expectations in opposite directions. Vendor marketing frames these tools as autonomous collaborators, which sets a bar no current model meets. Meanwhile, developers who try them once on a whole file, get a wall of irrelevant comments, and conclude the whole category is useless.
 
-I ran into this when I tried to use Claude once to review a PR that added pagination to a 500-line endpoint. It flagged a missing docstring on a helper function that no one would ever read, but missed the fact that the new offset parameter could return duplicate rows under high concurrency. Two weeks later, we rolled back the change after a customer reported inconsistent results. The model wasn’t wrong about the docstring; it was wrong about what mattered.
+The reality is narrower and more useful than either position. A language model reviewing code is doing pattern completion over tokens. It is genuinely good at local, syntactic, rule-shaped concerns. It is bad at anything requiring execution, runtime state, or knowledge of your domain invariants. Most disappointment comes from asking it to do the second kind of work.
+
+A typical failure mode: an LLM flags a missing docstring on a helper nobody will read, while staying silent on a new pagination parameter that can return duplicate rows under concurrent writes. The docstring comment is not wrong. It is just irrelevant to the risk that actually ships.
 
 ## The mental model that makes it click
 
-Think of Claude as a probabilistic grep plus a junior dev who’s read every Stack Overflow thread since 2018. It doesn’t understand context the way a human does, but it excels at surface-level correctness: type hints, import paths, argument counts, docstring presence, and basic style. That’s useful, but it’s only 10–15% of what a code review actually needs.
+Think of the model as a probabilistic grep combined with a junior developer who has read a very large amount of public code. It does not hold your repository in its head. It holds a compressed statistical sense of what code usually looks like.
 
-The key insight: treat it like a spell-checker, not a proofreader. Run it on the diff, not the whole file. Ask it specific questions like “flag any new async function without an explicit timeout” or “check that every new endpoint has OpenAPI tags.” Give it a narrow scope and you’ll get useful answers; give it the whole PR and you’ll drown in noise.
+That gives it strength in a specific band:
 
-I wasted a week trying to make it review entire files. After measuring its false-positive rate on 200 PRs, I narrowed it to diff-only and cut the noise by 70%. That’s when the real wins started.
+- Type hints that disagree with usage within a function
+- Imports that are unused, or names that do not resolve
+- Argument counts that do not match the call site
+- Docstring presence and rough shape
+- Style drift relative to the surrounding file
+- Blocking calls sitting inside an async function
 
-## A concrete worked example
+That band is real but narrow. It is a small fraction of what a code review actually needs to cover. The rest — correctness under concurrency, domain invariants, migration safety, authorization boundaries — requires either execution or knowledge the model does not have.
 
-Let’s walk through a real PR in our codebase. The change adds a new endpoint `/api/v2/users/{id}/orders` to return paginated orders for a user. Here’s the diff summary:
+The operational consequence: run it on the diff, not the whole file. Ask narrow questions. A prompt that says "review this PR" produces noise. A prompt that says "flag any new async function without an explicit timeout" produces a short list you can act on.
 
-- 150 lines added
-- 1 new async route
-- 1 new ORM query with offset/limit pagination
-- 3 new unit tests
-- 1 new OpenAPI schema file
+## A worked example
 
-### Step 1: Prompt engineering
+Consider a PR that adds an endpoint `/api/v2/users/{id}/orders` returning paginated orders. The diff adds roughly 150 lines: one async route, one ORM query using offset/limit pagination, three unit tests, and one OpenAPI schema file.
 
-I use this prompt (trimmed for length):
+### Step 1: Write a constrained prompt
 
 ```
 You are a senior Python code reviewer. Review only the diff below. Check:
-1. Every new async function has an explicit timeout (default timeout=5s).
+1. Every new async function has an explicit timeout.
 2. Every new endpoint has OpenAPI tags matching /api/v2/*.
 3. Every new public function has a Google-style docstring.
 4. No new global variables.
@@ -45,213 +48,202 @@ You are a senior Python code reviewer. Review only the diff below. Check:
 7. All new SQL queries use LIMIT and OFFSET safely.
 
 Return a JSON array with keys: issue_type, line, message, severity (low/medium/high).
+Return [] if there are no issues in these categories.
 ```
 
-### Step 2: Run the review
+Two details matter here. The enumerated list bounds the model's attention, and the explicit "return []" instruction prevents it from manufacturing findings to seem useful. Models asked for issues will usually produce issues; giving them a legal empty answer reduces that pressure.
 
-I pipe the diff to Claude via the Anthropic API using this Python snippet:
+### Step 2: Pipe the diff in
 
 ```python
-import subprocess
 import json
+import subprocess
 
-# Get the diff between target and current branch
-diff = subprocess.check_output([
-    "git", "diff", "--unified=0", "main...HEAD"
-], text=True)
+prompt = """You are a senior Python code reviewer. Review only the diff below. Check:
+1. Every new async function has an explicit timeout.
+2. Every new endpoint has OpenAPI tags matching /api/v2/*.
+3. Every new public function has a Google-style docstring.
+4. No new global variables.
+5. All new imports are used.
+6. No new blocking calls inside async functions.
+7. All new SQL queries use LIMIT and OFFSET safely.
 
-# Send to Claude with a pinned model version
-response = subprocess.run(
-    ["claude", "--model", "claude-3-5-sonnet-20260219", 
-     "--prompt", prompt, "--input", diff],
-    capture_output=True, text=True
+Return a JSON array with keys: issue_type, line, message, severity (low/medium/high).
+Return [] if there are no issues in these categories."""
+
+diff = subprocess.check_output(
+    ["git", "diff", "--unified=0", "main...HEAD"], text=True
 )
 
-issues = json.loads(response.stdout)
+result = subprocess.run(
+    ["claude", "--prompt", prompt, "--input", diff],
+    capture_output=True, text=True, check=True,
+)
+
+try:
+    issues = json.loads(result.stdout)
+except json.JSONDecodeError:
+    issues = []
+    print("Model returned non-JSON output; skipping this diff.")
+    print(result.stdout[:500])
+
 print(f"Found {len(issues)} issues")
+for issue in issues:
+    print(issue["severity"], issue["line"], issue["message"])
 ```
 
-### Step 3: Results
+Note the `try`/`except`. Structured output is a request, not a guarantee. Any pipeline that assumes valid JSON on the first try will eventually break in CI at the worst possible moment.
 
-Claude returned 8 issues:
+### Step 3: Triage the output
 
-- High: Missing OpenAPI tags on the new endpoint (line 42)
-- Medium: Async function `get_user_orders` has no timeout (line 78)
-- Low: Missing docstring on `build_order_query` (line 112)
-- Low: Import `time.sleep` used in async function (line 145)
+A representative result on a diff like this might be four findings: missing OpenAPI tags on the new endpoint, an async function without a timeout, a missing docstring, and a blocking call inside an async function. Of those, the timeout and the blocking call are the ones with real consequences. The docstring is style. The OpenAPI tag matters only if something downstream depends on it.
 
-Of these, the timeout was the only one that mattered. We added `timeout=10` to the endpoint and the issue was resolved. The others were noise.
+The triage ratio is the number that determines whether the tool is worth running. If three of four findings are noise, you are paying a context-switch tax for one useful signal. That can still be worth it — but only if you measure it.
 
-### Step 4: Human review
+### Step 4: Human review of what the model cannot see
 
-I still manually checked:
-- The pagination logic for duplicates under concurrency (race condition)
-- The ORM query for SQL injection risks
-- The OpenAPI schema for correctness
+The model will not tell you that the new offset/limit pagination can return duplicate rows when a concurrent insert shifts the window between page requests. It will not tell you that the ORM query is safe from injection only because the ORM parameterizes it, and would not be if someone switched to a raw string later. It will not validate that the OpenAPI schema matches the actual response shape.
 
-The model missed the race condition entirely. That’s expected: it doesn’t run the code or simulate load.
+Those checks remain human work. The model narrows the surface you have to inspect manually; it does not remove it.
 
-### Step 5: Cost and latency
+## How this connects to tools you already use
 
-- API call: 2.3 seconds average latency
-- Cost: $0.0008 per 1000 tokens (our PR averaged 8k tokens)
-- Total for 100 PRs/month: ~$0.64 — cheaper than a junior reviewer’s coffee budget.
+If you run a linter in CI, you already have a static analyzer. An LLM reviewer is a static analyzer with a natural-language interface and a much larger, much fuzzier rule set. The difference is important: a linter enforces rules you wrote down, so its false-positive rate is bounded by your configuration. An LLM enforces rules it infers from training data plus your prompt, so its false-positive rate is bounded by nothing in particular.
 
-## How this connects to things you already know
+The same comparison holds against fuzz testing. A fuzzer throws inputs at your code to find crashes. An LLM throws critiques at your diff to find inconsistencies. Both are probabilistic. Both miss deep logic errors. Both are assistants, not oracles.
 
-If you’ve ever used `pylint` or `flake8` in CI, you’ve used a static analyzer. Claude is like that, but with a natural language interface and a much larger training set. The difference is that `pylint` enforces rules you define; Claude enforces rules it infers from its training data plus your prompt.
+This is why replacing an existing linter with an LLM is usually a mistake. A linter's rules are deterministic, cheap, and reproducible. Keep the linter for what it does well and add the LLM for the categories the linter cannot express — "every new endpoint has tags," "no blocking call in async context." Those are rules a linter could technically encode, but writing and maintaining a custom AST rule for each one is often more work than a prompt.
 
-Think of it like a fuzz tester. Fuzzers throw random inputs at your code to find crashes; Claude throws random critiques at your diff to find inconsistencies. Both are probabilistic, both miss deep logic errors, and both are best used as assistants, not oracles.
+## Common misconceptions
 
-I once replaced our entire `pylint` config with Claude for a week. The false-positive rate jumped from 12% to 45%. That’s because Claude doesn’t know our internal style rules. So I kept both: `pylint` for style, Claude for correctness.
+**"It can review whole files, not just diffs."**
 
-## Common misconceptions, corrected
+It can, but the output degrades badly. On a large file with a small change, the model has no signal about what is new, so it comments on everything. The result is a long list dominated by observations about code that has not changed in years. Diff-scoping is not a limitation to work around; it is the mechanism that makes the tool usable.
 
-**Myth 1: "Claude can review entire files, not just diffs."**
+**"It understands types and imports."**
 
-False. I tried this on a 2000-line file with 500 lines changed. It returned 120 issues, 95% of which were irrelevant to the change. On closer inspection, 70% were complaints about functions that hadn’t changed in years. Stick to diffs.
+Partially. It reliably spots unused imports and internal type mismatches. It also invents import paths that look plausible and do not exist. A suggestion like `from app.models.user import UserModel` when the real path is `from app.models import User` is a one-token difference that breaks the build. Never apply an import fix without running the test suite.
 
-**Myth 2: "It understands types and imports."**
+**"It catches security issues."**
 
-Partial. It’s great at spotting unused imports and mismatched types within a function, but it frequently invents import paths that don’t exist. In one PR, it suggested `from app.models.user import UserModel` when the correct path was `from app.models import User`. That’s a one-character difference, but it breaks the build.
+Sometimes, and unpredictably. It may flag a hardcoded credential in a config file because that pattern is heavily represented in training data. It is much less reliable on injection risks where the tainted value is assembled across several functions, because detecting that requires tracking data flow, not recognizing a shape. Keep parameterized queries, secret scanning, and human review for security.
 
-**Myth 3: "It catches security issues."**
+**"It is cheaper than a human reviewer."**
 
-Rarely. It flagged a hardcoded password in a test config once, but missed SQL injection in a raw query string because the query string was built dynamically in Python, not SQL. Security requires semantic understanding that AI hasn’t cracked yet.
+The API cost is usually small. The real cost is the context switch. Every false positive forces a developer to stop, read the comment, evaluate it, and dismiss it. If that takes a few minutes each and you get several per PR, the accumulated interruption can exceed the value of the true positives. This is the number to measure before scaling up, and it is the reason prompt precision matters more than model choice.
 
-**Myth 4: "It’s cheaper than a human."**
+## Measuring it on your own repository
 
-Sometimes. At our scale (100 PRs/month, 260k lines), the API cost is ~$6/month. But the real cost is the context switch: every false positive is a mental interruption. I measured that each false positive costs me 4 minutes of re-reading. At 5 false positives per PR, that’s 3.3 hours wasted per month — more than the API bill.
+Do not adopt published accuracy figures. They are measured on other codebases with other conventions. Run a small blind comparison instead.
 
-## The advanced version (once the baselines are solid)
+1. Collect 30 to 50 recently merged PRs where a human reviewer left comments.
+2. Run the LLM reviewer on each diff with your production prompt. Save the raw output.
+3. For each PR, list the issues the human reviewer raised.
+4. Classify every LLM finding as true positive (a real issue a human would also raise), false positive (noise), or novel (a real issue the human missed).
+5. Compute precision as true positives divided by total findings, and recall as true positives divided by human-raised issues.
 
-Once you’re comfortable with diff-only reviews, you can push further:
+The two numbers tell you different things. Low precision means your prompt is too broad and you are generating interruption cost. Low recall means the tool is missing categories you care about — usually a sign you need to enumerate those categories explicitly in the prompt, or accept that they are out of scope.
 
-1. **Custom rule sets**: Feed Claude examples of your worst past bugs and ask it to flag similar patterns. For instance, we trained it to spot any `requests.get` inside an async function.
+What to instrument in production, once it is running:
 
-2. **Pre-commit hooks**: Run Claude on every commit before the test suite. We use this script:
+- Findings per PR, split by severity
+- Fraction of findings a human marks as actionable
+- Time from comment posted to comment resolved or dismissed
+- Number of merges blocked by an LLM finding that turned out to be wrong
+
+A pipeline whose dismissal rate climbs over time is drifting. That usually means the prompt has not kept up with the codebase, or the model has started pattern-matching on your own past comments rather than the code.
+
+## The advanced version, once the basics hold
+
+**Custom rule sets from your own bug history.** Take your last twenty postmortems, extract the code shape that caused each incident, and add a line to the prompt for each one. "Flag any `requests.get` inside an async function" is a rule derived from a real outage, and it is far more valuable than a generic instruction to "find bugs."
+
+**Pre-commit hooks.** Run the reviewer on staged changes before the test suite. Keep it advisory at first — print findings, do not fail the build. Once precision is high enough that developers trust it, you can exit non-zero on high-severity findings only.
 
 ```python
 #!/usr/bin/env python3
-import subprocess
 import json
+import subprocess
 import sys
 
-def review_diff(diff):
-    prompt = f"""
-    Review this git diff for anti-patterns:
-    - Any synchronous HTTP call inside async context
-    - Any raw SQL without parameterization
-    - Any function longer than 50 lines added or changed
-    - Any new public method without a docstring
+PROMPT = """Review this git diff for these anti-patterns only:
+- Any synchronous HTTP call inside async context
+- Any raw SQL without parameterization
+- Any function longer than 50 lines added or changed
+- Any new public method without a docstring
 
-    Return JSON array with keys: issue, severity, line.
-    """
+Return a JSON array with keys: issue, severity, line.
+Return [] if none apply."""
+
+def review_diff(diff: str) -> list:
     result = subprocess.run(
-        ["claude", "--model", "claude-3-5-sonnet-20260219", 
-         "--prompt", prompt, "--input", diff],
-        capture_output=True, text=True
+        ["claude", "--prompt", PROMPT, "--input", diff],
+        capture_output=True, text=True, check=True,
     )
-    return json.loads(result.stdout)
+    try:
+        return json.loads(result.stdout)
+    except json.JSONDecodeError:
+        print("Non-JSON response from reviewer; treating as no findings.")
+        return []
 
 if __name__ == "__main__":
     diff = subprocess.check_output(["git", "diff", "--cached"], text=True)
+    if not diff.strip():
+        sys.exit(0)
     issues = review_diff(diff)
     if issues:
         print(json.dumps(issues, indent=2))
         sys.exit(1)
 ```
 
-3. **Benchmark against your team**: Run a blind test on 50 PRs. Have Claude review them, then have two senior devs review the same PRs without seeing Claude’s output. Measure the overlap. In our test, Claude caught 40% of the issues the devs caught, but only 15% of the issues the devs missed. The remaining 85% were subtle logic errors that require understanding the domain.
+**Blind benchmarking against your team.** The methodology above is the only honest way to know whether the tool is helping. Run it quarterly. Codebases change, prompts drift, and a configuration that was net-positive six months ago may not be today.
 
-4. **Cost guardrails**: At scale, API costs can spiral. We set a budget alert at $20/month and switch to a cheaper model (`claude-3-haiku-20260219`) for non-critical reviews. The cheaper model is 3x slower but 5x cheaper per token.
+**Cost guardrails.** Set a hard daily ceiling on API spend and alert when you approach it. The failure mode is not a single expensive call; it is a hook that fires on every commit in a monorepo and quietly multiplies. Log token counts per invocation so you can see which diffs are expensive and why.
 
-I once forgot to set the budget alert and got a $180 bill in one day from a misconfigured loop. Now I have a Slack bot that pings me if the daily spend exceeds $2.
+## Where it fails, and what to do instead
 
-## Quick reference
+The failure modes cluster tightly:
 
-| Task | Tool/Version | Command or Prompt | Expected Output | Cost per 100 PRs |
-|------|-------------|-------------------|-----------------|------------------|
-| Diff-only review | Claude 3.5 Sonnet 20260219 | `claude --model claude-3-5-sonnet-20260219 --prompt "review diff" --input "$diff"` | JSON array of issues | $0.64 |
-| Pre-commit hook | Same as above | Run script above on `git diff --cached` | Exit 1 if issues found | $0.02 per commit |
-| Full file scan | Same model | Prompt with entire file | 70% false positives | $1.20 per file |
-| Budget guardrail | Claude CLI + Slack bot | `claude budget set 20` | Alerts at $20/day | $0 |
-| Custom rules | Same model | Feed examples of past bugs | Pattern-matching issues | Same as review |
+- **Concurrency bugs.** Race conditions, deadlocks, and async starvation require simulating interleavings. A model reading a diff cannot do this. Cover these with stress tests and targeted integration tests.
+- **Domain logic.** The model does not know that orders must be unique per user under concurrent writes. That invariant lives in your team's head and your schema. Write it down as a test.
+- **Legacy drift.** In a codebase with years of accumulated convention, the model's priors about how code "usually" looks will be wrong. It will suggest imports and signatures from a generic Python project rather than yours.
+- **Security.** Subtle injection risks and secrets in unusual locations are missed. Keep dedicated tooling for this category.
 
-## Further reading worth your time
+For all four, the answer is the same as it was before LLMs existed: tests, human review, and deliberate failure injection. The model reduces the volume of mechanical review work. It does not reduce the need for the parts of review that require understanding.
 
-- [Anthropic’s 2026 model card for Claude 3.5 Sonnet](https://www.anthropic.com/model-card/claude-3-5-sonnet-20260219) — pay attention to the evaluation scores on Python code.
-- [Google’s 2026 study on AI code review accuracy](https://arxiv.org/abs/2603.12345) — TL;DR: AI catches 30–50% of issues humans catch, but varies wildly by language.
-- [My post on async Python pitfalls](https://kubai.co/async-python-pitfalls) — where Claude fails hardest.
-- [The Twelve-Factor App review checklist](https://12factor.net/) — a human review framework that Claude can’t replicate.
+## A decision checklist
 
-## Frequently Asked Questions
+Before wiring an LLM reviewer into your workflow, answer these:
 
-**What’s the best prompt to start with for Python code review?**
+- Is the review scoped to the diff, not the file?
+- Does the prompt enumerate specific, checkable rules rather than asking for general review?
+- Does the prompt explicitly permit an empty result?
+- Is the output parsed defensively, with a fallback when it is not valid JSON?
+- Have you measured precision and recall on at least 30 of your own PRs?
+- Do you know your false-positive cost in developer minutes per week?
+- Is the tool advisory rather than merge-blocking until precision justifies otherwise?
+- Is there a daily spend cap with alerting?
+- Are concurrency, domain-logic, and security reviews still assigned to humans?
 
-Use a constrained JSON response with severity levels. Start with this:
+Any "no" is a gap worth closing before scaling.
 
-```
-You are a senior Python code reviewer. Review the diff below for:
-1. Every new async function has an explicit timeout (default 5s).
-2. Every new public function has a Google-style docstring.
-3. No new global variables.
-4. All new imports are used.
-5. No blocking calls inside async functions.
-Return a JSON array with keys: issue_type, line, message, severity (low/medium/high).
-```
+## FAQ
 
-**Does Claude catch SQL injection risks?**
+**What prompt structure works best for Python diffs?**
 
-Almost never. It flagged one hardcoded password in a config file, but missed a raw SQL query built with string concatenation. For security, keep using SQL parameterization and human review.
+An enumerated list of checkable rules, an explicit output schema, and an explicit empty-result option. Vague instructions like "find bugs" produce vague findings. Rules like "every new async function has an explicit timeout" produce findings you can verify in seconds.
 
-**How do I avoid false positives from Claude?**
+**How do I keep false positives down?**
 
-Narrow the scope to diff-only, pin the model version, and use a custom prompt that mirrors your team’s worst past bugs. We cut false positives from 45% to 12% by doing this.
+Three levers, in order of impact: narrow the prompt to specific rules, scope the input to the diff, and pin the model version so behavior does not shift under you. If precision is still poor, your rules are probably broader than your codebase's actual conventions.
 
-**What’s the ROI of using Claude for code review?**
+**Can it replace a linter?**
 
-At 100 PRs/month with 260k lines, we save 1.5 hours of review time per PR, or ~150 hours/month. The API cost is ~$6/month. Net gain: ~144 hours/month. That’s a 2400% return on time investment.
+No. A linter is deterministic and cheap; an LLM is probabilistic and costs tokens per run. Use the linter for anything expressible as a rule, and the LLM for the categories you would otherwise review by eye.
 
-## Where it fails (and what to do instead)
+**Should it block merges?**
 
-Claude fails hardest on:
+Not initially. Run it in advisory mode, measure precision, and only promote high-severity findings to blocking once the false-positive rate is low enough that developers do not route around it.
 
-- **Concurrency bugs**: Race conditions, deadlocks, and async starvation. It doesn’t simulate load or timeouts.
-- **Domain logic**: It doesn’t know that “user orders” must be unique under high concurrency. Only humans catch that.
-- **Legacy code**: It invents import paths and API signatures when the codebase has 3 years of drift.
-- **Security**: It misses subtle injection risks and hardcoded secrets in environment files.
+## Do this in the next 30 minutes
 
-For these, keep doing what you’ve always done: human review, integration tests, and chaos engineering. Treat Claude as a force multiplier, not a replacement.
-
-I was surprised that it missed a subtle off-by-one error in a pagination query that caused duplicate rows under load. The model flagged the missing docstring but not the logic bug. That’s why I still run the test suite and a chaos test on every deploy.
-
-Now go set up a pre-commit hook that runs Claude on every diff. Here’s the command:
-
-```bash
-git diff --cached | claude --model claude-3-5-sonnet-20260219 --prompt "review diff for async timeouts and docstrings only" --format json > claude-review.json
-```
-
-If `claude-review.json` has issues, exit non-zero. Do this today and you’ll cut your review fatigue by next week.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 08, 2026
+Pick one merged PR from the past week that a human reviewed. Run your diff through the prompt above, then classify each finding as true positive, false positive, or novel. If more than half are noise, rewrite the prompt to be narrower before running it on anything else.

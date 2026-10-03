@@ -1,312 +1,335 @@
 # Failed AI wrappers 2026: what the survivors did right
 
-The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+## The core failure mode: treating the upstream API as stable
 
-# Why this list exists (what I was actually trying to solve)
+An AI wrapper is a thin application layer that sits between your product and one or more model providers. Its value proposition is convenience: one SDK, one response shape, one billing relationship. Its structural weakness is that everything it abstracts is owned by someone else.
 
-I started 2026 building an AI wrapper around a niche SaaS API. By early 2026 we had 12 paying customers and $42k ARR. Then the API vendor kept changing their rate limits and model outputs. Our wrapper’s retry logic started failing silently, and our customers blamed us. That’s when I realized most AI wrappers in 2026 aren’t failing because of bad code—they’re failing because they assumed the underlying APIs were stable.
+The documented behavior of most hosted model APIs is that they will change. Providers deprecate model identifiers, adjust rate-limit tiers, alter default sampling parameters, revise system-prompt templates, and occasionally change response envelopes. None of this is malicious; it is normal platform evolution. But a wrapper that hard-codes assumptions about any of those things accumulates latent breakage.
 
-The wrapper business model promised simplicity: “Just plug in our SDK and you get cutting-edge AI.” Reality: every vendor changes their prompts, rate limits, and embedding dimensions every quarter. Wrappers that survived 2026 had to treat the underlying API as an untrusted dependency that could change at any time.
+The typical failure sequence looks like this:
 
-So I set out to answer: which AI wrapper strategies still work today, and which ones were just cargo-cult engineering? I analyzed 47 failed wrappers (public postmortems and GitHub issues) and 12 that scaled past $1M ARR. The patterns were stark.
+1. A provider changes a default or a response field.
+2. The wrapper's parsing or retry logic silently produces wrong output rather than an error.
+3. Downstream application logic treats the wrong output as valid.
+4. Users notice degraded quality before any alert fires.
+5. The wrapper team learns about the change from a support ticket, not from telemetry.
 
-I expected to find winners in prompt optimization and model routing. Instead, the real survivors focused on observability, contract testing, and cost arbitrage before anything else. The ones that died fastest chased “better” models or fancier multi-agent systems.
+The wrappers that stay healthy are not the ones with the cleverest prompt engineering. They are the ones that treat the provider as an untrusted dependency and instrument the boundary accordingly.
 
-This list is what I wish I’d had when I started. It’s not another “AI is eating the world” post. It’s a postmortem on wrapper businesses that treated AI APIs like a reliable foundation instead of a moving target.
+## Four properties that determine wrapper survival
 
-# How I evaluated each option
+Rather than ranking named products, it is more useful to describe the properties a wrapper needs and how to measure each one in your own system.
 
-I scored every wrapper using four metrics that actually matter in 2026:
+### 1. Drift resilience
 
-1. **API drift resilience** — How quickly the wrapper detects and adapts when the underlying API changes prompts, rate limits, or response schemas. Measured in hours-to-detect after a breaking change. 2. **Cost arbitrage** — The ability to switch models or providers to save 20%+ on token costs without rewriting application logic. Measured as percentage cost reduction over 90 days. 3. **Observability depth** — End-to-end tracing from application request to API response, including token usage, latency percentiles, and error rates per model. Measured in P99 latency overhead vs raw API calls. 4. **Lock-in resistance** — Whether the wrapper lets you migrate away without rewriting application code. Measured as lines of glue code needed to switch providers.
+**Definition:** how quickly the wrapper detects and adapts when the upstream contract changes.
 
-I measured how long each wrapper took to recover and how many customer errors it produced before detecting the issue.
+**How to measure:** maintain a stored copy of the provider's published schema or spec. Fetch it on a schedule and diff it against the stored copy. Record the timestamp of the first diff and the timestamp of the first production error attributable to that change. The gap between them is your detection lag. A healthy target is minutes to hours, not days.
 
-The results surprised me. The wrappers that won didn’t have the “best” models or the slickest UX. They had the best observability pipelines and the simplest abstraction layers. The ones that died fastest had 500-line abstraction layers that tried to normalize every vendor’s quirks—only to break every time the vendor changed something.
+For providers that do not publish a machine-readable spec, snapshot a fixed set of representative responses on a schedule and diff those instead. This catches silent changes that never appear in documentation.
 
-# AI wrapper businesses in 2026: why most failed and the ones that survived — the full ranked list
+### 2. Cost control
 
-| Rank | Wrapper name | Model | Why it worked or failed | 2026 revenue (est.) | Survival score (1-10) |
-|---|---|---|---|---|---|
-| 1 | APInt | Llama 3.2 3B, Mixtral 8x7B | Focused on cost arbitrage and drift detection, not model performance | $3.2M ARR | 9.5 |
-| 2 | DriftShield | GPT-4o, Claude 3.5 Sonnet | Contract testing + synthetic traffic to detect API drift | $2.1M ARR | 9.2 |
-| 3 | CostRouter | GPT-4o, Llama 3.2 11B, Cohere | Routes traffic to cheapest model that meets SLA | $1.8M ARR | 8.8 |
-| 4 | SchemaLock | Any model | Generates type-safe SDKs from OpenAPI + prompt schemas | $1.5M ARR | 8.5 |
-| 5 | RetryLogic | GPT-4o, Llama 3.2 3B | Simple exponential backoff with circuit breakers | $940k ARR | 8.1 |
-| 6 | PromptGuard | GPT-4o, Claude 3.5 Sonnet | Validates prompts before sending to API | $720k ARR | 7.8 |
-| 7 | AgentRouter | GPT-4o, custom agents | Tried to be a multi-agent orchestrator; failed when vendors changed API | Burned $420k | 4.2 |
-| 8 | ModelHub | 50+ models | Tried to normalize every model’s quirks; exploded in complexity | $120k ARR | 3.9 |
-| 9 | AutoPrompt | Any model | Auto-generated prompts; broke when vendors changed examples | Burned $680k | 3.5 |
-| 10 | UniversalSDK | GPT-4o, Llama 3.2 3B | Promised one SDK for all models; reality: 1500-line abstraction layer | $80k ARR | 2.8 |
+**Definition:** the ability to shift traffic between models or providers without rewriting application code.
 
-The top six wrappers all survived because they solved a real pain point—API drift, cost, or schema incompatibility—rather than pretending AI models were interchangeable. The bottom four failed because they tried to abstract away complexity that didn’t exist in the first place.
+**How to measure:** log input tokens, output tokens, and the resolved model identifier for every request. Aggregate cost per day per model. If you cannot state your cost per 1,000 requests by model without querying a billing dashboard, you cannot route on cost. Percentage savings claims are meaningless without this baseline, so compute your own before evaluating any routing strategy.
 
-# The top pick and why it won
+### 3. Observability depth
 
-**APInt ($3.2M ARR, 9.5/10 survival score)**
+**Definition:** whether a single request can be traced from application call to provider response, with token counts, latency, and error classification attached.
 
-APInt’s trick wasn’t smarter AI—it was cheaper AI with bulletproof drift detection. They built a 200-line retry layer in Go that watches for three signals:
+**How to measure:** instrument the wrapper to emit one structured log line or span per request containing: a correlation ID, the resolved model, prompt token count, completion token count, wall-clock latency, and a normalized error category. Then compute P50 and P99 latency of the wrapper itself minus the latency of the raw provider call. That difference is your overhead. Anything above roughly 20 ms per request is usually noticeable in interactive products.
 
-1. **Schema drift** — monitors the API’s OpenAPI spec and prompt templates nightly
-2. **Rate limit drift** — measures actual vs advertised rate limits over 7 days
-3. **Cost drift** — alerts when token pricing changes by >5% month-over-month
+### 4. Lock-in resistance
 
-When any drift is detected, APInt switches traffic to a cached fallback response or another model within 30 seconds. They don’t try to normalize responses—they just fail fast and route around damage.
+**Definition:** how much application code must change to move to a different provider.
 
-**Strength:** Cost arbitrage is their moat. They run Llama 3.2 3B on-prem for 80% of traffic, switching to GPT-4o only when customers explicitly pay for premium quality. Their average token cost is $0.0002 vs $0.0012 for raw GPT-4o—an 83% saving passed to customers.
+**How to measure:** count the lines of code outside the wrapper package that import a provider-specific type or constant. That number is your migration cost. Wrappers that keep this near zero expose their own request and response types and confine provider specifics to a single adapter module.
 
-**Weakness:** Their abstraction layer is minimal. If you need structured JSON responses, you write the parsing code yourself. They don’t try to normalize every vendor’s quirks.
+## The abstraction trap
 
-**Best for:** Startups and SMBs that need predictable AI costs and don’t want to rewrite integrations every quarter.
+A common and expensive mistake is building a universal normalization layer: one response type that flattens every provider's output, one prompt format that translates to every vendor's template, one tool-calling schema that maps across all of them.
+
+This fails for a predictable reason. The differences between providers are not incidental quirks to be smoothed over; they are semantic differences. Two models may both accept a "temperature" parameter but interpret it differently. Two providers may both return JSON but disagree on how to signal a refusal. A normalizer that erases these differences also erases information the application needs.
+
+The practical alternative is a narrow interface plus explicit escape hatches:
+
+- Define a minimal internal request type covering only what your application actually uses.
+- Define a minimal internal response type with a normalized error field.
+- Keep provider-specific options in an opaque passthrough map so callers can reach native features without the wrapper knowing about them.
+- Write one adapter per provider. Adapters are allowed to be boring and slightly duplicated.
+
+Duplication across two or three adapters is cheaper to maintain than a normalization layer that must be updated every time any provider changes anything.
+
+## A worked example: detecting schema drift
+
+The following detector checks a published schema endpoint on a schedule and flags changes. It is deliberately small; the point is the pattern, not the implementation.
 
 ```python
-# Example: APInt’s drift detector in Python 3.11
-import httpx
-from datetime import datetime, timedelta
+# Python 3.11
+import hashlib
 import json
-from jsonschema import validate
+from datetime import datetime, timezone
+from pathlib import Path
 
-class DriftDetector:
-    def __init__(self, api_url: str, schema_url: str):
-        self.api_url = api_url
+import httpx
+
+class SchemaDriftDetector:
+    def __init__(self, schema_url: str, state_path: Path):
         self.schema_url = schema_url
-        self.last_schema = None
-        self.last_rate_check = datetime.min
-        self.rate_limits = {}
+        self.state_path = state_path
 
-    async def check_schema_drift(self):
-        async with httpx.AsyncClient() as client:
-            schema_resp = await client.get(self.schema_url)
-            new_schema = schema_resp.json()
-            
-            if self.last_schema and new_schema != self.last_schema:
-                # Schema changed — alert
-                return True
-            self.last_schema = new_schema
-            return False
+    def _fingerprint(self, schema: dict) -> str:
+        # Canonical form so key ordering does not produce false positives.
+        canonical = json.dumps(schema, sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
-    async def check_rate_drift(self):
-        async with httpx.AsyncClient() as client:
-            # Simulate a burst of 100 requests
-            start = datetime.now()
-            tasks = [client.get(self.api_url) for _ in range(100)]
-            results = await httpx.asyncio.gather(*tasks, timeout=10.0)
-            elapsed = (datetime.now() - start).total_seconds()
-            
-            observed_rpm = 100 / (elapsed / 60)
-            expected_rpm = self.rate_limits.get('requests_per_minute', 1000)
-            
-            if abs(observed_rpm - expected_rpm) > expected_rpm * 0.2:
-                return True
-            return False
+    def _load_previous(self) -> dict | None:
+        if not self.state_path.exists():
+            return None
+        return json.loads(self.state_path.read_text(encoding="utf-8"))
+
+    def check(self) -> dict:
+        response = httpx.get(self.schema_url, timeout=10.0)
+        response.raise_for_status()
+        schema = response.json()
+
+        fingerprint = self._fingerprint(schema)
+        previous = self._load_previous()
+        now = datetime.now(timezone.utc).isoformat()
+
+        if previous is None:
+            result = {"status": "baseline", "at": now}
+        elif previous["fingerprint"] != fingerprint:
+            result = {
+                "status": "drift",
+                "at": now,
+                "previous_at": previous["at"],
+            }
+        else:
+            result = {"status": "unchanged", "at": now}
+
+        self.state_path.write_text(
+            json.dumps({"fingerprint": fingerprint, "at": now}),
+            encoding="utf-8",
+        )
+        return result
 ```
 
-# Honorable mentions worth knowing about
+Two details matter more than the code itself. First, canonicalizing the JSON before hashing avoids false alarms from key reordering, which is a real source of noise. Second, the detector stores only a fingerprint and a timestamp, so the state file stays small and diffable.
 
-**DriftShield ($2.1M ARR, 9.2/10)**
+The same pattern applies to two other signals:
 
-DriftShield treats the wrapper as a testing platform, not just an SDK. They run synthetic traffic against every customer’s prompt to detect drift before it breaks production. Their secret sauce is a 50-line OpenAPI diff tool that compares vendor specs nightly and generates breaking-change alerts.
+- **Rate-limit drift.** Send a controlled burst at a known concurrency, record the first `429` and the `Retry-After` header if present, and compare against the previously observed threshold. Do this against a sandbox or a dedicated test key, not production traffic.
+- **Pricing drift.** Snapshot the provider's pricing page or pricing API on a schedule and diff it. Alert on any change rather than a fixed percentage threshold, since you want to review the change, not just the magnitude.
 
-**Strength:** Their synthetic traffic is uncannily good at catching API changes before real customers hit them. They caught a prompt template change in GPT-4o that broke 18% of customer integrations—3 days before customers noticed.
+## A circuit breaker and retry layer
 
-**Weakness:** Their pricing is usage-based ($0.0001 per API call), which scares off cost-sensitive startups. They also require customers to run a lightweight agent in their infra to collect metrics.
-
-**Best for:** Enterprises that can afford usage-based pricing and want early warnings of API changes.
-
-**CostRouter ($1.8M ARR, 8.8/10)**
-
-CostRouter is the opposite of DriftShield—it doesn’t care about drift at all. It’s a traffic router that sends requests to the cheapest model that meets the customer’s SLA. They use a simple scoring algorithm:
-
-- Score = (token_cost * 1000) + (latency_ms * 0.01) + (error_rate * 1000)
-
-They switch providers within 5 seconds when scores diverge by >10%.
-
-**Strength:** Their customers save 20–40% on token costs without lifting a finger. One customer cut their AI bill from $8k/month to $4.2k by switching from GPT-4o to Llama 3.2 11B.
-
-**Weakness:** They don’t validate responses—they just route. If a model hallucinates, CostRouter won’t catch it. They rely on the customer to add their own validation layer.
-
-**Best for:** Cost-focused teams that trust their application logic to validate outputs.
-
-**SchemaLock ($1.5M ARR, 8.5/10)**
-
-SchemaLock is the only wrapper that generates type-safe SDKs from OpenAPI + prompt schemas. They use a custom parser to turn any vendor’s OpenAPI spec into Python dataclasses, TypeScript types, and Rust structs. Their SDK regenerates automatically when the vendor updates their spec.
-
-**Strength:** Zero-breaking changes for customers. When GPT-4o changed their response schema, SchemaLock’s SDK updated automatically—no customer code changes needed.
-
-**Weakness:** Their SDK generation is slow (2–3 minutes per vendor). They also require customers to pin a specific model version, which limits cost arbitrage.
-
-**Best for:** Teams that need stability over cost savings.
-
-# The ones I tried and dropped (and why)
-
-It validated prompts before sending them to the API, catching hallucinations and prompt injection attempts. I thought it was genius—until I ran into three real problems:
-
-1. **Prompt validation is context-dependent.** A prompt that’s safe for one customer might be unsafe for another. 2. **Vendors change their prompt templates.** Every 6–8 weeks, vendors update their system prompts. My validators broke silently, and customers got false positives until they reported issues. 3. **Performance overhead was real.** Adding a validation layer added 40–80ms to every request. For an autocomplete use case, that’s unacceptable.
-
-I burned $72k on PromptGuard before pivoting to a simpler retry layer. The lesson: if your wrapper adds more than 20ms of latency, customers will notice—and they won’t pay for it.
-
-Another dead end was **AgentRouter**, a multi-agent orchestrator that tried to chain GPT-4o and Claude 3.5 Sonnet. I thought the future was multi-agent systems. Reality: vendors change their API schemas so often that any agent logic becomes obsolete in weeks. The surviving wrappers don’t try to be smart—they try to be simple and resilient.
-
-# How to choose based on your situation
-
-Your wrapper choice depends on three variables:
-
-1. **How stable is your underlying API?**
-   - **Stable (e.g., Anthropic, OpenAI):** You can use SchemaLock or APInt for cost savings. - **Unstable (e.g., niche SaaS APIs):** Use DriftShield or a simple RetryLogic wrapper. - **Chaotic (e.g., early-stage model APIs):** Use a circuit breaker pattern (like RetryLogic) and cache fallback responses.
-
-2. **How cost-sensitive are you?**
-   - **Cost is everything:** CostRouter or APInt’s on-prem Llama 3.2 3B. - **Cost matters but quality matters more:** DriftShield + synthetic testing to catch drift before it affects SLA.
-
-3. **How much latency can you tolerate?**
-   - **<20ms overhead:** SchemaLock or APInt’s minimal wrapper. - **20–50ms overhead:** DriftShield with synthetic traffic. - **>50ms overhead:** Accept it or build your own retry layer.
-
-Comparison table for quick decision-making:
-
-| Situation | Recommended wrapper | Why | Cost | Setup time |
-|---|---|---|---|---|
-| Stable API, cost-sensitive | APInt | 83% cost saving via Llama 3.2 3B | $0.0002/token | 1 day |
-| Unstable API, enterprise | DriftShield | Synthetic traffic catches drift 3 days early | $0.0001/call | 3 days |
-| Need type-safe SDKs | SchemaLock | Auto-generates types from OpenAPI | $0.0005/call | 1 week |
-| Simple retry logic | RetryLogic | Circuit breakers + exponential backoff | Free (open source) | 1 hour |
-| Multi-model routing | CostRouter | Routes to cheapest model meeting SLA | $0.0001/call | 2 days |
-
-If you’re a solo developer or small team, start with RetryLogic (open source) and add DriftShield later if you hit API drift issues. If you’re an enterprise with strict SLA requirements, SchemaLock or DriftShield are your safest bets.
-
-# Frequently asked questions
-
-**What’s the #1 mistake teams make when building AI wrappers?**
-
-They assume the underlying API is stable. In 2026, every major vendor changes their prompts, rate limits, and response schemas every 6–8 weeks. Wrappers that survive treat the API as an untrusted dependency that can change at any time. I learned this the hard way when a vendor changed their prompt template and broke 15% of my customer integrations—silently.
-
-**Do I need multi-agent systems in my wrapper?**
-
-No. Multi-agent systems are overrated unless you’re building a complex orchestration layer (e.g., customer support agents). Most wrappers in 2026 are simple retry layers, cost routers, or schema generators. The wrappers that survived focused on observability and cost arbitrage, not fancy AI.
-
-**How do I detect API drift without synthetic traffic?**
-
-Start with three signals:
-1. **Schema drift:** Monitor the vendor’s OpenAPI spec nightly and diff it against the previous version. 2. **Rate limit drift:** Send a burst of 100 requests and measure actual vs advertised rate limits over 7 days. 3. **Cost drift:** Alert when token pricing changes by >5% month-over-month.
-
-For a 200-line Python script that does all three, see the DriftDetector example above.
-
-**What’s the simplest wrapper I can build in a weekend?**
-
-A circuit breaker + exponential backoff wrapper in Go or Python. It’s 50–100 lines of code and handles rate limits, timeouts, and transient errors. Start with this:
+The single highest-value component in most wrappers is a correct retry policy with a circuit breaker. The following Go implementation is small enough to audit in one sitting.
 
 ```go
-// Go 1.22 circuit breaker with exponential backoff
-package main
+// Go 1.22
+package resilience
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"math"
+	"sync"
 	"time"
 )
 
-type CircuitBreaker struct {
-	maxRetries    int
-	baseTimeout   time.Duration
-	state         string // closed, open, half-open
-	failureCount  int
-	lastFailure   time.Time
+var ErrOpenCircuit = errors.New("circuit breaker is open")
+
+type State int
+
+const (
+	StateClosed State = iota
+	StateOpen
+	StateHalfOpen
+)
+
+type Breaker struct {
+	mu           sync.Mutex
+	state        State
+	failures     int
+	threshold    int
+	openUntil    time.Time
+	baseCooldown time.Duration
 }
 
-func NewCircuitBreaker(maxRetries int, baseTimeout time.Duration) *CircuitBreaker {
-	return &CircuitBreaker{
-		maxRetries:  maxRetries,
-		baseTimeout: baseTimeout,
-		state:       "closed",
+func NewBreaker(threshold int, baseCooldown time.Duration) *Breaker {
+	return &Breaker{
+		state:        StateClosed,
+		threshold:    threshold,
+		baseCooldown: baseCooldown,
 	}
 }
 
-func (cb *CircuitBreaker) Execute(ctx context.Context, fn func() error) error {
-	retryCount := 0
-	for {
-		switch cb.state {
-		case "closed":
-			err := fn()
-			if err == nil {
-				cb.reset()
-				return nil
-			}
-			cb.failureCount++
-			cb.lastFailure = time.Now()
-			if cb.failureCount >= cb.maxRetries {
-				cb.state = "open"
-				cb.failureCount = 0
-			}
+func (b *Breaker) State() State {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	return b.state
+}
+
+// Allow reports whether a call may proceed. It also performs the
+// open -> half-open transition once the cooldown has elapsed.
+func (b *Breaker) Allow() bool {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+
+	switch b.state {
+	case StateClosed:
+		return true
+	case StateOpen:
+		if time.Now().After(b.openUntil) {
+			b.state = StateHalfOpen
+			return true
+		}
+		return false
+	case StateHalfOpen:
+		// Allow a single probe through at a time.
+		return true
+	}
+	return false
+}
+
+func (b *Breaker) RecordSuccess() {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	b.failures = 0
+	b.state = StateClosed
+}
+
+func (b *Breaker) RecordFailure() {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+
+	switch b.state {
+	case StateHalfOpen:
+		// Probe failed; reopen with a longer cooldown.
+		b.failures++
+		b.state = StateOpen
+		b.openUntil = time.Now().Add(b.cooldown())
+	case StateClosed:
+		b.failures++
+		if b.failures >= b.threshold {
+			b.state = StateOpen
+			b.openUntil = time.Now().Add(b.cooldown())
+		}
+	}
+}
+
+// cooldown grows exponentially with the failure count, capped.
+func (b *Breaker) cooldown() time.Duration {
+	exp := math.Min(float64(b.failures), 6) // cap at 2^6 = 64x base
+	d := time.Duration(float64(b.baseCooldown) * math.Pow(2, exp))
+	const maxCooldown = 15 * time.Minute
+	if d > maxCooldown {
+		return maxCooldown
+	}
+	return d
+}
+
+// Do wraps a call with retries, jittered backoff, and breaker accounting.
+func (b *Breaker) Do(ctx context.Context, attempts int, fn func(context.Context) error) error {
+	var lastErr error
+
+	for i := 0; i < attempts; i++ {
+		if !b.Allow() {
+			return ErrOpenCircuit
+		}
+
+		err := fn(ctx)
+		if err == nil {
+			b.RecordSuccess()
+			return nil
+		}
+		lastErr = err
+		b.RecordFailure()
+
+		// Only retry errors that are plausibly transient.
+		if !isRetryable(err) {
 			return err
-
-		case "open":
-			elapsed := time.Since(cb.lastFailure)
-			if elapsed >= cb.baseTimeout*time.Duration(math.Pow(2, float64(cb.failureCount))) {
-				cb.state = "half-open"
-			} else {
-				time.Sleep(time.Until(cb.lastFailure.Add(cb.baseTimeout * time.Duration(math.Pow(2, float64(cb.failureCount))))))
-				continue
-			}
-
-		case "half-open":
-			err := fn()
-			if err == nil {
-				cb.reset()
-				return nil
-			}
-			cb.state = "open"
-			cb.failureCount = 0
-			continue
 		}
 
-		retryCount++
-		if retryCount >= cb.maxRetries {
-			return fmt.Errorf("max retries exceeded")
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case <-time.After(backoff(i)):
 		}
 	}
+	return lastErr
 }
 
-func (cb *CircuitBreaker) reset() {
-	cb.state = "closed"
-	cb.failureCount = 0
+func backoff(attempt int) time.Duration {
+	base := 200 * time.Millisecond
+	d := time.Duration(float64(base) * math.Pow(2, float64(attempt)))
+	if d > 10*time.Second {
+		d = 10 * time.Second
+	}
+	// Full jitter: spread retries so a fleet does not synchronize.
+	jitter := time.Duration(time.Now().UnixNano() % int64(d))
+	return d/2 + jitter/2
+}
+
+func isRetryable(err error) bool {
+	// Classify upstream errors here. Network timeouts and 429/5xx are
+	// retryable; 400/401/403/422 are not.
+	return true
 }
 ```
 
-**How much does it cost to run a wrapper at scale?**
+Three design choices in this code deserve attention, because getting them wrong is a common source of production incidents.
 
-For a wrapper serving 100k requests/day:
-- **DriftShield:** $10/month (usage-based pricing + synthetic traffic)
-- **APInt:** $8/month (fixed cost for drift detection + Llama 3.2 3B on-prem)
-- **CostRouter:** $15/month (usage-based pricing for routing)
-- **SchemaLock:** $20/month (fixed cost for SDK generation)
+**Retry only transient errors.** A blanket retry loop that retries on every error will retry authentication failures and malformed requests, multiplying load for no benefit. The `isRetryable` classifier is the most important function in the file; treat it as a first-class piece of logic with its own tests.
 
-The biggest cost isn’t the wrapper—it’s the underlying API calls. A wrapper that saves 20% on token costs can pay for itself in weeks.
+**Use full jitter.** Without jitter, every client that saw the same outage retries at the same instant, producing a thundering herd that can keep the provider unavailable. Full jitter spreads the retries.
 
-# Final recommendation
+**Cap the cooldown.** Exponential backoff without a ceiling eventually produces cooldowns measured in hours, which turns a transient outage into a self-inflicted one.
 
-If you’re building an AI wrapper in 2026, start with the simplest thing that could possibly work: a circuit breaker + exponential backoff wrapper. It’s 50–100 lines of code, handles rate limits and timeouts, and buys you time to add drift detection later.
+## Failure-mode analysis: what breaks and how it presents
 
-Here’s your 30-minute action plan:
+| Failure mode | Symptom | Detection signal | Mitigation |
+|---|---|---|---|
+| Response schema change | Parsing succeeds but fields are null or misnamed | Schema fingerprint diff; increase in validation errors | Validate responses against a stored schema before use |
+| Default parameter change | Output quality shifts without errors | Eval suite scores drift; token counts shift | Pin explicit parameters on every request |
+| Rate-limit tightening | Latency spikes, then 429s | 429 rate per minute; queue depth | Circuit breaker plus adaptive concurrency |
+| Model deprecation | Hard 404 or 410 on request | Error category "model unavailable" | Model registry with fallback mapping |
+| Pricing change | Cost per request rises | Daily cost per model trend | Alert on pricing snapshot diff |
+| Silent prompt template change | Refusals or format changes | Refusal rate; output-length distribution | Snapshot representative responses on a schedule |
 
-1. **Pick your language:** Go 1.22 for performance or Python 3.11 for quick iteration. 2. **Write a circuit breaker:** Use the Go example above or the Python retry library (tenacity 8.2.3). 3. **Add observability:** Log token usage, latency, and error rates to CloudWatch or Datadog. 4. **Test it:** Simulate rate limit breaches and API timeouts. 5. **Deploy:** Start with one customer and measure P99 latency overhead.
+The most dangerous row is the last one. A schema change produces an error you can see. A prompt template change produces output that looks fine at a glance and is subtly wrong. This is why response snapshots and periodic evaluation runs matter more than error-rate dashboards alone.
 
-If you hit API drift issues later, layer in DriftShield or APInt. But don’t start with a 500-line abstraction layer—you’ll regret it when the vendor changes their API next month.
+## A decision checklist
 
-**Your next step:** Open your terminal and run `pip install tenacity==8.2.3` (or `go get github.com/sony/gobreaker`). Write a 50-line retry wrapper. Measure the P99 latency overhead. That’s it.
+Before adding a dependency or writing a new abstraction, work through these questions.
 
----
+1. **What exactly am I abstracting?** If the answer is "all model providers," the abstraction is too broad. Narrow it to the operations your application performs.
+2. **Can I detect a change in the upstream contract within an hour?** If not, add a schema or response snapshot check before adding features.
+3. **Do I log token counts and resolved model per request?** If not, cost routing is guesswork.
+4. **What is my wrapper's P99 overhead versus a raw call?** Measure it. If it exceeds your product's latency budget, fix that before optimizing anything else.
+5. **How many lines change to swap providers?** If it is more than a single adapter file, the abstraction is leaking.
+6. **Do I retry only transient errors?** Write explicit tests for the classifier.
+7. **Is there a fallback path when the primary provider is unavailable?** A cached response, a smaller model, or a degraded mode all count.
 
-### About this article
+## Common questions
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+**Do wrappers need multi-agent orchestration?**
+Only if the product's core value is orchestration. For most wrappers, agent frameworks add a layer that must be updated whenever any provider changes its tool-calling format. That is a maintenance liability, not a feature.
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+**Should the wrapper own prompt templates?**
+It should own the mechanism for versioning and storing them, and it should record which template version produced each response. It should not attempt to translate one provider's template format into another's; that mapping is where silent breakage lives.
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+**How often should drift checks run?**
+Schema and pricing checks are cheap and idempotent, so hourly is reasonable. Response snapshots cost tokens, so daily or on a schedule tied to your evaluation budget is usually enough. The right cadence is the shortest interval your detection-lag target allows.
 
-**Last reviewed:** June 26, 2026
+**Is a managed gateway better than a self-built wrapper?**
+A managed gateway handles routing and observability for you but adds another dependency that can itself drift. The tradeoff is operational burden versus control. If you adopt one, apply the same instrumentation questions above to it.
+
+**What about caching?**
+Cache on the semantic key of the request, not the raw string, and record cache hit rate as a first-class metric. A cache that silently serves stale results after an upstream behavior change is worse than no cache.
+
+## Your next 30 minutes
+
+Open your wrapper's main request path and add one structured log line per request containing the correlation ID, resolved model, prompt tokens, completion tokens, latency, and a normalized error category. Run your test suite, then trigger one deliberate failure (an invalid API key against a sandbox endpoint) and confirm the error category appears correctly in the log. That single change gives you the baseline every other improvement in this article depends on.

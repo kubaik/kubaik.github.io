@@ -1,288 +1,192 @@
 # Buy vs build AI: 3 hard rules for 2026
 
-I've hit the same build buy mistake in more than one production codebase over the years. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why.
+## The real question behind "build vs buy"
 
-## Why this list exists (what I was actually trying to solve)
+Most teams frame the decision as a binary, then discover the cost sits in the 30–40% of work nobody scoped: token budgeting, retry storms, cache eviction, and the behaviour of mobile networks that drop to a few kilobytes per second mid-request. The algorithmic part of an AI feature is usually the cheap part. The operational envelope around it is where budgets and on-call rotations go.
 
-In 2026, every SaaS team in Lagos, Nairobi, or Accra is asking the same question: should we roll our own LLM glue or stitch APIs together? The trap isn’t “build vs buy” as a binary; it’s the 30–40 % of work that nobody budgets for—token budgeting, retry storms, and the moment your user in a matatu with 2G sees 404s from your self-hosted embedding cache. The part that trips people up is the hidden cost of keeping inference fast when the local network drops to 12 kb/s for 30 seconds, and that’s what this post actually covers.
+Three failure patterns recur often enough to treat as archetypes:
 
-Three concrete failure patterns keep repeating:
-- Teams ship a Python 3.11 service that works locally but dies on first deploy because they forgot to set `PYTHONASYNCIODEBUG=1` and now `httpx` retries every 50 ms for 30 s, burning 800 k tokens on one failed /chat endpoint.
-- A fintech in Kenya hits 180 ms p99 on their self-hosted embedding model only to learn that their Redis 7.2 cluster running on `t3.small` nodes evicts keys at 80 % memory pressure, so every cache miss triggers a 1.2 s cold-start rebuild of the 512-dim vector.
+- A service passes local tests but dies on first deploy because retry logic fires every 50 ms for 30 seconds against a throttled endpoint, burning a large token budget on a single failed call.
+- A self-hosted embedding model shows acceptable p99 latency until the cache layer evicts keys under memory pressure, at which point every miss triggers a cold rebuild of a 512- or 768-dimension vector.
+- A messaging bot that looks trivial accumulates a webhook queue backlog whenever the payment provider's rate limit is lower than documented, and each retry re-sends the full payload.
 
-- A logistics dashboard in Kampala thinks their WhatsApp bot is “just a bot” until the monthly M-Pesa webhook queue backs up every time the LLM provider’s rate limit bucket leaks at 800 req/min instead of the promised 1200 req/min, costing them 4 200 KES in failed payment confirmations per incident.
+None of these are model-quality problems. They are infrastructure and edge-case costs that only appear under real load and real network conditions.
 
-The common thread: these aren’t algorithmic failures. They’re infra and edge-case costs nobody modeled.
+## Four axes for scoring each component
 
-## How I evaluated each option
+Score every candidate component along the same four axes. The point is not to produce a single number but to expose which axis dominates, because that determines build-versus-buy.
 
-I scored every component along four axes: 
-- **Latency floor** – 95th-percentile end-to-end time from user tap to first token in Kenya, Ghana, and Uganda airtime markets using 2026 network traces from the *African Internet Report 2026* dataset.
-- **Token economics** – cost per 1 000 tokens at 2026 spot prices for both self-hosted and hosted models, including infra amortized over one month of 100k daily users.
-- **Operational blast radius** – how many pager nights a single outage triggers (measured in incidents/quarter).
-- **Localization debt** – how much extra code you must write to support M-Pesa, mobile-money split payments, and low-bandwidth retries before the feature even talks to the LLM.
+- **Latency floor.** The 95th-percentile end-to-end time from user action to first useful token, measured on the network conditions your users actually have, not on a datacentre link.
+- **Token economics.** Cost per 1,000 tokens at current provider prices, plus amortised infrastructure cost for self-hosted options, computed over a stated load assumption.
+- **Operational blast radius.** How many pages a single outage generates per quarter, and whether recovery needs a human.
+- **Localisation and integration debt.** Extra code required for payment rails, message formats, low-bandwidth retries, and locale handling before the feature even reaches the model.
 
-I discarded frameworks that required Kubernetes 1.30 or newer unless they shipped a managed flavour that hides the cluster. Anything needing GPU sharding was automatically deprioritized; the median Lagos startup doesn’t have an NVIDIA L40S in 2026.
+Two filters are worth applying early. Anything requiring a specific GPU class should be deprioritised unless the team already runs that hardware continuously, because idle GPU cost dominates the arithmetic. Anything requiring a cluster orchestrator should be deprioritised unless a managed option hides the cluster entirely.
 
-The evaluation ran on real 2026 infra: 
-- Hosted LLMs priced at the 2026 public APIs (e.g., `gpt-4.1-mini` at $0.12 / 1k tokens in +$0.24 / 1k tokens out).
-- Self-hosted runtimes tested on AWS EC2 `c7i.large` (x86) and `c7g.large` (Graviton4) with Python 3.11 and vLLM 0.4.2.
-- Redis 7.2 with RedisJSON and RedisSearch for vector cache and metadata.
-- AWS Lambda (Python 3.12, 1 024 MB) for serverless fallback when the primary model throttles.
+### How to measure instead of guess
 
-Latency was measured with the open-source `africa-ping` tool that replays 2026 African mobile traces and logs every hop. Token costs were calculated from the provider’s public price list plus infra amortized over 30 days at 80 % average load.
+Vendor benchmarks and blog-post latency numbers rarely transfer. Instrument your own path:
 
-## When to build vs when to buy the AI components of your SaaS in 2026 — the full ranked list
+- **Latency:** record timestamps at request receipt, first byte from the provider, and final token. Emit a histogram, not an average. Compare p50 and p95 separately, because cold starts and retries show up almost entirely in the tail.
+- **Token spend:** log prompt tokens and completion tokens per request with a request ID and a feature tag. Aggregate daily. This is the only way to catch retry storms, since they inflate token counts without inflating successful-request counts.
+- **Cache effectiveness:** instrument hit rate, miss rate, and rebuild time per miss. A cache with a 90% hit rate and a 1.2-second rebuild still produces bad p99 if misses cluster.
+- **Network conditions:** replay recorded mobile traces through your stack, or at minimum throttle a staging environment to a realistic profile. Testing on office wifi hides the entire class of failures this article is about.
+
+## Component-by-component analysis
 
 ### 1. Embedding cache and vector search
 
-What it does: keeps a local copy of every user query’s 384–1 536-dim embedding so you don’t hit the LLM for semantic search on repeated questions.
+**What it does:** stores embeddings of repeated queries so semantic search does not call the model for every request.
 
-Strength: once the cache is warm, `/search` latency drops from 800 ms to 35 ms on a `c7g.large` with Redis 7.2 and RedisSearch 2.6, and you cut token spend 70 % for a typical SaaS.
+**Why it usually wins:** once warm, cache hits replace a full model round trip with a local lookup. The latency improvement is large and the cost improvement is proportional to your repeat-query rate. There is no GPU budget and no rate-limit race.
 
-Weakness: the cache is cold for the first 30–60 minutes after deploy, and on 2G it can take 4–6 s to rebuild a single 768-dim vector if you haven’t pre-warmed keys. Most teams set `expire-after-write: 1h` and forget the cold-start tax.
+**Failure mode:** the cache is cold for a period after every deploy and after every eviction event. A cold rebuild of a single 768-dimension vector can take seconds on constrained hardware. Teams commonly set a one-hour expiry and forget that the first hour after deploy is the worst hour.
 
-Best for: SaaS with heavy repeat queries (marketplaces, tutoring, health symptom checkers) where the same prompt appears 8–12 times per user session.
-
-
+**Build if:** your product has heavy repeat queries (marketplaces, tutoring, support tooling) and your token spend is dominated by search or retrieval rather than generation.
 
 ### 2. Prompt templating and dynamic few-shot retrieval
 
-What it does: swaps in context snippets at runtime based on user segment and locale without rebuilding the model.
+**What it does:** assembles context at runtime from a fragment library keyed by user segment and locale.
 
-Strength: one template file and a 300-line Python module can handle M-Pesa receipts in English, Luganda, and Hausa, cutting localisation cost 40 % compared to shipping a separate model per language.
+**Why it usually wins:** a single template layer plus a small module can serve many locales without maintaining a separate model per language.
 
-Weakness: if your prompt fragment library grows beyond 2 k fragments, lookup time in a plain dict jumps from 2 ms to 45 ms on 2G and you leak 1.8 k tokens per request to fill the fragment placeholder.
+**Failure mode:** the fragment library grows past a few thousand entries and lookup, serialisation, and placeholder filling start contributing measurable latency and token overhead. A naive dictionary lookup is fine at small scale and not fine at large scale.
 
-Best for: multilingual or multi-tenant SaaS where prompts change per user segment but the model backbone is fixed.
+**Build if:** prompts change per tenant or locale but the underlying model is fixed. Otherwise buy a templating layer or use the provider's built-in prompt management.
 
+### 3. Webhook parsing and validation
 
+**What it does:** converts raw business-messaging and payment callbacks into structured events.
 
-### 3. WhatsApp/M-Pesa webhook parsing and validation
+**Why it usually wins:** a focused parser replaces a large body of hand-written regular expressions, and the correctness gain is usually larger than the latency gain.
 
-What it does: converts raw WhatsApp business messages and M-Pesa STK push callbacks into structured events your LLM can act on.
+**Failure mode:** the upstream API returns a 503 with a `Retry-After` header during load spikes, and naive exponential backoff re-sends the full payload on every attempt. Retry cost scales with payload size, so a large payload plus an aggressive backoff schedule is the worst combination.
 
-Strength: a 150-line `whatsapp-mpesa-parser` (Python 3.12, `pydantic` 2.7) replaces 800 lines of hand-written regex and cuts median parse time from 140 ms to 24 ms on a `t4g.micro`.
-
-Weakness: when Safaricom’s API returns a 503 with `Retry-After: 30`, naive retries with exponential backoff burn 12 k tokens in one minute if your retry budget isn’t token-aware.
-
-Best for: fintech, logistics, and gig-economy apps that live inside WhatsApp and M-Pesa.
-
-
+**Build if:** you operate in a market where the payment or messaging rail is central to the product and no library handles it well.
 
 ### 4. LLM fallbacks and retry orchestration
 
-What it does: if the primary model throttles or returns 429, automatically retries on a cheaper model (e.g., `gpt-4.1-mini` → `llama-3.1-70b-instruct`) or a local distilled model.
+**What it does:** routes to a secondary model when the primary throttles or errors, under a bounded retry budget.
 
-Strength: a 90-line Node 20 LTS worker using BullMQ 4.15 queues keeps retry chaos inside a 500 ms envelope 98 % of the time, saving 30 % on token spend vs blind retries.
+**Why it usually wins:** a small queue worker keeps retry behaviour inside a predictable envelope and prevents unbounded fan-out.
 
-Weakness: when the queue depth hits 2 k, BullMQ’s default `limiter: { max: 10, duration: 1000 }` still lets 10 concurrent retries hammer the secondary model, triggering a 429 loop that costs 8 k tokens in 5 s.
+**Failure mode:** the queue's default concurrency limiter still permits enough concurrent retries to trigger a second round of throttling on the fallback provider, producing a loop that consumes tokens without producing responses.
 
-Best for: SaaS that cannot afford downtime and must guarantee a response within 2 s on 2G.
-
-
+**Build if:** you must guarantee a response within a fixed time budget and the provider's own retry semantics are insufficient.
 
 ### 5. Localisation prompts and tone adaptation
 
-What it does: rewrites model output into the user’s preferred tone (formal, friendly, pidgin) without fine-tuning.
+**What it does:** rewrites output into a preferred tone or register without fine-tuning.
 
-Strength: a 40-line Jinja2 template plus a 120-token system prompt replaces per-market fine-tunes and trims model size 15 %.
+**Why it usually wins:** a template plus a short system prompt replaces per-market fine-tunes and keeps the model size fixed.
 
-Weakness: tone rules longer than 256 tokens leak into the context window and push the next user’s first token out to 600 ms on 2G.
+**Failure mode:** tone rules grow past a few hundred tokens and start crowding the context window, pushing first-token latency up for subsequent requests.
 
-Best for: consumer apps with strong brand voice requirements across English, French, Portuguese, and Swahili.
+**Build if:** brand voice varies meaningfully across markets and a single system prompt cannot cover it.
 
+### 6. Self-hosted embedding model
 
+**What it does:** runs an open-weight embedding model on your own hardware.
 
-### 6. Self-hosted embedding model (e.g., `bge-small-en-v1.5`)
+**Why it can win:** at high, steady utilisation, self-hosting undercuts hosted embedding APIs.
 
-What it does: runs an open-weight 384-dim model on your own GPU or CPU to generate embeddings for search/retrieval.
+**Failure mode:** cold-start latency on ARM instances can be several seconds unless the model is kept warm with synthetic requests. On a slow mobile link, a cold start can exceed client-side timeouts.
 
-Strength: at 2026 AWS spot prices, the model serves 40k req/day on a single `g5g.xlarge` for ~$120/month, undercutting hosted embeddings by 60 %.
+**Build if:** you already run the hardware continuously and your query pattern is predictable. Otherwise buy.
 
-Weakness: cold-start latency on Graviton4 is 2.3 s unless you pre-warm with a synthetic request every 30 s; on 2G that spikes to 8 s and triggers Safari’s 5 s timeout.
+### 7. Fine-tuned adapter for domain jargon
 
-Best for: data-heavy apps (marketplaces, legal docs, medical symptom triage) with predictable query patterns and GPU budget.
+**What it does:** trains a small adapter over a base model to handle domain-specific vocabulary.
 
+**Why it can win:** inference cost grows only marginally while exact-match accuracy on in-domain queries improves.
 
+**Failure mode:** adapter artifacts are large relative to mobile app bundles, which complicates over-the-air updates on low-storage devices. You need delta updates and compression, which is real engineering work.
 
-### 7. Fine-tuned adapter for domain-specific jargon
+**Build if:** your domain vocabulary is not represented in general models and you have enough in-domain data to train on.
 
-What it does: trains a small adapter on top of a base model to understand local terms like “matatu stage” or “saloon car” without losing general capability.
+### 8. Real-time transcription
 
-Strength: a 200k-token adapter on top of `llama-3.1-8b` adds ~2 % to inference cost and improves exact-match accuracy 18 % on Nairobi route queries.
+**What it does:** converts voice messages into text for downstream processing.
 
-Weakness: adapter weight files balloon to 1.4 GB and break OTA updates on low-end Android 12 devices; you need differential updates and delta-compression.
+**Why it can win:** self-hosted transcription can be cheaper than cloud services once egress is included, at sufficient volume.
 
-Best for: vertical SaaS (logistics, real estate, health) that must understand hyper-local terminology.
+**Failure mode:** transcription latency on a slow link can be several times real time. Buffering 30 seconds of audio adds 30 seconds to the response, which violates any interactive SLA.
 
+**Build if:** the use case tolerates asynchronous responses (voice notes, field reports) rather than requiring live conversation.
 
+### 9. Self-hosted reranker
 
-### 8. Real-time transcription for voice notes
+**What it does:** reranks top-k candidates to improve ordering without another generation call.
 
-What it does: converts voice messages in Luganda or Amharic into text for downstream LLM processing.
+**Why it can win:** a CPU-hosted reranker is cheap and reduces downstream token consumption.
 
-Strength: Whisper-v3-turbo on a `g5g.2xlarge` serves 1 200 min/day for ~$85/month, beating cloud transcription services by 45 % when factoring in egress.
+**Failure mode:** reranker quality degrades on mixed-script documents, requiring a pre-filter step that adds latency.
 
-Weakness: transcription latency on 2G is 4.7× real time; buffering 30 s audio adds 30 s to the chat response, violating the 2 s SLA for chat UX.
+**Build if:** your documents are long, your corpus is stable, and you have measured a real ranking problem that a reranker solves.
 
-Best for: voice-first apps (health hotlines, customer support, field agent notes) where audio quality is secondary to cost.
+### 10. Fully fine-tuned conversational model
 
+**What it does:** trains a bespoke chat model to embody a specific voice.
 
+**Why it can win:** at large scale, a small fine-tuned model can match a larger general model on your narrow task at lower per-token cost.
 
-### 9. Self-hosted reranker (e.g., `bge-reranker-base`)
+**Failure mode:** model weights are too large for mobile delivery, so you need CDN distribution and delta updates, and cache misses under poor network conditions produce visible failures.
 
-What it does: reranks top-k search candidates to push the most relevant result to the top without another LLM call.
+**Build if:** you have a large training corpus, a strong voice constraint, and the distribution infrastructure to ship weights.
 
-Strength: a 400 MB reranker on CPU does 1 k req/sec on `c7i.large` for $90/month, cutting downstream LLM tokens 35 %.
+## Choosing between them: a decision table
 
-Weakness: reranker quality degrades 12 % when documents are in mixed scripts (Latin + Arabic + Devanagari); you need a pre-filter step, adding 150 ms.
+| Component | Default choice | Dominant risk | Choose build when |
+|---|---|---|---|
+| Embedding cache + vector search | Build | Cold-start and eviction | Repeat-query rate is high |
+| Prompt templating | Buy | Fragment library growth | Prompts vary per tenant |
+| Webhook parsing | Build | Upstream 503 storms | Payment rail is core to product |
+| Retry orchestration | Build | Retry amplification | Hard response-time SLA |
+| Tone adaptation | Buy | Context-window bloat | Brand voice varies by market |
+| Self-hosted embeddings | Buy | Cold-start latency | GPUs run continuously |
+| Fine-tuned adapter | Buy | Artifact size vs OTA | Strong domain vocabulary gap |
+| Transcription | Buy | Latency vs real time | Async use case only |
+| Reranker | Build | Mixed-script degradation | Measured ranking problem |
+| Full fine-tune | Buy | Weight distribution | Large corpus + CDN |
 
-Best for: knowledge-heavy apps with long documents (legal, medical, academic).
+The one-line rule: if the component's integration and localisation debt exceeds the cost of running it locally, build it; otherwise buy the API and wrap it in a thin local cache or queue.
 
+## Worked example: sizing an embedding cache
 
+Take a hypothetical product with 100,000 daily active users, each issuing 5 search queries per day, for 500,000 queries daily. Assume 40% of queries are exact repeats of a query already seen that day, and that a hosted embedding call costs $0.02 per 1,000 tokens with an average of 200 tokens per query.
 
-### 10. Full fine-tuned model for chatbot persona
+- Daily embedding tokens without cache: 500,000 × 200 = 100,000,000 tokens.
+- Daily cost without cache: 100,000,000 / 1,000 × $0.02 = $2,000.
+- Queries served from cache at 40%: 200,000.
+- Daily cost with cache: 300,000 × 200 / 1,000 × $0.02 = $1,200.
+- Daily saving: $800. Monthly saving: roughly $24,000.
 
-What it does: trains a bespoke chat model from scratch or via full fine-tune to embody a specific brand voice.
+Now the infrastructure side. A single mid-size ARM instance with an in-memory vector index can plausibly serve this query volume, at a cost that is a small fraction of the monthly saving. The arithmetic is illustrative and depends on your repeat rate, token counts, and provider pricing, but the structure is what matters: the decision turns on repeat-query rate and token price, both of which you can measure in a day.
 
-Strength: a 7B parameter model fine-tuned on 150k conversational turns yields a 22 % lift in user satisfaction scores at half the token cost of `gpt-4.1-mini`.
+If the repeat rate is 5% instead of 40%, the same calculation produces a monthly saving of roughly $3,000, and the build case weakens considerably. Measure before you build.
 
-Weakness: model size 7 GB rules out mobile OTA delivery; you must ship via a CDN with delta updates and face 503s when the CDN cache misses under 2G.
+## Failure-mode analysis: cache eviction under pressure
 
-Best for: consumer brands with extreme voice constraints and large training budgets.
+The most common way an embedding cache stops helping is eviction. A cache configured with a least-recently-used policy will, under memory pressure, evict entries that are frequently accessed but not recently accessed. In a workload with a small hot set and a large cold tail, this produces a cache that appears healthy in hit-rate dashboards but degrades sharply during traffic spikes.
 
+Symptoms to watch for:
 
-## The top pick and why it won
+- Hit rate looks acceptable on average but p99 latency spikes correlate with memory pressure.
+- Rebuild time per miss is high enough that a burst of misses saturates the embedding service.
+- The eviction policy is the default, and nobody has tuned reserved memory.
 
-The #1 slot goes to **embedding cache and vector search** for two reasons: it has the highest measurable upside with the lowest operational risk. A warmed Redis 7.2 + RedisSearch 2.6 cluster on a `c7g.large` drops p99 from 800 ms to 35 ms and cuts token spend 70 % for a typical SaaS serving 100k daily users. That’s a 2.3× latency improvement and a 4.7× cost cut compared to calling the LLM on every search. The failure mode is the cold-start period, but that’s a one-time 30–60 minute tax that can be pre-warmed with synthetic requests or a CI job that hits `/health` every 5 minutes. No GPU budget, no fine-tuning, no rate-limit races—just a cache.
+Mitigations:
 
-Contrast that with self-hosted embeddings (#6): they save 60 % only if you already run GPUs 24/7, and the cold-start latency spike to 8 s on 2G breaks mobile UX. The adapter (#7) improves jargon accuracy 18 % but introduces 1.4 GB model files that brick low-end Android updates. The reranker (#9) is powerful, but reranker quality drops 12 % on mixed scripts unless you add a pre-filter, which adds 150 ms.
+- Switch to a frequency-based eviction policy if your store supports it, so frequently accessed entries survive.
+- Reserve headroom so the process does not hit the system OOM killer, which produces a full cache loss rather than a partial one.
+- Pre-warm the cache after deploy with a synthetic workload drawn from your real query distribution.
+- Alert on miss rate, not just hit rate, and alert on rebuild time separately.
 
-If you can afford one “build” experiment, build the embedding cache first. It’s the only component where the upside is both mathematically obvious and operationally safe.
+## Failure-mode analysis: retry amplification
 
+Retry logic that is not token-aware turns a transient provider error into a budget event. The mechanism is simple: each retry re-sends the full prompt, so cost scales with (number of retries) × (prompt size) × (concurrent failures).
 
-
-## Honorable mentions worth knowing about
-
-### Ollama 0.2.5 for local dev and edge prototyping
-
-What it does: bundles quantized open models (Llama 3.1, Phi-3, Gemma) into a single binary that runs on M1/M2 Macs, Windows WSL, and Linux ARM.
-
-Strength: `ollama pull llama3.1:8b-instruct-q4_0` downloads in 6 minutes over a 4 Mb link, starts in 2.4 s, and serves requests without Docker or NVIDIA drivers—perfect for field tests in Nairobi cybercafés or Kampala coworking spaces.
-
-Weakness: the 4-bit quant model still weighs 4.3 GB, so OTA delivery to low-memory Android 13 devices triggers an `INSTALL_FAILED_INSUFFICIENT_STORAGE` crash. You need delta updates and app bundle splits.
-
-Best for: solo founders or small teams doing rapid prototyping before committing to hosted APIs.
-
-
-
-### vLLM 0.4.2 for high-throughput serving
-
-What it does: optimizes PagedAttention to serve 10–20× more concurrent requests on the same GPU, cutting latency variance.
-
-Strength: on a single A10G, vLLM 0.4.2 serves 120 req/s at 250 ms p99 vs 18 req/s with the stock HuggingFace `text-generation-inference`.
-
-Weakness: vLLM’s CUDA dependency means it won’t run on Graviton4 without a custom build; the community `vllm-arm` image is 3 weeks behind upstream releases.
-
-Best for: teams with GPU budgets who need to squeeze every last request through a single node.
-
-
-
-### Redis 7.2 with RedisJSON and RedisSearch
-
-What it does: embeds JSON documents and vector search inside Redis, avoiding an external vector DB.
-
-Strength: one process, one port, one ops story. A single `c7g.large` handles 80k req/s with 80 % cache hit rate and keeps RAM at 6.2 GB—well under the 16 GB ceiling.
-
-Weakness: when memory hits 80 % pressure, Redis evicts keys in LRU mode, which evicts your 768-dim vector cache and triggers a 1.2 s rebuild on the next cache miss.
-
-Best for: SaaS that wants to avoid managing a separate vector database and already runs Redis for session cache.
-
-
-
-### Django-ai 1.9 for Django shops
-
-What it does: wraps HuggingFace pipelines into Django views with Celery for async tasks and Sentry for error tracking.
-
-Strength: a 300-line Django app can serve `/chat/` endpoints with fallback logic in 200 ms p99 on a `t4g.medium` without touching Kubernetes.
-
-Weakness: Django’s synchronous ORM blocks the event loop; under 200 concurrent users, latency jumps from 200 ms to 1.4 s because ORM queries queue behind LLM calls.
-
-Best for: Django monoliths that want to bolt on LLM features without rewriting the stack.
-
-
-
-### AWS App Runner with CPU burst
-
-What it does: serverless containers that scale to zero and burst to 2 vCPU for LLM inference.
-
-Strength: you pay $0.05 per GB-hour and the container starts in 800 ms—good enough for low-traffic SaaS or staging environments.
-
-Weakness: CPU burst stops after 15 minutes; a 10-minute chat session can hit the CPU limit and degrade to 1 vCPU, adding 400 ms to every token.
-
-Best for: side projects, MVPs, or staging environments where infra cost must be near zero.
-
-
-
-## The ones I tried and dropped (and why)
-
-### LangChain 0.2.5
-
-LangChain promised to unify 30+ LLM providers and 20 vector stores behind one API. In practice, the `RunnablePassthrough` chain added 80 ms per hop, and the memory layer (Redis + checkpointing) leaked 400 MB per user session. When we hit 1 000 concurrent users, Redis memory ballooned to 22 GB and eviction storms crashed the cluster. Switched to plain `httpx` + `pydantic` + `redis-py` and cut memory 75 %.
-
-
-
-### Haystack 2.5
-
-Haystack 2.5 shipped a unified pipeline for indexing and querying, but the default `InMemoryDocumentStore` kept every embedding in RAM. For a 500k-document corpus, that meant 2.1 GB RAM at startup—fine on a dev laptop, fatal on a `t3.medium` in AWS. Migrated to RedisSearch and trimmed RAM to 300 MB.
-
-
-
-### FastAPI + Uvicorn with Gunicorn
-
-We tried running FastAPI under Gunicorn workers to handle blocking I/O. Under 200 req/s, latency stayed flat at 220 ms, but when network jitter hit 500 ms, Gunicorn’s worker pool exhausted and the API returned 502 for 12 s. Switched to `uvicorn` with `--workers 1` and offloaded blocking retries to a BullMQ queue; p99 dropped to 350 ms even under jitter.
-
-
-
-### Fine-tuning `bge-small-en-v1.5` on Swahili
-
-Swahili fine-tune seemed like a good idea to cut translation costs. The resulting 300 MB adapter improved Swahili retrieval 12 %, but the model’s English accuracy dropped 8 %—a net loss for bilingual users. Rolled back and switched to prompt templating instead.
-
-
-
-## How to choose based on your situation
-
-Use this table to decide what to build vs buy. Each row shows the concrete trade-off for a typical Lagos–Nairobi–Kampala SaaS in 2026.
-
-| Component | Build vs Buy | Latency floor (2G) | Token cost (per 1k) | Ops blast radius | Localisation debt | When to choose
-|---|---|---|---|---|---|---|
-| Embedding cache + vector search | Build first | 35 ms (warm) | $0.04 | Low | None | Heavy repeat queries or high token spend
-| Prompt templating & few-shot retrieval | Buy unless you have >2k fragments | 24 ms | $0.00 (local) | Low | High | Multilingual or multi-tenant
-| WhatsApp/M-Pesa webhook parsing | Build | 24 ms | $0.00 | Medium | Very high | Fintech, logistics, gig
-| LLM fallbacks & retry orchestration | Build | 500 ms | $0.08 worst-case | Medium | Low | Must guarantee response within 2 s
-| Localisation prompts & tone adaptation | Buy | 2 ms | $0.00 | Low | High | Consumer apps with brand voice
-| Self-hosted embedding model | Buy unless you run GPUs 24/7 | 8 s cold / 2.3 s warm | $0.03 | High | None | Data-heavy apps with predictable queries
-| Fine-tuned adapter | Buy unless you have 150k in-domain tokens | 220 ms | $0.05 | Medium | Medium | Vertical jargon (logistics, health)
-| Real-time transcription | Buy unless you serve >1k min/day | 4.7× real time | $0.07 | Medium | High | Voice-first apps
-| Reranker | Build if you need sub-150 ms rerank | 150 ms | $0.02 | Medium | Medium | Knowledge-heavy apps with long docs
-| Full fine-tuned model | Buy unless you have >500k conv turns | 600 ms | $0.11 | Very high | Very high | Consumer brands with extreme voice constraints
-
-Decision rule in one sentence: if the component’s localisation debt or token cost is higher than the infra cost of running it locally, build it; otherwise buy the API and wrap it in a thin local cache.
-
-Example: a Kampala health symptom checker with 200k daily users. Token spend on hosted embeddings would be $1 200/month, but a `c7g.large` + Redis 7.2 runs $95/month and drops latency from 800 ms to 35 ms on 2G. Build the cache, buy the embeddings.
-
-## Frequently asked questions
-
-### What happens if my Redis cache evicts keys during a 2G outage?
-
-A common failure mode in 2026 is that Redis 7.2’s default `maxmemory-policy` is `allkeys-lru`, which evicts both hot and cold keys when memory pressure hits 80 %. Teams running in Nairobi or Kampala see cache misses spike from 5 % to 45 % during outages, and each miss triggers a 1.2 s rebuild of the 768-dim vector. The fix is to switch to `maxmemory-policy allkeys-lfu` (Redis 7.2+) so the eviction pattern favours frequency over recency. You also need to tune `reserved-memory` to leave 20 % headroom for the vector cache; otherwise the OS OOM killer steps in.
-
-
-
-### How do I avoid token-burning retry storms when the LLM provider rate-limits?
-
-Most teams start with exponential backoff starting at 100 ms. On a 2G link with 500 ms jitter, that turns into a 100 ms, 200 ms, 400 ms, 800 ms… sequence that burns 8 k tokens in 5 s before the request finally gives up. The fix is to make retries token-aware: use a token bucket per user with a 100-token credit limit and a 60-second refill. When the bucket is empty, fail fast instead of retrying. In Node 20 LTS with BullMQ 4.15, you can implement this with a custom limiter:
+A bounded approach uses a per-user token bucket. When the bucket is empty, fail fast with a clear error rather than retrying. This converts an unbounded cost into a bounded one and makes the failure visible to the user instead of invisible in the billing dashboard.
 
 ```javascript
 import { Queue, Worker } from 'bullmq';
@@ -298,11 +202,9 @@ const worker = new Worker('llm-fallback', async job => {
 }, { connection: redis });
 ```
 
+The important property is not the specific library but that the retry decision consults a budget. Any queue implementation that supports a custom admission check will do.
 
-
-### Why does my WhatsApp bot fail 40 % of the time during M-Pesa webhook storms?
-
-Safaricom’s STK callback API returns 503 with `Retry-After: 30` during load spikes, and naive retries with `axios-retry` default settings hammer the retry budget. Each retry sends the same 1.2 k token payload, so at 800 req/min you burn 960 k tokens in one minute—roughly 1 152 KES at 2026 token prices. The fix is to use a token-aware queue with backpressure: when the queue depth exceeds 100, switch to a 30-second fixed delay instead of exponential and cap max retries at 3. In Python 3.12 with `httpx` and `tenacity`:
+For webhook handlers, where the upstream may send a `Retry-After` header, a fixed delay with a hard attempt cap is usually better than exponential backoff, because backoff schedules can outlast the upstream outage and re-send payloads long after they are useful.
 
 ```python
 from tenacity import retry, stop_after_attempt, wait_fixed
@@ -315,45 +217,46 @@ async def confirm_payment(payload: dict) -> bool:
     return True
 ```
 
+## What to avoid building
 
+Some components look attractive to build and rarely pay off:
 
-### When does it make sense to fine-tune an embedding model instead of using a prompt template?
+- **A general-purpose LLM abstraction layer.** The maintenance cost grows with every provider API change, and the abstraction rarely hides the differences that matter (streaming semantics, tool-call formats, error taxonomies).
+- **An in-memory document store for a large corpus.** Keeping every embedding in RAM works on a laptop and fails on a small instance. If your corpus is large, use a store designed for it.
+- **A synchronous web framework serving blocking model calls.** Blocking calls under a synchronous ORM queue behind each other and produce latency cliffs under concurrency. Offload to a queue or use an async stack end to end.
+- **Fine-tuning an embedding model on a small corpus.** A small in-domain gain often comes with a regression on the general case, and the net effect for bilingual or mixed-domain users is negative.
 
-Fine-tuning `bge-small-en-v1.5` on Swahili cut retrieval error 12 % but raised English error 8 %, a net loss for bilingual users. The break-even point is 150k in-domain tokens where the accuracy gain outweighs the multilingual regression. If your corpus is <50k tokens, stick to prompt templates; the gain isn’t worth the localisation debt.
+## A decision checklist
 
-## Final recommendation
+Before committing to build, answer all of these:
 
-Pick one component to build this quarter: the embedding cache. In 60 minutes you can spin up a Redis 7.2 cluster on a `c7g.large`, pre-warm it with a synthetic request, and wrap your LLM search endpoint in a 50-line decorator:
+1. Can you state the current p50 and p95 latency for this path, measured on realistic network conditions?
+2. Can you state the current daily token spend for this path, broken down by feature?
+3. What is the repeat rate, cache hit rate, or other metric that determines whether a local implementation helps?
+4. What is the monthly infrastructure cost of the build option, including idle time?
+5. What is the on-call cost of the build option, expressed as expected pages per quarter?
+6. Who maintains the build option when the upstream API changes?
+7. What is the rollback plan if the build option underperforms?
 
-```python
-from redis import Redis
-from redis.commands.search.field import VectorField
-from redis.commands.search.query import Query
+If you cannot answer questions 1 through 3, you are not ready to decide. Measure first.
 
-redis = Redis(host='redis-cache', port=6379, decode_responses=True)
+## FAQ
 
-VECTOR_DIM = 768
-INDEX_NAME = "embeddings"
+**Does the choice change with model provider pricing?**
+Yes. The build case strengthens when hosted token prices rise or when your repeat rate is high, and weakens when prices fall. Re-run the arithmetic quarterly rather than treating the decision as permanent.
 
-def search(query_embedding: list[float], k: int = 5) -> list[dict]:
-    q = Query(f"\\*=>[KNN {k} @vector $query_embedding AS distance]") \\
-        .sort_by("distance") \\
-        .return_fields("id", "text", "distance")
-    res = redis.ft(INDEX_NAME).search(q, {"query_embedding": query_embedding})
-    return [doc.__dict__ for doc in res.docs]
-```
+**Is a cache always cheaper than calling the model?**
+No. A cache adds an operational component, a cold-start period, and an eviction failure mode. It pays off when the repeat rate is high enough that the avoided calls exceed the infrastructure and maintenance cost. Compute the break-even repeat rate for your own numbers.
 
-That single change cuts token spend 70 % and drops p99 from 800 ms to 35 ms on 2G. Everything else can be bought as an API and wrapped in a thin local cache or queue.
+**How do I decide between a vector database and an in-process index?**
+In-process indexes are simpler and faster for corpora that fit in memory. External vector stores are necessary when the corpus exceeds available memory or when you need independent scaling and persistence guarantees. Start in-process and move when you hit a limit you can measure.
 
+**Should retries use exponential backoff?**
+For interactive requests, a bounded fixed delay with a hard attempt cap is often better, because exponential schedules can outlast the outage and re-send payloads after they are stale. For background jobs where latency does not matter, exponential backoff with jitter is reasonable.
 
----
+**When is fine-tuning worth it over prompt engineering?**
+When you have enough in-domain data that the accuracy gain exceeds the regression on general inputs, and when you have the distribution infrastructure to ship the artifact. If your corpus is small, prompt templates usually capture most of the gain at a fraction of the cost.
 
-### About this article
+## Do this in the next 30 minutes
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** August 2026
+Add per-request token logging to your primary AI endpoint. Log prompt tokens, completion tokens, feature tag, and request ID to a table you can query. Without this, every build-versus-buy decision is a guess, and retry storms remain invisible until the invoice arrives. Once the data exists, you can compute your repeat rate, your cache break-even point, and your real cost per feature — which is the only sound basis for deciding what to build.

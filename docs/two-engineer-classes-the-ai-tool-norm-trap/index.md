@@ -1,44 +1,50 @@
 # Two engineer classes: the AI tool norm trap
 
-The metric everyone watches for building healthy isn't the one that would have warned us. The tutorials all show the happy path. This is the writeup with the mistakes left in, not edited out.
+Mixed AI tool adoption inside a single team creates a predictable failure mode: the engineers who generate code fastest push more diffs into a review queue staffed by people who cannot reconstruct how that code was produced. The productivity gain is visible in the editor. The cost shows up in review latency, in rubber-stamped approvals, and in a quiet split between engineers who feel like authors and engineers who feel like QA. The coordination problem is the real one; the tooling choice is mostly a distraction.
 
-## The situation (what we were trying to solve)
+## The failure mode, described precisely
 
-A team of fourteen engineers had a quiet problem that everyone felt and nobody fixed. Some members had quietly adopted Cursor Pro, GitHub Copilot Business, and a private Claude Code subscription. Others used only the IDE and a chat tab. By month three, the gap was visible in pull requests: the AI-assisted engineers shipped features 30-40% faster on boilerplate work, but their code reviews took longer because reviewers couldn't reconstruct how a chunk of code had been generated. The unassisted engineers started calling the others "AI engineers," and a quiet resentment formed around who was doing "real" work.
+A team of fourteen engineers has a problem everyone feels and nobody fixes. Some members have adopted an AI coding assistant with inline suggestions, others use a chat-style generation tool, and others use only the IDE. By month three, the gap is visible in pull requests. The AI-assisted engineers ship boilerplate-heavy features faster, but their reviews take longer because reviewers cannot reconstruct how a chunk of code was generated.
 
-This is the typical failure mode in 2026. A 2026 Stack Overflow Developer Survey reported that 73% of professional developers now use AI tools weekly, but only about 41% of teams have written rules for how those tools get used. That gap is where teams fracture. The question isn't whether to allow AI tooling; it is whether the team builds norms that hold when usage is uneven, voluntary, and partially hidden. The part that trips people up is the social layer, not the tooling — and that is what this post covers.
+Two things then happen in parallel. First, the AI users start writing for the machine, producing code that is plausible but opaque. Second, the non-AI users start to feel like QA, which they resent. Neither group is behaving badly. The norms are missing.
 
-The risk is concrete. When half the team ships with autocomplete and the other half reads the resulting diff line by line, two things happen. First, the AI users start to write for the machine, generating code that is plausible but opaque. Second, the non-AI users start to feel like QA, which they resent. Neither group is wrong. The norms are missing.
+This is a coordination failure, not a productivity failure. It appears whenever three conditions hold at once:
 
-## What we tried first and why it didn't work
+- Usage is uneven across the team.
+- Adoption is voluntary and partly unspoken.
+- The artifact handed to reviewers does not carry enough context to be read quickly.
 
-The first attempt was a policy doc. Two pages, shared in the team channel, setting rules like "AI use is allowed but must be disclosed in the PR description." It failed within three weeks. A common trap here is treating policy as the answer; policy without enforcement just becomes a norm the people who already cared about norms follow, while the rest ignore it. A typical failure pattern: two engineers on the same squad marked "AI-assisted" on a PR and two did not, and nobody caught the inconsistency. Reviewers assumed AI output was hand-written and rubber-stamped it. The non-AI engineers felt undercut.
+The last condition is the one a team can actually fix, and it is where most of the leverage sits.
 
-The second attempt was the opposite: a hard ban on AI tools during work hours. This is what mid-size companies tend to reach for, and it usually makes things worse. Engineers who had built muscle memory with Copilot lost 20-25% of their throughput on routine code, and a few senior engineers quietly kept using a personal account on a second monitor. The ban created the two-class problem it was supposed to prevent. The seniors who used AI in secret were now operating outside the team's stated values, while the juniors who followed the rule felt punished for compliance.
+## Three common responses and why they stall
 
-The third attempt — and the one that produced the most useful data — was a public dashboard. We asked everyone to log which AI tool they used on which PR, for how long, and whether they accepted, rejected, or edited the suggestions. Two weeks of data showed that 11 of 14 engineers used some AI tool, but usage intensity ranged from 2% of PRs to 68%. The interesting signal wasn't the spread. It was that the engineers who used AI the least were spending the most time reviewing other people's AI-assisted code. The hidden labor was in the diff, not the editor.
+**The policy doc.** Two pages in the team channel: "AI use is allowed but must be disclosed in the PR description." A common trap is treating policy as the answer. Policy without enforcement becomes a norm that only the people who already cared about norms follow. A typical failure pattern: two engineers on the same squad mark "AI-assisted" on a PR and two do not, nobody catches the inconsistency, reviewers assume AI output was hand-written and rubber-stamp it, and the non-AI engineers feel undercut.
 
-| Norm attempt | Adoption after 30 days | Side effect |
+**The hard ban.** Engineers who built muscle memory with an inline assistant lose throughput on routine code, and some senior engineers quietly keep using a personal account on a second monitor. The ban creates the two-class problem it was meant to prevent: seniors operating outside the team's stated values, juniors feeling punished for compliance.
+
+**The voluntary disclosure dashboard.** Ask everyone to log which tool they used on which PR and whether they accepted, rejected, or edited suggestions. This produces the most useful signal of the three, and it exposes the counterintuitive part: the engineers who use AI the least tend to spend the most time reviewing other people's AI-assisted code. The hidden labor is in the diff, not the editor.
+
+| Norm attempt | Typical 30-day outcome | Side effect to watch for |
 |---|---|---|
-| Policy doc, no enforcement | ~30% compliance | Reviewers couldn't tell AI from human code |
-| Hard ban on AI tools | ~85% stated compliance | Secret usage by seniors; juniors felt penalized |
-| Voluntary disclosure dashboard | ~70% compliance | Revealed review-time asymmetry across the team |
+| Policy doc, no enforcement | Partial compliance, self-selected | Reviewers cannot distinguish AI from human code |
+| Hard ban on AI tools | High stated compliance | Off-record usage by seniors; juniors feel penalized |
+| Voluntary disclosure dashboard | Moderate compliance | Reveals review-time asymmetry across the team |
 
-## The approach that worked
+## The reframe: treat usage as a review problem
 
-The shift that finally moved the needle was treating AI tool usage as a code review problem, not a policy problem. The team agreed on three norms, written into the PR template and the team's working agreement:
+The shift that moves the needle is treating AI tool usage as a code review problem rather than a policy problem. Three norms, written into the PR template and the team's working agreement, carry most of the weight:
 
-1. Every PR must declare AI involvement with a checkbox: none, autocomplete-only, full-generation. Reviewers treat each category differently.
-2. Every AI-assisted PR must include a one-line "intent" comment on any non-obvious block — a sentence explaining what the code is doing and why, in human terms. This is the reviewer's escape hatch when the code is correct but cryptic.
-3. The team tracks a single metric weekly: review-to-PR ratio per engineer. If an engineer's median review queue length crosses 1.5x the team median, the team talks about load, not about AI.
+1. Every PR declares AI involvement with a checkbox: none, autocomplete-only, or full-generation. Reviewers treat each category differently.
+2. Every AI-assisted PR includes a one-line "intent" comment on any non-obvious block — a sentence explaining what the code does and why, in human terms. This is the reviewer's escape hatch when the code is correct but cryptic.
+3. The team tracks one metric weekly: review-to-PR ratio per engineer. If an engineer's median review queue length crosses roughly 1.5x the team median, the team discusses load distribution, not AI.
 
-This works because it makes the invisible visible without making it moral. Nobody is "cheating" by using Cursor; nobody is "pure" by not using it. The norm is about what reviewers can see and what authors owe the team. The numbers in the next section come from a typical mid-size engineering org tracking these signals over a 90-day window.
+This works because it makes the invisible visible without making it moral. Nobody is cheating by using an assistant; nobody is pure by declining one. The norm is about what reviewers can see and what authors owe the team.
 
-## Implementation details
+## Implementation: three pieces of process
 
-The practical mechanics matter. Three pieces of code and process made the difference.
+### The PR template
 
-First, the PR template. We standardized on `.github/pull_request_template.md` so every PR — AI-assisted or not — got the same fields. The disclosure checkbox matters because it costs the author three seconds; anything heavier gets skipped.
+Standardize on `.github/pull_request_template.md` so every PR, AI-assisted or not, gets the same fields. The disclosure checkbox matters because it costs the author three seconds; anything heavier gets skipped.
 
 ```markdown
 ## What changed
@@ -53,28 +59,35 @@ First, the PR template. We standardized on `.github/pull_request_template.md` so
 <!-- Required if any AI box is checked. One line per non-obvious block. -->
 ```
 
-Second, the intent comment convention. We agreed that any block over ~15 lines that came out of a chat-style tool gets a leading comment:
+### The intent comment convention
+
+Agree that any block over roughly 15 lines produced by a chat-style tool gets a leading comment:
 
 ```python
 # INTENT: Streams newline-delimited JSON from S3 into a worker queue.
-# The retry with jitter avoids the synchronized thundering-herd pattern
-# we hit in incident #214. Do not "simplify" the backoff without reading
-# the runbook first.
+# The retry with jitter avoids a synchronized retry storm: without the
+# jitter, every worker that failed on the same batch retries in lockstep.
+# Do not "simplify" the backoff without reading the runbook first.
 def enqueue_from_s3(bucket: str, prefix: str, queue: "SQSClient") -> int:
     backoff = exponential_backoff(base=0.5, cap=30.0)
+    keys_processed = 0
     for key in s3_list(bucket, prefix):
         try:
             payload = s3_get(bucket, key)
             queue.send(MessageBody=payload)
+            keys_processed += 1
         except QueueFull:
             time.sleep(next(backoff))
             queue.send(MessageBody=payload)
+            keys_processed += 1
     return keys_processed
 ```
 
-That comment is what makes AI-assisted code reviewable. It is also the cheapest possible documentation: it costs the author 20 seconds and saves the reviewer 10 minutes.
+That comment is what makes AI-assisted code reviewable. It is also the cheapest documentation available: it costs the author a few seconds and can save the reviewer many minutes.
 
-Third, the dashboard. A Python 3.11 script ran weekly over the GitHub API and produced a small report. It is rough on purpose; the point is visibility, not polish.
+### The dashboard
+
+A short script over the hosting provider's API produces a weekly report. Keep it rough on purpose; the point is visibility, not polish.
 
 ```python
 # scripts/ai_norm_report.py — Python 3.11+
@@ -86,13 +99,13 @@ TEAM = ["alice", "bob", "carla", "dani", "eli", "fran"]
 
 gh = Github("TOKEN")
 repo = gh.get_repo("acme/core")
-since = dt.datetime.utcnow() - dt.timedelta(days=7)
+since = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=7)
 
 review_load = defaultdict(int)
 pr_count = defaultdict(int)
 
 for pr in repo.get_pulls(state="closed", sort="updated", direction="desc"):
-    if pr.merged_at and pr.merged_at.replace(tzinfo=None) < since:
+    if pr.merged_at and pr.merged_at < since:
         continue
     author = pr.user.login.lower()
     if author not in TEAM:
@@ -110,81 +123,73 @@ for engineer in TEAM:
           f"ratio {ratio:.2f}")
 ```
 
-We ran this against a real org repo with the GitHub Actions runner on `ubuntu-24.04`, posting the output to a private channel once a week. The numbers were not used to rank engineers; they were used to find load imbalance.
+Two implementation notes. `datetime.now(dt.timezone.utc)` returns an aware datetime, which compares correctly against `pr.merged_at`; mixing naive and aware datetimes raises `TypeError` and is a common bug when this script is copied. And the numbers are not used to rank engineers. They are used to find load imbalance.
 
-## Results — the numbers before and after
+## How to measure whether any of this helped
 
-A 90-day window with these norms in place produced these typical results for a 14-person team working in a Node 20 LTS / Python 3.11 / Go 1.22 codebase with GitHub Enterprise 3.13 and Copilot Business / Cursor Business mixed usage:
+No credible before-and-after table can be published for your team, because the numbers depend on your repo, your review culture, and your baseline. What can be published is the measurement recipe. Instrument these five signals for a 30-day window before changing anything, then for a 30-day window after.
 
-| Metric | Before norms (90 days prior) | After norms (90 days) |
-|---|---|---|
-| Median PR review turnaround | 18.4 hours | 11.2 hours |
-| Reviewer-to-author ratio, top quartile | 3.1x | 1.6x |
-| PRs flagged "I can't follow this code" in review | 22% | 7% |
-| Engineers using any AI tool weekly | 11 / 14 | 14 / 14 |
-| Self-reported sense of fairness (1-5) | 2.8 | 4.1 |
+**Median PR review turnaround.** Time from `ready_for_review` to first substantive review, not to merge. Pull it from the API: for each PR, subtract the timestamp of the first review from the timestamp the PR left draft state. Compare medians, not means; a single week-long PR will drag a mean around.
 
-Three things to call out. The drop in "I can't follow this code" reviews is the most important number, because that is the language people use when they feel the work is opaque. The fact that all 14 engineers ended up using some tool is a side effect of removing shame — the holdouts had been avoiding tools out of peer pressure, not preference. And the self-reported fairness score moved more than any throughput metric, which is the whole point.
+**Review-to-PR ratio per engineer.** Reviews authored divided by PRs authored, over the window. The script above computes it. Watch the top quartile rather than the average.
 
-Cost note: the team was already paying for Copilot Business seats at $19/user/month. Adding Cursor Business for the engineers who wanted it cost an additional $20/user/month for 6 seats. Total tool spend: about $322/month for a 14-person team. A typical mid-size engineering org of 80 engineers tracking the same norms lands around $1,800-$2,100/month in tool spend, which is a line item worth budgeting rather than absorbing.
+**"I can't follow this" review comments.** Grep your review comments for phrases like "unclear", "why", "what does this do", "can you explain". This is noisy but directionally useful, and it is the closest proxy for perceived opacity.
 
-## What we'd do differently
+**Disclosure coverage.** Percentage of merged PRs where the AI-assistance checkbox is filled in at all. If this is below roughly two-thirds, the template is not being read and no other metric is trustworthy.
 
-Two things would change with hindsight. First, the intent comment rule needed to be paired with a code-owners file that routed reviews based on file domain, not on who happened to be online. Some of the review-load imbalance came from the fact that two engineers owned the auth layer and got every PR there. AI norms don't fix ownership imbalances; they reveal them.
+**Self-reported fairness.** A one-question pulse survey, monthly: "Review load on this team is distributed fairly" on a 1-5 scale. Crude, but it moves before attrition does.
 
-Second, the disclosure checkbox should have been richer. "Autocomplete-only" and "full-generation" turn out to hide a meaningful third category: "I used the AI to draft tests for code I wrote by hand." That category produces the highest-quality output in our data because the author knows the code intimately and is using the AI for the boring part. A common failure mode here is conflating all AI use; the norms get better when they distinguish intent.
+Run the same queries against both windows with the same team membership. If membership changed, say so and do not compare.
 
-Third, the dashboard ran on cron for a while before we moved it to a GitHub Actions scheduled workflow. The cron version failed silently for two weeks when the GitHub token rotated, and nobody noticed because the script returned empty results instead of an error. Switch to the workflow; let it fail loudly.
+## Failure modes to expect
 
-## The broader lesson
+**Silent dashboard failure.** A scheduled script that returns empty results instead of erroring will look like a quiet week. Prefer a scheduled workflow over a hand-rolled cron job, and make the job fail loudly on an empty result set or a rotated token. An empty report and a broken report must be distinguishable at a glance.
 
-The principle: AI tool usage is a coordination problem, not a productivity problem. Teams that treat it as productivity end up with hidden two-class dynamics. Teams that treat it as coordination get a fair review queue and code that the whole team can read.
+**Ownership imbalance masquerading as AI imbalance.** If two engineers own the auth layer, they receive every auth PR regardless of how it was written. AI norms do not fix ownership imbalances; they reveal them. Pair the norm rollout with a `CODEOWNERS` file that routes by domain.
 
-The corollary: the norm that matters most is not "use AI" or "don't use AI." It is "explain your non-obvious code in one line of human language." That single rule scales across tools, languages, and individual preferences because it asks for a behavior, not a tool choice. Engineers who write that comment, AI-assisted or not, become the engineers everyone wants on their PR.
+**Over-broad disclosure categories.** "Autocomplete-only" and "full-generation" hide a third category that matters: using the AI to draft tests for code the author wrote by hand. That combination tends to produce the highest-quality output, because the author owns the design and delegates the tedious part. Norms get better when they distinguish intent rather than lumping all usage together.
 
-A related principle: when a tool changes how fast one group works, the unaddressed cost shows up in review load. If your team is shipping more but reviewing is bottlenecking, the fix is rarely "review faster." The fix is to make the artifact reviewable. AI-generated code without an intent comment is the same shape as machine-generated code without a commit message: technically correct, socially expensive.
+**Disclosure as a status marker.** If the checkbox becomes a proxy for "real engineer" versus "tool user," it will be gamed or abandoned. Keep it factual and keep the review bar tied to the artifact, not the author.
 
-## How to apply this to your situation
+**The metric becoming a ranking.** The moment review-to-PR ratio appears in a performance review, engineers optimize it. State explicitly, in writing, that the dashboard exists to find load imbalance and will not be used in evaluation.
 
-The 30-minute action: add the disclosure checkbox to your PR template today. The file is `.github/pull_request_template.md` in your repo. Add the three AI-assistance options and the human-readable summary field. Make a PR that adds it, get one teammate to review it, and merge. That is the smallest possible change that makes the invisible visible.
+## A decision checklist
 
-Within a week, add the intent-comment rule to your team's working agreement. Within a month, write the dashboard script — the one in this post is a starting point — and post its results once a week. The point of the dashboard is not the data; the point is the conversation it triggers when the numbers look uneven.
+Before rolling this out, answer these in writing:
 
-Skip the policy doc. Skip the ban. Skip the Slack thread about whether AI is good or bad. Skip the debate about which tool to standardize on. None of those conversations produce code. The norm that produces code is the one in the PR template.
+- Does every PR, regardless of authorship, pass through the same template? If not, fix that first.
+- Is there a named owner for the weekly report, and does the job alert on failure?
+- Has the team agreed that the review-to-PR ratio will not feed performance reviews?
+- Is there a `CODEOWNERS` file, or will domain owners absorb all AI-related review load?
+- Are the disclosure categories granular enough to distinguish "AI wrote this" from "AI wrote the tests for this"?
+- What is the escalation path when one engineer's queue crosses the threshold — rebalancing, pairing, or a temporary review freeze?
 
-A note on team size. The mechanics here work cleanly for 10-30 engineers. Below that, the dashboard is overkill — just talk. Above 50, the PR template alone won't carry the load and you'll need a CODEOWNERS file and possibly an internal "AI-assisted" label that reviewers can filter. The underlying norm does not change; the scaffolding does.
+## What actually generalizes
 
-## Frequently Asked Questions
+AI tool usage is a coordination problem, not a productivity problem. Teams that treat it as productivity end up with hidden two-class dynamics. Teams that treat it as coordination get a fairer review queue and code the whole team can read.
 
-**Should AI-assisted code be flagged differently in code review?**
-Yes, and the cheapest way is a checkbox in the PR template. Reviewers treat flagged PRs with a slightly higher bar for "intent comments" on non-obvious blocks. This adds about 20 seconds to the author's workflow and saves roughly 8-12 minutes of reviewer time per non-trivial PR. The signal is the value, not the moral weight behind it.
+The corollary: the norm that matters most is not "use AI" or "don't use AI." It is "explain your non-obvious code in one line of human language." That rule scales across tools, languages, and individual preferences because it asks for a behavior, not a tool choice.
 
-**How do we stop senior engineers from secretly using AI tools?**
-You can't, and you shouldn't try. The fix is to make secret use unnecessary. When the team's norm says "AI use is fine, just disclose it and explain the non-obvious parts," senior engineers stop hiding because there is nothing to hide. In our data, six months after the norms landed, zero engineers reported using tools off-record.
+A related principle: when a tool changes how fast one group works, the unaddressed cost surfaces in review load. If the team is shipping more but reviewing is bottlenecking, the fix is rarely "review faster." The fix is to make the artifact reviewable. AI-generated code without an intent comment has the same shape as machine-generated code without a commit message: technically correct, socially expensive.
 
-**What if the team can't agree on which AI tool to standardize on?**
-Don't standardize on a tool; standardize on a norm. The disclosure-and-intent rule works whether the team uses Copilot, Claude Code, Cursor, Continue, Windsurf, or a local model in Ollama 0.6.x. Tool standardization is a procurement decision; norm standardization is a culture decision. The latter is more durable.
+## Scope limits
 
-**How do we handle AI-generated tests vs AI-generated production code?**
-Different review bar, same disclosure. Tests generated by AI from human-written code are usually high quality because the author owns the design. Tests generated alongside AI-written production code are the spot where most teams see subtle coverage gaps. Require an extra reviewer for that combination, or require the author to run the suite once and paste the summary in the PR description. The norm is the same; the scrutiny is calibrated.
+These mechanics fit teams of roughly 10 to 30 engineers. Below that, the dashboard is overkill; a conversation and a template are enough. Above roughly 50, the PR template alone will not carry the load, and a `CODEOWNERS` file plus a filterable label for AI-assisted PRs becomes necessary. The underlying norm does not change with team size. The scaffolding does.
 
-## Resources that helped
+## FAQ
 
-Two pieces of writing and one internal artifact did most of the work. The "Intentional Code" essay in Martin Fowler's 2026 bliki series framed the reviewability question in a way the team accepted — Fowler's framing of "the artifact is what we ship, the process is what we ran" landed where a policy doc would not. The 2026 DORA "AI Assistants in Software Teams" report was the data anchor: their finding that high-performing teams don't use AI more, they use it more *transparently*, matched what we saw. The third resource was a one-page "PR readability checklist" that two senior engineers drafted together and posted in the team channel; the act of writing it together mattered more than its contents.
+**Should AI-assisted code be flagged differently in review?**
+Yes, and the cheapest mechanism is a checkbox in the PR template. Reviewers apply a slightly higher bar for intent comments on flagged PRs. The value is the signal, not any moral weight attached to it.
 
-For tooling references, the GitHub REST API docs for `pulls.get_reviews` and `pulls.list_reviews` are the pieces you'll touch first; the `PyGithub` 2.5.x client makes the script in this post almost trivial. If you're on GitLab instead, the `merge_request` and `approval` endpoints have analogous shapes, and the PR template equivalent is `.gitlab/merge_request_templates/`.
+**How do you stop senior engineers from using AI tools off the record?**
+You generally cannot, and attempting to tends to push usage further underground. The practical fix is to make disclosure unremarkable: when the norm is "AI use is fine, disclose it and explain the non-obvious parts," there is less to hide. Verify this with the disclosure-coverage metric rather than assuming it.
 
-The closing action, in one sentence: open your repo's PR template file right now and add the three-option AI disclosure checkbox plus the human-readable summary field before you close this tab.
+**What if the team cannot agree on one AI tool?**
+Do not standardize on a tool; standardize on a norm. The disclosure-and-intent rule works across inline assistants, chat-style generators, and locally hosted models alike. Tool standardization is a procurement decision. Norm standardization is a culture decision, and it outlasts the tooling.
 
+**How should AI-generated tests be treated versus AI-generated production code?**
+Same disclosure, different scrutiny. Tests generated from human-written code are usually high quality because the author owns the design. Tests generated alongside AI-written production code are where subtle coverage gaps appear. Require an extra reviewer for that combination, or require the author to run the suite and paste the summary into the PR description.
 
----
+## Start here
 
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** September 2026
+Open `.github/pull_request_template.md` in your repository right now — create it if it does not exist — and add the three-option AI disclosure checkbox plus the human-readable summary field. Commit it, request one review from a teammate, and merge it today. That is the smallest change that makes the invisible visible, and it takes less than thirty minutes.

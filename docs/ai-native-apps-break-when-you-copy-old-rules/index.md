@@ -1,344 +1,197 @@
 # AI-native apps break when you copy old rules
 
-I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+## The conventional advice and where it stops working
 
-## The conventional wisdom (and why it's incomplete)
+The standard guidance for adding an AI feature is familiar: wrap the model in a REST endpoint, cache the response, monitor latency, put it behind a load balancer with autoscaling. That advice was written for APIs whose behavior resembles a function call — deterministic, cheap, and fast.
 
-Three years ago, we were all told to treat AI features like any other API: wrap them in a REST endpoint, cache the responses, and monitor latency. That worked fine when AI models were slow toys running on a laptop. In 2026, that advice is actively harmful.
+A model call is none of those things. It is a distributed workload with variable latency, variable cost, and no strong guarantee that two identical requests produce identical output. Copying REST patterns onto it produces predictable failure modes, and those failures usually appear under load rather than in development.
 
-The model calls were wrapped in a single FastAPI endpoint. On my machine, it returned in 300 ms. In production under load, the same endpoint averaged 2.4 seconds. Users didn’t just notice—they dropped off. After digging, I found the bottleneck wasn’t the model, it was the queue depth in the connection pool. The FastAPI app used a single PostgreSQL connection per request, and the model calls blocked the thread while waiting for the database to return route data. Adding caching cut the median response time to 400 ms, but the 95th percentile was still 1.8 seconds because of cold-start model invocations.
+The gap shows up in three places:
 
-The honest answer is that AI-native applications aren’t just endpoints with bigger payloads. They’re systems where:
-- Requests arrive in bursts (user asks for 5 itineraries at once)
-- Model outputs are cacheable but only for short windows (prices change hourly)
-- Latency budgets are measured in milliseconds, not seconds
-- Cost scales with both compute time and the number of concurrent users
+1. **Requests are not idempotent.** A cache miss triggers a model call whose output can vary with temperature, top_p, seed, and the model version behind an alias.
+2. **Cost is not linear in request count.** Cost scales with tokens consumed, and tokens consumed can grow when prompts get longer, when retries fire, or when a model version changes its output length.
+3. **Failure modes are new.** A modest latency increase can cascade if retry budgets, queue depths, and connection pools were sized for a fixed-latency dependency.
 
-You can’t treat an AI-native system like a vending machine that dispenses snacks at predictable intervals. It’s more like a crowd pouring into a stadium where some doors open instantly and others jam shut.
+Teams typically discover these gaps in production, while debugging retries, cache invalidation, and budget alerts simultaneously.
 
-The standard advice misses three realities:
+## What the standard pattern actually does under load
 
-1. **Requests aren’t idempotent.** A cache miss triggers a model call that might return different results each time, depending on API parameters and model temperature. 2. **Cost isn’t linear.** A 10% increase in concurrency can spike the bill by 300% when model tokens double or retries fire. 3. **Failure modes are new.** A 500 ms spike in model latency can cascade into a full outage if your retry budget is set to the old 3-second SLA.
+Consider a feature built exactly the way the old advice suggests: an HTTP endpoint that calls a model synchronously, caches the response, and returns JSON. It behaves correctly at low traffic. Then traffic doubles, and four things tend to happen in roughly this order.
 
-Teams that copy-paste REST patterns into AI systems discover these gaps only after users complain. By then, they’re debugging retries, cache invalidation, and budget alerts at 2 a.m.
+**Connection pool exhaustion.** If the handler holds a database connection while it awaits the model, the pool becomes a scarce resource whose occupancy time is set by model latency rather than database latency. With a pool of size `N` and an average model latency of `L` seconds, the sustainable request rate is approximately `N / L`. A pool of 20 with a 2-second model call sustains about 10 requests per second before requests start queueing for a connection. The fix is not a bigger pool; it is not holding the connection across the model call. Fetch what you need, release the connection, then call the model.
 
-## What actually happens when you follow the standard advice
+**Cold starts.** If the model runs on infrastructure with scale-to-zero or slow instance initialization, new capacity arrives seconds after it is needed. Provisioned concurrency or a warm pool addresses this, but the underlying issue is that the request path includes an operation whose latency is not bounded by your own code.
 
-Let’s say you build an AI-native feature exactly as you’ve been taught: a REST endpoint that calls a model, caches the response, and returns JSON. You deploy it behind a load balancer with auto-scaling and CloudWatch alarms. It works fine until traffic doubles one morning. Here’s what you’ll see:
+**Cache stampede.** A short TTL plus a burst of identical requests produces simultaneous misses. If 200 requests arrive for the same key in the same second and the cache entry has just expired, all 200 may call the model. The standard mitigations are a per-key lock so only one caller populates the entry, and a short randomized jitter added to TTLs so entries do not expire in lockstep.
 
-1. **Connection pool exhaustion.** Your endpoint uses a single PostgreSQL connection per request — the default in FastAPI with SQLAlchemy. At 500 RPS, the pool exhausts in 4 minutes. Users get 503 errors while new connections spin up. 2. **Model cold starts.** Your model runs on AWS SageMaker with provisioned concurrency. Under load, new instances take 8 seconds to initialize. The 95th percentile latency jumps to 3.2 seconds even though the model itself runs in 800 ms.
+**Budget drift.** A token limit enforced in application code goes stale when the model or prompt changes. If cost monitoring tracks wall-clock compute rather than tokens, the drift is invisible until the invoice arrives.
 
-Once I switched to a pooled client (asyncpg 0.29) and added a connection pool of 50, the pool exhaustion disappeared — but the cold-start latency remained.
+A common cycle follows: add caching, hit cold starts, enlarge the pool, watch the bill, rewrite the caching layer, repeat. The root cause is the assumption that the model call behaves like a fast, deterministic dependency.
 
-3. **Cache stampede.** You set a 5-minute TTL on model outputs. At 2 a.m., a viral tweet triggers a flash mob of users asking for the same itinerary. Your cache misses trigger 100 model calls in parallel. The model can’t handle the burst. Your bill for that hour? $128. The users? Most leave. 4. **Token budget drift.** You hard-coded a token limit of 1000 per request. A new model version quietly raises the limit to 2000. Your budget alert never fires because you’re measuring compute time, not tokens. The next AWS bill shows a 40% increase you can’t explain.
+## A different mental model: the model call is a task
 
-Teams that ship AI features this way often find themselves in a cycle: add cache → hit cold starts → increase pool size → watch the bill → rewrite the caching layer → repeat. The root cause isn’t the model or the cache. It’s the assumption that AI calls behave like traditional API calls.
+The reframing that resolves most of these problems is to stop treating the model call as a function invocation and start treating it as a task submitted to a queue.
 
-## A different mental model
-
-AI-native systems need a new mental model: **the AI call is not a function call. It’s a distributed workload with variable cost, latency, and correctness guarantees.**
-
-Think of it like this:
-
-| Traditional API | AI-native workload |
+| Traditional API call | Model call as distributed task |
 |---|---|
-| Function call | Distributed task |
-| Predictable latency | Variable latency (model, queue, retries) |
-| Idempotent response | Non-idempotent response (temperature, seed, prompt drift) |
-| Cacheable by URL | Cacheable only with prompt hashing and TTL tuning |
-| Cost scales with CPU | Cost scales with tokens, concurrency, and retries |
+| Synchronous function call | Asynchronous job with an ID |
+| Latency bounded by your code | Latency varies with model, queue, retries |
+| Idempotent for a given input | Output varies with sampling parameters and model version |
+| Cache key is the URL | Cache key must include prompt and sampling parameters |
+| Cost scales with CPU time | Cost scales with tokens, concurrency, and retries |
 
-This mental shift changes everything:
+Four consequences follow from this shift.
 
-1. **Requests become tasks.** Instead of calling the model synchronously, treat the model as a task queue. Your endpoint enqueues a job and returns a job ID. The client polls for results. This decouples the caller from the model latency. 2. **Cache key design changes.** A cache key must include not just the prompt, but the model ID, temperature, seed, and top_p. Two prompts that look identical might return different results because the model parameters differ. 3. **Retries become strategic.** Instead of blind retries on 5xx errors, you need to retry only on specific errors (rate limit, timeout) and back off exponentially. Blind retries can double your token bill. 4. **Cost becomes a first-class metric.** You need to track tokens consumed, not just compute time. A 100 ms model call might cost $0.0002 at 1000 tokens, but $0.002 at 5000 tokens — a 10x difference.
+**Requests become tasks.** The endpoint enqueues a job and returns a job ID immediately. A separate worker pool consumes jobs and calls the model. The caller's latency is now bounded by your own queue, not by the model. A status endpoint lets clients poll, or you can push results over Server-Sent Events or WebSockets.
 
-In 2026, the best AI-native systems don’t expose a REST endpoint for model calls. They expose a task API with:
-- Prompt hashing for cache keys
-- Token budget tracking per user
-- Queue depth monitoring
-- A job status endpoint for polling
+**Cache keys must include sampling parameters.** Two requests with identical prompts but different temperature values are different requests. A cache key derived only from the prompt text will return results that do not match what the caller asked for.
 
-This isn’t over-engineering. It’s the difference between a system that works at 100 RPS and one that collapses at 1000 RPS.
+**Retries must be selective.** Retrying on every 5xx multiplies token spend without improving the success rate for deterministic failures. Retry on rate limits and timeouts with exponential backoff and a jittered delay; do not retry on validation errors or content policy rejections.
 
-## Evidence and examples from real systems
+**Cost becomes a first-class metric.** Track tokens consumed per request, per user, and per time window. A 500 ms call and a 3-second call may cost the same or differ by an order of magnitude depending on token counts, so latency is a poor proxy for spend.
 
-Let’s look at three systems I’ve worked on that adopted this mental model and the concrete numbers they produced.
+## A worked example: sizing a queue and a token budget
 
-### 1. Travel itinerary generator (Node.js 20 LTS, Redis 7.2, AWS SageMaker)
+The following numbers are illustrative, chosen to show the arithmetic rather than to describe a measured system.
 
-We built an itinerary generator that asks the model for personalized travel routes based on user preferences. The first version was a single Express endpoint that called SageMaker synchronously. Under load, we saw:
+Suppose a feature averages 1,500 input tokens and 500 output tokens per request, for 2,000 tokens total. Suppose the model's published price is $3 per million input tokens and $15 per million output tokens. Then the per-request cost is:
 
-- Median latency: 450 ms
-- 95th percentile latency: 2.4 s
-- Cold start latency: 8 s
-- Token cost per request: 800 tokens
-- AWS bill for 10k requests: $12.80
+- Input: 1,500 tokens × $3 / 1,000,000 = $0.0045
+- Output: 500 tokens × $15 / 1,000,000 = $0.0075
+- Total: $0.012 per request
 
-After switching to a task-based model with:
-- A BullMQ queue backed by Redis 7.2
-- Prompt hashing for cache keys
-- A job status endpoint for polling
-- Token budget per user capped at 3000 tokens
+At 100,000 requests per month that is $1,200. Now suppose a bug causes a retry on 20% of requests. Effective requests become 120,000, and cost rises to $1,440 — a 20% increase with no change in user-visible behavior. If instead a prompt change doubles input tokens, input cost becomes $0.009 and total per-request cost becomes $0.0165, a 37.5% increase. Neither change is visible in a latency dashboard.
 
-Results after one week:
+For queue sizing, suppose the worker pool can process 20 jobs per second per worker, and the model call takes 2 seconds. Each worker can therefore hold 2 jobs in flight, so 10 workers sustain 20 jobs per second. If the arrival rate is 50 jobs per second, the queue grows by 30 jobs per second, and a 500-job backlog forms in under 17 seconds. The relevant alerts are queue depth and queue age, not request latency.
 
-| Metric | Before | After |
-|---|---|---|
-| Median latency | 450 ms | 200 ms |
-| 95th percentile latency | 2.4 s | 450 ms |
-| Cold start latency | 8 s | 1.2 s (with provisioned concurrency) |
-| Token cost per request | 800 tokens | 750 tokens (cache hits) |
-| AWS bill for 10k requests | $12.80 | $5.20 |
-| User drop-off rate | 12% | 3% |
+To measure the real figures rather than these illustrative ones:
 
-The key was decoupling the client from the model latency. Users no longer waited for the model to finish. They got a job ID and could check progress in the background. The cache hit rate jumped from 40% to 85% because we included model parameters in the cache key.
+- Instrument token counts at the point where you build the request and where you receive the response, and emit them as a metric labeled by model ID and endpoint.
+- Log cache hits and misses with the cache key, then compute the hit rate over a rolling window.
+- Emit queue depth and the age of the oldest job as gauges.
+- Compare p50, p95, and p99 latency separately, because a task queue usually improves the tail far more than the median.
+- Run a load test that ramps to peak concurrency and holds it, then watch queue depth and token spend rather than only latency.
 
-### 2. AI customer support chatbot (Python 3.11, FastAPI, PostgreSQL 16, Redis 7.2)
+## Designing the cache key
 
-We built a chatbot that answers customer queries using a fine-tuned Llama 3.2 model. The first version used a single FastAPI endpoint with a connection pool of 20. Under load:
-
-- Connection pool exhaustion at 300 RPS
-- Model cold starts at 6 s
-- Cache miss stampede at 2 a.m. caused 500 model calls in parallel
-- Token cost per query: 1200 tokens
-- AWS bill for 50k queries: $45.60
-
-After switching to:
-- A task queue with Celery and Redis 7.2
-- Prompt hashing for cache keys (including chat history)
-- Token budget per user capped at 4000 tokens
-- Queue depth monitoring with alerts at 500 jobs
-
-Results after two weeks:
-
-| Metric | Before | After |
-|---|---|---|
-| Connection pool exhaustion | Every 30 minutes | Never |
-| Model cold starts | 6 s | 1.5 s (with provisioned concurrency) |
-| Cache miss stampede | 500 model calls | 10 model calls (queue drained) |
-| Token cost per query | 1200 tokens | 950 tokens (cache hits) |
-| AWS bill for 50k queries | $45.60 | $18.90 |
-
-The queue drained cold starts over time instead of hitting users all at once. The cache hit rate improved because we included the chat history in the prompt hash. Most importantly, we stopped getting paged at 2 a.m.
-
-### 3. AI code review assistant (Go 1.22, PostgreSQL 16, Redis 7.2)
-
-We built a tool that reviews pull requests using a fine-tuned StarCoder2 model. The first version used a single endpoint with a connection pool of 10. Under load:
-
-- Connection pool exhaustion at 200 RPS
-- Model cold starts at 7 s
-- Cache miss stampede at peak hours
-- Token cost per review: 2000 tokens
-- AWS bill for 20k reviews: $98.40
-
-After switching to:
-- A task queue with Go channels and Redis 7.2
-- Prompt hashing for cache keys (including diff and repo context)
-- Token budget per repo capped at 5000 tokens
-- Queue depth monitoring with alerts at 200 jobs
-
-Results after three weeks:
-
-| Metric | Before | After |
-|---|---|---|
-| Connection pool exhaustion | Every 45 minutes | Never |
-| Model cold starts | 7 s | 1.8 s (with provisioned concurrency) |
-| Cache miss stampede | 200 model calls | 5 model calls (queue drained) |
-| Token cost per review | 2000 tokens | 1500 tokens (cache hits) |
-| AWS bill for 20k reviews | $98.40 | $32.10 |
-
-The biggest win was decoupling the code review from the PR event. Instead of blocking the PR merge, the review ran in the background. Developers got results in seconds instead of waiting for the model to finish. The cache hit rate improved because we included the diff and repo context in the prompt hash.
-
-## The cases where the conventional wisdom IS right
-
-Not every AI feature needs a task queue and prompt hashing. The conventional advice works fine when:
-
-1. **The model is fast and cheap.** If your model runs in under 200 ms and costs less than $0.0001 per call, the overhead of a task queue isn’t worth it. A simple REST endpoint with caching is enough. 2. **Requests are infrequent.** If you get fewer than 100 requests per minute, connection pool exhaustion and cold starts aren’t a problem. 3. **Correctness isn’t critical.** If the AI output is a suggestion rather than a decision, occasional latency spikes or retries are acceptable.
-
-For example, a weather app that uses AI to generate a daily summary might work fine with a REST endpoint. The model is fast, requests are infrequent, and occasional latency spikes don’t matter. But a financial app that uses AI to generate loan offers can’t afford those spikes. It needs a task queue, token budgeting, and prompt hashing.
-
-The key is to match the architecture to the risk profile. If the AI output affects user decisions, money, or safety, treat it like a distributed workload. If it’s a nice-to-have, the REST endpoint is fine.
-
-## How to decide which approach fits your situation
-
-Here’s a simple framework to decide whether to adopt the AI-native pattern:
-
-| Factor | REST endpoint with caching | Task queue with prompt hashing |
-|---|---|---|
-| Request frequency | < 100 RPS | > 100 RPS |
-| Model latency | < 200 ms | > 200 ms |
-| Model cost per call | < $0.0001 | > $0.0001 |
-| Correctness critical? | No | Yes |
-| User impact of latency | Low | High |
-| Cache hit rate expected | > 80% | < 80% |
-
-If you tick two or more boxes in the task queue column, adopt the task queue pattern. Otherwise, the REST endpoint is fine.
-
-But don’t stop there. Even if you choose the REST endpoint, you still need to:
-
-1. **Add token budgeting.** Track tokens per request and per user. Set hard limits to avoid bill shock. 2. **Use async clients.** Don’t block the thread while waiting for the model. Use asyncpg, aiohttp, or similar. 3. **Monitor queue depth.** Even if you don’t use a task queue, model calls are asynchronous under the hood. Monitor the queue depth in your async client. 4. **Set SLA budgets.** Don’t use a single latency SLA. Set separate budgets for median, 95th percentile, and cold starts.
-
-The mental model shift isn’t all-or-nothing. It’s about treating AI calls as distributed workloads, even if you still expose a REST endpoint.
-
-## Objections I've heard and my responses
-
-### “Adding a task queue complicates the code.”
-
-It does add complexity, but the complexity is in the infrastructure, not the business logic. Most of the code remains unchanged. The task queue is a thin layer around the model call. In Python, it’s a decorator or a background task. In Go, it’s a channel and a worker. The ROI is in the latency, cost, and reliability you gain. I’ve seen teams spend two weeks debugging connection pools and cold starts only to realise a task queue would have saved them the pain.
-
-### “Users don’t want to poll for results.”
-
-Polling is a UX trade-off. In many cases, users prefer a 2-second wait with a progress indicator over a 5-second wait with a blank screen. If you need real-time updates, use Server-Sent Events (SSE) or WebSockets on top of the task queue. The task queue is the foundation; the real-time layer is optional.
-
-### “We can’t afford Redis 7.2.”
-
-Redis 7.2 is cheap compared to the cost of model calls. A single Redis instance can handle 50k ops/sec for under $50/month. The token savings alone often pay for the Redis bill. If cost is a concern, use in-memory caching with Go channels or Python’s asyncio queues. The pattern is the same; the storage backend is flexible.
-
-### “Our model is stateless. Why cache?”
-
-Stateless models still benefit from caching if the prompts are repeated. Even with a temperature of 0, two identical prompts might return different results due to prompt drift or model updates. Hashing the prompt with model parameters ensures cache consistency. In our travel itinerary system, the cache hit rate improved from 40% to 85% when we included model parameters in the key.
-
-### “We use serverless functions. Isn’t that the same as a task queue?”
-
-Not quite. Serverless functions (AWS Lambda, Cloud Functions) are stateless and scale automatically, but they still block the caller while the model runs. If the model takes 3 seconds, the function waits 3 seconds before returning. That’s a user-facing latency spike. A task queue decouples the caller from the model latency. The function enqueues a job and returns immediately. This is the difference between a system that works at 100 RPS and one that collapses at 1000 RPS.
-
-## What I'd do differently if starting over
-
-If I were building an AI-native system from scratch today, here’s what I’d do differently:
-
-1. **Start with a task queue, even if traffic is low.** The overhead is small, and the pattern is easy to scale. In our chatbot, we added the task queue early and avoided connection pool issues entirely. 2. **Hash the prompt with model parameters for cache keys.** Don’t just hash the prompt. Include model ID, temperature, seed, top_p, and any other parameters that affect the output. This prevents cache misses due to prompt drift. 3. **Track tokens per user, not just per request.** Set hard limits per user to avoid bill shock. In our code review assistant, we capped tokens per repo at 5000. This saved us from a surprise $100 bill when a new model version increased token usage. 4. **Use async clients for all database and API calls.** Even if you’re not using a task queue, model calls are asynchronous. Use asyncpg, aiohttp, or similar to avoid blocking threads. This alone cut our connection pool exhaustion issues by 90%. 5. **Monitor queue depth and token budget, not just latency.** Latency is a symptom. Queue depth and token budget are the root causes. Set alerts on queue depth > 100 and token budget > 80% of limit. 6. **Avoid hard-coding model IDs and parameters.** Use environment variables or a config service. This makes it easy to switch models or tune parameters without redeploying. 7. **Test cold starts and queue stampedes early.** Use a load testing tool like k6 or Locust to simulate burst traffic. In our itinerary generator, we discovered the cache stampede at 2 a.m. only after a load test. We fixed it before it hit users.
-
-The biggest lesson? **AI-native systems aren’t just bigger REST endpoints. They’re distributed workloads with variable cost, latency, and correctness guarantees.** Treat them as such from day one.
-
-## Summary
-
-AI-native applications break when you copy old rules. Treating model calls like REST endpoints leads to connection pool exhaustion, cold-start latency spikes, cache stampedes, and bill shock. The conventional wisdom is incomplete because it ignores the distributed nature of AI workloads.
-
-The new mental model is simple: treat the AI call as a distributed task, not a function call. Use a task queue, hash prompts with model parameters for cache keys, track tokens per user, and monitor queue depth and token budget. This pattern reduces latency, cuts costs, and improves reliability.
-
-The evidence is clear. In three real systems, switching to this pattern cut median latency by 50–60%, reduced 95th percentile latency by 80%, and slashed AWS bills by 50–70%. The UX improved, the pager stopped going off at 2 a.m., and the team slept better.
-
-Not every system needs this pattern. If your model is fast and cheap, and requests are infrequent, the REST endpoint is fine. But if correctness is critical, or latency and cost matter, adopt the AI-native pattern from day one.
-
-The choice isn’t between complexity and simplicity. It’s between a system that works today and one that collapses tomorrow.
-
-
-## Frequently Asked Questions
-
-### How do I hash a prompt for cache keys in Python 3.11?
-
-Use a SHA-256 hash of the prompt string combined with model parameters. In Python 3.11, you can do this:
+A cache key for a model call must be a hash of everything that can change the output. At minimum: the prompt, the system message, the model ID, the temperature, top_p, top_k, the seed if set, and any tool or function definitions. If the feature is conversational, the prior turns are part of the input and belong in the key.
 
 ```python
 import hashlib
 import json
 
-def make_cache_key(prompt: str, model_id: str, temperature: float, top_p: float, seed: int) -> str:
+def make_cache_key(
+    prompt: str,
+    system: str,
+    model_id: str,
+    temperature: float,
+    top_p: float,
+    top_k: int,
+    seed: int | None,
+) -> str:
     params = {
         "prompt": prompt,
+        "system": system,
         "model_id": model_id,
         "temperature": temperature,
         "top_p": top_p,
-        "seed": seed
+        "top_k": top_k,
+        "seed": seed,
     }
-    key = json.dumps(params, sort_keys=True).encode()
-    return hashlib.sha256(key).hexdigest()
+    # sort_keys makes the serialization stable regardless of dict insertion order
+    encoded = json.dumps(params, sort_keys=True).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
 ```
 
-Store this key in Redis 7.2 with a TTL of 5–15 minutes. This ensures cache hits only when the prompt and model parameters are identical. Test the hash with a small sample of prompts to ensure consistency.
+Two details matter. First, `sort_keys=True` prevents two logically identical parameter sets from producing different keys. Second, the model ID should be the exact version identifier, not an alias that can be repointed, because a repointed alias changes the output for the same key.
 
+For TTL, choose a window that matches how long the underlying data is valid. Prices, inventory, and availability change on their own schedules; a TTL longer than that schedule serves stale answers. Add a small random jitter to each TTL so that a batch of entries written at the same time does not expire simultaneously.
 
-### What’s the best way to cap token usage per user in Node.js 20 LTS?
+To prevent stampedes, take a short-lived lock on the cache key before calling the model. If the lock is held, the caller either waits briefly or returns a cached value if one exists. The lock should have a timeout so a crashed worker does not block the key indefinitely.
 
-Use a token budget tracker in your middleware. In Express with Node.js 20 LTS, you can do this:
+## Budgeting tokens per user
 
-```javascript
-import { TokenBudget } from './tokenBudget.js';
-
-const tokenBudget = new TokenBudget({ perUserLimit: 3000 });
-
-app.post('/ai/generate', async (req, res, next) => {
-  const userId = req.headers['x-user-id'];
-  const tokens = await tokenizer.countTokens(req.body.prompt);
-  
-  if (!tokenBudget.check(userId, tokens)) {
-    return res.status(429).json({ error: 'Token budget exceeded' });
-  }
-  
-  const result = await model.call(req.body.prompt);
-  tokenBudget.record(userId, result.tokens);
-  
-  res.json(result);
-});
-```
-
-The `TokenBudget` class should track tokens per user and emit alerts when the limit is exceeded. Use Redis 7.2 for persistence if you need distributed tracking.
-
-
-### Why does Redis 7.2 outperform older versions for AI caching?
-
-Redis 7.2 introduced several improvements for AI workloads:
-- Faster string and hash operations due to new memory allocator
-- Improved eviction policies for AI caches with variable TTLs
-- Better Lua scripting support for prompt hashing and token budgeting
-- Lower latency for Redis Streams, which are useful for task queues
-
-In benchmarks, Redis 7.2 handles 100k ops/sec with sub-millisecond latency for cache operations. Older versions (Redis 6.x) start to lag at 50k ops/sec. For AI caches with high churn and variable TTLs, Redis 7.2 is worth the upgrade.
-
-
-### How do I simulate burst traffic for AI workloads using k6?
-
-Use k6 to simulate a flash mob of users triggering cache misses. Here’s a script that simulates 1000 users asking for the same itinerary in 10 seconds:
+Token budgets are the equivalent of rate limits for a metered dependency. Track consumption per user over a rolling window, and reject or downgrade requests that would exceed the limit.
 
 ```javascript
-import http from 'k6/http';
-import { check } from 'k6';
-
-export const options = {
-  stages: [
-    { duration: '10s', target: 1000 },
-    { duration: '30s', target: 1000 },
-    { duration: '10s', target: 0 }
-  ],
-  thresholds: {
-    http_req_duration: ['p(95)<500']
+// tokenBudget.js
+export class TokenBudget {
+  constructor({ perUserLimit, windowSeconds }) {
+    this.perUserLimit = perUserLimit;
+    this.windowSeconds = windowSeconds;
   }
-};
 
-export default function () {
-  const payload = JSON.stringify({
-    prompt: 'Generate a 3-day itinerary for Paris with budget under $1000',
-    model_id: 'llama3.2-11b',
-    temperature: 0.3,
-    top_p: 0.9
-  });
-  
-  const res = http.post('https://api.example.com/ai/generate', payload, {
-    headers: { 'Content-Type': 'application/json' }
-  });
-  
-  check(res, {
-    'status is 200': (r) => r.status === 200
-  });
+  // Returns true if the request is allowed.
+  async check(userId, estimatedTokens) {
+    const used = await this.getUsage(userId);
+    return used + estimatedTokens <= this.perUserLimit;
+  }
+
+  async record(userId, tokens) {
+    // Increment the counter and set the window expiry on first write.
+    // Implementation depends on your store; Redis INCR with EXPIRE is typical.
+    throw new Error("implement against your store");
+  }
+
+  async getUsage(userId) {
+    throw new Error("implement against your store");
+  }
 }
 ```
 
-Run this script with `k6 run --vus 1000 --duration 60s script.js`. Watch your cache miss rate and queue depth. If you see queue depth > 100, your cache TTL is too short or your queue workers are too slow.
+The estimate passed to `check` should be an upper bound, computed from the prompt length plus the maximum output tokens you allow. Recording actual usage after the call lets you reconcile estimates against reality and tune the estimate over time.
 
----
+A budget limit is only useful if exceeding it produces a defined behavior. Decide in advance whether an over-budget request is rejected with an error, downgraded to a cheaper model, or queued until the window resets. Each has different user-visible consequences.
 
-### About this article
+## Retry policy
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+Retries are where cost and latency interact most sharply. The rules that tend to work:
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+- Retry only on transient conditions: rate limits, timeouts, and connection errors. Do not retry on validation failures or content policy rejections.
+- Use exponential backoff with jitter. A fixed delay synchronizes retries across workers and produces repeated bursts.
+- Cap the total number of attempts, and count retries against the token budget.
+- Respect the retry-after header when the provider sends one.
+- Make retried operations idempotent from the caller's perspective by keying the job, so a retry does not produce duplicate side effects.
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+A retry budget that was sized for a 3-second SLA will fire far more often against a model whose p99 latency is higher than that, and each firing costs tokens.
 
-**Last reviewed:** June 23, 2026
+## When the simpler pattern is the right choice
+
+Not every AI feature needs a task queue. The synchronous endpoint remains appropriate when:
+
+- The model is fast enough that the caller's latency budget accommodates it, and requests are infrequent enough that pool occupancy is not a constraint.
+- The output is advisory rather than decision-making, so occasional latency spikes and retries are acceptable.
+- The cost per call is low enough that budget drift is not a meaningful risk.
+
+The decision is about the risk profile, not about sophistication. If the output influences a financial decision, a safety-relevant action, or a user-visible commitment, the cost of a latency spike or a duplicated call is high, and the task-queue pattern pays for itself. If the output is a suggestion a user can ignore, the simpler architecture is usually correct.
+
+## Decision checklist
+
+Use this list to decide which pattern fits:
+
+- Does the caller's latency budget accommodate the model's p99 latency, not its median?
+- Is the model call holding a scarce resource such as a database connection while it runs?
+- Can two callers submit the same request concurrently, and would that produce duplicate cost?
+- Does the output depend on sampling parameters that could differ between callers?
+- Is there a hard cost ceiling per user or per time window, and is it enforced in code?
+- Are retries bounded, jittered, and counted against the budget?
+- Are queue depth and queue age monitored as first-class metrics?
+- Is the model version pinned, or is it an alias that can change underneath you?
+
+If any answer is unfavorable, the corresponding part of the task-based design applies. The pattern is composable: you can adopt prompt hashing and token budgets without adopting a queue, and vice versa.
+
+## Common objections
+
+**A task queue complicates the code.** It adds infrastructure, not business logic. The model call itself is unchanged; what changes is where it runs and how the caller learns the result. The trade is a small amount of queue plumbing against the failure modes described above.
+
+**Users will not poll for results.** Polling is a UX decision, not an architectural one. A progress indicator during a short wait is often preferable to a blank screen during a longer one. If you need push semantics, Server-Sent Events or WebSockets can sit on top of the same queue.
+
+**The queue backend is expensive.** A queue backend is typically a small fraction of model spend, and the token savings from deduplicated work often exceed it. If cost is a constraint, an in-process queue or an existing message broker may be sufficient; the pattern does not depend on a specific product.
+
+**The model is stateless, so why cache?** Caching is about avoiding repeated computation, not about model state. Identical prompts with identical parameters are common in practice, and the cache key described above ensures that only genuinely identical requests share an entry.
+
+**Serverless functions already scale.** Autoscaling addresses capacity, not latency. A serverless function that calls a model synchronously still holds the caller for the duration of the call. The queue decouples the two.
+
+## Action to take in the next 30 minutes
+
+Open the handler for your highest-traffic AI endpoint and find the line where the model call begins. Check whether a database connection is held across that line. If it is, restructure the handler so the connection is released before the call, then measure p95 latency before and after under a load test that holds peak concurrency for at least 60 seconds.

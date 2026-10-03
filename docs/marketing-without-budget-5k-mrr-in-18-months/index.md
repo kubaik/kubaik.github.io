@@ -1,191 +1,120 @@
-# Marketing without budget: $5k MRR in 18 months
+# Earning Developer Attention Without a Marketing Budget
 
-The short version: the conventional advice on got mrr is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.
+Developer tools rarely fail because nobody could find a landing page. They fail because nobody had a reason to trust the tool before installing it. The contribution-first approach inverts the usual order: instead of building an audience and then earning trust, you earn trust in public, one small useful act at a time, and the audience accumulates as a byproduct.
 
-## The one-paragraph version (read this first)
+## The core idea in one paragraph
 
-I built a $5,000 monthly recurring revenue SaaS with zero marketing budget, no ads, and no salespeople. The entire funnel came from 3,800 lines of open-source contributions, 1,200 GitHub stars earned one commit at a time, and a waitlist that grew organically from 47 to 2,100 people in six months—without any paid acquisition. The key was treating every contribution as an experiment and every GitHub star as a data point. The product wasn’t flashy; it was reliable. I stopped optimizing for features and started optimizing for trust signals developers actually need. This post shows how that worked in practice, with exact numbers, timelines, and the tools I used to measure progress without spending a dime.
+For developer tools, distribution is downstream of demonstrated usefulness. A snippet that solves someone's real problem in a Stack Overflow answer, a small documentation fix in an upstream repository, or a package published under a name people already search for all function as micro-proofs. Each one is small. None of them is a launch. But they are indexed, searchable, and persistent, and they accumulate in places where your future users already spend attention. The practical discipline is to treat each contribution as a measurable experiment rather than a favor, and to instrument the channels so you know which ones actually produce installs and revenue.
 
-## Why this concept confuses people
+## Why "launch-first" is the wrong default
 
-Most SaaS founders think marketing starts when the product is ready. They wait for a launch, a website, and polished docs. I did the same thing at first. I spent six weeks building a dashboard, writing a blog post, and setting up a Mailchimp sequence—only to realize no one had ever asked for it. The confusion isn’t about *what* to build; it’s about *when* to show it. The outdated pattern here is the “launch-first” mindset. Back in 2021, every tutorial said you needed a landing page, a waitlist, and a drip campaign. By 2026, that same advice is still circulating, even though the median SaaS waitlist conversion rate is under 1.5% if you don’t already have traction.
+The launch-first model assumes attention is a moment. In practice, for developer tools, attention is a search query. A developer with a broken build does not wait for your launch post; they search for the error message. If your tool appears in the answer, you win that session. If it doesn't, you were never in the running.
 
-I learned this the hard way when I launched a CLI tool in 2026. I followed the standard playbook: a landing page on Webflow, a Typeform waitlist, and a Twitter thread. After two weeks, I had 287 signups. Only 3 people actually used the tool after signing up. The rest were “idea collectors”—people who collect tools they’ll never use. The real mistake wasn’t the tool; it was the timing. I showed it too early, before it solved a real pain point for anyone specific.
+This produces a specific failure mode: teams spend weeks on a landing page and a launch post, get a one-day traffic spike, and then watch installs decay to zero because none of that traffic arrived with an existing problem. The spike is real; the retention is not. The diagnostic is simple. Plot daily installs for 60 days after launch. If the curve looks like a spike and a decay to near-baseline, you acquired curiosity, not need. If it looks like a slowly rising line with small bumps, you acquired need.
 
-The confusion compounds when founders conflate *visibility* with *viability*. Posting on Hacker News or Reddit might get you eyeballs, but it rarely gets you revenue. The median Hacker News submission gets 147 views and zero signups if the product isn’t already sticky. I posted my CLI tool on r/programming and hit the front page for 3 hours. The traffic spiked to 1,800 uniques. Only 0.7% converted to GitHub stars. Only 0.1% actually ran the tool. Visibility ≠ revenue.
+A second failure mode is mistaking visibility for viability. A post reaching the front page of a large aggregator can produce a large one-day traffic number and almost no installs, because the audience is there to read, not to solve a problem. The fix is not to avoid those channels; it is to stop treating raw traffic as the metric and start tracking activation.
 
-The outdated pattern is the “build it and they will come” myth. It’s still repeated in 2026 in Medium articles and YouTube videos, but the data doesn’t support it. A 2026 analysis of 1,280 indie SaaS launches found that projects with zero marketing spend before launch had a median MRR of $180 at month 6. Projects that started marketing *during* development—by contributing to upstream repos, answering questions on Stack Overflow, and publishing tiny, useful snippets—hit $1,200 MRR by month 6. The difference wasn’t the product; it was the timing of the signal.
+## The mental model: signal density
 
-## The mental model that makes it click
+Think of your public activity as a set of small signals emitted into places where search engines and package indexes do the amplification for you. Three properties make a signal compound:
 
-Think of your product as a radio station. Most founders treat it like a blockbuster movie—something they announce once and hope people watch. Instead, treat it like a public radio station. You don’t need a huge budget to broadcast; you need a clear frequency and a loyal audience that tunes in every week. The frequency is your *trust signal*—the thing that makes developers believe your tool won’t waste their time. The audience is the subset of developers who already have the exact problem your tool solves.
+1. **Persistence.** A Stack Overflow answer or a merged documentation change stays indexed for years. A social post does not.
+2. **Specificity.** "Fixes crash when `AWS_REGION` is missing" is a signal that matches a real query. "Excited to announce v2" is not.
+3. **Low friction.** A one-line snippet that requires no installation is a smaller ask than a signup form.
 
-The outdated pattern is the “broadcast” model. It assumes you need a website, a logo, and a launch post. Instead, use the *contribution-first* model. Every time you fix a bug in an open-source repo, answer a Stack Overflow question, or publish a tiny CLI that saves someone 10 minutes, you’re broadcasting at a specific frequency. That frequency attracts the right listeners.
+Signal density is the number of useful, persistent, specific interactions you produce per week. The claim is not that density guarantees revenue; it is that density is the only input you fully control when your budget is zero.
 
-I tested this with a small CLI tool called `dbt-helper` in early 2026. Instead of building a landing page, I started by answering dbt-related questions on Stack Overflow. Every answer included a one-line code snippet using `dbt-helper`. In three months, I answered 127 questions. The tool got 412 GitHub stars. The first paying customer came from a Stack Overflow answer, not a landing page. The key insight: developers don’t trust tools that haven’t helped them solve a real problem yet. Every contribution is a micro-proof that your tool is worth trusting.
+## A worked example, with the reasoning shown
 
-The advanced version of this model is the *compounding signal* loop. Each contribution (Stack Overflow answer, GitHub PR, or bug report fix) generates a small ripple. If the ripple is useful, it gets amplified by search engines, package managers, or community curation. Over time, the ripples compound into a visible wave—without any paid marketing. The outdated pattern is optimizing for a single “launch moment.” The modern pattern is optimizing for *signal density*—the number of useful interactions per week.
+The following is illustrative — a synthetic scenario used to show the mechanics, not a reported result. Assume a small open-source CLI that validates environment variables before a build or deploy, distributed as a Python package.
 
-## A concrete worked example
+**Phase 1 — Pick one channel and one artifact.** Choose the tag or topic where your tool's problem is discussed. Answer questions there, and in each answer include the smallest possible working snippet. Instrument it: put a UTM-tagged link in your profile, not in the answer body, and track `pip install` counts from your package index's public statistics page. Compare weekly installs against weekly answer count. If installs do not move with answer count, the channel is wrong or the snippet is too large an ask.
 
-Here’s exactly how I hit $5,000 MRR with no marketing budget. I’ll break it down by phase, with dates, tools, and numbers.
+**Phase 2 — Move into upstream documentation.** Open small pull requests to projects your users already depend on: typo fixes, missing `--help` text, a dependency bump, a docs clarification. Where the project's contribution guidelines allow it, a docs change may reference a companion tool. Do not assume this is welcome — read `CONTRIBUTING.md` first, and expect maintainers to decline anything that reads as advertising. The measurable question is whether referral traffic from the upstream repository's documentation appears in your analytics. If it does, that channel is producing qualified traffic, because the reader was already in the relevant context.
 
-**Phase 1: Seed (Months 1–3)**
-- Product: A CLI tool called `envsafe` that validates environment variables at build time. It’s 470 lines of Python.
-- Signal source: Stack Overflow.
-- Action: Answer 15 dbt and Python-related questions per week. Include a one-line envsafe snippet in the answer.
-- Tool stack: `pytest 7.4`, `Click 8.1`, `GitHub Actions`, `uvicorn 0.29` for local dev.
-- Result: 287 GitHub stars, 43 forks, 18 bug reports, 0 revenue.
-- Mistake: I tried to add features (Docker support, CI templates) too early. The signal dropped when I stopped answering questions.
+**Phase 3 — Publish to package indexes.** A package index is a search engine with an install button. The relevant work is naming and description, not promotion: the package name and the first line of the description determine whether you appear for the query a developer types. Instrument by recording install counts daily and correlating them with release dates. If a release produces no visible change in installs, the release notes were not the constraint.
 
-**Phase 2: Traction (Months 4–6)**
-- Product: Same tool, but now with a `--ci` flag that generates GitHub Actions workflows.
-- Signal source: Contribute to upstream repos.
-- Action: Open 5 PRs to dbt-core, dbx, and cookiecutter-dbt. Each PR includes a tiny envsafe usage snippet in the docs.
-- Tool stack: `dbt-core 1.7`, `GitHub CLI 2.45`, `pre-commit 3.6`.
-- Result: dbt-core merged one PR. The snippet got 1,200 views. GitHub stars grew to 812. First paying customer: a data team at a SaaS company. MRR: $180.
-- Surprise: The paying customer wasn’t from GitHub stars or Stack Overflow. They found the tool via the dbt-core docs page that included the envsafe snippet. The outdated pattern is assuming traffic comes from your own site. It comes from upstream docs.
+**Phase 4 — Ship integrations.** A build-time CLI requires a developer to remember to run it. An editor extension that runs the same check on save removes that step. The general lesson is that the integration point, not the core binary, is often what converts, because it removes a decision. Instrument by tracking installs per integration and revenue attribution per integration separately; they will not match.
 
-**Phase 3: Growth (Months 7–12)**
-- Product: Added a `--validate` flag that checks secrets against AWS IAM and GCP IAM policies.
-- Signal source: Waitlist and GitHub releases.
-- Action: Publish 14 tiny releases with only bug fixes and dependency updates. Each release includes a one-sentence changelog: “Fixes crash when AWS_REGION is missing.”
-- Tool stack: `mypy 1.9`, `pip-audit 2.7`, `GitHub Releases API`.
-- Result: Waitlist grew from 47 to 2,100 people via organic word-of-mouth. MRR: $1,800. Conversion to paid: 1.2% (25 customers).
-- Mistake: I assumed the waitlist conversion rate would stay flat. It actually doubled after I added a one-click “try in browser” demo on the waitlist page. The demo used GitHub Codespaces. It cost $0 to run because Codespaces free tier covered the usage.
+The point of the four phases is not the sequence. It is that each phase ends with a measurement that tells you whether to continue or stop.
 
-**Phase 4: Scale (Months 13–18)**
-- Product: Added a VS Code extension that runs envsafe on file save.
-- Signal source: Package managers.
-- Action: Publish to npm, PyPI, and Homebrew. Submit to VS Code Marketplace.
-- Tool stack: `vsce 2.15`, `pypi-publish 1.8`, `npm 10.7`.
-- Result: npm downloads: 8,100/month. PyPI downloads: 3,200/month. VS Code extension: 1,400 installs. MRR: $4,900. Top paying customer: a fintech company with 200 engineers. They paid $490/month for the VS Code extension.
-- Surprise: The VS Code extension drove 60% of new revenue, even though it was only 15% of the codebase. The outdated pattern is assuming the CLI is the main product. The real product was the integration point.
+## How to measure each channel without paying for analytics
 
-Here’s the exact revenue timeline:
+The goal is to answer one question per channel: does this activity produce activated users? Instrument the following.
 
-| Month | MRR | New Customers | Churn | Source |
-|-------|-----|---------------|-------|--------|
-| 1 | $0 | 0 | 0% | — |
-| 3 | $0 | 0 | 0% | Stack Overflow |
-| 6 | $180 | 3 | 0% | dbt-core PRs |
-| 9 | $800 | 12 | 8% | Waitlist word-of-mouth |
-| 12 | $1,800 | 25 | 5% | GitHub releases |
-| 15 | $3,100 | 42 | 3% | npm downloads |
-| 18 | $4,900 | 68 | 2% | VS Code extension |
+- **Package index statistics.** Most public package registries publish download counts per version and per day. Record them daily in a spreadsheet. Compare against your activity log.
+- **Referral traffic.** Any free web analytics tool that reports referrers will show you traffic from documentation sites, search engines, and code hosts separately. Segment by referrer host.
+- **Search queries.** A free webmaster console reports the queries that brought people to your documentation. This is the closest thing to reading your users' minds, and it is free.
+- **Activation, not installs.** Define one event that means the tool worked — a successful validation run, a first passing build. Track it separately from installs. Install-to-activation is the number that matters.
+- **Revenue.** A payment provider dashboard gives you MRR and churn. For a small customer base, that is sufficient; paid analytics products add cost without adding much signal at this scale.
 
-I used Stripe for billing and Baremetrics for revenue tracking. The entire stack cost $12/month in 2026. The revenue was real; the marketing budget was zero.
+The arithmetic is straightforward once you have the numbers. If a channel produces 1,000 referrals, 12 percent of those install, and 5 percent of installers activate, you have six activated users from that channel. Run the same multiplication for every channel and stop the ones whose product is zero.
 
-## How this connects to things you already know
+## A failure-mode checklist
 
-You probably know that open-source contributions build credibility. But you might not realize how fast that credibility compounds when you optimize for *micro-impact*—tiny, useful snippets that solve a specific pain without requiring installation. Think of it like compound interest in a high-yield savings account. Each contribution doesn’t just earn interest; it earns *more interest* because the next developer sees it, uses it, and then contributes back.
+Before investing in any contribution-first channel, check the following.
 
-You also know that waitlists are noisy. But you might not know that the noise drops when you make the waitlist *actionable*. In 2026, most waitlist tools (Carrd, Typeform, Webflow) let you embed a tiny demo. The demo I added to the envsafe waitlist was a single HTML file that ran envsafe in the browser using WebAssembly. It cost $0 to host on GitHub Pages. Conversion rate jumped from 0.8% to 1.8% after adding the demo.
+- **Is the contribution welcome?** Read the project's contribution guidelines. Unsolicited promotional edits get reverted and can damage your reputation in that community.
+- **Is the snippet self-contained?** If it requires installing your tool to be useful, it is not a micro-proof; it is an ad. Prefer snippets that work standalone and mention the tool as an optional next step.
+- **Are you measuring activation or vanity?** Stars, views, and downloads are inputs. If none of them move your activation event, they are not evidence of product-market fit.
+- **Is the channel decaying?** If a channel's installs fall while your activity there stays constant, the audience is saturated. Move.
+- **Is there a single point of failure?** If all your traffic comes from one upstream repository's documentation, a maintainer's decision can erase it overnight. Diversify across at least two independent channels.
 
-You probably know that package managers (npm, PyPI, Homebrew) drive downloads. But you might not realize how much *velocity* matters. The envsafe npm package got 500 downloads on day 1, 1,200 on day 2, and 3,800 by day 7—because I submitted it on a Monday morning when npm traffic peaks. The outdated pattern is treating package managers as a “set and forget” channel. The modern pattern is treating them as a real-time traffic source you can time for maximum impact.
+## Comparison of channels
 
-I ran into this timing issue when I published a Python package at 2 AM. The initial downloads were slow. When I republished at 9 AM EST (npm peak), downloads tripled within 4 hours. The lesson: package managers have traffic patterns. Use them.
+| Channel | Persistence | Effort per unit | Best measurement | Main risk |
+|---|---|---|---|---|
+| Q&A answers | High (indexed for years) | Medium | Referral traffic, installs | Answers age out of relevance |
+| Upstream docs PRs | High (lives in the repo) | Medium | Referrer host in analytics | Maintainer reverts it |
+| Package index listing | High | Low after setup | Daily download counts | Name/description not discoverable |
+| Editor integration | Medium (platform-dependent) | High | Installs per integration | Platform API changes |
+| Aggregator posts | Low (hours to days) | Low | Activation rate, not traffic | Traffic without need |
 
-## Common misconceptions, corrected
+## The advanced version: constraints over features
 
-**Misconception 1: “You need a marketing budget to get noticed.”**
-The outdated pattern is assuming that attention is bought, not earned. In 2026, the median SaaS with zero marketing spend still gets 60% of its traffic from organic sources if it solves a real pain point. The envsafe project got 42% of its traffic from GitHub search, 28% from Stack Overflow, and 15% from npm. Only 8% came from social media. The rest was direct or referral.
+Once a tool has paying users, the highest-leverage changes are usually constraints, not features. A validation tool that prints warnings is easy to ignore. The same tool that exits with a non-zero status code when a required variable is missing becomes a build failure, which is impossible to ignore and which the user must resolve before shipping.
 
-**Misconception 2: “Open-source contributions don’t pay.”**
-The outdated pattern is assuming contributions are altruistic. In reality, they’re a lead-gen channel. Every PR I opened to dbt-core included a link to envsafe in the docs. The PR got 1,200 views. At least 87 people clicked through. Two became paying customers. The ROI isn’t the code; it’s the signal.
-
-**Misconception 3: “Waitlists convert at 1–2%.”**
-The outdated pattern is treating waitlist conversion as a fixed metric. In reality, it’s a function of *actionability*. The envsafe waitlist conversion jumped from 0.8% to 2.1% after I added a one-click “try in browser” demo. The demo used GitHub Codespaces, which was free at the time. The outdated pattern is sending people to a landing page. The modern pattern is sending them to an interactive demo.
-
-**Misconception 4: “VS Code extensions don’t drive revenue.”**
-The outdated pattern is assuming extensions are toys. In 2026, VS Code extensions can drive serious revenue if they solve a real workflow pain. The envsafe VS Code extension drove 60% of new revenue in months 15–18, even though it was only 15% of the codebase. The key was making it *zero-config*—install, open a file, and envsafe runs automatically on save.
-
-## The advanced version (once the basics are solid)
-
-Once you have $1,000 MRR and 50 paying customers, the game changes. You’re no longer optimizing for signals; you’re optimizing for *retention* and *referral*. The outdated pattern is adding features. The advanced pattern is adding *constraints*—tiny, automatic behaviors that make the tool harder to ignore.
-
-I learned this when I added a `--fail-fast` flag to envsafe. Instead of printing warnings, it exits with code 1 if any environment variable is missing or invalid. The flag was 12 lines of code. It drove a 22% increase in paid conversions because teams immediately saw the value in production. The flag also reduced support tickets—another hidden cost saver.
-
-Here’s the exact diff:
+The following example uses a command-line argument parser. The pattern applies to any CLI framework: add a flag that turns warnings into a hard failure, and make the exit code explicit.
 
 ```python
-# Before
-@click.option('--validate', is_flag=True, help='Validate env vars')
-def main(validate):
-    config = load_config()
-    if validate:
-        config.validate()  # prints warnings
+import sys
 
-# After
-@click.option('--fail-fast', is_flag=True, help='Fail on first invalid var')
-def main(validate, fail_fast):
+def main(validate: bool, fail_fast: bool) -> int:
     config = load_config()
     if validate:
-        if not config.validate(fail_fast=fail_fast):
-            sys.exit(1)  # exits with code 1
+        ok = config.validate(fail_fast=fail_fast)
+        if not ok:
+            return 1
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main(validate=True, fail_fast=True))
 ```
 
-The `--fail-fast` flag was so effective that I added it to the VS Code extension as well. The extension now runs envsafe on file save and shows an inline error if any variable is invalid. The change took 2 days to implement and drove a 15% increase in extension installs.
+Two properties make this effective. First, the failure is visible in CI, where it blocks a merge. Second, the exit code is a machine-readable signal, so it composes with any build system. The same behavior belongs in an editor integration, where the error surfaces inline on save.
 
-Another advanced tactic is *reverse contribution*. Instead of contributing to upstream repos, you curate a list of the most painful issues in your niche and publish a tiny, opinionated guide. The guide becomes a lead magnet. For envsafe, I published a 1,200-word guide: “The 7 most common .env mistakes in dbt projects (and how to fix them).” The guide got 8,400 organic visits in 6 months. It converted 3.2% of readers to GitHub stars and 1.1% to paying customers.
+The measurement for this kind of change is conversion from free to paid among users who have the constraint enabled, compared with users who do not. If the constraint does not move that number, it is a feature, not a lever.
 
-The guide was built with `mkdocs 1.5`, hosted on GitHub Pages, and indexed by Google within 10 days. The cost: $0. The ROI: $1,800 in new MRR from guide readers.
+## Reverse contribution: publishing a problem-specific guide
 
-The outdated pattern is building a blog and hoping for traffic. The advanced pattern is building a *problem-specific* guide that ranks for the exact questions your ideal customer is asking.
+Instead of contributing to someone else's repository, publish a short, opinionated guide that answers the exact questions your users ask. The guide should be narrow enough to rank for a specific query and complete enough to be useful without your tool installed. A static site generator plus a free hosting tier is sufficient.
 
-## Quick reference
+Measure it with a webmaster console: which queries bring readers, and what fraction of readers click through to the tool. A guide that ranks for a high-intent query but converts poorly usually has a mismatch between the query and the tool; a guide that converts well but ranks poorly needs a narrower topic.
 
-| Concept | Outdated pattern | Modern pattern | Tools to use | Cost |
-|---------|------------------|----------------|--------------|------|
-| Launch | Build a landing page first | Start with micro-contributions | GitHub, Stack Overflow | $0 |
-| Signal | Wait for GitHub stars | Optimize for micro-impact snippets | pytest, Click, mkdocs | $0 |
-| Traffic | Buy ads or hope for HN front page | Package managers, upstream docs | npm, PyPI, Homebrew | $0 |
-| Conversion | Assume 1% waitlist rate | Add interactive demo | GitHub Codespaces, HTML | $0 |
-| Retention | Add features | Add constraints | `--fail-fast`, VS Code API | $0 |
-| Growth | Hire a marketer | Reverse contribution | mkdocs, Google Search Console | $0 |
+## FAQ
 
-## Further reading worth your time
+**How do I choose which questions to answer?**
+Filter by the tags that describe your problem domain, sort by recent activity, and prefer questions with no accepted answer. Specificity beats volume: one answer to a question that matches your tool's exact use case outperforms ten generic answers.
 
-- [“How I got 10,000 GitHub stars in 6 months” by @fermyon](https://fermyon.com/blog/github-stars) — shows the exact commit-by-commit breakdown of a similar project.
-- [“Package manager traffic patterns in 2026” by npm](https://github.blog/2026-03-14-package-manager-traffic-patterns/) — data on when to publish for maximum impact.
-- [“Waitlist conversion hacks that don’t cost money” by @rauchg](https://rauchg.com/2026/waitlist-conversion) — practical demos and A/B tests.
+**Is it acceptable to mention my tool in an upstream pull request?**
+Only where the project's guidelines permit it, and only when the tool is genuinely relevant to the change. Expect most maintainers to be conservative. A reverted pull request costs you more reputation than it earns traffic.
 
-## Frequently Asked Questions
+**Do I need paid analytics?**
+For a small customer base, no. A payment provider dashboard, a free webmaster console, public package statistics, and one free web analytics tool cover referrals, queries, installs, activation, MRR, and churn. Add paid tooling when the free tools' sampling or retention limits actually block a decision.
 
-**How do I find the right Stack Overflow questions to answer?**
-Use Stack Exchange’s “top questions” feed filtered by tags you care about (e.g., dbt, python, cli). Sort by “most recent” and look for questions with zero answers and low view counts. Those are the ripples—tiny signals that compound over time. I spent 15 minutes a day answering the top 5 questions. Within 3 months, the answers drove 432 GitHub stars.
+**Does this work outside Python or outside CLIs?**
+The mechanics are language-agnostic. The channel changes with the ecosystem — a different package index, a different Q&A site, a different editor platform — but the loop is the same: produce a persistent, specific, low-friction signal where your users already search, then measure activation rather than traffic.
 
-**Isn’t contributing to open-source repos risky if my tool isn’t ready?**
-Not if you contribute tiny, low-risk fixes. Start with typo fixes in docs, add a missing `--help` flag, or update a dependency version. Each PR includes a one-line mention of your tool in the docs. The risk is minimal; the signal is high. I contributed 5 typo fixes to dbt-core before opening a feature PR. The typo fixes alone drove 187 GitHub stars.
+## The next 30 minutes
 
-**How do I track revenue without spending on analytics?**
-Use Stripe’s free dashboard for revenue and Baremetrics’ free tier for churn and MRR. The free tier covers up to 1,000 customers. I used Stripe for billing and Baremetrics for revenue tracking. The entire stack cost $12/month in 2026. The outdated pattern is paying for Mixpanel or Amplitude when Stripe + Baremetrics covers 90% of needs.
-
-**What if my tool isn’t CLI or Python?**
-The pattern works for any tool. For a JavaScript library, answer npm-related questions on Stack Overflow. For a Go tool, contribute to upstream Go repos. For a Rust crate, publish tiny crates that solve one pain point. The key is micro-impact: tiny, useful snippets that solve a specific pain without requiring installation. I’ve seen this work for VS Code extensions, Chrome extensions, and even mobile apps built with Flutter.
-
-## Closing step
-
-Today, open your GitHub profile and check your recent contributions. Pick the three most viewed contributions in the last 90 days. For each, ask: “What one-line snippet could I add that makes this contribution more useful?” Then add it and publish a tiny update. That’s the next 30-minute step.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 13, 2026
+Open your webmaster console or web analytics tool and list the top ten queries that brought visitors to your documentation in the last 28 days. For each query, check whether a page on your site actually answers it in the first screenful. Pick the one query with the highest impressions and the weakest matching page, and rewrite that page's opening paragraph to answer the query directly. Publish it, then note the page's impressions and click-through rate today so you can compare in two weeks.

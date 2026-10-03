@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Kubernetes or Nomad: the real experiment cost split - Kubai Kevin</title>
-        <meta name="description" content="Nomad 1.7 vs Kubernetes 1.30 for AI experiments — GPU idle cost, pod startup latency, and the 70 % experiment budget split most teams miss">
+        <meta name="description" content="A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.">
         <meta name="keywords" content="NomadVsKubernetes, Ai, Startups, Kubernetes, K8s, Techjobs">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-03T14:47:24.911552">
-        <meta property="article:modified_time" content="2026-09-23T16:25:34.122164+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:43:50.446602+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Kubernetes or Nomad: the real experiment cost split">
-        <meta property="og:description" content="Nomad 1.7 vs Kubernetes 1.30 for AI experiments — GPU idle cost, pod startup latency, and the 70 % experiment budget split most teams miss">
+        <meta property="og:description" content="A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.">
         <meta property="og:url" content="https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Kubernetes or Nomad: the real experiment cost split">
-        <meta name="twitter:description" content="Nomad 1.7 vs Kubernetes 1.30 for AI experiments — GPU idle cost, pod startup latency, and the 70 % experiment budget split most teams miss">
+        <meta name="twitter:description" content="A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/kubernetes-or-nomad-the-real-experiment-cost-split.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/#article",
       "headline": "Kubernetes or Nomad: the real experiment cost split",
-      "description": "Nomad 1.7 vs Kubernetes 1.30 for AI experiments — GPU idle cost, pod startup latency, and the 70 % experiment budget split most teams miss",
+      "description": "A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.",
       "datePublished": "2026-08-03T14:47:24+00:00",
-      "dateModified": "2026-09-23T16:25:34+00:00",
-      "wordCount": 2572,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-03T12:43:50+00:00",
+      "wordCount": 1993,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Kubernetes or Nomad: the real experiment cost split</h1>
                 
-                <p class="post-lead">Nomad 1.7 vs Kubernetes 1.30 for AI experiments — GPU idle cost, pod startup latency, and the 70 % experiment budget split most teams miss</p>
+                <p class="post-lead">A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.</p>
                 
                 
                 <div class="tags">
@@ -260,30 +260,28 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2572 words
+                        10 min read
+                        &nbsp;·&nbsp; 1993 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-23
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Most write-ups stop exactly where the interesting part starts. Here's the root cause, not just the symptom.</p>
-<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>Two years ago we moved our AI experiment pipeline from AWS Batch to a self-hosted cluster. In 2026 the difference still surprises me: Nomad clusters cost 68 % less for the same GPU throughput, but Kubernetes wins when you need GPU sharing and auto-scaling. The gap isn’t theoretical—it shows up in every experiment metric we track: queue wait time, GPU idle rate, and cost per training run.</p>
-<p>That single metric killed our experiment throughput: 30 % of jobs timed out waiting for GPUs even though the cluster had free nodes. This post is what I wish I had read before making that mistake.</p>
-<h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
-<p>Kubernetes 1.30 with NVIDIA GPU Operator is the default choice in most AI labs because it gives you three things you cannot get elsewhere: fine-grained GPU sharing, pod-level autoscaling, and the entire ecosystem of Helm charts, operators, and ingress controllers.</p>
-<p>Under the hood, Kubernetes uses the Device Plugin framework. When you install the NVIDIA GPU Operator 1.13, it creates a DaemonSet that registers every GPU as a node resource. Your pods request <code>nvidia.com/gpu: 1</code> exactly like CPU or memory. The scheduler then packs pods onto nodes with available GPUs, and the Cluster Autoscaler 1.28 adds or removes nodes when the cluster is under or over-provisioned.</p>
-<p>In practice this means:
-- GPU sharing via MIG (Multi-Instance GPU) works out of the box; no custom drivers required. - Horizontal Pod Autoscaling can scale inference pods based on Prometheus metrics. - Jobs that finish early free the GPUs immediately instead of waiting for a whole node to drain.</p>
-<p>The catch? Every one of those features adds latency. In our 2026 cluster the 95th percentile pod startup time with GPU Operator was 19 s, and the 99th percentile hit 42 s because the scheduler had to place pods across multiple availability zones. That’s 42 seconds your AI training job isn’t running—even though GPUs are sitting idle.</p>
-<p>I learned this the hard way when we ran a sweep of 500 hyper-parameter jobs. The cluster had 24 A100 GPUs, but the scheduler couldn’t place the pods fast enough.</p>
-<p>If you need GPU sharing, multi-team isolation via namespaces, or tight integration with Argo Workflows and Kubeflow, Kubernetes is still the only game in town. Just budget for the latency tax.</p>
-<pre><code class="language-yaml"># Example GPU pod spec using Kubernetes 1.30 and NVIDIA GPU Operator 1.13
-apiVersion: v1
+                <h2 id="why-the-scheduler-choice-shows-up-in-your-gpu-bill">Why the scheduler choice shows up in your GPU bill</h2>
+<p>Two clusters can run the same training image on the same GPU model and produce very different cost-per-experiment numbers. The difference is rarely the GPU itself. It is how long a GPU sits idle between the moment a job is submitted and the moment it starts burning FLOPs, plus how much control-plane and networking overhead you pay to keep the cluster alive.</p>
+<p>This article compares two common ways to schedule GPU training workloads:</p>
+<ul>
+<li><strong>Kubernetes</strong>, using the device plugin framework to advertise GPUs as schedulable resources.</li>
+<li><strong>Nomad</strong>, which models GPUs as a device resource on the client and binds them directly to a task.</li>
+</ul>
+<p>The goal is not to declare a universal winner. It is to give you the instrumentation, the arithmetic, and the failure modes you need to decide for your own workload profile.</p>
+<h2 id="option-a-kubernetes-with-gpu-device-plugins">Option A: Kubernetes with GPU device plugins</h2>
+<p>Kubernetes is the default choice in many AI platforms because it gives you three things that are hard to replicate elsewhere: fine-grained GPU sharing, pod-level autoscaling, and a large ecosystem of Helm charts, operators, and ingress controllers.</p>
+<p>Under the hood, GPU support comes from the <strong>device plugin framework</strong>. A vendor-supplied daemon runs on each node, discovers the GPUs, and registers them with the kubelet as an extended resource such as <code>nvidia.com/gpu</code>. Pods then request that resource exactly like CPU or memory:</p>
+<pre><code class="language-yaml">apiVersion: v1
 kind: Pod
 metadata:
   name: pytorch-mnist
@@ -304,160 +302,168 @@ spec:
   nodeSelector:
     accelerator: &quot;nvidia-tesla-a100&quot;
 </code></pre>
-<h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
-<p>Nomad 1.7 from HashiCorp treats GPUs like any other device: you declare them in a job spec, and the scheduler places the task on a node that has the required GPU. No Device Plugin, no CSI driver, no extra controllers. The entire stack is 120 MB of binary and a single configuration file.</p>
-<p>The simplicity shows in the numbers. In our 2026 lab we ran the same 500-job hyper-parameter sweep on a Nomad cluster with 24 A100 GPUs. The median task start time was 2.1 s, and the 99th percentile was 5.8 s.</p>
-<p>Nomad doesn’t give you GPU sharing or pod-level autoscaling. Instead you use job collocation: you pack multiple small tasks onto one GPU using fractional allocation if your driver supports it (CUDA 12.4+). For pure training workloads that finish end-to-end, that’s usually good enough.</p>
-<p>Where Nomad shines is cost efficiency and operational simplicity. Our Nomad cluster runs on 8 c6g.metal AWS instances (Graviton3) at $0.72 per hour each. Kubernetes runs on 10 p4d.24xlarge instances (Intel + A100) at $3.06 per hour each. Even after factoring in GPU hours, the Nomad cluster cost $2,736 per month versus $6,390 for Kubernetes. That’s a 57 % reduction in infrastructure spend for the same AI throughput.</p>
-<p>The trade-off is isolation. Nomad jobs run on the host, so you lose the namespace-level security Kubernetes provides. If you need multi-team isolation or GPU sharing, you have to build it yourself with cgroups and CUDA MIG profiles. We did that with a custom driver wrapper, but it added 500 lines of code and still doesn’t give us the same level of resource accounting as Kubernetes.</p>
-<p>If you’re running pure training jobs that don’t need sharing or complex autoscaling, Nomad is the pragmatic choice. If you need GPU sharing, ingress, or a rich ecosystem of operators, you’ll pay for it in both latency and cost.</p>
-<pre><code class="language-hcl"># Example GPU job spec for Nomad 1.7
-job &quot;pytorch-mnist&quot; {
+<p>The scheduler places the pod on a node that reports an available GPU, the kubelet mounts the device, and the container starts with the GPU visible.</p>
+<p>What this buys you:</p>
+<ul>
+<li><strong>GPU sharing.</strong> Multi-Instance GPU (MIG) partitions a physical GPU into isolated slices. A device plugin can advertise those slices as separate resources, so multiple pods share one card with hardware-level isolation.</li>
+<li><strong>Pod-level autoscaling.</strong> The Horizontal Pod Autoscaler scales replicas from metrics; KEDA extends this to event-driven scaling. Both are useful for inference services.</li>
+<li><strong>Fast resource release.</strong> When a pod exits, its GPU is returned to the pool immediately. You do not have to drain a whole node.</li>
+</ul>
+<p>The cost is scheduling and setup latency. A GPU pod typically passes through more steps than a plain CPU pod: the scheduler must find a node whose device plugin reports a free GPU, the kubelet must set up the device, and the container runtime must mount it. On clusters that span availability zones or run several CNI and admission layers, that chain can add seconds to every job start. For a long training run this is noise. For a sweep of thousands of short jobs, it is the dominant cost.</p>
+<h3 id="a-failure-mode-worth-knowing">A failure mode worth knowing</h3>
+<p>A common symptom is a pod stuck in <code>ContainerCreating</code> while GPUs sit idle. The usual causes:</p>
+<ol>
+<li>The image's CUDA user-space libraries do not match the node driver. The container runtime reports a driver initialization error, and the pod never starts.</li>
+<li>The device plugin daemon is unhealthy on one node, so that node advertises zero GPUs even though the hardware is present.</li>
+<li>A node selector or taint excludes every node that actually has a free GPU.</li>
+</ol>
+<p>The diagnostic sequence is: <code>kubectl describe pod &lt;name&gt;</code> for events, then the kubelet logs on the target node, then the device plugin pod's logs in its namespace. Budget time for this; it is the tax you pay for the abstraction.</p>
+<h2 id="option-b-nomad-device-scheduling">Option B: Nomad device scheduling</h2>
+<p>Nomad takes a different approach. GPUs are declared as a device resource in the job spec, and the Nomad client on the target node binds the device directly to the task. There is no separate device plugin daemon and no scheduler-to-kubelet handshake for the device itself.</p>
+<pre><code class="language-hcl">job &quot;pytorch-mnist&quot; {
   datacenters = [&quot;dc1&quot;]
-  type = &quot;batch&quot;
+  type        = &quot;batch&quot;
 
   group &quot;train&quot; {
     count = 1
 
     task &quot;pytorch&quot; {
       driver = &quot;docker&quot;
+
       config {
-        image = &quot;pytorch/pytorch:2.3.0-cuda12.1&quot;
+        image   = &quot;pytorch/pytorch:2.3.0-cuda12.1&quot;
         command = &quot;python train.py&quot;
       }
 
       resources {
-        cpu = 8
+        cpu    = 8
         memory = 32000
-        gpu {
-          # Nomad 1.7 exposes GPU as a device resource
-          devices = 1
+
+        device &quot;nvidia/gpu&quot; {
+          count = 1
         }
       }
     }
   }
 }
 </code></pre>
-<h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>We ran a synthetic benchmark on both schedulers using the same hardware: 24 NVIDIA A100 GPUs across 8 nodes. Each job requested one full GPU and 8 CPUs. We measured three metrics: pod/task start latency, GPU idle time, and cost per 1000 training steps.</p>
+<p>Because device binding is local to the client, task start latency is typically lower and more predictable than in a Kubernetes cluster with a layered control plane. That matters most for short jobs.</p>
+<p>What Nomad does <strong>not</strong> give you out of the box:</p>
+<ul>
+<li><strong>GPU sharing.</strong> There is no native MIG partitioning. You can approximate sharing by setting <code>CUDA_VISIBLE_DEVICES</code> to a MIG slice from a wrapper script, but you own the isolation, the accounting, and the failure handling.</li>
+<li><strong>Pod-level autoscaling.</strong> Nomad scales job counts, not individual pods driven by arbitrary metrics. Event-driven autoscaling requires custom work.</li>
+<li><strong>Namespace-grade isolation.</strong> Nomad has ACLs and namespaces, but the isolation boundary is coarser than Kubernetes namespaces with network policies.</li>
+</ul>
+<h2 id="how-to-measure-this-yourself-instead-of-trusting-a-table">How to measure this yourself instead of trusting a table</h2>
+<p>Published benchmark tables are almost never reproducible on your hardware. Measure your own cluster. Here is what to instrument.</p>
+<p><strong>Job start latency.</strong> Timestamp the moment the job is submitted and the moment the training process logs its first step. On Kubernetes, compare <code>kubectl get pod -w</code> creation time against the first application log line. On Nomad, compare the <code>Submitted</code> and <code>Started</code> events in <code>nomad job status</code>. Record the median and the 95th and 99th percentiles, not the mean. Tail latency is what starves a sweep.</p>
+<p><strong>GPU idle time.</strong> Scrape GPU utilization at a fixed interval (for example, once per second) and compute the fraction of samples below a threshold while a job is queued or starting. This is the number that converts directly into wasted money.</p>
+<p><strong>Cost per experiment.</strong> Define it explicitly:</p>
+<pre><code>cost_per_experiment =
+    (job_wall_clock_seconds / 3600) * price_per_node_hour / gpus_per_node
+  + (queue_and_start_seconds / 3600) * price_per_node_hour / gpus_per_node
+</code></pre>
+<p>The first term is useful work; the second is the latency tax. If the second term is a large fraction of the first, your scheduler is the problem, not your model.</p>
+<p><strong>Cluster idle cost.</strong> Sum the hourly price of every node that is running but not executing a job. Divide by the number of experiments completed in the same window. This exposes over-provisioning that a per-job metric hides.</p>
+<h3 id="a-worked-example">A worked example</h3>
+<p>Assume a cluster of 8 nodes, each with 4 GPUs, at an illustrative on-demand price of $3.00 per node-hour. That is $24.00 per hour for 32 GPUs, or $0.75 per GPU-hour.</p>
+<p>Now consider a sweep of 1,000 jobs, each requesting one full GPU and running for 10 minutes of actual compute.</p>
+<p>Useful GPU time per job: 10 minutes = 0.1667 GPU-hours.
+Useful cost per job: 0.1667 × $0.75 = <strong>$0.125</strong>.</p>
+<p>Add start latency. Suppose the median start-to-first-step time is 20 seconds on one scheduler and 3 seconds on the other.</p>
+<ul>
+<li>20 seconds = 0.00556 GPU-hours → 0.00556 × $0.75 = <strong>$0.0042</strong> per job.</li>
+<li>3 seconds = 0.00083 GPU-hours → 0.00083 × $0.75 = <strong>$0.00063</strong> per job.</li>
+</ul>
+<p>Over 1,000 jobs the difference is $4.17 minus $0.63, or about <strong>$3.54</strong>. That is small against $125 of useful compute — a 2.8% overhead.</p>
+<p>Now change the workload: jobs that run for 30 seconds of compute instead of 10 minutes.</p>
+<p>Useful cost per job: (30/3600) × $0.75 = <strong>$0.00625</strong>.
+Latency cost at 20 seconds: <strong>$0.0042</strong> — that is 67% of the useful cost.
+Latency cost at 3 seconds: <strong>$0.00063</strong> — about 10%.</p>
+<p>The lesson is arithmetic, not vendor preference: <strong>the shorter your jobs, the more the scheduler's start latency dominates your bill.</strong> Long training runs can absorb almost any scheduling overhead. Short sweeps cannot.</p>
+<h2 id="head-to-head-comparison">Head-to-head comparison</h2>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Kubernetes 1.30 + GPU Operator</th>
-<th>Nomad 1.7</th>
+<th>Dimension</th>
+<th>Kubernetes with GPU device plugin</th>
+<th>Nomad device scheduling</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Median job start latency</td>
-<td>19 s</td>
-<td>2.1 s</td>
+<td>GPU advertised as</td>
+<td>Extended resource via device plugin daemon</td>
+<td>Device resource on the client</td>
 </tr>
 <tr>
-<td>95th percentile start latency</td>
-<td>28 s</td>
-<td>3.9 s</td>
+<td>Native GPU sharing</td>
+<td>Yes, via MIG slices</td>
+<td>No, requires a custom wrapper</td>
 </tr>
 <tr>
-<td>99th percentile start latency</td>
-<td>42 s</td>
-<td>5.8 s</td>
+<td>Pod/task-level autoscaling</td>
+<td>Yes, HPA and KEDA</td>
+<td>Job-count scaling; custom work for metrics-driven</td>
 </tr>
 <tr>
-<td>GPU idle time per job</td>
-<td>14 %</td>
-<td>4 %</td>
+<td>Multi-tenant isolation</td>
+<td>Namespaces, network policies, RBAC</td>
+<td>ACLs and namespaces; coarser boundary</td>
 </tr>
 <tr>
-<td>Cost per 1000 training steps</td>
-<td>$11.80</td>
-<td>$3.50</td>
+<td>Typical start latency</td>
+<td>Higher, more moving parts</td>
+<td>Lower, local device binding</td>
 </tr>
 <tr>
-<td>Cluster idle cost per month</td>
-<td>$6,390</td>
-<td>$2,736</td>
+<td>Ecosystem</td>
+<td>Large: Helm, operators, ingress, workflow engines</td>
+<td>Smaller: single binary, fewer integrations</td>
+</tr>
+<tr>
+<td>Operational surface</td>
+<td>etcd, control plane, CNI, CSI, observability stack</td>
+<td>Single binary plus clients</td>
+</tr>
+<tr>
+<td>Best fit</td>
+<td>Sharing, isolation, inference autoscaling</td>
+<td>Full-GPU batch training, short jobs, simple ops</td>
 </tr>
 </tbody>
 </table>
-<p>The latency gap comes from three sources: CNI plugin time, scheduler complexity, and the Device Plugin handshake. In Kubernetes the kubelet has to mount the GPU device, register it with the API server, and wait for the scheduler to place the pod. In Nomad the Nomad client simply binds the device to the task and starts it.</p>
-<p>GPU idle time is lower in Nomad because tasks start faster and finish faster. Nomad never left a GPU idle for more than 20 seconds in our tests.</p>
-<p>Cost per training step is the most important metric for experiment throughput. In 2026 GPU hours cost $0.72 on AWS p4d.24xlarge and $0.81 on c6g.metal. The difference is mostly driven by start-up latency: every extra second a GPU waits is a second you’re burning money.</p>
-<p>If you need the fastest possible job launch and the lowest idle cost, pick Nomad. If you need fine-grained GPU sharing or multi-tenant isolation, you’ll have to accept the latency tax.</p>
-<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
-<p>Kubernetes gives you a rich ecosystem but steep learning curves. The kubectl get pods --watch command is powerful but noisy. Debugging a pod stuck in ContainerCreating takes 5–10 minutes: you have to check kubelet logs, CNI plugin logs, and sometimes the GPU Operator logs. In one incident we spent 45 minutes debugging a pod stuck because the NVIDIA driver didn’t load—turns out the image used an older CUDA version. The error message was literally <code>nvidia-container-cli: initialization error: driver error</code>.</p>
-<p>Nomad’s developer experience is closer to running docker run. The nomad job status command gives a clear timeline of events: when the task was submitted, when it started, and when it finished. Logs stream directly to stdout without extra configuration. The Nomad UI is minimal, but it shows exactly what you need: job status, node utilization, and event history.</p>
-<p>Template complexity also matters. Kubernetes Helm charts can reach 300+ lines for a simple GPU job. We maintain our own chart for PyTorch training that grew from 20 lines to 120 lines over six months. Nomad job specs stay under 50 lines for the same workload.</p>
-<p>CI/CD integration is another gap. Kubernetes works with Argo CD, Flux, and Tekton, but each tool adds its own latency and complexity. We run Jenkins pipelines that deploy to Kubernetes using kubectl apply. Nomad integrates with any CI system via the nomad job run command—no extra tooling required.</p>
-<p>If your team already lives in kubectl and Helm, Kubernetes is the path of least resistance. If you want to move fast without adding tooling, Nomad is simpler.</p>
-<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
-<p>The raw hardware cost is only one piece of the operational cost. You also pay for:
-- Cluster management: Kubernetes needs etcd, control plane nodes, and a load balancer. Nomad is a single binary. - Storage: Kubernetes uses CSI drivers and sometimes Rook Ceph. Nomad can use hostPath volumes for small datasets. - Networking: Kubernetes CNI plugins add latency and cost. Nomad uses host networking by default. - Observability: Kubernetes needs Prometheus, Grafana, and custom dashboards. Nomad exports Prometheus metrics out of the box and has a built-in UI.</p>
-<p>In our 2026 lab, the fully-loaded cost of running Kubernetes (including management nodes, CSI drivers, and observability stack) was $6,390 per month. The same workload on Nomad cost $2,736 per month. That’s a 57 % reduction, and it doesn’t include the engineering time saved debugging CNI and Device Plugin issues.</p>
-<p>The only scenario where Kubernetes saves money is GPU sharing. If you can run 4 small inference pods on one GPU instead of four separate nodes, you cut GPU hours by 75 %. But that scenario is rare for pure training workloads—most experiments still need full GPUs.</p>
-<p>If your budget is tight and your workloads are pure training, Nomad wins on cost. If you need GPU sharing or multi-tenant isolation, Kubernetes is worth the extra cost.</p>
-<h2 id="the-decision-framework-i-use">The decision framework I use</h2>
-<p>I use a simple checklist when teams ask which scheduler to pick for AI experiments. Ask these five questions and you’ll have your answer:</p>
+<h2 id="operational-cost-beyond-the-gpu">Operational cost beyond the GPU</h2>
+<p>Hardware is only part of the bill. When you compare the two, include:</p>
+<ul>
+<li><strong>Control plane.</strong> Kubernetes runs etcd and API server components that consume nodes or managed-service fees. Nomad's server is a single binary.</li>
+<li><strong>Networking.</strong> A CNI plugin adds configuration and, depending on the plugin, per-packet overhead. Nomad defaults to host networking.</li>
+<li><strong>Storage.</strong> CSI drivers and distributed storage systems add components to operate. Nomad can use host volumes for small datasets.</li>
+<li><strong>Observability.</strong> Kubernetes deployments commonly add a metrics stack and dashboards. Nomad exposes metrics and a built-in UI.</li>
+<li><strong>Engineering time.</strong> This is the largest and least visible line item. Track it as tickets resolved per month and hours per incident, not as a feeling.</li>
+</ul>
+<p>The only scenario where Kubernetes reliably saves money on GPU spend is <strong>sharing</strong>. If four small inference workloads can share one GPU instead of occupying four, you cut GPU hours substantially. For training jobs that need a full GPU, sharing does not apply, and the extra platform cost buys you nothing.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Work through these in order. Stop at the first "yes" that forces a choice.</p>
 <ol>
-<li>
-<p>Do you need GPU sharing or MIG? Yes → Kubernetes. No → keep going.</p>
-</li>
-<li>
-<p>Do you need multi-team isolation via namespaces? Yes → Kubernetes. No → keep going.</p>
-</li>
-<li>
-<p>Do your experiments finish end-to-end in under 10 minutes? Yes → Nomad. No → Kubernetes.</p>
-</li>
-<li>
-<p>Do you already run Kubernetes for other workloads? Yes → Kubernetes. No → Nomad.</p>
-</li>
-<li>
-<p>Is cost per experiment your top optimization target? Yes → Nomad. No → Kubernetes if you need the ecosystem.</p>
-</li>
+<li><strong>Do you need GPU sharing or MIG partitioning?</strong> Yes → Kubernetes. No → continue.</li>
+<li><strong>Do you need namespace-grade multi-tenant isolation?</strong> Yes → Kubernetes. No → continue.</li>
+<li><strong>Do your jobs run for less than a few minutes each?</strong> Yes → Nomad, because start latency dominates. No → continue.</li>
+<li><strong>Do you already operate Kubernetes for other workloads?</strong> Yes → Kubernetes, to avoid a second platform. No → continue.</li>
+<li><strong>Is minimizing platform operational surface your priority?</strong> Yes → Nomad. No → Kubernetes if you expect to need its ecosystem later.</li>
 </ol>
-<p>In 2026 the most common mistake I see is teams picking Kubernetes because “everyone uses it” and then discovering the 19-second pod startup latency kills their experiment throughput. If you’re running sweeps of small, short jobs, that latency is punitive.</p>
-<p>Conversely, teams that move from Kubernetes to Nomad often underestimate the work required to add GPU sharing later. If you think you’ll need it in six months, stick with Kubernetes and budget for the latency.</p>
-<h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
-<p>Recommendation: Use Nomad 1.7 for pure AI training workloads where each job requests a full GPU and finishes end-to-end. You’ll cut experiment cost per run by 70 % and reduce queue wait time from 28 s to 3.9 s.</p>
-<p>We’ve run this stack for 14 months across 28,000 training jobs. The only outage we had was when we misconfigured the Nomad client’s GPU device count—our fault, not the scheduler’s. The cluster uptime was 99.94 %, higher than our Kubernetes cluster despite running on cheaper hardware.</p>
-<p>When to ignore this recommendation:
-- If you need GPU sharing (e.g., serving multiple models on one A100). Nomad 1.7 supports it via cgroups and CUDA 12.4+ MIG, but it’s manual. Kubernetes with NVIDIA GPU Operator gives you sharing out of the box. - If you need multi-tenant isolation via namespaces. Nomad offers job ACLs, but they’re coarser than Kubernetes namespaces. - If you already have a mature Kubernetes platform with Argo Workflows, Kubeflow, and Ingress controllers. Migrating off Kubernetes will cost more in tooling time than the savings justify.</p>
-<p>The one scenario where Kubernetes still wins is when you’re running inference services that autoscale based on Prometheus metrics. Kubernetes HPA and KEDA work better than Nomad for those workloads.</p>
-<h2 id="final-verdict">Final verdict</h2>
-<p>If you’re running AI training experiments that finish end-to-end and don’t need GPU sharing, pick Nomad 1.7 on cheaper hardware. You’ll cut experiment cost per run by 70 % and reduce queue wait time from 28 s to 3.9 s. That’s 3× more experiments for the same budget.</p>
-<p>If you need GPU sharing, multi-tenant isolation, or a rich ecosystem of operators, stick with Kubernetes 1.30 and NVIDIA GPU Operator. Accept the 19-second pod startup latency and budget for the extra cost.</p>
-<p>The real surprise, after 14 months of running both, is how much the latency gap matters. Every second a GPU waits for a pod to start is money burned. Nomad gives you that second back. Kubernetes gives you features you rarely use in pure training workloads.</p>
-<p>In the next 30 minutes, run <code>nomad node status</code> in your cluster (or <code>kubectl get nodes</code> if you’re on Kubernetes). Note the node count, instance type, and GPU count. Then calculate the cost per GPU-hour at your cloud provider’s 2026 on-demand rate. You’ll know immediately which scheduler is the right choice for your next experiment batch.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>why is nomad faster than kubernetes for gpu job startup</strong>
-Nomad bypasses the Kubernetes control plane for device binding. In Kubernetes the kubelet waits for the scheduler to place the pod, then mounts the GPU via the Device Plugin. Nomad’s client binds the device directly to the task.</p>
-<p><strong>how do i enable gpu sharing in nomad 1.7</strong>
-Nomad 1.7 exposes GPU devices as a resource, but sharing requires CUDA 12.4+ and MIG profiles. You declare <code>gpu { devices = 1 }</code> in the job spec, then wrap your training script in a driver that sets <code>CUDA_VISIBLE_DEVICES</code> to a MIG slice. Expect 200–500 lines of extra code and manual driver configuration—Kubernetes does this automatically via the GPU Operator.</p>
-<p><strong>what’s the real cost delta between kubernetes and nomad in 2026</strong>
-In our lab the fully-loaded Kubernetes cluster cost $6,390/month for 24 A100 GPUs. The same workload on Nomad cost $2,736/month. That’s a 57 % reduction, driven by cheaper instance types (c6g.metal vs p4d.24xlarge), no CNI overhead, and simpler observability.</p>
-<p><strong>when should i not use nomad for ai experiments</strong>
-Avoid Nomad if you need GPU sharing (use Kubernetes with NVIDIA GPU Operator), multi-team isolation via namespaces (use Kubernetes), or auto-scaling inference services based on Prometheus metrics (use Kubernetes HPA/KEDA). Nomad excels at pure training jobs that finish end-to-end and request full GPUs.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
-<li><a href="https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/">Platform teams in 2026: Docs vs. production reality</a></li>
-<li><a href="https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/">Spot instances vs on-demand for AI experiments</a></li>
-</ul>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
-<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
-<li><a href="https://argo-cd.readthedocs.io/">Argo CD documentation</a></li>
-<li><a href="https://fluxcd.io/flux/">Flux documentation</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> August 2026</p>
-<!-- enhanced:v1 -->
+<p>The most expensive mistake is choosing Kubernetes for short batch jobs without measuring start latency first, then discovering that the scheduler overhead is a large fraction of each job. The second most expensive is choosing Nomad for a workload that will need GPU sharing in six months, then building that sharing by hand.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why is Nomad typically faster at starting GPU jobs?</strong>
+Nomad's client binds the device to the task locally. Kubernetes routes the placement decision through the scheduler and then has the kubelet set up the device, which adds steps to every job start.</p>
+<p><strong>How do I enable GPU sharing on Nomad?</strong>
+There is no native MIG integration. You expose MIG slices and set <code>CUDA_VISIBLE_DEVICES</code> in a wrapper. You own the isolation, accounting, and error handling. Kubernetes device plugins handle this more directly.</p>
+<p><strong>How do I compare cost fairly between the two?</strong>
+Measure cost per completed experiment, including queue and start time, not cost per GPU-hour. Use the formula in the measurement section and run it on your own hardware with your own job durations.</p>
+<p><strong>When should I avoid Nomad for AI workloads?</strong>
+When you need GPU sharing, namespace-grade isolation, or metrics-driven autoscaling of inference services. Nomad fits full-GPU batch training with simple operations.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one representative training job. Record its submit timestamp and the timestamp of its first training step, then compute the start latency. Run it ten times and take the median. Multiply that median by your GPU-hour price and by the number of jobs in a typical sweep. If that product is more than roughly 10% of your useful compute cost, your scheduler latency is worth fixing before you change anything else.</p>
                 
                 
             </div>
