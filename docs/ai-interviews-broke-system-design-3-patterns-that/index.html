@@ -64,8 +64,8 @@
       "description": "AI design tools produce complete-looking architectures that fail under real load. Three patterns, why they happen, and how to catch them before staging.",
       "datePublished": "2026-06-11T18:10:36+00:00",
       "dateModified": "2026-10-03T12:45:25+00:00",
-      "wordCount": 2859,
-      "timeRequired": "PT14M",
+      "wordCount": 2995,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -252,8 +252,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2859 words
+                        15 min read
+                        &nbsp;·&nbsp; 2995 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -519,6 +519,26 @@ Most assume UTC. Express schedules in the local timezone and convert explicitly 
 One that mirrors production on region, instance type, traffic shape, and cost constraints. A local cluster will not surface regional latency, volume throttling, or cost behavior.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open the most recent AI-generated design you have and check one thing: find every retry policy and every schedule. For each retry policy, confirm it has jitter and a limiter sized to the downstream's documented capacity; if not, fix it. For each schedule, confirm it is expressed in local time and does not overlap peak hours. Write down the documented capacity limit of your busiest downstream dependency next to the limiter that enforces it. If the two numbers do not match, you have found the next incident before it happens.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/">AI made self-service platforms trivial in 2026</a></li>
+<li><a href="https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/">AI interviews break systems: 5 real mistakes in 2026</a></li>
+<li><a href="https://kubaik.github.io/ai-stole-system-design/">AI stole system design</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://docs.locust.io/">Locust documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -547,8 +567,8 @@ One that mirrors production on region, instance type, traffic shape, and cost co
                     
                     <a class="related-card" href="/ai-stole-system-design/">
                         <h3>AI stole system design</h3>
-                        <p>Detect AI-generated system designs in 2026 interviews — 3 concrete red flags, a live debugging fix, and the exact Terraform command to audit Terraform pasted…</p>
-                        <span class="related-meta">10 min read · 21 June 2026</span>
+                        <p>AI can generate a polished system design in seconds. Here is how to redesign interviews around live debugging so you test real understanding.</p>
+                        <span class="related-meta">11 min read · 21 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-interviews-break-systems-5-real-mistakes-in-2026/">

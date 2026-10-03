@@ -64,7 +64,7 @@
       "description": "Compare AI-first autonomous incident response with human-first ops plus AI triage: architecture, failure modes, cost modeling, and a decision checklist.",
       "datePublished": "2026-06-23T01:31:13+00:00",
       "dateModified": "2026-10-03T12:41:46+00:00",
-      "wordCount": 2305,
+      "wordCount": 2433,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -259,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2305 words
+                        &nbsp;·&nbsp; 2433 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -477,6 +477,19 @@ class RemediationAgent:
 <p><strong>How do I roll autonomy back safely?</strong> Start with actions that are trivially reversible and observable, keep the human gate on everything else, and track false action rate from the first incident. If it rises, disable the policy rather than tuning it live during an outage.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your incident tracker, filter to the last 90 days, and tag each incident with two fields: a normalized signature (for example <code>deployment_5xx_spike</code>) and whether the resolving action was confirmed causal in the postmortem. Then compute the repeat rate: incidents whose signature has appeared more than once, divided by total incidents. If that number is below half, your next investment is incident history and runbook hygiene, not an autonomous agent.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-ops-pagerduty-vs-opsgenie-which-burns-your-team/">AI ops: PagerDuty vs Opsgenie — which burns your team</a></li>
+<li><a href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">Designing an AI Alert Triage Layer That Reduces Pages</a></li>
+<li><a href="https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -506,7 +519,7 @@ class RemediationAgent:
                     <a class="related-card" href="/fix-ai-agent-failures-postmortem-guide/">
                         <h3>Postmortems for AI agents: drift, cost, replay</h3>
                         <p>How to run postmortems on AI agents: capture prompts and model versions, measure drift and cost per session, and choose between log-based and instrumented pipelines.</p>
-                        <span class="related-meta">11 min read · 29 June 2026</span>
+                        <span class="related-meta">12 min read · 29 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-ops-pagerduty-vs-opsgenie-which-burns-your-team/">

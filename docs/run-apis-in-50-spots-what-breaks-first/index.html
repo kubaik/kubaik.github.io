@@ -64,8 +64,8 @@
       "description": "Edge APIs fail at the data layer, not the network. Covers sharding, bounded staleness, cache invalidation, clock drift, and how to measure each.",
       "datePublished": "2026-06-19T21:55:04+00:00",
       "dateModified": "2026-10-03T12:47:22+00:00",
-      "wordCount": 2218,
-      "timeRequired": "PT11M",
+      "wordCount": 2344,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -258,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2218 words
+                        12 min read
+                        &nbsp;·&nbsp; 2344 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -461,6 +461,23 @@ function mergeLWW&lt;T&gt;(a: VersionedValue&lt;T&gt;, b: VersionedValue&lt;T&gt
 <p>Only if your write patterns genuinely require multi-region write availability and your application can tolerate the cross-region commit latency. Many systems are better served by a single-leader write path with edge read replicas and bounded staleness.</p>
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Pick one endpoint you are considering moving to the edge. Add three timers to it: time before the first outbound call, round-trip time to the origin, and time from write-acknowledged to read-visible. Run it from a single non-local vantage point and record the three numbers. Those three numbers will tell you which of the failure modes above you will hit first — and whether the edge is the right move at all.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/50-locations-50-headaches-edge-native-backends-in/">50 locations, 50 headaches: edge-native backends in</a></li>
+<li><a href="https://kubaik.github.io/which-agent-stack-survives-3g/">Which agent stack survives 3G?</a></li>
+<li><a href="https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/">Store data once, serve everywhere: cheaper</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

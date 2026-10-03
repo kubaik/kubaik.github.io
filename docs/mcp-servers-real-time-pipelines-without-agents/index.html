@@ -64,8 +64,8 @@
       "description": "How to bridge fixed-length EBCDIC copybooks to a sub-500ms fraud pipeline on one legacy VM, with drift detection, latency budgets, and measurement steps.",
       "datePublished": "2026-07-03T15:56:03+00:00",
       "dateModified": "2026-10-03T12:39:40+00:00",
-      "wordCount": 2409,
-      "timeRequired": "PT12M",
+      "wordCount": 2540,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2409 words
+                        13 min read
+                        &nbsp;·&nbsp; 2540 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -428,6 +428,23 @@ done
 <p>Measure each stage separately first. For the conversion stage, write a small harness that decodes a fixed set of copybook records in a loop and reports per-record time. For the transport stage, use the broker's built-in benchmark tool if it has one, or a simple publisher and subscriber pair. Compose the stage measurements into an end-to-end estimate, then validate the estimate with a full-pipeline test before committing. Stage measurements are cheap; full-pipeline tests are not.</p>
 <h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
 <p>Pick one representative copybook, write a hash of its source, and add a runtime check that compares the incoming hash against the last known value and logs a structured error on mismatch. This is the single highest-value change you can make today, because it converts a silent corruption failure into a loud, diagnosable one.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+<li><a href="https://kubaik.github.io/mcp-servers-the-3-hidden-costs-nobody-quotes/">MCP servers: the 3 hidden costs nobody quotes</a></li>
+<li><a href="https://kubaik.github.io/ai-fixes-legacy-code-nobody-owns/">AI fixes legacy code nobody owns</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -463,7 +480,7 @@ done
                     <a class="related-card" href="/ai-feature-drift-why-your-model-died-at-midnight/">
                         <h3>AI feature drift: why your model died at midnight</h3>
                         <p>Diagnose nightly AI model drift and FeatureStoreKeyNotFound errors: tokenizer drift, memory fragmentation, and cold-start timeouts, with fixes.</p>
-                        <span class="related-meta">13 min read · 7 July 2026</span>
+                        <span class="related-meta">14 min read · 7 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/duckdb-in-production-when-it-replaces-a-warehouse/">

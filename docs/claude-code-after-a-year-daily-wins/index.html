@@ -64,8 +64,8 @@
       "description": "Design an agentic Dependabot patcher that bumps a dependency, runs tests in a container, and opens a PR only when the suite passes.",
       "datePublished": "2026-06-25T03:55:14+00:00",
       "dateModified": "2026-10-03T12:29:22+00:00",
-      "wordCount": 2394,
-      "timeRequired": "PT12M",
+      "wordCount": 2524,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2394 words
+                        13 min read
+                        &nbsp;·&nbsp; 2524 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -645,6 +645,23 @@ Write one JSON record per run containing the alert, the diff path, the test exit
 Not automatically. The gate proves the tests pass; it does not prove the change is desirable. Keep a human in the loop on the merge.</p>
 <h2 id="do-this-next">Do this next</h2>
 <p>Pick one real Dependabot alert in a repository you own, set the <code>alert</code> object at the bottom of <code>patcher.py</code> to match it, and run the script once. Watch which step fails first — the diff apply, the container start, or the test command. That single run tells you more about your repository's readiness for agentic patching than any amount of reading, and it takes about thirty minutes including the container pull.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/claude-code-after-365-days-what-actually-works/">Claude Code after 365 days: what actually works</a></li>
+<li><a href="https://kubaik.github.io/pr-checklists-are-dead-ai-agents-do-reviews-now/">PR checklists are dead: AI agents do reviews now</a></li>
+<li><a href="https://kubaik.github.io/agent-code-review-gap-nobody-admits/">agent code review gap nobody admits</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

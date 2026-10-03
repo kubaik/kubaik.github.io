@@ -64,8 +64,8 @@
       "description": "Data-residency rules push transaction ledgers, caches and audit trails into each country. Here is how to split a system into sovereign nodes without losing auditability.",
       "datePublished": "2026-08-02T13:12:23+00:00",
       "dateModified": "2026-10-03T12:32:17+00:00",
-      "wordCount": 3045,
-      "timeRequired": "PT15M",
+      "wordCount": 3178,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -242,8 +242,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3045 words
+                        16 min read
+                        &nbsp;·&nbsp; 3178 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -366,6 +366,25 @@
 <p>Two trade-offs are worth stating plainly. First, a relational ledger with date partitioning is easy to staff and reason about, but it will not match the throughput of a purpose-built wide-column store; choose based on measured write volume, not on benchmarks from other workloads. Second, a traditional message broker is heavier per node than a log-based or stream-based alternative; the lighter options reduce operational footprint but change your delivery semantics, so re-derive your idempotency design if you switch.</p>
 <h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
 <p>Pick one regulated flow — a cross-border transfer, an agent withdrawal, anything that touches two jurisdictions — and write down, for that single flow, every place a record is written, which jurisdiction that record must remain in, and what identifier links it to the rest of the trail. Then check one thing: whether the identifier that links the records is generated once at the origin and carried unchanged through every hop, or regenerated somewhere in the middle. If it is regenerated, you have found the exact point where your audit trail will break under redelivery, and you can fix it before a regulator finds it for you.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/">African fintech agents: the compliance cliff most miss</a></li>
+<li><a href="https://kubaik.github.io/ndpr-2026-broke-fintech-apis/">NDPR 2026 broke fintech APIs</a></li>
+<li><a href="https://kubaik.github.io/nigerias-2026-api-rules-broke-our-microservices/">Designing Fintech Backends Around Audit Deadlines</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

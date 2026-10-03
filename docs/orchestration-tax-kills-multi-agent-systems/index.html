@@ -64,7 +64,7 @@
       "description": "Why coordination layers dominate multi-agent latency and memory, with patterns that remove the scheduler and how to measure your own orchestration tax.",
       "datePublished": "2026-08-11T10:02:06+00:00",
       "dateModified": "2026-10-03T12:54:56+00:00",
-      "wordCount": 2514,
+      "wordCount": 2643,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2514 words
+                        &nbsp;·&nbsp; 2643 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -516,6 +516,24 @@ The workflow engine serializes state and writes execution history for every step
 Run N agents doing fixed work with no coordination and record p99 and RSS. Add one coordination mechanism and repeat. The difference is the tax. Repeat at 10, 100, and 500 agents to see how it scales.</p>
 <h2 id="next-step">Next step</h2>
 <p>Open your agent task handler and make the work idempotent: derive a key from the task identity, store it with a TTL longer than the maximum processing time, and release it on failure. Then run the same workload at 10, 100, and 500 agents with and without your current coordination layer, and compare p99 latency and per-agent RSS. If the tax grows with agent count, you have found the bottleneck — and the fix is to remove or shard the shared resource, not to tune the agents.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/">Multi-agent handoffs: the latency tax nobody measures</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

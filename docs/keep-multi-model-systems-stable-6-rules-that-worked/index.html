@@ -64,8 +64,8 @@
       "description": "Six rules for multi-model agent routers: bounded concurrency, idempotency keys, timeouts, observability, and how to measure each one yourself.",
       "datePublished": "2026-07-15T02:44:07+00:00",
       "dateModified": "2026-10-03T12:34:04+00:00",
-      "wordCount": 2887,
-      "timeRequired": "PT14M",
+      "wordCount": 3027,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2887 words
+                        15 min read
+                        &nbsp;·&nbsp; 3027 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -727,6 +727,27 @@ Streaming breaks the request/response idempotency model. Use a separate channel 
 Routing wins when your traffic is heterogeneous and your latency budget is tight. Fine-tuning wins when your task is narrow, your dataset is large enough to be representative, and you can tolerate higher per-call latency. Measure both on your own traffic; published comparisons rarely match your mix.</p>
 <h2 id="take-action-in-the-next-30-minutes">Take action in the next 30 minutes</h2>
 <p>Open your router's metrics dashboard and find the p99 latency for your slowest agent backend. Write that number down. Then check whether your concurrency guard is a fixed-window counter or a sliding window. If it is fixed-window, replace it with the sorted-set implementation above — that single change is the most common fix for retry-storm tail latency.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-native-apps-forget-the-old-stack/">AI-native apps: forget the old stack</a></li>
+<li><a href="https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/">Temporal changed our agent retries for good</a></li>
+<li><a href="https://kubaik.github.io/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -768,7 +789,7 @@ Routing wins when your traffic is heterogeneous and your latency budget is tight
                     <a class="related-card" href="/context-windows-live-longer-than-you-think/">
                         <h3>Context windows live longer than you think</h3>
                         <p>Long-running agents exhaust context windows through unbounded history growth. Covers pruning, summarisation, retrieval, and retention policies with code.</p>
-                        <span class="related-meta">12 min read · 25 July 2026</span>
+                        <span class="related-meta">13 min read · 25 July 2026</span>
                     </a>
                     
                 </div>

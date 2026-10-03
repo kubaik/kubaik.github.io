@@ -64,8 +64,8 @@
       "description": "Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.",
       "datePublished": "2026-07-03T13:30:22+00:00",
       "dateModified": "2026-10-03T12:53:24+00:00",
-      "wordCount": 2015,
-      "timeRequired": "PT10M",
+      "wordCount": 2137,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -236,8 +236,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 2015 words
+                        11 min read
+                        &nbsp;·&nbsp; 2137 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -348,6 +348,19 @@ WHERE tenant_id = 'acme'
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Pick your highest-cardinality log field and run one query filtering on it against your current backend. Capture the query profile and the p99 wall-clock time over 100 runs. Then run the same query against a single-node columnar store loaded with one day of the same data. Compare granules or documents scanned, not just elapsed time. That single comparison will tell you more about which architecture fits than any benchmark table.</p>
 <p>If the search backend scans a large fraction of the index while the columnar store prunes to a handful of granules, cardinality is your bottleneck and the architecture decision is effectively made.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+<li><a href="https://kubaik.github.io/postgres-vector-search-what-breaks-first/">Postgres vector search: what breaks first</a></li>
+<li><a href="https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

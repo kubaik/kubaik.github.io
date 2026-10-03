@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI stole system design - Kubai Kevin</title>
-        <meta name="description" content="Detect AI-generated system designs in 2026 interviews — 3 concrete red flags, a live debugging fix, and the exact Terraform command to audit Terraform pasted…">
+        <meta name="description" content="AI can generate a polished system design in seconds. Here is how to redesign interviews around live debugging so you test real understanding.">
         <meta name="keywords" content="System, SystemDesign2026, Redis, TerraformCodeAudit, Ai, Generativeai, Systemdesign, Techjobs">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-21T15:10:03.056592">
-        <meta property="article:modified_time" content="2026-09-19T11:42:21.713997+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:59:32.942008+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI stole system design">
-        <meta property="og:description" content="Detect AI-generated system designs in 2026 interviews — 3 concrete red flags, a live debugging fix, and the exact Terraform command to audit Terraform pasted…">
+        <meta property="og:description" content="AI can generate a polished system design in seconds. Here is how to redesign interviews around live debugging so you test real understanding.">
         <meta property="og:url" content="https://kubaik.github.io/ai-stole-system-design/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI stole system design">
-        <meta name="twitter:description" content="Detect AI-generated system designs in 2026 interviews — 3 concrete red flags, a live debugging fix, and the exact Terraform command to audit Terraform pasted…">
+        <meta name="twitter:description" content="AI can generate a polished system design in seconds. Here is how to redesign interviews around live debugging so you test real understanding.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-stole-system-design.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-stole-system-design/#article",
       "headline": "AI stole system design",
-      "description": "Detect AI-generated system designs in 2026 interviews — 3 concrete red flags, a live debugging fix, and the exact Terraform command to audit Terraform pasted…",
+      "description": "AI can generate a polished system design in seconds. Here is how to redesign interviews around live debugging so you test real understanding.",
       "datePublished": "2026-06-21T15:10:03+00:00",
-      "dateModified": "2026-09-19T11:42:21+00:00",
-      "wordCount": 2015,
-      "timeRequired": "PT10M",
+      "dateModified": "2026-10-03T12:59:32+00:00",
+      "wordCount": 2185,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI stole system design</h1>
                 
-                <p class="post-lead">Detect AI-generated system designs in 2026 interviews — 3 concrete red flags, a live debugging fix, and the exact Terraform command to audit Terraform pasted…</p>
+                <p class="post-lead">AI can generate a polished system design in seconds. Here is how to redesign interviews around live debugging so you test real understanding.</p>
                 
                 
                 <div class="tags">
@@ -260,107 +260,148 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 2015 words
+                        11 min read
+                        &nbsp;·&nbsp; 2185 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>After reviewing a lot of code that touches system design, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
-<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>If you’ve interviewed in 2026, you’ve probably seen this: a candidate’s system design doc reads like a vendor whitepaper, full of buzzwords like “multi-agent orchestration,” “embedding cache,” and “vectorized state machines.” Yet when you dig in, the candidate can’t explain how sharding actually works or why they picked DynamoDB over MongoDB. I asked how they’d shard the embedding cache. They paused, then said, “Isn’t it automatically handled by the vector database?” That’s when I realized the interview had been outsourced to an AI assistant.</p>
-<p>The surface symptom is slick-looking diagrams and confident-sounding prose, but the real issue is that candidates are using AI to generate system designs verbatim from 2026 blog posts. The result? Every interviewer has a story about a candidate who quoted exact latency numbers (e.g., “Redis Cluster supports 1M ops/sec”) without understanding how replication lag affects that number in practice.</p>
-<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
-<p>AI assistants like Cursor, GitHub Copilot Enterprise, and Amazon Q Developer have gotten too good at generating system designs. In 2026, these tools can produce a passable AWS architecture diagram and Terraform from a one-line prompt like “build a multi-region event streaming system.” Candidates copy-paste that output into their interview doc, swap out a few variable names, and present it as their own work.</p>
-<p>The deeper cause is that system design interviews still rely on the candidate’s ability to explain trade-offs in real time. AI can’t simulate the pressure of explaining why you’d choose S3 over EFS when the interviewer says, “Assume a 10 TB dataset with 100 MB/s write throughput and 5 ms read latency.” Candidates who rely on AI output hit a wall when asked to justify constraints, estimate cost, or describe failure modes.</p>
-<p>One candidate in Bogotá delivered a flawless design for a “global CDN with edge workers” but couldn’t explain how their edge cache invalidation policy would behave during a regional outage. When I probed, they admitted they’d used Cursor’s “Generate system design” feature and pasted the result. The tool had invented a fictional CDN provider called “CloudFront Edge Plus” that doesn’t exist.</p>
-<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
-<p>The most common cause is that the candidate’s design doc is too polished. If every arrow is perfectly aligned, every latency number is a round decimal, and every AWS service name is spelled correctly, it’s likely AI-generated. Authentic designs usually have messy notes, crossed-out boxes, and back-of-the-envelope calculations scribbled in the margin.</p>
-<p>To detect this, ask the candidate to redraw their architecture on a whiteboard or shared doc in real time. Watch how they handle constraints: “What happens if your primary region goes down?” or “How much will this cost at 10x scale?” If they pivot smoothly, they understand the system. If they stall or over-rely on jargon, they’re reciting.</p>
-<p>I once caught a candidate who quoted exact Aurora PostgreSQL IOPS figures from a 2026 AWS blog post. When I asked how they’d tune the buffer pool, they replied, “I let RDS handle it.” That’s a red flag. Real engineers know that buffer pool tuning is often the difference between a $5k/month and $20k/month bill.</p>
-<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
-<p>A less obvious cause is that interviewers are using AI to prepare their own questions. Some hiring teams now prompt an AI assistant with “Generate 10 system design questions for a senior distributed systems role” and use those verbatim. The result? Candidates who studied the AI output instead of learning distributed systems fundamentals.</p>
-<p>This happened to me when a candidate correctly answered every question about CRDTs but couldn’t implement a basic leader election algorithm in Python. When I dug deeper, they confessed they’d memorized the CRDT section from the “Distributed Systems Interview Bible” — a PDF generated by an AI tool in 2026. The PDF had 237 pages and was trending on GitHub.</p>
-<p>The fix is to ask open-ended questions that require synthesis, not recall. For example: “Explain how you’d design a system that processes 10 million events per second with exactly-once semantics. Walk me through your code changes and the trade-offs you’d accept.” Candidates who rely on AI cram will freeze when asked to produce code on the spot.</p>
-<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
-<p>In Latin America in 2026, the environment-specific cause is bandwidth and latency constraints. Many candidates rely on AI assistants that run in the cloud (e.g., GitHub Copilot Enterprise hosted in us-east-1). When the candidate’s local internet is slow or unstable, the assistant’s autocomplete suggestions lag or fail entirely. That forces the candidate to think through the design themselves.</p>
-<p>I saw this firsthand in a São Paulo interview room where the candidate’s VS Code extension kept timing out. Instead of getting stuck, they sketched a system design using pen and paper and walked me through their reasoning. The design wasn’t perfect, but it was authentic. Meanwhile, in Bogotá, another candidate with a stable connection relied entirely on Copilot and produced a design full of non-existent AWS services.</p>
-<p>The lesson: unstable connectivity can accidentally improve interview authenticity. If you’re hiring in regions with spotty infrastructure, lean into it. Ask candidates to design offline first, then iterate once they’re back online.</p>
-<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
-<p>To verify the fix, run a 15-minute follow-up exercise: give the candidate a failing production scenario and ask them to sketch a fix live. For example: “Your Redis cluster in us-west-2 is returning timeouts during peak hours. The current setup is 3 masters, 6 replicas. Sketch the change you’d make and the command you’d run.”</p>
-<p>If the candidate draws a vpc peering connection to a new region, adjusts replica count, and writes a redis-cli command to flush stale keys, they’re authentic. If they stare blankly or ask for “a hint,” they’re reciting.</p>
-<p>I used this in a Medellín interview where a candidate confidently said, “I’d use DynamoDB DAX.” I replied, “DAX is not compatible with Redis Cluster.” They froze. When pressed, they admitted they’d copied the suggestion from Copilot without checking the docs. That’s verification in action.</p>
-<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
-<p>Prevent this by changing the interview format entirely. Replace the static design doc with a live coding exercise on a real cluster. For example:</p>
+                <h2 id="the-symptom-and-the-root-cause">The symptom and the root cause</h2>
+<p>A candidate's system design document reads like a vendor whitepaper: multi-agent orchestration, embedding caches, vectorized state machines. The diagram is clean, the service names are spelled correctly, and every latency figure is a round number. Then the interviewer asks a follow-up — how would you shard that cache, what happens to replication lag under write pressure, why this database and not the other one — and the answer stalls. The candidate says the vector database handles sharding automatically. The interview is effectively over.</p>
+<p>The surface symptom is polish. The root cause is that the candidate never built a model of the system; they retrieved one. Large language models are good at producing plausible architecture prose because architecture prose is abundant, well-structured, and rarely falsifiable at a glance. A prompt like "design a multi-region event streaming system" returns something that looks like the first page of an engineering blog post. That output is not a design. It is a prior over design vocabulary.</p>
+<p>The reason this breaks interviews is structural, not moral. System design interviews were always an oral exam in disguise: the artifact on the whiteboard is secondary, and the graded signal is the candidate's ability to defend trade-offs under changing constraints. Generated documents carry no such signal, because the generator cannot answer "what if the primary region goes down" — only the candidate can, and only if they actually reasoned about it.</p>
+<h2 id="what-ai-output-looks-like-under-pressure">What AI output looks like under pressure</h2>
+<p>Generated designs share recognizable failure signatures. None of these is proof on its own; treat them as probes.</p>
+<p><strong>Round numbers everywhere.</strong> Human capacity estimates involve arithmetic with awkward inputs. A generated design tends to state clean figures without showing the derivation. Ask where a number came from. A real candidate will reproduce the multiplication; a reciting candidate will restate the number.</p>
+<p><strong>Services that do not exist.</strong> Models hallucinate plausible product names, especially in cloud catalogs where the naming conventions are consistent enough to extrapolate. A candidate confidently naming a service you have never heard of is a strong signal to ask them to open the docs.</p>
+<p><strong>No failure modes.</strong> Real designs carry scars: the retry storm, the hot partition, the cache stampede after a deploy. Generated designs describe the happy path in detail and the failure path in generalities.</p>
+<p><strong>Missing units and boundaries.</strong> "1M ops/sec" without stating per node, per cluster, read or write, and at what payload size is a number-shaped decoration.</p>
+<p><strong>Instant fluency on the diagram, silence on the mechanism.</strong> The candidate can describe what the boxes are but not what happens between them during a partial failure.</p>
+<h2 id="a-worked-example-what-a-defensible-answer-contains">A worked example: what a defensible answer contains</h2>
+<p>Take a common prompt: "Design a read-heavy service with a 10 TB dataset, 100 MB/s of writes, and a 5 ms read latency target." The exact numbers matter less than the reasoning chain, which should sound something like this.</p>
+<p><strong>Step 1 — separate the two workloads.</strong> Writes at 100 MB/s are a streaming problem; reads at 5 ms are a serving problem. They usually want different storage, so the first design decision is where the write path ends and the read path begins.</p>
+<p><strong>Step 2 — size the write path.</strong> 100 MB/s is 8.64 TB/day if sustained (100 MB/s × 86,400 s = 8,640,000 MB ≈ 8.64 TB). That exceeds the stated 10 TB dataset per day, which means either the dataset is replaced continuously or the write figure is a burst, not a steady state. A candidate who notices this inconsistency is reasoning; one who does not is reciting. Resolving it changes the design: a steady 8.64 TB/day implies retention and compaction policy as first-class concerns, not an afterthought.</p>
+<p><strong>Step 3 — size the read path.</strong> 5 ms is aggressive for a cold read from object storage, whose first-byte latency is typically tens to hundreds of milliseconds. So the read path needs either a cache with a high hit rate or a database with local storage. The choice depends on the read pattern, which the candidate should ask about rather than assume.</p>
+<p><strong>Step 4 — name the trade-off.</strong> Caching gives latency but introduces invalidation and staleness. A replicated database gives consistency but costs write amplification and cross-region traffic. The candidate should state which they chose, what it costs, and what they would monitor to know if the choice was wrong.</p>
+<p><strong>Step 5 — describe the failure.</strong> If the cache tier is lost, what happens to the database? If the answer is "it falls over," the design needs a load-shedding or admission-control story. This is the part generated output almost never contains.</p>
+<p>The value of the exercise is not the specific architecture. It is watching whether the candidate can move between a number, a constraint, and a decision, and revise when the interviewer changes one input.</p>
+<h2 id="how-to-measure-whether-a-probe-works">How to measure whether a probe works</h2>
+<p>Do not trust a single interview's impression. Instrument the process.</p>
 <ul>
-<li>Spin up a 3-node Redis Cluster on your laptop using Docker Compose. - Give the candidate a failing test: a GET request returns stale data after a write. - Ask them to debug and fix it in 20 minutes while explaining their reasoning.</li>
+<li><strong>Tag every interview</strong> with whether a live-mutation probe was used and whether the candidate revised their design in response.</li>
+<li><strong>Record the probe question and the candidate's first three sentences.</strong> Review them later against the rubric. This is the cheapest way to find out whether your probes discriminate or just add noise.</li>
+<li><strong>Compare pass rates on the written stage versus the live stage.</strong> If a large fraction of candidates who pass the document review fail the live probe, the document review is not measuring what you think it measures.</li>
+<li><strong>Track inter-rater agreement.</strong> Two interviewers scoring the same transcript should land in the same band. If they do not, the rubric is too vague to be useful.</li>
 </ul>
-<p>This works because AI assistants can’t fix a real system in real time. The candidate must understand replication lag, quorum, and eviction policies to proceed.</p>
-<p>I implemented this at a fintech in Mexico City. The key was moving from “design a system” to “fix this broken one.”</p>
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
-<ul>
-<li><strong>Over-reliance on AI-generated Terraform</strong>: Candidates paste Terraform modules from Copilot without understanding IAM policies. The symptom is a module that fails to deploy due to missing permissions. - <strong>Misquoted latency numbers</strong>: Candidates quote Redis 7.2’s 1M ops/sec as 10M ops/sec after reading a 2026 blog post. The symptom is an architecture that over-provisions by 3x. - <strong>Vendor-locked diagrams</strong>: Candidates draw diagrams using only AWS icons and services, then can’t explain how the same system would work on GCP. The symptom is a blank stare when asked about equivalent Azure services. - <strong>Over-engineered microservices</strong>: Candidates propose a service per endpoint after prompting Copilot with “microservices best practices.” The symptom is a design with 12 services for a CRUD app.</li>
-</ul>
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<p>If the candidate still passes the design round but fails the live coding round, escalate to a system design deep dive. Ask them to:</p>
+<p>A concrete instrument: for each candidate, log the number of distinct constraints they asked about before proposing a design, the number of times they revised after a mutation, and whether they named a failure mode unprompted. These are countable and cheap to collect. Trends across a hiring loop are more informative than any single anecdote.</p>
+<h2 id="redesign-the-loop-around-live-debugging">Redesign the loop around live debugging</h2>
+<p>The most reliable filter is to stop asking candidates to produce a design and start asking them to repair one. Repair requires a mental model; generation does not.</p>
+<p>A workable 45-minute format:</p>
 <ol>
-<li>Pick a past production outage they debugged. 2. Walk you through their thought process in real time. 3. Draw the system topology as they explain it.</li>
+<li><strong>Ten minutes — orient.</strong> Give the candidate a running system and a one-paragraph description. Let them read it and ask questions.</li>
+<li><strong>Twenty minutes — break it.</strong> Introduce a failure: stale reads after a write, a hot partition, a retry storm, a certificate expiry. Ask them to diagnose and fix it while narrating.</li>
+<li><strong>Fifteen minutes — extend it.</strong> Change one constraint — double the write rate, add a second region, cut the budget — and ask what breaks first.</li>
 </ol>
-<p>If they can’t reconstruct their own work from memory, they didn’t build it. I escalated a candidate in Lima this way. They’d presented a flawless design for a “real-time fraud detection system,” but couldn’t explain how their Kafka topic partitions were sized. Turns out they’d copied the design from a 2026 conference talk. Escalation saved us a bad hire.</p>
-<hr />
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why do candidates use AI for system design interviews in 2026?</strong></p>
-<p>Because the format rewards polish over substance. A slick diagram with buzzwords scores higher than a messy whiteboard with real trade-offs. AI tools make it trivial to generate that polish in seconds. Many candidates also lack recent hands-on experience with distributed systems, so they rely on AI to fill the gap.</p>
-<p><strong>How can I tell if a candidate’s system design is AI-generated?</strong></p>
-<p>Look for perfect alignment, round latency numbers, and non-existent AWS services. Authentic designs have messy notes, crossed-out boxes, and back-of-the-envelope math. Ask for a live rewrite on a whiteboard or shared doc — if the candidate hesitates or stalls, it’s likely AI.</p>
-<p><strong>What’s the best way to redesign system design interviews for 2026?</strong></p>
-<p>Replace static design docs with live debugging on a real cluster. For example, spin up a 3-node Redis Cluster and give the candidate a failing test: stale reads after a write. Ask them to fix it in 20 minutes while explaining their reasoning. This forces authenticity because AI can’t debug a real system in real time.</p>
-<p><strong>Is there a fair way to use AI in system design interviews without gaming the system?</strong></p>
-<p>Yes. Use AI as a sparring partner, not a crutch. For example, give candidates a prompt like “Generate a Terraform module for a Redis Cluster with TLS” and ask them to review it for security flaws. This tests their ability to audit AI output rather than regurgitate it. I’ve seen teams adopt this for junior roles with good results.</p>
-<hr />
+<p>The candidate needs a real environment for this. A local cluster is enough:</p>
+<pre><code class="language-yaml"># docker-compose.yml — three-node Redis Cluster for interview use
+services:
+  redis-1:
+    image: redis:7.2
+    command: redis-server --cluster-enabled yes --cluster-config-file nodes.conf --port 6379
+    ports: [&quot;7001:6379&quot;]
+  redis-2:
+    image: redis:7.2
+    command: redis-server --cluster-enabled yes --cluster-config-file nodes.conf --port 6379
+    ports: [&quot;7002:6379&quot;]
+  redis-3:
+    image: redis:7.2
+    command: redis-server --cluster-enabled yes --cluster-config-file nodes.conf --port 6379
+    ports: [&quot;7003:6379&quot;]
+</code></pre>
+<p>Bring it up with <code>docker compose up -d</code>, then form the cluster with <code>redis-cli --cluster create</code> across the three published ports. A three-node cluster with no replicas is sufficient for a debugging exercise and keeps setup under a minute.</p>
+<p>Then give the candidate a failing test. A minimal reproduction in Python:</p>
+<pre><code class="language-python">import redis
+
+r = redis.RedisCluster(host=&quot;localhost&quot;, port=7001, decode_responses=True)
+
+r.set(&quot;counter&quot;, &quot;1&quot;)
+first = r.get(&quot;counter&quot;)
+r.set(&quot;counter&quot;, &quot;2&quot;)
+second = r.get(&quot;counter&quot;)
+
+assert second == &quot;2&quot;, f&quot;stale read: got {second!r} after writing 2&quot;
+</code></pre>
+<p>If the assertion fires, the candidate has something real to chase: which node served the read, whether the client is routing to the right slot, whether a replica lagged, whether the key moved after a reshard. None of these can be answered by reciting a blog post.</p>
+<h2 id="audit-ai-output-instead-of-banning-it">Audit AI output instead of banning it</h2>
+<p>Banning assistants is both unenforceable and beside the point; the job increasingly involves reviewing generated code. A better format is to hand the candidate generated output and grade the review.</p>
+<p>Give them a prompt and its result: "Generate a Terraform module for a Redis Cluster with TLS." Then ask:</p>
+<ul>
+<li>Which resources are created, and what does each one cost?</li>
+<li>Where are the credentials stored, and who can read them?</li>
+<li>What happens on a node replacement — is data lost, and is that acceptable?</li>
+<li>Which parts of this module would you refuse to merge, and why?</li>
+</ul>
+<p>This tests the skill that matters in practice: reading generated infrastructure critically. A candidate who can spot an over-broad IAM policy or a missing encryption-at-rest setting is demonstrating real knowledge. A candidate who cannot has simply moved the failure one step later in the pipeline.</p>
 <table>
 <thead>
 <tr>
-<th>Tool</th>
-<th>Purpose</th>
-<th>Risk in 2026</th>
+<th>Interview format</th>
+<th>What it tests</th>
+<th>What it misses</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>GitHub Copilot Enterprise</td>
-<td>Generate Terraform, system diagrams, and boilerplate code</td>
-<td>Candidates paste without understanding IAM policies or latency trade-offs</td>
+<td>Static design document</td>
+<td>Vocabulary, structure, recall</td>
+<td>Whether the candidate can defend or revise the design</td>
 </tr>
 <tr>
-<td>Cursor</td>
-<td>Full-file generation with context-aware prompts</td>
-<td>Candidates rely on non-existent AWS services like “CloudFront Edge Plus”</td>
+<td>Live whiteboard design</td>
+<td>Reasoning under mild pressure</td>
+<td>Whether the candidate can operate a real system</td>
 </tr>
 <tr>
-<td>Amazon Q Developer</td>
-<td>AWS-native code generation and architecture suggestions</td>
-<td>Candidates quote Aurora PostgreSQL IOPS figures from 2026 AWS blogs</td>
+<td>Live debugging on a local cluster</td>
+<td>Diagnosis, tooling, mental model of failure</td>
+<td>Breadth of architecture knowledge</td>
 </tr>
 <tr>
-<td>Perplexity AI Pro</td>
-<td>Real-time web search with citations</td>
-<td>Candidates cite outdated latency benchmarks from 2026 benchmarks</td>
+<td>Audit of generated output</td>
+<td>Critical review, security judgment</td>
+<td>Original design ability</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<p>System design interviews in 2026 are broken by AI assistants that can pass them on autopilot. The only reliable fix is to stop asking candidates to design systems and start asking them to fix broken ones. Move from static docs to live debugging on a real cluster, and watch the authenticity rate climb.</p>
-<p>Your next step in the next 30 minutes: open your last system design interview rubric and replace the “design quality” section with a 20-minute live debugging exercise on a 3-node Redis Cluster. Spin it up with Docker Compose using Redis 7.2, then write a failing test that returns stale data after a write. That’s your new baseline for authenticity.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>No single format covers everything. A loop that uses only one of these will have a predictable blind spot.</p>
+<h2 id="failure-modes-of-the-fix-itself">Failure modes of the fix itself</h2>
+<p>Redesigning interviews introduces its own problems, and naming them is part of doing it well.</p>
+<p><strong>The probe becomes a trivia quiz.</strong> If the live exercise rewards memorizing a specific command, it selects for the same recall the old format did. Keep the system small enough that the candidate can reason about it from first principles.</p>
+<p><strong>Setup time eats the interview.</strong> A cluster that takes fifteen minutes to start leaves twenty for actual signal. Pin the image version, pre-build the environment, and verify it before the candidate joins.</p>
+<p><strong>The interviewer talks too much.</strong> The temptation to hint is strong. Hints reduce signal; a candidate who solves the problem with three hints has demonstrated something different from one who solved it alone. Log the hints given.</p>
+<p><strong>False positives from nervousness.</strong> A candidate who freezes under observation may still be competent. Separate the diagnostic score from the communication score, and weight them explicitly rather than blending them into one impression.</p>
+<p><strong>The rubric drifts.</strong> Without calibration sessions, two interviewers will interpret "good diagnosis" differently within a month. Review a shared transcript periodically and re-agree on the bands.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why does AI-generated design pass document review?</strong>
+Because document review grades the artifact, and the artifact is exactly what a language model produces well. The signal that matters — defending trade-offs under changing constraints — is absent from a static document, so the review cannot see its absence.</p>
+<p><strong>Is it fair to ask candidates to debug live if the role is design-heavy?</strong>
+Yes, if the exercise is scoped to reasoning rather than tooling. The goal is not to test whether someone remembers a specific CLI flag; it is to test whether they can form a hypothesis about a broken system and check it. That skill transfers to design work.</p>
+<p><strong>Should candidates be allowed to use AI during the interview?</strong>
+Allowing it in a review capacity is more informative than banning it. Give the candidate generated output and grade the critique. Banning is hard to enforce remotely and tests nothing about the job, which increasingly involves auditing generated code.</p>
+<p><strong>How many interviews does it take to know a probe works?</strong>
+More than a handful. Collect the probe result, the live-stage result, and the eventual hiring outcome for every candidate, then look for correlation across a full hiring cycle. A probe that does not correlate with later performance is adding cost without signal.</p>
+<p><strong>What if the candidate has never used the tooling in the exercise?</strong>
+Choose tooling with a low floor: a single-node store, a shell, and a failing test. The exercise should fail candidates who cannot reason, not candidates who have not memorized a particular client library.</p>
+<h2 id="the-next-30-minutes">The next 30 minutes</h2>
+<p>Open the rubric for your next system design interview and replace the "design quality" section with a 20-minute live debugging exercise. Start the three-node cluster above with <code>docker compose up -d</code>, form it with <code>redis-cli --cluster create</code>, and run the stale-read test until you can reproduce the failure yourself. If you cannot reproduce it, you cannot grade it — and neither can the candidate.</p>
+<h2 id="official-documentation">Official documentation</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ai-interviews-broke-system-design-3-patterns-that/">AI interviews broke system design: 3 patterns that</a></li>
-<li><a href="https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/">AI interviews break systems: 5 real mistakes in 2026</a></li>
-<li><a href="https://kubaik.github.io/why-ai-interviewers-failed-68-of-us-in-2026/">Why AI interviewers failed 68% of us in 2026</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
 </ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
@@ -410,7 +451,7 @@
                     <a class="related-card" href="/ai-interviews-broke-system-design-3-patterns-that/">
                         <h3>AI interviews broke system design: 3 patterns that</h3>
                         <p>AI design tools produce complete-looking architectures that fail under real load. Three patterns, why they happen, and how to catch them before staging.</p>
-                        <span class="related-meta">14 min read · 11 June 2026</span>
+                        <span class="related-meta">15 min read · 11 June 2026</span>
                     </a>
                     
                 </div>

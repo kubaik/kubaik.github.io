@@ -64,8 +64,8 @@
       "description": "Offline-first architecture for metered, low-signal networks: storage, encryption, sync scheduling, conflict resolution, and how to measure each.",
       "datePublished": "2026-06-21T10:38:08+00:00",
       "dateModified": "2026-10-03T12:34:22+00:00",
-      "wordCount": 2897,
-      "timeRequired": "PT14M",
+      "wordCount": 3020,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -258,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2897 words
+                        15 min read
+                        &nbsp;·&nbsp; 3020 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -428,6 +428,19 @@ Add a low-data mode that disables image uploads, reduces sync frequency, and com
 A local relational store with a reactive layer, encryption at rest, and a background worker with a durable queue. Add a "sync on demand" button and a storage budgeting policy that prunes old data when free space is low. That is a few hundred lines of code beyond your existing data layer and adds a small amount to your app size.</p>
 <h2 id="the-one-thing-to-do-in-the-next-30-minutes">The one thing to do in the next 30 minutes</h2>
 <p>Open your sync endpoint's request logging and record the average request body size over the last 24 hours. If it is above 2 KB, you are almost certainly sending full records instead of deltas — add a <code>since</code> parameter and a <code>changed_fields</code> field to your sync API, then re-measure.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/offline-first-agents-for-field-teams/">Offline-first agents for field teams</a></li>
+<li><a href="https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/">Why progressive web apps fail on 2G and how to fix…</a></li>
+<li><a href="https://kubaik.github.io/offline-agent-workflows-for-last-mile-ops/">Offline agent workflows for last-mile ops</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

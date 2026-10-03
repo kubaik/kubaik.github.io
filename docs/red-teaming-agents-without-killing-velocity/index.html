@@ -64,7 +64,7 @@
       "description": "How to embed lightweight adversarial testing for LLM agents into pull requests: fuzzed payloads, resilience assertions, shadow canaries.",
       "datePublished": "2026-07-17T06:39:14+00:00",
       "dateModified": "2026-10-03T12:34:36+00:00",
-      "wordCount": 2126,
+      "wordCount": 2255,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2126 words
+                        &nbsp;·&nbsp; 2255 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -407,6 +407,23 @@ Run the same tests, but record the model's responses once and replay them in CI.
 Measure the cost of a single production incident in the agent's area: engineering hours spent, downstream impact, and any direct infrastructure cost. Compare that to the engineering time required to write and maintain the suite. Present both numbers from your own records. Avoid quoted industry averages; they are not specific to your system and they invite disagreement.</p>
 <h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
 <p>Open the repository for an agent you maintain and create a single test file that sends one malformed input to the agent's entry point and asserts that it fails closed rather than posting an unsafe result. Run it locally. If it passes, commit it and add it to the existing CI job. If it fails, you have found a real bug and a reason to build the rest of the suite.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/claude-code-after-365-days-what-actually-works/">Claude Code after 365 days: what actually works</a></li>
+<li><a href="https://kubaik.github.io/agent-code-review-gap-nobody-admits/">agent code review gap nobody admits</a></li>
+<li><a href="https://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026/">Choosing a JavaScript Test Stack: Playwright and Vitest</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

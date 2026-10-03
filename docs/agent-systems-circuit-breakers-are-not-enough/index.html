@@ -64,8 +64,8 @@
       "description": "Circuit breakers and bulkheads were built for stateless services. Agent systems need semantic error handling, externalized state, and recursion guards.",
       "datePublished": "2026-09-12T11:54:46+00:00",
       "dateModified": "2026-10-03T12:53:42+00:00",
-      "wordCount": 2399,
-      "timeRequired": "PT12M",
+      "wordCount": 2518,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -228,8 +228,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2399 words
+                        13 min read
+                        &nbsp;·&nbsp; 2518 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -405,6 +405,19 @@ public async Task&lt;Plan&gt; HandleAsync(AgentRequest request)
 <p>Provider-side rate limiting protects the provider, not your system. It surfaces as 429 responses, which your breaker should count as tripping failures — but by the time you see them, your bulkhead queue is already full. Client-side bulkheading is what keeps you from reaching that point.</p>
 <h2 id="take-action-in-the-next-30-minutes">Take action in the next 30 minutes</h2>
 <p>Open the file that configures your circuit breaker and read the predicate. If it only checks status codes and latency, add a body inspection that classifies at least one logical error as non-tripping. Then add a hop counter to your request envelope and reject requests above a small fixed limit. Those two changes are a few lines each and close the two failure modes that a circuit breaker cannot see.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/">When your agent goes silent: degrade gracefully</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

@@ -1,27 +1,27 @@
 {
   "improved": [
     {
-      "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
-      "attempts": 2,
-      "retitled": false
-    },
-    {
-      "slug": "remote-work-in-2026-which-tools-survived",
-      "attempts": 2,
-      "retitled": false
-    },
-    {
-      "slug": "postgres-vector-search-what-breaks-first",
+      "slug": "use-feature-flags-to-deploy-ai-models-safely",
       "attempts": 1,
       "retitled": false
     },
     {
-      "slug": "ai-agents-eat-your-budget-3-ways",
-      "attempts": 2,
+      "slug": "trim-llm-bills-3-finops-moves-that-work",
+      "attempts": 1,
       "retitled": false
     },
     {
-      "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",
+      "slug": "ai-sales-cycles-3x-faster-40-less-talk",
+      "attempts": 1,
+      "retitled": true
+    },
+    {
+      "slug": "ai-stole-system-design",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "agent-slos-measure-what-agents-actually-do",
       "attempts": 1,
       "retitled": false
     }

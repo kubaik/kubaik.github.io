@@ -64,8 +64,8 @@
       "description": "How Argo Workflows and Tekton Pipelines differ for automated failure detection and recovery, with working code and failure-mode analysis.",
       "datePublished": "2026-06-27T23:59:52+00:00",
       "dateModified": "2026-10-03T12:42:24+00:00",
-      "wordCount": 2455,
-      "timeRequired": "PT12M",
+      "wordCount": 2584,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -237,8 +237,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2455 words
+                        13 min read
+                        &nbsp;·&nbsp; 2584 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -519,6 +519,24 @@ func main() {
 <p><strong>What about Argo Events vs. polling the API?</strong> Argo Events is event-driven and lower-latency. Polling the Kubernetes API is simpler and has fewer moving parts. For low-volume pipelines, polling is often sufficient; for high-volume, event-driven is worth the operational cost.</p>
 <h2 id="take-action">Take action</h2>
 <p>In the next 30 minutes, instrument one pipeline to count its failure classes. Add a label to every failed run recording whether the failure was transient, permanent, or unknown, based on what the human who resolved it observed. Run the pipeline for a week, then look at the distribution. That distribution — not any article's benchmark — is the input your classifier needs.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/">Self-healing pipelines: Argo vs Crossplane in 2026</a></li>
+<li><a href="https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">Self-healing agents vs rule-based deployment rollback</a></li>
+<li><a href="https://kubaik.github.io/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

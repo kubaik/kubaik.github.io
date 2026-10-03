@@ -64,8 +64,8 @@
       "description": "How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.",
       "datePublished": "2026-06-25T08:39:15+00:00",
       "dateModified": "2026-10-03T12:44:28+00:00",
-      "wordCount": 2261,
-      "timeRequired": "PT11M",
+      "wordCount": 2397,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2261 words
+                        12 min read
+                        &nbsp;·&nbsp; 2397 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -441,6 +441,26 @@ while True:
 <p>If the read-to-write ratio is high, the hit rate is estimable above roughly 80%, staleness of seconds is acceptable, and egress dominates your variable cost, caching is the right lever. Otherwise, replicate and pay for it deliberately.</p>
 <h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
 <p>Pick your slowest endpoint and measure it from a region far from your database. Run a loop of 100 requests from a machine in that region, recording the response time of each, and compute the p99. Then check your provider's billing export for cross-region transfer on that same endpoint's traffic. If the p99 exceeds your target and cross-region transfer is a visible line item, you have the two numbers that justify a cache — and you can size the TTL from the staleness your product already tolerates.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/aws-costs-for-nairobi-saas-2026-bill-split/">AWS costs for Nairobi SaaS: 2026 bill split</a></li>
+<li><a href="https://kubaik.github.io/50-locations-50-headaches-edge-native-backends-in/">50 locations, 50 headaches: edge-native backends in</a></li>
+<li><a href="https://kubaik.github.io/ai-stole-system-design/">AI stole system design</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -470,7 +490,7 @@ while True:
                     <a class="related-card" href="/agent-context-short-term-vs-long-term-memory/">
                         <h3>Agent context: short-term vs long-term memory</h3>
                         <p>Compare Redis-style short-term agent context with Postgres event logs: latency, durability, auditability, cost, and how to measure each.</p>
-                        <span class="related-meta">14 min read · 9 July 2026</span>
+                        <span class="related-meta">15 min read · 9 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/50-locations-50-headaches-edge-native-backends-in/">

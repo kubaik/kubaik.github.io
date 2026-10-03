@@ -64,7 +64,7 @@
       "description": "AI scanners catch pattern-level flaws but miss logic bugs. Learn a layered approach using deterministic rules, fuzzing, and runtime monitoring.",
       "datePublished": "2026-07-02T20:27:23+00:00",
       "dateModified": "2026-10-03T12:43:34+00:00",
-      "wordCount": 2302,
+      "wordCount": 2427,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -259,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2302 words
+                        &nbsp;·&nbsp; 2427 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -487,6 +487,19 @@ select q
 <p>No. Runtime monitoring is reactive: it catches what is already happening. Static analysis is proactive: it prevents issues from reaching production. Use both. When a runtime alert fires, ask which static rule or fuzz harness would have caught it earlier, and add it.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Open your most critical API endpoint and write one deterministic rule that encodes an invariant it must satisfy—for example, that every state-changing request validates a CSRF token, or that every file upload rejects path separators in the filename. Run it against your codebase, inspect the findings, and refine the rule until every hit is either a real issue or a documented exception. That single rule is the first layer of the grammar checker your AI scanner is missing.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/">Stop false positives in CI scanning now</a></li>
+<li><a href="https://kubaik.github.io/ai-static-analysis-vs-legacy-sast-5x-faster-scans/">AI Static Analysis vs Rule-Based SAST: A Practical Comparison</a></li>
+<li><a href="https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/">Context-aware security gates that cut CI alert noise</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

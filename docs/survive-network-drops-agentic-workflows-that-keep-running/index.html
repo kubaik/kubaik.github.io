@@ -64,7 +64,7 @@
       "description": "Design agentic workflows as state machines over an append-only log so retries replay deterministically instead of duplicating work.",
       "datePublished": "2026-07-04T12:14:28+00:00",
       "dateModified": "2026-10-03T12:51:12+00:00",
-      "wordCount": 2935,
+      "wordCount": 3065,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2935 words
+                        &nbsp;·&nbsp; 3065 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -543,6 +543,25 @@ log.append(Command(seq=1, name=&quot;send_sms&quot;,
                    payload={&quot;phone&quot;: &quot;+254712345678&quot;, &quot;msg&quot;: &quot;Approve? Reply YES&quot;}))
 </code></pre>
 <p>Watch the supervisor process it. Interrupt the supervisor with Ctrl+C while the send is in flight, restart it, and confirm the command still completes exactly once. That is durable execution in ten minutes, with no cluster and no managed service.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agentic-workflows-surviving-network-partitions/">Agentic workflows: surviving network partitions</a></li>
+<li><a href="https://kubaik.github.io/agentic-finops-is-a-trap/">Agentic FinOps is a trap</a></li>
+<li><a href="https://kubaik.github.io/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

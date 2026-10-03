@@ -64,8 +64,8 @@
       "description": "Why permissive agent tool defaults break in production, and how to add runtime, context-aware policy checks before every tool call.",
       "datePublished": "2026-08-10T02:02:42+00:00",
       "dateModified": "2026-10-03T12:47:05+00:00",
-      "wordCount": 2643,
-      "timeRequired": "PT13M",
+      "wordCount": 2765,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2643 words
+                        14 min read
+                        &nbsp;·&nbsp; 2765 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -496,6 +496,23 @@ Run the policy engine in-process during unit tests, load the policy file, and as
 <pre><code class="language-bash">grep -L &quot;get_permissions&quot; tools/**/*.py
 </code></pre>
 <p>Any tool that appears in the output is currently callable with no policy metadata, which means no policy engine can gate it. Either add a <code>get_permissions()</code> function to it, wrap it in an adapter, or remove it from the registry. Doing this first gives you the inventory you need before writing a single line of policy.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/scope-agent-permissions-per-task/">Scope agent permissions per task</a></li>
+<li><a href="https://kubaik.github.io/agent-access-for-non-ai-engineers/">Agent access for non-AI engineers</a></li>
+<li><a href="https://kubaik.github.io/tool-calls-why-retries-stampede/">Tool calls: why retries stampede</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

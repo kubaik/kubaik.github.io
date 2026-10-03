@@ -64,7 +64,7 @@
       "description": "How to attribute token cost, latency and developer time to prompt and agent platforms, with instrumentation recipes, failure modes and a decision checklist.",
       "datePublished": "2026-07-08T11:53:30+00:00",
       "dateModified": "2026-10-03T12:51:48+00:00",
-      "wordCount": 2721,
+      "wordCount": 2861,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2721 words
+                        &nbsp;·&nbsp; 2861 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -404,6 +404,25 @@ return redis.call(&quot;HSET&quot;, key, &quot;value&quot;, ARGV[2], &quot;ttl&q
 <p>Whatever is chosen, measure the four things that matter — attribution coverage, warm and cold latency, time to diagnose a regression, and reversal cost — on the real system, and record the measurement window alongside the number.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick one prompt in a staging environment, log its token counts to a span attribute, export the trace, and confirm the attribute is present and non-zero. If it is zero or missing, the attribute name mismatch is the most likely cause, and finding it now costs minutes rather than a billing cycle.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/observe-llm-features-90-faster/">Observability for LLM Features: Metrics That Drive Decisions</a></li>
+<li><a href="https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/">Big model API vs fine-tune: the 2026 math</a></li>
+<li><a href="https://kubaik.github.io/9-ai-wrapper-plays-that-worked-in-2026/">AI wrapper business models: what survives contact with users</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -433,7 +452,7 @@ return redis.call(&quot;HSET&quot;, key, &quot;value&quot;, ARGV[2], &quot;ttl&q
                     <a class="related-card" href="/purpose-built-beats-general-ai-tools/">
                         <h3>Purpose-built beats general AI tools</h3>
                         <p>When a general AI platform beats a purpose-built stack, how to choose, and how to measure latency, cost and fallback behaviour yourself.</p>
-                        <span class="related-meta">15 min read · 19 July 2026</span>
+                        <span class="related-meta">16 min read · 19 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-supply-chain-attacks-what-actually-broke/">

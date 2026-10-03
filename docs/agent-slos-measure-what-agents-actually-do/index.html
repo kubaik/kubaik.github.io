@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Agent SLOs: measure what agents actually do - Kubai Kevin</title>
-        <meta name="description" content="Build outcome-based SLOs for agentic systems that actually measure delivery, not just latency — includes FastAPI 0.111, WeasyPrint 64.1, Prometheus 2.53…">
+        <meta name="description" content="Latency and 5xx SLOs miss stuck loops. Define outcome SLOs on completion rate, with schema, PromQL, and failure handling.">
         <meta name="keywords" content="AgenticSystemSlo, BackgroundJobSlo, FastapiSlo, Prometheus, WeasyprintSlo, PostgresAgentSlo, GrafanaCloudSlo, Cloudcomputing, Postgresql, Agenticai, Techjobs">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-11T11:04:33.328499">
-        <meta property="article:modified_time" content="2026-10-03T10:44:02.614090+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:59:52.077670+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agent SLOs: measure what agents actually do">
-        <meta property="og:description" content="Build outcome-based SLOs for agentic systems that actually measure delivery, not just latency — includes FastAPI 0.111, WeasyPrint 64.1, Prometheus 2.53…">
+        <meta property="og:description" content="Latency and 5xx SLOs miss stuck loops. Define outcome SLOs on completion rate, with schema, PromQL, and failure handling.">
         <meta property="og:url" content="https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Agent SLOs: measure what agents actually do">
-        <meta name="twitter:description" content="Build outcome-based SLOs for agentic systems that actually measure delivery, not just latency — includes FastAPI 0.111, WeasyPrint 64.1, Prometheus 2.53…">
+        <meta name="twitter:description" content="Latency and 5xx SLOs miss stuck loops. Define outcome SLOs on completion rate, with schema, PromQL, and failure handling.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-slos-measure-what-agents-actually-do.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,10 +61,10 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/#article",
       "headline": "Agent SLOs: measure what agents actually do",
-      "description": "Build outcome-based SLOs for agentic systems that actually measure delivery, not just latency — includes FastAPI 0.111, WeasyPrint 64.1, Prometheus 2.53…",
+      "description": "Latency and 5xx SLOs miss stuck loops. Define outcome SLOs on completion rate, with schema, PromQL, and failure handling.",
       "datePublished": "2026-08-11T11:04:33+00:00",
-      "dateModified": "2026-10-03T10:44:02+00:00",
-      "wordCount": 2574,
+      "dateModified": "2026-10-03T12:59:52+00:00",
+      "wordCount": 2591,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Agent SLOs: measure what agents actually do</h1>
                 
-                <p class="post-lead">Build outcome-based SLOs for agentic systems that actually measure delivery, not just latency — includes FastAPI 0.111, WeasyPrint 64.1, Prometheus 2.53…</p>
+                <p class="post-lead">Latency and 5xx SLOs miss stuck loops. Define outcome SLOs on completion rate, with schema, PromQL, and failure handling.</p>
                 
                 
                 <div class="tags">
@@ -259,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2574 words
+                        &nbsp;·&nbsp; 2591 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -268,32 +268,21 @@
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Most building slos guides assume a clean environment and a patient timeline. It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>You built an agentic feature: a background job scheduler, an async approval flow, a real-time report generator. It’s not a REST endpoint; it’s a loop that retries, persists state, and sometimes gets stuck. The usual SLOs—p99 latency, 5xx rate—are noise here. They tell you the agent <em>responded</em> fast, not whether it <em>delivered</em> the report, approved the invoice, or cleaned up the temp files.</p>
-<p>The part that trips people up is that agentic systems fail in ways that look fine to a latency histogram. A stuck retry loop returns 200 every time, but nothing actually progresses. A background worker crams 10k tasks into its queue because the backoff policy never kicks in, and the dashboard still shows 0% errors.</p>
-<p>The real gap isn’t tooling; it’s defining what “good” means when the system is a loop instead of a request handler. This post shows how to build SLOs that track <em>outcomes</em>, not just signals.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You need a system that has:
-- A queue or work tracker (Postgres table, Redis Stream, SQS, etc.)
-- At least one recurring or background process (cron job, Lambda, systemd timer)
-- A way to mark work as <em>done</em> or <em>failed</em> (status field, counter, metric label)</p>
-<p>What you’ll build in this post:
-- A set of outcome-based SLOs for a background report generator that runs every 15 minutes and emails 50 PDFs
-- Alerts that fire when the <em>report completion rate</em> drops below 95% over 6 hours
-- A metrics pipeline using Prometheus 2.53 + Grafana Cloud (free tier) that works in São Paulo, Bogotá, and Mexico City
-- A one-file Python runner (<code>report_agent.py</code>) that uses FastAPI 0.111 and SQLAlchemy 2.0 to pull jobs from Postgres 15, render PDFs with WeasyPrint 64.1, and push metrics via OpenTelemetry 1.30</p>
-<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<p>Run this on a VM or container in AWS us-east-1 (closest region to all three client timezones). Use Python 3.11 and the following versions:</p>
-<pre><code class="language-bash">python -m venv .venv
-source .venv/bin/activate
-pip install fastapi[all]==0.111 sqlalchemy==2.0.25 opentelemetry-api==1.30.0 opentelemetry-sdk==1.30.0 opentelemetry-exporter-otlp==1.30.0 prometheus-client==0.9.0 weasyprint==64.1 psycopg2-binary==2.9.10
-</code></pre>
-<p>Create a Postgres 15 instance in RDS or on a local Docker container:</p>
-<pre><code class="language-bash">docker run -d --name pg15 -p 5432:5432 -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=reports 
-  postgres:15-alpine
-</code></pre>
-<p>Initialize the jobs table:</p>
+                <h2 id="why-request-shaped-slos-fail-on-loop-shaped-systems">Why request-shaped SLOs fail on loop-shaped systems</h2>
+<p>A background report generator, an async approval flow, a retry-driven sync job: none of these are request handlers. They are loops that pick up work, persist state, retry, and eventually either finish or get stuck. The standard SLO pair — p99 latency and 5xx rate — measures the wrong thing for them.</p>
+<p>The reason is structural. A loop that is stuck still returns 200 OK from whatever endpoint triggers it. A worker that has crammed ten thousand jobs into its queue because the backoff policy never engaged still reports zero errors. A renderer that leaks memory and slows to a crawl still completes some fraction of its work, so the latency histogram barely moves. In each case the signals look healthy while the system delivers nothing.</p>
+<p>The gap is not tooling. Prometheus, OpenTelemetry, and Grafana all handle counters and histograms fine. The gap is the definition of "good" when the unit of work is a job that takes minutes and can silently fail. This article builds SLOs that track outcomes — jobs that actually reached a terminal success state — rather than the signals emitted along the way.</p>
+<h2 id="what-you-need-before-starting">What you need before starting</h2>
+<p>The approach assumes a system with three properties:</p>
+<ul>
+<li>A durable work tracker: a Postgres table, a Redis Stream, an SQS queue, or anything else that records individual units of work and their state.</li>
+<li>At least one recurring or background process that consumes from it: a cron job, a systemd timer, a container worker, a scheduled function.</li>
+<li>A way to mark a unit of work as terminally done or failed — a status column, a counter, a metric label.</li>
+</ul>
+<p>If any of those is missing, add it first. Outcome SLOs are impossible without a terminal state, because the whole point is to count completions against attempts.</p>
+<p>The worked example throughout is a report generator: a scheduled process that picks queued report jobs, renders a document, delivers it, and records the result. The same structure applies to invoice approvals, nightly syncs, and message delivery.</p>
+<h2 id="model-the-job-lifecycle-explicitly">Model the job lifecycle explicitly</h2>
+<p>Before writing any metric, decide what states a job can occupy and which of them count as success. A minimal schema:</p>
 <pre><code class="language-sql">CREATE TABLE reports (
   id BIGSERIAL PRIMARY KEY,
   status TEXT NOT NULL CHECK (status IN ('queued','in_progress','done','failed')),
@@ -301,334 +290,189 @@ pip install fastapi[all]==0.111 sqlalchemy==2.0.25 opentelemetry-api==1.30.0 ope
   started_at TIMESTAMPTZ,
   finished_at TIMESTAMPTZ,
   attempts INT NOT NULL DEFAULT 0,
+  max_queue_age_minutes INT NOT NULL DEFAULT 30,
   report_name TEXT NOT NULL
 );
 
 CREATE INDEX idx_reports_status_queued_at ON reports(status, queued_at);
 </code></pre>
-<p>Gotcha: the index above keeps <code>SELECT * FROM reports WHERE status = 'queued' ORDER BY queued_at</code> fast, but on a t3.small Postgres instance it still adds ~8 ms to every job pickup query. If you’re running 1,000 jobs/minute, that’s 8 extra ms per job—13 minutes of cumulative CPU time per day. Drop the index if your queue depth never exceeds 100.</p>
-<p>Create a Grafana Cloud workspace (free tier) and copy the Prometheus remote-write endpoint. Add this to your Python code:</p>
-<pre><code class="language-python">from prometheus_client import start_http_server
-start_http_server(8000)
-</code></pre>
-<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<p>Paste the agent into <code>report_agent.py</code>. The key is to define two metrics:
-- <code>report_jobs_total</code> (counter): increments when a job finishes, labelled by status
-- <code>report_job_duration_seconds</code> (histogram): tracks how long a job runs</p>
-<pre><code class="language-python">from fastapi import FastAPI
-from sqlalchemy import create_engine, text
-from opentelemetry import trace
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
-from prometheus_client import Counter, Histogram
+<p>Two design choices matter here.</p>
+<p>First, <code>failed</code> is a real terminal state, not an absence of <code>done</code>. If the only way a job leaves the queue is by succeeding, then a crashed worker leaves rows in <code>in_progress</code> forever and the completion rate silently drifts upward because the denominator never grows. Explicit failure keeps the denominator honest.</p>
+<p>Second, <code>max_queue_age_minutes</code> is per-row rather than global. Different report types can legitimately have different deadlines, and encoding the deadline next to the job means the reaper query needs no join and no configuration lookup.</p>
+<p>The index on <code>(status, queued_at)</code> supports the pickup query <code>WHERE status='queued' ORDER BY queued_at LIMIT 1</code>. Whether to keep it is a real tradeoff: every index adds write cost to inserts and updates. For a queue that never exceeds a few hundred rows, a sequential scan is faster than the index lookup. For a queue that routinely holds thousands, the index pays for itself. Measure it rather than guessing: run <code>EXPLAIN (ANALYZE, BUFFERS)</code> on the pickup query with the index present and absent, at realistic queue depth, and compare the actual execution time.</p>
+<h2 id="pick-up-work-safely">Pick up work safely</h2>
+<p>The pickup step is where most silent-failure bugs originate. The correct pattern is a single atomic statement that claims one row and marks it in progress, so two workers cannot claim the same job:</p>
+<pre><code class="language-python">from sqlalchemy import create_engine, text
 
-app = FastAPI()
-
-# Metrics
-report_jobs_total = Counter(
-    'report_jobs_total',
-    'Count of report jobs by status',
-    ['status']
-)
-report_job_duration = Histogram(
-    'report_job_duration_seconds',
-    'Duration of report jobs in seconds',
-    buckets=[1.0, 3.0, 10.0, 30.0, 60.0, 120.0]
-)
-
-# DB
 engine = create_engine('postgresql://postgres:pass@localhost:5432/reports')
 
-@app.on_event('startup')
-def init_tracer():
-    provider = TracerProvider()
-    processor = BatchSpanProcessor(OTLPSpanExporter(endpoint='https://otlp.nr-data.net:4317',
-                                                   headers=('api-key', 'YOUR_NEW_RELIC_KEY')))
-    provider.add_span_processor(processor)
-    trace.set_tracer_provider(provider)
+def claim_next_job(conn):
+    return conn.execute(text(
+        &quot;&quot;&quot;
+        UPDATE reports
+        SET status='in_progress', started_at=now(), attempts=attempts+1
+        WHERE id = (
+            SELECT id FROM reports
+            WHERE status='queued'
+            ORDER BY queued_at ASC
+            FOR UPDATE SKIP LOCKED
+            LIMIT 1
+        )
+        RETURNING id, report_name, attempts
+        &quot;&quot;&quot;
+    )).fetchone()
+</code></pre>
+<p><code>FOR UPDATE SKIP LOCKED</code> is the important part. Without <code>SKIP LOCKED</code>, concurrent workers serialize on the same row and the second worker blocks. Without <code>FOR UPDATE</code>, two workers can both read the same <code>queued</code> row before either writes, and the job runs twice.</p>
+<p>Note what this does <em>not</em> do: it does not guarantee the job finishes. A worker that claims a job and then dies leaves the row in <code>in_progress</code>. That is expected — the reaper described below handles it.</p>
+<h2 id="define-the-metric-as-a-completion-ratio">Define the metric as a completion ratio</h2>
+<p>Two metric families carry the SLO:</p>
+<pre><code class="language-python">from prometheus_client import Counter, Histogram
 
-@app.get('/run')
-async def run_report():
-    tracer = trace.get_tracer('report_agent')
-    with tracer.start_as_current_span('run_report') as span:
-        # 1) Pick up next queued job
-        with engine.connect() as conn:
-            job = conn.execute(text(
-                &quot;&quot;&quot;
-                UPDATE reports 
-                SET status='in_progress', started_at=now(), attempts=attempts+1
-                WHERE id = (
-                    SELECT id FROM reports 
-                    WHERE status='queued' 
-                    ORDER BY queued_at ASC 
-                    FOR UPDATE SKIP LOCKED 
-                    LIMIT 1
-                ) 
-                RETURNING id, report_name
-                &quot;&quot;&quot;
-            )).fetchone()
+report_jobs_total = Counter(
+    'report_jobs_total',
+    'Count of report jobs by terminal status',
+    ['status']
+)
 
-            if not job:
-                span.set_attribute('report.skipped', 'no_queued_jobs')
-                return {'status': 'no_work'}
+report_job_duration_seconds = Histogram(
+    'report_job_duration_seconds',
+    'Duration of report jobs in seconds',
+    buckets=[1.0, 3.0, 10.0, 30.0, 60.0, 120.0, 300.0]
+)
+</code></pre>
+<p>The counter is labelled by <em>terminal</em> status only — <code>done</code> or <code>failed</code>. Do not increment it on <code>in_progress</code>. The histogram is secondary: it answers "how slow is the slow path," not "did the work happen."</p>
+<p>The SLO is the fraction of jobs that reach <code>done</code> within their deadline. In PromQL, over a six-hour window:</p>
+<pre><code class="language-promql">(
+  sum by (report_name) (increase(report_jobs_total{status=&quot;done&quot;}[6h]))
+  /
+  sum by (report_name) (increase(report_jobs_total[6h]))
+) * 100
+</code></pre>
+<p>Use <code>increase()</code> rather than <code>rate()</code> here. <code>rate()</code> returns a per-second value, which is fine for ratios but awkward when you want to reason about counts, and it silently extrapolates at window edges in ways that surprise people reading the dashboard. <code>increase()</code> gives the count of events in the window, which is what the SLO language ("95% of jobs") actually refers to.</p>
+<p>A subtlety: this ratio counts <em>terminal events</em>, not jobs. A job that fails, is retried, and then succeeds contributes one <code>failed</code> and one <code>done</code>. That is usually the right behavior — you want to know what fraction of attempts succeed — but if you want per-job success, you need a separate gauge that tracks the current state of each job, or you need to emit the terminal event only once per job ID. Decide which question you are answering before you build the alert.</p>
+<h2 id="choose-the-window-from-the-work-cycle">Choose the window from the work cycle</h2>
+<p>The window must be long enough to contain a full cycle of the work, plus slack for the slowest legitimate path.</p>
+<p>For a generator that runs every 15 minutes, a 6-hour window contains 24 cycles. That is enough that a single bad cycle does not trip the alert, but short enough that a sustained problem surfaces within the hour. For an hourly job, a 24-hour window is the natural choice. For a daily job, 7 days.</p>
+<p>The failure mode to avoid is a window shorter than the cycle. With a 1-hour window on a job that runs hourly, the ratio oscillates between 0 and 100 as each cycle lands, and the alert fires on every cycle boundary.</p>
+<p>The second failure mode is a window so long that detection is useless. A 30-day window on a 15-minute job will not move measurably until the problem has persisted for days.</p>
+<h2 id="handle-the-failure-paths-explicitly">Handle the failure paths explicitly</h2>
+<p>Three failure paths account for most silent SLO drift.</p>
+<p><strong>The process dies mid-job.</strong> The row stays <code>in_progress</code> and no counter is incremented. The completion ratio does not drop, because the denominator did not grow either. Fix this with a reaper that fails stale in-progress rows:</p>
+<pre><code class="language-sql">UPDATE reports
+SET status='failed', finished_at=now()
+WHERE status='in_progress'
+  AND started_at &lt; now() - interval '2 hours';
+</code></pre>
+<p><strong>The job never gets picked up.</strong> The row sits <code>queued</code> past its deadline. Fix with a queue-age reaper:</p>
+<pre><code class="language-sql">UPDATE reports
+SET status='failed', finished_at=now()
+WHERE status='queued'
+  AND queued_at &lt; now() - (max_queue_age_minutes || ' minutes')::interval;
+</code></pre>
+<p>Run both reapers on a schedule shorter than the alert window — every 10 minutes is typical. Each reaper should also increment <code>report_jobs_total{status="failed"}</code> for the rows it flips, otherwise the metric and the database disagree and the dashboard is lying.</p>
+<p><strong>The exception path skips the metric.</strong> This is the most common bug. Wrap the work so that every exit path increments exactly one counter:</p>
+<pre><code class="language-python">import time
 
-            job_id, name = job
-            span.set_attribute('report.job_id', job_id)
-            span.set_attribute('report.name', name)
-
-        # 2) Render PDF (WeasyPrint)
-        import time
-        start = time.time()
-        # Simulate 1-3 seconds of CPU-bound work
-        import subprocess
-        subprocess.run(['weasyprint', '--version'])  # quick smoke check
-        # Actual render omitted for brevity; assume 2.3 s median
-        duration = time.time() - start
-
-        # 3) Mark as done
-        with engine.connect() as conn:
+def run_job(conn, job_id, report_name):
+    start = time.time()
+    try:
+        render_report(report_name)
+        with conn.begin():
             conn.execute(text(
                 &quot;UPDATE reports SET status='done', finished_at=now() WHERE id=:id&quot;
             ), {'id': job_id})
-            conn.commit()
-
         report_jobs_total.labels(status='done').inc()
-        report_job_duration.observe(duration)
-        span.set_attribute('report.duration', duration)
-
-        return {'status': 'done', 'job_id': job_id}
+    except Exception:
+        with conn.begin():
+            conn.execute(text(
+                &quot;UPDATE reports SET status='failed', finished_at=now() WHERE id=:id&quot;
+            ), {'id': job_id})
+        report_jobs_total.labels(status='failed').inc()
+        raise
+    finally:
+        report_job_duration_seconds.observe(time.time() - start)
 </code></pre>
-<p>The SLO we care about is <em>completion rate</em>: the fraction of jobs that reach <code>status='done'</code> within 30 minutes of their <code>queued_at</code>. Build a PromQL query:</p>
-<pre><code class="language-promql">(
-  sum by (report_name) (rate(report_jobs_total{status=&quot;done&quot;}[6h]))
-  /
-  sum by (report_name) (rate(report_jobs_total[6h]))
-) * 100
+<p>The <code>finally</code> block matters: duration is recorded whether the job succeeded or failed, so the histogram reflects reality rather than only the happy path.</p>
+<h2 id="a-worked-example-diagnosing-a-stuck-loop">A worked example: diagnosing a stuck loop</h2>
+<p>Suppose the completion ratio drops from 99% to 91% over six hours. The latency histogram is flat. Where do you look?</p>
+<p>Step 1: split the ratio by failure mode. Query <code>increase(report_jobs_total{status="failed"}[6h])</code> and compare it to the reaper counts. If the reaper is producing most of the failures, the problem is throughput — jobs are queued but not being claimed. If the exception path is producing them, the problem is in the work itself.</p>
+<p>Step 2: if it is throughput, check whether workers are alive. A worker that has exited cleanly leaves <code>in_progress</code> rows that the reaper eventually fails; a worker that is alive but slow leaves rows <code>queued</code>. The distinction is visible in the timestamps: <code>started_at IS NULL</code> for queued, <code>started_at</code> set but stale for in-progress.</p>
+<p>Step 3: if it is the work, look at the duration histogram's tail. A shift in the 60–300 second bucket with no change in the lower buckets points at a slow dependency rather than a slow renderer. A shift in every bucket points at the host.</p>
+<p>Step 4: check attempt counts. <code>SELECT attempts, count(*) FROM reports WHERE status='failed' GROUP BY attempts</code> distinguishes a transient dependency outage (many rows at <code>attempts=1..3</code>) from a permanently broken job (many rows at the retry ceiling).</p>
+<p>This sequence is the payoff of the outcome SLO: the ratio tells you <em>that</em> something is wrong, and the per-status breakdown tells you <em>where</em> to look. The latency histogram alone would have shown nothing.</p>
+<h2 id="alert-on-sustained-drops-not-spikes">Alert on sustained drops, not spikes</h2>
+<p>A single failed cycle is not an incident. Alert on the ratio staying below threshold for longer than one cycle:</p>
+<pre><code class="language-yaml">groups:
+  - name: report-slo
+    rules:
+      - alert: ReportCompletionSLOViolation
+        expr: |
+          (
+            sum by (report_name) (increase(report_jobs_total{status=&quot;done&quot;}[6h]))
+            /
+            sum by (report_name) (increase(report_jobs_total[6h]))
+          ) * 100 &lt; 95
+        for: 30m
+        labels:
+          severity: page
+        annotations:
+          summary: &quot;Completion rate below 95% for {{ $labels.report_name }}&quot;
 </code></pre>
-<p>Set the SLO to 95% over 6 hours. That window is long enough to smooth timezone gaps—when your cron runs at 03:00 UTC (22:00 Bogotá, 23:00 Mexico City, 00:00 São Paulo), the 6-hour window still captures the morning rush.</p>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>Common trap: the job starts, WeasyPrint crashes after 25 seconds, but the agent never increments <code>report_jobs_total{status="failed"}</code> because the Python process exits. The metric is missing, so the SLO never drops—even though nothing is delivered.</p>
-<p>Fix it by wrapping the whole job in a try/except and explicitly marking failure:</p>
-<pre><code class="language-python">try:
-    # ...pdf render...
-    report_jobs_total.labels(status='done').inc()
-except Exception as e:
-    with engine.connect() as conn:
-        conn.execute(text(
-            &quot;UPDATE reports SET status='failed', finished_at=now() WHERE id=:id&quot;
-        ), {'id': job_id})
-        conn.commit()
-    report_jobs_total.labels(status='failed').inc()
-    raise
+<p>The <code>for: 30m</code> clause is what separates this from a latency alert. It requires the condition to hold continuously, which filters out the noise of a single slow cycle.</p>
+<p>Add a second, lower-severity rule for the reaper itself: if the reaper has not run in the last 20 minutes, the failure counts are stale and every other alert is unreliable.</p>
+<h2 id="testing-the-pipeline">Testing the pipeline</h2>
+<p>Two layers of testing are worth the effort.</p>
+<p>Unit-level: verify that each exit path increments exactly one counter. The metric objects expose their current value, so a test can assert on it directly:</p>
+<pre><code class="language-python">def test_failed_job_increments_failure_counter(db_session, monkeypatch):
+    monkeypatch.setattr('report_agent.render_report', lambda name: (_ for _ in ()).throw(RuntimeError('boom')))
+    seed_job(db_session, 'test.pdf')
+    before = report_jobs_total.labels(status='failed')._value.get()
+    with pytest.raises(RuntimeError):
+        run_job(db_session, 1, 'test.pdf')
+    after = report_jobs_total.labels(status='failed')._value.get()
+    assert after == before + 1
 </code></pre>
-<p>Another trap: clocks drift. If a job sits in <code>queued</code> for 40 minutes because the cron lambda was throttled, the SLO will count it as <em>late</em>, not <em>failed</em>. Add a <code>max_queue_age</code> column and a background worker that flips stale jobs to <code>failed</code>:</p>
-<pre><code class="language-sql">ALTER TABLE reports ADD COLUMN max_queue_age_minutes INT DEFAULT 30;
-
--- cron job every 10 minutes
-UPDATE reports SET status='failed', finished_at=now()
-WHERE status='queued' 
-  AND queued_at &lt; (now() - (max_queue_age_minutes || ' minutes')::interval);
-</code></pre>
-<p>On a t3.micro this update touches &lt;50 rows, so it runs in 12 ms and adds 0.35 cents/day to the AWS bill.</p>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<p>Add unit tests with pytest 7.4:</p>
-<pre><code class="language-python"># test_agent.py
-import pytest
-from fastapi.testclient import TestClient
-from report_agent import app, report_jobs_total
-
-client = TestClient(app)
-
-@pytest.fixture(autouse=True)
-def reset_metrics():
-    report_jobs_total.labels(status='done')._value.set(0)
-    report_jobs_total.labels(status='failed')._value.set(0)
-
-def test_run_report_success(db_session):
-    # seed job
-    db_session.execute(
-        &quot;INSERT INTO reports (status, report_name) VALUES ('queued', 'test.pdf')&quot;
-    )
-    db_session.commit()
-
-    resp = client.get('/run')
-    assert resp.json()['status'] == 'done'
-    assert report_jobs_total.labels(status='done')._value.get() == 1
-    assert report_jobs_total.labels(status='failed')._value.get() == 0
-</code></pre>
-<p>For end-to-end checks, run a synthetic cron every 15 minutes in your own account (not the client’s). Use GitHub Actions with a matrix of three jobs: <code>run_in_bogota</code>, <code>run_in_mexico_city</code>, <code>run_in_sao_paulo</code>. Each job posts a fake job to the same Postgres instance and waits 5 minutes for the status to flip to <code>done</code>. If &gt;5% fail, the workflow fails and pages you via Slack.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>After two weeks in production:
-- Completion rate: 97.6% (target 95%)
-- P99 job duration: 3.2 s (WeasyPrint 64.1 on c6g.large)
-- Cost: $0.14/day for the agent + Postgres, $0.08/day for synthetic cron checks
-- Alerts fired twice: once when WeasyPrint 64.1 had a memory leak on one node, once when the RDS instance ran out of burst credits for 8 minutes.</p>
-<p>The latency histogram never moved during the leak—the agent kept returning 200 OK while the real work piled up. The completion-rate SLO caught it within 15 minutes.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<h3 id="how-do-i-set-the-slo-window-when-my-agent-runs-hourly">How do I set the SLO window when my agent runs hourly?</h3>
-<p>Use a rolling window that matches your cycle: 24 hours for hourly agents, 7 days for daily agents. PromQL becomes:</p>
-<pre><code class="language-promql">(
-  sum by (report_name) (rate(report_jobs_total{status=&quot;done&quot;}[24h]))
-  /
-  sum by (report_name) (rate(report_jobs_total[24h]))
-) * 100 &gt;= 99
-</code></pre>
-<h3 id="what-if-my-agent-is-a-lambda-that-times-out-at-15-minutes">What if my agent is a Lambda that times out at 15 minutes?</h3>
-<p>Split the job into two Lambdas: <code>generate_pdf</code> (10 min timeout) and <code>email_pdf</code> (1 min timeout). Store intermediate state in S3 and mark the job as <em>in_progress</em> until <code>email_pdf</code> finishes. The SLO counts <code>done</code> only after the email step—so a stuck emailer still counts as failure.</p>
-<h3 id="can-i-use-this-for-a-chatbot-that-retries-failed-messages">Can I use this for a chatbot that retries failed messages?</h3>
-<p>Yes—replace the PDF count with a message count. The SLO becomes “99% of user messages get a final delivery status within 5 minutes.” Use a Prometheus metric <code>chat_messages_delivered_total</code> with labels <code>{status="success"}</code> and <code>{status="failed"}</code>.</p>
-<h3 id="how-do-i-alert-only-on-sustained-drops-not-spikes">How do I alert only on sustained drops, not spikes?</h3>
-<p>Use Grafana’s alerting rule with <code>for: 15m</code> in the YAML:</p>
-<pre><code class="language-yaml">- alert: ReportCompletionSLOViolation
-  expr: report_completion_rate &lt; 95
-  for: 15m
-  labels:
-    severity: page
-  annotations:
-    summary: &quot;Report completion rate below 95% for 15 minutes&quot;
-</code></pre>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>Run this command in your terminal now:</p>
-<pre><code class="language-bash">grep -R &quot;report_jobs_total&quot; . --include=&quot;*.py&quot; | wc -l
-</code></pre>
-<p>If the count is zero, add the two Counter lines from Step 2 to your agent today. That single change turns your background process from an unmeasured loop into an outcome-tracked service—before your next deploy.</p>
-<hr />
-<h3 id="advanced-edge-cases-i-personally-encountered">Advanced edge cases I personally encountered</h3>
-<p><strong>1. The “Silent Crash” in a Kubernetes-free budget</strong>
-The agent ran fine for three weeks until WeasyPrint 64.1’s memory leak pushed the VM into swap. The process didn’t crash—it just got <em>slow</em>. The Prometheus histogram still showed sub-second p99s because the metrics exporter was in the same process. The only symptom was a spike in <code>system_cpu_seconds_total</code> and an elevated <code>report_job_duration_seconds</code> bucket at 60+ seconds. The fix: split the metrics exporter into a separate <code>node_exporter</code> process and set <code>prometheus-node-exporter</code> to scrape every 15 seconds. The agent’s own process now stays under 200 MB RAM. The cost of the exporter? $0.005/day.</p>
-<p><strong>2. The “Timezone-Split Queue” in Colombia</strong>
-For a Bogotá-based client, the cron job ran at 02:00 local time (07:00 UTC). During daylight saving time changes, the job would either run twice or not at all because the systemd timer’s <code>OnCalendar</code> directive didn’t account for the 1-hour shift. The SLO window of 6 hours caught the anomaly, but the alert fired at 08:00 UTC—midnight in Bogotá—waking me up unnecessarily. The fix: use <code>OnCalendar=02:00</code> <em>and</em> <code>Persistent=true</code> in the systemd unit, plus a <code>max_queue_age_minutes=25</code> so jobs from the previous day’s missed run get failed after 25 minutes. The client’s finance team now gets their reports at 02:00 sharp, year-round.</p>
-<p><strong>3. The “Payment Processor Drop” in Brazil</strong>
-A São Paulo client used Pagar.me for credit card refunds, but their API would randomly return 503s for 5–10 minutes during the 11:30 AM local peak. The agent’s retry loop would hammer the endpoint, filling the Postgres queue with 5,000+ jobs. The latency histogram showed nothing—every request returned 200 OK—but the <code>report_jobs_total{status="done"}</code> counter flatlined. The fix: add a circuit breaker using <code>tenacity==8.3.0</code> with a 3-second timeout and 5 retries, plus a fallback to a secondary processor (Mercado Pago) if Pagar.me is down for &gt;2 minutes. The SLO now tracks <em>refund completion rate</em>, not just HTTP 200s. The circuit breaker cost: 12 lines of code and 0.01 ms per job.</p>
-<hr />
-<h3 id="integration-with-real-tools-2026-versions">Integration with real tools (2026 versions)</h3>
-<p><strong>1. New Relic + OpenTelemetry 1.30.0</strong>
-If your client already uses New Relic (common in Brazil), swap the OTLP exporter for the New Relic OTLP endpoint:</p>
-<pre><code class="language-python">from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
-
-exporter = OTLPSpanExporter(
-    endpoint='https://otlp.nr-data.net:4317',
-    headers=(
-        ('api-key', os.getenv('NEW_RELIC_INSERT_KEY')),
-        ('data-format', 'newrelic'),
-        ('data-source', 'agentic-system')
-    )
-)
-</code></pre>
-<p>Key gotcha: New Relic’s free tier only stores traces for 24 hours, so set <code>BatchSpanProcessor</code> to flush every 5 seconds (<code>schedule_delay_millis=5000</code>) or you’ll lose data during spikes.</p>
-<p><strong>2. Datadog + Prometheus Remote Write (Agent 7.53.0)</strong>
-For clients in Mexico or Colombia using Datadog, use the <code>datadog-prometheus</code> sidecar:</p>
-<pre><code class="language-yaml"># docker-compose.yml
-services:
-  prometheus:
-    image: prom/prometheus:v2.53.0
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - &quot;9090:9090&quot;
-
-  dd-agent:
-    image: gcr.io/datadoghq/agent:7.53.0
-    environment:
-      - DD_API_KEY=${DD_API_KEY}
-      - DD_PROMETHEUS_SCRAPE_YML=/etc/prometheus/prometheus.yml
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - /var/run/docker.sock:/var/run/docker.sock
-</code></pre>
-<p>In <code>prometheus.yml</code>:</p>
-<pre><code class="language-yaml">scrape_configs:
-  - job_name: 'report_agent'
-    static_configs:
-      - targets: ['report_agent:8000']
-    scrape_interval: 15s
-</code></pre>
-<p>The Datadog free tier (15-month retention) is generous enough for outcome metrics. The only tradeoff: you pay $10/month for the agent if you exceed 200 metrics.</p>
-<p><strong>3. Grafana Cloud + Tempo 2.3.0 for Trace Sampling</strong>
-If you’re on Grafana Cloud’s free tier, Tempo 2.3.0 now supports <em>outcome-based sampling</em>: drop traces where <code>report_jobs_total{status="done"}</code> was incremented but the job took &gt;120 seconds. Add this to your Python code:</p>
-<pre><code class="language-python">from opentelemetry.sdk.trace.sampling import Sampler, SamplingResult, SamplingDecision
-
-class OutcomeSampler(Sampler):
-    def should_sample(self, context, trace_id, name, attributes, links):
-        status = attributes.get('report.status')
-        duration = attributes.get('report.duration')
-        if status == 'done' and duration and duration &gt; 120:
-            return SamplingResult(SamplingDecision.SAMPLE, attributes)
-        return SamplingResult(SamplingDecision.DROP)
-
-# In your init_tracer:
-provider = TracerProvider(sampler=OutcomeSampler())
-</code></pre>
-<p>This cuts your trace ingestion bill by 40% in high-volume weeks (e.g., month-end reports) without losing critical path data.</p>
-<hr />
-<h3 id="beforeafter-comparison-real-metrics-from-a-2026-deployment">Before/after comparison (real metrics from a 2026 deployment)</h3>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before (Latency/Error SLO)</th>
-<th>After (Outcome SLO)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SLO Definition</td>
-<td>p99 latency &lt; 2s, 5xx rate &lt; 0.1%</td>
-<td>95% of jobs <code>done</code> within 30 min</td>
-</tr>
-<tr>
-<td>Alert Sensitivity</td>
-<td>Fired for spikes in p99</td>
-<td>Only fired for sustained drops</td>
-</tr>
-<tr>
-<td>False Positives</td>
-<td>3/week (throttled API, swap)</td>
-<td>0/week</td>
-</tr>
-<tr>
-<td>Time to Detect</td>
-<td>45 minutes (manual dashboard)</td>
-<td>8 minutes (auto-alert)</td>
-</tr>
-<tr>
-<td>Cost of Observability</td>
-<td>$2.10/day (CloudWatch, Datadog)</td>
-<td>$0.56/day (Prometheus + Grafana Cloud)</td>
-</tr>
-<tr>
-<td>Lines of Code</td>
-<td>120 (latency histograms + alerts)</td>
-<td>180 (added outcome metrics + tests)</td>
-</tr>
-<tr>
-<td>MTTR (Memory Leak)</td>
-<td>12 hours (VM swap + crash)</td>
-<td>15 minutes (circuit breaker)</td>
-</tr>
-<tr>
-<td>Queue Depth at Peak</td>
-<td>5,200 (silent failure)</td>
-<td>42 (explicit failures)</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Key takeaways from the numbers:</strong>
-1. The outcome SLO <em>correlates</em> with business impact (reports delivered), not just technical signals. In the before state, the team would have ignored the WeasyPrint memory leak for hours because the latency histogram looked fine. 2. The cost delta ($1.54/day) comes from dropping Datadog’s APM tier (replaced with OpenTelemetry + Grafana Cloud) and consolidating metrics into a single Prometheus instance. The savings paid for the extra 60 lines of outcome-tracking code in &lt;3 weeks. 3. The queue depth drop from 5,200 to 42 isn’t just a metric—it’s a <em>behavioral change</em>. When jobs explicitly fail (with <code>status='failed'</code>), the team <em>sees</em> the problem and fixes the root cause (e.g., circuit breaker) instead of assuming “it’ll retry.”</p>
+<p>Reaching into <code>_value</code> is a private API and will break across prometheus_client versions; for anything long-lived, expose a small helper that reads the counter through the public <code>collect()</code> interface instead.</p>
+<p>End-to-end: seed a synthetic job on a schedule and assert that it reaches a terminal state within the deadline. Run this from outside the system under test — a separate scheduler, a separate host — so that a failure of the main worker does not also disable the check.</p>
+<h2 id="instrumenting-the-measurement-itself">Instrumenting the measurement itself</h2>
+<p>If you want to claim a completion rate, you need to know the measurement is trustworthy. Three things to instrument:</p>
+<ul>
+<li>Reaper runs: a counter incremented every time each reaper executes, with a timestamp gauge for the last run.</li>
+<li>Counter/DB divergence: a periodic reconciliation query comparing <code>count(*)</code> of terminal rows by status against the counter's increase over the same period. A gap means a code path is skipping the metric.</li>
+<li>Claim latency: the difference between <code>queued_at</code> and <code>started_at</code>, as a histogram. This is the leading indicator — it rises before the completion ratio falls.</li>
+</ul>
+<p>To measure the divergence, run the reconciliation as a scheduled job and expose the absolute difference as a gauge. Alert if it is non-zero for more than one reconciliation period.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before shipping an outcome SLO, confirm:</p>
+<ul>
+<li>Every job has exactly one terminal state, and failure is explicit.</li>
+<li>The completion counter is incremented on every terminal transition, including those made by reapers.</li>
+<li>The reaper runs more often than the alert window.</li>
+<li>The SLO window is at least several times the work cycle.</li>
+<li>The alert uses <code>for:</code> to require sustained violation.</li>
+<li>There is a reconciliation check between the counter and the durable state.</li>
+<li>There is a synthetic end-to-end check running outside the system under test.</li>
+</ul>
+<p>If any of those is missing, the SLO will either miss real incidents or fire on noise. Both outcomes erode trust in the metric, and a metric nobody trusts is worse than no metric.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>What if the work has no natural terminal state?</strong> Then it is not a job and this pattern does not apply. Streaming pipelines and long-lived connections need a different model — usually a freshness or lag metric rather than a completion ratio.</p>
+<p><strong>Should retries count as separate attempts or as one job?</strong> Decide based on the question. "What fraction of attempts succeed" wants attempts. "What fraction of user requests are eventually served" wants jobs. The counter design above supports the first; the second needs a per-job terminal event emitted only once.</p>
+<p><strong>Can this work without Prometheus?</strong> Yes. Any system that can store a counter and evaluate a ratio over a window works. The specific query language changes; the structure does not.</p>
+<p><strong>How do I set the threshold?</strong> Start by measuring the current rate for a week, then set the threshold slightly below the observed floor. Setting an aspirational threshold before you have a baseline produces constant alerts.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one background process you own and answer a single question: for a unit of work in that system, what column or field, read today, tells you whether it succeeded? If the answer is "nothing," add a terminal status field and increment a counter on both the success and failure paths. That change alone converts an unmeasured loop into something you can put an SLO on.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/">Spot evictions: the retry logic that holds up</a></li>
-<li><a href="https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/">Agent flooded our API with bad calls overnight</a></li>
-<li><a href="https://kubaik.github.io/dead-letter-queues-stop-poison-messages/">Dead-letter queues: stop poison messages</a></li>
+<li><a href="https://kubaik.github.io/event-driven-beats-agent-driven-910-times/">Event-driven beats agent-driven 9/10 times</a></li>
+<li><a href="https://kubaik.github.io/postgres-17-buried-redis-s3-cron/">Postgres 17 buried Redis, S3, cron</a></li>
+<li><a href="https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/">Agent followed instructions too literally: the cron job trap</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>
 <li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
 <li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
-<li><a href="https://docs.docker.com/">Docker documentation</a></li>
 <li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
 </ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>

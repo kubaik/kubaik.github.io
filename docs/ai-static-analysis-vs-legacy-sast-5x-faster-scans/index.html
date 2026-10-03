@@ -64,8 +64,8 @@
       "description": "How AI-assisted static analysis compares with rule-based SAST on scan latency, false negatives, cost, and ops, plus how to measure both on your own repos.",
       "datePublished": "2026-06-13T08:40:42+00:00",
       "dateModified": "2026-10-03T12:38:25+00:00",
-      "wordCount": 2614,
-      "timeRequired": "PT13M",
+      "wordCount": 2735,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -261,8 +261,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2614 words
+                        14 min read
+                        &nbsp;·&nbsp; 2735 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -419,6 +419,19 @@ jobs:
 <p>What will not change is the operating cost. A scanner that produces findings nobody triages is worse than no scanner, because it consumes attention and produces a false sense of coverage. Whichever stack you pick, the measurement that matters is the same: of the findings you saw, how many were real, and of the real ones, how many did you see.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your CI configuration and find the security scan job. Answer one question: <strong>can this job fail the build?</strong> Look for <code>continue-on-error: true</code>, <code>|| true</code> on the scanner step, or an aggregation script that always exits zero. If the job cannot fail, you have no gate regardless of which scanner runs inside it. Fix that first, then run one scan on a deliberately vulnerable test file (a hardcoded credential and an obvious injection sink are enough) and confirm the job goes red. That single check tells you more about your current coverage than any tool comparison.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/">Stop false positives in CI scanning now</a></li>
+<li><a href="https://kubaik.github.io/ai-scanners-overlook-real-vulns/">AI scanners overlook real vulns</a></li>
+<li><a href="https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/">Context-aware security gates that cut CI alert noise</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

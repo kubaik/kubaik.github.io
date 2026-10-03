@@ -64,8 +64,8 @@
       "description": "Build a webhook service that counts alert firings per fingerprint and demotes noisy alerts, plus how to measure whether it works.",
       "datePublished": "2026-06-24T15:17:37+00:00",
       "dateModified": "2026-10-03T12:48:47+00:00",
-      "wordCount": 2784,
-      "timeRequired": "PT14M",
+      "wordCount": 2925,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2784 words
+                        15 min read
+                        &nbsp;·&nbsp; 2925 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -582,6 +582,26 @@ sum(rate(alert_triage_alerts_processed_total[1h]))
 <pre><code>count_over_time(ALERTS{severity=&quot;warning&quot;}[24h])
 </code></pre>
 <p>Sort descending. The top entries are your noisiest rules over the last day. For each of the top three, look at the label set and ask whether a single label — a namespace, an environment, a job — distinguishes the noisy instances from the ones you care about. If it does, add that as an exclusion to the rule and stop there. If it does not, that rule is a candidate for the triage layer, and you now have a baseline count to measure against.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">Designing an AI Alert Triage Layer That Reduces Pages</a></li>
+<li><a href="https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/">Designing Alert Triage That Suppresses Noise Safely</a></li>
+<li><a href="https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

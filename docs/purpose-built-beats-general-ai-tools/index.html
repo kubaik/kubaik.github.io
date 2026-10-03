@@ -64,8 +64,8 @@
       "description": "When a general AI platform beats a purpose-built stack, how to choose, and how to measure latency, cost and fallback behaviour yourself.",
       "datePublished": "2026-07-19T13:25:45+00:00",
       "dateModified": "2026-10-03T12:52:48+00:00",
-      "wordCount": 2984,
-      "timeRequired": "PT15M",
+      "wordCount": 3110,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2984 words
+                        16 min read
+                        &nbsp;·&nbsp; 3110 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -456,6 +456,23 @@ Enough to answer, for any bad answer: what was retrieved, which model ran, how m
 <p>The decision hinges on measurement, not on preference: know your routing split, your cost per successful request, your fallback rate, and how long it takes you to diagnose a bad answer. Those four numbers settle the question faster than any feature comparison.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick your most important AI feature and add one log line at the point where retrieval returns no results. Emit a counter or a structured log entry with the query ID and a <code>retrieval_empty</code> flag. Run it for a day. If that counter is nonzero, you have a fallback path you did not know about, and you now have the first number you need to decide whether this feature deserves a stack you control.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/purpose-built-ai-is-a-trap-for-solo-founders/">Purpose-built AI is a trap for solo founders</a></li>
+<li><a href="https://kubaik.github.io/only-boring-stacks-survive-ai-services/">Only boring stacks survive AI services</a></li>
+<li><a href="https://kubaik.github.io/observability-agents-lied-to-us/">Observability agents lied to us</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

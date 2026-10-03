@@ -64,7 +64,7 @@
       "description": "A framework for deciding which AI components to build versus buy, with failure modes, measurement methods, and code for caching and retries.",
       "datePublished": "2026-08-11T13:13:49+00:00",
       "dateModified": "2026-10-03T12:49:32+00:00",
-      "wordCount": 2949,
+      "wordCount": 3070,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -284,7 +284,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2949 words
+                        &nbsp;·&nbsp; 3070 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -529,6 +529,19 @@ For interactive requests, a bounded fixed delay with a hard attempt cap is often
 When you have enough in-domain data that the accuracy gain exceeds the regression on general inputs, and when you have the distribution infrastructure to ship the artifact. If your corpus is small, prompt templates usually capture most of the gain at a fraction of the cost.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Add per-request token logging to your primary AI endpoint. Log prompt tokens, completion tokens, feature tag, and request ID to a table you can query. Without this, every build-versus-buy decision is a guess, and retry storms remain invisible until the invoice arrives. Once the data exists, you can compute your repeat rate, your cache break-even point, and your real cost per feature — which is the only sound basis for deciding what to build.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-errors-hide-in-plain-latency/">AI errors hide in plain latency</a></li>
+<li><a href="https://kubaik.github.io/ai-agents-eat-your-budget-3-ways/">AI agents eat your budget 3 ways</a></li>
+<li><a href="https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/">Self-service AI tooling: where it breaks first</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

@@ -64,8 +64,8 @@
       "description": "How to run postmortems on AI agents: capture prompts and model versions, measure drift and cost per session, and choose between log-based and instrumented pipelines.",
       "datePublished": "2026-06-29T21:20:13+00:00",
       "dateModified": "2026-10-03T12:42:05+00:00",
-      "wordCount": 2254,
-      "timeRequired": "PT11M",
+      "wordCount": 2378,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2254 words
+                        12 min read
+                        &nbsp;·&nbsp; 2378 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -460,6 +460,19 @@ def call_model(client, session_id, request_id, template, variables, model, model
 </ul>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick one agent in production. Query your logs for the last 24 hours and count distinct <code>session_id</code> values and the number of model calls per session. If the distribution has a tail where a small number of sessions account for a disproportionate share of calls, you have found a compute amplification risk before it became an incident. Write down the query, save it, and add the two fields most likely missing from your events: the prompt template hash and the retrieval document IDs.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/">AI agent postmortem: human loop vs blind replay</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/ai-era-promotions-hinge-on-this-one-thing/">AI-era promotions hinge on this one thing</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

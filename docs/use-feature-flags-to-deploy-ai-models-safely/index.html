@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Use feature flags to deploy AI models safely - Kubai Kevin</title>
-        <meta name="description" content="Deploy AI models 80% faster with feature flags — canary splits, instant kill switches, and 5-minute rollbacks in 2026. FastAPI, Flagsmith 3.18, Prometheus 2.48.">
+        <meta name="description" content="Use feature flags to canary, shadow and roll back AI model changes without redeploys, with code, metrics and failure-mode handling.">
         <meta name="keywords" content="FeatureFlags, AiDeployment, FeatureFlagsAi, Feature, RollBackAi, CanaryAi, FeatureFlags2026, AiRollout, Ai, Kubernetes, K8s">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-20T20:49:06.113698">
-        <meta property="article:modified_time" content="2026-10-02T17:40:32.902455+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:58:35.593576+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Use feature flags to deploy AI models safely">
-        <meta property="og:description" content="Deploy AI models 80% faster with feature flags — canary splits, instant kill switches, and 5-minute rollbacks in 2026. FastAPI, Flagsmith 3.18, Prometheus 2.48.">
+        <meta property="og:description" content="Use feature flags to canary, shadow and roll back AI model changes without redeploys, with code, metrics and failure-mode handling.">
         <meta property="og:url" content="https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Use feature flags to deploy AI models safely">
-        <meta name="twitter:description" content="Deploy AI models 80% faster with feature flags — canary splits, instant kill switches, and 5-minute rollbacks in 2026. FastAPI, Flagsmith 3.18, Prometheus 2.48.">
+        <meta name="twitter:description" content="Use feature flags to canary, shadow and roll back AI model changes without redeploys, with code, metrics and failure-mode handling.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/use-feature-flags-to-deploy-ai-models-safely.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/#article",
       "headline": "Use feature flags to deploy AI models safely",
-      "description": "Deploy AI models 80% faster with feature flags — canary splits, instant kill switches, and 5-minute rollbacks in 2026. FastAPI, Flagsmith 3.18, Prometheus 2.48.",
+      "description": "Use feature flags to canary, shadow and roll back AI model changes without redeploys, with code, metrics and failure-mode handling.",
       "datePublished": "2026-06-20T20:49:06+00:00",
-      "dateModified": "2026-10-02T17:40:32+00:00",
-      "wordCount": 2549,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-03T12:58:35+00:00",
+      "wordCount": 2946,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Use feature flags to deploy AI models safely</h1>
                 
-                <p class="post-lead">Deploy AI models 80% faster with feature flags — canary splits, instant kill switches, and 5-minute rollbacks in 2026. FastAPI, Flagsmith 3.18, Prometheus 2.48.</p>
+                <p class="post-lead">Use feature flags to canary, shadow and roll back AI model changes without redeploys, with code, metrics and failure-mode handling.</p>
                 
                 
                 <div class="tags">
@@ -259,67 +259,61 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2549 words
+                        15 min read
+                        &nbsp;·&nbsp; 2946 words
                         
-                        &nbsp;·&nbsp; Updated 2026-10-02
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>The rollout took two weeks because every change to the prompt or model required a full regression suite, a 4-hour staging bake, and a 30-minute maintenance window. The fix was a one-line typo in the prompt template.</p>
-<p>This is the pattern we converged on, with numbers, code, and the edge cases that burned us.</p>
-<p>Feature flags became the backbone of safe AI rollouts because they give you:
-- Instant kill switches for bad model outputs
-- Canary traffic splits without restarting pods
-- Shadow deployments that log but don’t serve live traffic
-- Metric-gated promotions from staging to production</p>
-<p>If you’re shipping AI features today and still using environment variables or hot-reload scripts, you’re one prompt change away from the same outage.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You’ll need:
-- A Kubernetes cluster or a local minikube with 4 vCPUs and 8 GB RAM
-- Docker 24.0.7 or Podman 4.9
-- Node 20 LTS and Python 3.11
-- A flag management system: we’ll use Flagsmith 3.18.0 (open-source, EU-hosted option available)
-- An AI service: a small FastAPI 0.109 endpoint that wraps a quantized 0.5B parameter model (we’ll use Intel’s neural-chat-7b-v3-1 for CPU inference)
-- Prometheus 2.48 and Grafana 10.4 for metrics</p>
-<p>By the end you’ll have:
-1. A flagged AI endpoint behind an Nginx ingress
-2. A canary pipeline that sends 5% of traffic to the new model version
-3. An automated rollback when error rate &gt; 1% in a 5-minute window
-4. A Grafana dashboard that shows flag state and model KPIs side-by-side</p>
-<p>The total line count for the core service and flag wiring is about 280 lines of Python plus 120 lines of HCL for Terraform.</p>
-<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
+                <h2 id="why-model-rollouts-need-a-control-plane-separate-from-deployment">Why model rollouts need a control plane separate from deployment</h2>
+<p>Deploying a model and exposing it to traffic are two different decisions. Most tutorials collapse them into one: build an image, push it, and every user hits the new model the moment the pods become ready. That coupling is what makes AI rollouts expensive. A one-line prompt template change, a tokenizer version bump, or a quantization tweak can shift output quality in ways that only show up under real traffic, and without a control plane the only remedy is another deploy.</p>
+<p>A feature flag layer decouples that. The model container ships to the cluster and sits idle until a flag routes traffic to it. That gives you four capabilities that matter for AI specifically:</p>
+<ul>
+<li>An instant kill switch when output quality degrades, without rebuilding or restarting anything.</li>
+<li>Canary splits by user ID, percentage, or attribute, so a new model sees a controlled slice of traffic.</li>
+<li>Shadow mode, where the new model scores requests and logs results but its output is discarded before the response is returned.</li>
+<li>Metric-gated promotion, where the flag value changes only after latency and error thresholds hold for a defined window.</li>
+</ul>
+<p>The rest of this article builds that layer end to end: a flagged inference endpoint, a canary pipeline, automated rollback, and dashboards that show flag state next to model KPIs.</p>
+<h2 id="prerequisites-and-target-architecture">Prerequisites and target architecture</h2>
+<p>The stack below assumes:</p>
+<ul>
+<li>A Kubernetes cluster, or a local minikube with at least 4 vCPUs and 8 GB RAM.</li>
+<li>Docker or Podman for image builds.</li>
+<li>Node 20 LTS and Python 3.11.</li>
+<li>A flag management system. Any system with an SDK, percentage rollout, and a local evaluation cache works; the examples use an open-source self-hosted flag service with a PostgreSQL backend.</li>
+<li>An inference service. The examples use a FastAPI app wrapping a small CPU-friendly model exported to OpenVINO IR format. The model choice matters less than the flag wiring.</li>
+<li>Prometheus and Grafana for metrics.</li>
+</ul>
+<p>By the end you will have:</p>
 <ol>
-<li>Spin up a local cluster and install the tools.</li>
+<li>A flagged inference endpoint behind an ingress.</li>
+<li>A canary pipeline sending a configurable percentage of traffic to the new model.</li>
+<li>Automated rollback when error rate exceeds a threshold in a rolling window.</li>
+<li>A Grafana dashboard showing flag state and model KPIs together.</li>
 </ol>
-<pre><code class="language-bash"># 1. Install tools
-curl -LO https://dl.k8s.io/release/v1.28.0/bin/linux/amd64/kubectl
+<h2 id="step-1-stand-up-the-flag-service-and-metrics-stack">Step 1 — stand up the flag service and metrics stack</h2>
+<p>Install the base tooling:</p>
+<pre><code class="language-bash">curl -LO https://dl.k8s.io/release/v1.28.0/bin/linux/amd64/kubectl
 chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
 
-# 2. Install minikube with Docker driver
 minikube start --driver=docker --cpus=4 --memory=8192
 
-# 3. Install Helm 3.14.0
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
-# 4. Add Flagsmith Helm chart
-helm repo add flagsmith https://flagsmith.github.io/flagsmith
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
 </code></pre>
-<ol>
-<li>Deploy Flagsmith. We’ll use the open-source edition with a PostgreSQL 15 backend (no SaaS dependency).</li>
-</ol>
-<pre><code class="language-bash"># Create namespace
-kubectl create ns flagsmith
+<p>Deploy PostgreSQL for the flag service, then the flag service itself. The exact chart name and values depend on which flag system you choose; the shape is the same — a database, a web service, and an ingress.</p>
+<pre><code class="language-bash">kubectl create ns flags
 
-# Install PostgreSQL via Bitnami chart
-helm install postgres bitnami/postgresql --namespace flagsmith --version 13.2.21 -f - &lt;&lt;EOF
+helm install postgres bitnami/postgresql --namespace flags -f - &lt;&lt;EOF
 primary:
   persistence:
     size: 20Gi
@@ -330,57 +324,21 @@ primary:
 auth:
   postgresPassword: &quot;$(openssl rand -base64 16)&quot;
 EOF
-
-# Install Flagsmith
-helm install flagsmith flagsmith/flagsmith --namespace flagsmith --version 3.18.0 -f - &lt;&lt;EOF
-flagsmith:
-  env:
-    DATABASE_URL: &quot;postgres://postgres:${POSTGRES_PASSWORD}@postgres-postgresql.flagsmith.svc.cluster.local:5432/flagsmith&quot;
-    DJANGO_SECRET_KEY: &quot;$(openssl rand -base64 32)&quot;
-  service:
-    type: ClusterIP
-    port: 8000
-
-ingress:
-  enabled: true
-  className: nginx
-  hosts:
-    - host: flagsmith.local
-      paths:
-        - path: /
-          pathType: Prefix
-EOF
 </code></pre>
-<p>Wait for pods to be ready:</p>
-<pre><code class="language-bash">timeout 300 bash -c 'until kubectl get pods -n flagsmith -l app.kubernetes.io/name=flagsmith -o jsonpath=&quot;{.items[*].status.containerStatuses[*].ready}&quot; | grep true; do sleep 5; done'
+<p>Once the flag service is reachable, create a project and generate an SDK key for server-side evaluation. Store that key in a Kubernetes secret rather than in the deployment manifest:</p>
+<pre><code class="language-bash">kubectl create secret generic flag-sdk-key \
+  --namespace ai \
+  --from-literal=key=&quot;$FLAG_SDK_KEY&quot;
 </code></pre>
-<ol>
-<li>Expose Flagsmith locally and create an admin token.</li>
-</ol>
-<pre><code class="language-bash">kubectl port-forward svc/flagsmith -n flagsmith 8000:8000 &amp;
-open http://flagsmith.local:8000/admin
+<p>Install Prometheus and Grafana:</p>
+<pre><code class="language-bash">kubectl create ns monitoring
+helm install prometheus prometheus-community/prometheus --namespace monitoring
+helm install grafana grafana/grafana --namespace monitoring
+kubectl port-forward svc/grafana -n monitoring 3000:80 &amp;
 </code></pre>
-<p>Sign in with the default admin (admin/admin) and create a new project called "ai-features". Generate an SDK key for Python.</p>
-<ol>
-<li>Install Prometheus and Grafana.</li>
-</ol>
-<pre><code class="language-bash">helm install prometheus prometheus-community/prometheus --namespace monitoring --version 56.11.0
-helm install grafana grafana/grafana --namespace monitoring --version 7.3.4
-</code></pre>
-<p>Expose Grafana:</p>
-<pre><code class="language-bash">kubectl port-forward svc/grafana -n monitoring 3000:80 &amp;
-open http://localhost:3000
-</code></pre>
-<p>Default credentials: admin/admin. Add the Prometheus data source at <code>http://prometheus-server.monitoring.svc:80</code>.</p>
-<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<p>We’ll build a FastAPI service that:
-- Accepts a user ID and a list of product IDs
-- Calls one of two recommendation models based on a feature flag
-- Logs latency and error rate per flag variant
-- Exposes a /health endpoint for health checks</p>
-<ol>
-<li>Project layout:</li>
-</ol>
+<p>Add the Prometheus data source at <code>http://prometheus-server.monitoring.svc:80</code>. Change the Grafana admin password before exposing the port beyond localhost.</p>
+<h2 id="step-2-build-the-flagged-inference-service">Step 2 — build the flagged inference service</h2>
+<p>Project layout:</p>
 <pre><code>ai-features/
 ├── app/
 │   ├── __init__.py
@@ -390,115 +348,109 @@ open http://localhost:3000
 │   └── metrics.py
 ├── Dockerfile
 ├── requirements.txt
-├── terraform/
-│   └── main.tf
 └── k8s/
     ├── deployment.yaml
-    ├── service.yaml
-    └── ingress.yaml
+    └── service.yaml
 </code></pre>
-<ol>
-<li>Install dependencies.</li>
-</ol>
-<pre><code class="language-bash">cat &gt; requirements.txt &lt;&lt;'EOF'
-fastapi==0.109.0
+<p>Dependencies:</p>
+<pre><code>fastapi==0.109.0
 uvicorn[standard]==0.27.0
-python-dotenv==1.0.0
-flagsmith==3.7.0
 prometheus-client==0.19.0
 numpy==1.26.3
 pydantic==2.6.1
-httpx==0.27.0
-EOF
-
-python -m pip install -r requirements.txt
 </code></pre>
-<ol>
-<li>Create the feature flag helper.</li>
-</ol>
+<p>Install your flag SDK alongside these, pinned to a known version.</p>
+<p>The flag helper is the component that decides which model serves a request. The important design choice is the failure default: if the flag service is unreachable or the flag is missing, return the last known good version rather than raising. A flag outage must not become an inference outage.</p>
 <pre><code class="language-python"># app/flags.py
-from flagsmith import Flagsmith
-from flagsmith.models import FeatureState
 import os
-
-FLAGSMITH_URL = os.getenv(&quot;FLAGSMITH_URL&quot;, &quot;http://flagsmith.flagsmith.svc.cluster.local:8000&quot;)
-FLAGSMITH_KEY = os.getenv(&quot;FLAGSMITH_KEY&quot;)
-
-flagsmith = Flagsmith(environment_key=FLAGSMITH_KEY, api_url=FLAGSMITH_URL)
-
-def get_model_flag(user_id: str) -&gt; str:
-    &quot;&quot;&quot;
-    Returns 'v1' or 'v2' based on the flag state.
-    Defaults to 'v1' if the flag is not evaluated.
-    &quot;&quot;&quot;
-    try:
-        state: FeatureState = flagsmith.get_feature_state(&quot;recommendation_model&quot;)
-        return state.get_value(&quot;v1&quot;) if state.is_enabled else &quot;v1&quot;
-    except Exception:
-        # Fallback on errors to avoid blocking traffic
-        return &quot;v1&quot;
-</code></pre>
-<ol>
-<li>Spin up two CPU-only model servers. We’ll use Intel’s OpenVINO runtime to keep inference latency under 200 ms per request on a 4 vCPU node.</li>
-</ol>
-<pre><code class="language-python"># app/models.py
-from typing import List
-import numpy as np
-from openvino.runtime import Core
 import logging
+from flag_sdk import Client  # replace with your SDK's import
 
 logger = logging.getLogger(__name__)
 
-class ModelV1:
-    def __init__(self):
+FLAG_URL = os.getenv(&quot;FLAG_URL&quot;, &quot;http://flags.flags.svc.cluster.local:8000&quot;)
+FLAG_KEY = os.getenv(&quot;FLAG_KEY&quot;)
+
+client = Client(environment_key=FLAG_KEY, api_url=FLAG_URL)
+
+DEFAULT_VERSION = &quot;v1&quot;
+
+def get_model_flag(user_id: str) -&gt; str:
+    &quot;&quot;&quot;
+    Returns 'v1' or 'v2'. Falls back to DEFAULT_VERSION on any error
+    so that a flag-service outage never blocks inference.
+    &quot;&quot;&quot;
+    try:
+        state = client.get_feature_state(&quot;recommendation_model&quot;)
+        if not state.is_enabled:
+            return DEFAULT_VERSION
+        return state.get_value(DEFAULT_VERSION)
+    except Exception as exc:
+        logger.warning(&quot;flag evaluation failed, defaulting to %s: %s&quot;,
+                       DEFAULT_VERSION, exc)
+        return DEFAULT_VERSION
+</code></pre>
+<p>Two details worth noting. First, <code>get_value</code> takes a default argument, so a flag that exists but has no value set returns the default rather than <code>None</code>. Second, catching broad exceptions here is deliberate: a slow or malformed flag response should degrade to the default, not surface as a 500 to the caller.</p>
+<p>The model wrapper loads the compiled model once at process start, not per request:</p>
+<pre><code class="language-python"># app/models.py
+from typing import List
+import logging
+import numpy as np
+from openvino.runtime import Core
+
+logger = logging.getLogger(__name__)
+
+class Model:
+    def __init__(self, model_path: str):
         core = Core()
-        model_path = &quot;/models/v1/ir_model.xml&quot;
         self.compiled_model = core.compile_model(model_path, &quot;CPU&quot;)
 
-    def predict(self, user_embedding: np.ndarray, product_embeddings: np.ndarray) -&gt; List[float]:
+    def predict(self, user_embedding: np.ndarray,
+                product_embeddings: np.ndarray) -&gt; List[float]:
         try:
-            input_tensor = self.compiled_model.input(0)
             output_tensor = self.compiled_model.output(0)
-            result = self.compiled_model([user_embedding, product_embeddings])[output_tensor]
+            result = self.compiled_model(
+                [user_embedding, product_embeddings]
+            )[output_tensor]
             return result.tolist()
-        except Exception as e:
-            logger.error(&quot;ModelV1 inference failed: %s&quot;, e)
+        except Exception as exc:
+            logger.error(&quot;inference failed: %s&quot;, exc)
             raise
 </code></pre>
-<ol>
-<li>Wire FastAPI with flag evaluation and metrics.</li>
-</ol>
+<p>The FastAPI layer wires flag evaluation, inference, and metrics together:</p>
 <pre><code class="language-python"># app/main.py
+import time
+from typing import List
+
+import numpy as np
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from .flags import get_model_flag
-from .models import ModelV1, ModelV2
 from prometheus_client import Counter, Histogram, Gauge
-import time
-import os
 
-app = FastAPI(title=&quot;AI Recommendation Service&quot;)
+from .flags import get_model_flag
+from .models import Model
 
-# Metrics
+app = FastAPI(title=&quot;Flagged Inference Service&quot;)
+
 REQUEST_COUNT = Counter(
-    &quot;ai_recommendation_requests_total&quot;,
-    &quot;Total AI recommendation requests&quot;,
-    [&quot;model_version&quot;, &quot;http_status&quot;]
+    &quot;ai_requests_total&quot;,
+    &quot;Total inference requests&quot;,
+    [&quot;model_version&quot;, &quot;http_status&quot;],
 )
 REQUEST_LATENCY = Histogram(
-    &quot;ai_recommendation_latency_seconds&quot;,
-    &quot;AI recommendation latency in seconds&quot;,
-    [&quot;model_version&quot;]
+    &quot;ai_request_latency_seconds&quot;,
+    &quot;Inference latency in seconds&quot;,
+    [&quot;model_version&quot;],
 )
-ERROR_RATE = Gauge(
-    &quot;ai_recommendation_error_rate&quot;,
-    &quot;Current error rate per model version&quot;,
-    [&quot;model_version&quot;]
+FLAG_EVAL_ERRORS = Counter(
+    &quot;ai_flag_eval_errors_total&quot;,
+    &quot;Flag evaluations that fell back to the default&quot;,
 )
 
-# Models (loaded once at startup)
-model_v1 = ModelV1()
-model_v2 = ModelV2()
+models = {
+    &quot;v1&quot;: Model(&quot;/models/v1/ir_model.xml&quot;),
+    &quot;v2&quot;: Model(&quot;/models/v2/ir_model.xml&quot;),
+}
 
 class RecommendationRequest(BaseModel):
     user_id: str
@@ -506,368 +458,246 @@ class RecommendationRequest(BaseModel):
 
 @app.post(&quot;/recommend&quot;)
 async def recommend(payload: RecommendationRequest):
-    model_version = get_model_flag(payload.user_id)
-    start = time.time()
+    version = get_model_flag(payload.user_id)
+    start = time.perf_counter()
 
     try:
-        if model_version == &quot;v1&quot;:
-            scores = model_v1.predict(np.random.rand(256), np.random.rand(len(payload.product_ids), 256))  # mock embeddings
-        elif model_version == &quot;v2&quot;:
-            scores = model_v2.predict(np.random.rand(256), np.random.rand(len(payload.product_ids), 256))
-        else:
-            raise ValueError(&quot;Unknown model version&quot;)
+        model = models.get(version)
+        if model is None:
+            raise ValueError(f&quot;unknown model version: {version}&quot;)
 
-        latency = time.time() - start
-        REQUEST_COUNT.labels(model_version=model_version, http_status=&quot;200&quot;).inc()
-        REQUEST_LATENCY.labels(model_version=model_version).observe(latency)
-        return {&quot;scores&quot;: scores}
+        scores = model.predict(
+            np.random.rand(256),
+            np.random.rand(len(payload.product_ids), 256),
+        )
+        REQUEST_COUNT.labels(model_version=version, http_status=&quot;200&quot;).inc()
+        REQUEST_LATENCY.labels(model_version=version).observe(
+            time.perf_counter() - start
+        )
+        return {&quot;scores&quot;: scores, &quot;model_version&quot;: version}
 
-    except Exception as e:
-        REQUEST_COUNT.labels(model_version=model_version, http_status=&quot;500&quot;).inc()
-        ERROR_RATE.labels(model_version=model_version).inc()
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception as exc:
+        REQUEST_COUNT.labels(model_version=version, http_status=&quot;500&quot;).inc()
+        raise HTTPException(status_code=500, detail=str(exc))
 
 @app.get(&quot;/health&quot;)
 async def health():
     return {&quot;status&quot;: &quot;ok&quot;}
 </code></pre>
-<ol>
-<li>Build and publish the Docker image.</li>
-</ol>
-<pre><code class="language-bash">cat &gt; Dockerfile &lt;&lt;'EOF'
-FROM python:3.11-slim
+<p>The <code>model_version</code> label on every metric is what makes per-variant dashboards possible. Without it, you can see that latency rose but not which model caused it.</p>
+<p>Dockerfile:</p>
+<pre><code class="language-dockerfile">FROM python:3.11-slim
 WORKDIR /app
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-RUN pip install openvino==2024.0.0
 EXPOSE 8000
 CMD [&quot;uvicorn&quot;, &quot;app.main:app&quot;, &quot;--host&quot;, &quot;0.0.0.0&quot;, &quot;--port&quot;, &quot;8000&quot;]
-EOF
-
-docker build -t ai-features:1.0.0 .
-kind load docker-image ai-features:1.0.0  # if using kind; or push to ECR/GCR
 </code></pre>
-<ol>
-<li>Terraform to deploy the service into Kubernetes.</li>
-</ol>
-<pre><code class="language-hcl"># terraform/main.tf
-terraform {
-  required_version = &quot;&gt;= 1.6&quot;
-  required_providers {
-    kubernetes = {
-      source  = &quot;hashicorp/kubernetes&quot;
-      version = &quot;2.27.0&quot;
-    }
-    helm = {
-      source  = &quot;hashicorp/helm&quot;
-      version = &quot;2.13.0&quot;
-    }
-  }
-}
-
-provider &quot;kubernetes&quot; {
-  config_path = &quot;~/.kube/config&quot;
-}
-
-provider &quot;helm&quot; {
-  kubernetes {
-    config_path = &quot;~/.kube/config&quot;
-  }
-}
-
-resource &quot;kubernetes_namespace&quot; &quot;ai&quot; {
-  metadata { name = &quot;ai&quot; }
-}
-
-resource &quot;kubernetes_deployment&quot; &quot;ai&quot; {
-  metadata {
-    name      = &quot;ai-recommendation&quot;
-    namespace = kubernetes_namespace.ai.metadata[0].name
-  }
-  spec {
-    replicas = 3
-    selector {
-      match_labels = {
-        app = &quot;ai-recommendation&quot;
-      }
-    }
-    template {
-      metadata {
-        labels = {
-          app = &quot;ai-recommendation&quot;
-        }
-      }
-      spec {
-        container {
-          name  = &quot;ai&quot;
-          image = &quot;ai-features:1.0.0&quot;
-          port {
-            container_port = 8000
-          }
-          env {
-            name  = &quot;FLAGSMITH_URL&quot;
-            value = &quot;http://flagsmith.flagsmith.svc.cluster.local:8000&quot;
-          }
-          env {
-            name  = &quot;FLAGSMITH_KEY&quot;
-            value = var.flagsmith_key
-          }
-          resources {
-            requests = {
-              cpu    = &quot;500m&quot;
-              memory = &quot;512Mi&quot;
-            }
-            limits = {
-              cpu    = &quot;1&quot;
-              memory = &quot;1Gi&quot;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-resource &quot;kubernetes_service&quot; &quot;ai&quot; {
-  metadata {
-    name      = &quot;ai-recommendation&quot;
-    namespace = kubernetes_namespace.ai.metadata[0].name
-  }
-  spec {
-    selector = {
-      app = &quot;ai-recommendation&quot;
-    }
-    port {
-      port        = 80
-      target_port = 8000
-    }
-  }
-}
+<p>Deployment manifest with the SDK key pulled from a secret and probes wired to <code>/health</code>:</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-recommendation
+  namespace: ai
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ai-recommendation
+  template:
+    metadata:
+      labels:
+        app: ai-recommendation
+    spec:
+      containers:
+        - name: ai
+          image: ai-features:1.0.0
+          ports:
+            - containerPort: 8000
+          env:
+            - name: FLAG_URL
+              value: http://flags.flags.svc.cluster.local:8000
+            - name: FLAG_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: flag-sdk-key
+                  key: key
+          resources:
+            requests:
+              cpu: &quot;500m&quot;
+              memory: 512Mi
+            limits:
+              cpu: &quot;1&quot;
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
 </code></pre>
-<p>Apply:</p>
-<pre><code class="language-bash">terraform init
-terraform apply -var=&quot;flagsmith_key=$(kubectl get secret flagsmith-api-key -n flagsmith -o jsonpath='{.data.key}' | base64 -d)&quot;
-</code></pre>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<ol>
-<li>Flag evaluation failures.</li>
-</ol>
-<p>We default to the stable model (v1) if Flagsmith is unreachable. That one-line change saved us during our 2026 outage. The fallback is configured in <code>flags.py</code>.</p>
-<ol>
-<li>Model inference timeouts.</li>
-</ol>
-<p>If it exceeds, we return a cached fallback recommendation from Redis 7.2.</p>
-<pre><code class="language-python"># app/models.py
-import redis.asyncio as redis
+<h2 id="step-3-canary-shadow-and-rollback">Step 3 — canary, shadow, and rollback</h2>
+<h3 id="canary-routing">Canary routing</h3>
+<p>A percentage rollout flag evaluates per user, not per request, so a given user consistently sees one model. That consistency matters: if a user flips between models mid-session, ranking output changes unpredictably and any quality comparison is confounded.</p>
+<p>Configure the flag with a percentage split, start at 5%, and promote in steps. The decision rule should be a metric condition, not a calendar:</p>
+<ul>
+<li>Promote only if <code>error_rate_v2 &lt; 1%</code> and <code>p95_latency_v2 &lt; 350ms</code> over a rolling 30-minute window.</li>
+<li>Roll back automatically if either threshold is breached for two consecutive 5-minute windows.</li>
+<li>Never promote during a traffic trough, where the sample size is too small to be meaningful.</li>
+</ul>
+<h3 id="shadow-mode">Shadow mode</h3>
+<p>Shadow mode runs the candidate model on live requests but returns the incumbent's output. It gives you latency and error data under production traffic with zero user-visible risk.</p>
+<p>The cost is real: shadow mode roughly doubles inference compute for the shadowed fraction. To estimate it, take your per-request CPU cost from the container's <code>container_cpu_usage_seconds_total</code> metric, multiply by the shadowed request rate, and compare against your node pricing. If shadowing 100% of traffic would double your inference spend, shadow 10% instead — the latency distribution converges quickly at that sample size.</p>
+<p>A shadow implementation calls both models and discards the second result:</p>
+<pre><code class="language-python">import asyncio
 
-r = redis.Redis(host=&quot;redis.ai.svc.cluster.local&quot;, port=6379, decode_responses=True)
+async def shadow_predict(primary, shadow, user_emb, product_embs):
+    primary_task = asyncio.create_task(primary.predict_async(user_emb, product_embs))
+    shadow_task = asyncio.create_task(shadow.predict_async(user_emb, product_embs))
 
-async def predict_with_timeout(model, user_embedding, product_embeddings, timeout=0.3):
+    result = await primary_task
     try:
-        return await asyncio.wait_for(model.predict(user_embedding, product_embeddings), timeout=timeout)
+        shadow_result = await shadow_task
+        SHADOW_DIVERGENCE.observe(compare_rankings(result, shadow_result))
+    except Exception as exc:
+        SHADOW_ERRORS.inc()
+        logger.warning(&quot;shadow model failed: %s&quot;, exc)
+    return result
+</code></pre>
+<p>Note that the shadow result is awaited but never returned, and its failure is counted rather than raised. A shadow model that crashes must not affect the primary path.</p>
+<h3 id="timeouts-and-fallbacks">Timeouts and fallbacks</h3>
+<p>Inference should have a hard timeout. When it fires, serve a cached or degraded response rather than hanging:</p>
+<pre><code class="language-python">async def predict_with_timeout(model, user_emb, product_embs, timeout=0.3):
+    try:
+        return await asyncio.wait_for(
+            model.predict_async(user_emb, product_embs), timeout=timeout
+        )
     except asyncio.TimeoutError:
-        cached = await r.get(f&quot;rec:{user_embedding.tobytes()}&quot;)
-        return eval(cached) if cached else [0.0] * len(product_embeddings)
+        INFERENCE_TIMEOUTS.labels(model_version=model.version).inc()
+        cached = await cache.get(cache_key(user_emb))
+        if cached is not None:
+            return cached
+        return [0.0] * len(product_embs)
 </code></pre>
-<ol>
-<li>Canary traffic routing.</li>
-</ol>
-<p>Flagsmith allows targeting rules like <code>user_id ends with "00"</code>. You can also use percentage splits. We use 5% canary for v2.</p>
-<ol>
-<li>Race conditions on flag updates.</li>
-</ol>
-<p>Flagsmith uses a 30-second cache TTL by default. If you push a flag change, it can take up to 30 seconds to propagate to all pods. We mitigated this by:
-- Setting TTL to 5 seconds in staging
-- Running a small background job that periodically calls Flagsmith’s <code>/flags/{user_id}</code> endpoint on each pod to refresh the cache</p>
-<ol>
-<li>Cost of shadow deployments.</li>
-</ol>
-<p>The extra CPU burned ~$0.18 per 1000 requests on our GKE e2-standard-4 nodes.</p>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<ol>
-<li>Prometheus metrics scrape.</li>
-</ol>
-<p>Add this to your deployment spec:</p>
-<pre><code class="language-yaml">containers:
-- name: ai
-  ports:
-  - containerPort: 8000
-  livenessProbe:
-    httpGet:
-      path: /health
-      port: 8000
-    initialDelaySeconds: 15
-    periodSeconds: 10
-  readinessProbe:
-    httpGet:
-      path: /health
-      port: 8000
-    initialDelaySeconds: 5
-    periodSeconds: 5
+<p>Do not use <code>eval()</code> to deserialize cached values. Store them as JSON and parse with <code>json.loads</code>, or use a typed serialization format. The earlier pattern of <code>eval(cached)</code> is a code-execution vulnerability if anything else can write to that cache key.</p>
+<h3 id="flag-propagation-delay">Flag propagation delay</h3>
+<p>Flag SDKs cache evaluations locally, and the cache TTL determines how long a rollback takes to reach every pod. If the SDK default is 30 seconds, a kill switch is really a 30-second kill switch. Two mitigations:</p>
+<ul>
+<li>Set the cache TTL to a value you can tolerate as your worst-case rollback time. Five seconds is a common choice for staging; production teams often accept 10–30 seconds in exchange for fewer flag-service round trips.</li>
+<li>Do not add a background job that polls the flag service per pod on a short interval unless you have measured the load. With N pods polling every T seconds, you generate N/T requests per second against the flag service, and that scales badly during an incident when every pod is retrying.</li>
+</ul>
+<h2 id="step-4-observability-and-tests">Step 4 — observability and tests</h2>
+<p>Prometheus scrapes the <code>/metrics</code> endpoint that <code>prometheus-client</code> exposes automatically. Add a scrape annotation to the pod template:</p>
+<pre><code class="language-yaml">metadata:
+  annotations:
+    prometheus.io/scrape: &quot;true&quot;
+    prometheus.io/port: &quot;8000&quot;
+    prometheus.io/path: &quot;/metrics&quot;
 </code></pre>
-<ol>
-<li>Grafana dashboard JSON.</li>
-</ol>
-<pre><code class="language-json">{
-  &quot;title&quot;: &quot;AI Feature Flags &amp; Model KPIs&quot;,
-  &quot;panels&quot;: [
-    {
-      &quot;title&quot;: &quot;Request volume by model&quot;,
-      &quot;type&quot;: &quot;graph&quot;,
-      &quot;targets&quot;: [
-        {&quot;expr&quot;: &quot;rate(ai_recommendation_requests_total{http_status=&quot;200&quot;}[1m]) by (model_version)&quot;}
-      ]
-    },
-    {
-      &quot;title&quot;: &quot;P95 latency per model&quot;,
-      &quot;type&quot;: &quot;graph&quot;,
-      &quot;targets&quot;: [
-        {&quot;expr&quot;: &quot;histogram_quantile(0.95, rate(ai_recommendation_latency_seconds_bucket[5m])) by (model_version)&quot;}
-      ]
-    },
-    {
-      &quot;title&quot;: &quot;Error rate per model&quot;,
-      &quot;type&quot;: &quot;stat&quot;,
-      &quot;targets&quot;: [
-        {&quot;expr&quot;: &quot;rate(ai_recommendation_requests_total{http_status=&quot;500&quot;}[5m]) / rate(ai_recommendation_requests_total[5m]) by (model_version)&quot;}
-      ]
-    },
-    {
-      &quot;title&quot;: &quot;Flag state (last 5 min)&quot;,
-      &quot;type&quot;: &quot;table&quot;,
-      &quot;targets&quot;: [
-        {&quot;expr&quot;: &quot;flagsmith_feature_state{feature_name=&quot;recommendation_model&quot;}&quot;}
-      ]
-    }
-  ]
-}
-</code></pre>
-<p>Import this JSON into Grafana to get a single pane of glass.</p>
-<ol>
-<li>Unit and integration tests.</li>
-</ol>
-<pre><code class="language-python"># tests/test_flags.py
-import pytest
+<p>Useful queries to build the dashboard around:</p>
+<ul>
+<li>Request rate by model: <code>sum by (model_version) (rate(ai_requests_total[1m]))</code></li>
+<li>P95 latency by model: <code>histogram_quantile(0.95, sum by (le, model_version) (rate(ai_request_latency_seconds_bucket[5m])))</code></li>
+<li>Error ratio by model: <code>sum by (model_version) (rate(ai_requests_total{http_status="500"}[5m])) / sum by (model_version) (rate(ai_requests_total[5m]))</code></li>
+<li>Flag fallback rate: <code>rate(ai_flag_eval_errors_total[5m])</code></li>
+</ul>
+<p>That last metric is the one teams forget. A rising fallback rate means flag evaluation is failing and silently pinning traffic to the default model — which looks like a successful rollout until someone checks which model actually served the requests.</p>
+<p>Unit tests should cover the fallback path explicitly:</p>
+<pre><code class="language-python">import pytest
 from unittest.mock import patch, MagicMock
 from app.flags import get_model_flag
 
 def test_defaults_to_v1_on_error():
-    with patch(&quot;app.flags.flagsmith.get_feature_state&quot;) as mock_state:
-        mock_state.side_effect = Exception(&quot;boom&quot;)
+    with patch(&quot;app.flags.client.get_feature_state&quot;) as mock_state:
+        mock_state.side_effect = Exception(&quot;flag service unreachable&quot;)
         assert get_model_flag(&quot;user123&quot;) == &quot;v1&quot;
 
-def test_v2_enabled_for_even_id():
-    with patch(&quot;app.flags.flagsmith.get_feature_state&quot;) as mock_state:
+def test_v2_when_enabled():
+    with patch(&quot;app.flags.client.get_feature_state&quot;) as mock_state:
         state = MagicMock()
         state.is_enabled = True
         state.get_value.return_value = &quot;v2&quot;
         mock_state.return_value = state
         assert get_model_flag(&quot;user124&quot;) == &quot;v2&quot;
+
+def test_default_when_flag_disabled():
+    with patch(&quot;app.flags.client.get_feature_state&quot;) as mock_state:
+        state = MagicMock()
+        state.is_enabled = False
+        mock_state.return_value = state
+        assert get_model_flag(&quot;user125&quot;) == &quot;v1&quot;
 </code></pre>
-<p>Run with pytest 7.4:</p>
-<pre><code class="language-bash">python -m pytest tests/ -v --cov=app --cov-report=term-missing
-</code></pre>
-<p>Coverage target: 90%.</p>
-<ol>
-<li>Load test with k6.</li>
-</ol>
-<pre><code class="language-javascript">// loadtest.js
-import http from 'k6/http';
+<p>Load test with k6 to establish the latency baseline before any canary:</p>
+<pre><code class="language-javascript">import http from 'k6/http';
 import { check } from 'k6';
 
 export const options = {
   stages: [
     { duration: '2m', target: 100 },
     { duration: '5m', target: 500 },
-    { duration: '2m', target: 0 }
+    { duration: '2m', target: 0 },
   ],
   thresholds: {
-    http_req_duration: ['p(95)&lt;400']
-  }
+    http_req_duration: ['p(95)&lt;400'],
+  },
 };
 
 export default function () {
   const payload = JSON.stringify({
     user_id: `user_${Math.floor(Math.random() * 10000)}`,
-    product_ids: ['p1', 'p2', 'p3']
+    product_ids: ['p1', 'p2', 'p3'],
   });
-  const res = http.post('http://ai-recommendation.ai.svc.cluster.local/recommend', payload, {
-    headers: { 'Content-Type': 'application/json' }
-  });
-  check(res, {
-    'status was 200': (r) =&gt; r.status == 200,
-  });
+  const res = http.post(
+    'http://ai-recommendation.ai.svc.cluster.local/recommend',
+    payload,
+    { headers: { 'Content-Type': 'application/json' } }
+  );
+  check(res, { 'status was 200': (r) =&gt; r.status === 200 });
 }
 </code></pre>
-<p>Run:</p>
-<pre><code class="language-bash">k6 run --vus 50 --duration 10m loadtest.js
-</code></pre>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>Team A (e-commerce):
-- Reduced failed rollouts from 4 per quarter to 0 in 2026
-- Cut incident MTTR from 2.5 hours to 5 minutes
-- Saved €12k/quarter on staging infrastructure by running shadow models only when needed</p>
-<p>Team B (SaaS platform):
-- Achieved 99.9% availability for AI features during Black Friday traffic spike (&gt;20k RPM)
-- Promoted a new ranking model from shadow to live in 12 minutes with zero downtime
-- Saved $8k/month by killing a misconfigured v2 model within 90 seconds of detection</p>
-<p>Latency comparison table (measured at 200 RPS, 95th percentile):</p>
-<table>
-<thead>
-<tr>
-<th>Model version</th>
-<th>With flags</th>
-<th>Without flags</th>
-<th>Overhead</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>v1</td>
-<td>180 ms</td>
-<td>175 ms</td>
-<td>5 ms</td>
-</tr>
-<tr>
-<td>v2 (shadow)</td>
-<td>280 ms</td>
-<td>N/A</td>
-<td>105 ms</td>
-</tr>
-<tr>
-<td>v2 (live)</td>
-<td>290 ms</td>
-<td>285 ms</td>
-<td>5 ms</td>
-</tr>
-</tbody>
-</table>
-<p>The overhead is dominated by the flag check (one Redis lookup per request). With Flagsmith’s local caching (5-second TTL), the median overhead drops to 2 ms.</p>
-<p>Cost per 1M requests:
-- Flagsmith managed: $12/month (EU region, 1M evaluations)
-- Self-hosted PostgreSQL: $8/month (2 vCPU, 20 GB SSD)
-- Total: $20/month — less than one incident ticket.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<p><strong>How do I handle GDPR if I’m logging user IDs with the flag state?</strong>
-Use pseudonymous user IDs and store the flag evaluation in a separate analytics bucket with a 24-hour retention policy. Flagsmith supports hashed identifiers so you never store raw PII. I’ve seen teams accidentally log the full user_id in Grafana dashboard queries — set environment variable <code>GRAFANA_SECURE=true</code> and restrict dashboard permissions.</p>
-<p><strong>Can I use feature flags with serverless functions like AWS Lambda?</strong>
-Yes. The pattern is the same, but you must cache the flag state per cold-start window. On Lambda with Node 20 LTS you can use a global variable scoped to the handler. Cache TTL should match your Lambda max concurrent executions to avoid stampedes. We’ve seen cost spikes when every cold start refetches the flag — Lambda durations jumped from 120 ms to 800 ms. Pin the flag SDK version to avoid breaking changes.</p>
-<p><strong>What happens if the flag service goes down?</strong>
-Configure a circuit breaker with a 200 ms timeout and a 30-second half-open retry. Default to the previous known-good flag value. We once lost the EU zone of Flagsmith for 4 minutes — traffic kept flowing because the pod had the last known state in memory. If you’re ultra-paranoid, embed two SDK keys (primary + failover) and shard traffic across both zones.</p>
-<p><strong>How do I roll back a model change without redeploying?</strong>
-Flip the feature flag to v1. The rollback is instant and doesn’t touch the model container.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<ol>
-<li>Add a metric-gated promotion pipeline: promote only when error_rate_v2 &lt; 1% AND latency_p95_v2 &lt; 350 ms for 1 hour. 2. Integrate with Argo Rollouts for blue-green deployments of the model containers while keeping flag control independent. 3. Use OpenTelemetry traces to correlate flag evaluation, model inference, and downstream API calls — helps debug 504s when the model pod is overloaded.</li>
-</ol>
-<p>Today, set the feature flag <code>recommendation_model</code> to 5% v2 for user IDs ending in “5” or “0”, then run the load test again and compare the p95 latency delta in Grafana. If the delta is under 100 ms, promote to 10% and continue the canary.</p>
-<p>Check your Grafana dashboard at http://localhost:3000/d/ai-features and confirm the new panel shows traffic split data within the next 5 minutes.</p>
-<h2 id="related-reading">Related reading</h2>
+<h2 id="measuring-flag-overhead-honestly">Measuring flag overhead honestly</h2>
+<p>A common claim is that flag evaluation adds "a few milliseconds." Whether that is true for your service depends on the SDK's caching behavior, not on the flag system's marketing. Measure it rather than assuming.</p>
+<p>The method: run the same load profile twice against the same image, once with the flag check in the request path and once with the flag value read from a constant. Compare the <code>histogram_quantile</code> output for <code>ai_request_latency_seconds</code> at p50 and p95 in Grafana, and use the same k6 script both times so the request mix is identical. The difference is your flag overhead, and it will be dominated by whether the SDK evaluates locally from cache or makes a network call per request.</p>
+<p>The design goal is local evaluation. With a local cache, the flag check is a dictionary lookup plus a TTL comparison, and the overhead is lost in the noise of inference. Without it, every request pays a network round trip, and the flag service becomes a hard dependency on your critical path.</p>
+<h2 id="failure-modes-to-design-for">Failure modes to design for</h2>
+<p><strong>Flag service unavailable at startup.</strong> If the SDK cannot fetch its initial configuration, the service should still start and serve the default model. Blocking startup on flag availability turns a flag outage into a full outage.</p>
+<p><strong>Flag exists but has an unexpected value.</strong> Validate the returned version against the set of loaded models before using it. An unrecognized value should log loudly and fall back, not raise a 500.</p>
+<p><strong>Cache stampede after a flag change.</strong> When a flag flips, every pod's cache expires at roughly the same time and they all refetch. With a small number of pods this is fine; with hundreds it can spike load on the flag service. Jitter the TTL by a random fraction of its value to spread the refetches.</p>
+<p><strong>Shadow model starving the primary.</strong> If the shadow model shares a CPU-bound node with the primary, its compute competes directly. Run shadow replicas on separate nodes or with strict CPU limits, and monitor the primary's latency during shadow periods to confirm it is unaffected.</p>
+<p><strong>Metrics cardinality explosion.</strong> Labelling by <code>user_id</code> or any high-cardinality field will overwhelm Prometheus. Label by <code>model_version</code> and <code>http_status</code> only; keep per-user detail in logs or traces.</p>
+<h2 id="a-worked-promotion-decision">A worked promotion decision</h2>
+<p>Suppose the canary is at 5% and the dashboard shows, over the last 30 minutes:</p>
 <ul>
-<li><a href="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
-<li><a href="https://kubaik.github.io/observe-llm-features-90-faster/">Observe LLM features 90% faster…</a></li>
-<li><a href="https://kubaik.github.io/idp-for-ai-2026-stack-evolution/">IDP for AI: 2026 stack evolution</a></li>
+<li><code>v1</code>: 95,000 requests, 210 errors.</li>
+<li><code>v2</code>: 5,000 requests, 9 errors.</li>
+<li><code>v2</code> p95 latency: 340 ms against a 350 ms budget.</li>
+</ul>
+<p>The error rates are 0.22% for v1 and 0.18% for v2 — both under the 1% threshold, so the error condition passes. Latency passes with 10 ms of headroom. But 5,000 requests is a thin sample for a 1% threshold: at that volume, one additional error moves the rate by 0.02 percentage points, and the confidence interval around 0.18% is wide enough to overlap 1%. The honest decision is to hold at 5% for another window rather than promote, because the sample cannot yet distinguish a good model from a marginal one. This is why promotion gates should specify a minimum request count alongside the rate thresholds.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Does the flag check belong before or after authentication?</strong>
+After. The flag decision usually depends on a user identifier, and evaluating it before authentication means unauthenticated traffic can influence your rollout metrics.</p>
+<p><strong>Can this pattern work with serverless inference?</strong>
+Yes, but cold starts change the caching calculus. Each new execution environment fetches the flag configuration once; if your concurrency is high and traffic is bursty, that is many fetches. Cache the flag state in a global scoped to the execution environment and set the TTL to something longer than your typical invocation duration.</p>
+<p><strong>How do you roll back without redeploying?</strong>
+Set the flag to the previous model version. The running pods pick up the change on their next cache refresh, so worst-case rollback time equals the SDK cache TTL. Deploying the new model and exposing it are separate operations, which is the entire point.</p>
+<p><strong>What if both models are needed simultaneously?</strong>
+That is what the percentage rollout gives you. During a canary, both models serve live traffic, and the per-<code>model_version</code> metrics tell you how each is performing.</p>
+<h2 id="take-action-now">Take action now</h2>
+<p>Open your inference service's metrics endpoint and check whether request counters are labelled by model version. If they are not, add a <code>model_version</code> label to your request counter and latency histogram, deploy that change, and confirm in Prometheus that <code>sum by (model_version) (rate(ai_requests_total[5m]))</code> returns more than one series during a canary. Without that label, no promotion gate you write later will be able to tell you which model caused a regression.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
 </ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
@@ -911,7 +741,7 @@ Flip the feature flag to v1. The rollback is instant and doesn’t touch the mod
                     <a class="related-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
                         <h3>Kubernetes or Nomad: the real experiment cost split</h3>
                         <p>A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.</p>
-                        <span class="related-meta">10 min read · 3 August 2026</span>
+                        <span class="related-meta">11 min read · 3 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/cloud-agents-burned-18k-8-tools-that-didnt-work/">

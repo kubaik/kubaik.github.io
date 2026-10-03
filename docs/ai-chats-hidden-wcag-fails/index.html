@@ -64,8 +64,8 @@
       "description": "Why AI chat UIs break screen readers: dynamic ARIA roles, focus hijacking, and contrast failures, plus how to test and prevent them.",
       "datePublished": "2026-07-02T12:40:53+00:00",
       "dateModified": "2026-10-03T12:40:19+00:00",
-      "wordCount": 2625,
-      "timeRequired": "PT13M",
+      "wordCount": 2749,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -237,8 +237,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2625 words
+                        14 min read
+                        &nbsp;·&nbsp; 2749 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -521,6 +521,19 @@ Only if the generated content is rendered through that library. Raw markdown pas
 The changes themselves are small — role mapping, a focus condition, token-based styling. The cost is in establishing the test path: a screen reader pass and a dynamic focus assertion in CI. That setup is what prevents the same class of bug from recurring.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your chat interface, send a prompt that produces a long response containing a code block, and start a screen reader before the response begins. Listen for three things: whether the response is announced in fragments or as a unit, whether any error you trigger interrupts the current announcement, and whether you can navigate to an earlier message while the response is still streaming. Write down what you observe. Those three observations tell you which of the three failures above you have, and each fix is a small, localized change.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-ui-tools-promise-vs-production/">AI UI tools: promise vs. production</a></li>
+<li><a href="https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/">AI UI Generators: Production Constraints and Fixes</a></li>
+<li><a href="https://kubaik.github.io/ai-ui-generation-what-it-fixed-and-what-still-breaks/">AI UI generation: what it fixed and what still breaks</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

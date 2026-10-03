@@ -64,7 +64,7 @@
       "description": "AI features fail through cache eviction, schema drift and missing rollback paths. A practical guide to validation gates, fallback caches and metrics.",
       "datePublished": "2026-08-15T12:43:35+00:00",
       "dateModified": "2026-10-03T12:30:36+00:00",
-      "wordCount": 2114,
+      "wordCount": 2242,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2114 words
+                        &nbsp;·&nbsp; 2242 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -429,6 +429,23 @@ Return an explicit error rather than an empty summary. A 503 with a clear body i
 No. It is a starting point. The correct value is the longest staleness your users will tolerate without filing tickets, which is a product question, not an infrastructure one.</p>
 <h2 id="next-step">Next step</h2>
 <p>Open your LLM-backed endpoint and make one request with <code>curl -i</code>. Look at the response headers. If there is no header that tells you whether the response came from the model, from the cache, or from a fallback, you cannot measure the health of the feature at all. Add that header today, then add the counter that increments when it is set. That single change turns an invisible failure mode into a number you can alert on.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/">Postmortems for AI agents: drift, cost, replay</a></li>
+<li><a href="https://kubaik.github.io/ai-observability-the-metrics-that-matter/">AI observability: the metrics that matter</a></li>
+<li><a href="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

@@ -64,8 +64,8 @@
       "description": "Offline validation rarely matches production traffic. Learn the evaluation gap, how to measure drift, and concrete checks to add before your next deploy.",
       "datePublished": "2026-09-11T07:51:02+00:00",
       "dateModified": "2026-10-03T12:43:02+00:00",
-      "wordCount": 2998,
-      "timeRequired": "PT15M",
+      "wordCount": 3134,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -282,8 +282,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2998 words
+                        16 min read
+                        &nbsp;·&nbsp; 3134 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -596,6 +596,25 @@ Shadow testing runs the new model on live traffic but discards its predictions, 
 <p><strong>When should I roll back a model based on drift alerts?</strong>
 Define guardrails that combine statistical drift with business impact. If both thresholds are breached for two consecutive monitoring windows, trigger an automated rollback via your deployment tool. A statistical trigger alone should page a human, not revert traffic.</p>
 <p>Take the next 30 minutes to open your CI repository, add a <code>test_shadow_latency</code> function modeled on the sketch above, and run it against a small batch of recorded production requests. If it fails, you have just uncovered an evaluation gap before it reaches production.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+<li><a href="https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/">LLM drift before users complain: catch it early</a></li>
+<li><a href="https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/">LLM output metrics that actually move the needle</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.temporal.io/">Temporal documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

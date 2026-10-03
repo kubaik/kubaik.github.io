@@ -1,212 +1,170 @@
 # Trim LLM bills: 3 FinOps moves that work
 
-Most finops llmheavy guides assume a clean environment and a patient timeline. Nobody mentions the failure mode until it's already cost someone a bad night. This is the version of the write-up that includes the part that broke.
+Most cost-control advice for LLM services is written for a clean environment and a patient timeline. It stops at "track tokens and set budget alerts." That advice is fine for a prototype. It falls apart once you have real traffic, because LLM traffic is not CRUD: it is iterative, unpredictable, and often wasteful. A single mis-routed prompt can fan out into several parallel tool calls, each burning tokens while the client waits.
 
-## The gap between what the docs say and what production needs
+Three levers move the needle in production: request shaping, cache placement, and queue discipline. Everything else is tuning.
 
-Most FinOps guides for LLM teams still preach the same 2026 playbook: track tokens, set budget alerts, and pray. That’s fine for a weekend prototype, but it crumbles when you run 500 production endpoints on 2026 hardware. I learned this the hard way when our monthly AI bill jumped from $7,200 to $18,400 in a single sprint. The docs promised cost controls, but the only dial they gave us was “turn off the model” — which also turned off our product.
+## Why token dashboards are not a cost control
 
-The real problem isn’t the tooling; it’s the mismatch between cloud provider marketing and reality. Vendors want you to believe that launching an LLM service is like spinning up a Postgres cluster: set a max concurrency, add a budget alert, and forget it. But LLM traffic isn’t CRUD — it’s iterative, unpredictable, and often wasteful. A single mis-routed prompt can spawn ten parallel tool calls, each burning tokens and dollars while you wait for the user’s next message.
+A token counter tells you what you already spent. It does not change what the next request costs. The documented behavior of most managed inference APIs is that you are billed for input tokens plus output tokens, and that long-context requests are the expensive ones. Nothing in the billing model rewards you for sending a well-formed prompt.
 
-The bottleneck wasn’t our API gateway; it was the model server’s internal queue, which kept 200 concurrent requests alive for 4.2 seconds each, long after the client had timed out. The docs never mentioned that.
+A typical failure mode looks like this: a request arrives with a compound question, the model generates a long internal reasoning chain, the client times out at 30 seconds, and the server keeps generating until it hits its own output limit. The client never sees the answer, but the tokens were produced and billed. Multiply that by a retry policy and the same user question can be paid for three times.
 
-FinOps for LLM teams in 2026 needs to stop pretending we’re running a database. We’re running a chat server with a CPU, a GPU, and a credit card that screams when you look away.
+The first useful measurement is therefore not "tokens per day." It is **tokens billed per successful response delivered**. Instrument two counters at your gateway: tokens billed (from the provider's usage field in the response) and responses returned with a 2xx status to the client. The ratio is your waste indicator. If a request times out client-side but completes server-side, you are paying for output nobody reads.
 
-## How FinOps for LLM-heavy teams: the levers that actually move the needle in 2026 actually works under the hood
+## Lever 1: Request shaping
 
-Three levers actually move the needle in production today: request shaping, cache placement, and queue discipline. Everything else is noise.
+Request shaping means rewriting or splitting a prompt before it reaches the model. Two shapes are worth doing:
 
-**Request shaping** means intercepting traffic before it hits the model. Not just rate limiting, but semantic shaping. We use a lightweight Rust proxy (built on Axum 0.7) that rewrites prompts to remove redundant context. For example, a user asking “What’s my balance and recent transactions?” gets split into two parallel calls instead of one giant prompt that forces the model to juggle context. That drop reduced our token burn by 28% in two weeks.
+1. **Split compound questions.** "What is my balance and my recent transactions?" becomes two independent calls. Each call has a smaller context, so each is cheaper, and the two can run in parallel.
+2. **Strip redundant context.** Conversation history that repeats the same system preamble on every turn is a common source of wasted input tokens. Keep a stable system prompt and send only the delta.
 
-**Cache placement** is where most teams get it wrong. They cache model responses in Redis 7.2 with a TTL of 5 minutes, assuming that’s “fast enough.” But the real latency killer is the model’s first-token delay. A cache miss on a 7B parameter model costs 350ms of GPU warm-up time — which is worse than the network round trip to a far-flung cache. The fix? Cache at two layers: an in-process LRU for hot prompts (max 100 entries, 8KB each) and a distributed Redis layer for cold prompts. That split cut our p99 latency from 850ms to 210ms.
-
-**Queue discipline** is the forgotten lever. Most teams treat their LLM queue like a FIFO buffer, letting long prompts block short ones. We switched to a priority queue based on estimated token cost. A 5-token “hi” prompt jumps ahead of a 5,000-token “summarize my 2026 tax filings” prompt. The change cost us 12 lines of Python and saved $1,800 a month in GPU idle time.
-
-These levers don’t require new models or exotic hardware. They require treating the LLM endpoint like a real production service — with shaping, caching, and queuing that respect token economics.
-
-## Step-by-step implementation with real code
-
-Here’s how we wired the three levers into a system running on Node 20 LTS and AWS Lambda with arm64.
-
-First, the semantic shaper. We intercept prompts in an AWS Application Load Balancer (ALB) listener rule that forwards to a Lambda@Edge function. The function uses a simple regex to split compound questions:
+A shaping function does not need a model to do its job. A deterministic splitter is cheap, testable, and has no failure mode of its own. Here is a minimal Node implementation:
 
 ```javascript
 // prompt-shaper.js
-export const shapePrompt = (prompt) => {
-  const parts = prompt.split(/\s*and\s+/i);
-  if (parts.length > 1) {
-    return parts.map(p => `Answer the following: ${p.trim()}`);
-  }
-  return [prompt];
-};
+const COMPOUND = /\s+and\s+(?=(?:what|how|when|where|why|who|show|list|give)\b)/i;
 
-// Example
-shapePrompt("What is my balance and recent transactions?")
-// => ["Answer the following: What is my balance?", "Answer the following: recent transactions?"]
+export function shapePrompt(prompt) {
+  const parts = prompt.split(COMPOUND).map(s => s.trim()).filter(Boolean);
+  if (parts.length <= 1) return [prompt];
+  return parts.map(p => `Answer only this question: ${p}`);
+}
+
+// shapePrompt("What is my balance and what are my recent transactions?")
+// => ["Answer only this question: What is my balance",
+//     "Answer only this question: what are my recent transactions?"]
 ```
 
-Next, the two-layer cache. We use an in-process LRU cache in the Lambda function (max 100 entries, 8KB each) and a Redis 7.2 cluster for cold storage. The cache key is a SHA-256 hash of the shaped prompt plus the model ID. We avoid full prompt caching because most prompts are unique; instead, we cache common sub-queries.
+Two caveats. First, splitting changes semantics: a question that depends on the answer to the first half must not be split. Gate the splitter on an explicit list of independent question types rather than on a general conjunction. Second, splitting multiplies request count, which increases per-request overhead (TLS, routing, model warm-up). Only split when the combined prompt is large enough that the context reduction outweighs the extra round trips.
+
+**How to measure whether shaping helps:** log `input_tokens` and `output_tokens` per request before and after the change, grouped by a stable request-type label. Compare the median, not the mean, because a handful of large prompts will dominate the average. A split that reduces median input tokens but raises median latency is a trade you should make explicitly, not by accident.
+
+## Lever 2: Cache placement
+
+Caching model responses is where teams most often pick the wrong layer. A distributed cache with a short TTL looks fast on paper, but the dominant cost on a cache miss is not the network round trip. It is the model's time-to-first-token, which on a self-hosted model includes any GPU cold start or queue wait. A cache that saves 5 ms of network but still triggers a 300 ms model call has not saved much.
+
+The practical pattern is two layers:
+
+- **In-process cache** for the hottest keys, bounded by entry count and entry size. This avoids a network hop entirely.
+- **Distributed cache** for the long tail of keys shared across instances.
+
+The cache key must include everything that changes the answer: the shaped prompt, the model identifier, and the model version. Omitting the version means a model upgrade silently serves stale answers.
 
 ```javascript
 // cache-layer.js
 import { LRUCache } from 'lru-cache';
-import Redis from 'ioredis';
+import { createClient } from 'redis';
 
-const localCache = new LRUCache({ max: 100, maxSize: 8 * 1024 });
-const redis = new Redis(process.env.REDIS_URL);
+const local = new LRUCache({ max: 500, maxSize: 8 * 1024 * 1024, sizeCalculation: (v) => v.length });
+const redis = createClient({ url: process.env.REDIS_URL });
+await redis.connect();
 
-export const getCached = async (key) => {
-  const cached = localCache.get(key);
-  if (cached) return cached;
-  const redisVal = await redis.get(key);
-  if (redisVal) {
-    localCache.set(key, redisVal);
-    return redisVal;
+export async function getCached(key) {
+  const hit = local.get(key);
+  if (hit !== undefined) return hit;
+  const remote = await redis.get(key);
+  if (remote !== null) {
+    local.set(key, remote);
+    return remote;
   }
   return null;
-};
+}
 
-export const setCached = async (key, value) => {
-  localCache.set(key, value);
-  await redis.set(key, value, 'EX', 300); // 5 minutes TTL
-};
+export async function setCached(key, value, ttlSeconds = 300) {
+  local.set(key, value);
+  await redis.set(key, value, { EX: ttlSeconds });
+}
 ```
 
-Finally, the priority queue. We use AWS SQS with a custom attribute `Priority` set to the estimated token count. The Lambda function reads from the queue, processes prompts in priority order, and updates the `Priority` attribute dynamically based on the actual token burn.
+The `lru-cache` option `maxSize` with `sizeCalculation` bounds total bytes, not just entry count, which matters when responses vary in length. A fixed entry count with unbounded value size is a memory leak waiting for a long response.
+
+**How to measure cache value:** instrument three counters — local hits, remote hits, misses — and compute the hit ratio per layer. Then compute the cost avoided: `(local_hits + remote_hits) * mean_cost_per_model_call`. If the remote hit ratio is high but the local hit ratio is near zero, your hot set is larger than your local bound, or your instances are not seeing repeat traffic.
+
+## Lever 3: Queue discipline
+
+A first-in-first-out queue lets one large request delay every small request behind it. The failure is not throughput; it is tail latency and idle GPU time. While a 10,000-token summarization runs, a queue of one-line questions waits, and the user-visible latency for those small requests is dominated by the large one ahead of them.
+
+Priority queuing fixes this by ordering work by estimated cost rather than arrival time. A simple version uses a visibility timeout as a delay: set a short visibility for low-priority messages so they become visible again later, and a long visibility for high-priority ones.
 
 ```python
 # queue_worker.py
 import boto3
-import json
-import tiktoken
+from token_estimator import estimate_tokens  # your tokenizer wrapper
 
-sqs = boto3.client('sqs', region_name='us-east-1')
-QUEUE_URL = 'https://sqs.us-east-1.amazonaws.com/123456789012/llm-queue'
+sqs = boto3.client("sqs")
 
-def estimate_tokens(text):
-    encoding = tiktoken.get_encoding('cl100k_base')
-    return len(encoding.encode(text))
-
-def poll_queue():
-    resp = sqs.receive_message(
-        QueueUrl=QUEUE_URL,
+def receive(queue_url):
+    return sqs.receive_message(
+        QueueUrl=queue_url,
         MaxNumberOfMessages=10,
         WaitTimeSeconds=1,
-        MessageAttributeNames=['All']
+        MessageAttributeNames=["All"],
+    ).get("Messages", [])
+
+def classify(prompt):
+    tokens = estimate_tokens(prompt)
+    if tokens < 200:
+        return "high", 0        # immediately visible
+    if tokens < 2000:
+        return "normal", 5      # visible after 5s
+    return "low", 30            # visible after 30s
+
+def enqueue(queue_url, prompt, body):
+    tier, delay = classify(prompt)
+    sqs.send_message(
+        QueueUrl=queue_url,
+        MessageBody=body,
+        DelaySeconds=delay,
+        MessageAttributes={"Tier": {"StringValue": tier, "DataType": "String"}},
     )
-    for msg in resp.get('Messages', []):
-        priority = int(msg['MessageAttributes']['Priority']['StringValue'])
-        prompt = msg['Body']
-        # ... process prompt ...
-        # After processing, update priority based on actual tokens
-        actual_tokens = estimate_tokens(response)
-        sqs.change_message_visibility(
-            QueueUrl=QUEUE_URL,
-            ReceiptHandle=msg['ReceiptHandle'],
-            VisibilityTimeout=120
-        )
-        sqs.send_message(
-            QueueUrl=QUEUE_URL,
-            MessageBody=prompt,
-            MessageAttributes={
-                'Priority': {'StringValue': str(actual_tokens), 'DataType': 'Number'}
-            }
-        )
 ```
 
-The queue discipline is the easiest win. Most teams burn thousands on over-provisioned GPUs because their queue is stuck behind a 10,000-token monster. Our priority queue cost us 30 minutes to wire up and saved $1,800 the first month.
+Two honest warnings about this pattern. First, `DelaySeconds` is capped at 900 seconds by the SQS API, and the delay is applied at send time, so a message already in flight cannot be re-prioritized without re-sending it. Second, starvation is real: if high-priority traffic never pauses, low-priority work never runs. The standard mitigation is aging — after a message has been deferred N times, promote it one tier. Cap N explicitly and log every promotion so you can see whether starvation is happening.
 
-## Performance numbers from a live system
+**How to measure queue discipline:** record queue wait time (time from enqueue to first token) per tier, and record GPU utilization separately from GPU busy time. If utilization is low while wait time is high, the scheduler is the problem, not capacity.
 
-We run a customer support chatbot on AWS Bedrock with Anthropic’s Claude 3.5 Sonnet (2026 release) at 80% of requests and a smaller open model for the rest. The system handles 12,000 requests/day on average, with spikes to 45,000 during Black Friday.
+## Failure modes and how to detect them
 
-| Metric                | Before levers | After levers | Change          |
-|-----------------------|---------------|--------------|-----------------|
-| Avg token burn        | 2,100         | 1,520        | -28%            |
-| p99 latency           | 850ms         | 210ms        | -75%            |
-| GPU idle time         | 18%           | 6%           | -67%            |
-| Monthly cost          | $18,400       | $12,100      | -34%            |
-| Cache hit rate        | 32%           | 78%          | +144%           |
+**Cache stampede.** When a popular key expires, every concurrent request misses and calls the model at once. Detect it by charting misses per second against cache expiry events. Mitigate with a short random jitter on TTL, or by serving a slightly stale value while one request refreshes the key.
 
-The biggest surprise was the GPU idle time drop. We assumed the model was always busy, but in reality, long prompts sat in the queue while short ones waited. The priority queue fixed that faster than any auto-scaling tweak.
+**Prompt drift.** Users rephrase over time, so a cached answer becomes subtly wrong. Detect it by sampling cache hits and comparing the stored prompt to the incoming one with a similarity threshold. If you add a similarity check, measure its latency cost separately; an embedding call per request can cost more than the cache saves.
 
-Our Redis 7.2 cluster sits in the same AZ as the Lambda functions, reducing cache misses to 22% and keeping latency low. The in-process LRU cache handles 60% of hits, which keeps us off the Redis hot path entirely for the most common prompts.
+**Queue starvation.** Detect it with the promotion counter described above. If promotions exceed a small fraction of total messages, your tier boundaries are wrong.
 
-We also track a new metric: token waste. It’s the difference between tokens sent to the model and tokens returned to the user. Before the shaper, waste was 18%. After, it’s 3%. That’s 15% more useful tokens per dollar.
+**Model version drift.** A prompt that works on one model version can behave differently on the next. Pin the version in the cache key and log every miss. This is cheap and prevents a class of silent correctness bugs.
 
-The numbers speak for themselves. These levers aren’t theory; they’re what moved the needle in production.
+**Retry amplification.** A client-side timeout that triggers a retry while the server is still generating doubles your cost for one user-visible answer. Detect it by comparing server-side completion counts to client-side success counts per request ID.
 
-## The failure modes nobody warns you about
+## Measuring cost honestly
 
-The first failure mode is cache stampede. If you cache a prompt that 100 users hit in the first second, you’ll overwhelm your model server. We learned this when our cache hit rate spiked to 92% and our GPU queue backed up to 45 seconds. The fix? Cache only the most frequent prompts (top 5% by volume) and let the rest fall through to the model. We use a Bloom filter to gate cache access, cutting stampedes by 94%.
+Do not trust a single before/after table from someone else's system. Build your own with three steps.
 
-The second failure mode is prompt drift. Users change their phrasing over time, turning a cached response into a stale one. We added a semantic similarity check using Sentence-BERT (all-MiniLM-L6-v2) to invalidate cached responses when the new prompt is more than 0.85 cosine similar to the original. That added 12ms per request, but it prevented 7% of support tickets about “wrong answers.”
+1. **Establish a baseline over a fixed window.** Pick seven days of steady-state traffic. Export per-request records with: timestamp, model ID, input tokens, output tokens, cache layer hit (none/local/remote), queue wait, and total latency.
+2. **Change one lever.** Deploy shaping only, or caching only. Changing all three at once makes attribution impossible.
+3. **Compare distributions, not averages.** Report p50 and p95 for tokens and latency, plus the hit ratio per cache layer. Averages hide the expensive tail that usually drives the bill.
 
-The third failure mode is queue starvation. If short prompts keep jumping ahead of long ones, users with complex requests get stuck in a loop. We solved this by capping the number of re-queues per prompt to 3. After the third re-queue, the prompt gets a “complex” flag and moves to a slower, cheaper model. That kept our GPU utilization balanced and prevented any single user from monopolizing the queue.
+The only arithmetic worth doing is from your own numbers. For example, if your baseline shows 12,000 requests per day at a mean of 2,000 billed tokens, that is 24,000,000 tokens per day. If shaping reduces the median input by 30 percent on the half of requests that are compound, the expected daily reduction is `12,000 * 0.5 * 0.3 * (mean input tokens per request)` — plug in your own mean input figure, because it is not the same as total billed tokens.
 
-The fourth failure mode is model version drift. A prompt that worked on Claude 3.5 might break on 3.6. We now pin model versions in the cache key and log every prompt that misses both cache layers. That added 400 lines of monitoring, but it caught a breaking change from Anthropic two weeks before it hit production.
+## When this approach is wrong
 
-Each failure mode taught us that FinOps for LLMs isn’t just about dollars — it’s about stability, correctness, and user trust. Ignore these edge cases and you’ll save money for a week, then spend it tenfold on support tickets.
+Three-lever shaping, caching, and queuing pays off when you have repeated traffic, a small number of dominant prompt shapes, and control over the request path. It is the wrong choice when:
 
-## Tools and libraries worth your time
+- **Every prompt is unique.** Creative writing, legal drafting, and one-off analysis have near-zero cache hit rates. A priority queue still helps, but caching does not, and the added complexity is pure overhead.
+- **You are on a fully managed endpoint.** If the provider owns the queue and the cache, you can only shape and monitor on your side. Shaping adds a hop; measure whether it is worth it.
+- **Traffic is tiny.** Below a few hundred requests a day, the operational cost of running a cache and a priority queue exceeds the token savings. Use a single queue and revisit later.
+- **Latency is the only constraint.** Caching adds a lookup on every request. If your SLA is tight and your hit rate is low, the lookup is a tax with no rebate.
 
-**Semantic shaper**: Rust + Axum 0.7 for low-latency rewrites. We saw 95% lower CPU usage than Node 20 for the same workload, which matters when you’re paying by the millisecond.
+## A decision checklist
 
-**Cache layers**: 
-- In-process: `lru-cache` (Node) or `functools.lru_cache` (Python). Max 100 entries, 8KB each. - Distributed: Redis 7.2 with `redis-py` or `ioredis`. Use `EX` for TTL, not `PX`, to avoid millisecond drift. - Bloom filter: `bloom-filters` (Node) or `pybloom_live` (Python) to gate cache access.
+Before implementing any lever, answer these:
 
-**Queue discipline**: AWS SQS with custom attributes. Skip AWS Step Functions; SQS gives you FIFO and priority in one service. The `VisibilityTimeout` trick is undocumented but saves retries.
+1. What fraction of requests repeat a previously seen prompt? (If under 5 percent, skip caching.)
+2. What is your p95 input token count, and how much of it is repeated context? (If most, shaping pays.)
+3. What is your queue wait time at p95, and is it correlated with prompt size? (If yes, priority queuing pays.)
+4. Can you attribute cost per request ID end to end? (If not, fix observability first.)
+5. What is your rollback plan if shaping changes answer quality? (Keep the splitter behind a flag.)
 
-**Token counting**: `tiktoken` (Python) or `js-tiktoken` (Node). The encodings are model-specific: use `cl100k_base` for GPT-4, `o200k_base` for Claude 3.5.
+## The one thing to do in the next 30 minutes
 
-**Monitoring**: Prometheus + Grafana for GPU idle time, token waste, and cache hit rate. Add a custom metric: `llm_queue_starvation_seconds` to catch long waits.
-
-**Cost dashboards**: AWS Cost Explorer with a custom savings plan for the GPU instances. We use `m7g.2xlarge` (Graviton3) for the shaper and Lambda for the queue worker. The savings plan cut our compute bill by 22% overnight.
-
-Avoid the hype tools: LangSmith, Arize, WhyLabs. They’re great for model debugging, but they don’t give you the levers that move the needle in production. Focus on shaping, caching, and queuing first.
-
-## When this approach is the wrong choice
-
-This three-lever approach works for teams running 10K–100K prompts/day with a single primary model. If you’re running a multi-model, multi-region system with 1M+ daily prompts, you need a different playbook. At that scale, the shaping, caching, and queuing overhead becomes noise compared to the model’s own inefficiencies.
-
-It also fails if your prompts are all unique — like creative writing or legal document generation. Cache hit rates drop to 5%, and the priority queue becomes a liability. In that case, switch to a streaming response model with backpressure, and focus on GPU utilization instead of token waste.
-
-Finally, this approach assumes you control the prompt routing. If you’re using a managed API like OpenRouter or Together AI, you’re stuck with their queue and cache. You’ll need to implement shaping and monitoring on your side, which adds latency and complexity.
-
-We tried this approach on a side project with 500 daily prompts and saw no benefit. The overhead of the shaper and cache outweighed the savings. The levers only move the needle when the scale is right.
-
-## My honest take after using this in production
-
-I expected the biggest win to be cache hits. Instead, it was the priority queue. The moment we let short prompts jump ahead of long ones, our GPU idle time dropped from 18% to 6% and our support tickets about slow responses fell by 40%. That wasn’t in the docs.
-
-The shaping lever was the hardest to sell internally. Product managers hated the idea of rewriting user prompts, even if it saved money. We started with a “soft shaper” that only rewrote prompts longer than 500 characters, and even that caused pushback. In the end, we made the shaper opt-in, but the data convinced them: 28% token savings in two weeks is hard to ignore.
-
-The cache stampede surprise hit us on Black Friday. We assumed our top 5% prompts would stay stable, but a single viral tweet changed user phrasing overnight. The Bloom filter saved us from a 30-second queue backup. That’s the kind of edge case you only learn in production.
-
-Most FinOps guides stop at “track tokens” or “set a budget.” That’s like giving a pilot a fuel gauge and calling it a flight plan. The real work is in shaping traffic, caching smartly, and disciplining the queue. The rest is noise.
-
-If you take one thing from this post, let it be this: your LLM endpoint isn’t a database. Treat it like a chat server with a credit card, and the levers will reveal themselves.
-
-## What to do next
-
-Open your cost dashboard right now. Filter for the last 7 days of LLM spend. Look at the line items: model name, tokens consumed, and idle time. Identify one model where idle time is above 15%. Then, open your queue logs and check the longest-waiting prompt. If it’s over 3 seconds, switch that queue to priority mode using the code snippets above. Do it now — before your next invoice arrives.
-
-You’ll save hundreds this month, and you’ll learn more about your traffic in 30 minutes than a quarter of FinOps reports will tell you.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** July 12, 2026
+Open your gateway logs for the last 24 hours and compute a single number: billed tokens divided by successful client responses. If that ratio is meaningfully above your mean tokens per prompt, you are paying for output nobody received. Find the top three request IDs by billed tokens where the client never got a 2xx response, and check whether a client timeout triggered a retry. That one query tells you whether your problem is shaping, caching, or simply retry policy — before you write any new infrastructure.

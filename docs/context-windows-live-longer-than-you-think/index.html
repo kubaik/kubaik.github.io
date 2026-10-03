@@ -64,8 +64,8 @@
       "description": "Long-running agents exhaust context windows through unbounded history growth. Covers pruning, summarisation, retrieval, and retention policies with code.",
       "datePublished": "2026-07-25T13:43:38+00:00",
       "dateModified": "2026-10-03T12:50:51+00:00",
-      "wordCount": 2476,
-      "timeRequired": "PT12M",
+      "wordCount": 2608,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2476 words
+                        13 min read
+                        &nbsp;·&nbsp; 2608 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -555,6 +555,24 @@ Design for deletion from the start. Keep a per-ticket index of every storage loc
 Lock on the ticket ID with a TTL longer than your worst-case turn. Log lock acquisition and release so you can see contention and expiry events in production.</p>
 <h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
 <p>Open your agent's code and find where the message array is appended to. If there is no eviction step between the append and the API call, that is the bug. Add a single counter that records the prompt token count from the API response's usage field, tagged by ticket ID, and emit it to whatever metrics system you already run. That one metric will tell you within a day whether your tail is approaching the limit — and whether the work in this article applies to you at all.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/context-windows-agents-that-run-for-days/">Context windows: agents that run for days</a></li>
+<li><a href="https://kubaik.github.io/agents-running-hours-youre-losing-context-fast/">Agents running hours? You're losing context fast</a></li>
+<li><a href="https://kubaik.github.io/trim-llm-bills-3-finops-moves-that-work/">Trim LLM bills: 3 FinOps moves that work</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -596,7 +614,7 @@ Lock on the ticket ID with a TTL longer than your worst-case turn. Log lock acqu
                     <a class="related-card" href="/keep-multi-model-systems-stable-6-rules-that-worked/">
                         <h3>Stabilize multi-model agent routers: six production rules</h3>
                         <p>Six rules for multi-model agent routers: bounded concurrency, idempotency keys, timeouts, observability, and how to measure each one yourself.</p>
-                        <span class="related-meta">14 min read · 15 July 2026</span>
+                        <span class="related-meta">15 min read · 15 July 2026</span>
                     </a>
                     
                 </div>

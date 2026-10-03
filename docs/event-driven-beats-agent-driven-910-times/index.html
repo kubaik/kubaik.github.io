@@ -64,8 +64,8 @@
       "description": "How to tell when scheduled jobs and polling loops quietly turn an event-driven system into an agent-driven one, and how to fix it without a rewrite.",
       "datePublished": "2026-07-30T02:38:09+00:00",
       "dateModified": "2026-10-03T12:37:40+00:00",
-      "wordCount": 2807,
-      "timeRequired": "PT14M",
+      "wordCount": 2948,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -246,8 +246,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2807 words
+                        15 min read
+                        &nbsp;·&nbsp; 2948 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -537,6 +537,27 @@ No. The pattern is about where the decision lives, not about the runtime. A Kube
   --include='*.yaml' --include='*.yml' .
 </code></pre>
 <p>For each match, ask the single question that separates the two patterns: <em>does this code decide what to do next based on state it maintains itself?</em> If the answer is yes, you have found an agent. Pick the highest-traffic one and convert it to an event source mapping with a redrive policy before your next deploy.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/">Always-On vs On-Demand Agents: Real Cost Trade-offs</a></li>
+<li><a href="https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/">Agent SLOs: measure what agents actually do</a></li>
+<li><a href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://argo-cd.readthedocs.io/">Argo CD documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -577,8 +598,8 @@ No. The pattern is about where the decision lives, not about the runtime. A Kube
                     
                     <a class="related-card" href="/ai-stole-system-design/">
                         <h3>AI stole system design</h3>
-                        <p>Detect AI-generated system designs in 2026 interviews — 3 concrete red flags, a live debugging fix, and the exact Terraform command to audit Terraform pasted…</p>
-                        <span class="related-meta">10 min read · 21 June 2026</span>
+                        <p>AI can generate a polished system design in seconds. Here is how to redesign interviews around live debugging so you test real understanding.</p>
+                        <span class="related-meta">11 min read · 21 June 2026</span>
                     </a>
                     
                 </div>

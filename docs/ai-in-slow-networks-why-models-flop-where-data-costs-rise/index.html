@@ -64,8 +64,8 @@
       "description": "How to cut payload size, round-trips and cost for AI features on 2G/3G networks, with a worked ASR example, failure modes and a measurement checklist.",
       "datePublished": "2026-07-05T11:34:19+00:00",
       "dateModified": "2026-10-03T12:54:22+00:00",
-      "wordCount": 2698,
-      "timeRequired": "PT13M",
+      "wordCount": 2827,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2698 words
+                        14 min read
+                        &nbsp;·&nbsp; 2827 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -476,6 +476,24 @@ There is no universal answer. Small quantised models can match larger ones on cl
 Only if the same embedding is reused across multiple queries. If most queries are distinct intents, caching embeddings adds storage without reducing model calls. Cache the final response or an intent-to-answer mapping instead.</p>
 <h2 id="one-thing-you-can-do-in-the-next-30-minutes">One thing you can do in the next 30 minutes</h2>
 <p>Open your slowest AI endpoint in Chrome DevTools, switch to the Network tab, and enable 3G throttling. Record the total transferred bytes and the time to first useful output for the full request chain. If either exceeds your budget, the fastest wins are usually enabling gzip on the response, removing base64 from the payload, and merging sequential calls into one. Change one thing, re-measure, and keep the change only if the bytes or the time actually moved.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
+<li><a href="https://kubaik.github.io/mobile-first-ai-fails-you-didnt-plan/">Mobile-first AI fails you didn’t plan…</a></li>
+<li><a href="https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/">Zero-trust AI: skip the latency tax</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+<li><a href="https://webassembly.org/">WebAssembly</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

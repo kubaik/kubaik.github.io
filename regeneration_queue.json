@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-unit-costs-the-metric-both-teams-fight-over",
-    "title": "AI unit costs: the metric both teams fight over",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "always-on-agents-cost-more-than-you-think",
-    "title": "Always-on agents cost more than you think",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about real cost during a code review recently, and my first",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "audit-logs-that-scale-skip-the-3am-fire-drills",
-    "title": "Audit logs that scale: skip the 3AM fire drills",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "aws-cloudwatch-synthetics-for-ai-pipelines",
-    "title": "AWS CloudWatch Synthetics for AI pipelines",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "biometrics-beat-passwords-passkey-2026-shift",
-    "title": "Biometrics beat passwords: passkey 2026 shift",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",
     "title": "CDC pipeline death spiral: one bad LLM call can crash…",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on building change before understanding what w",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "cicd-for-ai-code-test-secure-rollback-fast",
     "title": "CI/CD for AI code: test, secure, rollback fast",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three days debugging the connection pool issue that turned out to be a s",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "currency-switch-fails-in-ghana-one-config-file-to-rule",
     "title": "Currency switch fails in Ghana: one config file to rule…",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I've hit the same building fintech mistake in more than one production codebase ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "edge-agents-vs-cloud-round-trips-in-2026",
     "title": "Edge agents vs cloud round-trips in 2026",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I tested this with a Python 3.11 agent using ONNX Runtime 1.16 on a mid-range An",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "evolve-your-monolith-without-rewriting-in-2026",
     "title": "Evolve your monolith without rewriting in 2026",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this golden paths problem while migrating a service under a hard dead",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "latency-spike-after-llm-feature-rollout",
@@ -721,6 +691,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "ai-unit-costs-the-metric-both-teams-fight-over",
+    "title": "AI unit costs: the metric both teams fight over",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "always-on-agents-cost-more-than-you-think",
+    "title": "Always-on agents cost more than you think",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about real cost during a code review recently, and my first",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "audit-logs-that-scale-skip-the-3am-fire-drills",
+    "title": "Audit logs that scale: skip the 3AM fire drills",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "aws-cloudwatch-synthetics-for-ai-pipelines",
+    "title": "AWS CloudWatch Synthetics for AI pipelines",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "biometrics-beat-passwords-passkey-2026-shift",
+    "title": "Biometrics beat passwords: passkey 2026 shift",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ai-errors-hide-in-plain-latency",

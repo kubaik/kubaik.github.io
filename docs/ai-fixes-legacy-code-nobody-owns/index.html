@@ -64,7 +64,7 @@
       "description": "How to combine static analysis, runtime traces, and LLM contextualization to make unowned legacy systems legible, with code and failure modes.",
       "datePublished": "2026-06-27T09:58:08+00:00",
       "dateModified": "2026-10-03T12:31:37+00:00",
-      "wordCount": 3578,
+      "wordCount": 3700,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -238,7 +238,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3578 words
+                        &nbsp;·&nbsp; 3700 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -484,6 +484,19 @@ Write characterization tests first. They capture current behavior, including beh
 Cross-check it against the traces and against the code. Any claim that is not supported by a trace, a log line, or a specific code location should be treated as a hypothesis, not a finding.</p>
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Pick one legacy service you have access to, run <code>py-spy top --pid &lt;PID&gt; --duration 30</code> (or the equivalent profiler for your runtime) against it during a period of normal load, and save the output. Then open the three files that appear hottest in the profile and check whether any of them have been modified in the last year. That single pass will tell you whether the system's real hotspots match the parts of the codebase your team actually understands — which is the precondition for any further triage.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/">Map legacy code with AI before it breaks</a></li>
+<li><a href="https://kubaik.github.io/legacy-codebases-let-ai-own-the-boring-parts/">Legacy codebases? Let AI own the boring parts</a></li>
+<li><a href="https://kubaik.github.io/ai-revives-unloved-legacy-codebases/">AI revives unloved legacy codebases</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

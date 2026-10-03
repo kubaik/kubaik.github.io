@@ -64,8 +64,8 @@
       "description": "A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.",
       "datePublished": "2026-08-03T14:47:24+00:00",
       "dateModified": "2026-10-03T12:43:50+00:00",
-      "wordCount": 1993,
-      "timeRequired": "PT10M",
+      "wordCount": 2125,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 1993 words
+                        11 min read
+                        &nbsp;·&nbsp; 2125 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -464,6 +464,23 @@ Measure cost per completed experiment, including queue and start time, not cost 
 When you need GPU sharing, namespace-grade isolation, or metrics-driven autoscaling of inference services. Nomad fits full-GPU batch training with simple operations.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick one representative training job. Record its submit timestamp and the timestamp of its first training step, then compute the start latency. Run it ten times and take the median. Multiply that median by your GPU-hour price and by the number of jobs in a typical sweep. If that product is more than roughly 10% of your useful compute cost, your scheduler latency is worth fixing before you change anything else.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
+<li><a href="https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/">Why Cloud Cost Tools Miss Agent-Driven GPU Spend</a></li>
+<li><a href="https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/">Agent followed instructions too literally: the cron job trap</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

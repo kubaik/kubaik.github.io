@@ -64,7 +64,7 @@
       "description": "How to build AI wrappers that tolerate vendor API drift: contract tests, drift detection, cost routing, and a circuit breaker you can write today.",
       "datePublished": "2026-06-26T23:58:50+00:00",
       "dateModified": "2026-10-03T12:31:55+00:00",
-      "wordCount": 2340,
+      "wordCount": 2474,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -259,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2340 words
+                        &nbsp;·&nbsp; 2474 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -594,6 +594,23 @@ A managed gateway handles routing and observability for you but adds another dep
 Cache on the semantic key of the request, not the raw string, and record cache hit rate as a first-class metric. A cache that silently serves stale results after an upstream behavior change is worse than no cache.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Open your wrapper's main request path and add one structured log line per request containing the correlation ID, resolved model, prompt tokens, completion tokens, latency, and a normalized error category. Run your test suite, then trigger one deliberate failure (an invalid API key against a sandbox endpoint) and confirm the error category appears correctly in the log. That single change gives you the baseline every other improvement in this article depends on.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/">AI features as tech debt or golden paths</a></li>
+<li><a href="https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/">Skip M-Pesa: build one API for 3 African markets</a></li>
+<li><a href="https://kubaik.github.io/9-ai-wrapper-plays-that-worked-in-2026/">AI wrapper business models: what survives contact with users</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

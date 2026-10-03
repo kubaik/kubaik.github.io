@@ -64,8 +64,8 @@
       "description": "How to cut tail latency for users on congested 4G by moving cache logic to the CDN edge, with code, measurement commands and failure modes.",
       "datePublished": "2026-06-25T23:11:40+00:00",
       "dateModified": "2026-10-03T12:34:56+00:00",
-      "wordCount": 2656,
-      "timeRequired": "PT13M",
+      "wordCount": 2788,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2656 words
+                        14 min read
+                        &nbsp;·&nbsp; 2788 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -596,6 +596,23 @@ await redis.set(userKey, JSON.stringify(cart), { EX: 10 });
 </ul>
 <h2 id="take-this-action-now">Take this action now</h2>
 <p>Open your CDN's edge function file — or create one if you do not have one — and change the prefetch hint to point at the single API route your monitoring shows as slowest at the 95th percentile. Then run the <code>curl</code> timing command above thirty times from a phone on a congested mobile network, save the output, and compare the <code>time_starttransfer</code> p95 against a run with the prefetch hint removed. That comparison, not this article, is the evidence you should act on.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
+<li><a href="https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">AI in slow networks: why models flop where data costs rise</a></li>
+<li><a href="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">Build apps that still work on 500 ms latency</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

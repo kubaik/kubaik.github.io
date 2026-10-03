@@ -64,8 +64,8 @@
       "description": "Diagnose nightly AI model drift and FeatureStoreKeyNotFound errors: tokenizer drift, memory fragmentation, and cold-start timeouts, with fixes.",
       "datePublished": "2026-07-07T03:43:58+00:00",
       "dateModified": "2026-10-03T12:28:26+00:00",
-      "wordCount": 2677,
-      "timeRequired": "PT13M",
+      "wordCount": 2805,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -258,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2677 words
+                        14 min read
+                        &nbsp;·&nbsp; 2805 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -523,6 +523,23 @@ client = redis.Redis(connection_pool=pool)
 <p>If the new categories are legitimate and will persist, yes. Validation and alerting buy time; they do not make the model accurate on inputs it never saw.</p>
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Open your model's memory metric for the last 14 days and plot the p99 of peak usage against the container limit. If that ratio exceeds 90%, raise the limit to the next tier and redeploy. That single change removes the most common cause of nightly failures before you investigate anything else.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rag-pipelines-4-silent-prod-killers/">RAG pipelines: 4 silent prod killers</a></li>
+<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+<li><a href="https://kubaik.github.io/llm-drift-the-silent-quality-drop-metrics-miss/">LLM drift: the silent quality drop metrics miss</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

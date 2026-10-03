@@ -64,8 +64,8 @@
       "description": "Model calls are distributed workloads, not function calls. Here is how to design task queues, cache keys, token budgets and retry policy for AI features.",
       "datePublished": "2026-06-23T13:39:38+00:00",
       "dateModified": "2026-10-03T12:50:32+00:00",
-      "wordCount": 2431,
-      "timeRequired": "PT12M",
+      "wordCount": 2559,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -255,8 +255,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2431 words
+                        13 min read
+                        &nbsp;·&nbsp; 2559 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -434,6 +434,23 @@ export class TokenBudget {
 <p><strong>Serverless functions already scale.</strong> Autoscaling addresses capacity, not latency. A serverless function that calls a model synchronously still holds the caller for the duration of the call. The queue decouples the two.</p>
 <h2 id="action-to-take-in-the-next-30-minutes">Action to take in the next 30 minutes</h2>
 <p>Open the handler for your highest-traffic AI endpoint and find the line where the model call begins. Check whether a database connection is held across that line. If it is, restructure the handler so the connection is released before the call, then measure p95 latency before and after under a load test that holds peak concurrency for at least 60 seconds.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-native-apps-forget-the-old-stack/">AI-native apps: forget the old stack</a></li>
+<li><a href="https://kubaik.github.io/postgres-vector-search-what-breaks-first/">Postgres vector search: what breaks first</a></li>
+<li><a href="https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/">AI features as tech debt or golden paths</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -469,7 +486,7 @@ export class TokenBudget {
                     <a class="related-card" href="/ai-native-apps-forget-the-old-stack/">
                         <h3>AI-native apps: forget the old stack</h3>
                         <p>LLM-backed services are token-bound, stateful and failure-prone. Learn the failure modes, how to measure them, and patterns that contain them.</p>
-                        <span class="related-meta">9 min read · 12 June 2026</span>
+                        <span class="related-meta">10 min read · 12 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/who-signs-off-on-ai-code/">

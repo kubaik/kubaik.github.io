@@ -64,8 +64,8 @@
       "description": "How to build agent task pipelines that resume after crashes, schema drift and model changes, using Redis streams, idempotent steps and replay.",
       "datePublished": "2026-07-06T07:57:25+00:00",
       "dateModified": "2026-10-03T12:46:26+00:00",
-      "wordCount": 2209,
-      "timeRequired": "PT11M",
+      "wordCount": 2350,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -257,8 +257,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2209 words
+                        12 min read
+                        &nbsp;·&nbsp; 2350 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -643,6 +643,27 @@ def test_task_is_durable_across_restart(monkeypatch):
 <p>In those cases, the same task schema and processor logic apply; only the queue adapter changes. Keep <code>enqueue</code>, <code>dequeue</code>, <code>ack</code>, and <code>update_task</code> behind a small interface so swapping the backend is a one-file change.</p>
 <h2 id="take-action-in-the-next-30-minutes">Take action in the next 30 minutes</h2>
 <p>Open your agent project and add a single field to your task model: <code>attempt: int = 0</code>. Persist it alongside the task payload before every outbound call, and increment it on the persisted copy rather than in memory. Then write one test that kills the worker process mid-call and asserts the task is either retried or marked failed, never silently lost. If you cannot make that test pass, the rest of the durability work is decoration.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/stop-assuming-payment-apis-never-fail/">Stop assuming payment APIs never fail</a></li>
+<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
+<li><a href="https://kubaik.github.io/survive-network-drops-agentic-workflows-that-keep-running/">Survive network drops: agentic workflows that keep running</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

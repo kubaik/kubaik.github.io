@@ -64,7 +64,7 @@
       "description": "How PagerDuty AIOps and Opsgenie Incident AI differ in event grouping, template suggestions, cost, and lock-in, plus a pilot plan to measure which fits.",
       "datePublished": "2026-06-29T20:08:01+00:00",
       "dateModified": "2026-10-03T12:52:07+00:00",
-      "wordCount": 2526,
+      "wordCount": 2655,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -251,7 +251,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2526 words
+                        &nbsp;·&nbsp; 2655 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -422,6 +422,23 @@ if __name__ == &quot;__main__&quot;:
 <p>At the end, keep the tool that reduced MTTA without increasing cognitive load. If neither did, the honest answer is that the tool is not the bottleneck.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Open your metrics configuration and check the scrape interval. If it is longer than the clustering window you intend to use, a clustering-based platform cannot group events reliably. For a Prometheus setup, that means inspecting <code>prometheus.yml</code>, confirming <code>scrape_interval</code> is short enough for your grouping window, and verifying that scrape duration stays well below the interval so scrapes are not routinely missing their deadline. If the interval is too long or scrapes are timing out, fix the metrics pipeline before evaluating either tool, because no AI layer can cluster signals it never receives.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
+<li><a href="https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI-First vs Human-First Incident Response</a></li>
+<li><a href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">Designing an AI Alert Triage Layer That Reduces Pages</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -451,7 +468,7 @@ if __name__ == &quot;__main__&quot;:
                     <a class="related-card" href="/fix-ai-agent-failures-postmortem-guide/">
                         <h3>Postmortems for AI agents: drift, cost, replay</h3>
                         <p>How to run postmortems on AI agents: capture prompts and model versions, measure drift and cost per session, and choose between log-based and instrumented pipelines.</p>
-                        <span class="related-meta">11 min read · 29 June 2026</span>
+                        <span class="related-meta">12 min read · 29 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-ops-vs-human-ops-the-incidents-that-broke-them/">

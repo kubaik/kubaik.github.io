@@ -64,8 +64,8 @@
       "description": "Compare Redis-style short-term agent context with Postgres event logs: latency, durability, auditability, cost, and how to measure each.",
       "datePublished": "2026-07-09T07:11:24+00:00",
       "dateModified": "2026-10-03T12:48:26+00:00",
-      "wordCount": 2895,
-      "timeRequired": "PT14M",
+      "wordCount": 3034,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2895 words
+                        15 min read
+                        &nbsp;·&nbsp; 3034 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -533,6 +533,26 @@ They are useful when you need continuous aggregates over high-volume event strea
 <pre><code class="language-bash">redis-cli INFO stats | grep evicted_keys
 </code></pre>
 <p>If that number is non-zero, the store has already been discarding live contexts. Then grep your agent code for the side-effecting calls — payment, email, record creation — and check whether each one is guarded by a durable record written <em>before</em> the call. Any unguarded call is a duplicate-action bug waiting for a restart. Write the guard, or move the record to a log, before you tune anything else.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agents-running-hours-youre-losing-context-fast/">Agents running hours? You're losing context fast</a></li>
+<li><a href="https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
+<li><a href="https://kubaik.github.io/event-sourcing-pay-the-complexity-tax-only-here/">Event sourcing: pay the complexity tax only here</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://github.com/pgvector/pgvector">pgvector README</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -574,7 +594,7 @@ They are useful when you need continuous aggregates over high-volume event strea
                     <a class="related-card" href="/store-data-once-serve-everywhere-cheaper/">
                         <h3>Store data once, serve everywhere: cheaper</h3>
                         <p>How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.</p>
-                        <span class="related-meta">11 min read · 25 June 2026</span>
+                        <span class="related-meta">12 min read · 25 June 2026</span>
                     </a>
                     
                 </div>

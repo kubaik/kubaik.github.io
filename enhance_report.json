@@ -1,21 +1,21 @@
 {
   "changed": [
     {
-      "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",
+      "slug": "agent-slos-measure-what-agents-actually-do",
       "sentences_removed": 0,
       "sections_added": 2,
       "footer_migrated": false
     },
     {
-      "slug": "postgres-vector-search-what-breaks-first",
+      "slug": "ai-sales-cycles-3x-faster-40-less-talk",
       "sentences_removed": 0,
       "sections_added": 2,
       "footer_migrated": false
     },
     {
-      "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
+      "slug": "trim-llm-bills-3-finops-moves-that-work",
       "sentences_removed": 0,
-      "sections_added": 2,
+      "sections_added": 1,
       "footer_migrated": false
     }
   ],
@@ -23,34 +23,18 @@
     "agent-drift-the-failure-mode-you-didnt-log",
     "agents-keep-breaking-prod-3-boundary-rules-you-still-need",
     "ai-agent-postmortem-human-loop-vs-blind-replay",
-    "ai-chats-hidden-wcag-fails",
-    "ai-era-promotions-hinge-on-this-one-thing",
     "ai-features-rot-faster-than-you-build-them",
-    "ai-in-slow-networks-why-models-flop-where-data-costs-rise",
-    "ai-interviews-now-ask-for-this",
-    "ai-sales-cycles-3x-faster-40-less-talk",
-    "ai-scanners-overlook-real-vulns",
     "ai-unit-costs-the-metric-both-teams-fight-over",
-    "apis-must-die-in-2026",
     "audit-logs-that-scale-skip-the-3am-fire-drills",
-    "buy-vs-build-ai-3-hard-rules-for-2026",
-    "event-driven-beats-agent-driven-910-times",
-    "fix-ai-agent-failures-postmortem-guide",
     "foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality",
-    "kubernetes-or-nomad-the-real-experiment-cost-split",
     "llm-eval-drift-that-users-notice-first",
-    "mcp-servers-real-time-pipelines-without-agents",
     "observability-2026-ditch-the-three-pillars",
-    "offline-first-apps-what-3g-markets-taught-us",
-    "pr-checklists-are-dead-ai-agents-do-reviews-now",
     "replace-env-with-these-in-2026",
-    "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse",
     "spot-instances-vs-on-demand-for-ai-experiments",
     "why-does-my-agent-version-break-clients",
     "why-your-multi-agent-system-degraded-slowly"
   ],
   "retitle": [
-    "african-fintech-rules-broke-our-stack",
     "agent-flooded-our-api-with-bad-calls-overnight",
     "ai-pair-prompts-9-setups-we-tried-in-2026",
     "ai-tools-rewrote-my-engineering-rules",
@@ -60,7 +44,6 @@
     "react-19-compiler-my-components-changed-how",
     "temporal-changed-our-agent-retries-for-good",
     "why-does-my-agent-version-break-clients",
-    "why-does-my-model-drift-after-deploy",
     "why-our-schema-survived-ai-scaling"
   ]
 }
