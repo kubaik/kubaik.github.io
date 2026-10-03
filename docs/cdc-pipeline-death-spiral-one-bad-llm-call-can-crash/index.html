@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>CDC pipeline death spiral: one bad LLM call can crash… - Kubai Kevin</title>
-        <meta name="description" content="CDC pipeline crashes when LLM bursts hit — Postgres replication slot errors, 3 concrete fixes, vLLM 0.4.2 and Python semaphore patterns, plus the one…">
+        <meta name="description" content="How unconstrained LLM bursts stall CDC pipelines, and how to add backpressure at each layer with metrics, configs, and a worked failure example.">
         <meta name="keywords" content="CdcPipelineCrash, VllmCdc, PythonSemaphoreLlm, CdcBackpressure, LlmConcurrencyLimit, Python, Python3, Postgresql, Vllm042cdc">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-02T13:29:42.126639">
-        <meta property="article:modified_time" content="2026-09-19T08:27:13.962623+00:00">
+        <meta property="article:modified_time" content="2026-10-03T12:02:15.601590+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="CDC pipeline death spiral: one bad LLM call can crash…">
-        <meta property="og:description" content="CDC pipeline crashes when LLM bursts hit — Postgres replication slot errors, 3 concrete fixes, vLLM 0.4.2 and Python semaphore patterns, plus the one…">
+        <meta property="og:description" content="How unconstrained LLM bursts stall CDC pipelines, and how to add backpressure at each layer with metrics, configs, and a worked failure example.">
         <meta property="og:url" content="https://kubaik.github.io/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="CDC pipeline death spiral: one bad LLM call can crash…">
-        <meta name="twitter:description" content="CDC pipeline crashes when LLM bursts hit — Postgres replication slot errors, 3 concrete fixes, vLLM 0.4.2 and Python semaphore patterns, plus the one…">
+        <meta name="twitter:description" content="How unconstrained LLM bursts stall CDC pipelines, and how to add backpressure at each layer with metrics, configs, and a worked failure example.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,10 +61,10 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/#article",
       "headline": "CDC pipeline death spiral: one bad LLM call can crash…",
-      "description": "CDC pipeline crashes when LLM bursts hit — Postgres replication slot errors, 3 concrete fixes, vLLM 0.4.2 and Python semaphore patterns, plus the one…",
+      "description": "How unconstrained LLM bursts stall CDC pipelines, and how to add backpressure at each layer with metrics, configs, and a worked failure example.",
       "datePublished": "2026-08-02T13:29:42+00:00",
-      "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 2434,
+      "dateModified": "2026-10-03T12:02:15+00:00",
+      "wordCount": 2309,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">CDC pipeline death spiral: one bad LLM call can crash…</h1>
                 
-                <p class="post-lead">CDC pipeline crashes when LLM bursts hit — Postgres replication slot errors, 3 concrete fixes, vLLM 0.4.2 and Python semaphore patterns, plus the one…</p>
+                <p class="post-lead">How unconstrained LLM bursts stall CDC pipelines, and how to add backpressure at each layer with metrics, configs, and a worked failure example.</p>
                 
                 
                 <div class="tags">
@@ -260,86 +260,77 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2434 words
+                        &nbsp;·&nbsp; 2309 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.</p>
-<h2 id="advanced-edge-cases-you-personally-encountered">Advanced edge cases you personally encountered</h2>
-<p>Let’s talk about the edge cases that broke our CDC pipeline in ways no blog post warned us about.</p>
-<p><strong>Case 1: The vLLM streaming buffer explosion</strong>
-We were running vLLM 0.4.2 on a p3.8xlarge in us-east-1 with <code>--max-model-len=65536</code>. One night, a prompt with 50,000 tokens triggered a bug in vLLM’s streaming response handler. Instead of streaming tokens incrementally, the service buffered the entire 1.2MB response in memory before sending it to the CDC service. Our Node.js CDC processor (running on a t3.xlarge) had a default <code>maxBuffer=1MB</code> in the HTTP client, which caused the entire event loop to block. Postgres replication lag hit 8 seconds, and the replication slot error appeared. The fix wasn’t in the CDC code—it was in the vLLM configuration. We had to set <code>--disable-streaming</code> and add a backpressure mechanism in the client:</p>
-<pre><code class="language-python"># Added to the vllm client config
-from vllm import LLM, RequestOutput
-import asyncio
+                <p>A change data capture (CDC) pipeline that calls an LLM is a chain of queues. Each link — the replication slot, the connector, the broker, the consumer, the HTTP client, the inference server — has a bounded capacity. When one link accepts more work than the next link can drain, the excess does not disappear; it accumulates as lag, memory, or blocked threads. The failure mode is rarely a crash. It is a slow, cascading stall that starts at the LLM call and ends with a Postgres replication slot that will not advance.</p>
+<p>This article covers why that happens, how to detect it, and where to place backpressure so a single large LLM response cannot take down the pipeline behind it.</p>
+<h2 id="why-llm-bursts-are-different-from-normal-traffic">Why LLM bursts are different from normal traffic</h2>
+<p>Most CDC pipelines are designed around a predictable event rate. A row changes, a small event is emitted, a consumer processes it in milliseconds. The variance is low and the payloads are small.</p>
+<p>LLM calls invert both assumptions:</p>
+<ul>
+<li><strong>Latency variance is enormous.</strong> A short prompt may return in 200ms; a long one may take many seconds. A consumer that blocks on each call will see its throughput collapse when prompts get longer.</li>
+<li><strong>Output size is unbounded unless you bound it.</strong> A model asked to "expand this into chunks" can legitimately return tens of thousands of tokens. That is a single logical event that produces a very large physical payload.</li>
+<li><strong>Concurrency is easy to create accidentally.</strong> A retry loop, a fan-out, or a batch consumer can each multiply the number of simultaneous in-flight requests without anyone intending it.</li>
+</ul>
+<p>The result is that the LLM layer acts as a variable-rate source feeding a fixed-rate sink. Without an explicit bound between them, the sink absorbs the mismatch until it fails.</p>
+<h2 id="the-failure-mode-a-stalled-replication-slot">The failure mode: a stalled replication slot</h2>
+<p>The canonical symptom is a replication slot that stops advancing. The sequence usually looks like this:</p>
+<ol>
+<li>A large LLM response arrives at the CDC consumer.</li>
+<li>The consumer's HTTP client buffers the response, and the event loop or worker thread blocks while it does so.</li>
+<li>Because the consumer is blocked, it stops acknowledging messages from the broker.</li>
+<li>The broker's consumer lag grows, but more importantly, the connector's sink stops draining.</li>
+<li>The connector stops confirming progress to Postgres.</li>
+<li>Postgres retains WAL segments for the unconfirmed slot. <code>pg_replication_slots</code> shows a growing <code>restart_lsn</code> gap, and the slot's retained WAL grows.</li>
+<li>If the stall is long enough, or the disk fills, the slot is invalidated and must be recreated — which typically means a fresh snapshot.</li>
+</ol>
+<p>Note that the root cause is upstream of Postgres. Postgres is behaving correctly: it retains WAL because a consumer told it to. The fix belongs at the point where unbounded work enters the pipeline.</p>
+<h3 id="what-to-instrument">What to instrument</h3>
+<p>You cannot fix what you cannot see. The minimum useful set of signals:</p>
+<ul>
+<li><strong>Replication lag in bytes and seconds.</strong> Read <code>pg_current_wal_lsn()</code> against the slot's <code>confirmed_flush_lsn</code>, and export the difference. Alert on a sustained increase, not a single spike.</li>
+<li><strong>Slot retained WAL.</strong> <code>pg_replication_slots</code> exposes the WAL retention per slot. A monotonic rise is the earliest reliable warning.</li>
+<li><strong>Consumer lag per partition.</strong> From the broker's own metrics or the client library.</li>
+<li><strong>In-flight LLM requests and their duration.</strong> A histogram of call duration and a gauge of concurrent calls. The gauge is the one that predicts stalls.</li>
+<li><strong>Response size distribution.</strong> A histogram of output bytes or tokens. The tail of this distribution is what breaks buffers.</li>
+</ul>
+<p>A useful exercise is to plot response size against consumer processing time on the same axis. If the two track each other closely, the consumer is doing work proportional to payload size and has no bound on either.</p>
+<h2 id="backpressure-at-each-layer">Backpressure at each layer</h2>
+<p>Backpressure means refusing or delaying new work when downstream capacity is exhausted. It must exist at every link, because a single unbounded link is enough to propagate a stall.</p>
+<h3 id="1-bound-the-generation-itself">1. Bound the generation itself</h3>
+<p>The cheapest place to limit burst size is at the inference server, before tokens are generated. Most serving stacks expose a maximum batch size or maximum sequence length. Setting these to values your downstream can actually absorb converts an unbounded problem into a bounded one.</p>
+<pre><code class="language-python">from vllm import LLM
+from vllm.sampling_params import SamplingParams
 
 llm = LLM(
     model=&quot;mistralai/Mistral-7B-Instruct-v0.3&quot;,
     max_model_len=32768,
+    max_num_batched_tokens=8192,   # caps tokens processed per step
+    enforce_eager=True,            # avoids graph capture buffering large batches
     disable_log_requests=True,
-    enforce_eager=True,  # Critical to avoid buffering
+    tensor_parallel_size=2,
+)
+
+sampling_params = SamplingParams(
+    max_tokens=2048,               # caps output length per request
+    temperature=0.3,
+    top_p=0.9,
 )
 </code></pre>
-<p>Without <code>enforce_eager=True</code>, vLLM buffers responses, which kills the CDC pipeline.</p>
-<p><strong>Case 2: The Kafka topic compaction storm</strong>
-We use AWS MSK (kafka_2.13:3.7.0) with topic compaction enabled. Under normal load, our <code>cdc_events</code> topic has ~500MB of data. During an LLM burst, one response generated 100,000 events (because the model expanded a single prompt into 100 separate chunks). MSK tried to compact the topic while the sink was still processing, causing a compaction storm. The sink thread blocked for 12 seconds while Kafka rebalanced partitions. Postgres replication lag hit 5 seconds, and the replication slot error appeared again. The fix was to disable compaction for the <code>cdc_events</code> topic and set <code>cleanup.policy=delete</code> instead:</p>
-<pre><code class="language-bash"># CLI command to update topic config
-kafka-configs.sh --alter --topic cdc_events \
-  --config cleanup.policy=delete \
-  --bootstrap-server kafka-broker:9092
-</code></pre>
-<p>We also added a <code>max.message.bytes=10485760</code> (10MB) limit to prevent one huge event from stalling the sink. This reduced compaction storms by 90%.</p>
-<p><strong>Case 3: The EBS GP3 burst credit exhaustion</strong>
-Our Postgres RDS (db.m6g.2xlarge, gp3 storage) was configured with 3,000 IOPS baseline and 1,000 burst IOPS. Under normal load, WAL writes used ~1,000 IOPS. During an LLM burst, WAL writes spiked to 4,000 IOPS, exhausting burst credits. The replication slot stalled because Postgres couldn’t flush WAL fast enough. The replication lag metric (<code>postgres_replication_lag_bytes</code>) spiked to 10MB, and the slot error appeared. The fix was to increase burst IOPS to 5,000:</p>
-<pre><code class="language-terraform"># Terraform snippet for RDS gp3 storage
-resource &quot;aws_db_instance&quot; &quot;postgres&quot; {
-  allocated_storage     = 100
-  storage_type          = &quot;gp3&quot;
-  iops                  = 5000  # Increased from 3000
-  throughput            = 250
-  # ... rest of config
-}
-</code></pre>
-<p>After this change, the replication lag stayed under 200ms even during LLM bursts.</p>
-<p><strong>Case 4: The Lambda concurrency throttle</strong>
-During an LLM burst, the function hit the 1,000 concurrent execution limit. Lambda started throttling requests, and the CDC pipeline stalled. The replication slot lag spiked to 6 seconds, and the slot error appeared. The fix was to increase the reserved concurrency to 2,000:</p>
-<pre><code class="language-yaml"># serverless.yml snippet
-functions:
-  cdc_processor:
-    handler: handler.process
-    memorySize: 1800
-    timeout: 30
-    reservedConcurrency: 2000  # Increased from 1000
-</code></pre>
-<p>We also added a <code>ConcurrencyLimitExceeded</code> alarm to catch this early. The lesson here is that Lambda’s concurrency limits can silently break your CDC pipeline if you don’t account for LLM bursts.</p>
-<p><strong>Case 5: The Debezium snapshot stall</strong>
-During an LLM burst, the snapshot phase (which runs a <code>SELECT * FROM table</code>) blocked the replication slot for 8 seconds. The replication lag spiked, and the slot error appeared. The fix was to split the snapshot into batches:</p>
-<pre><code class="language-yaml"># Debezium connector config
-snapshot.fetch.size: 10000
-snapshot.max.mb.per.sec: 10
-snapshot.select.statement.overrides: &quot;id&quot;
-snapshot.mode: &quot;initial&quot;
-</code></pre>
-<p>We also added a <code>DebeziumSnapshotRunning</code> metric to alert when the snapshot is active. This reduced snapshot stalls by 80%.</p>
-<p>Each of these edge cases taught us that the real problem isn’t Postgres or Kafka—it’s the unconstrained LLM bursts breaking every upstream system. The fix isn’t just in the CDC code; it’s in the entire pipeline.</p>
-<hr />
-<h2 id="integration-with-23-real-tools-name-versions-with-a-working-code-snippet">Integration with 2–3 real tools (name versions), with a working code snippet</h2>
-<p>Let’s integrate our CDC pipeline with three real tools in 2026: <strong>vLLM 0.5.1</strong>, <strong>Debezium 2.6.0</strong>, and <strong>AWS Lambda (Python 3.12)</strong>. We’ll show a working code snippet for each integration, including the critical backpressure mechanisms.</p>
-<hr />
-<h3 id="1-vllm-051-gpu-inference-with-backpressure">1. vLLM 0.5.1 (GPU inference with backpressure)</h3>
-<p>vLLM 0.5.1 introduced a <code>max_num_batched_tokens</code> parameter to limit burst size. Here’s how we integrated it with our CDC pipeline:</p>
-<pre><code class="language-python"># vllm_client.py
-from vllm import LLM, RequestOutput
-from vllm.sampling_params import SamplingParams
-import asyncio
+<p>Two distinct bounds are in play here. <code>max_num_batched_tokens</code> limits how much work the server schedules per step; <code>max_tokens</code> limits the length of any single response. Both matter. A server that schedules 8,192 tokens per step will still return a very long single response if <code>max_tokens</code> is unset.</p>
+<p>Verify the effect by measuring, not by assuming. Log the output token count per request and confirm the 99th percentile is below your configured cap. If it is not, the cap is not being applied where you think it is.</p>
+<h3 id="2-bound-concurrency-at-the-caller">2. Bound concurrency at the caller</h3>
+<p>A semaphore around the LLM call is the simplest effective control. It converts "however many requests happen to be in flight" into a fixed number.</p>
+<pre><code class="language-python">import asyncio
 from prometheus_client import Histogram
 
-# Metrics
 llm_duration = Histogram(
     &quot;llm_call_duration_seconds&quot;,
     &quot;Duration of LLM calls&quot;,
@@ -351,334 +342,124 @@ llm_tokens = Histogram(
     buckets=[100, 1000, 5000, 10000, 20000, 50000],
 )
 
-llm = LLM(
-    model=&quot;mistralai/Mistral-7B-Instruct-v0.3&quot;,
-    max_model_len=32768,
-    max_num_batched_tokens=8192,  # Critical: limits burst size
-    enforce_eager=True,  # Prevents response buffering
-    disable_log_requests=True,
-    tensor_parallel_size=2,  # Use 2 GPUs
-)
+_semaphore = asyncio.Semaphore(4)
 
-sampling_params = SamplingParams(
-    max_tokens=2048,
-    temperature=0.3,
-    top_p=0.9,
-)
-
-async def summarize(text: str) -&gt; str:
-    with llm_duration.time():
-        outputs = llm.generate(
-            prompt=text,
-            sampling_params=sampling_params,
-        )
-        if outputs:
+async def safe_generate(text: str) -&gt; str:
+    async with _semaphore:
+        with llm_duration.time():
+            outputs = llm.generate(prompt=text, sampling_params=sampling_params)
+            if not outputs:
+                raise ValueError(&quot;no LLM output&quot;)
             response = outputs[0].outputs[0].text
             llm_tokens.observe(len(response.split()))
             return response
-    raise ValueError(&quot;No LLM output&quot;)
-
-# Example usage with Semaphore (from original post)
-from asyncio import Semaphore
-
-token_semaphore = Semaphore(4)
-
-async def safe_summarize(text: str) -&gt; str:
-    async with token_semaphore:
-        return await summarize(text)
 </code></pre>
-<p>Key details:
-- <code>max_num_batched_tokens=8192</code> limits the burst size to 8,192 tokens. This prevents one huge prompt from blocking the GPU. - <code>enforce_eager=True</code> forces vLLM to stream responses incrementally, avoiding buffering. - The <code>Semaphore(4)</code> limits concurrency to 4 parallel LLM calls. - Metrics track LLM call duration and output token count.</p>
-<p>We run this on an <code>inf2.4xlarge</code> instance in us-east-1 (4x AWS Inferentia2 chips). The cost is ~$1.20/hour, but the backpressure guarantees prevent CDC pipeline stalls.</p>
-<hr />
-<h3 id="2-debezium-260-cdc-with-backpressure">2. Debezium 2.6.0 (CDC with backpressure)</h3>
-<p>Debezium 2.6.0 introduced a <code>max.batch.size</code> parameter to limit the batch size for Kafka sinks. Here’s how we configured it for our <code>cdc_events</code> topic:</p>
-<pre><code class="language-yaml"># debezium-connector.yaml
-name: &quot;postgres-connector&quot;
+<p>Choose the semaphore size from measurement: saturate the downstream, find the concurrency at which p99 latency starts to climb faster than throughput, and set the limit below that point. A value that is too high provides no protection; a value that is too low wastes capacity.</p>
+<p>The <code>llm_output_tokens</code> histogram is what tells you whether the bound is real. If the tail keeps growing, the semaphore is limiting concurrency but not response size.</p>
+<h3 id="3-bound-the-connectors-batch-and-fetch-sizes">3. Bound the connector's batch and fetch sizes</h3>
+<p>On the CDC side, the connector's batch and fetch settings determine how much data the sink takes on at once. Large defaults are fine when events are small; they are dangerous when a single event can be megabytes.</p>
+<pre><code class="language-yaml">name: &quot;postgres-connector&quot;
 connector.class: &quot;io.debezium.connector.postgresql.PostgresConnector&quot;
 tasks.max: &quot;4&quot;
-database.hostname: &quot;postgres-primary.private&quot;
+database.hostname: &quot;postgres-primary.internal&quot;
 database.port: &quot;5432&quot;
-database.user: &quot;debezium&quot;
-database.password: &quot;secret&quot;
+database.user: &quot;cdc_user&quot;
 database.dbname: &quot;app_db&quot;
 database.server.name: &quot;app&quot;
 table.include.list: &quot;public.events&quot;
-slot.name: &quot;debezium_slot&quot;
+slot.name: &quot;cdc_slot&quot;
 plugin.name: &quot;pgoutput&quot;
 snapshot.mode: &quot;initial&quot;
 
-# Critical backpressure settings
-max.batch.size: 1000  # Limits batch size to 1,000 records
-max.poll.records: 500  # Limits records per poll
-fetch.max.bytes: 52428800  # 50MB max per poll
-poll.interval.ms: 100  # Poll every 100ms
+max.batch.size: 1000
+max.poll.records: 500
+fetch.max.bytes: 52428800   # 50 MB
+poll.interval.ms: 100
 
-# Kafka sink settings
 topic.prefix: &quot;cdc_events&quot;
 key.converter: &quot;org.apache.kafka.connect.json.JsonConverter&quot;
 value.converter: &quot;org.apache.kafka.connect.json.JsonConverter&quot;
 </code></pre>
-<p>Key details:
-- <code>max.batch.size=1000</code> prevents one huge LLM response from stalling the sink. - <code>fetch.max.bytes=50MB</code> ensures no single poll exceeds 50MB. - <code>poll.interval.ms=100</code> ensures frequent polling even under load. - We run 4 tasks to parallelize processing.</p>
-<p>We deploy this on Kubernetes (EKS 1.28) using the Debezium Operator. The connector runs in a <code>debezium-connect:2.6.0</code> container with 2GB memory and 1 vCPU.</p>
-<hr />
-<h3 id="3-aws-lambda-python-312-for-cdc-processing">3. AWS Lambda (Python 3.12) for CDC processing</h3>
-<p>We migrated our CDC processor to AWS Lambda to reduce costs. Here’s the working code snippet with backpressure:</p>
-<pre><code class="language-python"># lambda_function.py
-import json
-import boto3
-from openai import AsyncOpenAI
-from asyncio import Semaphore, run
-from prometheus_client import push_to_gateway, start_http_server
-import os
-
-# Metrics
-start_http_server(8000)
-llm_duration = push_to_gateway(
-    gateway=&quot;prometheus-pushgateway:9091&quot;,
-    job=&quot;lambda-cdc-processor&quot;,
-)
-
-client = AsyncOpenAI()
-semaphore = Semaphore(4)  # Limits concurrency
-
-def lambda_handler(event, context):
-    # Process CDC events from Kafka (via MSK)
-    records = event[&quot;Records&quot;]
-    processed = 0
-
-    for record in records:
-        data = json.loads(record[&quot;kinesis&quot;][&quot;data&quot;])
-        if &quot;llm_response&quot; in data:
-            run(process_llm_response(data))
-
-        processed += 1
-
-    return {
-        &quot;statusCode&quot;: 200,
-        &quot;body&quot;: json.dumps({&quot;processed&quot;: processed}),
-    }
-
-async def process_llm_response(data: dict):
-    with llm_duration.labels(endpoint=&quot;summarize&quot;).time():
-        async with semaphore:
-            response = await client.chat.completions.create(
-                model=&quot;mistralai/Mistral-7B-Instruct-v0.3&quot;,
-                messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: data[&quot;text&quot;]}],
-                max_tokens=2048,
-                temperature=0.3,
-            )
-            # Process response...
-            return response.choices[0].message.content
+<p>The exact parameter names and defaults vary by connector and version, so confirm them against the documentation for the version you run rather than copying values blindly. The principle is stable: cap how many records and how many bytes the sink will accept in one pass.</p>
+<h3 id="4-bound-the-brokers-per-message-size">4. Bound the broker's per-message size</h3>
+<p>A broker that accepts arbitrarily large messages will eventually hand one to a consumer that cannot process it. Setting a maximum message size forces oversized payloads to fail at produce time, where they are cheap to handle, rather than at consume time, where they block a partition.</p>
+<pre><code class="language-bash">kafka-configs.sh --alter --topic cdc_events \
+  --config max.message.bytes=10485760 \
+  --bootstrap-server kafka-broker:9092
 </code></pre>
-<p>Key details:
-- The Lambda function is configured with 1.8GB memory (1 vCPU) and 30s timeout. - <code>Semaphore(4)</code> limits concurrency to 4 parallel LLM calls. - We use the <code>openai&gt;=1.30.0</code> async client to avoid blocking the event loop. - Metrics are pushed to Prometheus Pushgateway for observability. - The function is triggered by MSK via a Lambda destination.</p>
-<p>We deploy this using Terraform:</p>
-<pre><code class="language-hcl"># main.tf
-resource &quot;aws_lambda_function&quot; &quot;cdc_processor&quot; {
-  function_name = &quot;cdc-processor&quot;
-  handler       = &quot;lambda_function.lambda_handler&quot;
-  runtime       = &quot;python3.12&quot;
-  memory_size   = 1800
-  timeout       = 30
-  filename      = &quot;lambda_function.zip&quot;
-  role          = aws_iam_role.lambda_exec.arn
-  environment {
-    variables = {
-      OPENAI_API_KEY = var.openai_api_key
-    }
-  }
-}
-
-resource &quot;aws_lambda_event_source_mapping&quot; &quot;msk_trigger&quot; {
-  event_source_arn  = aws_msk_cluster.cdc_cluster.arn
-  function_name     = aws_lambda_function.cdc_processor.arn
-  topics            = [&quot;cdc_events&quot;]
-  starting_position = &quot;LATEST&quot;
-  batch_size        = 100  # Limits batch size
-}
+<p>If a legitimate event exceeds the limit, the right answer is usually to store the payload elsewhere and pass a reference, not to raise the limit.</p>
+<h3 id="5-bound-the-compute-layers-concurrency">5. Bound the compute layer's concurrency</h3>
+<p>If the consumer runs on a serverless platform, its concurrency limit is a backpressure mechanism whether or not you treat it as one. Reaching the limit causes throttling, which is preferable to unbounded queue growth but still produces a stall if the source keeps producing.</p>
+<pre><code class="language-yaml">functions:
+  cdc_processor:
+    handler: handler.process
+    memorySize: 1800
+    timeout: 30
+    reservedConcurrency: 200
 </code></pre>
-<p>The Lambda function processes ~2,000 events/minute under normal load, with p99 latency of 150ms.</p>
-<hr />
-<p>These integrations show that the fix isn’t just in the CDC code—it’s in every tool in the pipeline. By adding backpressure at each step, we prevent LLM bursts from breaking the entire system.</p>
-<hr />
-<h2 id="a-beforeafter-comparison-with-actual-numbers">A before/after comparison with actual numbers</h2>
-<p>Let’s compare our CDC pipeline before and after adding backpressure mechanisms. All numbers are from production in Q1 2026, during peak load (LLM burst with 50,000 tokens).</p>
-<hr />
-<h3 id="before-unconstrained-llm-bursts-breaking-the-pipeline">Before: Unconstrained LLM bursts breaking the pipeline</h3>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Value</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>LLM burst size</strong></td>
-<td>50,000 tokens</td>
-<td>Single prompt with no <code>max_tokens</code> cap</td>
-</tr>
-<tr>
-<td><strong>LLM call duration (p99)</strong></td>
-<td>7.8s</td>
-<td>Unbounded response size</td>
-</tr>
-<tr>
-<td><strong>CDC lag (p99)</strong></td>
-<td>3,200ms</td>
-<td>Postgres replication slot stall</td>
-</tr>
-<tr>
-<td><strong>Postgres replication slot errors</strong></td>
-<td>8% of requests</td>
-<td>Slot <code>confirmed_flushed_lsn</code> timeout</td>
-</tr>
-<tr>
-<td><strong>Kafka consumer lag</strong></td>
-<td>5,000 messages</td>
-<td>Sink thread blocked on huge record</td>
-</tr>
-<tr>
-<td><strong>Debezium snapshot stall</strong></td>
-<td>8s</td>
-<td>Full table scan blocked slot</td>
-</tr>
-<tr>
-<td><strong>Memory usage (CDC service)</strong></td>
-<td>90%</td>
-<td>Node.js event loop blocked</td>
-</tr>
-<tr>
-<td><strong>Cost (per hour)</strong></td>
-<td>~$2.10</td>
-<td>Unoptimized Lambda + MSK</td>
-</tr>
-<tr>
-<td><strong>Lines of code changed</strong></td>
-<td>0</td>
-<td>No backpressure mechanisms</td>
-</tr>
-</tbody>
-</table>
-<p><strong>What broke:</strong>
-1. The LLM client buffered a 1.2MB response, blocking the Node.js event loop. 2. The CDC service (Node.js) had no concurrency limit, so 100 concurrent LLM calls saturated the event loop. 3. Debezium’s default <code>max.batch.size=20048</code> caused the sink to block on a huge batch. 4. Postgres replication slot stalled because the CDC service stopped consuming. 5. Kafka consumer lag spiked because the sink thread was blocked.</p>
-<p><strong>Root cause:</strong> No backpressure at any layer. The LLM burst propagated through the pipeline like a shockwave.</p>
-<hr />
-<h3 id="after-backpressure-mechanisms-in-place">After: Backpressure mechanisms in place</h3>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Value</th>
-<th>Improvement</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>LLM burst size</strong></td>
-<td>8,192 tokens</td>
-<td>84% reduction</td>
-<td>vLLM <code>max_num_batched_tokens=8192</code></td>
-</tr>
-<tr>
-<td><strong>LLM call duration (p99)</strong></td>
-<td>1.2s</td>
-<td>85% reduction</td>
-<td>Semaphore(4) + <code>max_tokens=2048</code></td>
-</tr>
-<tr>
-<td><strong>CDC lag (p99)</strong></td>
-<td>150ms</td>
-<td>95% reduction</td>
-<td>Postgres replication slot stable</td>
-</tr>
-<tr>
-<td><strong>Postgres replication slot errors</strong></td>
-<td>0.1% of requests</td>
-<td>99% reduction</td>
-<td>Slot no longer stalls</td>
-</tr>
-<tr>
-<td><strong>Kafka consumer lag</strong></td>
-<td>50 messages</td>
-<td>99% reduction</td>
-<td>Sink thread never blocks</td>
-</tr>
-<tr>
-<td><strong>Debezium snapshot stall</strong></td>
-<td>0s</td>
-<td>100% reduction</td>
-<td>Snapshot split into batches</td>
-</tr>
-<tr>
-<td><strong>Memory usage (CDC service)</strong></td>
-<td>45%</td>
-<td>50% reduction</td>
-<td>No event loop blocking</td>
-</tr>
-<tr>
-<td><strong>Cost (per hour)</strong></td>
-<td>~$1.45</td>
-<td>31% reduction</td>
-<td>Optimized Lambda + MSK</td>
-</tr>
-<tr>
-<td><strong>Lines of code changed</strong></td>
-<td>15</td>
-<td>Minimal change</td>
-<td>Added semaphore + config tweaks</td>
-</tr>
-</tbody>
-</table>
-<p><strong>What fixed it:</strong>
-1. <strong>vLLM:</strong> Added <code>max_num_batched_tokens=8192</code> and <code>enforce_eager=True</code> to limit burst size and stream responses. 2. <strong>LLM client:</strong> Added <code>Semaphore(4)</code> to limit concurrency and <code>max_tokens=2048</code> to cap response size. 3. <strong>Debezium:</strong> Reduced <code>max.batch.size=1000</code> and <code>fetch.max.bytes=50MB</code> to prevent sink stalls. 4. <strong>Postgres:</strong> Increased EBS GP3 burst IOPS to 5,000 to handle WAL spikes. 5. <strong>Lambda:</strong> Increased reserved concurrency to 2,000 and bumped memory to 1.8GB.</p>
-<p><strong>Cost breakdown:</strong>
-| Component | Before | After | Savings |
-|-----------|--------|-------|---------|
-| Lambda | $1.20/hr | $0.85/hr | 29% |
-| MSK | $0.30/hr | $0.25/hr | 17% |
-| RDS (gp3) | $0.60/hr | $0.35/hr | 42% |
-| <strong>Total</strong> | <strong>$2.10/hr</strong> | <strong>$1.45/hr</strong> | <strong>31%</strong> |</p>
-<p><strong>Latency improvements:</strong>
-| Component | Before (p99) | After (p99) | Improvement |
-|-----------|--------------|-------------|-------------|
-| LLM call | 7.8s | 1.2s | 85% |
-| CDC processing | 450ms | 120ms | 73% |
-| Postgres replication lag | 3,200ms | 150ms | 95% |
-| Kafka sink lag | 5s | 50ms | 99% |</p>
-<p><strong>Observability improvements:</strong>
-- Added <code>llm_call_duration_seconds</code> histogram to track LLM call duration. - Added <code>cdc_lag_seconds</code> histogram to track replication lag. - Added <code>kafka_consumer_lag</code> metric to monitor sink health. - Added <code>DebeziumSnapshotRunning</code> metric to catch snapshot stalls.</p>
-<p><strong>Lines of code changed:</strong>
-- <strong>vLLM client:</strong> 5 lines (added <code>max_num_batched_tokens</code> and <code>enforce_eager</code>). - <strong>LLM client:</strong> 3 lines (added <code>Semaphore</code> and <code>max_tokens</code>). - <strong>Debezium config:</strong> 2 lines (added <code>max.batch.size</code> and <code>fetch.max.bytes</code>). - <strong>Lambda config:</strong> 5 lines (added reserved concurrency and batch size). - <strong>Total:</strong> 15 lines of code changed.</p>
-<p><strong>Deployment timeline:</strong>
-| Step | Time | Notes |
-|------|------|-------|
-| Add vLLM backpressure | 10 min | Deployed to staging |
-| Add LLM client semaphore | 5 min | Deployed to staging |
-| Update Debezium config | 5 min | Deployed to production |
-| Increase RDS IOPS | 15 min | Database team approval |
-| Update Lambda config | 5 min | Deployed to production |
-| <strong>Total</strong> | <strong>40 min</strong> | <strong>Production fix deployed</strong> |</p>
-<p><strong>Lessons learned:</strong>
-1. <strong>Backpressure must be applied at every layer.</strong> One unconstrained component can break the entire pipeline. 2. <strong>Metrics are critical.</strong> Without <code>llm_call_duration_seconds</code> and <code>cdc_lag_seconds</code>, we wouldn’t have caught the problem early. 3. <strong>Cost savings follow reliability.</strong> By fixing the pipeline, we reduced cloud costs by 31%. 4. <strong>Minimal code changes can have maximal impact.</strong> We fixed the problem with just 15 lines of code.</p>
-<p><strong>Final thought:</strong> In 2026, LLM pipelines are the new "noisy neighbor." Without backpressure, they’ll break your entire infrastructure. The fix isn’t in Postgres—it’s in the tools you use to call the LLM.</p>
+<p>Two cautions. First, reserved concurrency is a ceiling, not a target; setting it very high removes the protection entirely. Second, a throttled consumer still leaves the replication slot unconfirmed, so the slot retains WAL during the throttle window. Pair the limit with an alarm on throttles so the condition is visible.</p>
+<h2 id="a-worked-example">A worked example</h2>
+<p>Consider a pipeline with the following stated assumptions. These are illustrative round numbers chosen to make the arithmetic visible, not measurements.</p>
+<ul>
+<li>The replication slot retains WAL at a rate of 2 MB/s while the consumer is stalled.</li>
+<li>The consumer stalls for 30 seconds while buffering one large response.</li>
+<li>The consumer's normal drain rate is 5 MB/s.</li>
+</ul>
+<p>During the stall, WAL accumulates at 2 MB/s for 30 seconds:</p>
+<pre><code>2 MB/s * 30 s = 60 MB retained
+</code></pre>
+<p>After the stall clears, the consumer must both process new events and catch up on the backlog. If it drains at 5 MB/s while new WAL arrives at 2 MB/s, the net drain is:</p>
+<pre><code>5 MB/s - 2 MB/s = 3 MB/s
+</code></pre>
+<p>Recovering 60 MB at a net 3 MB/s takes:</p>
+<pre><code>60 MB / 3 MB/s = 20 s
+</code></pre>
+<p>So a 30-second stall produces roughly 50 seconds of degraded operation. If stalls occur more often than every 50 seconds, the backlog never clears and the slot's retained WAL grows without bound.</p>
+<p>This is the arithmetic that makes backpressure non-optional. The relevant question is not whether a stall happens but whether the recovery time is shorter than the interval between stalls. Measure both: the stall duration from your duration histogram, and the recovery rate from your lag metric.</p>
+<h2 id="how-to-verify-a-fix">How to verify a fix</h2>
+<p>A configuration change is a hypothesis. To test it:</p>
+<ol>
+<li><strong>Reproduce the condition deliberately.</strong> Send a request at the maximum size your system claims to support and watch the lag metrics. If nothing moves, the bound is not where you think it is.</li>
+<li><strong>Compare the response size distribution before and after.</strong> The tail should be truncated at the configured cap. If the tail is unchanged, <code>max_tokens</code> is not being applied.</li>
+<li><strong>Watch the concurrency gauge under load.</strong> It should sit at the semaphore limit and not above it. A gauge that exceeds the limit means requests are bypassing the semaphore.</li>
+<li><strong>Measure recovery time.</strong> After a deliberate stall, record how long the lag takes to return to baseline. This is the number that determines your safety margin.</li>
+<li><strong>Confirm the slot does not retain WAL indefinitely.</strong> Query <code>pg_replication_slots</code> before and after; the retained WAL should return to a steady state.</li>
+</ol>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before adding an LLM call to a CDC pipeline, confirm each of the following:</p>
+<ul>
+<li>[ ] The inference server has both a per-request output cap and a per-step batch cap.</li>
+<li>[ ] The caller has a concurrency limit sized from measurement, not guesswork.</li>
+<li>[ ] The HTTP client's buffer limits are known and larger than the maximum response you will accept.</li>
+<li>[ ] The connector's batch and fetch sizes are set explicitly rather than left at defaults.</li>
+<li>[ ] The broker enforces a maximum message size.</li>
+<li>[ ] The compute layer's concurrency is bounded and its throttling is alarmed.</li>
+<li>[ ] Replication lag, retained WAL, consumer lag, in-flight requests, and response size are all exported as metrics.</li>
+<li>[ ] There is an alarm on retained WAL growth, not just on lag.</li>
+<li>[ ] There is a documented recovery procedure for an invalidated slot.</li>
+</ul>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why not just make the consumer faster?</strong>
+Faster consumers raise the drain rate but do not bound the arrival rate. A sufficiently large burst will still exceed any fixed drain rate. Backpressure bounds the input; throughput improvements only delay the failure.</p>
+<p><strong>Is a semaphore enough on its own?</strong>
+No. A semaphore limits how many calls are in flight, but a single call with an unbounded <code>max_tokens</code> can still return a payload larger than the consumer's buffer. You need both a concurrency bound and a size bound.</p>
+<p><strong>What if the LLM output legitimately needs to be large?</strong>
+Store the large payload out of band and pass a reference through the CDC stream. The pipeline's job is to move change events reliably, not to carry multi-megabyte documents.</p>
+<p><strong>How do I choose the semaphore size?</strong>
+Increase concurrency until p99 latency rises faster than throughput, then set the limit below that point. The exact number depends on the model, the hardware, and the request mix, so it must be measured on your system.</p>
+<p><strong>Does raising the replication slot's WAL retention help?</strong>
+It delays the failure. The slot will retain more WAL before becoming a problem, but the underlying mismatch between arrival and drain rates is unchanged. Treat increased retention as a safety margin, not a fix.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Query your replication slot's retained WAL twice, 60 seconds apart, and export both values. If the second reading is higher than the first while your pipeline is nominally idle, you have an unconfirmed slot and an unbounded link somewhere upstream — start by checking the in-flight LLM request count and the response size histogram.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">Postgres 17 swallowed Redis, Kafka, Timescale</a></li>
+<li><a href="https://kubaik.github.io/observe-llm-features-90-faster/">Observability for LLM Features: Metrics That Drive Decisions</a></li>
+<li><a href="https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/">Designing APIs for High-Latency Satellite Links</a></li>
 <li><a href="https://kubaik.github.io/ai-agents-eat-your-budget-3-ways/">AI agents eat your budget 3 ways</a></li>
-<li><a href="https://kubaik.github.io/trim-llm-bills-3-finops-moves-that-work/">Trim LLM bills: 3 FinOps moves that work</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>
 <li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
-<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
-<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
-<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
-<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
 </ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>

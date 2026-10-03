@@ -1,323 +1,232 @@
 # Postgres vector search: what breaks first
 
-moved some looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path.
+## What this article covers
 
-## Why this list exists (what I was actually trying to solve)
+Keeping embeddings inside PostgreSQL is an attractive default: one datastore, one backup story, one connection string, and SQL for filtering and joins. That default holds up fine for prototypes and low-traffic semantic search. It stops holding up at a fairly predictable point, and the failure rarely announces itself as "vector search is slow." It shows up as connection pool exhaustion, autovacuum interference, index bloat, or a p99 that drifts upward over weeks.
 
-I ran a product search engine for an e-commerce site in Jakarta that lets users type in free-form queries like "running shoes for wide feet that are breathable" instead of forcing them through a dropdown. In 2026 we were getting 120k searches/day and the vector embeddings for products had grown from 768 to 1024 dimensions. We started with pgvector 0.7.0 in PostgreSQL 16.2, thinking we could keep everything in one place and save on infra costs.
+This article describes the failure modes in the order they typically appear, how to measure each one with tools you already have, and what the decision looks like when you have to choose between staying in Postgres and running a separate vector service. It is written for teams already comfortable with PostgreSQL and now putting real query volume against an HNSW or IVFFlat index.
 
-After three months I had to eat those words. The p99 latency for vector search crawled from 80ms to 350ms during traffic spikes, and the database CPU hit 95% while the CPU on our application servers sat idle. I spent a week tweaking the pgvector index type (IVFFlat → HNSW → Sparse → dense), vacuuming tables every hour, and raising shared_buffers to 4GB. Nothing moved the needle. I finally broke down and profiled the query itself with `EXPLAIN (ANALYZE, BUFFERS)` and saw 98% of the time was spent in the ANN search, not in the surrounding SQL.
+## The failure modes, in the order they usually appear
 
-The real problem wasn’t Postgres; it was that the database had become a general-purpose compute engine doing a job it wasn’t optimized for. Vector search is a throughput-bound workload, not a transactional one. Postgres can do it — but only if you’re willing to pay the cost in latency, CPU, and operational overhead.
+### 1. Connection pool exhaustion (before the database is the bottleneck)
 
-Here is what I wish I had measured first:
+The first thing that breaks is usually not the index. It is the pool.
 
-- End-to-end vector search latency under 95th percentile load
-- CPU steal time and iowait on the database host
-- The cost of running pgvector vs. a dedicated ANN service at our scale
-- The time it takes to re-index a 1.2M vector collection
+Vector search endpoints tend to be called from application code that opens a connection per request or per worker, and the queries are longer than typical OLTP statements. Under a burst, connections are held longer, the pool saturates, and clients queue. The observable symptom is latency that rises before CPU or IO on the database host looks saturated.
 
-If you’re on the fence about keeping vector work in Postgres, measure those four things before you commit. If any one of them scares you, read on.
+PostgreSQL's `max_connections` default is 100. That number is a hard server-side ceiling, and every connection costs backend process memory. A common failure pattern is an application pool configured with a high `max_client_conn` pointed at a server whose `max_connections` was never raised, so under load the server refuses connections and the client retries with backoff. The retry storm adds latency to every request, including ones that would otherwise have been fast.
 
+What to measure:
 
-## How I evaluated each option
+- `SELECT count(*), state FROM pg_stat_activity GROUP BY state;` during a load test, not after.
+- `SHOW max_connections;` and your pooler's `max_client_conn` / `default_pool_size`.
+- Client-side pool wait time. With PgBouncer, `SHOW POOLS;` exposes `maxwait` and `maxwait_us`; a sustained nonzero `maxwait` means requests are queuing for a connection.
+- Connection churn: `SELECT sum(numbackends) FROM pg_stat_database;` sampled over time, plus the `tcp_established` count on the host.
 
-I set up a repeatable benchmark in AWS us-east-1 using identical data sets and traffic patterns. The dataset was 1.2M product vectors (1024-D float32), 30k search queries/day, and a bursty traffic profile that mimicked a flash sale: 10× normal load for 15 minutes, then back to baseline. I measured three things for every option:
+If pool wait time is nonzero during your peak, fix that before you benchmark the index. Otherwise every latency number you collect is contaminated by queueing.
 
-1. P99 latency for a nearest-neighbor search under 1500 QPS
-2. Cost per million queries in 2026 US dollars using on-demand pricing
-3. Time to re-index the entire collection after schema changes or model drift
+### 2. Autovacuum and index maintenance interfering with search
 
-I ran each option for 48 hours with automated load tests using Locust 2.24.1, collecting metrics in Prometheus 2.45 and Grafana 10.4. Each experiment started with a cold cache so I could see worst-case behavior.
+HNSW indexes in pgvector are graph structures stored in the normal PostgreSQL page format. Inserts and updates cause page splits and dead tuples, and the graph gradually becomes less cache-friendly. Two things follow:
 
-The contenders were:
+- Query latency degrades over time even when query volume is flat.
+- Maintenance operations (autovacuum, `REINDEX`) consume CPU and IO that the search path also needs.
 
-- pgvector 0.7.0 on PostgreSQL 16.2
-- Weaviate 1.20.5 running in a single pod on EKS with 4 vCPU/16 GiB
-- Milvus Lite 2.3.4 on a single node (8 vCPU/32 GiB)
-- Qdrant 1.8.0 on the same hardware as Milvus
-- Pinecone Serverless (2026 pricing tier) with 1 index
+A frequently reported pattern is a periodic latency spike correlated with autovacuum running on the table or index. On a busy instance, autovacuum is not something you tune once and forget; it competes with your query workload by design.
 
-I used a standard cosine distance metric and a query batch size of 10. I forced each system to load the entire collection into RAM to remove disk I/O as a variable. That gave me a fair fight: memory-bound ANN vs. memory-bound Postgres.
+What to measure:
 
-What surprised me was the re-index time. pgvector took 42 minutes to re-index the whole collection because it had to rebuild the HNSW graph in-place. Weaviate took 19 minutes, but it also vacuumed the entire vector store in the background, which spiked CPU to 100% for two minutes every 30 minutes. Qdrant was fastest at 8 minutes, and Milvus was 12 minutes. The cloud option (Pinecone) re-indexed in 4 minutes, but cost was 3× higher than the self-hosted options at our scale.
+- `SELECT relname, n_dead_tup, last_autovacuum, last_autoanalyze FROM pg_stat_user_tables WHERE relname = 'your_table';`
+- Index size over time: `SELECT pg_size_pretty(pg_relation_size('your_index'));` sampled daily. Steady growth with flat row count indicates bloat.
+- Latency histogram sliced by time-of-day, so you can correlate spikes with vacuum windows.
+- `log_autovacuum_min_duration = 0` temporarily, to see exactly when vacuum runs and how long it takes.
 
-The final table of raw numbers looked like this:
+If your p99 spikes line up with vacuum, the fix is either tuning autovacuum aggressively for that table (lower `autovacuum_vacuum_scale_factor`, raise `autovacuum_vacuum_cost_limit`) or moving the workload off the instance. Both are legitimate; only one of them is cheap.
 
-| Option        | p99 latency (ms) | Cost per M queries | Re-index time | Peak RAM usage |
-|---------------|------------------|--------------------|---------------|----------------|
-| pgvector      | 350              | $0.42              | 42 min        | 11 GiB         |
-| Weaviate      | 65               | $0.89              | 19 min        | 13 GiB         |
-| Milvus Lite   | 58               | $0.76              | 12 min        | 26 GiB         |
-| Qdrant        | 52               | $0.61              | 8 min         | 22 GiB         |
-| Pinecone      | 38               | $1.72              | 4 min         | managed        |
+### 3. Recall and latency trade-offs under filtering
 
-I also logged every error returned to clients during the 48-hour tests. pgvector had 12 timeouts and 8 connection resets under load, while Qdrant had zero. That told me something about robustness and connection handling.
+Vector search combined with a `WHERE` clause is where naive implementations fall over. There are two broad strategies and they have opposite failure modes:
 
-The biggest mistake I made was not measuring connection pool exhaustion early. I started with pgBouncer 1.21 and set `max_client_conn = 100`, which looked fine until I realized we had 50 application pods each opening 50 connections during the flash sale. That alone added 180ms to every query because of TCP backoff. I had to raise `max_client_conn` to 5000 and increase `server_idle_timeout` from 10s to 30s. Even then, the pool became a bottleneck before the database did.
+- **Post-filter:** run the ANN search for `top_k`, then discard rows that fail the filter. If the filter is selective, you may discard most of the results and return fewer than `top_k` rows. Raising `top_k` to compensate increases latency roughly linearly.
+- **Pre-filter:** restrict the candidate set first, then search. If the filter is selective, the ANN index may not be usable and the planner falls back to a sequential scan over the filtered rows, which is exact but slow.
 
-If you’re benchmarking ANN services yourself, start by measuring the connection pool settings under your peak concurrency, not the raw search latency.
+Neither is wrong. The problem is that the query planner's choice can change as statistics drift, so a query that was fast last month becomes slow this month without any code change.
 
+What to measure:
 
-## Why we moved some vector workloads back to dedicated ANN after trying everything in Postgres — the full ranked list
+- `EXPLAIN (ANALYZE, BUFFERS)` on the actual production query shape, with realistic filter values, not on a `SELECT *` with no filter.
+- Recall against a brute-force ground truth. For a sample of queries, compute exact nearest neighbors with a sequential scan and compare to the ANN result. Track recall@k over time; a falling number means the index is degrading or the data distribution has shifted.
+- Latency as a function of filter selectivity. Run the same query with filters that match 1%, 10%, and 50% of rows.
 
-Here is the list of every option I tried, ranked by the gap between promise and reality when I actually ran it in production at our scale. Each item includes what it promised, what it actually delivered, and whether it’s worth your time.
+### 4. Write amplification and re-index cost
 
+Every insert into an HNSW index does graph maintenance work. For a write-heavy table, this can dominate. The practical consequence is that bulk loads and model migrations become expensive operations that need their own maintenance window, and the cost scales with collection size.
 
-### 1. pgvector 0.7.0 on PostgreSQL 16.2
+What to measure:
 
-What it promises: "Keep your data in one place, use SQL for everything, and avoid extra infra."
+- Insert throughput with the index present versus dropped, on the same hardware, with the same batch size.
+- Time to build the index from scratch on your actual data volume. This is the number that determines your migration window.
+- Time for `REINDEX INDEX CONCURRENTLY`, which does not block writes but does consume significant IO and takes longer than the blocking version.
 
-What it delivered: 350ms p99 latency, 95% CPU on the database host, and 12 timeouts per 1000 queries under load. The HNSW index helped, but the vacuum process blocked searches for 4–6 seconds every 30 minutes. I had to double the database instance size from db.m6g.2xlarge (8 vCPU/32 GiB) to db.m6g.4xlarge (16 vCPU/64 GiB), which doubled the hourly cost from $0.68 to $1.36 in 2026 us-east-1 pricing.
+The build time on your data is the only number that matters here. It depends on dimension count, row count, and the `m` and `ef_construction` parameters you chose, so it cannot be borrowed from someone else's benchmark.
 
-Who it’s best for: teams that already run Postgres and only need occasional vector search (e.g., one-off recommendations) where latency isn’t critical. If you’re doing more than 10k searches/day or have strict SLOs, skip it.
+## How to benchmark this yourself
 
+A benchmark you did not run is not evidence. The following procedure produces numbers that are defensible for your workload.
 
-### 2. Weaviate 1.20.5 (self-hosted on EKS)
+**Define the workload.** Fix the vector count, the dimension, the query rate, the burst profile, and the filter selectivity distribution. A burst profile matters more than a steady-state number, because that is where pools and vacuum interact.
 
-What it promises: "Vector search at scale with GraphQL interface and modular indexing."
+**Set up ground truth.** For a sample of at least a few hundred queries, compute exact nearest neighbors with a sequential scan (`SET enable_indexscan = off;` for the query, or a separate table without the index). Store the true top-k. This gives you recall.
 
-What it delivered: 65ms p99 latency, but the re-index job vacuumed the entire store every 30 minutes, causing 100% CPU for two minutes and raising p99 to 280ms during that window. Memory usage grew from 10 GiB to 13 GiB over a week with no compaction. I had to set `GRAPHQL_ENABLED=false` and disable the GraphQL endpoint to drop CPU usage by 15%.
+**Instrument four things, not one:**
 
-Who it’s best for: teams that want GraphQL and don’t mind operational overhead. If you’re allergic to Kubernetes, skip it.
+- Latency percentiles (p50, p95, p99), recorded server-side and client-side. The gap between them is your queueing and network cost.
+- Recall@k against the ground truth sample.
+- CPU utilization and iowait on the database host, sampled at least every 15 seconds.
+- Pool wait time and connection count.
 
-
-### 3. Milvus Lite 2.3.4 (single node)
-
-What it promises: "Production-grade vector database with GPU acceleration."
-
-What it delivered: 58ms p99 latency with GPU, but without GPU it jumped to 120ms. Memory usage was the highest of all options at 26 GiB for 1.2M vectors. The worst surprise was the Python client: it leaked 128 MiB per 1k queries under load, causing our app pods to OOM after 8 hours. I had to pin the client to Milvus Lite Python SDK 2.3.4 and set `memory_limit=32Gi` in the node config. Re-indexing was fast at 12 minutes, but the CPU spike during re-index ate into our reserved burst capacity.
-
-Who it’s best for: teams that already use GPUs and can tolerate node-level memory bloat. If you’re on CPU-only hardware, avoid.
-
-
-### 4. Qdrant 1.8.0 (standalone)
-
-What it promises: "Blazing fast vector search with minimal dependencies."
-
-What it delivered: 52ms p99 latency, zero timeouts under load, and the lowest memory footprint of the self-hosted options at 22 GiB. The Rust binary was rock-solid, and the connection pool settings were saner than the others. Re-index time was 8 minutes — the fastest I measured. CPU usage stayed flat at 65% even during the flash sale. The only annoyance was the lack of a built-in bulk upsert API; I had to chunk batches to 1k vectors to avoid timeouts.
-
-Who it’s best for: teams that want self-hosted, minimal dependencies, and don’t need GraphQL or fancy features. This is the best drop-in replacement for pgvector if you’re willing to run another service.
-
-
-### 5. Pinecone Serverless (2026 pricing tier)
-
-What it promises: "Fully managed vector search with no infra to manage."
-
-What it delivered: 38ms p99 latency and 4-minute re-index time, but cost was $1.72 per million queries, which was 3× higher than self-hosted Qdrant. The managed aspect was great for on-call, but the query latency was unpredictable when the index scaled to multiple shards. The biggest surprise was the 80ms cold-start latency on the first query after an idle period, which broke our 100ms SLO for the first search of a session. I had to add a warm-up endpoint that fired a dummy query every 5 minutes, which itself added cost.
-
-Who it’s best for: teams that don’t want to run infrastructure and can tolerate a 10% cost premium and occasional cold starts.
-
-
-### 6. Chroma 0.4.23 (experimental)
-
-What it promises: "Lightweight vector store with DuckDB under the hood."
-
-What it delivered: 180ms p99 latency, 25% higher than pgvector, and the Python client crashed under load because of a memory leak in the HTTP layer. I filed an issue and it was fixed in 0.4.24, but by then I had moved on. The storage format was SQLite-based, which made backups slow (7 minutes for 1.2M vectors). Re-indexing required a full dump and restore, which was painful.
-
-Who it’s best for: prototypes and small datasets under 500k vectors. Anything larger is a gamble.
-
-
-### 7. Redis Stack 7.2 with RedisSearch 2.6
-
-What it promises: "Use Redis for vectors too — one less service to manage."
-
-What it delivered: 95ms p99 latency with a 2.5 GB index in RAM. The problem was the connection pool: Redis Stack 7.2 defaulted to 1000 maxclients, but our app pods opened 5000 connections during the flash sale. That caused Redis to shed connections and return `ERR max number of clients reached` 120 times per minute. I had to raise `maxclients` to 10000 and set `tcp-keepalive 60` to drop TCP timeouts from 200ms to 60ms. Even then, the p99 spiked to 150ms during connection churn.
-
-Who it’s best for: teams already running Redis for caching who don’t mind tuning connection limits and can accept latency spikes during connection churn.
-
-
-### 8. OpenSearch 2.11 with k-NN plugin
-
-What it promises: "Vector search with full-text search in one engine."
-
-What it delivered: 110ms p99 latency, but the k-NN plugin used Lucene’s scoring which isn’t optimized for pure vector search. The worst part was the JVM heap pressure: I had to set `-Xms8g -Xmx8g` to avoid GC pauses, which doubled the memory footprint. Re-indexing required a full cluster restart, which took 4 minutes and dropped queries to zero for that window.
-
-Who it’s best for: teams that already use OpenSearch for logs and want to bolt on vector search without another service.
-
-
-
-## The top pick and why it won
-
-The winner was Qdrant 1.8.0 running on a single node with 8 vCPU/32 GiB RAM, no GPU, and no Kubernetes. It delivered the best balance of p99 latency (52ms), cost ($0.61 per million queries), and operational simplicity. It also had zero connection resets and zero timeouts under load, which was the biggest surprise — I expected a new service to be flakier than pgvector.
-
-The real reason it won wasn’t the numbers; it was the lack of surprises. pgvector had vacuum surprises. Weaviate had background vacuum surprises. Milvus had memory leak surprises. Pinecone had cold-start surprises. Qdrant just worked.
-
-I also liked that Qdrant’s Rust runtime was stable under load. I ran it for 21 days straight with no restarts, while pgvector needed a restart every 5 days due to index corruption after a crash.
-
-The only downside was the lack of a SQL interface. I had to write a thin shim in Python that exposed a REST endpoint with the same shape as our Postgres endpoint, so the application code didn’t change. The shim adds 5ms to the p99, but it’s worth it to avoid rewriting queries.
-
-
-## Honorable mentions worth knowing about
-
-
-### Vespa 8.351
-
-Vespa is the heavyweight champ if you’re already in the Yahoo ecosystem or need hybrid search (vector + BM25). It served 1.2M vectors at 28ms p99 in my tests, but it requires 3 nodes for HA and a 24 GiB JVM heap per node. The config language is YAML-based and verbose, and the deployment pipeline is heavy. If you’re not already using Vespa, the learning curve is steep. I ran it for 3 days before giving up on the YAML config.
-
-
-### pg_embedding 0.1.7 (experimental Postgres extension)
-
-This extension replaces pgvector with an HNSW index built on top of Postgres’ storage engine. In my tests it delivered 140ms p99 latency, which is better than pgvector but still too slow for production. The killer feature is that it doesn’t require a separate ANN service, so if you’re desperate to stay in Postgres, it’s worth a try. I ran it for a week before hitting a segmentation fault during a vacuum, so I switched back to pgvector.
-
-
-### pg_ivfflat 0.4 (Postgres extension)
-
-This extension adds IVFFlat to Postgres, which is faster to build than HNSW but slower to query. In my tests it delivered 210ms p99, which is better than pgvector but still too slow for production. The real problem is that the index has to be rebuilt after every insert, which means your vector store is effectively read-only during updates. If your product catalog changes frequently, skip this.
-
-
-### Elasticsearch 8.13 with dense_vector
-
-Elasticsearch delivered 135ms p99 latency in my tests, which is acceptable, but the JVM heap pressure and connection pool issues were worse than Redis. The worst surprise was the 15-second delay between indexing a vector and it being searchable, which broke our real-time recommendation pipeline. If you’re already using Elasticsearch for logs, it’s a fine choice, but don’t pick it for vectors alone.
-
-
-
-## The ones I tried and dropped (and why)
-
-
-### pgvector + pgBouncer + read replicas
-
-I tried splitting reads to read replicas to offload search from the primary. The problem was that pgvector doesn’t replicate the ANN index, only the raw vectors. That meant every read replica had to rebuild the HNSW graph from scratch on startup, which added 30 seconds of CPU spike and 200ms latency to every query. I dropped it after 4 hours.
-
-
-### pgvector + TimescaleDB hypertables
-
-I tried storing vectors in a TimescaleDB hypertable to get time-series partitioning. The partitioning added 40ms to every query because the planner had to prune partitions before searching. I also had to write custom SQL to union results across partitions, which was brittle. Dropped after a day.
-
-
-### pgvector + Citus 12.1
-
-I tried horizontal sharding with Citus. The problem was that Citus doesn’t push down ANN search to worker nodes; it ships the entire query result set to the coordinator. That turned a 50ms ANN search into a 400ms operation when sharded. Dropped after two days.
-
-
-### Qdrant + Kubernetes operator
-
-I tried running Qdrant in Kubernetes with the Qdrant operator. The operator added 15 seconds of latency during pod restarts because it had to re-warm the cache. I also had to set `resources.requests.memory` to 32 GiB to avoid OOM kills, which doubled the node cost. Dropped after a week.
-
-
-### Pinecone pod-based tier
-
-The pod-based tier in Pinecone 2026 pricing had 70ms p99 latency, but the cost was $2.18 per million queries, which was 3.5× higher than self-hosted Qdrant. I also hit the pod memory limit (16 GiB) after 500k vectors, which forced me to shard. Dropped after three days.
-
-
-
-## How to choose based on your situation
-
-Use this table to pick the right option for your load, budget, and skills. The table assumes 1.2M vectors, 1024 dimensions, and a 1500 QPS bursty workload. Adjust the numbers for your scale.
-
-
-| Your constraint          | pgvector | Weaviate | Milvus Lite | Qdrant | Pinecone | Redis Stack | OpenSearch | Vespa |
-|--------------------------|----------|----------|-------------|--------|----------|-------------|------------|-------|
-| Must stay in Postgres    | ✅       | ❌       | ❌          | ❌     | ❌       | ❌          | ❌         | ❌    |
-| Need SQL interface       | ✅       | ❌       | ❌          | ❌     | ❌       | ❌          | ✅         | ❌    |
-| Under $1 per M queries   | ✅       | ❌       | ✅          | ✅     | ❌       | ✅          | ✅         | ❌    |
-| Under 100ms p99 latency  | ❌       | ✅       | ✅          | ✅     | ✅       | ❌          | ❌         | ✅    |
-| Minimal infra            | ✅       | ❌       | ❌          | ✅     | ✅       | ✅          | ❌         | ❌    |
-| GPU acceleration         | ❌       | ✅       | ✅          | ❌     | ✅       | ❌          | ❌         | ❌    |
-| HA ready                 | ❌       | ✅       | ✅          | ✅     | ✅       | ✅          | ✅         | ✅    |
-
-If you’re still unsure, run the same benchmark I did. Here’s the Locust script I used to generate load:
-
-```python
-from locust import HttpUser, task, between
-
-class VectorUser(HttpUser):
-    wait_time = between(0.1, 0.5)
-
-    @task
-    def search(self):
-        self.client.post("/search", json={
-            "query": [0.1]*1024,
-            "top_k": 10,
-            "filter": {}
-        })
-```
-
-And the Prometheus queries I used to collect metrics:
+A minimal Prometheus setup for the host metrics:
 
 ```promql
-# p99 latency over 5m window
-histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))
+# CPU utilization (1 = fully busy)
+1 - avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m]))
 
-# CPU usage on the vector DB host
-100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
+# Memory actually available
+node_memory_MemAvailable_bytes
 
-# Memory usage
-node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes
+# Disk read latency, if you are IO-bound during index build
+rate(node_disk_read_time_seconds_total[5m]) / rate(node_disk_reads_completed_total[5m])
 ```
 
-Start with 100 QPS and ramp to your peak load. Watch for connection pool exhaustion, GC pauses, and vacuum spikes. If any of those appear, switch to a dedicated ANN service before you hit production.
+A minimal load generator. The point is to reproduce your burst shape, not to hit a headline QPS number:
 
+```python
+import time
+import random
+from concurrent.futures import ThreadPoolExecutor
 
-## Frequently asked questions
+import httpx
 
+DIM = 1024
+TOP_K = 10
 
-### Why does pgvector get slower over time even with an HNSW index?
+def one_query(client: httpx.Client) -> float:
+    payload = {
+        "query": [random.random() for _ in range(DIM)],
+        "top_k": TOP_K,
+        "filter": {},
+    }
+    start = time.perf_counter()
+    client.post("http://localhost:8000/search", json=payload, timeout=30.0)
+    return (time.perf_counter() - start) * 1000.0
 
-pgvector’s HNSW index is built in-place. Every insert or update triggers a re-heap operation that can fragment the index. Over time the graph becomes less cache-friendly, which raises latency. The only fix is to rebuild the index (`REINDEX INDEX CONCURRENTLY`), which locks the table for minutes. If your vector collection is write-heavy, pgvector will degrade faster than a dedicated ANN service.
+def run(concurrency: int, duration_s: int) -> None:
+    latencies: list[float] = []
+    deadline = time.time() + duration_s
+    with httpx.Client() as client:
+        with ThreadPoolExecutor(max_workers=concurrency) as pool:
+            while time.time() < deadline:
+                futures = [pool.submit(one_query, client) for _ in range(concurrency)]
+                latencies.extend(f.result() for f in futures)
+    latencies.sort()
+    n = len(latencies)
+    print(f"n={n} p50={latencies[n // 2]:.1f}ms "
+          f"p95={latencies[int(n * 0.95)]:.1f}ms "
+          f"p99={latencies[int(n * 0.99)]:.1f}ms")
 
+if __name__ == "__main__":
+    run(concurrency=50, duration_s=300)
+```
 
-### How do I know if my connection pool is the bottleneck?
+Ramp concurrency in steps and record the percentile at each step. The knee of that curve, where p99 starts rising faster than p50, is your practical capacity. That number is far more useful than a single peak-throughput figure.
 
-Check three things: `pg_stat_activity.max_connections`, `pgBouncer.show pools`, and the `tcp_established` metric on your database host. If `pg_stat_activity.max_connections` is close to your pool’s `max_client_conn` and you see `too many connections` errors, your pool is exhausted. Also look at the time-series of `pgBouncer.client_wait_time` — if it’s >50ms, connections are waiting to be served.
+## A worked example: deciding whether to move
 
+Suppose a service handles 40,000 vector searches per day, averaging 0.5 queries/second, with a daily 15-minute burst at 10× average (5 queries/second). Vectors are 1,024-dimensional float32, 1.5 million rows.
 
-### What’s the real cost difference between self-hosted Qdrant and Pinecone Serverless at 5M queries/month?
+Storage for the raw vectors alone: 1.5M × 1,024 × 4 bytes = 6.1 GB, before index overhead. An HNSW index typically adds a substantial multiple of that, so plan for the index and the table to both be resident in memory for predictable latency, or accept disk reads.
 
-At 5M queries/month, self-hosted Qdrant on a db.m6g.large (2 vCPU/8 GiB) costs $0.61 × 5 = $3.05. Pinecone Serverless costs $1.72 × 5 = $8.60. The difference is $5.55/month, but Pinecone saves you the operational overhead of running Qdrant. If you value your time at $50/hour, the break-even is 6.6 hours of saved ops time per month.
+At 5 queries/second peak, with each query taking even 200 ms of database CPU, the database needs about 1 core dedicated to vector search at peak. That is comfortably within a small instance. At 50 queries/second peak, the same query cost needs about 10 cores, which is no longer a small instance and starts to compete with whatever else the database does.
 
+This arithmetic is illustrative, but the method is not: (peak QPS) × (CPU seconds per query) = cores required at peak. Measure the second factor on your own hardware with `EXPLAIN (ANALYZE)` and `pg_stat_statements`, then decide. The crossover point where a dedicated service becomes cheaper than a larger database instance is a function of that product, not of a rule of thumb.
 
-### Why did my Milvus Lite Python client leak memory?
+## When a dedicated vector service earns its cost
 
-Milvus Lite Python SDK 2.3.4 used an unbounded queue for responses. Under load, the queue filled faster than the consumer could drain it, causing Python to allocate new memory blocks continuously. The fix was to set `GRPC_CLIENT_MAX_RECEIVE_MESSAGE_LENGTH=100Mi` and pin the client to 2.3.5. If you’re using Milvus, always pin the SDK version and set memory limits in the client.
+A separate service is justified when at least one of these is true:
 
+- **Vector search is on the critical path with a strict p99 SLO** and you cannot afford latency spikes from vacuum or index maintenance.
+- **Query volume is high enough** that the cores required for ANN search crowd out transactional work on the same instance.
+- **You need index types or quantization** that pgvector does not offer, and the recall/latency trade-off matters for your product.
+- **You need independent scaling** of the search tier, so a traffic spike in search does not degrade writes.
 
-### When should I consider pg_embedding instead of pgvector?
+A separate service is not justified merely because it benchmarks faster on a synthetic workload. It adds a second datastore, a second backup and restore procedure, a second upgrade cadence, and a consistency problem: keeping the vector store in sync with the source of truth in Postgres. That last item is the one teams underestimate.
 
-Only if you’re desperate to stay in Postgres and can tolerate 2× higher latency. pg_embedding delivers ~140ms p99 vs pgvector’s ~350ms, but it’s still too slow for production at scale. Use it for prototypes or small datasets (<500k vectors) where you can’t run another service.
+## The consistency problem nobody benchmarks
 
+If vectors live in a separate service, Postgres remains the source of truth for the underlying rows, and the vector store is a derived index. That means you need a propagation mechanism: outbox table plus a worker, logical replication, or a change-data-capture pipeline. Each has a failure mode.
 
-### How do I migrate from pgvector to Qdrant without breaking the app?
+- **Outbox plus polling worker:** simple and debuggable, but adds latency between a row changing and its embedding being searchable. Under a backlog, search results are stale.
+- **Logical replication:** lower latency, but schema changes and replication slot management become operational concerns, and a dropped slot can cause unbounded WAL growth.
+- **CDC pipeline:** lowest latency, but the most moving parts.
 
-1. Stand up Qdrant alongside your Postgres instance.
-2. Write a batch job that reads vectors from Postgres and upserts them to Qdrant in chunks of 1k.
-3. Deploy a thin shim service that proxies `/search` to Qdrant and keeps the same JSON shape as your Postgres endpoint.
-4. Run both in parallel for one week, comparing results and latency.
-5. Flip the traffic to Qdrant and monitor for errors.
-6. Deprecate the pgvector endpoint.
+Whichever you choose, you need a reconciliation job that periodically compares row counts and, ideally, a checksum of the embedding column against the vector store. Without it, silent divergence accumulates and you find out when search results stop matching reality.
 
-The shim is 120 lines of Python using FastAPI and httpx. I open-sourced it here: https://github.com/yourhandle/vector-shim (replace with your repo).
+The migration itself follows a standard pattern:
 
+1. Stand up the new service alongside Postgres.
+2. Backfill in batches, recording the highest primary key or `updated_at` processed per batch.
+3. Start the change stream from that watermark.
+4. Run both paths in parallel, comparing result sets for a sample of queries.
+5. Shift read traffic gradually, watching recall and latency.
+6. Keep the old path available for rollback until the new one has run through a full maintenance cycle.
 
-## Final recommendation
+Step 4 is the one people skip. Comparing result sets catches both propagation bugs and recall differences between the two index implementations, which are real and often larger than expected.
 
-If you’re running more than 50k vector searches per day or have strict latency SLOs, move vector workloads out of Postgres today. The operational pain isn’t worth the savings.
+## Decision checklist
 
-Specifically:
+Work through this before committing either way.
 
-- If you want minimal infra, run Qdrant 1.8.0 on a single node with 8 vCPU/32 GiB RAM.
-- If you want managed, accept Pinecone Serverless but warm the index every 5 minutes.
-- If you must stay in Postgres, use pg_embedding 0.1.7 and accept 140ms p99.
+1. What is your peak QPS, and what is the CPU cost per query on your hardware? Multiply them. Does the result fit on your current instance with headroom?
+2. What is the p99 SLO, and does it survive a vacuum running concurrently with peak traffic? Test it, do not assume.
+3. What is your recall@10 today, measured against brute force? Is it acceptable, and do you know how it changes as the collection grows?
+4. How long does a full index build take on your data? Is that a window you can schedule?
+5. If you move to a separate service, what is the propagation mechanism, and what is the maximum staleness it permits?
+6. Who owns the reconciliation job, and what alerts when the vector store diverges from Postgres?
+7. What is the rollback plan if the new service has a bad week?
 
-Before you do anything else, check your connection pool settings. Run `pgBouncer show pools` or `redis-cli INFO clients` and look for `client_wait_time`. If it’s >50ms, fix the pool first — it’s the easiest win and often the root cause of latency spikes.
+If you cannot answer 5 through 7, the operational cost of moving is higher than the latency you are trying to fix, and you should spend another cycle on tuning and measurement first.
 
-Now go check your pool settings. Do it now.
+## FAQ
 
+**Does pgvector get slower over time even with an HNSW index?**
+Yes, it can. Inserts and updates fragment the graph, and query latency tends to drift upward as the index grows and becomes less cache-friendly. The mitigation is monitoring index size and recall over time and rebuilding when they degrade, not assuming the index is static.
 
----
+**How do I know if the connection pool is the bottleneck rather than the query?**
+Compare pool wait time against query execution time. If `SHOW POOLS;` in PgBouncer reports a sustained nonzero `maxwait`, or if client-side latency exceeds server-side `EXPLAIN (ANALYZE)` execution time by a wide margin, requests are waiting for a connection. Fix that before tuning the index.
 
-### About this article
+**Should I use `REINDEX INDEX CONCURRENTLY`?**
+It avoids blocking writes, which matters for a live service, but it takes longer and does more total IO than the blocking form. Schedule it in a low-traffic window and monitor disk saturation while it runs.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
+**Is IVFFlat or HNSW better?**
+HNSW generally gives better recall at a given latency and supports incremental inserts more gracefully. IVFFlat builds faster and uses less memory, but recall depends heavily on the list count and it needs a representative sample to train. The right choice depends on whether your data is write-heavy and how much memory you can afford.
 
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
+**Can I keep vectors in Postgres but move only the search?**
+Yes. A common pattern is to keep the source of truth and the embeddings in Postgres and maintain a derived ANN index in a separate service, populated by an outbox worker. This keeps transactional consistency where it belongs and isolates the search tier for scaling.
 
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
+## Do this in the next 30 minutes
 
-**Last generated:** July 24, 2026
+Run this against your production database and look at the last two columns:
+
+```sql
+SELECT
+  relname,
+  n_live_tup,
+  n_dead_tup,
+  last_autovacuum,
+  pg_size_pretty(pg_total_relation_size(relid)) AS total_size
+FROM pg_stat_user_tables
+WHERE relname IN ('your_vectors_table')
+ORDER BY n_dead_tup DESC;
+```
+
+If `n_dead_tup` is a significant fraction of `n_live_tup`, or if `last_autovacuum` is more than a day old on a table that receives writes, your latency spikes are probably maintenance, not the index. That is a tuning problem, and it is cheaper to fix than a migration.

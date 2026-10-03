@@ -508,5 +508,11 @@
     "title": "AWS FinOps levers: what mid-size teams ignore in 2026",
     "reason": "Near-duplicate of aws-cost-levers-2026-the-3-that-cut-bills-30",
     "deleted_at": "2026-10-03T11:56:07.456867+00:00"
+  },
+  {
+    "slug": "debug-async-python-before-it-deadlocks",
+    "title": "Debug async Python before it deadlocks…",
+    "reason": "Near-duplicate of tame-python-asyncs-hidden-traps",
+    "deleted_at": "2026-10-03T11:59:38.285599+00:00"
   }
 ]

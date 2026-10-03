@@ -1,130 +1,101 @@
 # Remote work in 2026: which tools survived
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+Most remote-work tooling assumes a developer on fiber in a major hub. When a team spans high-latency regions, metered connections, and grids that drop for hours, that assumption becomes the failure mode. A chat client that hangs on a 250 ms socket timeout, a CI runner that re-downloads a 1 GB image on every job, a deploy step with no retry — each is individually small and collectively fatal to throughput.
 
-## Why I wrote this (the problem I kept hitting)
+This article covers how to measure your actual constraints, then build a stack that degrades gracefully: a self-hosted CI runner, an async chat bridge, retry and power-failure handling, and enough observability to debug without a live call. Everything here is reproducible with commands you can run yourself.
 
-By 2026, the remote-work tooling landscape had fractured into two camps: companies that treated hybrid as a temporary phase and those that bet their entire stack on async-first workflows. I ran into this when a government grant portal we built in Kenya kept failing deployments during Nairobi power cuts. The team had moved to GitHub Actions, which sounded great—until we realized the default runner image for `ubuntu-latest` in Q3 2026 was 18 GB and the office router only allowed 50 GB/day. After three weeks of throttling and manual retries, we switched to self-hosted runners on a $120/month Raspberry Pi 5 cluster. That’s the kind of friction most remote teams still ignore until the bill hits.
+## Measure first, then choose
 
-I was surprised that even in 2026, the median company running a fully remote stack still relies on Zoom for async standups. That’s like using a fire hose to fill a thimble. The disconnect between async-first tooling and synchronous habits is the gap I kept hitting—and it’s costing teams real hours.
-
-The real problem isn’t bandwidth or tools; it’s that most remote stacks are built for developers in San Francisco, London, or Berlin. Sub-Saharan teams, Latin American engineers, and Southeast Asian freelancers face a different reality: unreliable electricity, metered connections, and latency that makes Figma unusable after 5 PM. In 2026, the companies that pulled back the most were those that assumed remote work meant “everyone has fiber and a UPS.” The ones that doubled down understood that remote work is just work—with constraints.
-
-I spent two weeks debugging a Slack bot that kept timing out during Lagos business hours. The error was `Error: request to https://slack.com/api/chat.postMessage failed, reason: socket hang up`. Turns out the bot was using Node 20 LTS on a t3.small EC2 instance in `us-east-1`, and the 300 ms latency to Nigeria was enough to trigger the default 250 ms socket timeout. I bumped the timeout to 1000 ms, moved the instance to `af-south-1`, and saved $18/month by switching to an `m6g.large` Graviton instance. Small fixes, big impact.
-
-This isn’t about whether remote work is good or bad. It’s about which tools and processes actually work when your team is spread across time zones, power grids, and internet providers that go dark for hours.
-
-
-## Prerequisites and what you'll build
-
-You’ll need a basic understanding of async workflows and a willingness to throw out tools that assume everyone has 1 Gbps fiber. If you’re still using Zoom for async meetings, stop. This guide assumes you’re already running a codebase on GitHub, GitLab, or Bitbucket. You’ll also need Node 20 LTS or Python 3.11 for the examples, and a budget of less than $200/month for a small self-hosted runner or CI cluster.
-
-What you’ll build is a minimal async stack that survives power cuts and metered connections. It includes:
-
-- A self-hosted GitHub Actions runner (Node 20 LTS, Ubuntu 24.04)
-- A lightweight async chat bridge using Matrix (Synapse 1.116.0)
-- A status page built with Dokku 0.34.4 and a $10/month VPS
-- A deployment script that only pushes when the exit code is 0 and the PowerShell check passes (yes, PowerShell)
-
-The stack weighs under 2 GB total and runs on a $20/month Hetzner VPS in Germany with IPv6. If you’re in Nairobi or Lagos, you can mirror the runner to a local $35/month Orange Pi 5 or Raspberry Pi 5 with an M.2 SSD.
-
-Why these tools? Because in 2026, the companies that pulled back from remote work were the ones that assumed cloud runners were free and Zoom was enough. The ones that doubled down used async-first chat, self-hosted runners, and deployment scripts that fail fast.
-
-
-## Step 1 — set up the environment
-
-Start by auditing your current stack. Run this on a laptop in the office during peak hours:
+Before changing tooling, quantify the problem. Latency to your source host and package registries drives CI flakiness more than raw bandwidth does.
 
 ```bash
-time curl -s https://api.github.com/users/octocat | jq '.name'
+for i in $(seq 1 10); do
+  curl -s -o /dev/null -w "%{time_total}\n" https://api.github.com/users/octocat
+done
 ```
 
-If the latency is over 300 ms to `github.com`, you’re already in trouble. In Nairobi, I’ve seen 800 ms latency to GitHub’s CDN. That’s enough to make every CI job flaky.
+Collect ten samples and compare the median, not the best case. A median above roughly 300 ms to your primary Git host means every CI step that makes many small API calls inherits that penalty multiplied by call count. Also measure:
 
-### 1.1 Choose your runner strategy
+```bash
+# DNS resolution time alone
+dig api.github.com | grep "Query time"
 
-There are three options:
+# Time to first byte from a container registry
+curl -s -o /dev/null -w "connect=%{time_connect} ttfb=%{time_starttransfer}\n" \
+  https://registry-1.docker.io/v2/
+```
 
-| Option | Cost/month | Uptime | Best for |
+Record these numbers before and after any change. Without a baseline, "it feels faster" is not evidence, and vendor claims about latency are not your latency.
+
+### Runner placement options
+
+| Option | Typical monthly cost | Failure domain | Suits |
 |---|---|---|---|
-| Cloud runners (GitHub Actions, CircleCI) | $0–$200+ | 99.9% | Teams with fat pipes and credit cards |
-| Self-hosted cloud VPS (Hetzner, DigitalOcean) | $5–$40 | 99.9% | Teams with one fat pipe and IPv6 |
-| Local metal (Orange Pi 5, Pi 5, NUC) | $0–$50 | 95–99% | Teams with solar power and local ISPs |
+| Cloud-hosted runners | Usage-based, can be high | Provider outage | Teams with reliable local links and card billing |
+| Self-hosted VPS in a nearby region | Low, fixed | Provider outage | Teams needing predictable cost and low latency to the repo host |
+| Local hardware (SBC or mini-PC) | Hardware + power | Power and ISP | Teams with solar/battery and a local ISP |
 
-I picked a $20/month Hetzner VPS in `fsn1` (Germany) with IPv6 because the latency to GitHub’s `eu-central-1` runners was 22 ms vs 240 ms from Nairobi. The runner image for Ubuntu 24.04 is 8 GB, so I switched to the `ubuntu-24.04-arm64` image to save 30% on bandwidth.
+The tradeoff is control versus operational burden. A VPS gives you a stable IP, IPv6, and a provider SLA. Local hardware gives you the lowest latency and survives WAN outages but adds power, cooling, and disk-failure risk to your list.
 
-### 1.2 Install dependencies
+## Set up the base environment
 
-On the VPS, run:
+Install the common dependencies on the host:
 
 ```bash
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y docker.io docker-compose git jq nodejs npm python3 python3-pip build-essential
+sudo apt install -y docker.io docker-compose-plugin git jq build-essential
 ```
 
-Install Node 20 LTS:
+Install a current Node LTS via NodeSource (the exact patch version will move; check with `node --version` after install):
 
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs
-node --version  # Should be v20.15.1
+node --version
 ```
 
-Install Synapse 1.116.0 for Matrix:
+### Register a self-hosted runner
 
-```bash
-sudo apt install -y lsb-release wget apt-transport-https
-sudo wget -O /usr/share/keyrings/matrix-org-archive-keyring.gpg https://packages.matrix.org/debian/matrix-org-archive-keyring.gpg
-sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/matrix-org-archive-keyring.gpg] https://packages.matrix.org/debian/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/matrix-org.list'
-sudo apt update
-sudo apt install -y matrix-synapse-py3
-```
-
-### 1.3 Configure GitHub Actions runner
-
-Download the runner:
+Download the runner archive matching your architecture. The example below is arm64; substitute `x64` for Intel/AMD hosts, and verify the current release tag on the runner's releases page rather than hardcoding one.
 
 ```bash
 mkdir ~/actions-runner && cd ~/actions-runner
-curl -o actions-runner-linux-arm64-2.317.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.317.0/actions-runner-linux-arm64-2.317.0.tar.gz
-tar xzf ./actions-runner-linux-arm64-2.317.0.tar.gz
+curl -o actions-runner.tar.gz -L \
+  https://github.com/actions/runner/releases/download/v2.317.0/actions-runner-linux-arm64-2.317.0.tar.gz
+tar xzf ./actions-runner.tar.gz
 ```
 
-Register the runner with a PAT token that has `repo` scope:
+Register it with a token scoped to the repository (use the token GitHub generates for runner registration, not a broad personal access token):
 
 ```bash
-./config.sh --url https://github.com/your-org/your-repo --token YOUR_PAT_TOKEN --name "hzn-hetzner-arm64"
+./config.sh --url https://github.com/your-org/your-repo \
+  --token YOUR_REGISTRATION_TOKEN \
+  --name "runner-01"
 ```
 
-Start the service:
+Install and start as a service:
 
 ```bash
 sudo ./svc.sh install
 sudo ./svc.sh start
 ```
 
-Check status:
+A common failure: the runner tries to pull `node:20` and stalls on a slow link. Pre-pull images explicitly and pin digests for reproducibility:
 
 ```bash
-./run.sh --check
+docker pull node:20-alpine
+docker image inspect node:20-alpine --format '{{index .RepoDigests 0}}'
 ```
 
-Gotcha: If the runner fails with `Error: Unable to find image 'node:20' locally`, run `docker pull node:20-alpine` once. The Alpine image is 50 MB vs 1 GB for the full image.
+Pin the digest in your workflow so a re-tag upstream cannot silently change your build.
 
+## Build the async chat bridge
 
-## Step 2 — core implementation
+The point of an async bridge is that GitHub events land in a chat room as messages, and nobody has to attend a meeting to learn a build failed. Matrix is one option: a federated, open protocol with self-hostable servers. The same pattern works with any chat system that exposes an HTTP send endpoint.
 
-The core of an async-first stack is a chat bridge that posts GitHub events to Matrix rooms. No Zoom, no Slack. Matrix is federated, open source, and works on low-bandwidth connections.
+The bridge's job is narrow: receive a webhook, format a message, POST it to the room. Keep it that small. A bridge that also tries to parse commits and run commands becomes a second, worse CI system.
 
-### 2.1 Matrix bridge setup
-
-Create a new user in Synapse for the bridge:
-
-```bash
-register_new_matrix_user -c /etc/matrix-synapse/homeserver.yaml http://localhost:8008
-```
-
-Create a room and invite the bridge user. Then, in the bridge config (`config.json`):
+### Config shape
 
 ```json
 {
@@ -143,15 +114,9 @@ Create a room and invite the bridge user. Then, in the bridge config (`config.js
 }
 ```
 
-Run the bridge:
+Never commit this file. Load secrets from environment variables or a secrets manager, and mount the config read-only into the container.
 
-```bash
-docker run -d --name github-matrix-bridge -v $(pwd)/config.json:/app/config.json -e NODE_ENV=production ghcr.io/matrix-org/matrix-github:v2.3.1
-```
-
-### 2.2 GitHub Actions workflow
-
-Create `.github/workflows/async-push.yml`:
+### Workflow that posts status
 
 ```yaml
 name: Async Push
@@ -167,68 +132,64 @@ jobs:
         run: |
           npm ci
           npm run build
-      - name: Notify Matrix
+      - name: Notify chat
         if: always()
         run: |
-          curl -X POST -H "Content-Type: application/json" \
-            -d '{"text":"Build ${{ job.status }} for ${{ github.sha }}"}' \
-            "https://matrix-client.matrix.org/_matrix/client/v3/rooms/!github-updates:yourdomain.com/send/m.room.message"
-      - name: Deploy to Dokku
+          curl -sS -X POST -H "Content-Type: application/json" \
+            -d "{\"text\":\"Build ${{ job.status }} for ${{ github.sha }}\"}" \
+            "${{ secrets.MATRIX_ROOM_URL }}"
+      - name: Deploy
         if: success()
-        run: |
-          git remote add dokku dokku@your-dokku-server:app
-          git push dokku main
+        run: ./scripts/deploy.sh
 ```
 
-Key points:
-- The runner is tagged `linux`, `arm64`, and `self-hosted`.
-- The Matrix notification fires even if the build fails.
-- The deploy only happens on success.
+Two details matter. `if: always()` ensures the notification fires on failure — the case you most need to hear about. And the room URL lives in a secret, not in the workflow file, so rotating it does not require a code change.
 
-I spent three days debugging why the Matrix notification failed. Turns out the curl command used the public Matrix endpoint, which was blocked by the office firewall. Switching to the local Synapse client (`https://matrix-client.matrix.org`) fixed it.
+A failure mode worth naming: pointing the notification at a public federation endpoint from inside a corporate network often fails because outbound traffic to that host is blocked. Send to your own homeserver's client endpoint instead, and confirm with a single manual `curl` before wiring it into CI.
 
+## Handle the failure cases as first-class
 
-## Step 3 — handle edge cases and errors
+In a constrained-network environment, power cuts, throttling, and transient network errors are the normal path, not exceptions. Build for them directly.
 
-Edge cases in a remote stack are not edge cases—they’re the main cases.
-
-### 3.1 Power cut detection
-
-Add a script that checks the UPS status every 5 minutes. On the VPS, run:
+### Power and UPS state
 
 ```bash
 #!/bin/bash
 # ups-check.sh
-STATUS=$(apcaccess status | grep "STATUS" | awk '{print $3}')
+STATUS=$(apcaccess status | awk '/^STATUS/ {print $3}')
 if [ "$STATUS" != "ONLINE" ]; then
-  curl -X POST -H "Content-Type: application/json" \
-    -d '{"text":"Power cut detected on VPS! UPS status: ${STATUS}"}' \
-    "https://matrix-client.matrix.org/_matrix/client/v3/rooms/!status:yourdomain.com/send/m.room.message"
+  curl -sS -X POST -H "Content-Type: application/json" \
+    -d "{\"text\":\"Power event. UPS status: ${STATUS}\"}" \
+    "$MATRIX_ROOM_URL"
 fi
 ```
 
-Install `apcaccess` if you have a UPS:
+Install the daemon that provides `apcaccess`:
 
 ```bash
 sudo apt install -y apcupsd
 ```
 
-For solar/battery setups without a UPS, check the battery level via SSH from a local Pi:
+A real trap: some UPS units report `STATUS ONLINE` while running on a nearly depleted battery during a brownout. Status alone is not enough — also read the battery charge field and alert on a low threshold, not just on a status change.
+
+For battery/solar hosts without a UPS, check thermal throttling on a Raspberry Pi:
 
 ```bash
-ssh pi@local-pi "vcgencmd get_throttled" | grep throttled=0x0
+ssh pi@local-pi "vcgencmd get_throttled"
 ```
 
-### 3.2 Bandwidth throttling
+A non-zero value indicates the board has throttled due to undervoltage or heat — both common when running CI on solar power.
 
-If your ISP throttles GitHub or Docker, use a local cache. On the VPS:
+### Local registry cache
+
+If pulling images from a public registry is slow or throttled, run a pull-through cache:
 
 ```bash
 sudo apt install -y docker-registry
-sudo systemctl enable docker-registry
+sudo systemctl enable --now docker-registry
 ```
 
-Then in `/etc/docker/daemon.json`:
+Configure Docker to use it:
 
 ```json
 {
@@ -236,17 +197,13 @@ Then in `/etc/docker/daemon.json`:
 }
 ```
 
-Restart Docker:
-
 ```bash
 sudo systemctl restart docker
 ```
 
-Now `docker pull node:20-alpine` pulls from localhost instead of Docker Hub. Latency drops from 200 ms to 5 ms.
+Measure the effect rather than assuming it: time `docker pull node:20-alpine` before and after, with the image removed between runs (`docker rmi node:20-alpine`). The cache only helps on repeat pulls; the first pull still crosses the WAN.
 
-### 3.3 Flaky network retry logic
-
-In the deployment step, add a retry loop with exponential backoff:
+### Retry with backoff
 
 ```yaml
 - name: Deploy with retry
@@ -255,244 +212,108 @@ In the deployment step, add a retry loop with exponential backoff:
     MAX_RETRIES=3
     RETRY_DELAY=5
     for i in $(seq 1 $MAX_RETRIES); do
-      if git push dokku main; then
+      if ./scripts/deploy.sh; then
         echo "Deploy succeeded"
         exit 0
       fi
-      echo "Deploy failed, retry $i/$MAX_RETRIES in $RETRY_DELAY seconds"
+      echo "Deploy failed, retry $i/$MAX_RETRIES in ${RETRY_DELAY}s"
       sleep $RETRY_DELAY
       RETRY_DELAY=$((RETRY_DELAY * 2))
     done
-    echo "Max retries reached, failing"
+    echo "Max retries reached"
     exit 1
 ```
 
-This reduced our failure rate from 12% to 1.5% during Nairobi peak hours.
+To know whether this helps, instrument the deploy step to emit an outcome label (success, retry-then-success, failed) to your metrics backend. Compare the failure rate over a week before and after enabling retries. Do not trust a single anecdotal improvement.
 
+## Observability you can actually debug with
 
-## Step 4 — add observability and tests
+You cannot fix what you cannot see, and on an unreliable network you will be debugging remotely.
 
-Observability isn’t a luxury—it’s survival. Without it, you’re debugging blind when the power cuts or the ISP throttles.
+### Metrics
 
-### 4.1 Metrics with VictoriaMetrics 1.94.0
-
-Install VictoriaMetrics single binary:
-
-```bash
-wget https://github.com/VictoriaMetrics/VictoriaMetrics/releases/download/v1.94.0/victoria-metrics-linux-arm64-v1.94.0.tar.gz
-tar xzf victoria-metrics-linux-arm64-v1.94.0.tar.gz
-cd victoria-metrics-prod
-./victoria-metrics-prod -storageDataPath ./data -httpListenAddr :8428
-```
-
-Scrape the runner metrics with a Node exporter:
+Run a Prometheus-compatible time-series database and a node exporter on the runner host. Scrape the exporter on its default port and store the data locally:
 
 ```bash
-wget https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-arm64.tar.gz
-tar xzf node_exporter-1.6.1.linux-arm64.tar.gz
-cd node_exporter-1.6.1.linux-arm64
+# node exporter exposes host metrics on :9100
 ./node_exporter &
 ```
 
-Point VictoriaMetrics to the exporter:
+Point your metrics database at `localhost:9100` as a scrape target, then build panels for:
 
-```bash
-curl -X POST -H "Content-Type: application/json" \
-  -d '{"targets":["localhost:9100"],"labels":{"env":"prod"}}' \
-  http://localhost:8428/api/v1/targets
-```
+- Runner CPU, memory, and disk I/O
+- Chat bridge process uptime and restart count
+- CI queue depth and job duration percentiles
+- Deploy step outcome counts
 
-Create a Grafana dashboard with panels for:
-- Runner CPU and memory
-- Matrix bridge uptime
-- GitHub Actions queue length
+Watch disk I/O specifically: on a single-board computer with an SD card, CI workloads can saturate the card and cause both slowness and early failure. An M.2 SSD avoids this.
 
-I was surprised that the default Node exporter config included `nvme` metrics, which crashed on the Orange Pi 5’s SD card. Disabling them saved 15% RAM.
+### Logs
 
-### 4.2 Tests for async workflows
+Ship logs to a local aggregator and query them by repo, job, and error string. The value is being able to answer "what did the deploy step print at 03:14 when the link dropped?" without SSH-ing into a machine that may be offline.
 
-Write a test that simulates a power cut by injecting a 500 ms delay in the Matrix notification:
+### Tests for async behavior
 
 ```javascript
-// test/matrix.spec.js
-const { expect } = require('chai');
+// test/bridge.spec.js
+const assert = require('node:assert');
 const axios = require('axios');
-describe('Matrix bridge', () => {
-  it('should post message within 1000 ms even with delay', async () => {
-    const start = Date.now();
-    await axios.post('http://localhost:3000/webhook', { text: 'test', delay: 500 });
-    const elapsed = Date.now() - start;
-    expect(elapsed).to.be.at.most(1000);
-  });
-});
+
+(async () => {
+  const start = Date.now();
+  await axios.post('http://localhost:3000/webhook', { text: 'test', delay: 500 });
+  const elapsed = Date.now() - start;
+  assert.ok(elapsed <= 1000, `bridge took ${elapsed}ms`);
+})();
 ```
 
-Run with Mocha 10.4.0:
+Run it with the Node test runner or any test framework you already use:
 
 ```bash
-npm install mocha@10.4.0 chai axios
-npx mocha test/matrix.spec.js
+node test/bridge.spec.js
 ```
 
-### 4.3 Logs with Loki 2.9.4
+The point of the test is a bound, not a precise number: the bridge must respond within a stated budget even when a downstream call is slow. Set the budget from your measured latency, not from a guess.
 
-Install Loki and Promtail:
+## A worked sizing example
 
-```bash
-wget https://github.com/grafana/loki/releases/download/v2.9.4/loki-linux-arm64.zip
-unzip loki-linux-arm64.zip
-./loki-linux-arm64 -config.file=loki-config.yaml &
+Suppose a team wants a runner that survives a WAN outage and keeps cost predictable. Reason through it:
 
-wget https://github.com/grafana/loki/releases/download/v2.9.4/promtail-linux-arm64.zip
-unzip promtail-linux-arm64.zip
-./promtail-linux-arm64 -config.file=promtail-config.yaml
-```
+1. Build peak memory is about 1.5 GB (Node build plus Docker overhead).
+2. The chat bridge and metrics agent together use about 200 MB.
+3. Add headroom of 50% for spikes: 1.7 GB × 1.5 ≈ 2.6 GB.
+4. A host with 4 GB RAM and 2 vCPU covers this with margin.
+5. Storage: the OS plus two pinned images plus build cache. Measure with `docker system df` after a week of real jobs, then size the disk to twice that figure.
 
-Point Grafana to Loki at `http://localhost:3100`. Now you can search logs by repo, job, or error message.
+These numbers are illustrative — substitute your own measurements. The method is what matters: measure peak usage, add explicit headroom, then size the machine. Do not size from a blog post's numbers, including these.
 
+## Decision checklist before you migrate
 
-## Real results from running this
+- Baseline latency to your Git host and registry is recorded, with ten samples and a median.
+- You know your peak build memory and disk usage from real jobs.
+- Secrets for the bridge and deploy live outside the repository.
+- The deploy step has retries with backoff and emits an outcome metric.
+- Notifications fire on failure, not only on success.
+- You can read logs for a job that ran while you were offline.
+- You have a documented plan for a multi-hour power or WAN outage: what queues, what fails loudly, what fails silently.
 
-After switching from GitHub cloud runners to a self-hosted arm64 runner, our build time dropped from 14 minutes to 8 minutes. The cost went from $42/month (GitHub Actions) to $20/month (Hetzner) + $5/month (Matrix) = $25/month. That’s a 40% cost saving and a 43% latency improvement.
+If any line is unchecked, fix that before adding more tooling. Adding an AI triage layer on top of a stack you cannot observe just moves the mystery one layer up.
 
-| Metric | Before | After |
-|---|---|---|
-| Build time | 14m 12s | 8m 05s |
-| Cost/month | $42 | $25 |
-| Failure rate | 12% | 1.5% |
-| Uptime (90 days) | 98.4% | 99.8% |
+## FAQ
 
-The async chat bridge reduced our meeting time from 2 hours/week to 30 minutes/week. Teams stopped using Zoom for async updates and started posting in Matrix rooms. The biggest surprise was that engineers outside Nairobi reported feeling more included—the chat logs showed them participating in real time, not catching up in the next meeting.
+**Should the runner be local or on a VPS?**
+Local hardware wins on latency and survives WAN outages; a VPS wins on operational stability and a provider SLA. If your main pain is flaky CI due to latency, local or nearby-region hosting helps. If your pain is a machine that dies when the power does, a VPS in a stable region is the safer default.
 
-I spent two weeks debugging a false positive in the power cut detection. The script assumed the UPS status was always available, but during a brownout, the UPS reported `STATUS ONLINE` even though the battery was at 10%. Adding a battery level check fixed it.
+**How do I know if the chat bridge is the problem or the network is?**
+Log the time spent inside the bridge separately from the time spent on the outbound request. If the bridge's own processing is fast and the outbound call is slow, it is the network. If both are slow, the bridge is overloaded. One timing log per request answers this.
 
+**Do I need a full metrics stack for a small team?**
+No. A single node exporter plus a lightweight time-series database is enough to see CPU, memory, disk, and job duration. Add log aggregation when you find yourself SSH-ing to read logs during an incident.
 
-## Common questions and variations
+**What is the most common silent failure?**
+A notification that fires only on success, so a failed build produces no signal and the team discovers it hours later. Always send on failure.
 
+## Do this in the next 30 minutes
 
-### How do I set up a self-hosted runner on a Raspberry Pi 5 with solar power?
-
-Use a 5V/3A power supply from a solar battery. Install Ubuntu 24.04 ARM64 on a 128 GB SSD. Run the runner as a systemd service:
-
-```bash
-sudo nano /etc/systemd/system/actions-runner.service
-```
-
-Add:
-
-```ini
-[Unit]
-Description=GitHub Actions Runner
-After=network.target
-
-[Service]
-ExecStart=/home/pi/actions-runner/run.sh
-WorkingDirectory=/home/pi/actions-runner
-User=pi
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-```
-
-Then:
-
-```bash
-sudo systemctl enable actions-runner
-sudo systemctl start actions-runner
-```
-
-Gotcha: The runner will fail if the Pi’s temperature exceeds 80°C. Add a fan and monitor with:
-
-```bash
-sudo apt install -y lm-sensors
-sensors
-```
-
-
-### Why did my Matrix bridge keep disconnecting?
-
-Matrix 1.116.0 has a default sync timeout of 30 seconds. If your VPS is under load, the bridge times out. Increase the timeout in `config.json`:
-
-```json
-{
-  "bridge": {
-    "sync_timeout": 60000
-  }
-}
-```
-
-Restart the bridge:
-
-```bash
-docker restart github-matrix-bridge
-```
-
-
-### Which cloud providers are best for self-hosted runners in Africa?
-
-| Provider | Region | IPv6 | Cost/GB (out) | Latency to GitHub |
-|---|---|---|---|---|
-| Hetzner | fsn1 (Germany) | Yes | $0.09 | 22 ms |
-| Orange Cloud | eu-west-3 (Paris) | Yes | $0.08 | 35 ms |
-| AWS | af-south-1 (Cape Town) | Yes | $0.11 | 180 ms |
-| Azure | westeurope | No | $0.12 | 30 ms |
-
-Avoid AWS and Azure in Africa unless you need compliance. Hetzner and Orange Cloud are the best balance of cost and latency.
-
-
-### How do I handle Slack bot timeouts during peak hours?
-
-Slack’s socket timeout is 250 ms by default. Bump it to 1000 ms in your bot code:
-
-```javascript
-const { WebClient } = require('@slack/web-api');
-const web = new WebClient(process.env.SLACK_TOKEN, {
-  timeout: 1000,
-});
-```
-
-Then route traffic through a local proxy:
-
-```bash
-ssh -N -L 3000:slack.com:443 pi@local-pi &
-```
-
-This drops latency from 400 ms to 50 ms.
-
-
-## Where to go from here
-
-The mistake I keep seeing is teams adding AI agents before fixing their async stack. AI agents won’t save you if your chat is synchronous and your runners are in the cloud. Start with observability and a self-hosted runner. Then, once you can see every failure in real time, add AI for triage—not for chat.
-
-The next step is to audit your current stack. Run this command today and log the latency:
-
-```bash
-for i in $(seq 1 10); do time curl -s -o /dev/null -w "%{time_total}\n" https://api.github.com/users/octocat; done
-```
-
-If the median latency is over 300 ms, switch to a self-hosted runner in the nearest low-latency region within 30 days. Move your chat to Matrix or a local Matrix server. Then, and only then, think about AI agents.
-
-The companies that pulled back from remote work in 2026 were the ones that assumed their tools were universal. The ones that doubled down built stacks that worked anywhere—on solar power, on metered connections, in brownouts. That’s the difference.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 13, 2026
+Run the latency loop from the first section ten times against your primary Git host and write down the median. If it exceeds 300 ms, open an issue in your repo titled "CI latency baseline" with the number and a link to the ten raw samples. That single recorded measurement turns every later tooling argument into a comparison against evidence.
+===END===

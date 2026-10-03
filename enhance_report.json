@@ -1,15 +1,21 @@
 {
   "changed": [
     {
-      "slug": "ai-ui-tools-6-months-in-what-i-gained-and-lost",
+      "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",
       "sentences_removed": 0,
       "sections_added": 2,
       "footer_migrated": false
     },
     {
-      "slug": "build-in-public-without-burning-out",
+      "slug": "postgres-vector-search-what-breaks-first",
       "sentences_removed": 0,
-      "sections_added": 1,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
+      "sentences_removed": 0,
+      "sections_added": 2,
       "footer_migrated": false
     }
   ],
@@ -36,10 +42,7 @@
     "mcp-servers-real-time-pipelines-without-agents",
     "observability-2026-ditch-the-three-pillars",
     "offline-first-apps-what-3g-markets-taught-us",
-    "postgres-vector-search-what-breaks-first",
     "pr-checklists-are-dead-ai-agents-do-reviews-now",
-    "rag-is-not-enough-hybrid-search-reranking-in-2026",
-    "remote-work-in-2026-which-tools-survived",
     "replace-env-with-these-in-2026",
     "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse",
     "spot-instances-vs-on-demand-for-ai-experiments",

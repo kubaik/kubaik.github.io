@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-17T12:51:36.917045">
-        <meta property="article:modified_time" content="2026-08-17T12:51:36.917058">
+        <meta property="article:modified_time" content="2026-10-03T11:59:34.047421+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Audit logs that scale: skip the 3AM fire drills">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Audit logs that scale: skip the 3AM fire drills",
       "description": "Cut audit log storage 70% and query latency 90% with a dual-stream stack—Kafka 3.7, ClickHouse 23.11, S3 Parquet—while satisfying GDPR and SOC2 integrity…",
       "datePublished": "2026-08-17T12:51:36+00:00",
-      "dateModified": "2026-08-17T12:51:36+00:00",
+      "dateModified": "2026-10-03T11:59:34+00:00",
       "wordCount": 2638,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
@@ -262,7 +262,7 @@
                         13 min read
                         &nbsp;·&nbsp; 2638 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-17
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -333,9 +333,7 @@
 </li>
 </ol>
 <p>Even here, you can mitigate the worst failures:
-- Cap the log line size at 2 KB.
-- Use hot-warm architecture with 30-day retention.
-- Run a nightly integrity job that snapshots the <code>_id</code> field and hashes the payload.</p>
+- Cap the log line size at 2 KB. - Use hot-warm architecture with 30-day retention. - Run a nightly integrity job that snapshots the <code>_id</code> field and hashes the payload.</p>
 <h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
 <p>Use the <strong>4-question filter</strong> to pick your stack:</p>
 <table>

@@ -1,33 +1,30 @@
 {
   "improved": [
     {
-      "slug": "build-in-public-without-burning-out",
+      "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
+      "attempts": 2,
+      "retitled": false
+    },
+    {
+      "slug": "remote-work-in-2026-which-tools-survived",
+      "attempts": 2,
+      "retitled": false
+    },
+    {
+      "slug": "postgres-vector-search-what-breaks-first",
       "attempts": 1,
       "retitled": false
     },
     {
-      "slug": "ai-made-self-service-platforms-trivial-in-2026",
+      "slug": "ai-agents-eat-your-budget-3-ways",
       "attempts": 2,
       "retitled": false
     },
     {
-      "slug": "ai-ui-tools-6-months-in-what-i-gained-and-lost",
-      "attempts": 2,
-      "retitled": true
+      "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",
+      "attempts": 1,
+      "retitled": false
     }
   ],
-  "failed": [
-    {
-      "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
-      "errors": [
-        "dropped too many code examples"
-      ]
-    },
-    {
-      "slug": "remote-work-in-2026-which-tools-survived",
-      "errors": [
-        "dropped too many code examples"
-      ]
-    }
-  ]
+  "failed": []
 }

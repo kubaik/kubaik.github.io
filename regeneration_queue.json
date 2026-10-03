@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-errors-hide-in-plain-latency",
-    "title": "AI errors hide in plain latency",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-hiring-what-actually-moves-the-bar",
-    "title": "AI hiring: what actually moves the bar",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three weeks tuning the resume parser weights on Named Entity Recognition",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-made-self-service-platforms-trivial-in-2026",
-    "title": "AI made self-service platforms trivial in 2026",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): The short version: the conventional advice on changed selfservice is incomplete.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-on-slow-networks-nairobi-teams-2026-playbook",
-    "title": "AI on slow networks: Nairobi teams' 2026 playbook",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this nairobibased teams problem while migrating a service under a har",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-tools-wont-help-if-everyone-writes-the-same-code",
-    "title": "AI tools won’t help if everyone writes the same code",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I was surprised when a Berlin teammate bluntly said, \"I don’t trust a single AI-",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ai-unit-costs-the-metric-both-teams-fight-over",
     "title": "AI unit costs: the metric both teams fight over",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "always-on-agents-cost-more-than-you-think",
     "title": "Always-on agents cost more than you think",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about real cost during a code review recently, and my first",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "audit-logs-that-scale-skip-the-3am-fire-drills",
     "title": "Audit logs that scale: skip the 3AM fire drills",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "aws-cloudwatch-synthetics-for-ai-pipelines",
     "title": "AWS CloudWatch Synthetics for AI pipelines",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "biometrics-beat-passwords-passkey-2026-shift",
     "title": "Biometrics beat passwords: passkey 2026 shift",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",
@@ -751,6 +721,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "ai-errors-hide-in-plain-latency",
+    "title": "AI errors hide in plain latency",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-hiring-what-actually-moves-the-bar",
+    "title": "AI hiring: what actually moves the bar",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three weeks tuning the resume parser weights on Named Entity Recognition",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-made-self-service-platforms-trivial-in-2026",
+    "title": "AI made self-service platforms trivial in 2026",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): The short version: the conventional advice on changed selfservice is incomplete.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-on-slow-networks-nairobi-teams-2026-playbook",
+    "title": "AI on slow networks: Nairobi teams' 2026 playbook",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this nairobibased teams problem while migrating a service under a har",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-tools-wont-help-if-everyone-writes-the-same-code",
+    "title": "AI tools won’t help if everyone writes the same code",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I was surprised when a Berlin teammate bluntly said, \"I don’t trust a single AI-",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agent-drift-why-prod-breaks-without-human-checkpoints",
