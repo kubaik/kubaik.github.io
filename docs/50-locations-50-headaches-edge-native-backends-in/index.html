@@ -64,8 +64,8 @@
       "description": "How to design edge-native backends: bounded staleness, write fan-out cost, leader-based writes, and how to measure P99 latency per POP.",
       "datePublished": "2026-06-22T07:49:49+00:00",
       "dateModified": "2026-10-03T11:27:34+00:00",
-      "wordCount": 2187,
-      "timeRequired": "PT11M",
+      "wordCount": 2319,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2187 words
+                        12 min read
+                        &nbsp;·&nbsp; 2319 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -499,6 +499,25 @@ Start at the leader. If the leader is clean, capture packets at the affected POP
 Treating every POP as a mini-region. POPs are resource-constrained and have higher latency to any control plane. Design for bounded staleness instead of assuming strong consistency is available.</p>
 <h2 id="close-the-gap-in-30-minutes">Close the gap in 30 minutes</h2>
 <p>Open your API's read path and add a one-second TTL cache in front of the most frequently read query, then measure two things before and after: P95 latency for that endpoint, and egress bytes per minute. If latency drops and egress stays flat, the cache is doing useful work and you have a measured starting point for the rest of the design.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/">Run APIs in 50 spots: what breaks first</a></li>
+<li><a href="https://kubaik.github.io/choose-no-code-only-when/">Choose no-code only when</a></li>
+<li><a href="https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/">Store data once, serve everywhere: cheaper</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -537,10 +556,10 @@ Treating every POP as a mini-region. POPs are resource-constrained and have high
                         <span class="related-meta">15 min read · 19 June 2026</span>
                     </a>
                     
-                    <a class="related-card" href="/build-a-nairobi-saas-stack-for-32kmonth/">
-                        <h3>Build a Nairobi SaaS stack for $3.2k/month</h3>
-                        <p>Cut Nairobi SaaS costs 40% with this 2026 stack — exact Terraform, CI/CD, and RDS tuning that kept us under $3.2k/month at 5,000 users</p>
-                        <span class="related-meta">12 min read · 10 June 2026</span>
+                    <a class="related-card" href="/settlement-vs-clearing-backend-engineers-guide/">
+                        <h3>Settlement vs clearing: backend engineer&#39;s guide</h3>
+                        <p>Clearing vs settlement: why your ledger doesn&amp;#x27;t balance. A backend engineer&amp;#x27;s guide to obligations, netting, and settlement finality.</p>
+                        <span class="related-meta">14 min read · 28 September 2026</span>
                     </a>
                     
                 </div>

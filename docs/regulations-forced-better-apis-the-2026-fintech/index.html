@@ -64,7 +64,7 @@
       "description": "Why payment APIs need durable state machines, explicit retry policies, and status endpoints that survive restarts — and when the old synchronous playbook still works.",
       "datePublished": "2026-06-20T08:41:19+00:00",
       "dateModified": "2026-10-03T11:02:59+00:00",
-      "wordCount": 2501,
+      "wordCount": 2638,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -257,7 +257,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2501 words
+                        &nbsp;·&nbsp; 2638 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -421,6 +421,25 @@ export default router;
 <p>The third step is to make the status endpoint read from durable storage. If it currently reads from process memory, change it to read from the database, with a cache in front. This is a small change with a large effect on correctness.</p>
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Open the file that implements your payment retry logic — often named something like <code>retry_policy.py</code>, <code>retry.go</code>, or <code>retry.ts</code>. Check whether it stores the retry count and the next retry time in durable storage, or only in memory. If it stores them only in memory, add a Redis hash or a database row keyed by payment ID with fields for <code>retries</code>, <code>next_retry_at</code>, and <code>error_code</code>, and set an expiry longer than your maximum retry window. That single change converts an in-memory retry counter into an auditable, restart-surviving retry record.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+<li><a href="https://kubaik.github.io/idempotency-keys-what-they-fix-what-they-dont/">Idempotency keys: what they fix, what they don't</a></li>
+<li><a href="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">M-Pesa failures cost us 40 hours</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

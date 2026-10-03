@@ -64,7 +64,7 @@
       "description": "How to structure a personal AI assistant as replaceable services: contracts, self-hosted embeddings, retries, failure modes, and a checklist to start.",
       "datePublished": "2026-06-11T09:44:01+00:00",
       "dateModified": "2026-10-03T11:29:21+00:00",
-      "wordCount": 2935,
+      "wordCount": 3070,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2935 words
+                        &nbsp;·&nbsp; 3070 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -623,6 +623,25 @@ deploy:
 <p>Use a shared rate limiter with a sliding window, and wrap each tool call in a retry policy with a small maximum attempt count and a per-call timeout. Add a circuit breaker so that a tool failing repeatedly is marked unhealthy for a short period, which prevents thundering herds and gives users a clear error instead of a long hang.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Pick one tool your team already runs daily — a linter, a formatter, or a diff — and wrap it in a container with a memory limit and a health check. Then write a schema for its input and output, and a ten-line HTTP handler that validates both against the schema before returning. Run <code>curl -w "%{time_total}\n" -o /dev/null</code> against it twenty times and record the median and the 95th percentile. That single measurement, plus the schema boundary, is the smallest unit of a lock-in-resistant assistant and tells you more than any benchmark table.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/">Big model API vs fine-tune: the 2026 math</a></li>
+<li><a href="https://kubaik.github.io/ai-code-traps-copilot-vs-cursor-smackdown/">AI code traps: Copilot vs Cursor smackdown</a></li>
+<li><a href="https://kubaik.github.io/ai-agents-eat-your-budget-3-ways/">AI agents eat your budget 3 ways</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

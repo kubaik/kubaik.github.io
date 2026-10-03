@@ -64,7 +64,7 @@
       "description": "Always-on containers bill for idle time; on-demand functions bill per invocation. Compare latency, retries, cold starts, and the failure modes that decide which fits.",
       "datePublished": "2026-07-05T05:04:40+00:00",
       "dateModified": "2026-10-03T11:05:23+00:00",
-      "wordCount": 2349,
+      "wordCount": 2483,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -229,7 +229,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2349 words
+                        &nbsp;·&nbsp; 2483 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -476,6 +476,25 @@ def process_once(payload: dict, store, handler) -&gt; dict:
 <p>Run both models against a shadow copy of production traffic if the workload permits. Compare cost per successful task and p99 latency, not headline monthly cost.</p>
 <h2 id="take-action-in-the-next-30-minutes">Take action in the next 30 minutes</h2>
 <p>Open your monitoring dashboard and compute the duty cycle of your busiest always-on agent: divide total processing seconds by total uptime over the last seven days. If that number is below 0.2 and every side effect in the agent is idempotent, you have a concrete candidate for migration. If it is above 0.5, stop considering the migration and spend the time on the failure modes above instead.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+<li><a href="https://kubaik.github.io/7-skills-senior-engineers-need-now-agents-are-live/">7 skills senior engineers need now agents are live</a></li>
+<li><a href="https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/">Cut cold starts 70%: Lambda cost hack</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

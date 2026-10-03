@@ -64,7 +64,7 @@
       "description": "How cache stampedes happen, why lazy TTLs fail under load, and how to implement coordinated refresh with locks, stale fallbacks, and jitter.",
       "datePublished": "2026-07-21T02:56:30+00:00",
       "dateModified": "2026-10-03T11:26:44+00:00",
-      "wordCount": 3118,
+      "wordCount": 3254,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -229,7 +229,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3118 words
+                        &nbsp;·&nbsp; 3254 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -509,6 +509,24 @@ ttl = get_ttl_with_jitter(1800)  # 30 minutes ± 180 seconds
 <p>If the first two answers are yes and the last three are yes, coordinated refresh is likely worth the complexity. If not, start with jitter and a shorter, staggered TTL, measure again, and only then add locking.</p>
 <h2 id="next-30-minutes">Next 30 minutes</h2>
 <p>Pick your single hottest cache key, add jitter to its TTL, and instrument two counters — cache misses and source queries — around its expiry window. Run a load test that expires the key deliberately, and record the source query rate for the ten seconds after expiry. That number tells you whether you have a stampede problem, and it gives you the baseline you need before changing anything else.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+<li><a href="https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/">Container Build Caching: What Actually Speeds Up CI</a></li>
+<li><a href="https://kubaik.github.io/idempotency-keys-what-they-fix-what-they-dont/">Idempotency keys: what they fix, what they don't</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

@@ -64,7 +64,7 @@
       "description": "How to evaluate push, email, SMS and chat notification infrastructure: latency, idempotency, retries, cost per message and lock-in.",
       "datePublished": "2026-06-22T08:52:57+00:00",
       "dateModified": "2026-10-03T11:07:05+00:00",
-      "wordCount": 2358,
+      "wordCount": 2490,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -245,7 +245,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2358 words
+                        &nbsp;·&nbsp; 2490 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -391,6 +391,24 @@ Logging tells you what happened to individual messages. Metrics tell you whether
 <p>Teams commonly end up with a hybrid: a managed API for the channels that are hard to operate well (email deliverability, SMS routing) and a self-hosted path for push and in-app, where the provider is free and the semantics are simple. That is a defensible architecture as long as the routing logic lives in your code, not in a vendor's dashboard.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Pick your highest-volume channel and add three metrics to it: a latency histogram from ingestion to provider acceptance, a counter of send outcomes split by retryable and permanent, and a counter of duplicate suppressions. Run one hour of production-shaped traffic against it and record p50, p95, and success rate. Those three numbers are the baseline you will compare every future provider and architecture decision against — and they cost you less than an afternoon.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+<li><a href="https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/">Skip M-Pesa: build one API for 3 African markets</a></li>
+<li><a href="https://kubaik.github.io/when-flags-become-experiments/">When flags become experiments</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

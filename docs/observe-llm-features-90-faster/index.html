@@ -64,8 +64,8 @@
       "description": "Log one structured event per LLM interaction instead of tracing every token, then alert only on user-facing outcomes that justify keeping a feature.",
       "datePublished": "2026-07-08T14:23:50+00:00",
       "dateModified": "2026-10-03T10:58:59+00:00",
-      "wordCount": 2591,
-      "timeRequired": "PT13M",
+      "wordCount": 2733,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -258,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2591 words
+                        14 min read
+                        &nbsp;·&nbsp; 2733 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -693,6 +693,27 @@ def backfill_embeddings():
   http://localhost:8000/feature/summarise
 </code></pre>
 <p>Compare the wrapper's reported latency against the LLM endpoint's own latency logs. That difference is the observability layer's true overhead, and it is the first number you need before deciding whether the rest of this design is worth adopting.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/7-ways-to-measure-prompt-platform-roi-in-2026/">7 ways to measure prompt platform ROI in 2026</a></li>
+<li><a href="https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/">Structured Logs and Pinned Versions for Multi-Agent Systems</a></li>
+<li><a href="https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/">Zero-trust AI: skip the latency tax</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://github.com/pgvector/pgvector">pgvector README</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

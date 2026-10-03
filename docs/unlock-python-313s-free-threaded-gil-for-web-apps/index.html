@@ -64,8 +64,8 @@
       "description": "Free-threaded Python removes the GIL, but C extensions, shared state and pools break. A practical checklist for migrating a web service safely.",
       "datePublished": "2026-06-22T19:38:03+00:00",
       "dateModified": "2026-10-03T11:30:36+00:00",
-      "wordCount": 2624,
-      "timeRequired": "PT13M",
+      "wordCount": 2761,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -247,8 +247,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2624 words
+                        14 min read
+                        &nbsp;·&nbsp; 2761 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -521,6 +521,27 @@ Not meaningfully. Removing the GIL does not add cores. It removes a serialisatio
 There is no general rule. The gain depends on the same Python-to-I/O ratio as on x86_64, plus whatever differences the platform has in memory model and scheduling. Measure it; do not assume the x86_64 result transfers.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Pick one endpoint in your service that is I/O-bound and does a non-trivial amount of Python work per request. Add a temporary route that returns <code>sys._is_gil_enabled()</code> and <code>psutil.Process().num_threads()</code>. Deploy that build with <code>PYTHON_GIL=0</code> to a single canary instance behind your load balancer, hit the route, and confirm the GIL is actually off with all your production imports loaded. If it reports <code>True</code>, you have found a GIL-bound extension before it cost you a migration. If it reports <code>False</code>, run your existing load test against the canary and the baseline for the same duration and compare P99 latency on that one endpoint. That single comparison tells you more than any published benchmark.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
+<li><a href="https://kubaik.github.io/bundle-size-70-lighter-with-server-components/">Cutting Client Bundle Size with React Server Components</a></li>
+<li><a href="https://kubaik.github.io/meter-dev-tool-pricing-in-2026/">Meter dev-tool pricing in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.locust.io/">Locust documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

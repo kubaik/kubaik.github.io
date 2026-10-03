@@ -64,8 +64,8 @@
       "description": "Design a Django CI/CD pipeline for 1-2 vCPU runners, slow links and metered egress: caching, image size, migrations and health checks.",
       "datePublished": "2026-07-03T14:11:10+00:00",
       "dateModified": "2026-10-03T11:29:56+00:00",
-      "wordCount": 2374,
-      "timeRequired": "PT12M",
+      "wordCount": 2503,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -255,8 +255,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2374 words
+                        13 min read
+                        &nbsp;·&nbsp; 2503 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -501,6 +501,24 @@ def test_health_endpoint_live():
 <p>A worked sizing example makes the arithmetic concrete. Suppose a base image is 50 MB compressed, your dependency layer is 60 MB, and your application layer is 5 MB. A cold build transfers roughly 115 MB; a warm build with a local registry transfers the application layer only, about 5 MB. At a hypothetical egress price of $0.10/GB (illustrative, not a quoted rate), the difference is about $0.011 per build. At 40 builds a day that is roughly $0.44 a day, or about $160 a year. The larger saving is usually time: if the pull takes 45 seconds cold and 8 seconds warm, the warm path saves 37 seconds per build, which is 25 minutes a day at 40 builds. Substitute your own measured numbers; the point is that the calculation is trivial once you have the two measurements.</p>
 <h2 id="a-30-minute-action">A 30-minute action</h2>
 <p>Open your CI workflow and find every network operation that has no timeout: <code>docker pull</code>, <code>docker push</code>, <code>pip install</code>, <code>curl</code> in a health check. Add an explicit bound to each — <code>--max-time</code> for curl, <code>--timeout</code> for pip, and a retry loop with a fixed sleep for pushes. Then run one build and record the wall-clock time and the bytes transferred from <code>/proc/net/dev</code>. Those two numbers are the baseline against which every later change is judged.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/build-dev-platform-for-2kmonth/">Build dev platform for $2k/month</a></li>
+<li><a href="https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/">Designing APIs for High-Latency Satellite Links</a></li>
+<li><a href="https://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026/">ARM in production: Graviton4 vs Ampere in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

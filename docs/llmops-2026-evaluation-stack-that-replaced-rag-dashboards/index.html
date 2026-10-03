@@ -64,8 +64,8 @@
       "description": "Why RAG dashboards miss real failures, and how to build an evaluation stack around task resolution, dataset rotation, prompt versioning, and drift checks.",
       "datePublished": "2026-07-05T12:37:15+00:00",
       "dateModified": "2026-10-03T11:20:01+00:00",
-      "wordCount": 2477,
-      "timeRequired": "PT12M",
+      "wordCount": 2601,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2477 words
+                        13 min read
+                        &nbsp;·&nbsp; 2601 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -478,6 +478,19 @@ print(f&quot;Mean similarity to reference: {similarity:.3f}&quot;)
 <p>The failure mode is silent. Nothing crashes, latency stays flat, and the dashboard stays green while users get wrong answers. The fix is unglamorous: a rotating golden set, versioned prompts with CI gates, and drift monitoring on the retrieval layer.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your evaluation dataset and check its creation date. If it predates your last significant product or model change, sample 50 recent production queries, label their expected outcomes, and run your current model against them. Compare the resolution rate to your dashboard's score. The size of the gap tells you how much the dashboard is hiding.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+<li><a href="https://kubaik.github.io/llm-metrics-that-stop-wasting-time/">LLM metrics that stop wasting time</a></li>
+<li><a href="https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/">RAG is not enough: hybrid search + reranking in 2026</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

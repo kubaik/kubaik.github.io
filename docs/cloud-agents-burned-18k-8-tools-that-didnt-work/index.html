@@ -64,8 +64,8 @@
       "description": "Agent-driven GPU spend breaks assumptions in standard cloud cost tools. Learn why they miss it, how to measure detection latency, and what to build instead.",
       "datePublished": "2026-07-10T14:36:13+00:00",
       "dateModified": "2026-10-03T11:07:59+00:00",
-      "wordCount": 2281,
-      "timeRequired": "PT11M",
+      "wordCount": 2404,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -261,8 +261,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2281 words
+                        12 min read
+                        &nbsp;·&nbsp; 2404 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -380,6 +380,23 @@ WHERE t.decision_id IS NULL
 <p>Not necessarily, but the tool must ingest billing data from every provider your agents use. Single-provider tools will have blind spots for agents that span providers. Check the ingestion coverage before committing.</p>
 <h2 id="action-step">Action step</h2>
 <p>Open your cloud billing dashboard and filter for GPU spend over the last 7 days. For each GPU resource, compare its actual runtime against the expected runtime of the workload that created it. Any resource that ran significantly longer than expected, with utilization below 10%, is a candidate for the forgotten-teardown failure mode. Identify the agent that owns it, check whether its teardown step runs on all code paths including error paths, and add a lifetime-based policy check like the query above before the next billing cycle.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+<li><a href="https://kubaik.github.io/most-llm-cost-dashboards-lie/">Most LLM cost dashboards lie…</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

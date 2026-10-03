@@ -64,7 +64,7 @@
       "description": "When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.",
       "datePublished": "2026-06-09T09:48:26+00:00",
       "dateModified": "2026-10-03T11:03:48+00:00",
-      "wordCount": 1954,
+      "wordCount": 2091,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -253,7 +253,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 1954 words
+                        &nbsp;·&nbsp; 2091 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -458,6 +458,26 @@ Add new fields with defaults rather than renaming or retyping existing fields. D
 Yes, but batch events to reduce per-invocation overhead, and make handlers idempotent because retries may redeliver events. Watch for partial batch failures and ensure your append operation is safe to retry.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Pick the aggregate in your system that auditors or support engineers ask about most often. Time how long it takes to answer: "What did this aggregate look like at a specific past timestamp?" If the answer requires restoring a backup, parsing binlogs, or writing a one-off script, record that time and the steps involved. Then compare it against the replay-time measurement described above. That comparison, not a general preference for or against event sourcing, is what should drive the decision.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cqrs-when-it-pays-off-and-when-it-breaks/">CQRS: when it pays off and when it breaks</a></li>
+<li><a href="https://kubaik.github.io/audit-logs-compliance-vs-performance/">Audit logs: compliance vs performance</a></li>
+<li><a href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.temporal.io/">Temporal documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

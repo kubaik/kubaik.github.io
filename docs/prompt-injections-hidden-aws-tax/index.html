@@ -64,7 +64,7 @@
       "description": "How unsanitized prompt templates leak instructions, trigger retry storms, and inflate token bills — plus concrete hardening steps and code.",
       "datePublished": "2026-07-03T09:33:36+00:00",
       "dateModified": "2026-10-03T10:56:03+00:00",
-      "wordCount": 2338,
+      "wordCount": 2465,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2338 words
+                        &nbsp;·&nbsp; 2465 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -446,6 +446,23 @@ Send a request whose user field contains a string that looks like your template 
 Instrumenting rendered-prompt hashes and token usage per prompt version. Without that, you cannot tell whether a cost change is caused by traffic, prompt bloat, or a specific injection path. Everything else is guesswork until you can measure.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your prompt rendering code and find the function that produces the final prompt string. Add one line: hash the rendered prompt and log the hash alongside the request's token usage. Deploy it to staging, send a request containing <code>{{x}}</code> in a user-controlled field, and check whether the hash changes compared to the same request without those characters. If it does, your renderer is treating user input as template source, and that is the first thing to fix.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/prompt-injection-what-breaks-first-in-prod/">Prompt injection: what breaks first in prod</a></li>
+<li><a href="https://kubaik.github.io/api-attacks-rising-40-the-3-patterns-to-block-now/">Defending APIs Against Amplification, Stuffing and Smuggling</a></li>
+<li><a href="https://kubaik.github.io/ai-errors-hide-in-plain-latency/">AI errors hide in plain latency</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

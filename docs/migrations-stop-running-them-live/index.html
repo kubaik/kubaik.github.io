@@ -64,7 +64,7 @@
       "description": "Why live schema migrations cause outages, and how versioning the schema as a deployable artifact with expand/contract steps reduces that risk.",
       "datePublished": "2026-06-28T01:58:52+00:00",
       "dateModified": "2026-10-03T11:22:05+00:00",
-      "wordCount": 2149,
+      "wordCount": 2276,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -255,7 +255,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2149 words
+                        &nbsp;·&nbsp; 2276 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -416,6 +416,23 @@ func main() {
 <p>If the migration already committed, the rollback is another migration that reverses the change. If the application code has already deployed, you also need to disable the new code path, typically with a feature flag. The safest rollback is to deploy the previous application version and run the reverse migration, in that order or the reverse depending on which direction is safe for your schema.</p>
 <p><strong>Why do online schema change tools still cause issues?</strong></p>
 <p>Tools that create a shadow table and swap it in can still block queries during the swap phase. In high-concurrency systems, the swap can take seconds, during which locks accumulate and tail latency spikes. The expand/contract model avoids this by decoupling schema changes from runtime behavior, so no single operation needs to swap a table under load.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/stop-the-writes-zero-downtime-db-migrations/">Stop the writes — zero-downtime DB migrations</a></li>
+<li><a href="https://kubaik.github.io/why-our-schema-survived-ai-scaling/">Why our schema survived AI scaling</a></li>
+<li><a href="https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/">M-Pesa Daraja 2.0: your 2026 migration checklist</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -442,12 +459,6 @@ func main() {
                 <h2>Related Articles</h2>
                 <div class="related-grid">
                     
-                    <a class="related-card" href="/one-misconfigured-pool-drained-4kmonth/">
-                        <h3>One misconfigured pool drained $4k/month</h3>
-                        <p>One misconfigured pool drained $4k/month — how PgBouncer 1.22, Postgres 15 max_connections, and per-pod connection counts collided on Black Friday 2025</p>
-                        <span class="related-meta">12 min read · 31 July 2026</span>
-                    </a>
-                    
                     <a class="related-card" href="/postgres-vector-search-what-breaks-first/">
                         <h3>Postgres vector search: what breaks first</h3>
                         <p>Cut vector search latency 85% by moving out of Postgres — pgvector connection limits, Qdrant 1.8 latency, and the pool mistake that cost 180ms</p>
@@ -458,6 +469,12 @@ func main() {
                         <h3>Zero-downtime Postgres schema changes in 2026</h3>
                         <p>Zero-downtime Postgres schema changes on 2TB+ databases in 2026 — pg_repack 1.5.0, AWS DMS 3.5, and observability patterns to avoid 15-minute write pauses and…</p>
                         <span class="related-meta">16 min read · 11 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/stop-the-writes-zero-downtime-db-migrations/">
+                        <h3>Stop the writes — zero-downtime DB migrations</h3>
+                        <p>Zero-downtime migrations fail when writes keep flowing during the copy. A drain-copy-flip state machine, with instrumentation and a decision checklist.</p>
+                        <span class="related-meta">13 min read · 2 July 2026</span>
                     </a>
                     
                 </div>

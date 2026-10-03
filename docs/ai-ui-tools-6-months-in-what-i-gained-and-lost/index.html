@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>AI UI tools: 6 months in, what I gained and lost - Kubai Kevin</title>
-        <meta name="description" content="Cut UI generation time 40% with AI tools — but only after fixing design tokens and adding visual regression tests.">
+        <title>AI UI Generation: Where Design Systems Break - Kubai Kevin</title>
+        <meta name="description" content="AI UI generators produce fluent but token-blind components. Here&amp;#x27;s how teams keep generated code aligned with design systems, plus a worked example.">
         <meta name="keywords" content="AiUiTools, AiFrontendTools, Ai, V0Vercel, Visual, FrontendWorkflow2026, Webdev">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-27T05:01:58.869327">
-        <meta property="article:modified_time" content="2026-09-19T11:54:35.536279+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:41:26.583879+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="AI UI tools: 6 months in, what I gained and lost">
-        <meta property="og:description" content="Cut UI generation time 40% with AI tools — but only after fixing design tokens and adding visual regression tests.">
+        <meta property="og:title" content="AI UI Generation: Where Design Systems Break">
+        <meta property="og:description" content="AI UI generators produce fluent but token-blind components. Here&amp;#x27;s how teams keep generated code aligned with design systems, plus a worked example.">
         <meta property="og:url" content="https://kubaik.github.io/ai-ui-tools-6-months-in-what-i-gained-and-lost/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/ai-ui-tools-6-months-in-what-i-gained-and-lost.png">
-        <meta property="og:image:alt" content="AI UI tools: 6 months in, what I gained and lost">
+        <meta property="og:image:alt" content="AI UI Generation: Where Design Systems Break">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="AI UI tools: 6 months in, what I gained and lost">
-        <meta name="twitter:description" content="Cut UI generation time 40% with AI tools — but only after fixing design tokens and adding visual regression tests.">
+        <meta name="twitter:title" content="AI UI Generation: Where Design Systems Break">
+        <meta name="twitter:description" content="AI UI generators produce fluent but token-blind components. Here&amp;#x27;s how teams keep generated code aligned with design systems, plus a worked example.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-ui-tools-6-months-in-what-i-gained-and-lost.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,11 +60,11 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-ui-tools-6-months-in-what-i-gained-and-lost/#article",
-      "headline": "AI UI tools: 6 months in, what I gained and lost",
-      "description": "Cut UI generation time 40% with AI tools — but only after fixing design tokens and adding visual regression tests.",
+      "headline": "AI UI Generation: Where Design Systems Break",
+      "description": "AI UI generators produce fluent but token-blind components. Here's how teams keep generated code aligned with design systems, plus a worked example.",
       "datePublished": "2026-06-27T05:01:58+00:00",
-      "dateModified": "2026-09-19T11:54:35+00:00",
-      "wordCount": 2947,
+      "dateModified": "2026-10-03T11:41:26+00:00",
+      "wordCount": 3008,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "AI UI tools: 6 months in, what I gained and lost",
+          "name": "AI UI Generation: Where Design Systems Break",
           "item": "https://kubaik.github.io/ai-ui-tools-6-months-in-what-i-gained-and-lost/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>AI UI tools: 6 months in, what I gained and lost</span>
+            <span>AI UI Generation: Where Design Systems Break</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">AI UI tools: 6 months in, what I gained and lost</h1>
+                <h1 itemprop="headline">AI UI Generation: Where Design Systems Break</h1>
                 
-                <p class="post-lead">Cut UI generation time 40% with AI tools — but only after fixing design tokens and adding visual regression tests.</p>
+                <p class="post-lead">AI UI generators produce fluent but token-blind components. Here&amp;#x27;s how teams keep generated code aligned with design systems, plus a worked example.</p>
                 
                 
                 <div class="tags">
@@ -256,36 +256,45 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2947 words
+                        &nbsp;·&nbsp; 3008 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
+                <p>The short version: the conventional advice on AI UI generation tools is incomplete. It works in the simple case — one component, one prompt, one browser — and breaks in a specific way once the output has to survive a team, a build pipeline, and multiple rendering engines. Here's the fuller picture.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>AI UI generation tools like v0 by Vercel, Figma AI, and Bolt.new cut my component creation time by 40% in the first month, but they introduced new kinds of drift between design and code that cost me 8 hours of debugging when a button style changed in production. These tools don’t replace design systems—they expose gaps in them. If your team still debates primary button colors in Slack threads, AI won’t fix that; it will automate the inconsistency.</p>
+<p>AI UI generation tools — v0 by Vercel, Figma AI, Bolt.new and similar products — reduce the time to a first working component, but they introduce a new class of drift between design intent and shipped code. The failure is not that the model writes broken JSX; it is that the model writes <em>plausible</em> JSX using literal values (<code>#2563eb</code>, <code>text-5xl</code>, <code>0.5rem</code>) instead of the tokens your system already defines. These tools do not replace design systems — they expose the gaps in them. If a team still debates primary button colors in chat threads, generation will automate that inconsistency rather than resolve it.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most tutorials show AI spitting out a perfect Tailwind component in seconds, but anyone who has worked on a team knows shared codebases have rules that aren’t captured in a prompt. It returned perfectly valid CSS, but the shadow was 2px off from the Figma file, and the border radius used rem instead of px. The component passed code review, but the inconsistency showed up in 15% of user sessions because Safari rendered the rem value differently. The confusion isn’t whether AI can generate code—it’s whether it can generate code that survives a team, a build, and multiple browsers.</p>
-<p>Another layer is the velocity paradox: teams celebrate the first 10 components generated in an hour, but then hit a wall when they need to update 200 instances after a design token change. I saw a team generate 120 React components in two days using v0, only to realize they had to manually update every instance when the primary color hex shifted from #2563eb to #1d4ed8. The tool didn’t break; the process did. People conflate speed with sustainability, and AI amplifies that gap.</p>
-<p>Finally, there’s the trust gap. I trusted the AI output and skipped the visual regression tests on a payment button because the screenshot matched the prompt. Two weeks later, a user reported a misaligned chevron icon in Firefox. The AI used a system font that wasn’t in our design tokens, so the icon’s bounding box shifted at 120% zoom. The code was correct; the assumption about the environment was wrong. These tools don’t just generate code—they generate assumptions that can become production bugs.</p>
+<p>Most tutorials show a model emitting a clean Tailwind component in seconds. Anyone who has worked on a shared codebase knows that shared codebases carry rules that are not captured in a prompt: which component library is approved, which spacing scale is canonical, which interaction patterns are allowed.</p>
+<p>A representative failure mode: the model returns valid CSS, but the shadow is a couple of pixels off from the design file, and the border radius is expressed in <code>rem</code> where the rest of the codebase uses <code>px</code>. The component passes review because it <em>looks</em> right on the reviewer's monitor. The inconsistency surfaces later, in a subset of viewports, because the two units resolve differently under browser zoom or user font-size settings.</p>
+<p>The confusion is not whether AI can generate code. It is whether it can generate code that survives a team, a build, and multiple browsers.</p>
+<p>A second layer is the velocity paradox. Teams celebrate the first ten components generated in an hour, then hit a wall when a design token changes and 200 instances need updating. The tool did not break; the process did. Speed and sustainability are different properties, and generation tools amplify whichever one the underlying system already has.</p>
+<p>A third layer is the trust gap. Generated output tends to be trusted more than hand-written output because it looks deliberate. A screenshot matches the prompt, so visual regression tests get skipped on a button. Weeks later a user reports a misaligned icon in a different browser: the model used a system font that is not in the design tokens, so the icon's bounding box shifts at 120% zoom. The code was correct; the assumption about the runtime environment was wrong. These tools do not just generate code — they generate assumptions that can become production bugs.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of AI UI tools as a <strong>compiler for design decisions</strong>, not a code generator. Just like a compiler turns TypeScript into JavaScript, these tools turn design intent into code, but they can only compile what you explicitly feed them. If your design system is a loose collection of screenshots and Slack messages, the compiler will produce loosely consistent components.</p>
-<p>I visualize it as a pipeline with three layers:
-- <strong>Prompt layer</strong>: your intent expressed in words or sketches. - <strong>Design layer</strong>: the tokens, spacing scales, and typography rules that the AI can reference. - <strong>Runtime layer</strong>: the browser, OS, and viewport where the code executes.</p>
-<p>The magic happens when all three layers are aligned. When they’re not, bugs appear at the seams. The most common failure mode is assuming the prompt layer is enough. It’s not. The AI couldn’t bridge that gap because the gap wasn’t in the prompt.</p>
-<p>Another analogy: imagine a translator who speaks perfect English and perfect Spanish but has no dictionary. The translations will be fluent but wrong. AI UI tools are fluent, but they need a dictionary (your design tokens) to be accurate. Without it, you get fluent inconsistency.</p>
+<p>Think of an AI UI tool as a <strong>compiler for design decisions</strong>, not a code generator. A compiler turns TypeScript into JavaScript, but it can only compile what you explicitly feed it. Likewise, a generation tool turns design intent into code, but it can only compile the intent you have made explicit. If the design system is a loose collection of screenshots and chat messages, the compiler emits loosely consistent components.</p>
+<p>Picture a pipeline with three layers:</p>
+<ul>
+<li><strong>Prompt layer</strong> — intent expressed in words or sketches.</li>
+<li><strong>Design layer</strong> — the tokens, spacing scales, and typography rules the model can reference.</li>
+<li><strong>Runtime layer</strong> — the browser, OS, zoom level, and viewport where the code executes.</li>
+</ul>
+<p>Bugs appear at the seams between layers. The most common failure mode is assuming the prompt layer is sufficient. It is not. When generated output is wrong, the gap is usually in the design layer, not the prompt.</p>
+<p>A useful analogy: a translator who is fluent in two languages but has no dictionary will produce fluent, confident, wrong translations. Generation tools are fluent. They need a dictionary — your design tokens — to be accurate. Without one, the output is fluent inconsistency.</p>
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Let’s rebuild the pricing page hero from a SaaS site using v0 by Vercel (v0.3.10, released March 2026). The goal is a responsive hero with a centered headline, a two-column pricing card, and a subtle gradient background.</p>
-<p><strong>Step 1: Prompt</strong>
-I pasted this into v0:</p>
-<pre><code>Hero section with dark theme, gradient background from slate-900 to slate-800, large headline &quot;Build AI agents, not infrastructure&quot;, two-column pricing cards with monthly/yearly toggle, primary button &quot;Start free&quot;, secondary button &quot;Book demo&quot;, subtle drop shadow, rounded-lg on cards, spacing 8px increments.
+<p>The following walkthrough uses v0 by Vercel as the generator. The same steps apply to any comparable tool; substitute your own. The goal is a responsive hero section: a centered headline, a two-column pricing area, and a gradient background.</p>
+<p><strong>Step 1: Prompt</strong></p>
+<p>A first-pass prompt might read:</p>
+<pre><code>Hero section with dark theme, gradient background from slate-900 to slate-800,
+large headline &quot;Build AI agents, not infrastructure&quot;, two-column pricing cards
+with monthly/yearly toggle, primary button &quot;Start free&quot;, secondary button
+&quot;Book demo&quot;, subtle drop shadow, rounded-lg on cards, spacing 8px increments.
 </code></pre>
-<p>In 12 seconds, v0 returned a React component with Tailwind classes. Here’s the generated code (condensed for brevity):</p>
-<pre><code class="language-tsx">// v0 generated component
+<p>The tool returns a React component with Tailwind classes. Condensed for brevity:</p>
+<pre><code class="language-tsx">// First generation
 import { useState } from &quot;react&quot;
 
 export default function Hero() {
@@ -310,13 +319,23 @@ export default function Hero() {
   )
 }
 </code></pre>
-<p><strong>Step 2: Reality check</strong>
-The component looked fine in Chrome on my 1440px monitor, but when I opened it in Firefox on a 1024px screen, the headline wrapped and the buttons overlapped. The AI used <code>text-5xl</code> which is 48px in Tailwind, but our design tokens specify <code>text-6xl</code> (64px) for hero headlines. More importantly, the design tokens use <code>1.5rem</code> for line height, but Tailwind defaults to <code>1</code> for <code>text-5xl</code>, causing the text to collapse on smaller screens.</p>
-<p><strong>Step 3: Fixing the drift</strong>
-I added our design tokens to the prompt:</p>
-<pre><code>Use our design tokens: font sizes h1: 4rem, line-height h1: 1.5, spacing increments 0.5rem, border radius lg: 0.5rem, shadow: 0 4px 6px -1px rgba(0,0,0,0.1)
+<p><strong>Step 2: Reality check</strong></p>
+<p>The component renders acceptably in Chrome at a wide viewport. At narrower widths and higher zoom, the headline wraps and the buttons crowd. Two causes:</p>
+<ol>
+<li>The model chose <code>text-5xl</code>, which is a fixed 48px in Tailwind's default scale. The design tokens specify a larger hero size with an explicit line height.</li>
+<li>Tailwind's default line height for <code>text-5xl</code> is <code>1</code>. The design tokens specify <code>1.5</code> for headings. The tighter default causes the text block to collapse at small widths.</li>
+</ol>
+<p>Neither is a model bug. Both are missing inputs.</p>
+<p><strong>Step 3: Fixing the drift</strong></p>
+<p>The next prompt includes the relevant tokens explicitly:</p>
+<pre><code>Use these design tokens:
+- font size h1: 4rem
+- line-height h1: 1.5
+- spacing increments: 0.5rem
+- border radius lg: 0.5rem
+- shadow md: 0 4px 6px -1px rgba(0,0,0,0.1)
 </code></pre>
-<p>The second generation was closer, but still missing the yearly toggle logic and the subtle gradient that matched our Figma file.</p>
+<p>The second generation is closer, but the yearly toggle is still unimplemented and the gradient does not match the design file. Patching by hand:</p>
 <pre><code class="language-tsx">// Manually patched version
 import { useState } from &quot;react&quot;
 
@@ -353,33 +372,39 @@ export default function Hero() {
   )
 }
 </code></pre>
-<p><strong>Step 4: Measuring the gain</strong>
-Original: I spent 45 minutes sketching, coding, and iterating the hero manually. With v0: 12 seconds to generate, 30 minutes to patch and test. Net time saved: <strong>33 minutes per component</strong>, but only after accounting for the patching step. For a team of 5 frontend engineers shipping 2 new pages a week, that’s <strong>5.5 hours saved per week</strong>—enough to justify the tool if the patches are rare.</p>
-<p><strong>Step 5: The hidden cost</strong>
-That 30 minutes of patching uncovered a gap in our design tokens: we didn’t have a <code>shadow-md</code> token, so I had to hardcode it. Two weeks later, when the design team updated the shadow to <code>0 4px 8px rgba(0,0,0,0.15)</code>, I had to update 18 components by hand. The AI didn’t cause the gap; it exposed it. The real cost wasn’t the AI—it was the 30 minutes of patching plus the future 2 hours of refactoring.</p>
+<p><strong>Step 4: Measuring the gain</strong></p>
+<p>The numbers below are illustrative — substitute your own measurements. Assume:</p>
+<ul>
+<li>Manual path: 45 minutes to sketch, code, and iterate the hero.</li>
+<li>Generated path: 12 seconds to generate, 30 minutes to patch and test.</li>
+</ul>
+<p>Net saving: 45 − (0.2 + 30) ≈ <strong>15 minutes per component</strong> once patching is counted. That figure, not the raw generation time, is the one worth tracking. For a team shipping two new pages a week with five frontend engineers, the aggregate saving depends entirely on how often patching is required. If patches are rare, the tool pays for itself; if they are the norm, the saving shrinks toward zero.</p>
+<p>To measure this on your own team, instrument three timestamps per component: prompt submission, first working render, and merge. The difference between the first two is generation time; the difference between the last two is patch time. Log both. Anything you do not log, you will overestimate.</p>
+<p><strong>Step 5: The hidden cost</strong></p>
+<p>The 30 minutes of patching surfaced a gap in the token set: there was no <code>shadow-md</code> token, so the value was hardcoded. When the design team later revised the shadow, every component carrying the hardcoded value needed a manual update. The model did not create the gap; it exposed it. The real cost of generation is not the generation — it is the maintenance debt accumulated from every literal value the model had to invent because no token existed.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>If you’ve ever used a CSS preprocessor like Sass with variables, you already understand the core idea: centralize decisions so changes propagate automatically. AI UI tools extend this pattern to visual decisions. The difference is that in Sass, you centralize color hex codes; in AI UI tools, you centralize spacing scales, typography scales, and component behaviors.</p>
-<p>The setup looked like this:</p>
+<p>If you have used a CSS preprocessor with variables, you already understand the core idea: centralize decisions so changes propagate. Generation tools extend that pattern from color hex codes to spacing scales, typography scales, and component behaviors.</p>
+<p>A minimal token surface looks like this:</p>
 <pre><code class="language-css">:root {
   --color-primary: 37 99 235;
   --spacing-unit: 0.5rem;
 }
 </code></pre>
-<p>The AI UI tool equivalent is a design token file that the AI can reference. Without it, the AI generates components that use literal values like <code>#2563eb</code> and <code>0.5rem</code>, which are hard to update globally. With it, the AI uses tokens like <code>primary-500</code> and <code>spacing-2</code>, and a global change updates every component automatically.</p>
-<p>Another familiar concept is hot reloading. If you’ve used Next.js or Vite, you know the dev server watches files and updates the UI instantly. AI UI tools add a new layer: they watch your prompts and design tokens, not just your code. When you update a token, the AI regenerates components that use it. This is why tools like Figma AI and Bolt.new feel magical—they’re not just generating code; they’re generating code that adapts to your evolving design system.</p>
+<p>The generation-tool equivalent is a token file the model can reference. Without it, the model emits literal values like <code>#2563eb</code> and <code>0.5rem</code>, which cannot be updated globally. With it, the model emits references like <code>primary-500</code> and <code>spacing-2</code>, and a single change propagates everywhere.</p>
+<p>A second familiar concept is hot reloading. A dev server watches files and updates the UI instantly. Generation tools add a layer: they respond to prompts and tokens, not just code. When a token changes, regenerating the affected components is the equivalent of a hot reload for design decisions. This is why these tools feel unusually fast in a demo — the demo has one component and no downstream consumers.</p>
 <h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<p><strong>Misconception 1: AI UI tools eliminate design reviews.</strong>
-They don’t. They shift design reviews from “does this look good?” to “does this match our tokens?” I was surprised when a generated accordion component used <code>cursor: pointer</code> on the header but the design system required <code>cursor: default</code>. The AI generated valid code, but it violated the interaction pattern. Design reviews now focus on behavior, not aesthetics.</p>
-<p><strong>Misconception 2: AI tools reduce code review time.</strong>
-They can increase it if the generated code uses patterns the team hasn’t standardized. In one sprint, a teammate used a generated modal that relied on a third-party library we hadn’t approved. The code review took 45 minutes to reject the dependency, not because the modal was bad, but because the process wasn’t updated to handle AI-generated dependencies.</p>
-<p><strong>Misconception 3: AI tools work the same across browsers.</strong>
-They don’t. Safari’s rendering of <code>rem</code> units and <code>clamp()</code> functions differs from Chrome’s, and the AI doesn’t know that. I generated a hero with a responsive font size using <code>clamp(1rem, 2vw, 2rem)</code> that looked perfect in Chrome but clipped in Safari. The fix required adding a Safari-specific media query—something the AI couldn’t anticipate.</p>
-<p><strong>Misconception 4: AI tools reduce the need for accessibility audits.</strong>
-They don’t. A generated button might have the right color contrast in light mode but fail in dark mode. Another might have an <code>aria-label</code> that’s technically correct but reads as “button button button” in a screen reader because the AI duplicated the label. Accessibility is now a first-class concern in the review process, not an afterthought.</p>
+<p><strong>Misconception 1: generation tools eliminate design review.</strong>
+They shift review from "does this look good?" to "does this match our tokens and interaction patterns?" A generated accordion may use <code>cursor: pointer</code> on the header where the design system specifies <code>cursor: default</code>. The code is valid; the interaction pattern is violated. Review now focuses on behavior and token compliance, not aesthetics.</p>
+<p><strong>Misconception 2: generation tools reduce code review time.</strong>
+They can increase it when generated code uses patterns the team has not standardized. A generated modal that pulls in an unapproved third-party dependency can consume a review cycle on the dependency decision alone, independent of the modal's quality. Update the review checklist before adopting the tool, not after.</p>
+<p><strong>Misconception 3: generation tools behave the same across browsers.</strong>
+They do not. Rendering of <code>rem</code> units, <code>clamp()</code> and font fallbacks differs between engines, and the model has no knowledge of your target matrix. A responsive font size expressed as <code>clamp(1rem, 2vw, 2rem)</code> can look correct in one engine and clip in another. That is a test-matrix problem, not a generation problem — but generation makes it appear more often because more components are produced.</p>
+<p><strong>Misconception 4: generation tools reduce the need for accessibility audits.</strong>
+They do not. A generated button may pass contrast in light mode and fail in dark mode. A generated <code>aria-label</code> may be technically present but redundant, producing confusing screen-reader output. Accessibility remains a first-class review concern.</p>
 <h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>Once you’ve used AI UI tools for a few weeks, the next bottleneck isn’t the code—it’s the design system’s ability to scale. The advanced workflow involves three pillars: <strong>tokens as code</strong>, <strong>prompt templates</strong>, and <strong>runtime validation</strong>.</p>
-<p><strong>Pillar 1: Tokens as code</strong>
-Don’t store design tokens in Figma or a JSON file. Store them in your repo as code so the AI can reference them directly. In 2026, the standard is to use Style Dictionary (v3.5.0) to generate tokens from a YAML file and publish them as npm packages. Here’s a minimal setup:</p>
+<p>Once generation is routine, the bottleneck moves from code to the design system's ability to scale. Three practices matter: tokens as code, prompt templates, and runtime validation.</p>
+<p><strong>Pillar 1: Tokens as code</strong></p>
+<p>Store design tokens in the repository as code, not only in a design file. A common pattern is a single YAML or JSON source compiled into CSS custom properties and TypeScript types. A minimal source file:</p>
 <pre><code class="language-yaml"># tokens/figma.yml
 global:
   color:
@@ -390,17 +415,13 @@ global:
   spacing:
     unit: &quot;0.25rem&quot;
 </code></pre>
-<p>Then, configure Style Dictionary to output CSS custom properties and TypeScript types:</p>
-<pre><code class="language-bash">npm install style-dictionary@3.5.0
-npx style-dictionary build
-</code></pre>
-<p>This generates:</p>
+<p>A build step compiles this into CSS custom properties:</p>
 <pre><code class="language-css">:root {
   --color-primary-500: 37 99 235;
   --spacing-unit: 0.25rem;
 }
 </code></pre>
-<p>And TypeScript types:</p>
+<p>and into TypeScript types:</p>
 <pre><code class="language-ts">declare module &quot;@acme/design-tokens&quot; {
   export const color: {
     primary: {
@@ -412,8 +433,9 @@ npx style-dictionary build
   };
 }
 </code></pre>
-<p><strong>Pillar 2: Prompt templates</strong>
-Instead of writing free-form prompts, use a templating system like Handlebars or a JSON schema to standardize inputs. For example, a prompt template for a card component might look like:</p>
+<p>Several tools in the "design token compiler" category do this compilation step — pick one that emits both CSS variables and typed exports, and wire it into CI so the tokens cannot drift from the source.</p>
+<p><strong>Pillar 2: Prompt templates</strong></p>
+<p>Free-form prompts drift. A template that fixes the variable slots produces more consistent output. A minimal template for a card component:</p>
 <pre><code class="language-handlebars">Generate a card component with:
 - Background: {{backgroundColor}}
 - Border radius: {{borderRadius}}
@@ -421,9 +443,9 @@ Instead of writing free-form prompts, use a templating system like Handlebars or
 - Shadow: {{shadow}}
 - Content: {{content}}
 </code></pre>
-<p>The template ensures every generated card uses the same structure, making it easier to maintain. The tool reduced prompt drift by 80% in our team, cutting the patching time from 30 minutes to 6 minutes per component.</p>
-<p><strong>Pillar 3: Runtime validation</strong>
-Use tools like Chromatic (v10.0.0) for visual regression tests and Playwright (v1.42.0) for functional tests on generated components. The key is to run these tests in CI, not locally. I set up a GitHub Actions workflow that triggers on every PR:</p>
+<p>The template does not make the model smarter. It removes degrees of freedom, so the same input produces the same shape of output, and reviewers know what to expect.</p>
+<p><strong>Pillar 3: Runtime validation</strong></p>
+<p>Run visual regression and functional tests on generated components in CI, not locally. A minimal GitHub Actions workflow:</p>
 <pre><code class="language-yaml"># .github/workflows/visual-regression.yml
 name: Visual Regression
 on: [pull_request]
@@ -438,88 +460,82 @@ jobs:
           onlyChanged: true
           skip: &quot;**/*.stories.tsx&quot;
 </code></pre>
-<p>The workflow catches visual drift before it reaches production. In one case, it flagged a button style change that only appeared at 150% zoom, preventing a regression that would have affected 8% of our users.</p>
-<p><strong>Performance tip:</strong>
-If you’re using Next.js with the App Router, add a <code>generationId</code> to your components so Chromatic can track changes across generations. The <code>generationId</code> is a hash of the prompt and tokens used to generate the component. If the prompt or tokens change, the <code>generationId</code> changes, and Chromatic treats it as a new component for regression purposes.</p>
+<p>The value of this workflow is not the specific tool — it is that drift is detected before merge rather than after deploy. Any visual regression service that diffs rendered output against a baseline will do.</p>
+<p><strong>A note on tracking generations</strong></p>
+<p>If you want regression testing to understand which components changed, give each generated component a stable identifier derived from its prompt and the token version used. When either input changes, the identifier changes, and the regression tool treats the output as a new component rather than a modified one. This is a convention you implement, not a feature any tool ships by default.</p>
 <h2 id="quick-reference">Quick reference</h2>
 <table>
 <thead>
 <tr>
 <th>Task</th>
-<th>Tool</th>
-<th>Version</th>
-<th>Command / File</th>
-<th>Key metric</th>
+<th>Category</th>
+<th>Example command / file</th>
+<th>What to measure</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Generate component</td>
-<td>v0</td>
-<td>v0.3.10</td>
-<td>Paste prompt</td>
-<td>12s avg generation time</td>
+<td>AI UI generator</td>
+<td>Paste prompt into tool</td>
+<td>Time from prompt to first render</td>
 </tr>
 <tr>
-<td>Manage tokens</td>
-<td>Style Dictionary</td>
-<td>v3.5.0</td>
-<td><code>npx style-dictionary build</code></td>
-<td>80% less prompt drift</td>
+<td>Compile tokens</td>
+<td>Design token compiler</td>
+<td><code>npx &lt;token-cli&gt; build</code></td>
+<td>Number of hardcoded literals in output</td>
 </tr>
 <tr>
 <td>Visual regression</td>
-<td>Chromatic</td>
-<td>v10.0.0</td>
-<td><code>chromatic --project-token xyz</code></td>
-<td>Catches 95% of visual drift</td>
+<td>Visual diff service</td>
+<td><code>chromatic --project-token ***</code></td>
+<td>Diff count per PR</td>
 </tr>
 <tr>
 <td>Functional tests</td>
-<td>Playwright</td>
-<td>v1.42.0</td>
+<td>Component test runner</td>
 <td><code>npx playwright test</code></td>
-<td>Finds 30% more edge cases</td>
+<td>Edge cases caught pre-merge</td>
 </tr>
 <tr>
 <td>Prompt templating</td>
-<td>Custom CLI</td>
-<td>1.2.0</td>
+<td>Internal CLI or script</td>
 <td><code>npm run prompt -- --template card</code></td>
-<td>Reduces patching time by 80%</td>
+<td>Patch time per component</td>
 </tr>
 <tr>
-<td>Design tokens in code</td>
+<td>Typed tokens</td>
 <td>TypeScript</td>
-<td>5.4</td>
 <td><code>import { color } from "@acme/tokens"</code></td>
-<td>Saves 2h of refactoring</td>
+<td>Refactor time after a token change</td>
 </tr>
 </tbody>
 </table>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<ul>
-<li><a href="https://v0.dev/docs">Vercel v0 docs: Generating production-grade React components</a> — Focus on the “Design tokens” section; most teams skip it and regret it. - <a href="https://github.com/amzn/style-dictionary/releases/tag/v3.5.0">Style Dictionary v3.5.0 release notes</a> — The changelog explains how to generate CSS variables, JSON, and TypeScript types from a single source. - <a href="https://www.chromatic.com/blog/visual-testing-in-2026">Chromatic’s 2026 visual regression guide</a> — Skip the intro; go to “Handling AI-generated components” for the good parts. - <a href="https://help.figma.com/hc/en-us/articles/20264649053199">Figma AI’s design system checklist</a> — Not just for Figma users; the checklist applies to any AI UI tool. - <a href="https://playwright.dev/docs/test-components">Playwright’s AI component testing guide</a> — Learn how to test components without mounting the whole app.</li>
-</ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How do I keep AI-generated components in sync when the design system changes?</strong>
-Start by treating your design tokens as code. Use Style Dictionary to generate tokens from a YAML or JSON file in your repo. When a token changes, rebuild the tokens and regenerate the components. In CI, run a script that checks for drift between the generated components and the tokens. If drift exceeds a threshold (e.g., 2% of components), fail the build. This forces the team to update prompts or tokens before merging.</p>
-<p><strong>What’s the best way to review AI-generated components in a team?</strong>
-Split reviews into two parts: functional and visual. For functional reviews, check that the component uses your design tokens and follows your patterns (e.g., Button uses your Button component, not a new one). For visual reviews, use Chromatic to compare the generated component against the previous version. If the diff is larger than 5%, require a human review. This catches 95% of issues before they reach production.</p>
-<p><strong>Can I use AI tools with legacy codebases?</strong>
-Yes, but start small. Pick one component type (e.g., buttons or cards) and generate a few variants. Compare the generated code to your legacy code using a diff tool like <code>git diff</code>. If the generated code is cleaner and uses your tokens, adopt it. If not, keep the legacy code and iterate. I tried to generate a legacy data table component and the AI returned a sortable table with 200 lines of code—our legacy table was 50 lines. We kept the legacy version and gradually migrated.</p>
-<p><strong>How do I measure ROI on AI UI tools?</strong>
-Track three metrics: generation time (time from prompt to first working component), patch time (time to fix drift), and review time (time in code review for AI-generated components). For a team of 5, the breakeven is usually 4–6 weeks. After that, the tool pays off if patch time is less than 20% of generation time.</p>
-<h2 id="what-i-wish-i-knew-6-months-ago">What I wish I knew 6 months ago</h2>
-<p>Now I know that AI UI tools don’t just generate code; they generate assumptions that can become production bugs. The tools are fast, but speed without rigor is just technical debt in disguise.</p>
-<p>If you only take one thing from this post, make it this: <strong>treat your design tokens as code</strong>. If you do that, AI UI tools will amplify your team’s work instead of amplifying its gaps. If you don’t, they’ll expose every inconsistency you’ve been ignoring.</p>
-<h3 id="your-next-step-today">Your next step today</h3>
-<p>Open your design system’s Figma file or JSON file and count how many places the primary button color is defined. If it’s more than one, export those values as a single YAML file, then run Style Dictionary v3.5.0 to generate tokens. Commit the tokens to your repo and push the change. That’s the first step to making AI UI tools work for your team, not against it.</p>
+<p><strong>How do I keep generated components in sync when the design system changes?</strong>
+Treat the tokens as code and regenerate from them. When a token changes, rebuild the token package and regenerate the components that reference it. In CI, add a check that scans generated components for literal values that match a known token — a color hex, a spacing value, a font size. If the count of literals exceeds a threshold you set, fail the build. The threshold is arbitrary; the point is that it forces the team to update prompts or tokens before merging.</p>
+<p><strong>What is the best way to review generated components in a team?</strong>
+Split the review into two passes. Functional: does the component use the token package and existing primitives rather than reimplementing them? Visual: does a rendered diff against the previous version exceed a size you are willing to accept without a human look? Set both thresholds explicitly, and record them, so the review does not depend on reviewer mood.</p>
+<p><strong>Can these tools be used with legacy codebases?</strong>
+Yes, but start with one component type. Generate a few variants of a button or a card, then diff the output against the existing implementation. If the generated version is cleaner and uses the tokens, adopt it; if not, keep the existing code and iterate on the prompt. Large legacy components — data tables, complex forms — are usually a poor fit for first adoption because the generated version will be longer and less tested than what already ships.</p>
+<p><strong>How do I measure return on investment?</strong>
+Track three durations per component: generation time, patch time, and review time. Compare the sum against the manual baseline for the same component type. The break-even point is where patch time plus review time falls below the manual build time. Do not estimate these numbers — log them, because patch time is consistently underestimated in anecdotal reporting.</p>
+<h2 id="where-teams-most-often-go-wrong">Where teams most often go wrong</h2>
+<p>The most expensive mistake is adopting generation before the token layer exists. In that state, every generated component hardcodes values, and the cost is deferred rather than avoided — it lands later, as a refactor.</p>
+<p>The second most expensive mistake is measuring the wrong thing. Generation time is the least interesting metric because it is always small. Patch time and review time are where the real cost lives, and both grow with the number of unstated design decisions.</p>
+<p>The third is treating generated code as exempt from review standards. It is not. Generated code that bypasses the component library, introduces an unapproved dependency, or violates an interaction pattern is a defect regardless of how it was produced.</p>
+<h2 id="your-next-step-today">Your next step today</h2>
+<p>Open your design system source — the Figma file, the JSON export, or the CSS variables file — and count how many distinct definitions exist for one value: the primary button color. If the answer is more than one, consolidate them into a single YAML or JSON token file, add a build step that compiles it to CSS custom properties and TypeScript types, and commit both the source and the generated output. That single change is what makes every subsequent generation request reference a token instead of inventing a literal.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/">AI UI tools broke my React flow — here’s why</a></li>
+<li><a href="https://kubaik.github.io/ai-ui-generation-what-it-fixed-and-what-still-breaks/">AI UI generation: what it fixed and what still breaks</a></li>
 <li><a href="https://kubaik.github.io/ai-ui-tools-promise-vs-production/">AI UI tools: promise vs. production</a></li>
-<li><a href="https://kubaik.github.io/ai-burnout-why-output-pressure-rose-even-as-tools-got/">AI burnout: why output pressure rose even as tools got</a></li>
+<li><a href="https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/">AI UI Generators: Production Constraints and Fixes</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://react.dev/">React documentation</a></li>
 </ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>

@@ -64,8 +64,8 @@
       "description": "AI-written code often fails quietly under load. Here is how to validate it at build time, guard it at runtime, and keep on-call triage fast.",
       "datePublished": "2026-08-20T12:56:57+00:00",
       "dateModified": "2026-10-03T11:15:42+00:00",
-      "wordCount": 1840,
-      "timeRequired": "PT9M",
+      "wordCount": 1973,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -255,8 +255,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        9 min read
-                        &nbsp;·&nbsp; 1840 words
+                        10 min read
+                        &nbsp;·&nbsp; 1973 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -400,6 +400,24 @@ def acquire_refresh_slot(client: redis.Redis, resource_key: str) -&gt; bool:
 <p>Third, property-based tests require thought about the invariant. A property test that asserts something trivially true provides no protection and creates false confidence. Review the properties themselves, not just the test results.</p>
 <h2 id="take-action-in-the-next-30-minutes">Take action in the next 30 minutes</h2>
 <p>Open the most recent alert for a service that has received AI-generated diffs. Find the deploy that last touched the failing code path. If the alert card does not already link the alert to that deploy, add that link to the runbook now, and add a single line to the card: "Check the most recent diff on this path before debugging." That one change converts a search into a lookup and is the cheapest step toward the three-layer approach described above.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-reshaped-my-engineering-principles/">AI Code Generation: Failure Modes and Guardrails</a></li>
+<li><a href="https://kubaik.github.io/agent-code-review-gap-nobody-admits/">agent code review gap nobody admits</a></li>
+<li><a href="https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/">7 code review traps when AI writes half your code</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

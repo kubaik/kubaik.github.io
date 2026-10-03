@@ -64,7 +64,7 @@
       "description": "How to unify M-Pesa, Flutterwave, Paystack and mobile money behind one payment abstraction, with fallback logic, reconciliation and compliance.",
       "datePublished": "2026-06-20T12:04:01+00:00",
       "dateModified": "2026-10-03T11:29:01+00:00",
-      "wordCount": 2564,
+      "wordCount": 2697,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -256,7 +256,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2564 words
+                        &nbsp;·&nbsp; 2697 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -467,6 +467,24 @@ Give every attempt a <code>trace_id</code> that spans the adapter call, the prov
 It can, so bound it. Apply exponential backoff with jitter per provider, enforce a per-provider concurrency limit, and stop retrying when the circuit is open. Track rate-limit responses as a distinct error class so you can tune the limit from data rather than guesswork.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick one provider you already integrate with and add three structured log fields to its charge path: <code>attempt_id</code>, <code>idempotency_key</code> and <code>latency_ms</code>. Then query the last 24 hours and compute the failure rate and the p95 latency for that provider alone. That single number tells you whether your current stack is healthy, and it is the first column of the score table you will need if you ever build the abstraction.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/">Skip M-Pesa: build one API for 3 African markets</a></li>
+<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+<li><a href="https://kubaik.github.io/ai-payments-break-in-m-pesa-first/">AI payments break in M-Pesa first</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+<li><a href="https://developer.flutterwave.com/docs">Flutterwave documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

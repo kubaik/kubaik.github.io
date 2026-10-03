@@ -64,7 +64,7 @@
       "description": "Build a multi-agent research pipeline with Redis Streams, Step Functions retries and FastAPI, plus the failure modes that matter and how to measure them.",
       "datePublished": "2026-07-27T14:44:13+00:00",
       "dateModified": "2026-10-03T11:31:15+00:00",
-      "wordCount": 2546,
+      "wordCount": 2684,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -262,7 +262,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2546 words
+                        &nbsp;·&nbsp; 2684 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -636,6 +636,27 @@ If a single agent run can exceed the worker timeout, split it into multiple step
 done | sort -n | awk '{a[NR]=$1} END {print &quot;p50=&quot;a[int(NR*0.5)], &quot;p99=&quot;a[int(NR*0.99)]}'
 </code></pre>
 <p>Then check <code>XPENDING</code> on your task stream. If p99 is more than roughly three times p50, or pending count is climbing, the retry and acknowledgement logic is where the next hour of work should go — not the framework choice.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/">Agent frameworks: stop rewriting the same glue code</a></li>
+<li><a href="https://kubaik.github.io/orchestration-tax-kills-multi-agent-systems/">Orchestration tax kills multi-agent systems</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.temporal.io/">Temporal documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

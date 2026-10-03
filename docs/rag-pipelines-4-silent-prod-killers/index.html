@@ -64,8 +64,8 @@
       "description": "A practical guide to the silent failure modes that break RAG pipelines at scale: tokenizer drift, GPU fragmentation, index skew, and cache stampedes.",
       "datePublished": "2026-06-08T23:47:39+00:00",
       "dateModified": "2026-10-03T11:09:21+00:00",
-      "wordCount": 2440,
-      "timeRequired": "PT12M",
+      "wordCount": 2576,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -258,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2440 words
+                        13 min read
+                        &nbsp;·&nbsp; 2576 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -501,6 +501,24 @@ curl -s localhost:9090/api/v1/query?query=scrape_duration_seconds | jq
 <p>Do this in a spreadsheet, not in your head. The result will be specific to your workload and will change as your traffic grows. Revisit it quarterly.</p>
 <h2 id="the-30-minute-action">The 30-minute action</h2>
 <p>Pick the failure mode above that is most plausible for your stack, and add one instrument to it in the next 30 minutes. If you are unsure where to start, add per-filter-predicate latency logging to your vector-search call and run a 10-minute load test at your expected peak concurrency. Compare the P99 for your most selective filter against the P99 for your least selective one. A gap larger than 3x is your next debugging session.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/">RAG is not enough: hybrid search + reranking in 2026</a></li>
+<li><a href="https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+<li><a href="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

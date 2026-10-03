@@ -64,8 +64,8 @@
       "description": "Build usage-metered pricing for a dev tool: Stripe metered billing, Redis counters, idempotent usage events, and the edge cases that break first.",
       "datePublished": "2026-07-02T17:53:21+00:00",
       "dateModified": "2026-10-03T11:08:28+00:00",
-      "wordCount": 2021,
-      "timeRequired": "PT10M",
+      "wordCount": 2157,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 2021 words
+                        11 min read
+                        &nbsp;·&nbsp; 2157 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -495,6 +495,25 @@ export default function () {
 <p>Reconcile continuously. For each customer, compare the counter your service holds against the sum of events your client reports sending. A persistent gap means lost or duplicated events. Run this reconciliation on a schedule, not only when a customer complains.</p>
 <h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
 <p>Pick one endpoint or CLI command in your tool and add a single counter that records how many times it is invoked per customer, with a client-supplied idempotency key. Do not add billing yet — just record and reconcile. Run your own client against it for a day, then compare the client's event count to the server's counter. If those two numbers match, you have the foundation for metered pricing; if they do not, you have found the bug that would otherwise have appeared on a customer's invoice.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/double-the-price-double-the-revenue/">Double the price, double the revenue</a></li>
+<li><a href="https://kubaik.github.io/build-a-search-system-in-2026-semantic-keyword/">Build a search system in 2026: semantic, keyword</a></li>
+<li><a href="https://kubaik.github.io/pick-one-stripe-lemon-squeezy-paddle-in-2026/">Pick one: Stripe, Lemon Squeezy, Paddle in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -524,7 +543,7 @@ export default function () {
                     <a class="related-card" href="/double-the-price-double-the-revenue/">
                         <h3>Double the price, double the revenue</h3>
                         <p>How to design four-tier pricing for a developer tool: seat limits, usage counters, feature gates, plan enforcement, and how to measure whether it converts.</p>
-                        <span class="related-meta">12 min read · 30 June 2026</span>
+                        <span class="related-meta">13 min read · 30 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/lessons-from-3-saas-price-pivots-in-2026/">

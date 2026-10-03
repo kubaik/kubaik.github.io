@@ -64,7 +64,7 @@
       "description": "A practical ARM64 migration guide for Graviton4 and Ampere Altra: multi-arch builds, image pull timeouts, NUMA pinning, and how to measure each step.",
       "datePublished": "2026-06-10T08:38:47+00:00",
       "dateModified": "2026-10-03T11:17:52+00:00",
-      "wordCount": 2703,
+      "wordCount": 2845,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -251,7 +251,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2703 words
+                        &nbsp;·&nbsp; 2845 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -602,6 +602,27 @@ def compare_image_sizes(repo_name):
 <pre><code class="language-bash">kubectl get --raw &quot;/api/v1/nodes/$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')/proxy/configz&quot; | python -m json.tool | grep -E 'imagePullProgressDeadline|topologyManagerPolicy|cpuManagerPolicy'
 </code></pre>
 <p>Record the values. If <code>imagePullProgressDeadline</code> is at or below the default and your images are large, raise it before your next rollout. If the node has multiple NUMA nodes and <code>topologyManagerPolicy</code> is <code>none</code>, that is the first configuration change to test under load.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/">CI/CD for Django in 20ms Africa networks</a></li>
+<li><a href="https://kubaik.github.io/deploy-a-solo-stack-for-20month-in-2026/">Deploy a solo stack for under $20/month</a></li>
+<li><a href="https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/">Cut cold starts 70%: Lambda cost hack</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

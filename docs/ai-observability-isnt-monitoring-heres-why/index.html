@@ -64,8 +64,8 @@
       "description": "Traditional monitoring proves a service is up; AI observability proves its outputs are still correct. Layers, code, drift math, and failure modes.",
       "datePublished": "2026-06-25T21:25:57+00:00",
       "dateModified": "2026-10-03T11:32:18+00:00",
-      "wordCount": 2696,
-      "timeRequired": "PT13M",
+      "wordCount": 2830,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -237,8 +237,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2696 words
+                        14 min read
+                        &nbsp;·&nbsp; 2830 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -500,6 +500,25 @@ async def post_feedback(feedback: Feedback):
 <p>The honest cost picture: this adds per-request latency, per-request evaluation cost proportional to your sampling rate, an initial integration effort measured in days to weeks, and permanent maintenance of evaluator models and reference sets. For a small internal script that has not changed in months, that is a bad trade. For a user-facing model-driven feature with meaningful traffic and a quality bar, the question is not whether to measure quality but how soon you can start.</p>
 <h2 id="a-30-minute-starting-action">A 30-minute starting action</h2>
 <p>Open your AI endpoint's code and add three fields to whatever you already log: the raw input, the raw output, and a monotonic timestamp. Do not add embeddings, evaluators, or dashboards yet. Then write one scheduled job that computes, for the last 24 hours versus the previous 24 hours, the mean response length and the rate of explicit negative user actions you already record (retries, dismissals, thumbs-down). Log both numbers. You now have a baseline and two honest quality signals; everything else in this article is an extension of that first measurement.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-observability-the-metrics-that-matter/">AI observability: the metrics that matter</a></li>
+<li><a href="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
+<li><a href="https://kubaik.github.io/llm-drift-the-silent-quality-drop-metrics-miss/">LLM drift: the silent quality drop metrics miss</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

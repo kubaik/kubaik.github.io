@@ -64,8 +64,8 @@
       "description": "Build a scoring, deduplication and LLM-summary layer over PagerDuty or Opsgenie, plus how to measure whether it actually reduces wake-ups.",
       "datePublished": "2026-06-20T09:25:40+00:00",
       "dateModified": "2026-10-03T11:31:57+00:00",
-      "wordCount": 3055,
-      "timeRequired": "PT15M",
+      "wordCount": 3190,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -242,8 +242,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3055 words
+                        16 min read
+                        &nbsp;·&nbsp; 3190 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -555,6 +555,24 @@ If alert content is sensitive, yes. A self-hosted model behind an OpenAI-compati
 Start at 0.7, run in shadow mode, and lower it only when measured false suppressions are zero. Adjust in small increments and re-measure. Never tune during an incident.</p>
 <h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
 <p>Export your last 90 days of closed incidents from your paging platform's API and compute, per alert type, the median time from creation to resolution. Write the result to a CSV with two columns: alert type and median minutes. That single file is the historical-resolution input your scoring function needs, and building it now means you can run the layer in shadow mode tomorrow instead of waiting a month for data to accumulate.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">Designing an AI Alert Triage Layer That Reduces Pages</a></li>
+<li><a href="https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
+<li><a href="https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/">Designing Alert Triage That Suppresses Noise Safely</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

@@ -64,8 +64,8 @@
       "description": "How to evaluate Playwright, Vitest, and API mocking for a modern JS test stack: gates, trace-based debugging, migration steps, and CI cost math.",
       "datePublished": "2026-07-03T10:25:00+00:00",
       "dateModified": "2026-10-03T11:00:24+00:00",
-      "wordCount": 2037,
-      "timeRequired": "PT10M",
+      "wordCount": 2162,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -257,8 +257,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 2037 words
+                        11 min read
+                        &nbsp;·&nbsp; 2162 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -378,6 +378,23 @@ Assign a mock class to <code>globalThis.WebSocket</code> that records sent frame
 Call the mock server's reset function in an <code>afterEach</code> hook. If failures appear only in full-suite runs, leaking handlers or timers are the first thing to check.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick your slowest or flakiest E2E test and enable trace capture on failure, then run that single test with <code>npx playwright test &lt;path&gt; --trace on</code>. Open the resulting trace and find the exact moment the assertion failed. If the trace does not make the cause obvious within five minutes, the test is asserting on something too indirect — rewrite its locator to target an accessible role or label and rerun. That single loop, applied to your worst test, tells you more about whether this stack fits your project than any comparison table.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-codebase-onboarding-2-paths-tested/">AI codebase onboarding: 2 paths tested</a></li>
+<li><a href="https://kubaik.github.io/hire-for-agents-not-autocomplete/">Hire for agents, not autocomplete</a></li>
+<li><a href="https://kubaik.github.io/5-ai-tools-that-let-us-ship-faster-than-sf-teams/">Choosing AI Coding Assistants for Cloud-Heavy Stacks</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://react.dev/">React documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

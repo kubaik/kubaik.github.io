@@ -64,8 +64,8 @@
       "description": "How to evaluate Postgres 17 as a cache, scheduler and blob store, with measurement steps, failure modes and a decision checklist.",
       "datePublished": "2026-06-26T21:04:08+00:00",
       "dateModified": "2026-10-03T11:21:15+00:00",
-      "wordCount": 2020,
-      "timeRequired": "PT10M",
+      "wordCount": 2153,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 2020 words
+                        11 min read
+                        &nbsp;·&nbsp; 2153 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -388,6 +388,25 @@ ORDER BY mean_exec_time DESC
 LIMIT 10;
 </code></pre>
 <p>For each of the top ten queries, note whether it is a simple containment lookup, how often it runs, and its mean execution time. Then check the size of the table it reads from against your shared buffers setting (<code>SHOW shared_buffers;</code>). If your hottest queries are containment lookups whose tables fit comfortably in shared buffers, you have a candidate for consolidation and a baseline to measure against. If not, you have just saved yourself a migration.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">Postgres 17 swallowed Redis, Kafka, Timescale</a></li>
+<li><a href="https://kubaik.github.io/replace-managed-services-with-postgres-17/">Replace managed services with Postgres 17</a></li>
+<li><a href="https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/">Agent SLOs: measure what agents actually do</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

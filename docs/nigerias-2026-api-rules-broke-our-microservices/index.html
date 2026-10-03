@@ -64,8 +64,8 @@
       "description": "Regulatory audit deadlines change how you should split services. A worked example of transaction boundaries, outbox patterns and WAL-based audit reads.",
       "datePublished": "2026-07-03T08:55:38+00:00",
       "dateModified": "2026-10-03T11:28:07+00:00",
-      "wordCount": 2571,
-      "timeRequired": "PT13M",
+      "wordCount": 2702,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -255,8 +255,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2571 words
+                        14 min read
+                        &nbsp;·&nbsp; 2702 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -425,6 +425,24 @@ module.exports = { publishBatch };
 <p>The lesson from the arithmetic is that the largest term dominates. Optimising the 0.05-second ledger commit while leaving an unbounded external call is wasted effort. Bound the largest term first.</p>
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Open the repository for your highest-traffic financial path and list every synchronous call made between the incoming request and the database commit. For each call, note whether it has an explicit timeout. Any call without a timeout is an unbounded term in your worst-case latency budget. Add a timeout to the longest one now, and record the change so you can measure the effect on your commit-to-visible latency histogram at the next load test.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/settlement-vs-clearing-backend-engineers-guide/">Settlement vs clearing: backend engineer's guide</a></li>
+<li><a href="https://kubaik.github.io/african-fintech-rules-broke-our-stack/">African fintech rules broke our stack</a></li>
+<li><a href="https://kubaik.github.io/agent-compliance-in-african-fintech-the-cbn-gap/">Agent compliance in African fintech: the CBN gap</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

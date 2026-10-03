@@ -64,7 +64,7 @@
       "description": "Classify alerts by shape and downstream impact, then suppress with evidence. Includes PromQL, SQL, breaker logic, and a 30-minute first step.",
       "datePublished": "2026-07-11T13:28:35+00:00",
       "dateModified": "2026-10-03T11:07:22+00:00",
-      "wordCount": 2324,
+      "wordCount": 2456,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -259,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2324 words
+                        &nbsp;·&nbsp; 2456 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -454,6 +454,23 @@ def should_suppress(service: str, severity: str) -&gt; bool:
 <p><strong>How do we know a suppression rule is still correct?</strong> Audit it. Sample suppressed events weekly, label them, and retire any rule whose precision drops. A suppression rule with no audit is a coverage gap waiting to be discovered during an incident.</p>
 <h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
 <p>Open your largest Prometheus rule file, add a recording rule that computes the ratio of the current value to a 30-day average for one high-volume metric, and attach a <code>severity</code> label based on that ratio. Validate it with <code>promtool check rules rules/*.yml</code>, deploy to staging, and watch the new label appear in your alerting UI. You will immediately see which existing alerts would have been classified as spikes — and you will have the beginning of the data needed to justify suppressing them.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
+<li><a href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">Designing an AI Alert Triage Layer That Reduces Pages</a></li>
+<li><a href="https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/">LLM drift before users complain: catch it early</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

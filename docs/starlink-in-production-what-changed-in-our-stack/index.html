@@ -64,8 +64,8 @@
       "description": "How to keep an API reliable over high-latency satellite links: circuit breakers, retry budgets, failover gateways, and the metrics that show what broke.",
       "datePublished": "2026-08-10T11:35:53+00:00",
       "dateModified": "2026-10-03T11:15:28+00:00",
-      "wordCount": 2679,
-      "timeRequired": "PT13M",
+      "wordCount": 2812,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -251,8 +251,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2679 words
+                        14 min read
+                        &nbsp;·&nbsp; 2812 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -539,6 +539,26 @@ Start with the request rate and the acceptable amplification factor. If the serv
 It helps on the local egress queue, which is where bufferbloat usually originates. If the provider ignores DSCP, the marking still prevents your own bulk traffic from starving your own interactive traffic.</p>
 <h2 id="one-action-for-the-next-30-minutes">One action for the next 30 minutes</h2>
 <p>Open the module that makes outbound HTTP calls and find every place a timeout triggers a retry. For each one, write down the maximum number of calls that a single client request can produce. If that number is greater than one, add a counter that increments on each retry and a log line that records the request ID. Deploy it, then look at the counter after the next slow period. The number you see is your amplification factor, and it is the first thing to fix.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
+<li><a href="https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/">CI/CD for Django in 20ms Africa networks</a></li>
+<li><a href="https://kubaik.github.io/which-agent-stack-survives-3g/">Which agent stack survives 3G?</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

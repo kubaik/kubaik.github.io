@@ -64,8 +64,8 @@
       "description": "Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.",
       "datePublished": "2026-07-05T12:23:25+00:00",
       "dateModified": "2026-10-03T11:26:07+00:00",
-      "wordCount": 2840,
-      "timeRequired": "PT14M",
+      "wordCount": 2977,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -261,8 +261,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2840 words
+                        15 min read
+                        &nbsp;·&nbsp; 2977 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -409,6 +409,25 @@ if __name__ == &quot;__main__&quot;:
 <p>Usually because the event loop is blocked by synchronous work, or because the callback is waiting on a resource that is exhausted. Add a timeout to every callback and log when it fires. A timeout that triggers consistently under load points at a resource constraint rather than a logic bug.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Pick the agent that has been running longest in your environment. Run <code>ls /proc/&lt;pid&gt;/fd | wc -l</code> and compare it to the limit in <code>/proc/&lt;pid&gt;/limits</code>. If the count is above 50% of the limit, group the descriptors by target and identify the client responsible. Add that count to your monitoring before you do anything else, so the next time it grows you will see it happening instead of discovering it during an outage.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
+<li><a href="https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/">Always-On vs On-Demand Agents: Real Cost Trade-offs</a></li>
+<li><a href="https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/">Mobile money agent fees: why your bot keeps failing</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

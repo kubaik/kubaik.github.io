@@ -64,8 +64,8 @@
       "description": "Latency and error rate stay flat while LLM output quality quietly degrades. Here is how to log prompts, measure embedding drift, and catch it early.",
       "datePublished": "2026-07-04T20:16:21+00:00",
       "dateModified": "2026-10-03T11:02:42+00:00",
-      "wordCount": 1990,
-      "timeRequired": "PT10M",
+      "wordCount": 2111,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 1990 words
+                        11 min read
+                        &nbsp;·&nbsp; 2111 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -376,6 +376,19 @@ if fp != EXPECTED_FINGERPRINT:
 <h2 id="one-next-step">One next step</h2>
 <p>In the next 30 minutes, add a single field to your prompt logging: the tokenizer name and version, or a SHA-256 fingerprint of the tokenizer vocabulary, whichever your stack makes easier. Then write down the current value somewhere durable — a config file, a dashboard annotation, a comment in the deployment manifest.</p>
 <p>That one field turns an invisible class of failure into a diffable one. When it changes, you will know immediately, and you will know it was a tokenizer change rather than a prompt edit or a model update. Everything else in this article — embeddings, thresholds, nightly jobs — is an elaboration on having that baseline.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+<li><a href="https://kubaik.github.io/ai-observability-isnt-monitoring-heres-why/">AI observability isn’t monitoring — here’s why</a></li>
+<li><a href="https://kubaik.github.io/ai-errors-hide-in-plain-latency/">AI errors hide in plain latency</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

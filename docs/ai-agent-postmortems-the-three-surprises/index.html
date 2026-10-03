@@ -64,7 +64,7 @@
       "description": "How to run postmortems for AI agents that fail semantically, not just technically: structured semantic logging, live shadowing, and a decision checklist.",
       "datePublished": "2026-06-24T11:53:53+00:00",
       "dateModified": "2026-10-03T11:19:43+00:00",
-      "wordCount": 2758,
+      "wordCount": 2879,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2758 words
+                        &nbsp;·&nbsp; 2879 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -437,6 +437,19 @@ GROUP BY decision_output_class;
 <p>Semantic match rate, if a golden dataset exists. Without one, the most useful alert is on the ratio of terminal decisions made with weak retrieval, which is a leading indicator of semantic failure.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open the file that holds your agent's system prompt and record its hash in a comment or a version field. Then query your structured logs for the last 100 terminal decisions and count how many were made with a retrieval miss ratio above 0.5. If that count is greater than zero, you have a candidate incident to investigate, and you have just established the baseline that a postmortem template needs in order to say anything useful.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/json-modes-silent-failures-exposed/">JSON mode’s silent failures exposed</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/">Debug AI agents: failures aren't just bugs</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -466,7 +479,7 @@ GROUP BY decision_output_class;
                     <a class="related-card" href="/debug-ai-agents-failures-arent-just-bugs/">
                         <h3>Debug AI agents: failures aren&#39;t just bugs</h3>
                         <p>AI agent postmortems need different questions than service incidents. Compare structured failure narratives with LLM-assisted causal graphs, and when each wins.</p>
-                        <span class="related-meta">10 min read · 1 July 2026</span>
+                        <span class="related-meta">11 min read · 1 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/fix-ai-agent-failures-postmortem-guide/">

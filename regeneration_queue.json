@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "agent-drift-why-prod-breaks-without-human-checkpoints",
-    "title": "Agent drift: why prod breaks without human checkpoints",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "agent-flooded-our-api-with-bad-calls-overnight",
-    "title": "Agent flooded our API with bad calls overnight",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "agent-slos-measure-what-agents-actually-do",
-    "title": "Agent SLOs: measure what agents actually do",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I kept seeing teams ship SLO dashboards that measured the wrong thing and declar",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "agentic-finops-is-a-trap",
-    "title": "Agentic FinOps is a trap",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I've hit the same scan aigenerated mistake in more than one production codebase ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "agents-create-incidents-at-2am",
-    "title": "Agents create incidents at 2am",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this oncall changes problem while migrating a service under a hard de",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ai-errors-hide-in-plain-latency",
     "title": "AI errors hide in plain latency",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-hiring-what-actually-moves-the-bar",
     "title": "AI hiring: what actually moves the bar",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three weeks tuning the resume parser weights on Named Entity Recognition",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-made-self-service-platforms-trivial-in-2026",
     "title": "AI made self-service platforms trivial in 2026",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): The short version: the conventional advice on changed selfservice is incomplete.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-on-slow-networks-nairobi-teams-2026-playbook",
     "title": "AI on slow networks: Nairobi teams' 2026 playbook",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this nairobibased teams problem while migrating a service under a har",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-tools-wont-help-if-everyone-writes-the-same-code",
     "title": "AI tools won’t help if everyone writes the same code",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I was surprised when a Berlin teammate bluntly said, \"I don’t trust a single AI-",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-unit-costs-the-metric-both-teams-fight-over",
@@ -781,6 +751,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "agent-drift-why-prod-breaks-without-human-checkpoints",
+    "title": "Agent drift: why prod breaks without human checkpoints",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "agent-flooded-our-api-with-bad-calls-overnight",
+    "title": "Agent flooded our API with bad calls overnight",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "agent-slos-measure-what-agents-actually-do",
+    "title": "Agent SLOs: measure what agents actually do",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I kept seeing teams ship SLO dashboards that measured the wrong thing and declar",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "agentic-finops-is-a-trap",
+    "title": "Agentic FinOps is a trap",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I've hit the same scan aigenerated mistake in more than one production codebase ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "agents-create-incidents-at-2am",
+    "title": "Agents create incidents at 2am",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this oncall changes problem while migrating a service under a hard de",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "zero-downtime-postgres-schema-changes-in-2026",

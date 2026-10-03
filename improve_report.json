@@ -1,30 +1,33 @@
 {
   "improved": [
     {
-      "slug": "signals-5-state-tricks-that-broke-my-app",
+      "slug": "build-in-public-without-burning-out",
       "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "ai-made-self-service-platforms-trivial-in-2026",
+      "attempts": 2,
+      "retitled": false
+    },
+    {
+      "slug": "ai-ui-tools-6-months-in-what-i-gained-and-lost",
+      "attempts": 2,
       "retitled": true
-    },
-    {
-      "slug": "when-flags-become-experiments",
-      "attempts": 1,
-      "retitled": false
-    },
-    {
-      "slug": "api-attacks-rising-40-the-3-patterns-to-block-now",
-      "attempts": 1,
-      "retitled": true
-    },
-    {
-      "slug": "agent-permissions-the-mistake-that-breaks-production",
-      "attempts": 1,
-      "retitled": false
-    },
-    {
-      "slug": "who-owns-ai-generated-code",
-      "attempts": 1,
-      "retitled": false
     }
   ],
-  "failed": []
+  "failed": [
+    {
+      "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
+      "errors": [
+        "dropped too many code examples"
+      ]
+    },
+    {
+      "slug": "remote-work-in-2026-which-tools-survived",
+      "errors": [
+        "dropped too many code examples"
+      ]
+    }
+  ]
 }

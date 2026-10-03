@@ -64,7 +64,7 @@
       "description": "A practical checklist for migrating an M-Pesa Daraja integration across a breaking API change: auth, idempotency, callbacks, error handling and rollout.",
       "datePublished": "2026-07-02T16:41:45+00:00",
       "dateModified": "2026-10-03T11:11:51+00:00",
-      "wordCount": 2754,
+      "wordCount": 2900,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -242,7 +242,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2754 words
+                        &nbsp;·&nbsp; 2900 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -665,6 +665,27 @@ The sandbox supports simulating failure result codes. Assert that your handler d
 During a canary period, yes. Keep the two code paths separate and route by configuration rather than by branching inside a single function, so retiring one is a deletion rather than a refactor.</p>
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Open your integration's HTTP client code and find every place it reads a field from an M-Pesa response by direct index — <code>response["access_token"]</code>, <code>payload["Body"]["stkCallback"]</code>, and so on. For each one, replace it with a defensive accessor that logs the full response body when the expected path is missing, and add a test that asserts the accessor handles both the old and new shapes. That single change converts your next schema surprise from a production incident into a log line.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/">Skip M-Pesa: build one API for 3 African markets</a></li>
+<li><a href="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">M-Pesa failures cost us 40 hours</a></li>
+<li><a href="https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://oauth.net/2/">OAuth 2.0 resources</a></li>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

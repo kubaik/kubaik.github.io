@@ -64,8 +64,8 @@
       "description": "AI-generated PRs pass linting and unit tests yet break production. The gap is environment fidelity, not code quality. Here is how to close it.",
       "datePublished": "2026-08-27T08:16:38+00:00",
       "dateModified": "2026-10-03T10:58:24+00:00",
-      "wordCount": 2409,
-      "timeRequired": "PT12M",
+      "wordCount": 2542,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -256,8 +256,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2409 words
+                        13 min read
+                        &nbsp;·&nbsp; 2542 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -440,6 +440,24 @@ Three worker nodes, one primary database with at least one read replica, and a c
 No. Unit tests verify specific behaviors cheaply. Property tests verify invariants across input space. Run both; they catch different classes of bug.</p>
 <h2 id="next-step">Next step</h2>
 <p>Open your staging environment's infrastructure definition and check whether it has a read replica and at least three worker nodes. If it does not, add them. Then run a load test at a fraction of production traffic and compare p95 latency between staging and production for the same endpoint. If staging is faster than production by a wide margin, it is not production-like enough to catch the failures that matter.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/40-ai-code-meant-60-more-alerts/">Validating AI-Generated Code Before It Reaches Production</a></li>
+<li><a href="https://kubaik.github.io/ai-codebase-onboarding-2-paths-tested/">AI codebase onboarding: 2 paths tested</a></li>
+<li><a href="https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/">7 code review traps when AI writes half your code</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

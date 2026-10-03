@@ -64,7 +64,7 @@
       "description": "A practical guide to webhook delivery: idempotency, retry budgets, silent rate limits, poison-message triage, and what to instrument before you scale.",
       "datePublished": "2026-06-25T22:56:03+00:00",
       "dateModified": "2026-10-03T10:58:39+00:00",
-      "wordCount": 1951,
+      "wordCount": 2082,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 1951 words
+                        &nbsp;·&nbsp; 2082 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -388,6 +388,24 @@ async function bumpRetry(executionArn) {
 </ul>
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Pick one webhook consumer in your system and add a single metric: the count of idempotency rejections, emitted with the provider's event id as a dimension. Deploy it, let it run for a day, and look at the number. If it is zero, either your deduplication is broken or your provider is not retrying — both are worth knowing. If it is non-zero, you now have a baseline to optimize against, and you have replaced guesswork with a measurement.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/">Cache stampedes: the patterns that scale and the ones…</a></li>
+<li><a href="https://kubaik.github.io/webhook-delivery-that-survives-outages/">Webhook delivery that survives outages</a></li>
+<li><a href="https://kubaik.github.io/ai-features-m-pesa-paystack-flutterwave-traps/">AI features: M-Pesa, Paystack, Flutterwave traps</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

@@ -64,7 +64,7 @@
       "description": "How to evaluate consolidating Redis, Kafka and a time-series database into Postgres extensions, with honest limits, failure modes and a checklist.",
       "datePublished": "2026-07-02T17:01:10+00:00",
       "dateModified": "2026-10-03T11:33:32+00:00",
-      "wordCount": 2743,
+      "wordCount": 2880,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2743 words
+                        &nbsp;·&nbsp; 2880 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -433,6 +433,26 @@ CREATE TABLE api_metrics_2026_01
 <p>The tail latency of the specific code path you intend to move, split by hit and miss where applicable. Without a baseline for that path alone, an aggregate system metric will not tell you whether the change helped or hurt.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick the single highest-traffic code path that currently talks to your external cache, broker or time-series store. Find it in <code>pg_stat_statements</code> if it already touches Postgres, or in your tracing if it does not. Write down its current p99 latency, its request rate, and the size of the data it reads. That one row of numbers is the baseline you need before any consolidation decision is worth making.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/postgres-17-buried-redis-s3-cron/">Postgres 17 buried Redis, S3, cron</a></li>
+<li><a href="https://kubaik.github.io/replace-managed-services-with-postgres-17/">Replace managed services with Postgres 17</a></li>
+<li><a href="https://kubaik.github.io/compare-kafka-redpanda-nats-for-event-driven-systems/">Compare Kafka, Redpanda, NATS for event-driven systems</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -468,7 +488,7 @@ CREATE TABLE api_metrics_2026_01
                     <a class="related-card" href="/postgres-17-buried-redis-s3-cron/">
                         <h3>Postgres 17 buried Redis, S3, cron</h3>
                         <p>How to evaluate Postgres 17 as a cache, scheduler and blob store, with measurement steps, failure modes and a decision checklist.</p>
-                        <span class="related-meta">10 min read · 26 June 2026</span>
+                        <span class="related-meta">11 min read · 26 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/log-audit-costs-without-breaking-compliance/">

@@ -58,5 +58,65 @@
     "title": "AI wrote 40% of our code — here’s what broke our on-call",
     "reason": "Invented first-hand evidence/benchmarks (56 experience claims, 7 unverifiable products)",
     "deleted_at": "2026-10-03T10:44:07.513029+00:00"
+  },
+  {
+    "slug": "one-misconfigured-pool-drained-4kmonth",
+    "title": "One misconfigured pool drained $4k/month",
+    "reason": "Invented first-hand evidence/benchmarks (42 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T11:38:12.843672+00:00"
+  },
+  {
+    "slug": "9-ai-wrapper-apis-that-paid-off-in-2026",
+    "title": "9 AI wrapper APIs that paid off in 2026",
+    "reason": "Invented first-hand evidence/benchmarks (21 experience claims, 9 unverifiable products)",
+    "deleted_at": "2026-10-03T11:38:12.848053+00:00"
+  },
+  {
+    "slug": "build-a-nairobi-saas-stack-for-32kmonth",
+    "title": "Build a Nairobi SaaS stack for $3.2k/month",
+    "reason": "Invented first-hand evidence/benchmarks (21 experience claims, 4 unverifiable products)",
+    "deleted_at": "2026-10-03T11:38:12.851862+00:00"
+  },
+  {
+    "slug": "llm-apps-owasp-risks-you-missed",
+    "title": "LLM apps: OWASP risks you missed",
+    "reason": "Invented first-hand evidence/benchmarks (21 experience claims, 5 unverifiable products)",
+    "deleted_at": "2026-10-03T11:38:12.855615+00:00"
+  },
+  {
+    "slug": "saas-niche-in-2026-pick-a-sliver-no-llm-can-eat",
+    "title": "SaaS niche in 2026: pick a sliver no LLM can eat",
+    "reason": "Invented first-hand evidence/benchmarks (52 experience claims, 1 unverifiable products) | Incoherent invented timeline",
+    "deleted_at": "2026-10-03T11:38:12.859273+00:00"
+  },
+  {
+    "slug": "agent-decisions-cost-us-three-days-of-logs",
+    "title": "Agent decisions cost us three days of logs",
+    "reason": "Invented first-hand evidence/benchmarks (52 experience claims, 2 unverifiable products)",
+    "deleted_at": "2026-10-03T11:38:12.862978+00:00"
+  },
+  {
+    "slug": "pick-niches-ai-wont-eat-in-2026",
+    "title": "Pick niches AI won’t eat in 2026",
+    "reason": "Invented first-hand evidence/benchmarks (49 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:38:12.866826+00:00"
+  },
+  {
+    "slug": "css-2026-container-queries-retired-our-utility-class",
+    "title": "CSS 2026: container queries retired our utility class",
+    "reason": "Invented first-hand evidence/benchmarks (33 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:38:12.870540+00:00"
+  },
+  {
+    "slug": "orm-2026-prisma-vs-drizzle-vs-sqlalchemy",
+    "title": "ORM 2026: Prisma vs Drizzle vs SQLAlchemy",
+    "reason": "Invented first-hand evidence/benchmarks (46 experience claims, 5 unverifiable products)",
+    "deleted_at": "2026-10-03T11:38:12.874213+00:00"
+  },
+  {
+    "slug": "api-security-the-attacks-rising-in-2026",
+    "title": "API security: the attacks rising in 2026",
+    "reason": "Invented first-hand evidence/benchmarks (58 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T11:38:12.878027+00:00"
   }
 ]

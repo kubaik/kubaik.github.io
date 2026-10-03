@@ -64,7 +64,7 @@
       "description": "How to build an AI alert-triage service between Alertmanager and your pager: fingerprinting, LLM filtering, fail-open rules, and honest measurement.",
       "datePublished": "2026-06-12T21:55:33+00:00",
       "dateModified": "2026-10-03T11:34:12+00:00",
-      "wordCount": 2725,
+      "wordCount": 2868,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2725 words
+                        &nbsp;·&nbsp; 2868 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -720,6 +720,26 @@ Grouping reduces the number of notifications for related alerts. Triage decides 
 Mount them as environment variables from a Kubernetes Secret, and never bake them into the image. The service reads <code>PD_ROUTING_KEY</code>, <code>LLM_KEY</code>, and the endpoint URLs from the environment.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your monitoring UI and run a query that counts alerts by name over the last seven days, for example <code>sum by (alertname) (increase(alertmanager_alerts_received_total[7d]))</code>. Sort descending and look at the top five. For each one, answer a single question: if this alert fires at 3 a.m., does a human need to act before morning? Every alert where the answer is no is a candidate for the known-bad list or the queue path. Write those five names into a <code>bad_alerts.json</code> and load it into the service. That change alone is measurable, reversible, and requires no model tuning.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
+<li><a href="https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
+<li><a href="https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI ops vs human ops: the incidents that broke them</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

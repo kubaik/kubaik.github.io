@@ -1,37 +1,23 @@
 {
   "changed": [
     {
-      "slug": "agent-permissions-the-mistake-that-breaks-production",
-      "sentences_removed": 0,
-      "sections_added": 1,
-      "footer_migrated": false
-    },
-    {
-      "slug": "api-attacks-rising-40-the-3-patterns-to-block-now",
+      "slug": "ai-ui-tools-6-months-in-what-i-gained-and-lost",
       "sentences_removed": 0,
       "sections_added": 2,
       "footer_migrated": false
     },
     {
-      "slug": "signals-5-state-tricks-that-broke-my-app",
+      "slug": "build-in-public-without-burning-out",
       "sentences_removed": 0,
       "sections_added": 1,
       "footer_migrated": false
     }
   ],
   "needs_regeneration": [
-    "2026-ai-stack-solo-saas-cost-showdown",
-    "3-ways-container-builds-got-3x-faster-in-2026",
-    "5-ai-tools-that-let-us-ship-faster-than-sf-teams",
-    "5-notification-systems-ranked-push-email-sms",
-    "50-locations-50-headaches-edge-native-backends-in",
-    "7-patterns-for-systems-that-wont-die-when-networks",
-    "agent-code-review-gap-nobody-admits",
     "agent-drift-the-failure-mode-you-didnt-log",
     "agents-keep-breaking-prod-3-boundary-rules-you-still-need",
     "ai-agent-postmortem-human-loop-vs-blind-replay",
     "ai-chats-hidden-wcag-fails",
-    "ai-code-traps-copilot-vs-cursor-smackdown",
     "ai-era-promotions-hinge-on-this-one-thing",
     "ai-features-rot-faster-than-you-build-them",
     "ai-in-slow-networks-why-models-flop-where-data-costs-rise",
@@ -39,20 +25,12 @@
     "ai-sales-cycles-3x-faster-40-less-talk",
     "ai-scanners-overlook-real-vulns",
     "ai-unit-costs-the-metric-both-teams-fight-over",
-    "ai-wrote-the-docs-humans-wrote-the-gaps",
     "apis-must-die-in-2026",
-    "arm-in-production-graviton4-vs-ampere-in-2026",
     "audit-logs-that-scale-skip-the-3am-fire-drills",
-    "big-model-api-vs-fine-tune-the-2026-math",
     "buy-vs-build-ai-3-hard-rules-for-2026",
-    "cicd-for-django-in-20ms-africa-networks",
-    "cloud-agents-burned-18k-8-tools-that-didnt-work",
     "event-driven-beats-agent-driven-910-times",
-    "event-sourcing-pay-the-complexity-tax-only-here",
     "fix-ai-agent-failures-postmortem-guide",
     "foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality",
-    "graphql-vs-rest-vs-trpc-2026s-api-fight",
-    "kill-noisy-alerts-the-triage-system-that-restored-sleep",
     "kubernetes-or-nomad-the-real-experiment-cost-split",
     "llm-eval-drift-that-users-notice-first",
     "mcp-servers-real-time-pipelines-without-agents",
@@ -63,42 +41,23 @@
     "rag-is-not-enough-hybrid-search-reranking-in-2026",
     "remote-work-in-2026-which-tools-survived",
     "replace-env-with-these-in-2026",
-    "self-healing-ai-agents-vs-rule-based-ops-40-fewer",
     "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse",
     "spot-instances-vs-on-demand-for-ai-experiments",
-    "starlink-in-production-what-changed-in-our-stack",
-    "stay-relevant-when-tools-change-faster-than-you-can",
     "why-does-my-agent-version-break-clients",
     "why-your-multi-agent-system-degraded-slowly"
   ],
   "retitle": [
-    "15-agents-blew-up-our-logs-why-we-pinned-models-logs",
     "african-fintech-rules-broke-our-stack",
     "agent-flooded-our-api-with-bad-calls-overnight",
-    "agent-governance-opa-vs-kyverno-after-our-incident",
-    "agentic-workflows-how-we-kept-the-lights",
     "ai-pair-prompts-9-setups-we-tried-in-2026",
-    "ai-reshaped-my-engineering-principles",
     "ai-tools-rewrote-my-engineering-rules",
-    "ai-ui-tools-6-months-in-what-i-gained-and-lost",
-    "ai-ui-tools-broke-my-react-flow-heres-why",
     "api-abuse-2026-5-attacks-we-missed-until-costs-spiked",
     "apm-lied-about-our-ai-incidents",
-    "nigerias-2026-api-rules-broke-our-microservices",
     "one-misconfigured-vector-db-killed-our-rag-pipeline",
-    "price-saas-tools-in-2026-what-we-learned-pricing-a",
     "react-19-compiler-my-components-changed-how",
-    "starlink-in-production-what-changed-in-our-stack",
     "temporal-changed-our-agent-retries-for-good",
     "why-does-my-agent-version-break-clients",
     "why-does-my-model-drift-after-deploy",
-    "why-i-picked-playwright-and-vitest-in-2026",
     "why-our-schema-survived-ai-scaling"
-  ],
-  "dead_links_fixed": [
-    {
-      "slug": "trim-llm-bills-3-finops-moves-that-work",
-      "count": 1
-    }
   ]
 }

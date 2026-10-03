@@ -1,46 +1,49 @@
 # AI made self-service platforms trivial in 2026
 
-The short version: the conventional advice on changed selfservice is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.
+AI assistants can draft Terraform, Kubernetes manifests, and CI pipelines from a short prompt. That changes the bottleneck for self-service platforms: the hard part is no longer writing YAML, it is proving that generated infrastructure is correct, least-privileged, and compatible with the cluster it will actually run against. This article covers the failure modes that show up when teams wire an LLM into a deployment path, and the guardrails that catch them.
 
-## Advanced edge cases you personally encountered
+## Why generated infrastructure fails in ways unit tests miss
 
-In 2026, we hit three edge cases that weren’t in any LLM’s training data and broke our safety layer for a full 11 minutes in production. The first was **stateful LLM hallucination drift** — our primary LLM (Claude 3.7 Code, April 2026 snapshot) started misremembering the exact shape of our Terraform provider when we upgraded the AWS provider from v5.40 to v5.42. Mid-deployment, it began omitting the `depends_on` for IAM roles, causing race conditions where pods tried to assume roles before the roles existed. The safety layer didn’t catch it because Checkov v3.2’s policies still passed — the Terraform itself was valid, but the dependency graph was wrong. We fixed it by pinning the provider version in the prompt context and adding a custom policy that enforces `depends_on` for all IAM → EKS associations.
+An LLM produces text that looks like a valid manifest. It does not produce a resource that has been applied to your cluster, evaluated against your admission controllers, or reconciled by your controllers. Three failure classes recur.
 
-The second was **prompt injection through metadata**. A developer pasted a Jira ticket URL into the prompt: “Deploy payments-v2 — see Jira ENG-4567 for context.” The LLM followed the link, scraped the description, and generated a deployment that exposed our payments service to the public internet because the Jira ticket mentioned “expose /health for monitoring.” The safety layer missed it because the Terraform plan looked clean — the ingress rule was scoped to our health check CIDR. We solved this by adding a prompt sanitizer that strips URLs and enforces a whitelist of allowed context sources (GitHub PRs, internal docs, and Confluence pages only).
+**Dependency and ordering errors.** Generated Terraform can be syntactically valid and pass a schema check while encoding the wrong dependency graph. A common example: an IAM role and an EKS node group are emitted without an explicit `depends_on`, so Terraform's implicit ordering does not guarantee the role exists before nodes try to assume it. The plan is valid; the apply races.
 
-The third was **Kubernetes API version skew with auto-generated manifests**. The LLM generated a `Gateway` API resource targeting `gateway.networking.k8s.io/v1alpha2`, which our cluster (EKS v1.28) deprecated in favor of `v1`. The deployment succeeded, but the Gateway controller never reconciled. The synthetic test passed because it only hit the old v1beta1 Ingress path. We caught it in the rollback metrics — p99 latency spiked from 120ms to 450ms within 3 minutes. We now run `kubeval` (v0.16) against every generated manifest and pin the API versions to our cluster’s supported matrix.
+**Context pulled from untrusted input.** If a prompt includes a ticket URL or pasted text, the model may treat that content as instructions rather than context. A ticket that says "expose /health for monitoring" can turn into an ingress rule the author did not intend. This is prompt injection through metadata, and it is not visible in the generated diff unless someone reads the source of the context.
 
-Each of these taught us the same lesson: **the safety layer must validate the *runtime* environment, not just the generated code**. In 2026, the bar for “self-service” isn’t just “does the Terraform compile?” It’s “will this deploy break in prod, and can the safety layer detect it before customers do?”
+**API version and schema skew.** Models are trained on a snapshot of API surfaces. A manifest targeting `gateway.networking.k8s.io/v1alpha2` may apply cleanly against a cluster that only serves `v1`, and the controller will simply never reconcile it. The apply succeeds; the resource does nothing.
 
----
+The common thread: the generated artifact is validated as text, but the failure occurs at runtime. Guardrails have to validate against the runtime environment, not just the file.
 
-## Integration with 2–3 real tools (with code snippets)
+## Validate generated Terraform with policy and a real plan
 
-Here are the tools we integrate daily in 2026, along with the exact versions and working snippets that plug into the AI-generated pipeline.
+The cheapest gate is a policy check against the JSON plan, not the source. Produce the plan in machine-readable form first:
 
-### 1. **OPA Gatekeeper v3.15 + AWS IAM policy engine**
-We run OPA as a sidecar in our GitHub Actions runner to gate every Terraform plan before it merges. The policy enforces that no IAM role can have `*` in `actions` or `resources`, and that every role must have an attached trust policy limiting it to a specific service account.
+```bash
+terraform init -input=false
+terraform plan -out=tfplan -input=false
+terraform show -json tfplan > terraform_plan.json
+```
+
+Then evaluate policy against `terraform_plan.json`. Open Policy Agent (OPA) is the general-purpose option; here is a policy that rejects IAM roles with wildcard actions and roles not scoped to a specific service principal.
 
 ```rego
 # iam_deny_wildcard.rego
 package terraform
 
 deny[msg] {
-    input.resource.aws_iam_role
     role := input.resource.aws_iam_role[_]
     role.statement[_].actions[_] == "*"
     msg := sprintf("IAM role %s has wildcard actions", [role.name])
 }
 
 deny[msg] {
-    input.resource.aws_iam_role
     role := input.resource.aws_iam_role[_]
     not role.assume_role_policy.statement[_].principal.Service == ["eks.amazonaws.com"]
     msg := sprintf("IAM role %s is not restricted to EKS service", [role.name])
 }
 ```
 
-We run it in GitHub Actions like this:
+Run it in CI so a pull request fails when the policy is violated:
 
 ```yaml
 # .github/workflows/opa-terraform.yml
@@ -50,56 +53,93 @@ on:
     paths: ["terraform/**"]
 jobs:
   gatekeeper:
-    runs-on: ubuntu-latest-4core
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: open-policy-agent/setup-opa@v2
         with:
-          version: v3.15.0
+          version: v0.68.0
       - run: |
           opa eval --data iam_deny_wildcard.rego --input terraform_plan.json \
             --format pretty --fail-defined
 ```
 
-Add this to your `terraform_plan.json` by running:
+Two notes on the policy. First, the `deny` rules above assume the plan JSON has been reshaped into a flat `resource` map; OPA evaluates whatever structure you feed it, so either normalize the plan or write rules against Terraform's actual `planned_values` shape. Second, `--fail-defined` makes `opa eval` exit non-zero when any `deny` rule produces output, which is what turns the policy into a CI gate.
 
-```bash
-terraform show -json > terraform_plan.json
+For a worked example of the dependency failure: suppose the generated plan contains an `aws_iam_role` named `eks-node-role` and an `aws_eks_node_group` that references it. If the node group's `node_role_arn` is a literal string rather than a reference to `aws_iam_role.eks-node-role.arn`, Terraform has no edge in the graph and may create the node group first. A policy rule can require that the node group's role ARN be a reference:
+
+```rego
+deny[msg] {
+    ng := input.resource.aws_eks_node_group[_]
+    not startswith(ng.node_role_arn, "${aws_iam_role.")
+    msg := sprintf("node group %s must reference an aws_iam_role ARN, not a literal", [ng.name])
+}
 ```
 
-This gates every PR in ~1.2s. When the AI generates a Terraform stack with an over-permissive role, the PR fails with a clear diff and the violating resource highlighted.
+That is a static check on the plan, and it catches the race before apply.
 
----
+## Gate Kubernetes manifests against the cluster's schema
 
-### 2. **Argo Rollouts v1.6 + Istio VirtualService auto-rollback with synthetic canary**
-We use Argo Rollouts to orchestrate canary deployments, but in 2026, the AI generates the `VirtualService` and the Rollout manifest from a Slack prompt. The safety layer then runs a **synthetic canary test** before promoting the rollout.
+For Kubernetes, validate against the API versions your cluster actually serves rather than the versions the model remembers. `kubeconform` is a maintained schema validator; run it against the cluster's OpenAPI schema or a pinned schema bundle.
 
-Here’s the AI-generated Rollout manifest (trimmed):
+```bash
+# Validate generated manifests against a pinned schema set
+kubeconform -strict -summary \
+  -schema-location default \
+  -kubernetes-version 1.28.0 \
+  ./generated/
+```
+
+The `-kubernetes-version` flag is the important part. Pinning it to the target cluster's version means a manifest using a removed or alpha API fails validation instead of silently applying.
+
+A CI step that runs before merge:
+
+```yaml
+# .github/workflows/k8s-validate.yml
+- name: Validate manifests
+  run: |
+    docker run --rm -v "$PWD:/work" -w /work \
+      ghcr.io/yannh/kubeconform:latest \
+      -strict -summary -kubernetes-version 1.28.0 ./generated/
+```
+
+This is a schema check, not a semantic one. It will not catch a `Gateway` resource that references a controller that is not installed. For that, the runtime check below is what matters.
+
+## Verify at runtime, not just at merge
+
+Schema and policy checks confirm the artifact is well-formed and permitted. They do not confirm the controller reconciled it or that the service behaves. Add a post-apply verification step.
+
+For a Gateway or Ingress resource, the check is whether the resource reports a ready condition:
+
+```bash
+kubectl wait --for=condition=Programmed \
+  gateway/payments-gateway -n payments --timeout=120s
+```
+
+If the Gateway controller never reconciles the resource, the wait times out and the pipeline fails, which is the signal the schema check could not give.
+
+For a rollout, use a canary with an automated analysis step. Argo Rollouts supports an `AnalysisTemplate` that queries Prometheus and gates promotion on the result:
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
-kind: Rollout
+kind: AnalysisTemplate
 metadata:
-  name: payments-canary
+  name: payments-canary-analysis
 spec:
-  replicas: 10
-  strategy:
-    canary:
-      steps:
-        - setWeight: 10
-        - pause: {duration: 5m}
-        - setWeight: 50
-        - pause: {duration: 5m}
-      canaryService: payments-canary
-      stableService: payments-stable
-  template:
-    spec:
-      containers:
-        - name: payments
-          image: payments:v2.4.1
+  metrics:
+    - name: latency
+      interval: 1m
+      successCondition: "p95 <= 200"
+      failureLimit: 3
+      provider:
+        prometheus:
+          address: http://prometheus-operated.monitoring.svc:9090
+          query: 'histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{service="payments-canary"}[2m])) by (le))'
 ```
 
-The AI also generates the `VirtualService` (as shown earlier), but the new part is the **synthetic load test** that runs *before* the 10% canary step. We use Locust v2.20 with this script:
+The rollout references this template so the canary step pauses until the metric passes or the failure limit is hit. The threshold (`p95 <= 200`) is a policy decision, not a default; set it from your own SLO.
+
+A synthetic load test can run before the first canary weight is set. Locust is one option:
 
 ```python
 # locustfile.py
@@ -117,272 +157,82 @@ class PaymentsUser(HttpUser):
         self.client.post(
             "/v1/payments",
             json={"amount": 100, "currency": "KES"},
-            headers={"Host": "payments.internal"}
+            headers={"Host": "payments.internal"},
         )
 ```
 
-We run it via GitHub Actions:
+Run it headless in CI:
 
 ```yaml
-# .github/workflows/synthetic-canary.yml
-- name: Synthetic Canary Test
+- name: Synthetic canary test
   run: |
     docker run --rm \
-      -v $(pwd)/locust:/mnt/locust \
-      ghcr.io/locustio/locust:2.20 \
+      -v "$PWD/locust:/mnt/locust" \
+      ghcr.io/locustio/locust:2.20.0 \
       --host https://istio-ingressgw \
       --locustfile /mnt/locust/locustfile.py \
       --headless -u 1000 -r 100 --run-time 5m \
-      --expect-workers 1 --csv=locust_results
+      --csv=locust_results
 ```
 
-The workflow fails the rollout if:
-- p95 latency > 200ms
-- error rate > 1%
-- any 5xx response
+The workflow should fail the rollout if the parsed CSV shows p95 above your threshold, an error rate above your threshold, or any 5xx. Those thresholds are yours to set; the point is that the gate runs against a live endpoint, not a mock.
 
-We parse the CSV output and gate the Rollout’s `setWeight` step using Argo Rollouts’ `analysisTemplate`:
+## Sanitize the context the model sees
 
-```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: AnalysisTemplate
-metadata:
-  name: payments-canary-analysis
-spec:
-  metrics:
-    - name: latency
-      interval: 1m
-      successCondition: "p95 <= 200"
-      failureLimit: 3
-      provider:
-        prometheus:
-          address: https://prometheus-operated.monitoring.svc:9090
-          query: 'histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{service="payments-canary",host="payments.internal"}[2m])) by (le))'
+Prompt injection through metadata is best handled before generation. A sanitizer that strips URLs and restricts context sources to trusted systems removes the class of failure where a ticket description becomes an instruction.
+
+```python
+import re
+
+ALLOWED_SOURCES = ("github.com", "docs.internal", "confluence.internal")
+
+def sanitize_prompt(prompt: str) -> str:
+    # Drop bare URLs; context must come from allowlisted systems.
+    return re.sub(r"https?://\S+", "[redacted-url]", prompt)
 ```
 
-The AI wires this all together: from Slack prompt → Terraform + Rollout + VirtualService → synthetic test → promotion. The safety layer is the synthetic test and the OPA policy — not the human.
+This is a blunt filter and it will remove useful links. The tradeoff is deliberate: if the model cannot fetch arbitrary URLs, it cannot be steered by their contents. Teams that need ticket context should fetch it themselves through an API, strip the fields they do not want, and pass a structured summary rather than a URL.
 
----
+## A decision checklist before wiring an LLM into deploys
 
-### 3. **Checkov v3.2 + tfsec v1.26 + custom policy pack**
-We run Checkov in CI and also as a pre-commit hook. The AI-generated stacks are scanned for:
-- Public S3 buckets
-- IAM roles with `*` permissions
-- Egress to `0.0.0.0/0`
-- Missing `depends_on` for EKS IAM roles
+- **What is the model allowed to produce?** If it can emit IAM policies or ingress rules, those need policy gates. If it can only emit a diff for human review, the risk surface is smaller.
+- **What does the plan actually contain?** Run `terraform show -json` and inspect `planned_values` before trusting any policy check. A policy that reads the wrong field passes everything.
+- **Which API versions does the target cluster serve?** Pin the validator to that version. Do not rely on the model's remembered schema.
+- **What happens when the controller does not reconcile?** Add a `kubectl wait` on a ready condition, or an equivalent, so silent no-ops fail the pipeline.
+- **What is the rollback path?** A canary with an analysis template gives an automated rollback trigger. Without one, a bad rollout needs a human to notice.
+- **Where does the prompt context come from?** If any of it is user-supplied or fetched from a URL, sanitize it.
 
-Here’s our custom policy pack (`checkov-policies/payments.yaml`):
+## How to measure the effect of the guardrails
 
-```yaml
-policies:
-  - name: payments-no-public-buckets
-    id: CKV_AWS_18
-    severity: HIGH
-    definition:
-      or:
-        - cond_type: attribute
-          resource_type: aws_s3_bucket
-          attribute: acl
-          operator: equals
-          value: public-read
-        - cond_type: attribute
-          resource_type: aws_s3_bucket
-          attribute: acl
-          operator: equals
-          value: public-read-write
-  - name: payments-no-wildcard-iam
-    id: CKV_AWS_275
-    severity: CRITICAL
-    definition:
-      cond_type: attribute
-      resource_type: aws_iam_role_policy
-      attribute: policy
-      operator: contains
-      value: "\"Effect\": \"Allow\", \"Action\": \"*\""
+Do not adopt a benchmark from an article. Measure your own pipeline. Instrument these:
+
+- **Gate latency.** Time each step (`terraform plan`, policy eval, schema validation, synthetic test) and record the sum. Compare against your review SLA, not against a number from elsewhere.
+- **Escape rate.** Count deploys that passed all gates and still required a rollback. This is the number the guardrails exist to reduce.
+- **False-positive rate.** Count deploys blocked by a gate that turned out to be safe. A gate with a high false-positive rate gets disabled, so track it.
+- **Time to first failure signal.** For a failing deploy, measure the interval between apply and the first failing check. A short interval means the runtime check is doing its job.
+
+A simple starting point is to log one line per pipeline run with the gate name, duration, and pass/fail, then chart escape rate over time. If escape rate does not fall, the gates are checking the wrong thing.
+
+## FAQ
+
+**Does a passing OPA policy mean the Terraform is correct?**
+No. It means the plan satisfies the rules you wrote. Dependency ordering, provider version drift, and runtime behavior are outside what a plan-level policy can see.
+
+**Can I skip schema validation if I use a policy engine?**
+They check different things. Policy engines check your rules against the plan; schema validators check the manifest against the API surface. A manifest can satisfy every policy and still target a removed API version.
+
+**Is a synthetic load test a substitute for production canary analysis?**
+No. A synthetic test exercises known paths with synthetic traffic. Canary analysis observes real traffic. Run both if the service is user-facing.
+
+**How do I handle models that hallucinate provider attributes?**
+Pin the provider version in the context you pass to the model, and validate the plan against that provider's schema. If the attribute does not exist in the pinned version, `terraform validate` fails before apply.
+
+## Take one action in the next 30 minutes
+
+Pick one generated manifest in your repository and run a schema check against your cluster's actual API version:
+
+```bash
+kubeconform -strict -summary -kubernetes-version 1.28.0 ./path/to/manifest.yaml
 ```
 
-We run it in GitHub Actions:
-
-```yaml
-# .github/workflows/checkov.yml
-- name: Checkov Scan
-  run: |
-    docker run --rm \
-      -v $(pwd):/tf \
-      bridgecrew/checkov:3.2.0 \
-      -d /tf/terraform \
-      --output cli \
-      --compact \
-      --policy-dir /tf/checkov-policies
-```
-
-We also run `tfsec` in parallel for Kubernetes manifests:
-
-```yaml
-- name: TFSec Scan
-  run: |
-    docker run --rm \
-      -v $(pwd):/project \
-      aquasec/tfsec:v1.26.0 \
-      /project/terraform
-```
-
-The AI learns from these scans: if a prompt generates a public bucket, the next time the AI sees a similar prompt, it adds a guardrail comment in the generated Terraform:
-
-```hcl
-# WARNING: Checkov policy CKV_AWS_18 detected public ACL
-# Consider using acl = "private" and a bucket policy for public access
-```
-
-This creates a feedback loop where the AI improves its own guardrails over time.
-
----
-
-## Before/after comparison with actual numbers
-
-Here’s a real before/after from our Nairobi fintech, measured over 4 months in 2026 (Jan–Apr). The “before” is our 2026 system (manual forms + PR reviews), and the “after” is the AI-driven system with guardrails.
-
-| Metric | Before (Jan 2026) | After (Apr 2026) | Delta | Tooling |
-|---|---|---|---|---|
-| **Deployment frequency** | 12 deploys/day | 48 deploys/day | **+300%** | Argo Rollouts + AI pipeline |
-| **Failed rollouts** | 18% | 4% | **-78%** | Synthetic tests + Checkov |
-| **MTTR (failed deploy)** | 42 minutes | 8 minutes | **-81%** | AI-driven rollback + remediation |
-| **Time from prompt to prod** | 45 minutes | 2 minutes 43 seconds | **-94%** | AI generation + guardrails |
-| **Lines of Terraform per deploy** | 87 LOC | 112 LOC | **+29%** | AI-generated + policy guardrails |
-| **AWS bill (monthly)** | $84,200 | $69,100 | **-18%** | Infracost + Savings Plan optimization |
-| **Security incidents** | 3 (public S3, wildcard IAM, egress leak) | 0 | **-100%** | Checkov + OPA + synthetic tests |
-| **Cost per AI prompt** | N/A | $1.2k/month (5k prompts) | — | Claude 3.7 Code API |
-| **Latency added by safety layer** | N/A | 6.5s avg | — | Checkov (2s) + Infracost (1.5s) + synthetic test (3s) |
-| **Human review time** | 120 minutes/deploy | 5 minutes/deploy | **-96%** | AI auto-review + policy engine |
-| **Rollback rate** | 11% | 3% | **-73%** | AI-driven remediation |
-
-### Breakdown of the 6.5s safety layer latency:
-
-| Gate | Latency | Tool | Purpose |
-|---|---|---|---|
-| Terraform plan | 0.8s | Terraform v1.6 | Parse and validate |
-| Checkov scan | 2.0s | Checkov v3.2 | Security + IAM policies |
-| Infracost estimate | 1.5s | Infracost v0.10 | Cost gate (+10% max) |
-| Istio manifest lint | 0.5s | istioctl v1.18 | Validate VirtualService |
-| Synthetic load test | 3.0s | Locust v2.20 | Simulate 50k RPS, check p95/5xx |
-| Argo Rollout analysis | 0.7s | Argo Rollouts v1.6 | Prometheus-based SLO check |
-| **Total** | **6.5s** | — | — |
-
-### Code churn before vs after:
-
-Before (manual YAML):
-
-```yaml
-# payments-stable.yaml (2025)
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: payments-stable
-spec:
-  replicas: 10
-  template:
-    spec:
-      containers:
-      - name: payments
-        image: payments:v2.3.1
-        ports:
-        - containerPort: 8080
-```
-
-Lines of code: 12
-Human review: 120 minutes
-Security scan: Manual PR comment
-
-After (AI-generated + guardrails):
-
-```yaml
-# Generated by AI from Slack prompt
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
-metadata:
-  name: payments-canary
-spec:
-  strategy:
-    canary:
-      steps:
-        - setWeight: 10
-        - pause: {duration: 5m}
-        - setWeight: 50
-        - pause: {duration: 5m}
-      canaryService: payments-canary
-      stableService: payments-stable
----
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
-metadata:
-  name: payments-vs-canary
-spec:
-  hosts: ["payments.internal"]
-  http:
-    - route:
-        - destination:
-            host: payments-canary.payments.svc.cluster.local
-            port: {number: 80}
-          weight: 10
-        - destination:
-            host: payments-stable.payments.svc.cluster.local
-            port: {number: 80}
-          weight: 90
-```
-
-Lines of code: 45
-Human review: 5 minutes (prompt + policy diff)
-Security scan: Automated (Checkov + OPA)
-
-### Cost breakdown:
-
-| Item | Before | After | Notes |
-|---|---|---|---|
-| AWS EC2 (over-provisioned) | $62,400/month | $48,700/month | AI optimized instance sizes |
-| AWS S3 (public buckets) | $1,200/month | $0 | Guardrails prevented public access |
-| AWS IAM (over-permissive roles) | $3,800/month | $1,200/month | Wildcard roles removed |
-| AWS Data Transfer (egress leak) | $4,500/month | $0 | Egress to 0.0.0.0/0 blocked |
-| AI LLM cost | N/A | $1.2k/month | 5k prompts @ $0.24/prompt |
-| **Total** | **$84,200/month** | **$69,100/month** | **-18%** |
-
-### Human time saved:
-
-Before:
-- Engineer writes YAML: 30 minutes
-- PR review: 60 minutes
-- Security scan: 30 minutes
-- Load test setup: 15 minutes
-- **Total: 135 minutes**
-
-After:
-- Engineer writes prompt: 2 minutes
-- AI generates code: 10 seconds
-- Guardrails run: 6.5 seconds
-- Human review: 5 minutes (diff + prompt)
-- **Total: 7 minutes 10 seconds**
-
-The biggest win isn’t the speed — it’s the **shift in cognitive load**. Engineers no longer need to remember the exact shape of a Kubernetes manifest or the CIDR block for our VPC. They write a prompt, the AI generates the infrastructure, and the guardrails catch the mistakes before they ship. The bar for “self-service” in 2026 isn’t “can I deploy without a ticket?” It’s “can I deploy without trusting the AI?”
-
-And as we learned the hard way, the answer is only yes if you’ve built the guardrails first.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 03, 2026
+Replace `1.28.0` with your cluster's server version (`kubectl version --short` reports it). If the manifest fails, you have found a silent no-op before it reached production. If it passes, add the same command as a CI step so the next generated manifest is checked automatically.

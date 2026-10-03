@@ -64,7 +64,7 @@
       "description": "Compare append-only hash-chained logs with DynamoDB Streams for audit trails: replay, tamper evidence, cost model, and a decision checklist.",
       "datePublished": "2026-07-04T16:10:41+00:00",
       "dateModified": "2026-10-03T11:01:08+00:00",
-      "wordCount": 2904,
+      "wordCount": 3036,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -258,7 +258,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2904 words
+                        &nbsp;·&nbsp; 3036 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -481,6 +481,24 @@ print(f&quot;replayed {count} decisions into decisions.db&quot;)
 <p>Kinesis is a general-purpose ordered log with configurable retention (up to 365 days) and much higher throughput ceilings than DynamoDB Streams. It is a reasonable choice when you need longer retention than 24 hours or when you are already building an event pipeline. It does not, by itself, give you tamper evidence; you would still need to hash-chain the records if that is a requirement.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Pick one decision your system makes in production, then write a script that reconstructs that decision's full context from your current audit trail and times how long it takes. Run it against your production data, not a sample. If it takes longer than your incident response budget, or if it cannot reconstruct the context at all, you have found the gap that matters — and you now have a concrete number to bring to the decision about which architecture to adopt.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/audit-logs-compliance-vs-performance/">Audit logs: compliance vs performance</a></li>
+<li><a href="https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/">Agent Governance: OPA vs Kyverno in Kubernetes</a></li>
+<li><a href="https://kubaik.github.io/event-sourcing-pay-the-complexity-tax-only-here/">Event sourcing: pay the complexity tax only here</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
