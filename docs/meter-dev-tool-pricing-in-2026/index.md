@@ -1,54 +1,48 @@
 # Meter dev-tool pricing in 2026
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
-
-## Why I wrote this (the problem I kept hitting)
-
-I spent three months building a small CLI tool to lint OpenAPI specs, then hit a wall: after 1,200 GitHub stars it still wasn’t clear what to charge. I watched peers launch the same tool at $5 / month and die in three weeks; others at $99 / month and plateau at 200 users. The difference wasn’t the code—it was the pricing model.
-
-When I dug into the numbers, two patterns stood out. First, teams in Vietnam and Indonesia routinely underprice because they benchmark against global SaaS rather than local purchasing power. Second, most developer tools are sold on GitHub Sponsors or Gumroad at flat monthly rates, which collapses once support tickets spike or CI integrations break.
-
-I expected usage data to give me the answer. Instead, the moment I added a usage-based tier my cancellation rate dropped from 18 % to 6 %—because heavy users paid more, light users paid less, and everyone felt they were getting a deal. This post is what I wished I had found before pricing my first tool.
+Flat-rate pricing for a developer tool is easy to set up and hard to keep honest: one heavy CI user can consume more support time and compute than a hundred casual ones, while both pay the same. Usage metering fixes the alignment problem, but it moves complexity into the billing path, where bugs are expensive. This article walks through a working metered-billing service — Stripe Checkout and subscriptions, Redis counters, idempotent usage events — and then through the edge cases that break metered systems in practice.
 
 ## Prerequisites and what you'll build
 
-You need only two things:
-- A working CLI or web service you intend to monetise (Node.js 20 LTS or Python 3.11 will do).
-- A Stripe account with test mode enabled (we’ll use Stripe Checkout 2026-04-01).
+You need two things:
 
-What you’ll build is a **usage-metered pricing page** that:
-1. Shows three tiers (free, usage, and enterprise).
-2. Tracks API calls or CLI invocations per user.
-3. Creates a Stripe subscription with proration on plan changes.
-4. Displays a live usage meter so users see exactly what they’re paying for.
+- A CLI or web service you intend to monetize. The examples use Python 3.11 and FastAPI; the same design works for Node.js, Go, or a VS Code extension that reports events to a backend.
+- A Stripe account with test mode enabled.
 
-I chose a CLI because most dev tool revenue still flows through CLI downloads and CI jobs, but the same approach works for REST APIs, GraphQL endpoints, or even VS Code extensions that call home.
+You will build a **usage-metered pricing service** that:
+
+1. Defines three tiers (free, usage, enterprise).
+2. Records API calls or CLI invocations per customer.
+3. Creates a Stripe subscription and handles proration on plan changes.
+4. Exposes a usage endpoint so a client can show a live meter.
+
+A CLI is a useful reference because its events arrive from many machines, over unreliable networks, often from CI jobs that retry. That is exactly the environment where naive metering double-counts.
 
 ## Step 1 — set up the environment
 
-Create a fresh directory and install dependencies:
+Create a directory and install dependencies:
 
 ```bash
 mkdir devtool-pricing && cd devtool-pricing
 python -m venv .venv && source .venv/bin/activate  # or `.\.venv\Scripts\activate` on Windows
-pip install fastapi==0.115.0 uvicorn==0.34.0 stripe==10.5.0 redis==7.2.4 python-dotenv==1.0.1
+pip install fastapi uvicorn stripe redis python-dotenv
 echo "FASTAPI_ENV=dev" > .env
 ```
 
-Why FastAPI? It handles async endpoints with ~50 % less boilerplate than Flask and gives us built-in OpenAPI docs for free. Stripe Python SDK 10.5.0 is the 2026 LTS release and adds idempotency key support for retries.
+FastAPI is a reasonable default here because it gives async endpoints and generated OpenAPI docs without extra wiring. Pin your exact versions in `requirements.txt` once you have a working set — the Stripe Python SDK's API surface changes across major versions, so treat any upgrade as a migration.
 
-Next, set up Redis 7.2.4 for rate limiting and usage tracking:
+Run Redis locally for counters and rate limiting:
 
 ```bash
 docker run -d --name redis-dev -p 6379:6379 redis:7.2-alpine redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
 ```
 
-I chose Redis for its sub-millisecond writes and the ability to atomically increment counters. In production we’ll run a 3-node cluster; for this tutorial a single container is fine.
+Redis is used here for atomic increments (`INCR`) and cheap TTLs. Note the `allkeys-lru` policy above: it is fine for a development counter store, but it means keys can be evicted under memory pressure. For production billing counters you want a policy that never evicts metering data — persistence and eviction behavior are billing correctness concerns, not just caching concerns.
 
-Create `main.py` and add the scaffolding:
+Create `main.py` with the scaffolding:
 
 ```python
-from fastapi import FastAPI, Request, HTTPException, Depends
+from fastapi import FastAPI, Request, HTTPException, Depends, Header
 from fastapi.responses import JSONResponse
 import stripe
 import redis.asyncio as redis
@@ -58,7 +52,7 @@ import os
 load_dotenv()
 
 app = FastAPI()
-client = stripe.StripeClient(api_key=os.getenv("STRIPE_SECRET_KEY"))
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 redis_client = redis.from_url("redis://localhost:6379")
 
 @app.get("/health")
@@ -66,49 +60,36 @@ async def health():
     return {"status": "ok"}
 ```
 
-Run the server with hot-reload:
+Run it with hot reload:
 
 ```bash
 uvicorn main:app --reload --port 8000
 ```
 
-Gotcha: if you forget `--reload`, FastAPI will still start but file changes won’t appear in the browser until you restart. I wasted 20 minutes on that during the first run.
+Without `--reload`, the server still starts but code changes are not picked up until you restart it. This is a common source of "my fix didn't work" confusion during local development.
 
-## Step 2 — core implementation
+## Step 2 — record usage and check the subscription
 
-The core is a `POST /usage` endpoint that increments a counter and returns the current usage against the user’s plan. We’ll use Stripe’s metered billing so we only charge for actual usage instead of flat seats.
-
-Add the endpoint:
+The core is a `POST /usage` endpoint that increments a counter and reports the current count against the customer's plan limit. Add it:
 
 ```python
-from fastapi import Header
-import uuid
-
-async def get_or_create_customer(stripe_id: str):
-    customer = await client.customers.retrieve(stripe_id)
-    return customer
-
 @app.post("/usage")
 async def log_usage(
-    request: Request,
     stripe_customer_id: str = Header(...),
     tool_event: str = "api_call",
-    _: str = Depends(get_or_create_customer)
 ):
-    # Increment usage
     key = f"usage:{stripe_customer_id}:{tool_event}"
     count = await redis_client.incr(key)
-    
-    # Fetch active subscription
-    subs = await client.subscriptions.search(
+
+    subs = await stripe.Subscription.search_async(
         query=f"customer:'{stripe_customer_id}' AND status:'active'"
     )
     if not subs.data:
         raise HTTPException(status_code=402, detail="No active subscription")
-    
+
     subscription = subs.data[0]
     usage_limit = subscription.metadata.get("usage_limit", "1000")
-    
+
     return JSONResponse({
         "usage": count,
         "limit": int(usage_limit),
@@ -116,102 +97,48 @@ async def log_usage(
     })
 ```
 
-Key points:
-- We use Stripe’s idempotency keys in production (not shown here for brevity).
-- The endpoint is cheap: 95 % of requests complete in < 8 ms on a t3.micro.
-- We store usage per customer and per event type so a CLI can log `cli_run` and an API can log `api_call` separately.
+Design points worth keeping:
 
-Next, create a pricing page with Stripe Pricing table. Create `static/pricing.html`:
+- Usage is stored per customer **and** per event type, so a CLI can report `cli_run` while an API reports `api_call` without the counters colliding.
+- The subscription lookup happens on every request. That is a correctness choice, not a performance one: it means a canceled subscription stops being served immediately. If the lookup becomes a latency problem, cache it with a short TTL and accept a small window of stale authorization — but decide that deliberately.
+- The limit is read from subscription metadata rather than hardcoded, so a plan change does not require a deploy.
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Lint My OpenAPI</title>
-  <script src="https://js.stripe.com/v3/"></script>
-</head>
-<body>
-  <div id="pricing-table"></div>
-  <script>
-    const stripe = Stripe('pk_test_...');
-    fetch('/pricing-config')
-      .then(r => r.json())
-      .then(config => {
-        stripe.initEmbeddedPaymentElement({
-          clientSecret: config.clientSecret,
-        });
-        const elements = stripe.elements();
-        const pricingTable = stripe.elements().create('pricingTable', { 
-          pricingTableData: config.tableData 
-        });
-        pricingTable.mount('#pricing-table');
-      });
-  </script>
-</body>
-</html>
-```
+The Redis `INCR` is atomic, but the sequence "increment, then check subscription" is not transactional. A request that arrives between cancellation and the next check will still be counted. For most dev tools this is acceptable; for strict entitlements, check entitlement first and increment second, and accept that you may undercount instead of overcount.
 
-Note: use the 2026 Stripe.js bundle (`https://js.stripe.com/v3/`) because earlier versions deprecated the Pricing Table component.
+## Step 3 — make usage events idempotent
 
-Finally, expose `/pricing-config` from FastAPI:
-
-```python
-@app.get("/pricing-config")
-async def pricing_config():
-    customer_email = "user@example.com"  # replace with real auth
-    intent = await client.payment_intents.create(
-        amount=0,
-        currency="usd",
-        customer=customer_email,
-        automatic_payment_methods={"enabled": True},
-    )
-    return {
-        "clientSecret": intent.client_secret,
-        "tableData": {
-            "prices": [
-                {"id": "price_free", "label": "Free", "billing_scheme": "per_unit", "tiers": [{"up_to": 500, "unit_amount": 0}]},
-                {"id": "price_usage", "label": "Usage", "billing_scheme": "per_unit", "tiers": [{"up_to": 10000, "unit_amount": 0.002}]},
-                {"id": "price_enterprise", "label": "Enterprise", "billing_scheme": "tiered", "tiers": [{"up_to": 100000, "unit_amount": 0.0015}]},
-            ]
-        }
-    }
-```
-
-Pricing logic:
-- Free tier: 500 requests/month at $0.
-- Usage tier: $0.002 per request beyond 500 up to 10,000.
-- Enterprise: $0.0015 per request beyond 10,000.
-
-Conversion surprise: when I launched the usage tier at $0.002, conversion from free to paid jumped 2.3× because users could see the exact cost per invocation instead of a flat $99/month bill.
-
-## Step 3 — handle edge cases and errors
-
-Three edge cases broke the first production run:
-
-1. **Duplicate increments.** If a long-running CI job retries after a network glitch, we double-count calls. Fix: use Stripe’s idempotency key stored in Redis with a 24-hour TTL.
+This is the failure mode that matters most. A CI job that retries after a network timeout will re-send the same event, and a naive `INCR` double-bills the customer. The fix is to make the event carry a client-generated idempotency key and to reject replays:
 
 ```python
 import hashlib
 
+@app.post("/usage")
 async def log_usage(
-    request: Request,
-    stripe_customer_id: str,
+    stripe_customer_id: str = Header(...),
     tool_event: str = "api_call",
     idempotency_key: str = Header(None),
 ):
     if idempotency_key:
         hashed = hashlib.sha256(idempotency_key.encode()).hexdigest()[:16]
-        lock = await redis_client.setnx(f"idemp:{hashed}", "1")
-        if not lock:
+        # SET NX returns True only if the key did not exist.
+        first_seen = await redis_client.set(
+            f"idemp:{hashed}", "1", nx=True, ex=86400
+        )
+        if not first_seen:
             raise HTTPException(status_code=409, detail="Duplicate request")
-        await redis_client.expire(f"idemp:{hashed}", 86400)
+
+    key = f"usage:{stripe_customer_id}:{tool_event}"
+    count = await redis_client.incr(key)
+    # ... subscription check and response as above
 ```
 
-2. **Plan downgrades mid-cycle.** Users on the usage tier who downgrade to free should keep access until the end of the billing period. Stripe handles proration automatically if we set `proration_behavior: create_prorations` in the subscription update.
+Two details matter. First, the key is namespaced by a hash so that arbitrary client input cannot collide with or overwrite other Redis keys. Second, the TTL must be longer than the client's maximum retry window. If a CI job retries for an hour, a 24-hour TTL is safe; if it can retry for two days, it is not.
 
-3. **Zero-dollar subscriptions.** If a user cancels the paid tier but the free tier is still active, we must not block their usage. We fixed this by checking `subscription.status` before raising 402.
+A second edge case is **plan downgrades mid-cycle**. A customer on the usage tier who downgrades to free should keep access until the end of the paid period. Stripe handles this if the subscription update is sent with `proration_behavior="create_prorations"`; the customer is credited for unused time and the downgrade takes effect at period end. Do not implement proration yourself — the arithmetic around partial periods and timezones is a reliable source of disputes.
 
-Add a test suite in `tests/test_usage.py`:
+A third is **zero-dollar subscriptions**. A customer who cancels a paid plan may still be entitled to the free tier. If the entitlement check treats "no active paid subscription" as "no access," those users are blocked incorrectly. Check the plan the customer is entitled to, not just whether a paid subscription exists.
+
+A minimal test to pin the behavior:
 
 ```python
 import pytest
@@ -220,157 +147,118 @@ from main import app
 
 client = TestClient(app)
 
-@pytest.mark.asyncio
-async def test_usage_limit():
-    resp = client.post("/usage", headers={"stripe-customer-id": "cus_123", "idempotency-key": "a1b2c3"})
+def test_usage_increments():
+    resp = client.post(
+        "/usage",
+        headers={"stripe-customer-id": "cus_test", "idempotency-key": "a1b2c3"},
+    )
     body = resp.json()
     assert body["usage"] == 1
     assert body["limit"] == 500
+
+def test_duplicate_is_rejected():
+    headers = {"stripe-customer-id": "cus_test", "idempotency-key": "dup-1"}
+    client.post("/usage", headers=headers)
+    second = client.post("/usage", headers=headers)
+    assert second.status_code == 409
 ```
 
-Run tests with pytest 7.4:
+Run with:
 
 ```bash
-pip install pytest==7.4 pytest-asyncio==0.23
+pip install pytest pytest-asyncio
 export STRIPE_SECRET_KEY=sk_test_...
 pytest -v
 ```
 
-## Step 4 — add observability and tests
+## Step 4 — observability and load testing
 
-Observability is where most teams stop too early. We added three signals:
+Metering systems fail quietly. A counter that stops incrementing produces a smaller invoice, not an error page, so the signals you need are different from a typical web service.
 
-1. **Usage histogram.** Every 60 seconds we compute p99, p95, and p50 request counts per customer and push to Prometheus via the `/metrics` endpoint. We use `prometheus-client==0.20.0`.
+Instrument these:
+
+1. **Usage events per customer per event type.** A counter labeled by customer and event type lets you see a customer whose events stopped arriving — usually a broken client, occasionally a billing bug.
+2. **Duplicate-rejection rate.** A spike in 409s means clients are retrying, which means something upstream is failing. It is an early warning, not just a metric.
+3. **Redis latency and error rate.** Every metering request depends on Redis. If it degrades, billing degrades.
 
 ```python
 from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 
-USAGE_COUNTER = Counter("devtool_usage_total", "Total usage events", ["customer", "event"])
-
-@app.post("/usage")
-async def log_usage(...):
-    USAGE_COUNTER.labels(stripe_customer_id, tool_event).inc()
-    ...
+USAGE_COUNTER = Counter(
+    "devtool_usage_total", "Total usage events", ["customer", "event"]
+)
+DUPLICATE_COUNTER = Counter(
+    "devtool_usage_duplicate_total", "Rejected duplicate events", ["customer"]
+)
 
 @app.get("/metrics")
 async def metrics():
     return generate_latest(), 200, {"Content-Type": CONTENT_TYPE_LATEST}
 ```
 
-2. **Error budget.** We set a 99.5 % success rate SLO—anything below triggers a PagerDuty alert. We learned the hard way that Redis timeouts spike under 500 RPS, so we added a circuit breaker with `tenacity==8.3.0`.
+A retry wrapper around Redis calls is worth adding, but be careful about what you retry. Retrying an `INCR` that may have succeeded is exactly the double-counting problem you solved with idempotency keys, so the retry must be on the read path or be itself idempotent.
 
-```python
-from tenacity import retry, stop_after_delay, retry_if_exception_type
-import redis.exceptions
-
-@retry(
-    stop=stop_after_delay(500),
-    retry=retry_if_exception_type((redis.exceptions.ConnectionError, redis.exceptions.TimeoutError))
-)
-async def safe_incr(key):
-    return await redis_client.incr(key)
-```
-
-3. **Cost attribution.** Every 1,000 requests we log the cumulative cost so far in BigQuery. We discovered that 6 % of our infra cost came from unused Redis memory; after resizing the cluster we cut monthly spend by $18 from $29 to $11.
-
-Add OpenAPI schema so frontends can auto-generate clients:
-
-```python
-from fastapi.openapi.utils import get_openapi
-
-def custom_openapi():
-    if app.openapi_schema:
-        return app.openapi_schema
-    openapi_schema = get_openapi(
-        title="DevTool Pricing API",
-        version="1.0.0",
-        routes=app.routes,
-    )
-    app.openapi_schema = openapi_schema
-    return openapi_schema
-
-app.openapi = custom_openapi
-```
-
-Run a 5-minute load test with `k6`:
+To measure the system rather than guess at it, run a load test and compare two numbers: the number of requests your client sent and the counter value your service recorded. They should match exactly once duplicates are accounted for. A simple k6 script:
 
 ```javascript
 import http from 'k6/http';
-export let options = { vus: 50, duration: '5m' };
-export default function() {
+export const options = { vus: 50, duration: '5m' };
+export default function () {
   http.post('http://localhost:8000/usage', JSON.stringify({}), {
-    headers: { 'stripe-customer-id': 'cus_test', 'idempotency-key': `k6-${__VU}` },
+    headers: {
+      'stripe-customer-id': 'cus_test',
+      'idempotency-key': `k6-${__VU}-${__ITER}`,
+    },
   });
 }
 ```
 
-Result: 99.9 % success at 950 RPS with p99 latency of 12 ms on a t3.micro. The bottleneck was Python’s GIL; moving to `uvloop` cut p99 to 8 ms and cost $0.004 per 1,000 requests.
+Use a unique idempotency key per iteration, as above, so the test measures throughput rather than the duplicate-rejection path. Then reconcile: `k6` reports total requests, and your Redis counter for `cus_test` should equal that number. Any gap is a bug in the metering path, and it is much cheaper to find it here than in a customer's invoice.
 
-## Real results from running this
+## Choosing what to meter
 
-We open-sourced the tool and collected data for six weeks. The chart below shows daily active users (DAU) versus daily revenue.
+The unit you meter determines how customers perceive the price. A few options and their trade-offs:
 
-| Tier      | Users | Monthly ARR | Churn 30d | Support tickets / mo |
-|-----------|-------|-------------|-----------|----------------------|
-| Free      | 1,243 | $0          | 42 %      | 3                    |
-| Usage     |   187 | $1,124      | 11 %      | 12                   |
-| Enterprise|    22 | $2,640      |  5 %      | 30                   |
+| Metered unit | Fits | Watch out for |
+|---|---|---|
+| API calls | Hosted services, gateways | Retries inflate counts unless idempotent |
+| CLI invocations | Local-first tools | Offline runs need local buffering and later sync |
+| Files or lines processed | Linters, formatters, scanners | Large files make cost unpredictable per run |
+| Seats plus usage | Team products | Two meters to explain; keep the split simple |
+| Compute seconds | Build and CI tools | Requires accurate, tamper-resistant measurement |
 
-Key takeaways:
-- The usage tier ($0.002 per call) now drives 68 % of revenue despite having fewer users than free.
-- Enterprise sign-ups pay ~2.5× the list price once they see their month-end bill; we learned to show a preview table before the contract is signed.
-- Churn on the usage tier correlates with API errors: every 1 % increase in 5xx errors raises churn by 0.3 %. We added a real-time error dashboard and reduced 5xx from 0.4 % to 0.1 % within two weeks.
+The general rule: meter something the customer can predict before they run the command. "You will be billed per API call" is predictable. "You will be billed per unit of internal work" is not, and unpredictable bills generate support tickets regardless of whether the average is lower.
 
-Cost breakdown (AWS us-east-1, March 2026):
-- EC2 t3.micro: $8
-- ElastiCache Redis 7.2: $11
-- Stripe fees: 2.9 % + $0.30 per transaction → $42
-- BigQuery ingestion: $1
+## Migrating from flat-rate pricing
 
-Total: $62/month for 1,452 users—about $0.043 per user per month. Compare that to a typical flat-rate SaaS at $9/user/month: at 1,452 users that would be $13,068, making the usage model 210× cheaper to serve.
+Moving existing customers from flat-rate to metered pricing is where most of the risk lives, because existing customers did not opt into the new model.
 
-I was surprised that the biggest driver of support tickets wasn’t pricing but **explanation of the bill**. Users on the usage tier kept asking, “Why did I pay $8.42 last month?” We added a CSV export button that shows every API call with timestamp and price. Ticket volume dropped 40 % overnight.
+A workable pattern is a **grandfathered allowance**: give each existing customer a usage allowance equal to what their current flat fee would buy under the new rates, and hold that allowance for a fixed period. For example, if the new rate is $0.002 per call and a customer pays $49/month, their grandfathered allowance is 24,500 calls per month:
 
-## Common questions and variations
+```
+$49 / $0.002 per call = 24,500 calls
+```
 
-**How do I migrate existing flat-rate users to usage-based without churning them?**
+Show the customer their usage against that allowance before the grandfathering ends, so the first metered invoice is not a surprise. The metric to watch during migration is not revenue — it is support tickets per customer, because a spike there means the new bill is not understood.
 
-We gave flat-rate users a 6-month grandfathered rate equal to their previous flat fee but capped usage at the implied volume. For example, a user paying $49/month got 24,500 calls grandfathered. We then showed them a usage meter next to the old bill. Only 3 % of grandfathered users churned after the switch because the meter made cost transparent.
+## Common questions
 
-**What if my tool is CPU-bound instead of API-bound?**
+**What if my tool is CPU-bound rather than API-bound?**
 
-If your tool runs locally (like a linter), meter by CLI invocation or by files processed. We built a VS Code extension that logs `lint:file` events and charges per file. The extension’s telemetry showed 1,200 files/lint run on average, so we set $0.0005 per file. Revenue per active user doubled compared to a per-seat model.
+Meter something the user controls: CLI invocations, files processed, or repository size. For a local tool, the client must buffer events offline and sync later, which makes idempotency keys mandatory rather than optional.
 
-**How do I handle currency and tax for global users?**
+**Can I mix seat-based and usage-based pricing?**
 
-Use Stripe’s tax rates API with `stripe.tax.Rate.list()` and apply the customer’s location automatically. We set up a single tax code for digital services in the EU (VAT 20 %) and a zero rate for exports. Tax calculation adds < 2 ms to the checkout flow and saved us from a €30k fine in Germany when an auditor noticed mismatched rates.
+Yes. A common split is a seat fee covering fixed costs (hosting, support) plus usage covering variable costs. Keep the explanation to one sentence per meter; two meters with unclear boundaries is worse than one imperfect meter.
 
-**Can I mix seat-based and usage-based in the same plan?**
+**How do I handle tax and currency?**
 
-Yes—Stripe’s tiered pricing supports both. We launched a "Team" plan at $29/month + $0.001 per extra seat beyond 5. The seat portion covers fixed costs (hosting, support), while usage scales with activity. Conversion to Team from free rose 3.1× compared to a pure seat model.
+Use your payment provider's tax calculation rather than implementing rates yourself. Tax rules change and vary by jurisdiction; this is a case where the boring, provider-managed path is the correct one.
 
-## Where to go from here
+**How do I know if my metering is correct?**
 
-If you already have a running dev tool, open your analytics today and calculate the **price per active user per month** across your top 100 users. Divide monthly revenue by monthly active users. In 2026 the median for open-source CLI tools is $0.22; if you’re below that, you’re leaving money on the table. Now export the top 10 users’ usage logs to CSV and calculate what they would pay under a usage model. Compare the two numbers—if the usage model yields 20 % more revenue without increasing support tickets, schedule a 30-minute call with your top 5 users next week to validate pricing before you change anything.
+Reconcile continuously. For each customer, compare the counter your service holds against the sum of events your client reports sending. A persistent gap means lost or duplicated events. Run this reconciliation on a schedule, not only when a customer complains.
 
+## What to do in the next 30 minutes
 
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 02, 2026
+Pick one endpoint or CLI command in your tool and add a single counter that records how many times it is invoked per customer, with a client-supplied idempotency key. Do not add billing yet — just record and reconcile. Run your own client against it for a day, then compare the client's event count to the server's counter. If those two numbers match, you have the foundation for metered pricing; if they do not, you have found the bug that would otherwise have appeared on a customer's invoice.

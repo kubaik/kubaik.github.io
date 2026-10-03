@@ -1,52 +1,42 @@
-# Price SaaS tools in 2026: what we learned pricing a
+# Pricing SaaS tools by real cost, not seat count
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+Most pricing tutorials show the happy path: pick a tier name, draw three columns, ship it. This article covers what comes after — the part where the bill and the price list disagree, and the disagreement is expensive.
 
-## Why I wrote this (the problem I kept hitting)
+## Why seat-based pricing breaks
 
-In 2026 I helped launch an internal dev tool at a Series B startup in Jakarta. By early 2026 it had 12 000 daily active engineers and a usage curve that scared the CFO: our AWS bill tripled in one quarter. We had never touched pricing; we just counted seats and hit “publish”. When I dug into the bill I found $42 k of it went to Kinesis Firehose that nobody was reading after day 30. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+Seat pricing is easy to sell and easy to explain. It also decouples revenue from the thing that actually costs money. A single seat can generate one request per day or two million; the invoice looks the same. That mismatch produces three recurring failure modes.
 
-I’ve seen the same pattern in Vietnam, the Philippines and Singapore: teams build a tool, get traction with early adopters, and then freeze when someone asks for a price list. The usual advice is “just survey competitors” or “charge 20 % of what you save users”, but those answers ignore the hard parts:
+**Failure mode 1: infra cost is not the price floor.** A team can price an API call above its marginal compute cost and still lose money on it, because the marginal cost of a request is not the marginal cost of a customer interaction. Once a request fails, a support ticket is opened, an engineer investigates, and the cost of that ticket can exceed the revenue from thousands of successful calls. The floor is `infra cost + expected support cost`, not `infra cost`.
 
-* Your infra bill is not your price floor. In one Vietnamese e-commerce stack the infra cost per API call was $0.00004 but we billed at $0.00012 and still lost money because support tickets cost $28 each.
-* Seat-based pricing punishes power users. A Philippine fintech team charged per seat and their top user was running 1 800 concurrent jobs; their bill exploded before they could react.
-* Free tiers can bankrupt you. A Jakarta chatops tool gave away 10 000 events/month free and their top customer burned 9 800 events in one burst, leaving nothing for other users.
+**Failure mode 2: seats punish power users.** A seat-based plan silently subsidises light users and taxes heavy ones. When a single account starts running thousands of concurrent jobs, the account's cost curve detaches from its seat count, and the invoice arrives after the damage.
 
-I learned the hard way that pricing is not a spreadsheet exercise; it’s a systems problem. This guide is the checklist I wish I had when we had to re-price the tool in March 2026.
+**Failure mode 3: free tiers can be drained in a burst.** A monthly event allowance with no rate limit is a shared resource. One account that consumes the allowance in a single burst leaves every other free user throttled for the rest of the period, and the support queue fills with "the product stopped working" tickets that have nothing to do with a bug.
+
+The rest of this article builds a pricing model that tracks cost, plus the instrumentation needed to defend it.
 
 ## Prerequisites and what you'll build
 
-You need a running SaaS tool you can instrument, a way to replay traffic, and a pricing page you can change without a deploy. If you don’t have traffic yet, use the open-source load generator we’ll build in Step 1.
+You need a running service you can instrument, a way to replay traffic, and a pricing page you can change without a deploy. If you have no traffic yet, the load generator below stands in for it.
 
-What you’ll have at the end:
+By the end you will have:
 
-* A pricing model that is tied to real infra cost, not seat count.
-* A local replay environment so you can run load tests on your proposed tier without touching production.
-* Benchmark numbers for latency (P99 < 120 ms), infra cost per request ($0.00006), and support tickets per 1 000 requests (0.2 tickets).
-* A billing script that simulates the top 5 % heaviest users and shows you the break-even point.
+* A pricing model tied to measured infra and support cost rather than seat count.
+* A local replay environment for testing a proposed tier against recorded traffic.
+* Metrics for latency, infra cost per request, and support tickets per 1 000 requests.
+* A billing script that simulates the heaviest accounts and shows the break-even point.
 
-We’ll use:
-
-* Node 20 LTS (v20.13.1) for the API and billing script
-* Redis 7.2 for request-rate tracking and feature flags
-* Prometheus 2.52 with Grafana 11 for metrics
-* Terraform 1.8 to spin up a local replay cluster in Docker
-* AWS Lambda (arm64) and DynamoDB to model infra cost if you don’t have prod running yet
-
-Cost of these tools in 2026: zero if you run locally, about $14/month on AWS Free Tier if you use Lambda + DynamoDB.
+Stack used here: Node 20 LTS for the API and billing script, Redis 7.2 for counters and feature flags, Prometheus with Grafana for metrics, Docker Compose for local infrastructure. The AWS SDK is included only to model Lambda and DynamoDB costs if you have no production data yet. Running everything locally costs nothing; the cloud equivalents are within typical free-tier allowances.
 
 ## Step 1 — set up the environment
 
-Start with a clean project.
-
 ```bash
-mkdir pricing-2026 && cd pricing-2026
+mkdir pricing-lab && cd pricing-lab
 npm init -y
-npm install express@4.18.2 redis@4.6.12 prom-client@14.2.0 @aws-sdk/client-dynamodb@3.600.0
+npm install express@4.18.2 redis@4.6.12 prom-client@14.2.0 node-cache@5.1.2 @aws-sdk/client-dynamodb@3.600.0 @aws-sdk/client-sqs@3.600.0
 npm install --save-dev jest@29.7.0 @types/jest@29.5.12 @types/node@20.12.7 typescript@5.4.5 ts-jest@29.1.2
 ```
 
-Create a minimal API that returns feature flags and a usage counter. Save as `src/index.ts`.
+A minimal API that returns feature flags and counts usage:
 
 ```typescript
 import express from 'express';
@@ -56,7 +46,6 @@ import promClient from 'prom-client';
 const app = express();
 const redis = createClient({ url: 'redis://localhost:6379' });
 
-// Prometheus metrics
 const httpRequestsTotal = new promClient.Counter({
   name: 'http_requests_total',
   help: 'Total HTTP requests',
@@ -65,11 +54,10 @@ const httpRequestsTotal = new promClient.Counter({
 
 await redis.connect();
 
-app.get('/api/flags', async (req, res) => {
-  // Increment counter and set feature flag
+app.get('/api/flags', async (_req, res) => {
   await redis.incr('api_calls');
   httpRequestsTotal.inc({ route: '/api/flags', status: '200' });
-  res.json({ beta: await redis.get('beta') === '1' });
+  res.json({ beta: (await redis.get('beta')) === '1' });
 });
 
 app.get('/health', (_req, res) => {
@@ -83,7 +71,7 @@ app.listen(port, () => {
 });
 ```
 
-Spin up Redis and Prometheus with Docker Compose (`docker-compose.yml`).
+Local infrastructure with Docker Compose:
 
 ```yaml
 version: '3.8'
@@ -121,30 +109,16 @@ scrape_configs:
       - targets: ['host.docker.internal:3000']
 ```
 
-Run it:
-
 ```bash
 docker-compose up -d
 npm run build && node dist/index.js &
 ```
 
-Gotcha: if you’re on macOS or Windows, replace `host.docker.internal` with your host IP or use `extra_hosts` in the compose file. I lost an hour to that DNS loop once.
+On macOS or Windows, `host.docker.internal` resolves to the host from inside a container. On Linux it does not; add an `extra_hosts` entry mapping `host.docker.internal` to `host-gateway`, or point the scrape target at the host's bridge IP.
 
-## Step 2 — core implementation
+## Step 2 — build the cost model
 
-Your goal is a pricing model that scales with cost, not seats. We’ll use a hybrid of usage, concurrency and support burden.
-
-Model breakdown (numbers from our Jakarta prod):
-
-| Cost driver         | Weight % | 2026 rate example (USD) | Notes |
-|---------------------|----------|-------------------------|-------|
-| Lambda compute      | 35 %     | $0.000012 per 100 ms    | ARM64 saves ~20 % vs x86 |
-| DynamoDB reads      | 25 %     | $0.000025 per read      | 50 reads/sec baseline |
-| Redis memory        | 15 %     | $0.000008 per MB-hour   | Capped at 2 GB free tier |
-| Support tickets     | 20 %     | $28 per ticket           | Average cost in Manila |
-| Bandwidth           | 5 %      | $0.09 per GB            | Rare in dev tools      |
-
-Build a cost calculator in `src/pricing.ts`.
+The model has two parts: a measured infra cost per unit of work, and a measured support cost per ticket. Both come from your own telemetry, not from a table copied out of someone else's article. The structure below shows the shape; every constant must be replaced with a number you measured.
 
 ```typescript
 import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
@@ -155,33 +129,38 @@ export type Usage = {
   supportTickets: number;
 };
 
+// Replace every constant below with your own measured value.
 const LAMBDA_COST_PER_100MS = 0.000012;
 const DYNAMO_READ_COST = 0.000025;
 const REDIS_COST_PER_MB_HOUR = 0.000008;
 const SUPPORT_COST_PER_TICKET = 28;
 
 function infraCost(usage: Usage, hours: number): number {
-  const lambdaCost = (usage.requests * 0.005 * LAMBDA_COST_PER_100MS) * hours;
-  const dynamoCost = (usage.requests * DYNAMO_READ_COST) * hours;
-  const redisCost = Math.min(usage.concurrentJobs * 2 * REDIS_COST_PER_MB_HOUR * hours, 0.01); // cap at 1 cent
+  const lambdaCost = usage.requests * 0.005 * LAMBDA_COST_PER_100MS * hours;
+  const dynamoCost = usage.requests * DYNAMO_READ_COST * hours;
+  const redisCost = Math.min(
+    usage.concurrentJobs * 2 * REDIS_COST_PER_MB_HOUR * hours,
+    0.01
+  );
   return lambdaCost + dynamoCost + redisCost;
 }
 
 export function suggestedPrice(usage: Usage, hours: number): number {
   const infra = infraCost(usage, hours);
   const support = usage.supportTickets * SUPPORT_COST_PER_TICKET;
-  // Add 25 % margin on infra + support
-  return Math.max(infra + support, 0.05) * 1.25; // floor at 5 cents
+  return Math.max(infra + support, 0.05) * 1.25;
 }
 ```
 
-Now add a `/price` endpoint that uses real Redis usage to estimate the next 24 hours.
+The `0.05` floor prevents a zero invoice for a single low-volume developer. The `1.25` multiplier is a margin assumption covering payment processing and overhead; adjust it to your actual fee structure.
+
+A `/price` endpoint that reads live counters:
 
 ```typescript
-app.get('/price', async (req, res) => {
+app.get('/price', async (_req, res) => {
   const requests = await redis.get('api_calls');
-  const jobs = await redis.get('concurrent_jobs') || '1';
-  const tickets = await redis.get('support_tickets') || '0';
+  const jobs = (await redis.get('concurrent_jobs')) || '1';
+  const tickets = (await redis.get('support_tickets')) || '0';
 
   const usage: Usage = {
     requests: parseInt(requests || '0', 10),
@@ -191,29 +170,37 @@ app.get('/price', async (req, res) => {
 
   const price = suggestedPrice(usage, 24);
   httpRequestsTotal.inc({ route: '/price', status: '200' });
-  res.json({ price, currency: 'USD', breakdown: { infra: infraCost(usage, 24), support: tickets * SUPPORT_COST_PER_TICKET } });
+  res.json({
+    price,
+    currency: 'USD',
+    breakdown: {
+      infra: infraCost(usage, 24),
+      support: usage.supportTickets * SUPPORT_COST_PER_TICKET,
+    },
+  });
 });
 ```
 
-Why this works:
+### How to measure the constants instead of guessing them
 
-* It reflects infra reality, not seat count.
-* The floor of 5 cents prevents you from billing $0 for a single developer.
-* The 25 % margin covers payment fees (Stripe takes ~2.9 % + $0.30).
+Do not trust any cost table, including the one above. Measure:
 
-I tested this in staging against a 24-hour replay of our Jakarta traffic. The model predicted a $1 247 bill vs the actual $1 229 — within 2 %. That gave us the confidence to launch the tier.
+* **Infra cost per request.** Instrument a counter for total requests and a gauge for cumulative provider spend pulled from the billing API. Divide spend by requests over a fixed window (one week is usually stable enough). Compare week over week to catch drift.
+* **Support cost per ticket.** Take total support payroll plus tooling for a period, divide by tickets closed in the same period. If you cannot attribute payroll, use the fully loaded hourly cost of the people who answer tickets multiplied by average handling time.
+* **Concurrency cost.** Run a load test at increasing concurrency and record provider spend at each step. The slope of that line is your marginal cost per concurrent job.
+* **Latency baseline.** Record P50 and P99 under expected load before you change anything, so you have a reference point when a tier change alters traffic shape.
 
-## Step 3 — handle edge cases and errors
+A useful sanity check: compute infra cost per 1 000 requests and support cost per 1 000 requests separately. If support is the larger number, your pricing problem is a product problem — the fix is fewer tickets, not a higher price.
 
-Edge case 1 – cache stampede
+## Step 3 — handle the edge cases that break pricing
 
-When the feature flag `/api/flags` turned on for 1 000 users at once, Redis CPU spiked to 95 % and P99 latency went from 80 ms to 340 ms. The fix was a local cache in Node with a 5-second TTL and a fallback to Redis.
+**Cache stampede.** When a feature flag flips for many accounts at once, every request misses the cache and hits Redis simultaneously. Redis CPU climbs, latency follows, and the cost per request rises exactly when volume does. A short-lived in-process cache absorbs the burst:
 
 ```typescript
 import NodeCache from 'node-cache';
 const cache = new NodeCache({ stdTTL: 5 });
 
-app.get('/api/flags', async (req, res) => {
+app.get('/api/flags', async (_req, res) => {
   const cached = cache.get('beta');
   if (cached !== undefined) {
     httpRequestsTotal.inc({ route: '/api/flags', status: '200' });
@@ -226,9 +213,9 @@ app.get('/api/flags', async (req, res) => {
 });
 ```
 
-Edge case 2 – free-tier exhaustion
+The trade-off is staleness: with a 5-second TTL, a flag change takes up to 5 seconds to propagate. For feature flags that is usually acceptable; for kill switches it is not, so keep those on a separate uncached path.
 
-Our free tier allowed 10 000 requests/month. A user ran 9 800 requests in 2 minutes at 05:00 UTC. The next 200 users got 402 errors for the rest of the month. We added a “burst guard” in Nginx with the `limit_req_zone` directive.
+**Free-tier exhaustion.** A monthly allowance with no rate limit is a shared resource. Nginx rate limiting enforces a per-client ceiling before the request reaches your application:
 
 ```nginx
 limit_req_zone $binary_remote_addr zone=api_limit:10m rate=10r/s;
@@ -240,9 +227,9 @@ server {
 }
 ```
 
-Edge case 3 – concurrency spikes
+`rate=10r/s` with `burst=30 nodelay` allows short bursts up to 30 requests while capping sustained traffic at 10 per second per address. Tune both numbers against your measured P99 request rate per account, not against intuition.
 
-A Vietnamese payments team on-boarded a new customer whose job tracker spawned 5 000 Lambda functions at once. DynamoDB throttled and our P99 jumped to 1 200 ms. We added an SQS queue in front of DynamoDB writes and reduced P99 to 140 ms.
+**Concurrency spikes.** A single account can enqueue thousands of jobs at once. Decouple request acceptance from execution with a queue so the spike becomes a backlog rather than a provider-limit event:
 
 ```typescript
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
@@ -250,20 +237,21 @@ const sqs = new SQSClient({ region: 'ap-southeast-1' });
 
 app.post('/jobs', async (req, res) => {
   const { userId, job } = req.body;
-  const params = {
-    QueueUrl: 'https://sqs.ap-southeast-1.amazonaws.com/1234567890/jobs-queue',
+  await sqs.send(new SendMessageCommand({
+    QueueUrl: process.env.JOBS_QUEUE_URL,
     MessageBody: JSON.stringify({ userId, job }),
-  };
-  await sqs.send(new SendMessageCommand(params));
+  }));
   res.send('queued');
 });
 ```
 
-Lesson: every edge case we hit was either a rate spike or a support ticket explosion. Instrument both before you publish a price.
+Note the queue URL comes from an environment variable. Hard-coding an account ID and queue name into source is a credential-hygiene problem and a portability problem at the same time.
 
-## Step 4 — add observability and tests
+The pattern across all three: every pricing incident is either a rate spike or a support-ticket spike. Instrument both before publishing a price.
 
-Prometheus rules for alerting:
+## Step 4 — observability and tests
+
+Alerting rules:
 
 ```yaml
 groups:
@@ -285,7 +273,7 @@ groups:
       summary: "Cost spike detected"
 ```
 
-Add a Jest test that fails if we accidentally double-count requests.
+Tests that pin the pricing invariants:
 
 ```typescript
 import { suggestedPrice } from './pricing';
@@ -295,15 +283,15 @@ test('price floor is enforced', () => {
   expect(price).toBeGreaterThanOrEqual(0.05);
 });
 
-test('margin is respected', () => {
-  const infra = 0.02;
-  const tickets = 0;
-  const price = suggestedPrice({ requests: 1000, concurrentJobs: 1, supportTickets: tickets }, 24);
-  expect(price).toBeGreaterThan(infra * 1.25);
+test('margin is applied on top of infra plus support', () => {
+  const usage = { requests: 1000, concurrentJobs: 1, supportTickets: 0 };
+  const price = suggestedPrice(usage, 24);
+  const infraOnly = 1000 * 0.005 * 0.000012 * 24 + 1000 * 0.000025 * 24;
+  expect(price).toBeGreaterThan(infraOnly * 1.25);
 });
 ```
 
-Run the tests before every deploy:
+The second test computes its expected floor from the same constants rather than hard-coding a number, so it keeps working when constants change and fails when the margin logic breaks.
 
 ```bash
 npm test
@@ -312,83 +300,61 @@ npm test
 Observability checklist:
 
 * Grafana dashboard with three panels: P99 latency, infra cost per 1 000 requests, support tickets per 1 000 requests.
-* A single Slack alert that fires when infra cost per 1 000 requests exceeds $0.08 for 15 minutes.
-* A Grafana anomaly detection rule that triggers if support tickets jump above 0.5 per 1 000 requests.
+* One alert when infra cost per 1 000 requests exceeds your measured baseline by a margin you choose, sustained for 15 minutes.
+* One alert when support tickets per 1 000 requests exceed the trailing baseline.
 
-I added these after we accidentally billed a customer $89 for a month of idle usage. The anomaly detection caught the next spike within 23 minutes and we refunded the user before they complained.
+## A worked example: finding the break-even account
 
-## Real results from running this
+Suppose the measured constants are: 0.005 seconds of compute per request at $0.000012 per 100 ms, plus $0.000025 per DynamoDB read, plus a $0.05 floor, with a 1.25 margin. Support cost is $28 per ticket, and the observed rate is 0.2 tickets per 1 000 requests.
 
-We launched the new pricing in March 2026. The infra cost curve flattened immediately:
+For 1 000 requests over 24 hours:
 
-| Month       | Requests (M) | Infra cost | Support tickets | Revenue | Margin % |
-|-------------|--------------|------------|-----------------|---------|----------|
-| Feb 2026    | 2.1          | $3 214     | 42              | $2 100  | -34 %    |
-| Mar 2026    | 4.8          | $3 421     | 95              | $4 850  | 42 %     |
-| Apr 2026    | 7.2          | $3 609     | 144             | $7 310  | 51 %     |
+1. Compute: 1 000 × 0.005 s = 5 s of compute. At $0.000012 per 100 ms (0.1 s), that is 5 s ÷ 0.1 s = 50 units × $0.000012 = $0.0006.
+2. Reads: 1 000 × $0.000025 = $0.025.
+3. Support: 0.2 tickets × $28 = $5.60.
+4. Total cost: $0.0006 + $0.025 + $5.60 = $5.6256.
+5. Price before margin: max($5.6256, $0.05) = $5.6256.
+6. Price after margin: $5.6256 × 1.25 = $7.032.
 
-Key takeaways:
+Support is 99.5% of the cost. This is the single most useful output of the model: it tells you that optimising compute is pointless and that reducing ticket volume is the only lever that matters. A pricing change that raises the price without reducing tickets simply moves the loss to the customer's churn decision.
 
-* Support cost was the hidden killer. In February we spent $1 176 on support for $2 100 revenue; the new model forced us to cap low-value users and auto-escalate tickets.
-* Concurrency-based pricing reduced our largest customer’s bill from $2 100 to $840 even though their request count grew 3×. They stayed because the new model matched their usage pattern.
-* The 5-second cache cut Redis CPU from 60 % to 8 %, saving $210/month in RDS instances.
+Now run the same arithmetic at 1 000 000 requests with the same ticket rate:
 
-I was surprised that the margin improved even as we lowered prices for 60 % of customers. The trick was removing the seat-based floor and charging only for what actually costs money.
+1. Compute: 1 000 000 × 0.005 s = 5 000 s ÷ 0.1 s = 50 000 units × $0.000012 = $0.60.
+2. Reads: 1 000 000 × $0.000025 = $25.
+3. Support: 200 tickets × $28 = $5 600.
+4. Total: $5 625.60. Price after margin: $7 032.
 
-## Common questions and variations
+The ratio is unchanged because both components scale linearly with requests. Break-even analysis only becomes interesting when ticket rate is sublinear in volume — which is what a good self-service experience buys you. Measure your ticket rate at two different volume levels before assuming it is constant.
 
-**How do I price if my infra is serverless and usage is spiky?**
+## Decision checklist before publishing a price
 
-Use a two-part tariff: a small fixed fee (e.g., $5/month) plus a variable rate tied to the 95th percentile of concurrent jobs. In our Singapore cluster the fixed fee covers the baseline DynamoDB throughput and the variable rate reflects the Lambda burst cost. If your top user runs 200 concurrent jobs for 10 minutes, the fee is $0.00012 × 200 × 10 × 60 = $1.44. We charge the 95th percentile per month, so a single burst doesn’t bankrupt you.
+* Every constant in the pricing function traces to a measurement with a date and a source.
+* The price floor exceeds marginal infra cost plus expected support cost per unit.
+* Free tiers have a per-client rate limit, not just a monthly allowance.
+* Concurrency is metered separately from request count.
+* A replay of one week of production traffic produces a price within your tolerance of the actual bill.
+* There is an alert on cost per 1 000 requests and one on tickets per 1 000 requests.
+* The pricing page can change without a deploy.
 
-**What if my users are in different regions with different infra costs?**
+## Common questions
 
-Add a regional multiplier. For Southeast Asia we use 1.0, for EU we use 1.8, for US we use 2.2. The multiplier is applied to the infra cost only; support cost stays flat. We built this into the pricing engine in April after a German customer complained their bill was 3× higher than a Singapore customer with the same usage. The fix took one engineer-day and stabilized churn.
+**How do I price serverless workloads with spiky usage?**
 
-**Should I grandfather old customers or force migration?**
+Use a two-part tariff: a small fixed monthly fee covering baseline provisioned throughput, plus a variable rate tied to a high percentile of concurrency (P95 or P99) rather than the peak. Percentile-based charging means a single burst does not dominate the invoice. Compute the variable component from your measured marginal cost per concurrent job, not from a published price list.
 
-Grandfather for 90 days only. After that, auto-convert them to the new tier and send them a cost-comparison PDF. We tried grandfathering indefinitely and ended up with 14 % of revenue stuck in outdated contracts. The 90-day window is enough for them to optimize their usage; after that the margin drag hurts everyone.
+**What if users are in regions with different infra costs?**
 
-**How do I explain the pricing change without losing trust?**
+Apply a regional multiplier to the infra component only, and keep the support component flat, since support cost does not vary with the customer's region. Derive each multiplier by measuring the same workload in each region and dividing. Publishing the derivation prevents the "why is my bill three times higher" conversation.
 
-Send a three-email sequence: (1) “We’re improving our pricing to reflect real costs” with a one-pager on infra breakdown, (2) “Here is your personalized migration plan” with a usage forecast and savings table, (3) “Your new invoice is ready” with a side-by-side comparison. We lost 3 % churn on the first cohort but recovered it by day 30 once they saw the savings table.
+**Should existing customers be grandfathered?**
 
-## Where to go from here
+A bounded grandfathering window — one billing cycle is common — gives customers time to adjust usage and gives you a deadline to plan around. An unbounded window means the old price structure persists forever and every future change has to account for it.
 
-Take the pricing engine you just built and run a 24-hour replay of your production traffic through it. You’ll need:
+**How do I communicate a pricing change?**
 
-1. A traffic dump (`curl -H "Accept: application/json" https://your.prod/api/logs > logs.json`).
-2. A Docker container with your API and the pricing script.
-3. A command that replays the dump with 1× speed and records the suggested price every hour.
+Send the cost breakdown before the invoice. A message that shows the measured infra cost, the support cost, and the resulting price is far more persuasive than a message that shows only the new number. Customers argue with prices; they argue less with arithmetic they can check.
 
-Do it today. Open your terminal and run:
+## What to do in the next 30 minutes
 
-```bash
-grep -o '"request_id":"[^"]\+"' logs.json | wc -l  # count requests
-docker run -it --rm -v $(pwd):/app -w /app node:20-alpine \
-  sh -c "npm ci && node dist/pricing.js --replay logs.json --hours 24"
-```
-
-In 30 minutes you will have a data-driven price list and a cost breakdown you can show your CFO. If the model suggests $0.00, you just found the bug before anyone else did.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 15, 2026
+Instrument the two numbers the model depends on and compute the ratio between them. Add a counter for total requests and a gauge for cumulative provider spend, let them run for a day, then divide. If support cost per 1 000 requests exceeds infra cost per 1 000 requests, you have found your actual pricing problem, and it is not the price.

@@ -1,46 +1,36 @@
-# Agent governance: OPA vs Kyverno after our incident
+# Agent Governance: OPA vs Kyverno in Kubernetes
 
-I've seen the same governance layer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.
+## The governance gap in multi-agent systems
 
-## Why this comparison matters right now
+A recurring failure mode in production multi-agent systems is a governance layer that covers the API surface but not the agent runtime. The agents run in their own namespace, talk to their own controllers, and can take actions — exporting data, mutating their own configuration, calling external services — that never pass through the policy engine the team already trusts. The result is a control plane that reports "all policies enforced" while the agent path is unguarded.
 
-Six months ago, our first multi-agent system in production caused a compliance incident that cost us $12,400 in fines and 11 hours of downtime. The incident wasn’t a bug in the agents themselves—it was a missing governance layer that let an agent bypass approval for PII exports. We discovered that agents could self-sign policies, skip audit checks, and even modify their own runtimes without triggering alerts.
+The symptom is rarely a single dramatic bug. It is a class of actions that are technically permitted because nothing in the request path evaluates them:
 
-I spent three days debugging why our SOC2 auditor flagged the incident as "unprecedented"—only to realize we’d never configured any policy enforcement for the new agent framework. We were using Open Policy Agent (OPA) for API-level policies, but the agents ran in a separate Kubernetes namespace with its own admission controller. The control plane didn’t speak to the agent runtime. This post is what I wished I’d found when we had to write the incident report.
+- An agent exports records containing regulated fields without a recorded approval reference.
+- An agent rewrites its own ConfigMap or runtime flags, changing its own constraints.
+- An agent makes outbound calls with no correlation ID, so the audit trail cannot be reconstructed after the fact.
 
-The governance layer isn’t optional anymore. In 2026, every agent framework needs policy enforcement that’s:
-- Tight enough to pass audits
-- Light enough to run on low-end K8s nodes
-- Fast enough to not slow down agents on 2G connections
+This article compares the two policy engines most teams reach for when they need to close that gap: Open Policy Agent (OPA) and Kyverno. Both can validate, mutate, and audit. They solve the problem in structurally different ways, and the difference determines where each one fits.
 
-OPA and Kyverno are the two tools most teams reach for when they need agent governance. OPA is the 8-year-old incumbent with a mature Rego policy language. Kyverno is the newer declarative policy engine built directly into Kubernetes admission controllers. Both can validate, mutate, and audit agent behavior—but they solve the problem in opposite ways.
+## How OPA works
 
-If you’re running agents in Kubernetes and haven’t picked a governance layer yet, this comparison will save you from the same mistake we made: assuming your existing policy engine covers your agents just because it covers your APIs.
+OPA is a general-purpose policy engine that evaluates policies against JSON input. It runs as a sidecar, a daemon, or a library, receives a JSON document, and returns a decision. Policies are written in Rego, a declarative query language with Datalog-style semantics.
 
-## Option A — how OPA works and where it shines
+A minimal Rego rule for PII export validation looks like this:
 
-OPA (Open Policy Agent) is a general-purpose policy engine that evaluates policies against JSON input. It’s been around since 2016 and is used by companies like Netflix, Pinterest, and Cloudflare for API authorization, microservice validation, and now agent governance.
-
-At its core, OPA runs as a sidecar or daemon that receives JSON input (the agent’s request or state) and returns a decision. Policies are written in Rego, a declarative query language that feels like SQL mixed with Prolog. The Rego compiler runs in OPA’s runtime, so policy evaluation happens in-process with ~1ms latency per evaluation.
-
-We deployed OPA 1.12.0 with a custom policy bundle that validates:
-- Agents can’t export PII without a data steward approval
-- Agents can’t modify their own runtime configuration
-- Agents must include an audit trail ID with every external API call
-
-```python
-# rego policy snippet for PII export checks
+```rego
 package agent.governance
 
 violation[msg] {
   input.action == "export_data"
   contains(input.fields, "ssn")
-  not input.approval.ref  # missing approval reference
+  not input.approval.ref
   msg := sprintf("PII export without approval: %v", [input.request_id])
 }
 ```
 
-The policy runs in OPA’s runtime and returns JSON decisions like:
+The engine returns a JSON decision:
+
 ```json
 {
   "decision_id": "4b345c...",
@@ -49,28 +39,21 @@ The policy runs in OPA’s runtime and returns JSON decisions like:
 }
 ```
 
-OPA shines when you need:
-- Complex logic across multiple agent inputs (state, metadata, context)
-- Fine-grained control over nested JSON structures
-- Integration with non-Kubernetes agent runtimes (Lambda, ECS, ARM-based edge nodes)
+OPA is a good fit when you need:
 
-But OPA’s strength is also its weakness. Rego has a steep learning curve—teams often spend weeks writing and debugging policies. In our case, we wrote 142 lines of Rego to cover the three compliance rules above, and it still missed a race condition where agents could batch PII exports in parallel.
+- Logic that spans multiple inputs — agent state, request metadata, and external context in one evaluation.
+- Fine-grained traversal of nested JSON structures.
+- Enforcement outside Kubernetes: Lambda, ECS, bare-metal services, or edge nodes.
 
-OPA runs as a separate service, so you need to deploy it with high availability and secure its API endpoint. A single OPA pod in our staging cluster consumed 180MB RAM and 0.3 CPU cores. On a 4-node K8s cluster with 2GB RAM per node, this was acceptable, but on smaller clusters it adds up.
+The costs are structural, not incidental. Rego has a steep learning curve. OPA runs as a separate service, so you own its availability, its API endpoint security, and its monitoring. And because the decision is a network round trip from the caller to OPA and back, every enforcement point pays that latency.
 
-Performance-wise, OPA 1.12.0 evaluates 5,200 policies per second on a t3.medium AWS instance. That’s fast enough for most agent workloads, but the round-trip latency from agent → OPA → agent adds 8-12ms per decision, which matters when agents are on unreliable 2G connections.
+## How Kyverno works
 
-## Option B — how Kyvern works and where it shines
+Kyverno is a policy engine that runs inside the Kubernetes admission control path. Policies are Kubernetes Custom Resources written in YAML, so there is no separate query language to learn. Kyverno validates and mutates resources as they are created or updated.
 
-Kyverno is a policy engine built directly into Kubernetes admission controllers. It uses Kubernetes-native Custom Resource Definitions (CRDs) to define policies as YAML, so you don’t need to learn a new query language. In 2026, Kyverno is the default choice for teams that want agent governance without Rego.
-
-Kyverno policies are declarative YAML files that validate or mutate Kubernetes resources at admission time. For agent governance, we used Kyverno policies to enforce:
-- Agents must have a label `governance/pii-approved: "true"`
-- Agents can’t modify their own ConfigMaps
-- Agents must include an annotation `audit-trail-id` with every outbound call
+A policy requiring an approval label on agent pods:
 
 ```yaml
-# kyverno policy for PII-approved agents
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -93,166 +76,89 @@ spec:
             governance/pii-approved: "true"
 ```
 
-Kyverno policies run synchronously during resource creation, so there’s no additional network hop. A policy evaluation takes 2-4ms on a t3.small instance, which is 3-4x faster than OPA’s round-trip latency.
+Kyverno is a good fit when:
 
-Kyverno integrates directly with Kubernetes admission controllers, so it doesn’t add a separate service to monitor. The Kyverno controller runs as a deployment with 2 replicas, consuming 90MB RAM and 0.15 CPU cores in our staging cluster.
+- Everything you need to govern is a Kubernetes resource.
+- Policies are expressible as label, annotation, and field constraints.
+- You want audit output without standing up a separate logging pipeline — violations surface as Kubernetes events.
 
-Where Kyverno shines:
-- Kubernetes-native policies (no new language to learn)
-- Faster evaluation (no network hop)
-- Built-in audit trails via Kubernetes events
+The limits are equally structural. Kyverno only sees what the API server sees. If your agent state lives in object storage, in a queue message, or in a Lambda event, Kyverno cannot evaluate it. Policies that need external data require an admission webhook that calls out to something else, which reintroduces the network hop and the operational surface you were trying to avoid.
 
-But Kyverno’s simplicity is also a limitation. Complex policies that require external data (like fetching an approval from a separate service) are harder to express. We tried to use Kyverno to validate that every PII export has a corresponding approval in our internal ticketing system, but the policy had to call an external API—adding 150-300ms latency per evaluation.
+## Comparing the two engines
 
-Kyverno’s admission controller runs on the Kubernetes API server, so it only works for Kubernetes-based agents. If your agents run in Lambda, ECS, or on bare metal, Kyverno won’t help you.
-
-## Head-to-head: performance
-
-We benchmarked OPA 1.12.0 and Kyverno 1.11.4 on a staging cluster with 50 agents making parallel policy requests. The agents were simulated on t3.small instances with 2 vCPUs and 4GB RAM.
-
-| Metric | OPA 1.12.0 | Kyverno 1.11.4 | Notes |
-|---|---|---|---|
-| Median latency per decision | 12ms | 3ms | Kyverno runs in-process with no network hop |
-| 95th percentile latency | 45ms | 12ms | OPA’s Rego evaluation adds variance |
-| Memory per pod/controller | 180MB | 90MB | Kyverno’s controller is lighter |
-| CPU per pod/controller | 0.3 cores | 0.15 cores | Kyverno scales better on small clusters |
-| Throughput (policies/sec) | 5,200 | 12,800 | Kyverno processes policies faster |
-
-The latency difference matters when agents are on unreliable connections. In our tests, OPA’s 12ms round-trip added 15% to agent response time when agents were on a 2G connection with 300ms RTT. Kyverno’s 3ms decision added only 4% to response time.
-
-We also tested policy complexity. For a simple label check (like the Kyverno example above), both engines performed similarly. But for a nested JSON validation with 142 lines of Rego, OPA took 45ms per decision while Kyverno took 8ms—because Kyverno’s YAML policies are compiled into admission controllers, not interpreted at runtime.
-
-I was surprised to find that Kyverno’s admission controller added less overhead than OPA’s sidecar. We expected the admission controller to be a bottleneck, but it turned out to be more efficient because it runs in-process with the Kubernetes API server.
-
-## Head-to-head: developer experience
-
-Rego is powerful but frustrating. Writing policies feels like writing SQL that compiles to Prolog. The learning curve is steep—teams often spend 2-3 weeks writing and debugging policies before they work reliably.
-
-```rego
-# Example of a Rego policy that took us weeks to get right
-package agent.governance
-
-violation[msg] {
-  some i
-  input.actions[i].type == "export"
-  input.actions[i].fields[_] == "ssn"
-  not input.actions[i].metadata.approval.ref
-  msg := sprintf("PII export without approval at index %d", [i])
-}
-```
-
-The error messages are cryptic. A misplaced brace or a typo in a variable name can cause OPA to return a 500 error with no context. We spent days debugging a policy that failed silently because we used `==` instead of `=` in a variable assignment.
-
-Kyverno’s YAML policies are easier to read and write, but they’re limited to Kubernetes resource validation. If you need to validate JSON structures that aren’t Kubernetes resources, you’re out of luck.
-
-| Aspect | OPA | Kyverno |
+| Dimension | OPA | Kyverno |
 |---|---|---|
 | Policy language | Rego (declarative query) | YAML (declarative rules) |
-| Learning curve | Steep (weeks to productive) | Low (hours to productive) |
-| Policy complexity | High (100+ lines possible) | Low to medium (YAML only) |
-| Debugging | Cryptic errors, hard to trace | Clear Kubernetes events |
-| External data | Easy (HTTP calls in Rego) | Hard (requires admission webhooks) |
+| Enforcement point | Anywhere you can call it with JSON | Kubernetes admission control |
+| Input scope | Arbitrary JSON | Kubernetes resources |
+| External data | Native (HTTP calls from Rego) | Requires an admission webhook |
+| Decision path | Network round trip to the engine | In-process with the API server |
+| Audit output | Decision log API, needs a pipeline | Kubernetes events, queryable with kubectl |
+| Non-Kubernetes runtimes | Supported | Not supported |
 
-We measured the time to write and deploy a policy for PII export validation:
-- OPA: 142 lines of Rego, 3 days of debugging, 2 policy iterations
-- Kyverno: 24 lines of YAML, 30 minutes to write, 1 policy iteration
+The decision path difference is the one that most often decides the choice. Kyverno evaluates during admission, so there is no extra hop. OPA evaluates wherever you call it, which is more flexible but adds a round trip at every enforcement point.
 
-Kyverno’s audit trails are also better. Every policy violation is recorded as a Kubernetes event, which you can query with `kubectl get events --sort-by=.metadata.creationTimestamp`. OPA requires you to set up a separate logging pipeline to capture decisions.
+## How to measure the tradeoff for your workload
 
-But Kyverno’s simplicity comes at a cost. If you need to validate non-Kubernetes JSON (like agent state stored in S3 or a Lambda event), you’ll have to call an external API, which adds latency and complexity. OPA can validate any JSON input, so it’s more flexible for non-Kubernetes agents.
+Published benchmark numbers are not a substitute for measuring your own policies, because latency depends on policy complexity, input size, and where the engine sits relative to the caller. Here is what to instrument.
 
-## Head-to-head: operational cost
+**Decision latency.** For Kyverno, admission latency shows up in the API server's admission duration metrics and in the audit events. For OPA, wrap the client call and record the elapsed time around it. Compare the median and the 95th percentile, not just the mean — the tail is what breaks user-facing timeouts.
 
-We compared the operational cost of running OPA 1.12.0 vs Kyverno 1.11.4 on a 4-node Kubernetes cluster in AWS EKS. The cluster ran 50 agents and processed 10,000 policy decisions per hour.
+**Policy evaluation cost as a function of complexity.** Write the same rule in both engines — for example, "deny an export request whose payload contains a regulated field and whose metadata lacks an approval reference." Then add nesting depth and branch count in steps and re-measure. This tells you where each engine's cost curve bends for your actual rule shapes.
 
-| Cost factor | OPA 1.12.0 | Kyverno 1.11.4 |
-|---|---|---|
-| Pod/controller memory | 180MB | 90MB |
-| Pod/controller CPU | 0.3 cores | 0.15 cores |
-| Number of pods/controllers | 3 (HA) | 2 (HA) |
-| AWS EKS cost per month | $9.60 | $6.40 |
-| Additional monitoring cost | $12.00 (Prometheus + Grafana) | $6.00 (Kubernetes events + Loki) |
-| Total monthly cost | $21.60 | $12.40 |
-| Cost per 1,000 decisions | $0.00022 | $0.00013 |
+**Resource footprint.** Use `kubectl top pod` and `kubectl top node` for steady-state memory and CPU. Run the comparison at the replica count you would actually deploy for availability, not a single instance.
 
-Kyverno is cheaper because it runs as a controller instead of a sidecar, so it consumes fewer resources. But the real cost saving comes from not needing a separate monitoring stack—Kyverno’s audit trails are built into Kubernetes events, so we didn’t need to deploy Prometheus to capture OPA decisions.
+**Audit completeness.** Attempt a policy violation deliberately and confirm it appears in your audit path. For Kyverno, that is `kubectl get events --sort-by=.metadata.creationTimestamp`. For OPA, confirm the decision log reaches your collector and that the decision ID is correlatable with the request ID your agent emitted.
 
-We also considered the cost of policy development. OPA’s Rego learning curve cost us an extra $8,000 in developer time (three engineers at $2,700/month for two weeks). Kyverno’s YAML policies were written in a day, so the development cost was negligible.
+**Failure behavior.** Kill the policy engine under load and observe what the caller does. A fail-open policy engine is a governance gap that only appears during an incident, which is the worst time to discover it.
 
-If you’re running on small clusters or edge nodes with limited resources, Kyverno is the clear winner. But if you need to validate non-Kubernetes JSON or have complex policies that require external data, OPA’s flexibility justifies the higher cost.
+## A worked example: enforcing one rule end to end
 
-## The decision framework I use
+Consider a rule that is common in agent governance: an agent may not export records containing a regulated field unless the request carries an approval reference that resolves to a recorded approval.
 
-When teams ask me how to pick between OPA and Kyverno for agent governance, I run them through this framework. It’s not perfect, but it’s saved us from two more compliance incidents since the first one.
+**Step 1 — define the decision precisely.** The rule takes three inputs: the action type, the set of fields in the payload, and the approval reference. It returns allow or deny. Writing this down before choosing an engine matters, because the shape of the inputs determines which engine can express the rule directly.
 
-1. **Agent runtime**: Is your agent running in Kubernetes? If yes, Kyverno is a natural fit. If not (Lambda, ECS, bare metal), OPA is the only option.
-2. **Policy complexity**: Do you need to validate nested JSON structures, call external APIs, or write complex logic? If yes, OPA’s Rego is worth the learning curve. If you’re mostly validating Kubernetes resource labels and annotations, Kyverno’s YAML is simpler.
-3. **Latency sensitivity**: Are your agents on unreliable connections? If response time matters, Kyverno’s in-process evaluation wins. If you’re processing batch jobs in a data center, OPA’s 12ms latency is acceptable.
-4. **Team skills**: Does your team already know Rego? If not, budget 2-3 weeks for training. If your team is comfortable with YAML and Kubernetes, Kyverno is a no-brainer.
-5. **Audit requirements**: Do you need detailed audit logs of every policy decision? If yes, OPA’s decision log API is more flexible. If Kubernetes events are enough, Kyverno’s built-in audit trails are sufficient.
+**Step 2 — express it in Kyverno.** If the export is a Kubernetes resource, the rule maps cleanly onto a validate pattern: match the resource kind, require the approval annotation, and constrain the field list. The approval reference is checked for presence, not resolved against an external store. If you need resolution, you add a webhook — and at that point you have an external call in the admission path, with the latency and availability implications that follow.
 
-We used this framework to pick Kyverno for our new agent framework, but we kept OPA for a legacy agent that runs in Lambda and needs to validate JSON structures from external APIs. The framework isn’t perfect—we still had to write a custom admission webhook to call OPA from the Lambda runtime—but it gave us a starting point.
+**Step 3 — express it in OPA.** The same rule is a Rego violation rule. The approval reference can be resolved by an HTTP call from within the policy, or the caller can resolve it and pass the result in the input document. The second option keeps evaluation local and moves the external dependency into the caller, which is usually the better design.
 
-I made the mistake of trying to force Kyverno onto the Lambda agent because it was "simpler." It took two weeks to realize we needed OPA’s flexibility for non-Kubernetes JSON validation. This framework would have saved us that time.
+**Step 4 — decide where enforcement lives.** If the export happens through the Kubernetes API, Kyverno enforces it without any new moving parts. If the export happens from a Lambda function, a queue consumer, or a long-running service outside the cluster, Kyverno never sees it, and OPA is the only one of the two that can enforce the rule at all.
 
-## My recommendation (and when to ignore it)
+The worked example exposes the real decision: it is not "which engine is faster" but "where does the action happen, and what can see it." Latency and ergonomics are tiebreakers among engines that can actually observe the action.
 
-**Use Kyverno if:**
-- Your agents run in Kubernetes
-- Your policies are simple (labels, annotations, basic validation)
-- Response time matters (agents on 2G connections)
-- Your team is comfortable with YAML and Kubernetes
-- You want built-in audit trails without extra tooling
+## Failure modes to design against
 
-Kyverno is the safer choice for most teams in 2026. It’s faster, cheaper, and easier to maintain. We’ve used it for six months now, and it’s caught two compliance violations without adding noticeable overhead to our agents.
+**Split-brain governance.** API traffic goes through OPA, agent traffic goes through Kyverno, and no one owns the union. A rule added to one engine silently does not apply to the other path. The fix is a single inventory of enforcement points and a test that asserts each rule is present at each point where it is required.
 
-But Kyverno has weaknesses:
-- It won’t work for non-Kubernetes agents
-- Complex policies require external API calls (and latency)
-- Policy logic is limited to Kubernetes resource validation
+**Fail-open admission.** If the policy engine is unavailable, does the API server admit the resource or reject it? The answer is a configuration choice, and it should be a deliberate one. A fail-open default means an attacker who can degrade the policy engine can bypass it.
 
-**Use OPA if:**
-- Your agents run outside Kubernetes (Lambda, ECS, bare metal)
-- Your policies need to validate nested JSON or call external APIs
-- You need fine-grained control over policy logic
-- Your team is willing to learn Rego
+**Uncorrelated audit trails.** Both engines can produce a decision record. Neither can correlate it with the agent action unless the agent propagates a request ID into the input. Without that ID, post-incident reconstruction is guesswork.
 
-OPA is the better choice when you need flexibility or non-Kubernetes agents. But be prepared for the Rego learning curve and the operational overhead of running a separate service.
+**Policy drift between environments.** A rule enforced in staging but not production, or vice versa, produces exactly the class of incident this governance layer exists to prevent. Version policies alongside application code and diff them across environments.
 
-I recommend Kyverno for 80% of teams in 2026. The remaining 20% (mostly teams with non-Kubernetes agents or complex JSON validation needs) should use OPA. But even for those teams, I’d start with Kyverno if possible—it’s easier to maintain and cheaper to run.
+**Rules that only check presence.** Requiring an annotation to exist is not the same as requiring it to be valid. A policy that checks for `governance/pii-approved: "true"` passes any resource that sets the label, including one that sets it without authorization. Where the check is meaningful, resolve the reference.
 
-The only time I’d ignore this recommendation is if you’re already using OPA for API governance and want consistency across your stack. In that case, extending OPA to agent governance is a no-brainer, even if it means dealing with Rego.
+## Decision checklist
 
-## Final verdict
+Work through these in order. The first question that resolves to a "no" usually determines the answer.
 
-**Kyverno 1.11.4 is the better choice for agent governance in 2026.**
+1. **Does every action you need to govern pass through the Kubernetes API server?** If no, Kyverno cannot enforce it, and OPA is the candidate.
+2. **Do your rules need data from outside the cluster — an approval store, a risk service, a database?** If yes, either engine needs an external call. OPA can make it natively; Kyverno needs a webhook. Decide which of those you would rather operate.
+3. **How complex is your most complex rule?** Enumerate the branches and nesting. If the rules are label and annotation constraints, Kyverno expresses them directly. If they traverse nested payloads and combine multiple inputs, Rego is the more natural fit.
+4. **What is your latency budget at the enforcement point?** Measure the round trip for your candidate design, at the 95th percentile, under load. Compare it to the timeout the calling agent already has.
+5. **What does your team already operate?** A policy engine you cannot debug at 3 a.m. is worse than a simpler one you can. Rego fluency is a real prerequisite, not a nice-to-have.
+6. **What does your auditor require?** If they need a queryable record of every decision with the inputs that produced it, confirm the engine can produce that before you commit.
 
-It’s faster, cheaper, and easier to maintain than OPA. It integrates directly with Kubernetes admission controllers, so you don’t need to deploy a separate service. It’s also more resilient—Kyverno runs in-process with the Kubernetes API server, so it’s less likely to fail than OPA’s sidecar model.
+## Recommendation
 
-But Kyverno isn’t perfect. If your agents run outside Kubernetes or your policies need to validate complex JSON structures, you’ll need OPA. And if you’re already invested in Rego for other policy needs, sticking with OPA makes sense.
+For agents that run entirely inside Kubernetes and whose rules are expressible as resource constraints, Kyverno is the lower-overhead choice: no separate service to operate, no network hop in the decision path, and audit output through the Kubernetes event stream.
 
-Here’s the actionable takeaway: **If you’re running agents in Kubernetes and haven’t picked a governance layer yet, install Kyverno 1.11.4 today and write a single policy to validate agent labels.** Check the policy evaluation latency with `kubectl get events --sort-by=.metadata.creationTimestamp` and compare it to your agent response time. If the latency is less than 5ms, you’re good to go. If not, reconsider OPA.
+For agents that run outside Kubernetes, or rules that must evaluate arbitrary JSON or resolve external data, OPA is the engine that can actually see the action. Accept the operational cost of running it and the learning curve of Rego as the price of coverage.
 
-The worst mistake you can make is assuming your existing policy engine covers your agents. We learned that the hard way. Don’t repeat our incident.
+If a system spans both — Kubernetes-resident agents and external ones — the common mistake is to pick one engine and assume it covers everything. It will not. Either run both with a single rule inventory and tests that assert coverage at every enforcement point, or route all agent decisions through one engine that can see all the inputs, even if that means an extra hop for the in-cluster path.
 
+The choice that fails is not OPA and it is not Kyverno. It is assuming the policy engine you already run covers a path it cannot observe.
 
----
+## Do this in the next 30 minutes
 
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 03, 2026
+Pick one agent action that currently has no policy in its path — an export, a configuration change, an outbound call — and write down its inputs, its decision rule, and where the action physically executes. Then check whether that execution point passes through your existing policy engine. If it does not, you have found the gap this article is about, and you have the three facts you need to choose between the two engines above.

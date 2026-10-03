@@ -1,49 +1,45 @@
 # Platform engineering ROI: metrics that fund teams
 
-The metric everyone watches for platform engineering usually isn't the one that would have caught the problem early. This is what I put together after working through it properly. The failure is quiet — no errors, just wrong answers.
+## Why platform ROI conversations go wrong
 
-## The situation (what we were trying to solve)
+Platform engineering teams live or die by a budget line item that most executives don't understand. The team ships internal developer platforms, CI/CD pipelines, observability stacks, and golden paths. The output is not a customer-facing feature. It's a reduction in friction for other engineers. That makes the ROI conversation hard.
 
-Platform engineering teams live or die by a budget line item that most executives don't understand. The team ships internal developer platforms, CI/CD pipelines, observability stacks, and golden paths. The output is not a customer-facing feature. It's a reduction in friction for other engineers. That makes the ROI conversation hard. A common failure mode here is [that platform teams](/platform-teams-agentic-world-struggle/) present activity metrics — number of pipelines migrated, tickets closed, dashboards built — and leadership nods politely while sharpening the axe. Activity is not outcome. The finance director does not care that you migrated 47 services to a new CI system. They care that the migration reduced the cost of a deploy or the time a product team spends waiting on infrastructure.
+A common failure mode is that platform teams present activity metrics — number of pipelines migrated, tickets closed, dashboards built — and leadership nods politely while sharpening the axe. Activity is not outcome. A finance director does not care that 47 services were migrated to a new CI system. They care that the migration reduced the cost of a deploy or the time a product team spends waiting on infrastructure.
 
-The problem this post addresses is not whether platform engineering is valuable. It's how to prove it with numbers that survive a budget review. The part that trips people up is choosing metrics that connect platform work to business outcomes, and that's what this post actually covers.
+The problem this article addresses is not whether platform engineering is valuable. It's how to prove it with numbers that survive a budget review. The part that trips people up is choosing metrics that connect platform work to business outcomes.
 
-We were a platform team of six engineers supporting roughly 120 developers across 14 product teams. Our mandate was broad: own the CI/CD stack, the Kubernetes clusters, the internal service catalog, and the observability pipeline. We had been funded for 18 months on the strength of a migration story — moving from Jenkins to GitHub Actions and from self-managed Prometheus to a managed observability vendor. That story had a natural end. When the migration finished, leadership asked the obvious question: what now? The answer could not be "keep the lights on." We needed to show that the platform was compounding value, not just maintaining it.
+## The trap of measuring what is easy
 
-We started with a hypothesis: if we could reduce the time from code commit to production deploy, and reduce the percentage of deploys that required manual intervention, we would see a measurable drop in cycle time across product teams. Cycle time, in turn, correlates with the ability to respond to customer issues and ship revenue-generating features. That chain — platform metric to developer metric to business metric — was the only one we thought could survive scrutiny.
+A typical first attempt is a dashboard. A team builds a Grafana board with 22 panels: pipeline duration, queue wait time, cache hit rate, runner utilization, deploy frequency, change failure rate, mean time to recovery, and a dozen more. They present it in a quarterly business review. The feedback is often brutal but fair: "This shows me that things are happening. It does not show me that things are better."
 
-## What we tried first and why it didn't work
+The core mistake is treating platform metrics as self-evident. They are not. A 12% improvement in pipeline cache hit rate means nothing to a VP of Engineering unless it translates to a developer waiting less time or a deploy failing less often. Teams fall into the trap of measuring what is easy to measure rather than what matters.
 
-Our first attempt was a dashboard. We built a Grafana board with 22 panels: pipeline duration, queue wait time, cache hit rate, runner utilization, deploy frequency, change failure rate, mean time to recovery, and a dozen more. We presented it in a quarterly business review. The feedback was brutal but fair: "This shows me that things are happening. It does not show me that things are better."
+A second common mistake is attributing all developer productivity changes to the platform. When a product team's cycle time improves, the platform team claims credit. When it worsens, they blame the product team's process. That asymmetry destroys credibility. A platform team that only takes credit for wins is a platform team that gets defunded.
 
-The core mistake was treating platform metrics as self-evident. They are not. A 12% improvement in pipeline cache hit rate means nothing to a VP of Engineering unless it translates to a developer waiting less time or a deploy failing less often. We had fallen into the trap of measuring what was easy to measure rather than what mattered.
+A third failure is tooling. Homegrown scripts that pull data from CI systems, issue trackers, and incident tools into a CSV, then manually build charts in a spreadsheet, break every time an API changes. They take hours per month to maintain, and the data is often two weeks stale by the time it reaches leadership. Stale data in a budget conversation is worse than no data, because it invites the question "what have you done lately?"
 
-We also made a second mistake: we tried to attribute all developer productivity changes to the platform. When a product team's cycle time improved, we claimed credit. When it worsened, we blamed their process. That asymmetry destroyed our credibility. A platform team that only takes credit for wins is a platform team that gets defunded.
+## A three-layer metric chain
 
-The final failure was tooling. We used a homegrown Python script to pull data from GitHub Actions, Jira, and PagerDuty into a CSV, then manually built charts in a spreadsheet. The script broke every time an API changed. It took roughly 6 hours per month to maintain, and the data was always two weeks stale by the time it reached leadership. Stale data in a budget conversation is worse than no data, because it invites the question "what have you done lately?"
-
-## The approach that worked
-
-We shifted from activity metrics to a small set of flow metrics with a clear causal chain. The chain had three layers:
+The approach that tends to work is shifting from activity metrics to a small set of flow metrics with a clear causal chain. The chain has three layers:
 
 1. **Platform health metrics** — things the platform team directly controls. Examples: pipeline queue time, runner cold-start latency, artifact pull time, deploy success rate.
 2. **Developer flow metrics** — things product teams experience. Examples: lead time for changes (commit to production), deployment frequency, change failure rate, mean time to restore (MTTR).
 3. **Business proxy metrics** — things leadership already tracks. Examples: number of customer-impacting incidents per month, time to ship a compliance fix, cost per deploy.
 
-We did not claim that platform changes caused all movements in layer 2 and 3. Instead, we presented correlations with confidence intervals and explicitly noted when other factors were at play. That honesty made the numbers more credible, not less.
+Do not claim that platform changes caused all movements in layers 2 and 3. Instead, present correlations with confidence intervals and explicitly note when other factors are at play. That honesty makes the numbers more credible, not less.
 
-The key insight was to pick a single north-star metric for the platform team: **lead time for changes**. This is the time from a commit being pushed to that change running in production. It is a DORA metric, it is well understood, and it is directly affected by platform quality. If lead time drops, developers ship faster. If it rises, something in the platform is slowing them down.
+The key insight is to pick a single north-star metric for the platform team: **lead time for changes**. This is the time from a commit being pushed to that change running in production. It is a DORA metric, it is well understood, and it is directly affected by platform quality. If lead time drops, developers ship faster. If it rises, something in the platform is slowing them down.
 
-We instrumented lead time using GitHub Actions workflow events and deployment markers in our observability tool. We broke it down by team, by service, and by change type (feature, bugfix, config). That breakdown let us have specific conversations: "Team A's lead time is 4 hours because their test suite takes 90 minutes. Team B's is 40 minutes because they have a fast test suite and a warm runner pool." That specificity turned the platform conversation from abstract to actionable.
+Instrument lead time using CI workflow events and deployment markers in an observability tool. Break it down by team, by service, and by change type (feature, bugfix, config). That breakdown enables specific conversations: "Team A's lead time is 4 hours because their test suite takes 90 minutes. Team B's is 40 minutes because they have a fast test suite and a warm runner pool." That specificity turns the platform conversation from abstract to actionable.
 
-## Implementation details
+## Instrumenting lead time
 
-We built a lightweight data pipeline using Python 3.11 and the GitHub GraphQL API. The pipeline ran every 15 minutes via a scheduled GitHub Actions workflow, pulled the last 24 hours of workflow runs and deployments, and wrote aggregated metrics to a PostgreSQL 15 database. We used SQLAlchemy 2.0 for the ORM and Alembic for migrations. The entire pipeline was about 400 lines of Python, excluding tests.
+A lightweight data pipeline can be built with Python and the GitHub GraphQL API. It can run every 15 minutes via a scheduled CI workflow, pull the last 24 hours of workflow runs and deployments, and write aggregated metrics to a PostgreSQL database. SQLAlchemy handles the ORM and Alembic handles migrations. The entire pipeline can be a few hundred lines of Python, excluding tests.
 
-A simplified version of the lead time calculation looked like this:
+A simplified version of the lead time calculation looks like this:
 
 ```python
-from datetime import datetime, timedelta
+from datetime import datetime
 from github import Github
 
 # Initialize with a token that has read access to actions and deployments
@@ -64,67 +60,76 @@ lead_time = (deploy_time - commit_time).total_seconds() / 60  # minutes
 print(f"Lead time for {commit_sha[:7]}: {lead_time:.1f} minutes")
 ```
 
-We also instrumented the CI pipeline itself to capture queue time and execution time separately. That distinction mattered because queue time was often 30–40% of total pipeline duration during peak hours, and it pointed to a runner capacity problem rather than a slow test problem.
+Also instrument the CI pipeline itself to capture queue time and execution time separately. That distinction matters because queue time is often a large fraction of total pipeline duration during peak hours, and it points to a runner capacity problem rather than a slow test problem.
 
-On the observability side, we used OpenTelemetry 1.20 with a managed backend. We added a custom span for "deploy" that recorded the deployment ID, the service name, and the environment. That let us correlate deploy events with error rate spikes and latency changes. The correlation was not perfect, but it was good enough to answer questions like "did the last deploy cause the p99 latency increase?"
+On the observability side, OpenTelemetry with a managed backend can be used. Add a custom span for "deploy" that records the deployment ID, the service name, and the environment. That allows correlation of deploy events with error rate spikes and latency changes. The correlation is not perfect, but it is good enough to answer questions like "did the last deploy cause the p99 latency increase?"
 
-We stored metrics in a table with columns: `timestamp`, `team`, `service`, `metric_name`, `value`, `unit`. That schema was simple enough to query with plain SQL and flexible enough to add new metrics without migrations. We used a materialized view to pre-aggregate daily and weekly rollups, which kept dashboard queries under 200 ms even with 6 months of data.
+Store metrics in a table with columns: `timestamp`, `team`, `service`, `metric_name`, `value`, `unit`. That schema is simple enough to query with plain SQL and flexible enough to add new metrics without migrations.
 
-We presented the data in two places: a Grafana dashboard for the platform team and a weekly email digest for leadership. The email digest had exactly three numbers: median lead time for changes, deploy success rate, and number of customer-impacting incidents. Each number had a trend arrow and a one-sentence explanation of what changed. That format forced us to be concise and outcome-focused.
+Present the data in two places: a dashboard for the platform team and a weekly email digest for leadership. The email digest should have exactly three numbers: median lead time for changes, deploy success rate, and number of customer-impacting incidents. Each number gets a trend arrow and a one-sentence explanation of what changed. That format forces conciseness and outcome focus.
 
-## Results — the numbers before and after
+## How to measure your own baseline
 
-We ran this system for two quarters. The table below compares the baseline (the quarter before we started) with the most recent quarter. These are realistic figures for a mid-sized organization; your mileage will vary.
+The table below is not a benchmark. It is a measurement plan. For each metric, it tells you what to instrument and what to compare. Run the commands or queries against your own systems to produce your own numbers.
 
-| Metric | Baseline | After 2 quarters | Change |
-|--------|----------|------------------|--------|
-| Median lead time for changes | 4.2 hours | 1.8 hours | -57% |
-| 95th percentile lead time | 26 hours | 9 hours | -65% |
-| Deploy success rate | 87% | 96% | +9 pts |
-| Mean time to restore (MTTR) | 48 minutes | 22 minutes | -54% |
-| Pipeline queue time (median) | 6.5 minutes | 1.2 minutes | -82% |
-| Customer-impacting incidents per month | 3.1 | 1.4 | -55% |
-| Platform team cost per deploy | $12.40 | $7.10 | -43% |
+| Metric | What to instrument | What to compare |
+|--------|-------------------|-----------------|
+| Median lead time for changes | Timestamp of commit push vs. timestamp of production deploy marker | Current quarter vs. previous quarter, split by team and service |
+| 95th percentile lead time | Same events, percentile calculation over all deploys in the period | Same period comparison; investigate outliers individually |
+| Deploy success rate | CI workflow conclusion for deploy jobs (success/failure) | Rolling 30-day rate vs. prior 30-day rate |
+| Mean time to restore (MTTR) | Incident start and resolution timestamps from your incident tool | Median and p95 across incidents in the period |
+| Pipeline queue time | Time between job queued and job started, from CI API | Median and p95, segmented by runner pool |
+| Manual interventions per deploy | Count of approval steps, retries, and manual fixes logged per deploy | Percentage of deploys requiring any intervention |
+| Customer-impacting incidents | Incidents tagged as customer-facing in your incident tool | Count per month, with severity breakdown |
 
-The most persuasive number for leadership was not lead time. It was the reduction in customer-impacting incidents. That number connected directly to revenue risk. When we showed that incidents dropped from an average of 3.1 per month to 1.4 per month, and that each incident had an estimated cost of $18,000 in engineering time and customer credits, the math was simple: saving roughly $30,000 per month. The platform team's fully loaded cost was higher than that, but the point was that the platform was paying for a meaningful fraction of itself through incident reduction alone.
+The point of this table is that every number is reproducible from data you already have. There is no magic benchmark to chase. The trend in your own organization is the only number that matters for a budget conversation.
 
-We also tracked a less obvious metric: the number of manual interventions required during deploys. A manual intervention was any step where a human had to approve, retry, or fix something. Baseline was 22% of deploys. After two quarters, it was 6%. That reduction freed up an estimated 40 engineer-hours per month that had been spent babysitting deploys. At a fully loaded rate of $90 per hour, that was $3,600 per month in recovered time — not huge, but it added up and it was easy to explain.
+## A worked example of the arithmetic
 
-The pipeline queue time improvement came from a specific change: we moved from a shared runner pool to autoscaling runners with a warm pool of 10 instances. That change alone cost an extra $800 per month in compute but reduced median queue time from 6.5 minutes to 1.2 minutes. The payback was immediate in developer time saved waiting for CI.
+Suppose a platform team supports 100 developers. Suppose the median deploy wait time (queue plus pipeline) is 30 minutes, and each developer triggers 2 deploys per day. That is 100 × 2 × 30 minutes = 6,000 developer-minutes per day spent waiting, or 100 developer-hours per day. Over a 20-working-day month, that is 2,000 developer-hours per month.
 
-## What we'd do differently
+Now suppose a runner capacity change cuts median wait to 10 minutes. The new figure is 100 × 2 × 10 = 2,000 developer-minutes per day, or 33.3 developer-hours per day. Over a month, that is 667 developer-hours. The difference is 2,000 − 667 = 1,333 developer-hours per month recovered.
 
-If we were starting over, we would do three things differently.
+If the fully loaded cost of a developer hour is $90 (an illustrative figure — substitute your own), the recovered time is worth 1,333 × $90 = $119,970 per month. If the runner capacity change costs an extra $800 per month in compute, the net is $119,170 per month. That is the arithmetic that belongs in a budget review, with every assumption stated so leadership can challenge it.
 
-First, we would define the metrics before building any tooling. We spent the first month building a pipeline and a dashboard, then realized we were measuring the wrong things. A one-week exercise to align on metrics with leadership would have saved three weeks of rework.
+The same arithmetic applies to manual deploy interventions. If 22% of deploys require a human to approve, retry, or fix something, and there are 200 deploys per month, that is 44 interventions. If each intervention costs 30 minutes of engineer time, that is 22 engineer-hours per month. Reducing the intervention rate to 6% gives 12 interventions, or 6 engineer-hours — a recovery of 16 engineer-hours per month. At $90 per hour, that is $1,440 per month. Not huge, but easy to explain and easy to verify.
 
-Second, we would include product teams in the metric definition from day one. Our initial lead time definition counted time from commit to deploy, but product teams cared about time from ticket start to customer availability. Those are different. We ended up adding a second metric, "idea to production," which was harder to measure but more relevant to the business. If we had asked first, we would have known.
+## Failure modes to watch for
 
-Third, we would automate the leadership digest from the start. Our first digest was a manually written email with screenshots. It took 2 hours per week to produce. When we automated it with a Python script that generated HTML and sent it via SendGrid, we got that time back and the digest became more consistent. Consistency matters more than polish in a recurring report.
+**The stale data failure.** If the dashboard is two weeks behind, leadership will ask what has been done lately. Automate the pipeline and the digest so the numbers are always current. A cron job that fails silently is worse than no automation.
 
-We also learned that it's better to under-promise and over-deliver on metric improvements. We initially claimed we could cut lead time by 80% in one quarter. We achieved 57%. That gap gave leadership a reason to question our credibility. A more conservative target — 40% — would have been exceeded and would have built trust.
+**The attribution failure.** If the platform team claims credit for every improvement, they will eventually be caught. When a product team's lead time improves because they hired more engineers, say so. That honesty makes the times when you do claim credit more believable.
 
-## The broader lesson
+**The vanity metric failure.** Cache hit rate, runner utilization, and dashboard count are inputs. They don't tell anyone whether the platform is working. If a metric cannot be connected to a developer or business outcome in one sentence, it does not belong in the leadership digest.
 
-Platform engineering ROI is not a math problem. It's a trust problem. The numbers matter, but only if leadership believes they are honest, relevant, and not cherry-picked. The broader lesson is that platform teams should operate like a product team: define your customer (developers), define your value proposition (faster, safer delivery), and measure outcomes that your customer and your funder both care about.
+**The single-number failure.** A single metric can be gamed. Lead time can be reduced by deploying smaller, less tested changes. Pair lead time with change failure rate and MTTR so that speed cannot be bought with instability.
 
-The most common mistake is to measure platform activity instead of platform outcomes. Activity metrics — pipelines built, clusters managed, dashboards created — are inputs. They don't tell anyone whether the platform is working. Outcome metrics — lead time, deploy success rate, incident frequency — are what justify continued investment.
+**The stale-baseline failure.** Comparing against a baseline from two years ago is meaningless if the organization has changed. Re-baseline every two quarters and state the period explicitly.
 
-A second lesson is that you need a narrative, not just a dashboard. The dashboard shows the numbers. The narrative explains why they moved and what you did to move them. Without the narrative, leadership sees random fluctuations. With it, they see a team that understands its impact and can steer it.
+## A decision checklist
 
-Finally, be willing to say when the platform is not the cause of a change. If a product team's lead time improved because they hired more engineers, say so. That honesty makes the times when you do claim credit more believable. Platform teams that take credit for everything get credit for nothing.
+Before presenting platform metrics to leadership, verify each of the following:
 
-## How to apply this to your situation
+- The metric connects to a business outcome in one sentence.
+- The data is no more than 24 hours old.
+- The baseline period is stated and recent.
+- The attribution is honest — other factors are named.
+- The metric is paired with a counter-metric (speed with stability, cost with quality).
+- The trend, not just the absolute number, is shown.
+- The specific platform change that moved the metric is named.
+- A dollar estimate is provided with all assumptions stated.
+- The target was set before the period, not after.
+- The digest is consistent — same three numbers every week.
 
-Start by picking one north-star metric that connects platform work to business outcomes. Lead time for changes is a good default because it's well-documented, widely understood, and sensitive to platform quality. If your organization already tracks DORA metrics, use those. If not, start with lead time and deploy success rate.
+## Building the narrative
 
-Next, instrument that metric. You don't need a fancy data platform. A Python script that pulls data from your CI system and writes to a CSV or a small database is enough to start. The goal is to get a baseline number and a trend line. You can refine the instrumentation later.
+A dashboard shows the numbers. A narrative explains why they moved and what was done to move them. Without the narrative, leadership sees random fluctuations. With it, they see a team that understands its impact and can steer it.
 
-Then, set a target that is ambitious but achievable. A 30–40% reduction in lead time over two quarters is a reasonable goal for most teams. Communicate that target to leadership along with the specific changes you plan to make to hit it. That turns the budget conversation from "keep funding us" to "fund this specific improvement."
+The narrative should answer three questions: What changed? Why did it change? What is next? For example: "Median lead time dropped from 4 hours to 2 hours. The cause was moving from a shared runner pool to autoscaling runners with a warm pool, which cut queue time. Next quarter we are targeting test suite duration, which is now the dominant component."
 
-Finally, report regularly. A weekly or monthly digest with three numbers and a one-sentence explanation is more effective than a quarterly deep dive. Consistency builds trust.
+That narrative turns the budget conversation from "keep funding us" to "fund this specific improvement." It also makes the platform team accountable for a specific change rather than a vague promise of value.
 
-## Frequently Asked Questions
+## Frequently asked questions
 
 **How do you measure platform engineering ROI?**
 
@@ -140,29 +145,9 @@ They fail when they are disconnected from business outcomes. A 20% improvement i
 
 **What is a good lead time for changes benchmark?**
 
-For a mid-sized organization, a median lead time of under 2 hours is a strong target. Elite performers often achieve under 1 hour, but that requires significant investment in test automation and deployment infrastructure. A reasonable starting point is to measure your current median and aim for a 30–40% reduction over two quarters. The absolute number matters less than the trend.
+There is no universal benchmark. The DORA research program publishes distributions of lead time across performance bands, but the right target depends on your deployment model, your test suite, and your compliance requirements. A reasonable approach is to measure your current median and aim for a meaningful reduction over two quarters. The absolute number matters less than the trend and the stability of the counter-metrics.
 
-## Resources that helped
+## What to do in the next 30 minutes
 
-The DORA research program publishes annual reports on software delivery performance. The 2023 Accelerate State of DevOps Report is available at https://cloud.google.com/devops/state-of-devops. It provides benchmarks for lead time, deployment frequency, and other metrics.
-
-The GitHub Actions documentation on workflow events and the GraphQL API was essential for building our data pipeline. The API reference is at https://docs.github.com/en/graphql.
-
-For OpenTelemetry instrumentation, the official documentation at https://opentelemetry.io/docs/ was our primary guide. We used version 1.20 and the Python SDK.
-
-The book "Accelerate" by Nicole Forsgren, Jez Humble, and Gene Kim provides the research foundation for the metrics we used. It's a practical guide to measuring software delivery performance.
-
-Finally, our internal runbook for the metrics pipeline is something you can replicate. Start by writing a single Python script that queries your CI system for the last 100 workflow runs and calculates the median time from commit to deploy. Run it today, and you'll have a baseline before the end of the day. That baseline is the first step toward a credible ROI story.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
+Write a single Python script that queries your CI system for the last 100 workflow runs and calculates the median time from commit to deploy. Run it now. You will have a baseline before the end of the day. That baseline is the first step toward a credible ROI story — and it is the number you can defend in the next budget review.
+===END===

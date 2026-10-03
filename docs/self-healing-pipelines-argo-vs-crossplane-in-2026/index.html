@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Self-healing pipelines: Argo vs Crossplane in 2026 - Kubai Kevin</title>
-        <meta name="description" content="Cut mean time to recovery 70% with self-healing CI/CD — Argo CD vs Crossplane performance and cost compared using 2026 data from production clusters.">
+        <meta name="description" content="Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.">
         <meta name="keywords" content="GitopsSelfHealing, Kubernetes, Crossplane, Ai, K8s">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T13:16:29.832770">
-        <meta property="article:modified_time" content="2026-09-19T11:54:35.586574+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:05:04.572818+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Self-healing pipelines: Argo vs Crossplane in 2026">
-        <meta property="og:description" content="Cut mean time to recovery 70% with self-healing CI/CD — Argo CD vs Crossplane performance and cost compared using 2026 data from production clusters.">
+        <meta property="og:description" content="Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.">
         <meta property="og:url" content="https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Self-healing pipelines: Argo vs Crossplane in 2026">
-        <meta name="twitter:description" content="Cut mean time to recovery 70% with self-healing CI/CD — Argo CD vs Crossplane performance and cost compared using 2026 data from production clusters.">
+        <meta name="twitter:description" content="Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/self-healing-pipelines-argo-vs-crossplane-in-2026.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/#article",
       "headline": "Self-healing pipelines: Argo vs Crossplane in 2026",
-      "description": "Cut mean time to recovery 70% with self-healing CI/CD — Argo CD vs Crossplane performance and cost compared using 2026 data from production clusters.",
+      "description": "Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.",
       "datePublished": "2026-06-25T13:16:29+00:00",
-      "dateModified": "2026-09-19T11:54:35+00:00",
-      "wordCount": 3696,
-      "timeRequired": "PT18M",
+      "dateModified": "2026-10-03T11:05:04+00:00",
+      "wordCount": 2453,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Self-healing pipelines: Argo vs Crossplane in 2026</h1>
                 
-                <p class="post-lead">Cut mean time to recovery 70% with self-healing CI/CD — Argo CD vs Crossplane performance and cost compared using 2026 data from production clusters.</p>
+                <p class="post-lead">Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.</p>
                 
                 
                 <div class="tags">
@@ -251,36 +251,32 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        18 min read
-                        &nbsp;·&nbsp; 3696 words
+                        12 min read
+                        &nbsp;·&nbsp; 2453 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
-<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, self-healing deployment pipelines aren’t just a nice-to-have — they’re the difference between a 3 a.m. firefight and waking up to a green build. The hard truth? Most teams still treat their CI/CD as a glorified script runner, manually babysitting deployments when Kubernetes decides to reschedule pods or Argo Workflows hits a flaky node. That incident pushed us to evaluate two approaches: Argo CD’s ApplicationSets with automated rollback, and Crossplane’s declarative infrastructure with real-time reconciliation engines.</p>
-<p>Both tools claim to heal themselves, but they solve different problems. Argo CD is battle-tested for GitOps deployments with automatic drift correction, while Crossplane turns Kubernetes into a control plane for cloud resources with built-in health checks. The catch? Argo’s self-healing is reactive — it waits for Kubernetes to misbehave before triggering a rollback — whereas Crossplane proactively reconciles cloud resources to match your desired state every 60 seconds by default. That latency meant 45-second windows where a misconfigured RDS instance could stay broken before Crossplane noticed — plenty of time to break prod.</p>
-<p>But the real differentiator? Tooling friction. They only made progress when they started from scratch with Crossplane Composition functions. The lesson? Self-healing isn’t just about the tool — it’s about how much cognitive overhead you’re willing to pay in setup and maintenance.</p>
-<h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
-<p>Argo CD’s self-healing comes from two features: ApplicationSets and automated rollback via health checks. An ApplicationSet is a Kubernetes CRD that generates Argo Applications from a template, syncing multiple clusters or namespaces from a single Git repo. The magic happens in the health assessment: Argo CD continuously compares the live state of your cluster against the desired state in Git, and triggers a rollback if the health score drops below a threshold you define.</p>
-<p>Here’s the kicker: Argo CD performs these checks every 3 seconds by default. The self-healing is reactive — it doesn’t predict failures — but the 3-second polling loop is aggressive enough to catch most misconfigurations before they propagate. One edge case we hit was with Custom Resource Definitions (CRDs) that Argo doesn’t natively understand. When we deployed a Prometheus Operator CRD that mutated pod specs, Argo’s health checks started reporting the pods as "Unknown" because the CRD’s status subresource wasn’t updating fast enough. We spent three days debugging the CRD’s status update mechanism before realizing the issue was in the Prometheus Operator itself — not Argo. Lesson learned: Argo’s self-healing is only as good as the health status your applications expose.</p>
-<p>The other strength of Argo CD is its integration with existing GitOps tools. We used Argo CD with Tekton 0.55 for CI and Vault 1.14 for secrets, and the setup took two engineers three days to stabilize. The self-healing pipeline automatically rolls back to the last known good commit if any stage in the Tekton pipeline fails — including infrastructure provisioning via Terraform wrapped in a Kubernetes Job. That saved us $8k/month in wasted AWS costs during the 2025 holiday season when a Terraform module leaked 200 RDS instances before Argo detected the drift and rolled back to the last stable state.</p>
-<p>Where Argo shines:
-- Native GitOps workflows with minimal configuration
-- 3-second health polling that catches drift early
-- Rollback to last known good commit across all stages
-- Strong community support for CRDs and health checks</p>
-<p>Where it struggles:
-- Requires health endpoints that update quickly and accurately
-- Manual tuning of sync waves and retry policies
-- Limited proactive failure prediction</p>
-<pre><code class="language-yaml"># Example Argo CD ApplicationSet that syncs across clusters
-apiVersion: argoproj.io/v1alpha1
+                <h2 id="what-self-healing-actually-means-in-each-tool">What "self-healing" actually means in each tool</h2>
+<p>Self-healing is a marketing word covering at least three different mechanisms. Keeping them separate prevents most bad comparisons.</p>
+<p><strong>Continuous reconciliation.</strong> A controller reads a desired state, reads the observed state, and issues API calls to close the gap. This is the Kubernetes controller pattern, and both tools use it. The difference is <em>what</em> they reconcile: Argo CD reconciles Kubernetes manifests into a cluster; Crossplane reconciles cloud provider APIs through Kubernetes custom resources.</p>
+<p><strong>Health-driven rollback.</strong> A controller watches a workload's health signal and, when the signal degrades, reverts to a previously known-good revision. This is a Git operation in Argo CD's case: the desired state is a commit, and reverting means pointing the Application back at an earlier revision.</p>
+<p><strong>Drift correction.</strong> Something outside the pipeline changes a resource — a console edit, another automation, a provider-side mutation. The controller notices the live state no longer matches the desired state and re-applies the desired state.</p>
+<p>Argo CD is strongest at the first and third mechanisms applied to Kubernetes objects, plus health-driven sync status. Crossplane is strongest at the first and third mechanisms applied to cloud resources. Neither predicts failures. Neither repairs a resource whose provider API refuses the change. Any claim that one is "proactive" and the other "reactive" is really a statement about <em>polling interval and health signal quality</em>, not about a fundamentally different control model.</p>
+<h2 id="argo-cd-reconciliation-over-kubernetes-state">Argo CD: reconciliation over Kubernetes state</h2>
+<p>Argo CD stores desired state in Git and runs a controller inside the cluster. The controller compares the rendered manifests against live objects and reports a sync status (<code>Synced</code> / <code>OutOfSync</code>) and a health status (<code>Healthy</code> / <code>Progressing</code> / <code>Degraded</code> / <code>Missing</code> / <code>Unknown</code>).</p>
+<p>Two settings matter for self-healing:</p>
+<ul>
+<li><code>syncPolicy.automated.selfHeal: true</code> makes the controller re-apply desired state when live state drifts.</li>
+<li><code>syncPolicy.automated.prune: true</code> makes the controller delete resources that are no longer in Git.</li>
+</ul>
+<p>Health status is not computed by Argo CD from first principles. It comes from health checks that Argo CD ships for built-in Kubernetes kinds, plus Lua health checks you can supply for custom resources. If a CRD has no health check, Argo CD reports <code>Unknown</code> and will not treat the resource as degraded. This is the single most common reason an Argo CD "self-healing" setup silently does nothing: the resource that fails is not one Argo CD knows how to evaluate.</p>
+<p>A minimal ApplicationSet that syncs one app to every registered cluster:</p>
+<pre><code class="language-yaml">apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: multi-cluster-apps
@@ -296,7 +292,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/our-org/gitops.git
+        repoURL: https://github.com/example-org/gitops.git
         targetRevision: HEAD
         path: apps/{{.application}}
         helm:
@@ -316,28 +312,26 @@ spec:
             factor: 2
             maxDuration: 3m
 </code></pre>
-<h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
-<p>Crossplane treats your entire cloud infrastructure as a Kubernetes resource model, and its self-healing comes from the Reconciler loop that runs every 60 seconds by default. Every cloud resource (EKS clusters, RDS instances, S3 buckets) is represented as a Kubernetes Custom Resource, and Crossplane continuously compares the actual state of that resource against the desired state defined in your manifests. If there’s a drift — like an RDS instance running with the wrong engine version — Crossplane automatically triggers a reconciliation to fix it.</p>
-<p>The proactive nature of Crossplane’s self-healing is its biggest advantage. In 2026, we ran a test where we intentionally corrupted an RDS instance’s parameter group. Crossplane detected the drift in 63 seconds and initiated a replacement, while Argo CD’s health check only noticed the failure when the application pod started crashing — which took 4 minutes. That 3.5-minute difference meant 210k extra requests hitting a broken endpoint before Argo reacted. Crossplane’s self-healing isn’t just faster — it’s more comprehensive because it operates at the infrastructure layer, not the application layer.</p>
-<p>But Crossplane’s power comes with complexity. Modeling your infrastructure as Kubernetes manifests requires rewriting Terraform modules into Crossplane Compositions, which took our team six engineers six weeks in early 2026. The steep learning curve is real: we had to write Composition functions in Go to handle conditional logic for different AWS regions, and debugging a Composition that wasn’t reconciling properly meant digging through Crossplane’s controller logs with kubectl logs crossplane -n crossplane-system -c crossplane. The logs are verbose but not always helpful — it took me two days to realize a missing ownerReference in a Composition was causing the reconciler to skip updates entirely.</p>
-<p>Where Crossplane shines:
-- Proactive infrastructure reconciliation every 60 seconds
-- Single control plane for multi-cloud resources
-- Strong policy enforcement via Composition functions
-- Built-in cost controls via ResourceClaims</p>
-<p>Where it struggles:
-- Steep learning curve for Composition functions
-- 60-second reconciliation loop can feel slow for critical apps
-- Debugging drift is harder than with Argo’s GitOps model</p>
-<pre><code class="language-yaml"># Example Crossplane Composition for an EKS cluster with self-healing
-apiVersion: apiextensions.crossplane.io/v1
+<p>Notes on this manifest, because small mistakes here produce confusing behavior:</p>
+<ul>
+<li><code>allowEmpty: false</code> prevents an empty render from pruning everything. Keep it.</li>
+<li>The retry block governs <em>sync</em> retries, not health evaluation. A resource stuck in <code>Progressing</code> will not be retried by this block; it will simply stay <code>Progressing</code>.</li>
+<li><code>selfHeal</code> corrects drift in objects Argo CD manages. It does not correct drift in objects created by an operator that Argo CD does not track.</li>
+</ul>
+<p><strong>Failure mode to design around:</strong> a health check that returns healthy for a broken workload. A liveness probe that only checks that the process is listening will report healthy while the process returns errors for every request. Argo CD will see <code>Healthy</code>, will not roll back, and the outage continues. The fix is at the application layer — health endpoints that exercise real dependencies — not in Argo CD's configuration.</p>
+<p><strong>Second failure mode:</strong> a CRD with no health check. The resource is <code>Unknown</code> forever. Argo CD never considers the app degraded. Teams typically discover this only during an incident. Audit which kinds in your manifests have health checks before you rely on rollback.</p>
+<h2 id="crossplane-reconciliation-over-cloud-apis">Crossplane: reconciliation over cloud APIs</h2>
+<p>Crossplane installs providers that expose cloud resources as Kubernetes custom resources. A <code>VPC</code>, a <code>Cluster</code>, an <code>RDSInstance</code> — each is a Kubernetes object with a <code>spec.forProvider</code> block that mirrors the provider's API. A composite resource (XR) groups several of these, and a Composition describes how to build them from the XR's fields.</p>
+<p>The control loop is the same pattern as any Kubernetes controller: read desired, read observed, act. Crossplane's provider controllers watch their resources and re-issue create/update/delete calls when the observed state diverges from the spec.</p>
+<p>A Composition that builds a VPC and an EKS cluster from a composite resource:</p>
+<pre><code class="language-yaml">apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
   name: xeks.aws.example.org
   labels:
     provider: aws
     guide: quickstart
-    vpcNetwork: true
+    vpcNetwork: &quot;true&quot;
 spec:
   compositeTypeRef:
     apiVersion: example.org/v1alpha1
@@ -387,245 +381,112 @@ spec:
                 fmt: &quot;%s-eks&quot;
       connectionDetails:
         - fromConnectionSecretKey: kubeconfig
-      healthPolicy:
-        conditions:
-          - type: Synced
-            status: &quot;True&quot;
-          - type: Ready
-            status: &quot;True&quot;
+      readinessChecks:
+        - type: MatchString
+          fieldPath: &quot;status.atProvider.status&quot;
+          matchString: &quot;ACTIVE&quot;
 </code></pre>
-<h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>We ran a controlled failure scenario in Q1 2026 to compare the two approaches. We deployed the same application stack — a Node 20 LTS backend with PostgreSQL 15 on RDS — to two Kubernetes clusters (EKS 1.28 with Karpenter 0.32). We then introduced a failure by changing the RDS instance’s engine version from PostgreSQL 15 to 14 via the AWS console, simulating a manual configuration drift.</p>
-<p>Here are the results:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Argo CD 2.10</th>
-<th>Crossplane 1.14</th>
-<th>Winner</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Time to detect drift</td>
-<td>4m 12s</td>
-<td>63s</td>
-<td>Crossplane</td>
-</tr>
-<tr>
-<td>Time to reconcile</td>
-<td>2m 8s</td>
-<td>1m 45s</td>
-<td>Crossplane</td>
-</tr>
-<tr>
-<td>Total downtime</td>
-<td>6m 20s</td>
-<td>2m 48s</td>
-<td>Crossplane</td>
-</tr>
-<tr>
-<td>Resource overhead (CPU)</td>
-<td>3.2%</td>
-<td>7.8%</td>
-<td>Argo CD</td>
-</tr>
-<tr>
-<td>Cost to fix (AWS Lambda)</td>
-<td>$0.87</td>
-<td>$0.12</td>
-<td>Crossplane</td>
-</tr>
-</tbody>
-</table>
-<p>The 63-second detection time for Crossplane is deceptive — in reality, the reconciliation loop runs every 60 seconds, but the RDS health check in Crossplane has a built-in 30-second cooldown after detecting a change. That means the first reconciliation attempt happens at 60 seconds, but if the resource is still in a transitional state, Crossplane waits another 30 seconds before retrying.</p>
-<p>Argo CD’s detection time was dominated by the Tekton pipeline’s readiness probe. Our application had a 60-second liveness probe, and Argo only considered the pod unhealthy after three consecutive failures — 180 seconds total. Even with Argo’s 3-second health polling, the pod wasn’t marked as "Degraded" until Tekton reported the failure, which took 4 minutes in our setup. The lesson? Argo’s self-healing is only as fast as your application’s health signals.</p>
-<p>On resource overhead, Argo CD is lighter because it’s polling Kubernetes API objects that already exist in memory. Crossplane, by contrast, runs a full reconciliation loop for every cloud resource in your cluster, which adds up when you have 50+ EKS clusters and 200+ RDS instances. In our production cluster, Crossplane used 7.8% CPU versus Argo’s 3.2% — but that’s with a full AWS provider and 15 Composition functions.</p>
-<p>Cost-wise, Crossplane’s reconciliation is cheaper because it uses AWS Lambda for drift detection via CloudWatch Events, while Argo CD relies on Kubernetes API calls that generate cost via the EKS control plane.</p>
-<p>The performance winner is clear: Crossplane detects and reconciles failures faster, especially at the infrastructure layer. But Argo CD’s performance is more predictable and easier to optimize because it’s tightly coupled with Kubernetes’ own health mechanisms. If you’re running a stateful application with strict latency requirements, Crossplane’s proactive reconciliation is worth the overhead. If you’re mostly concerned with application-level failures, Argo CD is faster to adopt and lighter on resources.</p>
-<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
-<p>Developer experience isn’t just about setup time — it’s about how quickly a new engineer can debug a self-healing pipeline when it fails. In 2026, we onboarded six engineers to both systems and tracked their ramp-up time and error rates.</p>
-<p>Here’s what we measured:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Argo CD 2.10</th>
-<th>Crossplane 1.14</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Onboarding time (median)</td>
-<td>2.5 days</td>
-<td>8.5 days</td>
-<td>Crossplane requires Go knowledge</td>
-</tr>
-<tr>
-<td>Debugging time per failure</td>
-<td>35 minutes</td>
-<td>90 minutes</td>
-<td>Crossplane logs are verbose</td>
-</tr>
-<tr>
-<td>Rollback success rate</td>
-<td>94%</td>
-<td>97%</td>
-<td>Crossplane is more reliable</td>
-</tr>
-<tr>
-<td>Documentation satisfaction</td>
-<td>4.2/5</td>
-<td>3.1/5</td>
-<td>Argo’s docs are more practical</td>
-</tr>
-</tbody>
-</table>
-<p>The biggest pain point with Crossplane is the need to write Composition functions in Go. Most engineers on our team were comfortable with YAML and Terraform, but Go felt like a foreign language. We tried using Crossplane’s Function Framework with Python, but the performance overhead made the reconciliation loop miss deadlines.</p>
-<p>Argo CD’s developer experience is smoother because it’s declarative and Git-centric. New engineers can clone the GitOps repo, run <code>argocd app create</code> with the provided manifest, and immediately see the application sync. The self-healing behavior is visible in the Argo CD UI, which shows health status and rollback history. We built a custom dashboard in Grafana that pulls Argo CD’s metrics via the Argo CD API, and it took one engineer two days to build — something we couldn’t replicate with Crossplane because its metrics are scattered across Prometheus exporters.</p>
-<p>Debugging Crossplane failures is harder because the reconciler logs are long and noisy. When we introduced a syntax error in a Composition, Crossplane’s controller would log 500 lines of stack traces before failing. We had to write a custom log parser in Go to filter the relevant errors, which took another week. Argo CD’s logs, by contrast, are concise and actionable — the error message for a failed health check is usually the pod’s liveness probe output, which any engineer can read.</p>
-<p>Another developer experience win for Argo CD is its integration with existing CI/CD tools. We used Argo CD with GitHub Actions 2.31 and Sentry 1.32 for error tracking. When a deployment failed, GitHub Actions automatically opened a Jira ticket with the Argo CD sync status, and Sentry correlated the error with the commit hash. Crossplane doesn’t have native integrations with most CI/CD tools, so we had to write custom webhooks to trigger GitHub Actions — a brittle solution that broke every time we updated Crossplane.</p>
-<p>The developer experience winner is Argo CD for teams that value speed and simplicity. Crossplane is the better choice for teams willing to pay the upfront cost in Go expertise and debugging time, but only if you’re committed to modeling your entire infrastructure as Kubernetes resources. If you’re not ready to rewrite your Terraform modules into Crossplane Compositions, Argo CD is the pragmatic choice.</p>
-<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
-<p>Cost isn’t just about AWS bills — it’s about engineering time, tooling overhead, and opportunity cost. In 2026, we measured the total cost of ownership (TCO) for both systems over six months, including salaries, AWS costs, and tooling licenses.</p>
-<p>Here’s the breakdown:</p>
-<table>
-<thead>
-<tr>
-<th>Cost Category</th>
-<th>Argo CD 2.10</th>
-<th>Crossplane 1.14</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AWS costs (monthly)</td>
-<td>$187</td>
-<td>$245</td>
-<td>EKS control plane vs Lambda calls</td>
-</tr>
-<tr>
-<td>Engineering time (hours)</td>
-<td>42</td>
-<td>196</td>
-<td>Onboarding and debugging</td>
-</tr>
-<tr>
-<td>Tooling licenses</td>
-<td>$0</td>
-<td>$0</td>
-<td>Both are OSS</td>
-</tr>
-<tr>
-<td>Incident cost (avg)</td>
-<td>$2.4k</td>
-<td>$0.9k</td>
-<td>Crossplane prevented more outages</td>
-</tr>
-<tr>
-<td>Total TCO (6 months)</td>
-<td>$17.8k</td>
-<td>$26.1k</td>
-<td>Includes engineering time at $150/hr</td>
-</tr>
-</tbody>
-</table>
-<p>The AWS cost difference is small but measurable. Argo CD runs on EKS, which charges $0.10 per hour per cluster for the control plane. Crossplane uses AWS Lambda for drift detection via CloudWatch Events, which costs $0.20 per million requests. In our setup, Crossplane made 1.2 million Lambda calls per month, while Argo CD’s API calls cost $187. The difference is negligible for most teams, but it adds up when you have 50+ clusters.</p>
-<p>The real cost driver is engineering time. At an average salary of $150/hour, that’s an $8.4k difference per engineer. Add debugging time: Argo CD averaged 35 minutes per failure, while Crossplane took 90 minutes. Over six months, that’s an extra 21 hours per engineer — $3.15k per engineer.</p>
-<p>Incident cost is where Crossplane shines. In the six-month period, Argo CD had 12 incidents that required manual intervention, costing $2.4k per incident in lost revenue and AWS cleanup costs. Crossplane had three incidents, costing $0.9k each — mostly because Crossplane caught infrastructure drift before it caused application failures. The $1.5k per-incident difference is significant when you scale to hundreds of resources.</p>
-<p>The operational cost winner is Argo CD for teams that prioritize speed and cost efficiency. Crossplane’s higher TCO is justified if you have a large infrastructure footprint and can afford the upfront investment in Go expertise. For most teams, the $8k+ difference in engineering time isn’t worth the faster reconciliation — unless your application can’t tolerate even 6 minutes of downtime.</p>
-<h2 id="the-decision-framework-i-use">The decision framework I use</h2>
-<p>I’ve used both tools in production, and the choice depends on three factors: failure tolerance, infrastructure complexity, and team expertise. Here’s the framework I rely on when teams ask for my recommendation:</p>
-<ol>
-<li>
-<p><strong>Failure tolerance</strong>: How long can your application tolerate downtime? - If your SLA is &lt;5 minutes, use Crossplane. Its 60-second reconciliation loop is faster than Argo CD’s reactive model. - If your SLA is 5-30 minutes, Argo CD is sufficient and easier to adopt.</p>
-</li>
-<li>
-<p><strong>Infrastructure complexity</strong>: How many cloud resources do you manage? - If you have &lt;20 resources (EKS clusters, RDS, S3), Argo CD’s GitOps model is simpler. - If you have &gt;50 resources, Crossplane’s unified control plane reduces operational overhead.</p>
-</li>
-<li>
-<p><strong>Team expertise</strong>: What languages and tools is your team comfortable with? - If your team knows YAML, Terraform, and Kubernetes, Argo CD is a natural fit. - If your team has Go experience and is willing to model infrastructure as Kubernetes resources, Crossplane is worth the investment.</p>
-</li>
-</ol>
-<p>I also consider the cost of change. Moving from Terraform to Crossplane requires rewriting all your modules into Compositions, which is a multi-week project. Moving from a traditional CI/CD pipeline to Argo CD is a few days of work. The sunk cost of existing Terraform modules is real — if you’re not ready to abandon them, Argo CD is the safer choice.</p>
-<p>Here’s the decision matrix I use:</p>
-<table>
-<thead>
-<tr>
-<th>Factor</th>
-<th>Argo CD</th>
-<th>Crossplane</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SLA &lt;5 min</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>SLA 5-30 min</td>
-<td>✅</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>&lt;20 cloud resources</td>
-<td>✅</td>
-<td>❌</td>
-</tr>
-<tr>
-<td>&gt;50 cloud resources</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Team knows Go</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Team knows Terraform</td>
-<td>✅</td>
-<td>❌</td>
-</tr>
-<tr>
-<td>Existing Terraform mods</td>
-<td>✅</td>
-<td>❌</td>
-</tr>
-</tbody>
-</table>
-<p>The framework isn’t perfect, but it’s saved us from costly mistakes. In 2026, we almost adopted Crossplane for a small project with a 15-minute SLA and a team of YAML experts. The framework flagged the mismatch, and we went with Argo CD — saving us six weeks of Go wrangling.</p>
-<h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
-<p>My recommendation is simple: <strong>use Argo CD if you’re already running GitOps and want a lightweight, fast-to-adopt self-healing pipeline. Use Crossplane if you’re managing a large, multi-cloud infrastructure and need proactive reconciliation at the infrastructure layer.</strong></p>
-<p>Argo CD is the pragmatic choice for most teams in 2026. It’s battle-tested, integrates seamlessly with existing GitOps workflows, and has a lower operational cost. The self-healing is reactive but fast enough for most applications. We’ve run Argo CD in production for three years, and the only self-healing issues we’ve had were due to misconfigured health checks — not the tool itself. That’s the mark of a mature system: it fails gracefully when misconfigured, but works well when set up correctly.</p>
-<p>Crossplane is the better choice when you have a large infrastructure footprint and can afford the upfront cost. If you’re not ready to rewrite your Terraform modules into Crossplane Compositions, don’t force it. The cognitive overhead isn’t worth the marginal gain in self-healing speed.</p>
-<p>I still have reservations about Crossplane. The 60-second reconciliation loop feels slow for critical applications, and the debugging experience is painful. We mitigated the loop delay by reducing the cooldown to 10 seconds, but that required patching Crossplane’s controller — something most teams won’t do. And the Go dependency is a non-starter for many teams. If Crossplane ever ships a Python or TypeScript SDK for Composition functions, I’ll reconsider my stance.</p>
-<p>When to ignore this recommendation:
-- If your team is already invested in Crossplane and has Go expertise, stick with it. The sunk cost is real. - If you’re running a serverless architecture with AWS Lambda and API Gateway, Argo CD is overkill. Use AWS Step Functions with built-in retry policies instead. - If your application has strict latency requirements (e.g., real-time trading), neither tool is sufficient. Invest in chaos engineering and automated canary analysis.</p>
-<p>The recommendation comes with a caveat: <strong>self-healing pipelines are only as good as your health checks and rollback policies.</strong> I’ve seen teams deploy Argo CD with broken health checks and assume the self-healing would work — only to find out the hard way that the health endpoint was returning 200 OK even when the application was down. Test your health checks in staging, and simulate failures before deploying to production.</p>
-<h2 id="final-verdict">Final verdict</h2>
-<p>The verdict is clear: <strong>Argo CD is the best self-healing deployment pipeline for most teams in 2026.</strong> It’s fast to adopt, integrates seamlessly with GitOps workflows, and has a lower operational cost. Crossplane is a powerful tool for large, multi-cloud infrastructures, but its complexity and Go dependency make it a poor choice for most teams.</p>
-<p>Crossplane is better for teams that need proactive infrastructure reconciliation and have the expertise to model their infrastructure as Kubernetes resources. But for the majority of teams, the upfront cost isn’t worth the marginal gain in self-healing speed. Argo CD’s 3-second health polling and GitOps model are sufficient for most applications, and the developer experience is far superior.</p>
-<p>I’ll end with a story. In early 2026, we had a production incident where a misconfigured IAM policy caused our RDS instance to restart every 10 minutes. Argo CD detected the drift in 4 minutes and rolled back to the last known good state — saving us from a full outage. Crossplane, running in a separate cluster, detected the drift in 63 seconds but couldn’t roll back the RDS instance because AWS doesn’t allow automatic rollbacks for IAM-related changes. The incident highlighted a key weakness of both tools: self-healing is only as good as the cloud provider’s APIs. Argo CD’s strength was its GitOps model, which let us quickly revert the IAM policy change via a Git commit. Crossplane’s strength was its proactive detection, but it couldn’t fix the problem because AWS doesn’t support automatic rollbacks for IAM.</p>
-<p>The lesson? Self-healing pipelines are a tool, not a silver bullet. They’ll catch most failures, but not all. Combine them with automated testing, canary deployments, and chaos engineering for a truly resilient system.</p>
-<p>If you’re starting today, <strong>create a new Argo CD ApplicationSet that syncs a simple Nginx deployment across two clusters. Set the sync policy to <code>selfHeal: true</code> and <code>prune: true</code>, and watch how it automatically corrects drift.</strong> That’s the fastest way to see self-healing in action without committing to a full GitOps migration.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>Corrections worth flagging, because they appear in a lot of copied examples:</p>
 <ul>
-<li><a href="https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/">AI agents vs Argo, Tekton: which pipeline heals itself?</a></li>
-<li><a href="https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">Self-healing AI agents vs rule-based ops: 40% fewer</a></li>
-<li><a href="https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/">Agent governance: OPA vs Kyverno after our incident</a></li>
+<li><code>healthPolicy</code> is not a field on a Composition resource entry. Readiness for a composed resource is expressed with <code>readinessChecks</code> (Crossplane's own readiness evaluation) or, for provider resources, by the provider's own <code>status.conditions</code>. The version above uses <code>readinessChecks</code> with a field path into the observed state.</li>
+<li><code>matchControllerRef: true</code> in a selector means "match the resource created by the same composite." It is correct here, but note that it only resolves after the referenced resource exists, so ordering matters.</li>
+<li>The <code>patches</code> blocks derive a connection secret name from the composite's UID. Without a stable, unique name, two composites can collide on the same secret.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p><strong>Failure mode to design around:</strong> provider-side immutability. Many cloud fields cannot be updated in place. Changing an RDS engine version, an EKS cluster version, or a VPC CIDR may require replacement. Crossplane will attempt the change, the provider API will reject it or the resource will enter a failed state, and no amount of reconciliation will fix it. The controller is doing exactly what it should; the desired state is simply not achievable by update. Teams that model infrastructure declaratively often assume "the reconciler will handle it," and this is the assumption that breaks.</p>
+<p><strong>Second failure mode:</strong> drift that the provider API does not report. If a console change is invisible in the resource's observed state, Crossplane has nothing to compare against. Reconciliation is only as good as the provider's read API.</p>
+<h2 id="how-to-measure-detection-and-recovery-yourself">How to measure detection and recovery yourself</h2>
+<p>Benchmarks comparing these tools are almost always unverifiable, because results depend on probe timings, provider latency, and which resource drifted. The useful thing is a procedure you can run on your own stack.</p>
+<p><strong>Instrument these four timestamps for every simulated failure:</strong></p>
+<ol>
+<li><code>t_drift</code> — the moment you mutate the resource.</li>
+<li><code>t_detect</code> — the first time the controller reports the resource as not-ready or out-of-sync.</li>
+<li><code>t_act</code> — the first API call the controller makes to correct it.</li>
+<li><code>t_healthy</code> — the moment the health signal returns to healthy.</li>
+</ol>
+<p>Detection latency is <code>t_detect - t_drift</code>. Recovery latency is <code>t_healthy - t_detect</code>. Total impact window is <code>t_healthy - t_drift</code>.</p>
+<p><strong>What to watch:</strong></p>
+<ul>
+<li>For Argo CD: <code>argocd app get &lt;app&gt; -o yaml</code> shows <code>status.sync.status</code> and <code>status.health.status</code>. The controller's own metrics are exposed for Prometheus; the reconciliation and health-check counters tell you how often it is evaluating. Watch the Application's <code>.status.conditions</code> for the reason a health check is <code>Unknown</code>.</li>
+<li>For Crossplane: <code>kubectl get &lt;kind&gt; &lt;name&gt; -o yaml</code> and read <code>status.conditions</code> (<code>Synced</code>, <code>Ready</code>). Provider controller logs show the reconciliation attempts and the API errors. The <code>Synced</code> condition going <code>False</code> with reason <code>ReconcileError</code> is the signal that the desired state is not achievable.</li>
+</ul>
+<p><strong>A minimal, reproducible experiment.</strong> Pick one non-production resource. Change one mutable field out of band — for example, alter a security group rule or a bucket policy through the provider console. Then record the four timestamps above using a script that polls the status field every few seconds. Repeat five times and note the spread, not just the median. The spread is what determines whether your rollback window is predictable.</p>
+<p><strong>Why the numbers vary so much between setups.</strong> Detection latency for Argo CD is bounded below by the controller's reconciliation interval <em>and</em> by the workload's own health-probe configuration. A pod with a 60-second liveness probe and a failure threshold of 3 takes at least 180 seconds to be marked unhealthy, regardless of how often Argo CD polls. Detection latency for Crossplane is bounded by the provider controller's reconcile interval and by the provider API's own eventual consistency. Neither number is a property of the tool alone.</p>
+<h2 id="where-each-approach-breaks-down">Where each approach breaks down</h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Argo CD behavior</th>
+<th>Crossplane behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Custom resource with no health check</td>
+<td>Reports <code>Unknown</code>; no rollback triggered</td>
+<td>Not applicable; Crossplane uses provider readiness conditions</td>
+</tr>
+<tr>
+<td>Workload healthy at the probe but failing requests</td>
+<td>No rollback; health check is the weak link</td>
+<td>No rollback; same weak link</td>
+</tr>
+<tr>
+<td>Cloud field that cannot be updated in place</td>
+<td>Not managed by Argo CD</td>
+<td>Reconciliation fails; manual replacement needed</td>
+</tr>
+<tr>
+<td>Drift invisible in the provider's read API</td>
+<td>Not managed by Argo CD</td>
+<td>Not detected</td>
+</tr>
+<tr>
+<td>Desired state deleted from Git</td>
+<td>Prunes managed resources (if <code>prune: true</code>)</td>
+<td>Prunes composed resources when the XR is deleted</td>
+</tr>
+<tr>
+<td>Provider API rate limiting</td>
+<td>Not applicable</td>
+<td>Reconciliation backs off and retries; expect delays</td>
+</tr>
+<tr>
+<td>Change made directly in the cluster to a managed object</td>
+<td>Re-applied on next sync</td>
+<td>Not applicable</td>
+</tr>
+</tbody>
+</table>
+<p>The pattern in this table is that both tools fail at the same two places: an unreliable health signal, and a provider that will not accept the correction. Choosing between them does not remove those failure modes; it changes which layer you are debugging when they occur.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Work through these in order. The first question that produces a clear answer usually decides it.</p>
+<ol>
+<li><strong>What is the resource that fails most often?</strong> If it is a Kubernetes workload, Argo CD's model matches the problem. If it is a cloud resource — a database, a network, an IAM policy — Crossplane's model matches.</li>
+<li><strong>Do you already have Terraform or another IaC tool that works?</strong> Migrating existing modules to Compositions is a rewrite, not a port. If the existing tooling is not causing pain, the migration cost is unlikely to be repaid by faster reconciliation.</li>
+<li><strong>Can your team write and debug Go?</strong> Composition functions are the extension point for nontrivial logic. Teams without Go experience tend to hit a wall the first time a Composition needs conditional behavior.</li>
+<li><strong>How good are your health signals today?</strong> If your liveness probes only check that a process is listening, neither tool will roll back correctly. Fix the probes first; the tool choice is secondary.</li>
+<li><strong>What is your actual recovery-time objective, and is it met by a manual rollback?</strong> A Git revert plus a sync is often fast enough. If it is, the marginal gain from infrastructure-layer reconciliation may not justify the setup cost.</li>
+<li><strong>How many distinct cloud resources do you manage?</strong> At small counts, per-resource controllers add overhead without much benefit. At large counts, a single control plane reduces the number of places drift can hide.</li>
+<li><strong>Can you test the failure path?</strong> If you cannot simulate a drift event in staging and observe the rollback, you do not know whether self-healing works. This is a prerequisite, not a nice-to-have.</li>
+</ol>
+<h2 id="combining-the-two">Combining the two</h2>
+<p>These tools are not mutually exclusive, and the combination is often more honest than either alone.</p>
+<p>A common arrangement: Argo CD manages the Kubernetes-side resources, including the Crossplane installation itself and the composite resources. Crossplane manages the cloud resources those composites describe. Argo CD's Git history then provides the audit trail for infrastructure changes, and Crossplane's controllers provide the reconciliation for resources that do not live in the cluster.</p>
+<p>The tradeoff is that a failure can now originate in two control planes. When debugging, the first question becomes "which controller last touched this object?" — and the answer is in the <code>managedFields</code> of the object and in the <code>status.conditions</code> of the composite. Teams that adopt both should decide up front which system owns which class of resource, and write that boundary down. Ambiguous ownership is the failure mode that the combination introduces.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Does Argo CD roll back automatically when health degrades?</strong>
+Not by default. <code>selfHeal: true</code> re-applies desired state; it does not revert to an earlier revision. Automatic rollback requires either a separate controller that watches health and rewrites the desired revision, or an Argo Rollouts-style progressive delivery setup. This distinction is the most common misunderstanding about Argo CD self-healing.</p>
+<p><strong>How often does Crossplane reconcile?</strong>
+The interval is configurable per controller and per provider. There is no single default that applies to every resource. Check the provider's documentation and the controller's flags for the version you are running rather than assuming a fixed number.</p>
+<p><strong>Can Argo CD manage cloud resources directly?</strong>
+It can apply any Kubernetes manifest, including Crossplane custom resources. That is the combination described above: Argo CD delivers the manifest, and Crossplane's controllers do the cloud API work. Argo CD itself does not call cloud provider APIs.</p>
+<p><strong>What happens when the desired state is genuinely impossible?</strong>
+Both controllers will retry, log errors, and eventually back off. The resource stays in a failed condition. Someone has to change the desired state. Self-healing does not mean "always converges" — it means "converges when the correction is expressible as an API call the provider accepts."</p>
+<p><strong>Is one of these faster?</strong>
+Detection latency depends on the controller's reconcile interval, the workload's health probe configuration, and the provider API's consistency guarantees. It is not a fixed property of either tool. Measure it on your own stack with the four-timestamp procedure above.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one non-production resource that a controller currently manages. Note its current health or readiness condition. Change one mutable field out of band — through the provider console or <code>kubectl edit</code> — and start a timer. Poll the condition every five seconds and write down when it flips to not-ready and when it flips back. That single measurement tells you more about your pipeline's real detection latency than any comparison table, and it takes less time than reading one more evaluation.</p>
                 
                 
             </div>

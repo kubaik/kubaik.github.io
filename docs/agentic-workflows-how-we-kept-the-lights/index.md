@@ -1,62 +1,42 @@
-# Agentic workflows: how we kept the lights…
+# Observability for Long-Running LLM Agent Workflows
 
-observability stack looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke.
+Agentic workflows break the assumptions that most observability stacks are built on. Request/response dashboards report CPU, memory and 5xx rates, but they say nothing about agent state, tool-call latency, retry storms, or how deep the queue feeding the agents has grown. When an agent fleet stalls, the CPU graph often looks normal while every correlation query returns nonsense.
 
-## Why I wrote this (the problem I kept hitting)
+This article walks through a reference stack for instrumenting long-running LLM agents: a Rust agent that emits structured events, a log-shipping sidecar with a bounded buffer, a small metrics service that exposes queue depth and agent lifecycle counters, and Prometheus plus Grafana on top. It ends with the failure modes that bite in practice and a checklist for deciding what to sample.
 
-In late 2026 our agentic workflow service grew from 400 to 4,800 parallel LLM agents in a single region. One Tuesday at 03:17 the p99 latency climbed from 420 ms to 12.4 s and stayed there for 11 minutes. When the alert fired I ran `kubectl logs` on every pod and hit the same wall: logs were buffered for 30 s before they flushed, so all timestamps were off by exactly that window. That made every correlation query return nonsense. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+## The three properties that matter
 
-We were already shipping Prometheus + Grafana dashboards built for traditional request/response traffic. Those dashboards gave us CPU, memory, and 5xx rates; they told us nothing about agent state, tool calls, or retries. The agentic layer started dropping messages because the underlying Redis queue had grown to 320 k messages and the blocking pop timeout was still the default 0 ms. With no visibility into queue depth, the system simply queued forever and agents timed out.
+Any observability stack for agentic workloads needs three things before it needs anything else:
 
-The turning point came when we noticed the same symptom in Manila and Cape Town: every agent that ran longer than 90 s disappeared from the dashboard because its heartbeat fell into a 5-minute scrape interval. That 5-minute scrape cadence was the default in our Helm chart; it had been fine for cron jobs but was death for stateful agents. By the time we lowered it to 30 s the queue depth had already grown to 480 k. We burned 1.3 request-seconds per agent per 30-second scrape window just on scraping overhead. That’s 21 % of our CPU budget on a cluster that was already at 89 % utilization.
+1. **Millisecond-resolution event timestamps that survive log buffering.** Agent steps are short and interleaved; second-resolution timestamps make causal ordering impossible to reconstruct.
+2. **Real-time queue depth and agent lifecycle counters.** Agents that block on a queue look healthy at the CPU level. Queue depth is the signal that actually predicts timeouts.
+3. **Sampling that does not perturb the agent runtime.** Instrumentation that adds blocking I/O to the hot path changes the behavior you are trying to measure.
 
-I settled on three non-negotiables for any observability stack in agentic workloads:
+Traces, logs and metrics are all built on top of those three. Get them wrong and no dashboard will save you.
 
-1. millisecond-level event timestamps that survive log buffering
-2. real-time queue depth and agent lifecycle counters
-3. zero overhead sampling that does not perturb the agent runtime
+## Reference architecture
 
-Everything else — traces, logs, metrics — had to be built on top of those three.
+The stack described here runs on a single `t3.large` instance (2 vCPU, 8 GB) with Ubuntu 24.04 LTS and Docker Compose. The only external dependency is a managed search service for log storage; the same shape works with a self-hosted OpenSearch cluster or any log backend that accepts JSON documents.
 
-## Prerequisites and what you'll build
+Components:
 
-You will end up with a stack that works on a single t3.large EC2 instance (2 vCPU, 8 GB) running Ubuntu 24.04 LTS and Docker Compose. The only external dependency is AWS OpenSearch Serverless, which costs about $18 / month for 30 GB ingest and 100 GB storage at 2026 prices. You can run the entire stack locally with `docker compose up --scale agent=0` for testing.
+- A Rust agent container (Tokio async runtime) that simulates an LLM agent calling a tool and emitting structured events to stdout.
+- A Node sidecar that tails the agent's stdout, enriches events with a trace ID, and pushes them to the search backend through a pipeline processor.
+- Prometheus and Grafana on the same Compose network, scraping the metrics service.
+- A small Python service exposing `/metrics` and `/event` so Prometheus can scrape agent state without touching the agents themselves.
 
-What you will build:
+Pin your versions explicitly. Floating tags are the most common cause of "it worked yesterday" in this kind of stack.
 
-- A Rust agent container (built on `tokio 1.40`) that simulates an LLM agent calling a tool and emitting events to stdout.
-- A Node 20 LTS sidecar (`node:20-alpine`) that tail-logs, enriches events with a trace ID, and pushes them to OpenSearch via the Data Prepper 2.7 pipeline.
-- Prometheus 3.0 and Grafana 11.4 running in the same Compose network, scraping the sidecar on port 9090.
-- A tiny Python 3.12 service that exposes `/metrics` and `/depth` endpoints so Prometheus can scrape agent state without touching the agents themselves.
+## Step 1 — environment setup
 
-Tool versions pinned so you can copy-paste:
-- Rust 1.80 nightly (stable channel)
-- Node 20.13.1 LTS (alpine)
-- Python 3.12.4
-- Prometheus 3.0.0-rc.0
-- Grafana 11.4.0
-- OpenSearch 2.11.1
-- Data Prepper 2.7.0
-
-Gotcha I only discovered after two weeks: Data Prepper 2.7 does not support ARM64 containers in the official image. We had to switch to the multi-arch image `opensearchproject/data-prepper:2.7.0-arm64` running on an `a1.large` Graviton instance; otherwise the pipeline would OOM on every log line exceeding 16 kB.
-
-## Step 1 — set up the environment
-
-1. Spin up a fresh Ubuntu 24.04 LTS VM in your region.
+1. Provision a fresh Ubuntu 24.04 LTS VM and install Docker.
    ```bash
    sudo apt update && sudo apt install -y docker.io docker-compose-plugin
    sudo usermod -aG docker $USER
    newgrp docker  # refresh group membership without logout
    ```
 
-2. Clone the starter repo and switch to the branch for this article.
-   ```bash
-   git clone https://github.com/your-org/agent-obs-stack.git
-   cd agent-obs-stack
-   git checkout agent-obs-2026
-   ```
-
-3. Create the `.env` file with your AWS credentials and OpenSearch endpoint.
+2. Create the project directory and the `.env` file with your search endpoint and credentials.
    ```env
    OPENSEARCH_ENDPOINT=https://my-domain.us-east-1.aoss.amazonaws.com
    AWS_ACCESS_KEY_ID=AKIAXXXXXXXXXXXXXXXX
@@ -64,32 +44,34 @@ Gotcha I only discovered after two weeks: Data Prepper 2.7 does not support ARM6
    REGION=us-east-1
    ```
 
-4. Start the stack in detached mode.
+3. Bring the stack up in detached mode.
    ```bash
    docker compose up -d --build
    ```
 
-5. Tail the sidecar logs to confirm events are flowing.
+4. Tail the sidecar logs to confirm events are flowing.
    ```bash
    docker compose logs -f sidecar
    ```
-   You should see lines like:
+   Expected output resembles:
    ```
    2026-05-14T12:34:56.789Z agent=agent-1 trace=7f3a… event=tool_called tool=search duration_ms=142
    ```
 
-6. Open Grafana at http://localhost:3000 (user: admin, password: agentobs2026!) and import dashboard ID 19464 (OpenSearch Logs 2026) from the community library. The dashboard will immediately show a red panel: “Trace ID correlation missing”. That’s expected; we fix it in Step 4.
+5. Open Grafana at `http://localhost:3000` and add the search backend as a datasource. A "trace ID correlation missing" panel is expected at this stage; the trace ID is wired up in Step 2.
 
-Hard-to-reverse decisions you will make today:
+### Decisions that are hard to reverse
 
-- Storage class in OpenSearch Serverless (we picked `trace-analytics` at 200 GB, which costs $1.50 / GB-month). Once data lands you cannot shrink the class without re-indexing.
-- Sampling rate: we set it to 100 % for events under 500 ms and 10 % above. Lowering the rate later will lose events permanently.
+Two choices in this setup are expensive to change later:
 
-## Step 2 — core implementation
+- **Storage class and index size in the search backend.** Once data lands, changing the storage class or shrinking an index typically requires re-indexing. Pick the class based on your retention requirement and expected daily ingest, and confirm the per-GB-month price for your region before you commit.
+- **Sampling rate.** Dropping events at ingest loses them permanently. If you later decide you needed the high-latency tails you sampled away, there is no way to recover them. Start conservative: sample only what you have measured you can afford to lose.
 
-Let’s wire the Rust agent so it emits structured events every time it calls a tool. We’ll use the `tracing` crate because it gives us millisecond-precision timestamps and automatic log correlation IDs.
+## Step 2 — the agent side: structured events
 
-1. In `agent/src/main.rs` add the following dependencies to `Cargo.toml`.
+The agent emits one structured event per tool call. The `tracing` crate is a good fit because it gives millisecond-precision timestamps and automatic span correlation IDs.
+
+1. Add dependencies to `agent/Cargo.toml`.
    ```toml
    [dependencies]
    tokio = { version = "1.40", features = ["full"] }
@@ -99,14 +81,14 @@ Let’s wire the Rust agent so it emits structured events every time it calls a 
    reqwest = { version = "0.11", features = ["json"] }
    ```
 
-2. Replace the default `main.rs` with this skeleton.
+2. Replace `agent/src/main.rs` with this skeleton.
    ```rust
    use tracing::{info, instrument};
    use std::time::Instant;
-   
+
    #[tokio::main]
    async fn main() {
-       // Initialize tracing with millisecond precision and UTC timestamps
+       // Initialize tracing with JSON output and no ANSI escapes
        tracing_subscriber::fmt()
            .json()
            .with_target(false)
@@ -121,15 +103,13 @@ Let’s wire the Rust agent so it emits structured events every time it calls a 
        }
    }
 
-   #[instrument(skip_all, fields(trace_id, agent_id = "agent-1")])
+   #[instrument(skip_all, fields(trace_id, agent_id = "agent-1"))]
    async fn agent_step() {
        let start = Instant::now();
-       
-       // Simulate tool call
+
        let tool_result = call_tool("search", "kubernetes agentic latency").await;
        let duration = start.elapsed().as_millis();
-       
-       // Emit structured event
+
        info!(
            event = "tool_called",
            tool = "search",
@@ -147,28 +127,22 @@ Let’s wire the Rust agent so it emits structured events every time it calls a 
    }
    ```
 
-3. Build and push the agent image.
+3. Build the agent image and scale to 10 replicas.
    ```bash
    docker compose build agent
-   docker compose push agent
-   ```
-
-4. Scale the agents to 10 replicas.
-   ```bash
    docker compose up -d --scale agent=10
    ```
 
-5. Verify the events in OpenSearch.
+4. Verify events landed in the search backend.
    ```bash
-   aws opensearch start-service --domain-name my-domain
-   curl -XGET "https://my-domain.us-east-1.aoss.amazonaws.com/logs-agent-*/_search?pretty" -H 'Content-Type: application/json' -d'
+   curl -XGET "$OPENSEARCH_ENDPOINT/logs-agent-*/_search?pretty" -H 'Content-Type: application/json' -d'
    {
      "size": 5,
      "query": { "match_all": {} },
      "sort": { "@timestamp": { "order": "desc" } }
    }'
    ```
-   You should see entries like:
+   A representative document:
    ```json
    {
      "@timestamp": "2026-05-14T12:35:01.123Z",
@@ -180,96 +154,95 @@ Let’s wire the Rust agent so it emits structured events every time it calls a 
    }
    ```
 
-Key design choices and why they matter:
+### Why these design choices
 
-- We use `tracing` instead of `log` because it automatically injects a `trace_id` into every span. Without that, correlating events across agents is impossible.
-- We emit JSON so Data Prepper can parse without regex, saving ~40 % CPU on ingestion.
-- We set the log level to INFO so debug traces don’t swamp OpenSearch; we can raise it later if we need more detail.
+- `tracing` is used instead of `log` because it injects a span ID into every event automatically. Without that, correlating events across agents requires manual plumbing that most teams never finish.
+- Events are emitted as JSON so the ingestion pipeline can parse them without regex. Regex parsing at ingest is a common source of CPU cost and silent parse failures.
+- The log level is set to INFO. Debug-level spans on a busy agent fleet will overwhelm any backend; raise the level per-agent when you need detail, not globally.
 
-The logging format we settled on after two weeks of trial:
+### The event schema
 
 | Field        | Type     | Example value            | Why it matters                          |
 |--------------|----------|--------------------------|-----------------------------------------|
-| @timestamp   | ISO8601  | 2026-05-14T12:35:01.123Z | Survives log rotation and buffering     |
-| trace_id     | UUID     | 7f3a1b4c                 | Correlates agent steps across services  |
-| agent_id     | string   | agent-5                  | Identifies which agent produced the log |
-| event        | string   | tool_called              | Enables filtering in OpenSearch         |
-| tool         | string   | search                   | Helps debug tool-specific issues        |
-| duration_ms  | integer  | 142                      | Reveals performance regressions         |
+| `@timestamp` | ISO8601  | 2026-05-14T12:35:01.123Z | Preserves ordering across buffering     |
+| `trace_id`   | UUID     | 7f3a1b4c                 | Correlates agent steps across services  |
+| `agent_id`   | string   | agent-5                  | Identifies which agent produced the log |
+| `event`      | string   | tool_called              | Enables filtering in the backend        |
+| `tool`       | string   | search                   | Helps debug tool-specific issues        |
+| `duration_ms`| integer  | 142                      | Reveals performance regressions         |
 
-If you skip the `trace_id` you will waste days like I did trying to correlate logs that are 30 s out of sync.
+If you skip `trace_id`, expect to spend days correlating logs that are tens of seconds out of sync. It is the single field that pays for itself fastest.
 
-## Step 3 — handle edge cases and errors
+## Step 3 — the sidecar: bounded buffering and edge cases
 
-Edge cases we only caught after agents started failing:
+The sidecar is where most of the operational difficulty lives. Three failure modes show up repeatedly:
 
-- Agent restarts caused the sidecar to lose the last buffered log line. We now tail `/proc/1/fd/1` instead of relying on Docker’s stdout redirection.
-- When the OpenSearch endpoint is unreachable the sidecar would OOM buffering events. We added a 100-line memory-bound in-memory queue before pushing to the pipeline.
-- Tool calls occasionally returned >16 kB payloads, which Data Prepper 2.7 rejected with `illegal_argument_exception`. We truncate payloads at 12 kB and emit a separate `payload_truncated` event.
+- **Agent restarts lose the last buffered line.** Tailing the container's stdout file descriptor directly avoids the gap that Docker's log driver can introduce.
+- **An unreachable search backend causes OOM.** Without a bounded queue, the sidecar accumulates events until the container is killed. A fixed-size in-memory queue with backpressure is the fix.
+- **Oversized payloads are rejected by the pipeline.** Tool results can exceed the pipeline's per-record limit. Truncate at a known threshold and emit a separate event so the truncation is visible.
 
-Let’s add those fixes one by one.
-
-1. Replace the sidecar (`sidecar/index.js`) with the following.
+1. Replace `sidecar/index.js` with a version that handles all three.
    ```javascript
-   const { createReadStream } = require('fs');
    const { Tail } = require('tail');
-   const AWS = require('aws-sdk');
-   const { DataPrepperClient, PutPipelineRequest } = require('@aws-sdk/client-data-prepper');
-   
-   const client = new DataPrepperClient({ region: process.env.REGION });
-   const pipelineName = 'logs-pipeline';
-   
-   // Memory-bound queue (100 events max)
+   const { Client } = require('@opensearch-project/opensearch');
+
+   const client = new Client({ node: process.env.OPENSEARCH_ENDPOINT });
+   const INDEX = 'logs-agent';
+
+   // Bounded in-memory queue: drop oldest when full to protect the process
+   const MAX_QUEUE = 100;
    const queue = [];
    let processing = false;
 
-   // Tail the container’s stdout
+   // Tail the container's stdout directly
    const tail = new Tail('/proc/1/fd/1', { fromBeginning: false, follow: true });
-   
+
    tail.on('line', (line) => {
      try {
        const obj = JSON.parse(line);
-       obj['@timestamp'] = new Date().toISOString(); // overwrite to millisecond precision
+       obj['@timestamp'] = new Date().toISOString();
+       if (queue.length >= MAX_QUEUE) {
+         queue.shift(); // drop oldest; count this in a metric you actually monitor
+       }
        queue.push(obj);
-       if (queue.length >= 100 && !processing) flush();
+       if (!processing) flush();
      } catch (e) {
        console.error('Parse error', e);
      }
    });
 
    async function flush() {
-     if (queue.length === 0) return;
      processing = true;
-     const batch = queue.splice(0, 100);
-     try {
-       await client.send(new PutPipelineRequest({
-         pipelineName,
-         records: batch.map(r => ({ data: JSON.stringify(r) }))
-       }));
-     } catch (err) {
-       console.error('DataPrepper push failed', err);
-       // Re-queue on failure
-       queue.push(...batch);
-     } finally {
-       processing = false;
-       if (queue.length > 0) setImmediate(flush);
+     while (queue.length > 0) {
+       const batch = queue.splice(0, 100);
+       try {
+         await client.bulk({
+           body: batch.flatMap((r) => [{ index: { _index: INDEX } }, r]),
+         });
+       } catch (err) {
+         console.error('Bulk push failed', err);
+         // Re-queue on failure, respecting the bound
+         queue.unshift(...batch);
+         while (queue.length > MAX_QUEUE) queue.pop();
+         break;
+       }
      }
+     processing = false;
    }
-   
-   // Add graceful shutdown
-   process.on('SIGTERM', () => {
+
+   process.on('SIGTERM', async () => {
      tail.unwatch();
-     if (queue.length > 0) flush().finally(() => process.exit(0));
-     else process.exit(0);
+     await flush();
+     process.exit(0);
    });
    ```
 
 2. Install dependencies.
    ```bash
-   cd sidecar && npm install @aws-sdk/client-data-prepper tail@3.0.0
+   cd sidecar && npm install @opensearch-project/opensearch tail
    ```
 
-3. Update `docker-compose.yml` to mount the container’s stdout.
+3. Mount the container's stdout in `docker-compose.yml` so the sidecar can tail it.
    ```yaml
    services:
      sidecar:
@@ -277,26 +250,26 @@ Let’s add those fixes one by one.
        volumes:
          - /proc/1/fd/1:/proc/1/fd/1:ro
        environment:
-         - REGION=us-east-1
+         - OPENSEARCH_ENDPOINT=${OPENSEARCH_ENDPOINT}
+         - REGION=${REGION}
        depends_on:
          - agent
-         - opensearch-proxy
    ```
 
-4. Add error handling for oversized payloads in the agent.
-   In `agent/src/main.rs` replace the `call_tool` function:
+4. Add payload truncation in the agent. Replace `call_tool` in `agent/src/main.rs`.
    ```rust
    async fn call_tool(tool: &str, query: &str) -> String {
        tokio::time::sleep(std::time::Duration::from_millis(120)).await;
        let result = format!("{}: results for '{}'", tool, query);
-       if result.len() > 12_000 {
+       const MAX_LEN: usize = 12_000;
+       if result.len() > MAX_LEN {
            info!(
                event = "payload_truncated",
                original_len = result.len(),
-               truncated_len = 12_000,
+               truncated_len = MAX_LEN,
                "payload too large"
            );
-           result.chars().take(12_000).collect()
+           result.chars().take(MAX_LEN).collect()
        } else {
            result
        }
@@ -308,35 +281,33 @@ Let’s add those fixes one by one.
    docker compose down && docker compose up -d --build
    ```
 
-Verification commands:
+### Verifying the edge cases
 
-- Kill an agent container and watch the sidecar reconnect within 2 s.
-- Simulate an OpenSearch outage by setting `OPENSEARCH_ENDPOINT=http://192.0.2.1:9200`; the sidecar should buffer and survive for ~25 s without OOM.
-- Push a 16 kB payload; confirm you see a `payload_truncated` event in Grafana.
+- Kill an agent container and confirm the sidecar reconnects within a couple of seconds.
+- Point `OPENSEARCH_ENDPOINT` at an unroutable address (for example `http://192.0.2.1:9200`) and confirm the sidecar buffers without OOM. Watch RSS with `docker stats`.
+- Push a payload larger than the truncation threshold and confirm a `payload_truncated` event appears in the backend.
 
-The hardest-to-reverse decision here is the 100-line in-memory queue: if you raise it above ~10 k lines you risk OOM on a t3.large instance. Measure first, then tune.
+The queue size is the hardest value to tune. A `t3.large` has 8 GB of RAM shared with the agent and metrics containers; a queue of 100 small JSON events is trivial, but 10,000 events of a few kilobytes each will not fit. Measure RSS under load before raising the bound.
 
-## Step 4 — add observability and tests
+## Step 4 — queue depth, latency, and alerts
 
-We now have logs, but we still cannot answer the questions agents care about:
+Logs alone cannot answer the questions that matter during an incident:
 
 - Which agents are stuck?
-- How deep is the Redis queue feeding the agents?
+- How deep is the queue feeding the agents?
 - What is the p99 latency of tool calls?
 
-Let’s add Prometheus metrics and a Grafana dashboard.
+A small metrics service answers all three without instrumenting the agents directly.
 
-1. Create `metrics/main.py` using FastAPI 0.115 and Prometheus client 0.21.
+1. Create `metrics/main.py` using FastAPI and the Prometheus client.
    ```python
    from fastapi import FastAPI
    from prometheus_client import Counter, Gauge, Histogram, generate_latest, CONTENT_TYPE_LATEST
    from fastapi.responses import Response
    import redis.asyncio as redis
-   import asyncio
-   
+
    app = FastAPI()
-   
-   # Metrics
+
    AGENT_STEPS = Counter(
        'agent_steps_total',
        'Total agent steps completed',
@@ -350,12 +321,11 @@ Let’s add Prometheus metrics and a Grafana dashboard.
    )
    AGENT_QUEUE_DEPTH = Gauge(
        'agent_queue_depth',
-       'Current Redis list length for agent queue'
+       'Current queue length for agent work items'
    )
-   
-   # Initialize Redis client
+
    redis_client = redis.Redis(host='redis', port=6379, decode_responses=True)
-   
+
    @app.get('/metrics')
    async def metrics():
        AGENT_QUEUE_DEPTH.set(await redis_client.llen('agent_queue'))
@@ -372,7 +342,7 @@ Let’s add Prometheus metrics and a Grafana dashboard.
        return {'status': 'ok'}
    ```
 
-2. Add a tiny Python requirements file.
+2. Pin the Python dependencies in `metrics/requirements.txt`.
    ```txt
    fastapi==0.115.0
    prometheus-client==0.21.0
@@ -380,11 +350,10 @@ Let’s add Prometheus metrics and a Grafana dashboard.
    uvicorn==0.30.1
    ```
 
-3. Extend the Rust agent to send events to `/event`.
-   In `agent/src/main.rs` add a new function and call it after each tool call.
+3. Have the agent post events to the metrics service. In `agent/src/main.rs`:
    ```rust
    use reqwest::Client;
-   
+
    async fn send_event(client: &Client, body: serde_json::Value) -> Result<(), reqwest::Error> {
        client
            .post("http://metrics:8000/event")
@@ -395,13 +364,12 @@ Let’s add Prometheus metrics and a Grafana dashboard.
    }
    ```
 
-4. Start the metrics service.
+4. Add the metrics service to Compose and start it.
    ```bash
    docker compose up -d metrics
    ```
 
-5. Update Prometheus to scrape the metrics endpoint every 15 s.
-   In `prometheus.yml`:
+5. Configure Prometheus to scrape it every 15 seconds.
    ```yaml
    scrape_configs:
      - job_name: 'metrics'
@@ -410,13 +378,7 @@ Let’s add Prometheus metrics and a Grafana dashboard.
          - targets: ['metrics:8000']
    ```
 
-6. Import dashboard ID 19465 (Agentic Workflows 2026) into Grafana. You should see:
-   - A gauge for queue depth (should be 0 if agents keep up)
-   - A heatmap for tool latency percentiles (p50, p95, p99)
-   - A counter for agent steps per agent
-
-7. Add an alert rule for queue depth > 5000.
-   In `prometheus.yml`:
+6. Add an alert rule for sustained queue growth.
    ```yaml
    - alert: AgentQueueBackedUp
      expr: agent_queue_depth > 5000
@@ -428,70 +390,55 @@ Let’s add Prometheus metrics and a Grafana dashboard.
        description: "Queue depth is {{ $value }}; agents may time out."
    ```
 
-Gotcha: the Prometheus client in Python 0.21 leaks file descriptors on every scrape. We pinned `prometheus-client==0.21.0` and limited `/metrics` to 15 s scrape cadence; anything shorter causes the sidecar to crash with “too many open files”. I only caught that after Grafana started returning 502 errors.
+### How to measure whether any of this is helping
 
-## Real results from running this
+Do not trust a vendor's or a blog post's latency numbers. Measure your own. The instrumentation above gives you everything you need:
 
-We rolled this stack out to Manila, Cape Town, and Tallinn in January 2026. Here are the numbers that mattered:
+- **Detection time.** Record the wall-clock time when a stuck agent first appears and when the alert fires. Compare before and after the queue-depth metric is live. The difference is your detection improvement.
+- **Tool latency percentiles.** The histogram buckets above give you p50, p95 and p99 directly from Prometheus. Query `histogram_quantile(0.99, rate(agent_tool_latency_seconds_bucket[5m]))` and compare against a baseline captured before the change.
+- **Ingest cost.** Watch CPU on the ingestion pipeline and bytes-per-day in the backend. Compare JSON ingestion against a regex-based alternative by running both on the same event stream for an hour.
+- **Queue depth under load.** Load-test the agent fleet and graph queue depth over time. If it grows monotonically, the consumers are slower than the producers and no amount of dashboarding will fix that.
 
-| Metric                          | Before (Prom+Grafana only) | After (full stack) | Improvement |
-|---------------------------------|-----------------------------|--------------------|-------------|
-| Time to detect stuck agent      | 5–15 min                    | 25–45 s            | 90 % faster |
-| p99 tool call latency           | 4.2 s                       | 1.1 s              | 74 % lower  |
-| OpenSearch ingest CPU %         | 45 %                        | 18 %               | 60 % lower  |
-| MTTR for queue backups          | 120 min                     | 8 min              | 93 % faster |
+The point of measuring is to establish a baseline you can defend in a postmortem, not to produce a table.
 
-- The queue depth alert fired 17 times in the first month and never again after we lowered the agent count to match queue capacity.
-- The Grafana dashboard’s “Stuck agents” panel now correlates `trace_id` across 4,800 agents in <1 s; previously it required a custom script and 6 minutes of manual parsing.
-- Cost: $18 / month for OpenSearch Serverless plus $3 / month for the t3.large instance running Prometheus + Grafana + metrics service = $21 / month total. That’s 0.4 % of our previous ELK cluster spend.
+## Failure modes to plan for
 
-I also learned that humans ignore alerts that fire more than twice a week. After we tuned the alert threshold to p99 latency > 1.5 s the team stopped muting Slack notifications.
+- **Timestamps rewritten by the sidecar.** Setting `@timestamp` at ingestion time replaces the agent's own timestamp. That is fine if the agent's clock is unreliable and the transport is fast, but it destroys ordering if the sidecar batches. Decide which timestamp is authoritative and document it.
+- **Unbounded queues.** Any queue without a maximum will eventually exhaust memory. Drop oldest, drop newest, or block — but choose deliberately and emit a counter for drops.
+- **Silent parse failures.** A single malformed line should not stop the pipeline. Log parse errors with the offending line and a counter, not just to stderr.
+- **Alerts that fire constantly.** An alert that fires more than a couple of times a week gets muted. Tune the threshold against real traffic before you page anyone.
+- **Sampling away the tail.** Sampling high-latency events is exactly the wrong thing to do when latency is the symptom. Sample the boring events, keep the tails.
 
-## Common questions and variations
+## A decision checklist
+
+Before you ship any agent observability stack, be able to answer these:
+
+- What is the authoritative timestamp, and where is it set?
+- What is the maximum size of every in-memory buffer, and what happens when it fills?
+- Which metric tells you an agent is stuck, and how long after it gets stuck does that metric change?
+- What is your sampling policy, and what evidence justifies it?
+- What does a payload that exceeds the pipeline's limit do — truncate, drop, or fail?
+- Which alert would page you at 3 a.m., and how often has it fired in the last week?
+- What is the per-GB cost of your storage class, and how many days of retention does your budget buy?
+
+## FAQ
 
 **How do I run this on Kubernetes instead of Docker Compose?**
 
-You can lift the entire stack into Kubernetes by creating three Deployments: `agent`, `sidecar`, and `metrics`. Use a sidecar container in the agent pod that tails `/proc/1/fd/1` so you keep the same zero-copy log transfer. The Prometheus scrape config becomes a ServiceMonitor. The only hard-to-reverse decision is storage class in OpenSearch Serverless; once you choose `trace-analytics` you cannot shrink the index later without re-indexing.
+Split the stack into three Deployments: `agent`, `sidecar`, and `metrics`. Run the sidecar as a sidecar container in the agent pod so it can tail the same file descriptor. Replace the Prometheus static config with a ServiceMonitor. The storage-class decision is the same and is still the hard-to-reverse one.
 
-**Why not use Loki instead of OpenSearch?**
+**Why not use a log-only backend instead of a search backend?**
 
-Loki 3.0 is fast, but it does not support cross-cluster replication at 2026. We run agents in three regions, so we need a single pane of glass. Loki also lacks native tracing correlation until you bolt on Tempo, which adds 12 % ingest overhead. With OpenSearch we get logs, traces, and metrics in one place and the ingest cost is still under $18 / month.
-
-**What happens if Data Prepper 2.7 drops ARM64 support?**
-
-We pinned the arm64 image explicitly (`opensearchproject/data-prepper:2.7.0-arm64`). If the maintainers drop it we will switch to a custom build based on the open-source repo. The pipeline configuration is versioned in Git, so the migration is a one-line image tag change.
+A log-only backend is often cheaper and faster for pure log search, but it usually lacks native trace correlation. If you need logs, traces and metrics in one query surface, a search backend is simpler than stitching two systems together. If you only need logs, the cheaper option wins.
 
 **Can I sample events to reduce cost?**
 
-Yes. In Data Prepper set `sampleRate: 0.1` for events over 1 s duration. You will lose 10 % of high-latency events but save 45 % on ingest. We validated that the p99 latency signal remains within 3 % error when sampling 10 % of events.
+Yes, but sample deliberately. Sampling high-latency events removes the evidence you need most during an incident. A common pattern is to keep all error and slow events and sample successful fast ones. Whatever you choose, record the sampling rate as a field on every event so downstream queries can correct for it.
 
-## Where to go from here
+**What if the ingestion pipeline drops support for my architecture?**
 
-Shut down the Manila cluster tomorrow and run this stack on a single `t4g.nano` instance in Cape Town. The only changes you need are:
+Pin the image tag explicitly and keep the pipeline configuration in version control. A migration is then a one-line image tag change plus a rebuild. Do not rely on floating tags for anything in the ingest path.
 
-- Rebuild the Rust agent with `target aarch64-unknown-linux-gnu`
-- Change the OpenSearch endpoint to the Cape Town domain
-- Update the Grafana datasource URL
+## What to do in the next 30 minutes
 
-After 24 hours compare the p99 latency and queue depth graphs in Grafana. If the p99 is still under 1.5 s and the queue depth never peaks above 1,000 your stack is ready for prime time.
-
-Immediately open Grafana, go to Dashboard 19465, and click the “Stuck agents” panel. If it shows zero agents you are done. If it shows any agents, run `docker compose logs sidecar | grep -i error` and fix the first error line you see.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** July 17, 2026
+Open your current agent service, pick one tool call, and add a single structured log line that includes `trace_id`, `tool`, `duration_ms`, and an ISO-8601 timestamp with milliseconds. Deploy it to one replica. Then query your backend for that event and confirm the timestamp survived the round trip. If it did not, you have found the first thing to fix — and you have found it before an incident, not during one.

@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>7 skills senior engineers need now agents are live - Kubai Kevin</title>
-        <meta name="description" content="Cut API response time 60% with async I/O patterns — the 7 skills senior engineers now need once agents run 24/7 and the exact tuning steps that saved teams…">
+        <meta name="description" content="Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.">
         <meta name="keywords" content="AgentsInProduction, IdempotencyKeys, Redis7.2, Kubernetes, ConnectionPoolTuning, Temporal1.21, Node20Lts, Softwareengineering, K8s">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-05T12:23:25.302901">
-        <meta property="article:modified_time" content="2026-09-16T07:36:57.713442+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:26:07.225730+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="7 skills senior engineers need now agents are live">
-        <meta property="og:description" content="Cut API response time 60% with async I/O patterns — the 7 skills senior engineers now need once agents run 24/7 and the exact tuning steps that saved teams…">
+        <meta property="og:description" content="Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.">
         <meta property="og:url" content="https://kubaik.github.io/7-skills-senior-engineers-need-now-agents-are-live/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="7 skills senior engineers need now agents are live">
-        <meta name="twitter:description" content="Cut API response time 60% with async I/O patterns — the 7 skills senior engineers now need once agents run 24/7 and the exact tuning steps that saved teams…">
+        <meta name="twitter:description" content="Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/7-skills-senior-engineers-need-now-agents-are-live.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/7-skills-senior-engineers-need-now-agents-are-live/#article",
       "headline": "7 skills senior engineers need now agents are live",
-      "description": "Cut API response time 60% with async I/O patterns — the 7 skills senior engineers now need once agents run 24/7 and the exact tuning steps that saved teams…",
+      "description": "Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.",
       "datePublished": "2026-07-05T12:23:25+00:00",
-      "dateModified": "2026-09-16T07:36:57+00:00",
-      "wordCount": 1990,
-      "timeRequired": "PT10M",
+      "dateModified": "2026-10-03T11:26:07+00:00",
+      "wordCount": 2840,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">7 skills senior engineers need now agents are live</h1>
                 
-                <p class="post-lead">Cut API response time 60% with async I/O patterns — the 7 skills senior engineers now need once agents run 24/7 and the exact tuning steps that saved teams…</p>
+                <p class="post-lead">Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.</p>
                 
                 
                 <div class="tags">
@@ -261,206 +261,154 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 1990 words
+                        14 min read
+                        &nbsp;·&nbsp; 2840 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-16
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The answers I found online were either wrong or skipped the parts that mattered.</p>
-<h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>In late 2026, our team rolled out a fleet of long-running agents handling customer workflows. We thought we were ready. Then the agents started running for days without restarting, and everything we’d optimized for short-lived processes became liabilities.</p>
-<p>The agent kept one HTTP connection open per user session and never closed them, eventually hitting the OS file descriptor limit. This post is what I wished I’d had then.</p>
-<p>Some teams had a single senior engineer on call who could triage in under 10 minutes; others had war rooms that lasted six hours. The difference wasn’t tooling—it was skills that looked optional before agents became stateful.</p>
-<h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>The teams were based in Lagos, London, Manila, and Montreal, so I got a mix of cloud costs, local regulations, and talent markets.</p>
-<p>The script counted how many minutes elapsed between the first alert and the first meaningful action, and whether the on-call engineer mentioned memory, concurrency, or state consistency. Across 230 incidents, the average diagnosis time for teams strong in these skills was 8 minutes. For others, it was 47 minutes.</p>
-<p>Teams that tuned their async queues and connection pools cut their egress fees by 22% on average because they stopped retrying requests that were already in flight.</p>
-<h2 id="the-skills-that-became-table-stakes-for-senior-engineers-once-agents-were-in-production-the-full-ranked-list">The skills that became table stakes for senior engineers once agents were in production — the full ranked list</h2>
-<ol>
-<li>
-<p><strong>Async I/O patterns beyond async/await</strong>
-   What it does: Lets agents hold thousands of connections open without melting the CPU or leaking memory.
-   Strength: Real-world backpressure and cancellation are easier to implement once you stop treating async as magic.
-   Weakness: Debugging race conditions in callbacks requires a mental model shift most junior engineers haven’t practiced.
-   Best for: Teams running agents that talk to external APIs, databases, or message brokers.</p>
-</li>
-<li>
-<p><strong>Connection pooling with precise timeouts</strong>
-   What it does: Reuses TCP connections to databases or external services without leaking sockets.
-   Strength: Cuts both latency and AWS bills by avoiding new connection setup overhead.
-   Weakness: Wrong timeout values create deadlocks or cascade timeouts under load.
-   Best for: Any agent that opens more than 100 concurrent connections to a single host.</p>
-</li>
-</ol>
-<p>We set PostgreSQL connection pool idle timeout to 30 seconds and max lifetime to 3 minutes in PostgreSQL 16. That cut our connection churn from 1,200 open sockets to 80, and our API p99 latency fell from 340 ms to 110 ms.</p>
-<ol>
-<li><strong>State machine design for long-running processes</strong>
-   What it does: Turns spaghetti async code into a graph of states and transitions you can reason about.
-   Strength: Makes it trivial to resume after a crash or restart.
-   Weakness: Over-engineered state machines add boilerplate for trivial workflows.
-   Best for: Agents that must survive restarts or reconnect to external systems.</li>
-</ol>
-<p>The workflow survived three agent restarts and two database outages without losing progress.</p>
-<ol>
-<li>
-<p><strong>Distributed tracing with baggage propagation</strong>
-   What it does: Carries context across services and async boundaries so you can follow a single request for hours.
-   Strength: Reduces incident time from hours to minutes when the root cause is deep in a chain of callbacks.
-   Weakness: Adds ~5% overhead on high-cardinality traces, and some teams disable it under load.
-   Best for: Agents that call multiple internal microservices or external APIs.</p>
-</li>
-<li>
-<p><strong>Idempotency keys and deduplication at scale</strong>
-   What it does: Prevents duplicate side effects when an agent retries after a crash or network blip.
-   Strength: Saves money and customer trust when agents fire twice.
-   Weakness: Requires a durable store to track keys, which adds latency on every request.
-   Best for: Agents that mutate external systems like payment gateways or CRM platforms.</p>
-</li>
-</ol>
-<p>Our agents now generate a UUIDv7 idempotency key for every external call and store it in Redis 7.2 with a 24-hour TTL. Duplicate requests dropped from 1.8% to 0.02%, and our payment reversal rate fell from 0.4% to 0.003%.</p>
-<ol>
-<li>
-<p><strong>Async queue tuning under backpressure</strong>
-   What it does: Adjusts batch sizes, prefetch counts, and dead-letter routing to keep queues flowing without drowning downstream services.
-   Strength: Prevents thundering herds when agents reconnect after an outage.
-   Weakness: Tuning is empirical and changes with traffic patterns.
-   Best for: Agents that fan out work to queues like Kafka, RabbitMQ, or AWS SQS.</p>
-</li>
-<li>
-<p><strong>Autoscaling hysteresis and graceful degradation</strong>
-   What it does: Prevents agents from thrashing between scale-up and scale-down under variable load.
-   Strength: Cuts cloud costs by avoiding bursty scale events that hammer the database.
-   Weakness: Wrong hysteresis values create oscillating load.
-   Best for: Agents running on Kubernetes or serverless platforms like AWS Lambda with application autoscaling.</p>
-</li>
-</ol>
-<p>We set scale-out delay to 30 seconds and scale-in delay to 300 seconds on our agent fleet. That saved $3,200 per month on AWS EKS and smoothed the load on our Redis cluster.</p>
-<h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
-<p>Async I/O patterns beyond async/await is the clear winner because it underpins every other skill on this list. Without a solid mental model for backpressure, cancellation, and resource cleanup, the rest of the skills become band-aids on a gushing leak.</p>
-<p>I’ve seen teams spend weeks tuning connection pools and state machines, only to discover they’re still leaking sockets because their async callbacks don’t respect cancellation. Once they refactored the callbacks to use Python’s asyncio.shield and asyncio.timeout, the leaks vanished.</p>
-<p>The best way to start is to audit every async function that opens a resource. Replace unconditional await with try/except blocks that call await resource.aclose() in the exception handler. In Node 20 LTS, use the AbortController pattern to propagate cancellation across nested callbacks.</p>
-<h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
-<p><strong>Retry budgets with jitter</strong>
-   Use exponential backoff with jitter to avoid thundering herds during outages. Libraries like tenacity 8.2.3 in Python or resilient-http 2.1.0 in Node let you set a max retry count and jitter percentage.</p>
-<p><strong>Circuit breakers with state snapshots</strong>
-   Implement a circuit breaker that persists state to shared storage so agents can resume the same breaker state after a restart. Netflix’s Hystrix-inspired patterns work, but most teams forget to snapshot the state.</p>
-<p><strong>Resource limits in containers</strong>
-   Set CPU and memory limits in Kubernetes or Docker that match the agent’s expected steady-state usage, not peak load. After capping it at 512 MiB, the agent ran for 14 days without a restart.</p>
-<p><strong>Observability for async contexts</strong>
-   Use structured logging with trace IDs and span IDs so you can follow a single request across coroutines and callbacks. In Go 1.22, the slog package with zap makes this trivial. The key is to attach the trace ID to every log line without littering code with context.Context calls.</p>
-<h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
-<p><strong>Bulkheading every coroutine</strong>
-   I tried wrapping every async function in a separate thread pool to isolate failures. The overhead of context switching and the complexity of managing thread pools outweighed the benefits. In practice, a single misbehaving coroutine brought down the whole agent because the thread pool starved.</p>
-<p><strong>Automatic retry without idempotency</strong>
-   We built a retry middleware that fired on every HTTP 5xx. It looked great in tests but caused duplicate payments when the agent retried after a crash. After switching to idempotency keys, the duplicate rate dropped to near zero, and the retry middleware became safe to use.</p>
-<p><strong>Distributed locks for every state transition</strong>
-   I tried using Redlock for every state machine transition to prevent race conditions. The latency added by lock acquisition and renewal turned a 50 ms workflow into a 400 ms workflow.</p>
-<p><strong>Agent-specific metrics dashboards</strong>
-   I built a Grafana dashboard that showed agent state transitions, queue depths, and memory usage. It was too noisy and didn’t correlate with incidents. A simpler dashboard with p99 latency, error rate, and active agent count caught 92% of incidents.</p>
-<h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
+                <h2 id="why-long-running-agents-break-short-lived-assumptions">Why long-running agents break short-lived assumptions</h2>
+<p>A request-scoped service and a long-running agent look similar in code review and behave nothing alike in production. The service opens a connection, does work, closes the connection, and exits. The agent opens a connection, does work, and keeps the process alive for days or weeks while holding sockets, file descriptors, in-memory queues, and partial workflow state.</p>
+<p>The classic failure mode is a socket or file descriptor leak. An agent opens one HTTP connection per user session and never closes it. Under steady traffic the process reaches the OS file descriptor limit, and every subsequent <code>connect()</code> fails with <code>EMFILE</code>. The confusing part is that CPU and memory look fine right up until the moment nothing works, because leaked descriptors are not visible in a typical CPU or heap dashboard.</p>
+<p>This article covers seven skills that become table stakes for senior engineers once agents run continuously, how to tell whether a team actually has each skill, and where the common traps are. It is organized around failure modes rather than library recommendations, because the libraries change faster than the failure modes do.</p>
+<h2 id="how-to-tell-whether-a-skill-is-actually-present">How to tell whether a skill is actually present</h2>
+<p>Skill checklists are easy to write and hard to verify. A more useful test is to look for observable behavior during incidents and in the codebase.</p>
+<p>Two signals tend to separate teams that have internalized these skills from teams that have read about them:</p>
+<ul>
+<li><strong>Time to first meaningful action after an alert.</strong> This is the interval between the alert firing and the on-call engineer taking an action that changes the system state, as opposed to an action that gathers more information. Instrument it by logging alert timestamps and the first state-changing action (a config change, a restart, a rollback) with a shared trace ID.</li>
+<li><strong>Whether the diagnosis references resources or only symptoms.</strong> An engineer who says "the queue is backing up" is describing a symptom. An engineer who says "the prefetch count is 500 and the consumer is single-threaded, so the queue depth is bounded by consumer throughput" is describing a resource constraint.</li>
+</ul>
+<p>To measure the first signal, add a timestamp to your alert payload, log the first mutating action in the incident channel with the same incident ID, and compute the delta. To measure the second, review incident write-ups and tag each root cause as either a resource constraint (descriptors, connections, memory, concurrency, queue depth) or an external cause (upstream outage, bad deploy, DNS). Over a few months the ratio tells you where to invest training.</p>
+<h2 id="the-seven-skills">The seven skills</h2>
+<h3 id="1-async-io-patterns-beyond-asyncawait">1. Async I/O patterns beyond async/await</h3>
+<p><strong>What it is.</strong> Understanding backpressure, cancellation, and resource cleanup as first-class concerns rather than details the runtime handles automatically.</p>
+<p><strong>Why it matters for agents.</strong> An agent that holds thousands of concurrent connections needs to stop accepting new work when a downstream dependency slows down, and needs to release resources when a caller cancels. <code>async/await</code> gives you the syntax for concurrency but not the policy.</p>
+<p><strong>Failure mode.</strong> A coroutine awaits a downstream call with no timeout and no cancellation path. The caller times out and moves on, but the coroutine keeps running, holding its connection and its slot in the concurrency limit. Over hours, the process accumulates orphaned coroutines that consume descriptors without producing work.</p>
+<p><strong>How to check.</strong> Count in-flight coroutines or tasks and compare against your concurrency limit. If the count grows monotonically while throughput is flat, you have orphans. In Python, <code>asyncio.all_tasks()</code> gives you the live set; in Node, <code>process._getActiveHandles()</code> is a diagnostic, not a stable API, so prefer instrumenting your own task registry.</p>
+<h3 id="2-connection-pooling-with-precise-timeouts">2. Connection pooling with precise timeouts</h3>
+<p><strong>What it is.</strong> Reusing TCP connections to databases and upstream services instead of opening a new one per call, with explicit idle and lifetime bounds.</p>
+<p><strong>Why it matters for agents.</strong> Connection setup is expensive relative to many agent calls, and a long-lived process will accumulate connections unless something forces them to close.</p>
+<p><strong>Failure mode.</strong> Two opposite traps. If the pool's max size is too small, requests queue behind available connections and latency spikes under load. If idle timeout and max lifetime are unset, connections live forever and the upstream eventually closes them from its side, leaving the pool holding dead sockets that fail on first use.</p>
+<p><strong>Documented behavior worth knowing.</strong> PostgreSQL's default <code>idle_in_transaction_session_timeout</code> is 0, meaning disabled. Leaving a transaction open on a pooled connection will hold locks indefinitely unless you set that parameter or your pool enforces it. Check your server's <code>SHOW idle_in_transaction_session_timeout</code> before assuming the database will clean up after you.</p>
+<p><strong>How to measure.</strong> Instrument three numbers: pool wait time (time a request spends waiting for a connection), connection churn (connections opened per minute), and p99 query latency. Churn that scales with request rate means you are not reusing connections. Pool wait time that scales with request rate means the pool is too small.</p>
+<h3 id="3-state-machine-design-for-long-running-processes">3. State machine design for long-running processes</h3>
+<p><strong>What it is.</strong> Modeling a workflow as explicit states and transitions, with each transition persisted, instead of as a long function with nested awaits.</p>
+<p><strong>Why it matters for agents.</strong> A function that runs for hours cannot survive a restart. A state machine can, because the current state is data, not a program counter.</p>
+<p><strong>Failure mode.</strong> The over-engineered version: a state machine framework for a workflow that has three linear steps, adding configuration and indirection without adding resumability that matters. The under-engineered version: a 500-line async function with implicit state encoded in local variables, which loses all progress on restart and cannot be tested in isolation.</p>
+<p><strong>How to check.</strong> Ask what happens if the process is killed between any two operations. If the answer is "it retries from the beginning," the workflow is not a state machine regardless of how the code is structured. If the answer is "it resumes from the last persisted transition," it is.</p>
+<h3 id="4-distributed-tracing-with-context-propagation">4. Distributed tracing with context propagation</h3>
+<p><strong>What it is.</strong> Carrying a trace identifier and correlation metadata across service boundaries and asynchronous handoffs so a single logical request can be followed end to end.</p>
+<p><strong>Why it matters for agents.</strong> A single agent action can fan out into dozens of internal calls over minutes. Without propagation, you have logs from many services and no way to order them.</p>
+<p><strong>Failure mode.</strong> Trace context is propagated across HTTP but dropped at queue boundaries, so the trace ends at the producer and a new one starts at the consumer. The result is two disconnected traces that look unrelated in the UI. The fix is to serialize the context into message headers, which most tracing libraries support but few teams configure by default.</p>
+<p><strong>Cost note.</strong> High-cardinality traces (one trace per request, with many spans) generate significant storage and network volume. Sampling is the usual mitigation: keep all traces for errors and a percentage for successes. Decide the sampling policy before enabling tracing in production, not after the bill arrives.</p>
+<h3 id="5-idempotency-keys-and-deduplication">5. Idempotency keys and deduplication</h3>
+<p><strong>What it is.</strong> Attaching a unique, stable identifier to each logical operation so a retry can be recognized as a retry rather than a new operation.</p>
+<p><strong>Why it matters for agents.</strong> Agents retry. Networks fail, upstreams time out, processes restart mid-operation. Without idempotency, every retry risks a duplicate side effect.</p>
+<p><strong>Failure mode.</strong> The key is generated at the wrong layer. If the retry logic generates a fresh key on each attempt, the downstream sees two distinct operations and processes both. The key must be generated once, at the point the logical operation is created, and reused across every retry of that operation.</p>
+<p><strong>How to check.</strong> Find the code that generates the key and the code that retries. If they are in different layers and the retry layer does not receive the key from the caller, you likely have duplicate side effects under retry. A simple test: force a timeout on an operation that writes to an external system, let the retry run, and count the writes.</p>
+<h3 id="6-async-queue-tuning-under-backpressure">6. Async queue tuning under backpressure</h3>
+<p><strong>What it is.</strong> Adjusting prefetch counts, batch sizes, visibility timeouts, and dead-letter routing so that consumers are not overwhelmed when producers burst.</p>
+<p><strong>Why it matters for agents.</strong> Agents reconnect after outages and tend to resume aggressively. A consumer that reconnects and immediately fetches its maximum prefetch can stampede a downstream service that is still recovering.</p>
+<p><strong>Failure mode.</strong> The prefetch count is set high to maximize throughput in steady state, and the same setting causes a thundering herd during recovery. The queue drains into a downstream that cannot handle the burst, the downstream errors, the messages are redelivered, and the cycle repeats.</p>
+<p><strong>How to measure.</strong> Track queue depth, consumer processing time, and downstream error rate together. If downstream errors rise as queue depth falls, you are draining too fast. Reduce prefetch and confirm that downstream error rate falls even though drain time increases.</p>
+<h3 id="7-autoscaling-hysteresis-and-graceful-degradation">7. Autoscaling hysteresis and graceful degradation</h3>
+<p><strong>What it is.</strong> Deliberately asymmetric scale-out and scale-in behavior, plus a defined degraded mode for when scaling cannot keep up.</p>
+<p><strong>Why it matters for agents.</strong> Agents are often stateful and slow to start. Aggressive scale-in kills instances mid-work; aggressive scale-out multiplies load on shared dependencies like databases.</p>
+<p><strong>Failure mode.</strong> Symmetric scaling with short delays. Load rises, instances scale out, each new instance opens database connections, the database saturates, latency rises, the autoscaler interprets the latency as more load and scales out again. The system oscillates and never stabilizes.</p>
+<p><strong>How to measure.</strong> Log the timestamp and reason for every scale event alongside database connection count and p99 latency. If scale-out events correlate with database saturation rather than with request queue depth, your scaling signal is measuring the wrong thing.</p>
+<h2 id="a-worked-example-diagnosing-a-descriptor-leak">A worked example: diagnosing a descriptor leak</h2>
+<p>Consider an agent that has been running for six days and starts failing to connect to any upstream. CPU is at 15%, heap usage is flat, and the error is <code>EMFILE: too many open files</code>.</p>
+<p>Step 1: confirm the diagnosis. On Linux, <code>ls /proc/&lt;pid&gt;/fd | wc -l</code> gives the current open descriptor count, and <code>cat /proc/&lt;pid&gt;/limits</code> shows the limit. If the count is at or near the limit, the diagnosis is confirmed.</p>
+<p>Step 2: identify what is holding descriptors. <code>ls -l /proc/&lt;pid&gt;/fd | awk '{print $11}' | sort | uniq -c | sort -rn | head</code> groups open descriptors by target. If most of them point at a single upstream host and port, the leak is in the client for that upstream.</p>
+<p>Step 3: find the code path. If the client is a pooled HTTP client, the leak is usually a response body that is never read or closed. Many HTTP clients hold the connection until the body is consumed or explicitly released, and a code path that returns early on a non-200 status without reading the body will leak one connection per call.</p>
+<p>Step 4: fix and verify. Add explicit cleanup on every path, including error paths, and add a metric for open descriptors per upstream. Set an alert at 70% of the limit so the next leak is caught in hours rather than days.</p>
+<p>The general lesson is that descriptor counts belong on the same dashboard as memory and CPU for any long-running process. They are cheap to collect and they fail slowly enough to be caught before an outage.</p>
+<pre><code class="language-python">import asyncio
+import httpx
+
+async def fetch_with_cleanup(client: httpx.AsyncClient, url: str) -&gt; bytes:
+    # Read the body on every path so the connection is released back to the pool.
+    async with client.stream(&quot;GET&quot;, url) as response:
+        if response.status_code != 200:
+            # Still consume the body before returning.
+            await response.aread()
+            raise RuntimeError(f&quot;unexpected status {response.status_code}&quot;)
+        return await response.aread()
+
+async def main() -&gt; None:
+    limits = httpx.Limits(max_connections=100, max_keepalive_connections=20)
+    timeout = httpx.Timeout(connect=5.0, read=30.0, write=30.0, pool=5.0)
+    async with httpx.AsyncClient(limits=limits, timeout=timeout) as client:
+        data = await fetch_with_cleanup(client, &quot;https://example.invalid/data&quot;)
+        print(len(data))
+
+if __name__ == &quot;__main__&quot;:
+    asyncio.run(main())
+</code></pre>
+<p>The two details that matter here are the explicit <code>limits</code> and <code>timeout</code> arguments and the fact that the error path still consumes the response body. Both are easy to omit and both cause the failure described above.</p>
+<h2 id="honorable-mentions">Honorable mentions</h2>
+<p><strong>Retry budgets with jitter.</strong> Exponential backoff without jitter synchronizes retries across clients, producing bursts at regular intervals. Adding random jitter spreads them out. A retry budget caps the total retry volume as a fraction of successful requests, which prevents retries from overwhelming a recovering service.</p>
+<p><strong>Circuit breakers with persisted state.</strong> A circuit breaker that resets on restart is useless for a process that restarts frequently. Persisting breaker state to shared storage lets a new instance inherit the open circuit instead of immediately hammering a failing dependency.</p>
+<p><strong>Container resource limits matched to steady state.</strong> Setting memory limits to peak usage means the limit never triggers and provides no protection. Setting them to steady-state usage means legitimate spikes get killed. The workable approach is to set the limit above steady state with headroom, and set a separate alert at steady state so growth is visible before it becomes fatal.</p>
+<p><strong>Structured logging with correlation IDs.</strong> The value is not the format but the correlation. Every log line emitted while handling a logical operation should carry the same identifier, so logs can be grouped without relying on timestamps.</p>
+<h2 id="approaches-that-look-appealing-and-usually-are-not">Approaches that look appealing and usually are not</h2>
+<p><strong>Isolating every coroutine in its own thread pool.</strong> The intent is fault isolation. The effect is that a single blocking coroutine can exhaust the pool, and the context-switching overhead is paid on every call. Async runtimes already provide concurrency; adding threads on top usually adds failure modes rather than removing them.</p>
+<p><strong>Retry middleware without idempotency.</strong> Retrying on 5xx is correct only if the operation is safe to repeat. Applied to non-idempotent writes, it converts transient errors into duplicate side effects. The middleware is not wrong; deploying it without idempotency keys is.</p>
+<p><strong>Distributed locks on every state transition.</strong> Lock acquisition and renewal add latency to every transition, and the lock service becomes a dependency whose failure stalls the workflow. Locks are appropriate for genuinely contended resources, not as a default guard on all state changes.</p>
+<p><strong>Dashboards with every available metric.</strong> A dashboard that shows twenty metrics makes it harder to spot the one that changed. A small set of leading indicators, such as p99 latency, error rate, active instance count, and open descriptors, catches most incidents and is readable under pressure.</p>
+<h2 id="choosing-where-to-start">Choosing where to start</h2>
 <table>
 <thead>
 <tr>
 <th>Situation</th>
-<th>Top skill to master</th>
-<th>Why</th>
-<th>Starter exercise</th>
+<th>Skill to prioritize</th>
+<th>First measurement to take</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Agents calling external APIs</td>
-<td>Async I/O patterns beyond async/await</td>
-<td>Prevents socket leaks and CPU melt</td>
-<td>Audit every async function that opens a connection</td>
+<td>Async I/O and connection pooling</td>
+<td>Open descriptors per upstream, tracked over time</td>
 </tr>
 <tr>
 <td>Agents mutating external systems</td>
-<td>Idempotency keys and deduplication</td>
-<td>Saves money and customer trust</td>
-<td>Add a UUIDv7 idempotency key to every external call</td>
+<td>Idempotency keys</td>
+<td>Duplicate writes under forced retry</td>
 </tr>
 <tr>
-<td>Agents running on Kubernetes</td>
+<td>Agents on Kubernetes or serverless</td>
 <td>Autoscaling hysteresis</td>
-<td>Cuts cloud costs and smooths load</td>
-<td>Set scale-out delay to 30s and scale-in delay to 300s</td>
+<td>Scale events correlated with database connection count</td>
 </tr>
 <tr>
-<td>Agents talking to queues</td>
-<td>Async queue tuning under backpressure</td>
-<td>Prevents thundering herds</td>
-<td>Reduce prefetch from 500 to 50 and measure downstream errors</td>
+<td>Agents consuming from queues</td>
+<td>Queue tuning under backpressure</td>
+<td>Downstream error rate as a function of queue depth</td>
 </tr>
 <tr>
-<td>Agents with stateful workflows</td>
+<td>Agents with multi-step workflows</td>
 <td>State machine design</td>
-<td>Makes restarts and crashes survivable</td>
-<td>Rewrite a 500-line async loop as a Temporal workflow</td>
+<td>Behavior when the process is killed mid-workflow</td>
 </tr>
 </tbody>
 </table>
-<p>Pick the row that matches your agent’s primary pain point. If you’re bleeding money on AWS bills, start with autoscaling hysteresis. If you’re getting duplicate payments, start with idempotency keys.</p>
-<h2 id="frequently-asked-questions">Frequently asked questions</h2>
-<p><strong>What’s the fastest way to stop my agent from leaking sockets?</strong></p>
-<p>Start by running lsof -p <pid> on Linux to count open sockets. Then wrap every async function that opens a socket in a try/finally block that calls socket.close(). In Python, use a context manager:</p>
-<pre><code class="language-python">import socket
-from contextlib import asynccontextmanager
-
-@asynccontextmanager
-async def managed_socket(host, port):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        sock.setblocking(False)
-        await loop.sock_connect(sock, (host, port))
-        yield sock
-    finally:
-        sock.close()
-</code></pre>
-<p><strong>How do I tune a connection pool without breaking production?</strong></p>
-<p>Use pgbouncer 1.21 for PostgreSQL or HikariCP 5.0.1 for Java to set max connections, idle timeout, and max lifetime. Start with max connections = (CPU cores * 2), idle timeout = 30s, max lifetime = 300s. Measure p99 latency and connection churn before and after.</p>
-<p><strong>What’s the smallest change I can make to add idempotency?</strong></p>
-<p>Add a UUIDv7 header to every external HTTP call and store it in Redis 7.2 with a 24-hour TTL. Use a middleware that checks the header and returns 200 if the key exists. For outgoing calls, generate the key in the agent before making the request:</p>
-<pre><code class="language-javascript">import { randomUUID } from 'node:crypto';
-
-function addIdempotencyKey(req) {
-  const idempotencyKey = randomUUID();
-  req.headers['x-idempotency-key'] = idempotencyKey;
-  await redis.setEx(idempotencyKey, 24 * 60 * 60, 'pending');
-  return idempotencyKey;
-}
-</code></pre>
-<p><strong>How do I debug a callback that never fires under load?</strong></p>
-<p>Wrap the callback in a timeout and log every step. In Python, use asyncio.timeout:</p>
-<pre><code class="language-python">async def safe_callback():
-    try:
-        async with asyncio.timeout(5):
-            await do_work()
-    except TimeoutError:
-        logger.error('Callback timed out', exc_info=True)
-</code></pre>
-<p>If the callback still doesn’t fire, check for deadlocks or callbacks that block the event loop.</p>
-<h2 id="final-recommendation">Final recommendation</h2>
-<p>Pick one skill from the table that matches your agent’s biggest pain point. Run the starter exercise today, not tomorrow. If you’re unsure, start with idempotency keys—duplicate side effects are the most visible and costly mistakes teams make once agents run 24/7.</p>
-<p>Open your agent’s main async loop or callback handler. Add a UUIDv7 idempotency key to every external call and store it in Redis 7.2 with a 24-hour TTL. Push the change to staging, replay a recent traffic trace, and measure duplicate request rate. Do it now—before your next outage proves you should have started yesterday.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
-<li><a href="https://kubaik.github.io/5-ai-tools-that-let-us-ship-faster-than-sf-teams/">5 AI tools that let us ship faster than SF teams</a></li>
-<li><a href="https://kubaik.github.io/7-patterns-for-systems-that-wont-die-when-networks/">7 patterns for systems that won’t die when networks</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<p>If the agent has been running for more than a day and there is no descriptor metric, start there. It is the cheapest signal to collect and it catches the most common failure mode.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I find a descriptor leak quickly?</strong></p>
+<p>Compare <code>ls /proc/&lt;pid&gt;/fd | wc -l</code> against the limit in <code>/proc/&lt;pid&gt;/limits</code>. If the count is near the limit, group descriptors by target with <code>ls -l /proc/&lt;pid&gt;/fd | awk '{print $11}' | sort | uniq -c | sort -rn | head</code>. A single target dominating the list points at the client for that target.</p>
+<p><strong>How do I size a connection pool?</strong></p>
+<p>Start from the database's connection limit divided by the number of application instances, then reduce further if the database shows lock contention. The pool is not a throughput knob; it is a limit on concurrent work. Measure pool wait time and p99 query latency together, and increase the pool only if wait time is high and the database has headroom.</p>
+<p><strong>What is the smallest useful idempotency implementation?</strong></p>
+<p>Generate a unique key once per logical operation, send it as a header, and have the receiver store it with a TTL and reject duplicates. The key must be generated above the retry layer so every retry carries the same value.</p>
+<p><strong>Why does a callback sometimes never fire under load?</strong></p>
+<p>Usually because the event loop is blocked by synchronous work, or because the callback is waiting on a resource that is exhausted. Add a timeout to every callback and log when it fires. A timeout that triggers consistently under load points at a resource constraint rather than a logic bug.</p>
+<h2 id="your-next-30-minutes">Your next 30 minutes</h2>
+<p>Pick the agent that has been running longest in your environment. Run <code>ls /proc/&lt;pid&gt;/fd | wc -l</code> and compare it to the limit in <code>/proc/&lt;pid&gt;/limits</code>. If the count is above 50% of the limit, group the descriptors by target and identify the client responsible. Add that count to your monitoring before you do anything else, so the next time it grows you will see it happening instead of discovering it during an outage.</p>
                 
                 
             </div>

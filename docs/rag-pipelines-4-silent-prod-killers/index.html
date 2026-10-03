@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>RAG pipelines: 4 silent prod killers - Kubai Kevin</title>
-        <meta name="description" content="Cut RAG pipeline latency from 280ms to 35ms and monthly costs from $980 to $620 by moving vector search out of PostgreSQL 16 into Milvus 2.4.3 with Caffeine…">
+        <meta name="description" content="A practical guide to the silent failure modes that break RAG pipelines at scale: tokenizer drift, GPU fragmentation, index skew, and cache stampedes.">
         <meta name="keywords" content="RagPipelineProduction, VectorDatabaseCost, PgvectorVsMilvus, RagLatencyBenchmarks, RagPipelineArchitecture, RagCacheStrategies, RagConnectionPooling, RagPerformanceTuning, Database, Performance, Rag, Vectorsearch">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-08T23:47:39.972246">
-        <meta property="article:modified_time" content="2026-09-19T11:54:35.572657+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:09:21.614864+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="RAG pipelines: 4 silent prod killers">
-        <meta property="og:description" content="Cut RAG pipeline latency from 280ms to 35ms and monthly costs from $980 to $620 by moving vector search out of PostgreSQL 16 into Milvus 2.4.3 with Caffeine…">
+        <meta property="og:description" content="A practical guide to the silent failure modes that break RAG pipelines at scale: tokenizer drift, GPU fragmentation, index skew, and cache stampedes.">
         <meta property="og:url" content="https://kubaik.github.io/rag-pipelines-4-silent-prod-killers/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="RAG pipelines: 4 silent prod killers">
-        <meta name="twitter:description" content="Cut RAG pipeline latency from 280ms to 35ms and monthly costs from $980 to $620 by moving vector search out of PostgreSQL 16 into Milvus 2.4.3 with Caffeine…">
+        <meta name="twitter:description" content="A practical guide to the silent failure modes that break RAG pipelines at scale: tokenizer drift, GPU fragmentation, index skew, and cache stampedes.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/rag-pipelines-4-silent-prod-killers.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,10 +61,10 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/rag-pipelines-4-silent-prod-killers/#article",
       "headline": "RAG pipelines: 4 silent prod killers",
-      "description": "Cut RAG pipeline latency from 280ms to 35ms and monthly costs from $980 to $620 by moving vector search out of PostgreSQL 16 into Milvus 2.4.3 with Caffeine…",
+      "description": "A practical guide to the silent failure modes that break RAG pipelines at scale: tokenizer drift, GPU fragmentation, index skew, and cache stampedes.",
       "datePublished": "2026-06-08T23:47:39+00:00",
-      "dateModified": "2026-09-19T11:54:35+00:00",
-      "wordCount": 2323,
+      "dateModified": "2026-10-03T11:09:21+00:00",
+      "wordCount": 2440,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">RAG pipelines: 4 silent prod killers</h1>
                 
-                <p class="post-lead">Cut RAG pipeline latency from 280ms to 35ms and monthly costs from $980 to $620 by moving vector search out of PostgreSQL 16 into Milvus 2.4.3 with Caffeine…</p>
+                <p class="post-lead">A practical guide to the silent failure modes that break RAG pipelines at scale: tokenizer drift, GPU fragmentation, index skew, and cache stampedes.</p>
                 
                 
                 <div class="tags">
@@ -259,597 +259,248 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2323 words
+                        &nbsp;·&nbsp; 2440 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
-<h2 id="advanced-edge-cases-we-personally-encountered">Advanced edge cases we personally encountered</h2>
+                <p>Retrieval-augmented generation (RAG) demos work on a laptop. Production traffic exposes a different class of problem: failures that return HTTP 200 with plausible but wrong answers, or that degrade gradually until a pager fires at 3 a.m. This article covers the failure modes that appear once a pipeline is serving real concurrency, and how to instrument each one so you can confirm or rule it out in your own stack.</p>
+<h2 id="why-rag-pipelines-fail-quietly">Why RAG pipelines fail quietly</h2>
+<p>A RAG pipeline has more moving parts than a typical CRUD service: an embedding model, a vector index, a metadata filter layer, a reranker, a cache, and an LLM. Each has its own tokenizer, its own memory model, and its own notion of what "the same input" means. When two components disagree about input normalization, nothing throws. The pipeline returns a result. It is simply the wrong result.</p>
+<p>The other reason failures are quiet is that most RAG metrics measure the wrong layer. Request latency, HTTP status, and QPS all look healthy while retrieval precision collapses. You need retrieval-specific signals: recall against a labelled set, reranker score distributions, cache hit ratio by key class, and index-level latency percentiles broken out by filter predicate.</p>
+<h2 id="failure-mode-1-tokenizer-and-normalization-drift">Failure mode 1: tokenizer and normalization drift</h2>
+<p>Every model in the pipeline tokenizes text its own way. An embedding model may normalize Unicode punctuation, strip diacritics, or lowercase differently than the reranker or the LLM that consumes the retrieved chunks. When the index was built with one normalization and the query path uses another, exact-match signals (BM25, reranker cross-attention over rare tokens) silently degrade.</p>
+<p>A common concrete case: text containing curly apostrophes (<code>’</code>, U+2019) is indexed after one model normalizes them to straight quotes (<code>'</code>, U+0027), while a reranker trained on the original distribution expects the curly form. Product names, proper nouns, and code identifiers are the tokens most likely to be affected.</p>
+<p><strong>How to detect it.</strong> Build a small labelled query set (a few hundred pairs is enough). For each query, log the raw string, the normalized string produced by each stage, and the retrieved chunk IDs. Diff the normalized forms across stages. Any stage that produces a different normalized string than the indexer is a candidate.</p>
+<p><strong>How to fix it.</strong> Normalize once, at ingestion, and store the normalized form. Pass the same normalized text to every downstream stage. In Python, <code>ftfy</code> is a reasonable choice for Unicode repair; the important property is that the same function runs on both the index and query paths, not which library you pick.</p>
+<pre><code class="language-python">import ftfy
+import unicodedata
+
+def normalize(text: str) -&gt; str:
+    # Repair mojibake and normalize punctuation to a single canonical form.
+    text = ftfy.fix_text(text)
+    # NFC keeps accented characters composed; NFKC would fold them.
+    text = unicodedata.normalize(&quot;NFC&quot;, text)
+    return text.strip()
+
+# Apply at ingestion AND at query time. Never apply at only one.
+indexed_text = normalize(raw_document)
+query_text = normalize(user_query)
+</code></pre>
+<p><strong>How to measure the impact.</strong> Compare recall@k on the labelled set before and after unifying normalization. If the pipeline was relying on exact token matches, you will see the delta immediately. Do not guess at a percentage; measure it on your own data.</p>
+<h2 id="failure-mode-2-gpu-memory-fragmentation-under-concurrent-reranking">Failure mode 2: GPU memory fragmentation under concurrent reranking</h2>
+<p>Rerankers are usually the second-largest memory consumer after the LLM. A reranker served through an inference runtime such as ONNX Runtime or TensorRT allocates GPU memory per request. Under bursty concurrency, short-lived tensors of varying sizes fragment the allocator. The result is <code>CUDA out of memory</code> errors even though reported memory usage is well below the card's capacity.</p>
+<p>This shows up as intermittent 500s under load, not as a steady degradation. It is easy to misdiagnose as a leak.</p>
+<p><strong>How to detect it.</strong> Log <code>torch.cuda.memory_allocated()</code> and <code>torch.cuda.memory_reserved()</code> (or the equivalent for your runtime) at request start and end. A leak shows rising allocated memory that never returns to baseline. Fragmentation shows stable allocated memory but rising reserved memory, or allocation failures at a total well below capacity.</p>
+<p><strong>How to fix it.</strong> Three levers, in order of impact:</p>
 <ol>
-<li>
-<p><strong>Tokenisation drift between embeddings and rerankers</strong>
-We used <code>text-embedding-3-small</code> (v3) for indexing and <code>bge-reranker-large</code> (v2) for reranking. The v3 tokenizer normalises Unicode apostrophes to straight quotes, while v2 expects curly apostrophes. At 5k QPS, this caused 12% of queries to return irrelevant chunks because the reranker couldn’t match the tokenised text. The fix: pre-tokenise both index and query text with the same normalisation pipeline (using <code>ftfy</code> 6.1) before embedding. Latency impact: +8ms per rerank, but error rate dropped to 0.2%.</p>
-</li>
-<li>
-<p><strong>GPU memory fragmentation during back-to-back bulk searches</strong>
-When processing 10k concurrent requests (chaos test), the onnxruntime 1.18.0 session on A10G (24GB) started throwing <code>CUDA out of memory</code> errors despite only using 12GB. The issue was fragmented GPU memory from small, short-lived tensors. We switched to a persistent session with <code>enable_memory_optimizations=True</code> and pre-allocated the reranker’s input/output tensors. This increased initial GPU memory usage by 2GB but eliminated fragmentation. Memory usage stabilised at 18GB for 10k QPS.</p>
-</li>
-<li>
-<p><strong>Metadata index skew in Milvus 2.4.3</strong>
-Our metadata filter was <code>{"category": "shipping", "locale": "vi_VN"}</code>. At 20k QPS, queries filtering on <code>locale=vi_VN</code> became 10x slower because Milvus’s scalar index for <code>locale</code> was skewed — 95% of vectors had <code>vi_VN</code>, while <code>en_US</code> had only 5%. The solution: add a compound index <code>(category, locale)</code> and use dynamic field pruning in the search query. Latency dropped from 90ms to 15ms for skewed filters.</p>
-</li>
-<li>
-<p><strong>Cold-start latency spikes with Caffeine 3.1.8</strong>
-The local cache was initially built on-demand, causing the first query for a hot key to block for 120ms while Milvus searched. We switched to a pre-warmed cache using a background thread that prefetched the top-1000 chunks every 5 minutes. This added 200MB RAM but reduced cold-start latency to 2ms. The trade-off was acceptable: memory usage increased by 16% but P99 latency improved by 40ms.</p>
-</li>
-<li>
-<p><strong>HTTP/2 head-of-line blocking with httpx 0.28.1</strong>
-At 15k QPS, some FastAPI endpoints started timing out at 1.5s despite Milvus returning in 40ms. The issue was HTTP/2 head-of-line blocking — a single slow gRPC call to Milvus caused all subsequent requests in the same stream to queue. We switched to HTTP/1.1 for the Milvus client and used a separate connection pool (<code>max_connections=100</code>) to isolate the gRPC traffic. Latency stabilised at 45ms P99.</p>
-</li>
-<li>
-<p><strong>Prometheus scrape timeouts under high cardinality</strong>
-With 500+ time series (latency buckets, cache metrics, error counts), Prometheus 2.47.0 started missing scrapes at 25k QPS. The scrape interval was 15s, but the <code>/metrics</code> endpoint took 8s to respond.</p>
-</li>
-<li>
-<p><strong>Redis 7.2 Lua script memory leaks</strong>
-We used a Lua script to batch-update hot embeddings in Redis. After 48 hours at 20k QPS, the Redis process memory grew from 4GB to 12GB due to unreleased Lua table references. The fix: wrapped the script in <code>redis.pcall()</code> and explicitly cleared tables with <code>table.remove()</code>. Memory stabilised at 5GB after the patch.</p>
-</li>
-<li>
-<p><strong>Anthropic Bedrock rate limiting</strong>
-The Claude 3 Sonnet model on Bedrock has a soft limit of 1000 TPS per account. The solution: use Bedrock’s <code>ModelStreaming</code> with exponential backoff (1s, 2s, 4s) and a circuit breaker (<code>pybreaker</code> 1.0.1).</p>
-</li>
-<li>
-<p><strong>Kubernetes DNS throttling</strong>
-The FastAPI service used <code>milvus-lite.default.svc.cluster.local</code> for Milvus. At 25k QPS, CoreDNS started dropping packets due to <code>NXDOMAIN</code> retries. We switched to headless services (<code>milvus-lite.namespace.svc.cluster.local</code>) and added local <code>/etc/hosts</code> entries for the Milvus shards. DNS latency dropped from 40ms to 2ms.</p>
-</li>
-<li>
-<p><strong>Nightly cost spikes from on-demand Graviton instances</strong>
-Milvus Lite on Graviton3 (m7g.4xlarge) was $0.62/hour on-demand. Nightly cost dropped from $12 to $3.</p>
-</li>
+<li>Serve the reranker from a persistent session rather than creating one per request. Session creation is expensive and allocates a fresh memory pool each time.</li>
+<li>Pre-allocate input and output tensors at the maximum batch size you will serve, and reuse them across requests.</li>
+<li>Cap the batch size explicitly. A reranker that accepts unbounded batches will fragment fastest.</li>
 </ol>
-<hr />
-<h2 id="integration-with-real-tools-2026-versions">Integration with real tools (2026 versions)</h2>
-<h3 id="1-qdrant-191-fastapi-prometheus">1. Qdrant 1.9.1 + FastAPI + Prometheus</h3>
-<p>Qdrant is a Rust-based vector search engine that’s lighter than Milvus and integrates well with Python. We migrated one shard from Milvus 2.4.3 to Qdrant 1.9.1 to test.</p>
-<p><strong>Setup:</strong></p>
-<pre><code class="language-bash">docker run -p 6333:6333 -p 6334:6334 \
-  -v $(pwd)/qdrant_storage:/qdrant/storage \
-  qdrant/qdrant:v1.9.1
+<pre><code class="language-python">import onnxruntime as ort
+import numpy as np
+
+opts = ort.SessionOptions()
+opts.enable_mem_pattern = True
+opts.enable_cpu_mem_arena = False  # GPU-only deployment
+
+session = ort.InferenceSession(
+    &quot;reranker.onnx&quot;,
+    sess_options=opts,
+    providers=[(&quot;CUDAExecutionProvider&quot;, {&quot;device_id&quot;: 0})],
+)
+
+# Pre-allocate buffers at the maximum batch size you will serve.
+MAX_BATCH = 32
+MAX_SEQ = 512
+input_ids = np.zeros((MAX_BATCH, MAX_SEQ), dtype=np.int64)
+attention_mask = np.zeros((MAX_BATCH, MAX_SEQ), dtype=np.int64)
+
+def rerank(batch_tokens: np.ndarray) -&gt; np.ndarray:
+    n = batch_tokens.shape[0]
+    assert n &lt;= MAX_BATCH
+    input_ids[:n] = batch_tokens
+    attention_mask[:n] = 1
+    return session.run(
+        [&quot;scores&quot;],
+        {&quot;input_ids&quot;: input_ids[:n], &quot;attention_mask&quot;: attention_mask[:n]},
+    )[0]
 </code></pre>
-<p><strong>Qdrant collection schema (768-dim vectors):</strong></p>
-<pre><code class="language-python">from qdrant_client import QdrantClient, models
-
-client = QdrantClient(host=&quot;qdrant&quot;, port=6333)
-
-client.create_collection(
-    collection_name=&quot;faq_vectors&quot;,
-    vectors_config=models.VectorParams(
-        size=768,
-        distance=models.Distance.COSINE,
-    ),
-    shard_number=1,  # For testing
-    on_disk_payload=True,
-)
-</code></pre>
-<p><strong>FastAPI endpoint with Prometheus metrics:</strong></p>
-<pre><code class="language-python">from fastapi import FastAPI
-from prometheus_fastapi_instrumentator import Instrumentator
-from qdrant_client import QdrantClient
-import httpx
-
-app = FastAPI()
-client = QdrantClient(host=&quot;qdrant&quot;, port=6333)
-Instrumentator().instrument(app).expose(app)
-
-@app.post(&quot;/retrieve&quot;)
-async def retrieve(query: str):
-    search_result = client.search(
-        collection_name=&quot;faq_vectors&quot;,
-        query_vector=await get_embedding(query),  # Your embedding function
-        limit=5,
-        with_payload=True,
-    )
-    return [hit.payload for hit in search_result]
-</code></pre>
-<p><strong>Latency at 1k QPS:</strong>
-- Qdrant: 22ms median, 60ms P99
-- Memory: 800MB RSS
-- Cost: $0.28/hour on a t4g.xlarge (4 vCPU, 16GB)</p>
-<p><strong>When to use Qdrant:</strong>
-- You need a single-node vector search with &lt;100ms latency. - You want to avoid Java dependencies (Milvus requires JRE). - You’re running on ARM (Graviton) — Qdrant’s Rust binary is natively supported.</p>
-<hr />
-<h3 id="2-weaviate-1250-redis-72-langchain-0118">2. Weaviate 1.25.0 + Redis 7.2 + LangChain 0.1.18</h3>
-<p>Weaviate is a hybrid search engine (vector + BM25) that’s useful for e-commerce queries where product names or SKUs need exact matches. We tested it alongside Milvus for a product search use case.</p>
-<p><strong>Setup:</strong></p>
-<pre><code class="language-bash">docker run -d -p 8080:8080 \
-  -e QUERY_DEFAULTS_LIMIT=100 \
-  -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
-  semitechnologies/weaviate:1.25.0
-</code></pre>
-<p><strong>Weaviate collection with inverted index and HNSW:</strong></p>
-<pre><code class="language-python">import weaviate
-from weaviate import EmbeddedOptions
-
-client = weaviate.Client(
-    embedded_options=EmbeddedOptions(
-        persistence_data_path=&quot;./weaviate_data&quot;,
-        port=8080,
-    )
-)
-
-client.collections.create(
-    name=&quot;Products&quot;,
-    properties=[
-        weaviate.Property(name=&quot;name&quot;, data_type=weaviate.DataType.TEXT),
-        weaviate.Property(name=&quot;description&quot;, data_type=weaviate.DataType.TEXT),
-        weaviate.Property(name=&quot;price&quot;, data_type=weaviate.DataType.NUMBER),
-        weaviate.Property(name=&quot;category&quot;, data_type=weaviate.DataType.TEXT),
-    ],
-    vector_index_config=weaviate.Configure.VectorIndex(
-        hnsw=weaviate.Configure.VectorIndex.HNSW(
-            distance_metric=weaviate.VectorDistanceMetric.COSINE,
-            ef_construction=256,
-            max_connections=64,
-        ),
-        bm25=weaviate.Configure.VectorIndex.BM25(k1=1.2, b=0.75),
-    ),
-)
-</code></pre>
-<p><strong>Hybrid search query (vector + BM25):</strong></p>
-<pre><code class="language-python">response = (
-    client.collections.get(&quot;Products&quot;)
-    .query.hybrid(
-        query=&quot;samsung galaxy s24 ultra&quot;,
-        alpha=0.5,  # 0.5 = equal weight vector/BM25
-        limit=5,
-    )
-)
-</code></pre>
-<p><strong>Redis 7.2 cache layer for Weaviate:</strong></p>
-<pre><code class="language-python">import redis.asyncio as redis
-from langchain_community.cache import RedisCache
-
-r = redis.Redis(
-    host=&quot;redis&quot;,
-    port=6379,
-    db=0,
-    decode_responses=True,
-    max_connections=50,
-)
-
-langchain_cache = RedisCache(redis_=r)
-
-# Use in LangChain
-from langchain.embeddings import HuggingFaceInferenceAPIEmbeddings
-
-embeddings = HuggingFaceInferenceAPIEmbeddings(
-    model_name=&quot;text-embedding-3-small&quot;,
-    cache=langchain_cache,  # Caches embeddings
-)
-</code></pre>
-<p><strong>Latency at 1k QPS:</strong>
-- Weaviate: 35ms median, 90ms P99 (hybrid search)
-- Memory: 1.5GB RSS
-- Cost: $0.35/hour on a t4g.xlarge</p>
-<p><strong>When to use Weaviate:</strong>
-- You need hybrid search (vector + keyword) for product catalogs. - You want to avoid managing a separate reranker (Weaviate has cross-encoder reranking built-in). - You’re already using LangChain — Weaviate has first-class LangChain integration.</p>
-<hr />
-<h3 id="3-llamaindex-0103-milvus-243-ollama-028-local-llm">3. LlamaIndex 0.10.3 + Milvus 2.4.3 + Ollama 0.2.8 (local LLM)</h3>
-<p>For teams that want to avoid AWS Bedrock or Anthropic, Ollama is a lightweight way to run LLMs locally. We tested it with LlamaIndex 0.10.3 and Milvus 2.4.3 for a Vietnamese-language chatbot.</p>
-<p><strong>Setup:</strong></p>
-<pre><code class="language-bash"># Ollama 0.2.8 on a g5g.xlarge (1x A10G GPU)
-curl -fsSL https://ollama.com/install.sh | sh
-ollama pull phi3.5-mini-instruct-q4_0:latest  # 2.2GB
-</code></pre>
-<p><strong>LlamaIndex Milvus integration:</strong></p>
-<pre><code class="language-python">from llama_index.core import VectorStoreIndex, StorageContext
-from llama_index.vector_stores.milvus import MilvusVectorStore
-from llama_index.embeddings import HuggingFaceEmbedding
-from llama_index.llms.ollama import Ollama
-
-# Milvus vector store
-vector_store = MilvusVectorStore(
-    uri=&quot;http://milvus-lite:19530&quot;,
-    dim=768,
-    collection_name=&quot;faq_vectors&quot;,
-    overwrite=False,
-)
-
-storage_context = StorageContext.from_defaults(vector_store=vector_store)
-
-# Embedding model
-embed_model = HuggingFaceEmbedding(
-    model_name=&quot;BAAI/bge-small-en-v1.5&quot;,
-    cache_folder=&quot;./embeddings_cache&quot;,
-)
-
-# Local LLM
-llm = Ollama(
-    model=&quot;phi3.5-mini-instruct-q4_0&quot;,
-    base_url=&quot;http://ollama:11434&quot;,
-    request_timeout=120.0,
-)
-
-# Build index
-index = VectorStoreIndex.from_documents(
-    documents,
-    storage_context=storage_context,
-    embed_model=embed_model,
-    show_progress=True,
-)
-
-# Query engine
-query_engine = index.as_query_engine(
-    llm=llm,
-    similarity_top_k=5,
-    response_mode=&quot;tree_summarize&quot;,
-)
-</code></pre>
-<p><strong>Latency at 500 QPS:</strong>
-- Ollama: 180ms median (1x A10G)
-- Milvus: 30ms median
-- Memory: 8GB GPU, 1.2GB CPU (Milvus)
-- Cost: $0.68/hour (g5g.xlarge) + $0.00 (Milvus Lite)</p>
-<p><strong>When to use Ollama:</strong>
-- You need to avoid cloud LLM costs (e.g., for low-traffic internal tools). - You’re running in an air-gapped environment. - You want to fine-tune the LLM for Vietnamese (Ollama supports GGUF models).</p>
-<hr />
-<h2 id="beforeafter-comparison-actual-numbers">Before/after comparison (actual numbers)</h2>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>PostgreSQL 16 + pgvector 0.7.0</th>
-<th>FAISS 1.8.0 (Python)</th>
-<th>Redis 7.2 + RediSearch 2.6.5</th>
-<th>Milvus 2.4.3 + Caffeine 3.1.8 + FastAPI</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Latency (median, ms)</strong></td>
-<td>280</td>
-<td>45</td>
-<td>70</td>
-<td>35</td>
-</tr>
-<tr>
-<td><strong>Latency (P99, ms)</strong></td>
-<td>1200</td>
-<td>280</td>
-<td>180</td>
-<td>110</td>
-</tr>
-<tr>
-<td><strong>Max sustained QPS</strong></td>
-<td>1000</td>
-<td>5000</td>
-<td>10000</td>
-<td>25000</td>
-</tr>
-<tr>
-<td><strong>Cloud cost (USD/month)</strong></td>
-<td>$980</td>
-<td>$420</td>
-<td>$1800</td>
-<td>$620</td>
-</tr>
-<tr>
-<td><strong>Peak RAM per vector search (GB)</strong></td>
-<td>16</td>
-<td>12 (Python)</td>
-<td>8 (Redis)</td>
-<td>1.2 (Milvus) + 0.8 (FastAPI) = 2.0</td>
-</tr>
-<tr>
-<td><strong>Lines of code (retrieval only)</strong></td>
-<td>450</td>
-<td>320</td>
-<td>580</td>
-<td>280</td>
-</tr>
-<tr>
-<td><strong>Connection pool errors (per hour)</strong></td>
-<td>40 (PostgreSQL)</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td><strong>GPU memory usage (GB)</strong></td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>18 (A10G)</td>
-</tr>
-<tr>
-<td><strong>Cold start latency (ms)</strong></td>
-<td>80</td>
-<td>120</td>
-<td>60</td>
-<td>2</td>
-</tr>
-<tr>
-<td><strong>Chaos test recovery time (s)</strong></td>
-<td>N/A (crashed)</td>
-<td>60</td>
-<td>15</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>Embedding cache size (GB)</strong></td>
-<td>8</td>
-<td>10</td>
-<td>6</td>
-<td>2</td>
-</tr>
-<tr>
-<td><strong>Reranker latency (ms)</strong></td>
-<td>N/A</td>
-<td>120</td>
-<td>90</td>
-<td>40</td>
-</tr>
-<tr>
-<td><strong>LLM latency (ms, Bedrock)</strong></td>
-<td>180</td>
-<td>180</td>
-<td>180</td>
-<td>180</td>
-</tr>
-<tr>
-<td><strong>Total latency (P99, ms)</strong></td>
-<td>1380</td>
-<td>580</td>
-<td>450</td>
-<td>330</td>
-</tr>
-</tbody>
-</table>
-<h3 id="cost-breakdown-monthly">Cost breakdown (monthly)</h3>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>PostgreSQL</th>
-<th>FAISS</th>
-<th>Redis</th>
-<th>Milvus + Caffeine</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Database/Vector DB</td>
-<td>$450</td>
-<td>$0</td>
-<td>$900</td>
-<td>$420</td>
-</tr>
-<tr>
-<td>Cache (Redis)</td>
-<td>$0</td>
-<td>$0</td>
-<td>$900</td>
-<td>$200</td>
-</tr>
-<tr>
-<td>Compute (FastAPI)</td>
-<td>$530</td>
-<td>$420</td>
-<td>$0</td>
-<td>$0</td>
-</tr>
-<tr>
-<td>GPU (Bedrock)</td>
-<td>$0</td>
-<td>$0</td>
-<td>$0</td>
-<td>$0</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td><strong>$980</strong></td>
-<td><strong>$420</strong></td>
-<td><strong>$1800</strong></td>
-<td><strong>$620</strong></td>
-</tr>
-</tbody>
-</table>
-<h3 id="latency-waterfall-p99-25k-qps">Latency waterfall (P99, 25k QPS)</h3>
-<ol>
-<li><strong>PostgreSQL (original):</strong></li>
-<li>Connection setup: 40ms</li>
-<li>Query planning: 280ms</li>
-<li>Vector search: 200ms</li>
-<li>Chunk fetch: 120ms</li>
-<li>
-<p>Total: <strong>1200ms</strong></p>
-</li>
-<li>
-<p><strong>Milvus + Caffeine:</strong></p>
-</li>
-<li>Local cache hit: 2ms (80% of requests)</li>
-<li>Milvus search: 60ms</li>
-<li>Reranker: 40ms</li>
-<li>LLM: 180ms</li>
-<li>Total: <strong>330ms</strong></li>
-</ol>
-<h3 id="memory-usage-per-request-at-25k-qps">Memory usage per request (at 25k QPS)</h3>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>PostgreSQL</th>
-<th>FAISS</th>
-<th>Redis</th>
-<th>Milvus + Caffeine</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Database</td>
-<td>16GB</td>
-<td>0</td>
-<td>8GB</td>
-<td>0</td>
-</tr>
-<tr>
-<td>Cache</td>
-<td>0</td>
-<td>0</td>
-<td>4GB</td>
-<td>2GB</td>
-</tr>
-<tr>
-<td>FastAPI</td>
-<td>512MB</td>
-<td>2GB</td>
-<td>512MB</td>
-<td>200MB</td>
-</tr>
-<tr>
-<td>GPU (A10G)</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>18GB</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td><strong>16.5GB</strong></td>
-<td><strong>2GB</strong></td>
-<td><strong>12GB</strong></td>
-<td><strong>20.2GB</strong></td>
-</tr>
-</tbody>
-</table>
-<h3 id="developer-time-spent">Developer time spent</h3>
-<table>
-<thead>
-<tr>
-<th>Task</th>
-<th>PostgreSQL</th>
-<th>Milvus</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Initial setup</td>
-<td>3 days</td>
-<td>1 day</td>
-</tr>
-<tr>
-<td>Debugging</td>
-<td>12 days</td>
-<td>1 day</td>
-</tr>
-<tr>
-<td>Performance tuning</td>
-<td>8 days</td>
-<td>2 days</td>
-</tr>
-<tr>
-<td>Cost optimisation</td>
-<td>3 days</td>
-<td>1 day</td>
-</tr>
-<tr>
-<td>Chaos testing</td>
-<td>2 days</td>
-<td>1 day</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td><strong>28 days</strong></td>
-<td><strong>6 days</strong></td>
-</tr>
-</tbody>
-</table>
-<h3 id="key-takeaways-from-the-numbers">Key takeaways from the numbers</h3>
-<ol>
-<li>
-<p><strong>PostgreSQL is not a vector database.</strong> Even with pgvector 0.7.0, the memory per connection (8MB) and lack of distributed query planning make it unsuitable for &gt;1k QPS. The $980/month bill was unsustainable at scale.</p>
-</li>
-<li>
-<p><strong>FAISS is fragile under horizontal scaling.</strong> The 12GB RAM per Python process at 5k QPS forced us to scale vertically, which is expensive. Milvus’s sharding and Rust-based architecture solved this.</p>
-</li>
-<li>
-<p><strong>Redis is a cache, not a vector database.</strong> RediSearch 2.6.5 worked well at 10k QPS, but the OOM errors at 15k QPS proved it’s not designed for large vector workloads. Milvus’s HNSW index is 10x more memory-efficient.</p>
-</li>
-<li>
-<p><strong>Milvus Lite on Graviton3 is the best balance.</strong> At $620/month, it handles 25k QPS with 35ms median latency and 1.2GB RAM per shard. The cost is 37% lower than PostgreSQL and 66% lower than Redis.</p>
-</li>
-<li>
-<p>Without it, the system would have needed 2x more shards.</p>
-</li>
-<li>
-<p><strong>GPU memory is the new bottleneck.</strong> The A10G’s 24GB limit forced us to use <code>enable_memory_optimizations</code> in onnxruntime. At 25k QPS, the reranker used 18GB — leaving only 6GB for the LLM.</p>
-</li>
-<li>
-<p><strong>Chaos testing reveals real issues.</strong> The PostgreSQL setup crashed under chaos; Milvus recovered in 5 seconds. The difference is in distributed consensus and shard replication.</p>
-</li>
-</ol>
-<h3 id="when-to-choose-each-architecture">When to choose each architecture</h3>
-<table>
-<thead>
-<tr>
-<th>Use Case</th>
-<th>Recommended Stack</th>
-<th>Why</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Low-traffic (&lt;1k QPS) internal tool</strong></td>
-<td>PostgreSQL + pgvector 0.7.0</td>
-<td>Simple setup, no new dependencies.</td>
-</tr>
-<tr>
-<td><strong>High-traffic (1k–10k QPS) monolingual chatbot</strong></td>
-<td>FAISS 1.8.0 (single-node)</td>
-<td>Fast if you control the QPS and memory.</td>
-</tr>
-<tr>
-<td><strong>High-traffic (5k–20k QPS) e-commerce search</strong></td>
-<td>Redis 7.2 + RediSearch 2.6.5</td>
-<td>Good for keyword-heavy queries, but avoid for pure vector search.</td>
-</tr>
-<tr>
-<td><strong>High-traffic (&gt;20k QPS) multilingual RAG</strong></td>
-<td>Milvus 2.4.3 + Caffeine 3.1.8</td>
-<td>Distributed, memory-efficient, and production-ready.</td>
-</tr>
-<tr>
-<td><strong>Air-gapped or offline RAG</strong></td>
-<td>Milvus Lite + Ollama 0.2.8</td>
-<td>No cloud dependencies, runs on a single GPU machine.</td>
-</tr>
-<tr>
-<td><strong>Hybrid search (vector + BM25)</strong></td>
-<td>Weaviate 1.25.0 + LangChain 0.1.18</td>
-<td>Built-in reranking and inverted indexes for product searches.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="final-recommendation-2026">Final recommendation (2026)</h3>
-<p>If you’re building a RAG pipeline for &gt;5k QPS, <strong>Milvus 2.4.3 on Graviton3 with a two-tier Caffeine/Redis cache is the only architecture that balances cost, latency, and reliability</strong>. The numbers don’t lie: PostgreSQL melts, FAISS OOMs, Redis costs too much, and Milvus scales. Treat retrieval as a stateless service, not a database query — your future self will thank you when the chaos tests pass.</p>
-<h2 id="related-reading">Related reading</h2>
+<p><strong>Trade-off.</strong> Pre-allocation raises baseline GPU memory by the size of the buffers, but eliminates the fragmentation-driven OOMs. Measure both numbers on your hardware before committing.</p>
+<h2 id="failure-mode-3-metadata-index-skew">Failure mode 3: metadata index skew</h2>
+<p>Vector databases that support scalar filtering (Milvus, Qdrant, Weaviate) build scalar indexes to accelerate <code>WHERE</code>-style predicates. When the distribution of values in a filtered field is heavily skewed, the index for the minority value becomes inefficient, and queries filtering on it slow down disproportionately.</p>
+<p>A concrete pattern: a <code>locale</code> field where 95% of rows are <code>en_US</code> and 5% are <code>vi_VN</code>. A query filtering on <code>vi_VN</code> may scan nearly the whole index. Under high concurrency this manifests as a small set of queries with P99 latency an order of magnitude worse than the median.</p>
+<p><strong>How to detect it.</strong> Break out latency percentiles by filter predicate. If <code>filter=locale:vi_VN</code> has a P99 that is 10x the P99 of <code>filter=locale:en_US</code>, you have skew. Most vector databases expose per-query timing in their logs or metrics endpoint.</p>
+<p><strong>How to fix it.</strong></p>
 <ul>
-<li><a href="https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/">RAG is not enough: hybrid search + reranking in 2026</a></li>
-<li><a href="https://kubaik.github.io/build-a-search-system-in-2026-semantic-keyword/">Build a search system in 2026: semantic, keyword</a></li>
-<li><a href="https://kubaik.github.io/one-misconfigured-vector-db-killed-our-rag-pipeline/">One misconfigured vector DB killed our RAG pipeline</a></li>
+<li>Add a compound index over the frequently co-filtered fields (for example, <code>(category, locale)</code>) so the query planner can use a more selective prefix.</li>
+<li>Ensure the query planner is actually using the compound index. In Milvus, <code>EXPLAIN</code>-style output or the query plan in the logs will tell you.</li>
+<li>If a single value dominates and queries frequently target it, consider partitioning the collection by that field so the dominant value lives in its own partition.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<pre><code class="language-python">from pymilvus import Collection, CollectionSchema, FieldSchema, DataType
+
+collection = Collection(&quot;faq_vectors&quot;)
+
+# Compound index over the fields that are filtered together.
+collection.create_index(
+    field_name=&quot;category&quot;,
+    index_params={
+        &quot;index_type&quot;: &quot;INVERTED&quot;,
+        &quot;params&quot;: {},
+    },
+)
+collection.create_index(
+    field_name=&quot;locale&quot;,
+    index_params={
+        &quot;index_type&quot;: &quot;INVERTED&quot;,
+        &quot;params&quot;: {},
+    },
+)
+</code></pre>
+<p><strong>Trade-off.</strong> Compound indexes cost memory and slow ingestion slightly. The benefit only materialises if the query planner can use them, so verify with the plan output rather than assuming.</p>
+<h2 id="failure-mode-4-cache-stampedes-and-cold-start-latency">Failure mode 4: cache stampedes and cold-start latency</h2>
+<p>A local cache (in-process, or a sidecar) is the standard way to shave latency off hot queries. The failure mode is the cold start: when the cache is empty, every request for a hot key hits the vector database simultaneously. This is a cache stampede. The database sees a burst of identical queries, latency spikes, and the cache fills slowly because each request is doing the same expensive work.</p>
+<p>A second variant: TTL expiry. If many keys were written at the same time (for example, after a batch ingestion), they expire together and produce a synchronised stampede.</p>
+<p><strong>How to detect it.</strong> Log cache hit ratio as a time series. A stampede shows as a sharp drop in hit ratio followed by a spike in vector-database QPS. Correlate the two. If the spike is periodic, it is TTL synchronisation; if it is at deploy time, it is cold start.</p>
+<p><strong>How to fix it.</strong></p>
+<ul>
+<li>Pre-warm the cache on startup by issuing the top-N queries from a recorded query log. This is a batch job, not a per-request one.</li>
+<li>Add jitter to TTLs so keys do not expire together.</li>
+<li>Use a single-flight or request-coalescing layer so that concurrent requests for the same key wait on one database call rather than issuing N.</li>
+</ul>
+<pre><code class="language-python">import asyncio
+from collections import defaultdict
+
+_inflight: dict[str, asyncio.Future] = defaultdict(asyncio.Future)
+
+async def get_or_fetch(key: str, fetch):
+    &quot;&quot;&quot;Coalesce concurrent requests for the same key into one fetch.&quot;&quot;&quot;
+    if key in _inflight:
+        return await _inflight[key]
+    fut = _inflight[key]
+    try:
+        value = await fetch(key)
+        fut.set_result(value)
+        return value
+    except Exception as exc:
+        fut.set_exception(exc)
+        raise
+    finally:
+        _inflight.pop(key, None)
+</code></pre>
+<p><strong>Trade-off.</strong> Request coalescing adds a small amount of coordination overhead and a failure mode of its own: if the single fetch hangs, all waiters hang. Bound the fetch with a timeout.</p>
+<h2 id="failure-mode-5-dns-and-connection-pool-contention">Failure mode 5: DNS and connection-pool contention</h2>
+<p>At high QPS, the network layer becomes a source of latency that is invisible in application traces. Two patterns recur:</p>
+<p><strong>DNS resolution.</strong> A service that resolves its vector-database hostname on every request pays a resolver round-trip each time. Under load, the resolver (often CoreDNS in Kubernetes) can throttle or drop packets, causing multi-second stalls. Use a long-lived client with connection pooling and a cached resolved address, and prefer a stable service name over one that churns.</p>
+<p><strong>Connection-pool exhaustion.</strong> If the vector-database client and the LLM client share a connection pool, a slow LLM call can starve vector-search traffic. Isolate pools per downstream dependency and set <code>max_connections</code> based on the concurrency you actually serve, not the concurrency you hope to serve.</p>
+<pre><code class="language-python">import httpx
+
+# Separate pools per downstream dependency.
+vector_client = httpx.AsyncClient(
+    base_url=&quot;http://milvus:19530&quot;,
+    limits=httpx.Limits(max_connections=100, max_keepalive_connections=20),
+    timeout=httpx.Timeout(2.0, connect=0.5),
+)
+
+llm_client = httpx.AsyncClient(
+    base_url=&quot;http://llm-gateway:8080&quot;,
+    limits=httpx.Limits(max_connections=50, max_keepalive_connections=10),
+    timeout=httpx.Timeout(30.0, connect=0.5),
+)
+</code></pre>
+<p><strong>How to detect it.</strong> Instrument DNS resolution time separately from connection time and from request time. In Kubernetes, CoreDNS exposes <code>coredns_dns_request_duration_seconds</code> and <code>coredns_dns_responses_total</code>; a rise in <code>SERVFAIL</code> or <code>NXDOMAIN</code> responses under load is the signal. For pool exhaustion, log pool wait time (httpx exposes this via instrumentation hooks; most clients do).</p>
+<h2 id="failure-mode-6-metrics-cardinality-and-scrape-timeouts">Failure mode 6: metrics cardinality and scrape timeouts</h2>
+<p>Prometheus scrapes on a fixed interval. As the number of time series grows, the scrape payload grows, and eventually the scrape takes longer than the interval. The symptom is gaps in your dashboards and <code>scrape_timeout</code> errors in the Prometheus log.</p>
+<p>The cause is almost always unbounded label cardinality: a label whose value is a user ID, a query string, or a raw error message. Each distinct value creates a new time series.</p>
+<p><strong>How to detect it.</strong> <code>prometheus_tsdb_head_series</code> shows the current series count. If it grows linearly with traffic, you have a cardinality leak. <code>scrape_duration_seconds</code> and <code>scrape_samples_scraped</code> show the cost per target.</p>
+<p><strong>How to fix it.</strong></p>
+<ul>
+<li>Never put unbounded values in labels. Use a bounded set: status class (<code>2xx</code>, <code>4xx</code>, <code>5xx</code>), endpoint template (<code>/retrieve/:collection</code>), not the raw path.</li>
+<li>Aggregate high-cardinality dimensions before they reach Prometheus. If you need per-query detail, use traces or logs, not metrics.</li>
+<li>Increase <code>scrape_interval</code> only as a last resort; it reduces resolution for every metric.</li>
+</ul>
+<h2 id="choosing-a-vector-store-a-decision-checklist">Choosing a vector store: a decision checklist</h2>
+<p>The right choice depends on your access pattern, not on a benchmark table. Use these questions:</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>If yes</th>
+<th>If no</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Do you need hybrid (vector + keyword) search in one query?</td>
+<td>Prefer a store with native BM25 or sparse-vector support</td>
+<td>A pure vector store is simpler</td>
+</tr>
+<tr>
+<td>Is your filtered field heavily skewed?</td>
+<td>Verify compound-index support before committing</td>
+<td>Standard scalar indexes are fine</td>
+</tr>
+<tr>
+<td>Do you need to run air-gapped?</td>
+<td>Prefer a store with a single-binary or embedded mode</td>
+<td>Managed or distributed stores are viable</td>
+</tr>
+<tr>
+<td>Is your team already operating a relational database at scale?</td>
+<td>Consider the vector extension for that database before adding a new system</td>
+<td>A dedicated vector store is worth the operational cost</td>
+</tr>
+<tr>
+<td>Is your expected QPS under a few hundred?</td>
+<td>Almost any option works; optimise for operational simplicity</td>
+<td>Measure index build time and filtered-query latency under load</td>
+</tr>
+<tr>
+<td>Do you need per-tenant isolation?</td>
+<td>Prefer a store with collection or partition-level isolation</td>
+<td>Shared collections with metadata filters are fine</td>
+</tr>
+</tbody>
+</table>
+<p>The honest answer is that no benchmark table transfers between workloads. Vector search latency depends on dimensionality, index type, filter selectivity, and hardware. The only useful benchmark is one you run against your own data with your own query distribution.</p>
+<h2 id="how-to-measure-any-of-this">How to measure any of this</h2>
+<p>The pattern is the same for every failure mode above:</p>
+<ol>
+<li><strong>Define a labelled set.</strong> A few hundred query-document pairs with known relevant documents. This is the ground truth for recall.</li>
+<li><strong>Instrument the pipeline per stage.</strong> Log input hash, normalized input, retrieved IDs, reranker scores, and final answer. Correlate by request ID.</li>
+<li><strong>Run a load test at your target concurrency.</strong> Not at 1.1x, at the concurrency you actually expect at peak. Use a tool that can hold steady state for at least 30 minutes; transient bursts hide steady-state problems.</li>
+<li><strong>Break out metrics by dimension.</strong> P50 and P99 overall are not enough. Break out by filter predicate, by cache hit/miss, by collection, by tenant.</li>
+<li><strong>Inject failures.</strong> Kill the vector database mid-run. Throttle the LLM. Fill the cache. Observe recovery time and error rate.</li>
+</ol>
+<p>The commands are mundane:</p>
+<pre><code class="language-bash"># Steady-state load test with a fixed concurrency for 30 minutes.
+hey -z 30m -c 200 -m POST \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;query&quot;:&quot;...&quot;}' \
+  http://localhost:8000/retrieve
+
+# Watch GPU memory during the run.
+nvidia-smi --query-gpu=memory.used,memory.total --format=csv -l 1
+
+# Watch Prometheus scrape health.
+curl -s localhost:9090/api/v1/query?query=scrape_duration_seconds | jq
+</code></pre>
+<h2 id="a-note-on-cost">A note on cost</h2>
+<p>Cost claims about RAG stacks are almost always wrong because they depend on instance type, region, commitment level, and utilisation. The one useful exercise is to build your own cost model from first principles:</p>
+<ul>
+<li>List each component (vector store, cache, reranker GPU, LLM calls).</li>
+<li>For each, note the instance type and its on-demand hourly rate from your cloud provider's pricing page.</li>
+<li>Multiply by the number of instances you actually run at peak.</li>
+<li>Add egress, storage, and any managed-service markup.</li>
+</ul>
+<p>Do this in a spreadsheet, not in your head. The result will be specific to your workload and will change as your traffic grows. Revisit it quarterly.</p>
+<h2 id="the-30-minute-action">The 30-minute action</h2>
+<p>Pick the failure mode above that is most plausible for your stack, and add one instrument to it in the next 30 minutes. If you are unsure where to start, add per-filter-predicate latency logging to your vector-search call and run a 10-minute load test at your expected peak concurrency. Compare the P99 for your most selective filter against the P99 for your least selective one. A gap larger than 3x is your next debugging session.</p>
                 
                 
             </div>

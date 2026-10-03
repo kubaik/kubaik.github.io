@@ -1,423 +1,250 @@
 # AWS costs for Nairobi SaaS: 2026 bill split
 
-The tutorials all showed the happy path. This post shows what comes after.
+Most AWS cost tutorials stop at "here is the pricing page." The harder problem is attribution: knowing which line item belongs to which product decision, and which decisions to revisit first. This article walks through a representative stack for a SaaS product serving users in Kenya and East Africa, the cost drivers that dominate it, and how to measure each one instead of guessing.
 
-## Why I wrote this (the problem I kept hitting)
+All currency figures below are in USD. Where a number is an AWS list price or a documented default, it is labelled as such. Where a number is arithmetic, the assumptions are stated so you can substitute your own. Nothing here is a measured bill from a real account.
 
-The surprise wasn’t the compute charge — it was the $480/month RDS snapshot storage for a table that hadn’t been queried in 90 days.
+## The stack, and why each piece exists
 
-I had built the stack the way every tutorial told me: PostgreSQL on RDS, EC2 behind an ALB, S3 for files. Costs looked fine until the bill tripled when we added 200 users in Kampala and Kigali. The finance team asked for a breakdown by region, product area, and line item. I didn’t have one.
+A common architecture for a low-latency SaaS serving East African users:
 
-That week I learned that Nairobi bandwidth egress is still 5× more expensive than us-east-1 for inter-region traffic, and that CloudFront doesn’t cache POST requests by default, so every download link we generated in Kenya triggered a Lambda@Edge call. This post is the bill split I wish I’d had before launch day.
+- Application servers on EC2 (or a container service) in the closest available region.
+- PostgreSQL on a managed relational database service, with a standby for failover.
+- A Redis-compatible cache for sessions, rate limiting, and hot reads.
+- Object storage for user uploads, fronted by a CDN.
+- DNS with latency-based routing if more than one region is in play.
+- Cost and usage data exported to a queryable store for attribution.
+- Metrics, logs, and traces in a hosted observability tool.
 
-## Prerequisites and what you'll build
+The geography matters more than the component list. Nairobi has no AWS region. The nearest options are `af-south-1` (Cape Town) and `me-south-1` (Bahrain), with `eu-west-1` and `eu-south-1` also viable depending on traffic patterns. That choice cascades into every line item: instance pricing, inter-region transfer, CDN origin fetch latency, and the cost of replicating data for disaster recovery.
 
-You’ll end up with a repeatable stack for a Nairobi-based SaaS in 2026:
-- Django 5.1 backend on EC2
-- PostgreSQL 16 on RDS with read replicas in two other African regions
-- Redis 7.2 for caching and rate limiting
-- S3 + CloudFront for static and user uploads
-- Lambda@Edge for country-based redirects
-- Route 53 latency routing
-- AWS Cost Explorer and CUR exports automated with Athena
-- Grafana Cloud for dashboards and alerts
+## Cost drivers, in rough order of impact
 
-We’ll keep everything in a single CDK 2.84.0 TypeScript project so you can deploy the same infra to staging and prod with one command. The final bill should be under $1.20/user/month at 500 active users, with 90 % of the cost in compute and storage, and the remaining 10 % split between bandwidth and observability.
+For most small SaaS deployments, four categories dominate:
 
-If you’re on a team that bills in KES, note the exchange rate we’ll use: 155 KES = 1 USD as of Q2 2026. All figures are in USD unless stated.
+1. **Compute** — application servers plus any NAT gateways.
+2. **Database** — instance hours, storage, backups, and I/O.
+3. **Data transfer** — egress to the internet, inter-region replication, and CDN origin fetches.
+4. **Observability** — metrics, logs, and traces, which are frequently underestimated because they grow with traffic.
 
-## Step 1 — set up the environment
+Everything else — DNS, secrets, IAM, small caches — is usually a rounding error at this scale, until it isn't.
 
-Start with an empty directory and install the tools we’ll touch:
+### Compute
 
-```bash
-npm install -g aws-cdk@2.84.0 typescript@5.4  
-# CDK needs Node 20 LTS, so ensure you’re on 20.13.1 or later
-node --version  # v20.13.1
-```
-
-Create a new CDK app:
+EC2 pricing varies by region. Graviton (`t4g`, `m6g`, `r6g`) instances are typically cheaper per hour than equivalent x86 instances, and the difference is usually large enough to justify the porting effort for interpreted or well-behaved compiled workloads. To find out what your workload actually costs, the only reliable method is to look at your own usage:
 
 ```bash
-mkdir nairobi-saas && cd nairobi-saas
-cdk init app --language typescript
+aws ce get-cost-and-usage \
+  --time-period Start=2026-01-01,End=2026-01-08 \
+  --granularity DAILY \
+  --metrics UnblendedCost UsageQuantity \
+  --group-by Type=DIMENSION,Key=INSTANCE_TYPE \
+  --filter '{"Dimensions":{"Key":"SERVICE","Values":["Amazon Elastic Compute Cloud - Compute"]}}'
 ```
 
-Install the required constructs:
+That gives you cost per instance type per day. Compare it against your CloudWatch CPU and memory metrics over the same window. An instance averaging under 10% CPU over a week is a candidate for downsizing or consolidation.
+
+NAT gateways deserve separate attention. They are billed per hour plus per gigabyte processed, and they are easy to accumulate — one per availability zone is the default in many infrastructure-as-code templates. A workload doing heavy outbound traffic through NAT can spend more on NAT than on the instances it serves. The mitigation is VPC endpoints for AWS services (S3, ECR, Secrets Manager, and so on), which bypass NAT entirely.
 
 ```bash
-npm install @aws-cdk/aws-ec2@2.84.0 @aws-cdk/aws-rds@2.84.0 @aws-cdk/aws-s3@2.84.0 \
-  @aws-cdk/aws-cloudfront@2.84.0 @aws-cdk/aws-lambda@2.84.0 @aws-cdk/aws-elasticache@2.84.0 \
-  @aws-cdk/aws-route53@2.84.0 @aws-cdk/aws-lambda-nodejs@2.84.0 @aws-cdk/aws-iam@2.84.0
+aws ce get-cost-and-usage \
+  --time-period Start=2026-01-01,End=2026-01-08 \
+  --granularity DAILY \
+  --metrics UnblendedCost \
+  --filter '{"Dimensions":{"Key":"USAGE_TYPE","Values":["NatGateway-Hours","NatGateway-Bytes"]}}'
 ```
 
-Set up a profile for Nairobi with the correct region and credentials:
+### Database
+
+Managed PostgreSQL cost has three components that scale independently:
+
+- **Instance hours**, multiplied by the number of instances. A primary plus a standby is roughly double the instance cost of a primary alone.
+- **Storage**, billed per gigabyte-month, plus provisioned IOPS if you use them.
+- **Backups**, billed for storage beyond the free retention window. Automated backups within the retention period are typically free up to the size of the database; manual snapshots are billed at standard storage rates indefinitely.
+
+The failure mode here is snapshot accumulation. A team that takes a manual snapshot before every deploy, and never deletes them, will eventually pay more for snapshots than for the live database. The fix is a retention policy enforced in code, not a reminder in a wiki.
+
+To see what you are actually paying for:
 
 ```bash
-aws configure --profile nairobi-saas
-# Region: af-south-1  # Johannesburg is closest to Nairobi latency-wise
-# Output format: json
+aws rds describe-db-clusters \
+  --query 'DBClusters[*].[DBClusterIdentifier,BackupRetentionPeriod,AllocatedStorage]'
+
+aws rds describe-db-snapshots \
+  --snapshot-type manual \
+  --query 'DBSnapshots[*].[DBSnapshotIdentifier,SnapshotCreateTime,AllocatedStorage]' \
+  --output table
 ```
 
-Create a `.env` file with the secrets we’ll inject via AWS Secrets Manager later:
+Sort the snapshot list by age. Anything older than your stated retention policy is a candidate for deletion, subject to whatever compliance regime applies.
 
-```ini
-# .env
-DB_NAME=saas_prod
-DB_USER=saas_admin
-DB_PASSWORD=$(openssl rand -base64 32)
-REDIS_PASSWORD=$(openssl rand -base64 32)
-DJANGO_SECRET_KEY=$(openssl rand -hex 64)
-```
+For read-heavy workloads, read replicas can be cheaper than scaling the primary vertically, but they add their own instance hours and can lag. Measure replica lag before committing.
 
-Add `.env` to `.gitignore`.
+### Data transfer
 
-Gotcha: if you’re on a Windows host, the random generators behave differently — I wasted 45 minutes until I switched to WSL.
+This is where region choice bites hardest. Data transfer out to the internet is billed per gigabyte, and rates differ by region. Inter-region transfer is also billed, in both directions in some configurations. A cross-region replication setup that looks cheap on paper can become the largest line item once you account for daily replication volume.
 
-## Step 2 — core implementation
-
-Let’s scaffold the stack. Here’s the minimal CDK app that builds the Nairobi core:
-
-```typescript
-// lib/nairobi-saas-stack.ts
-import * as cdk from 'aws-cdk-lib';
-import * as ec2 from 'aws-cdk-lib/aws-ec2';
-import * as rds from 'aws-cdk-lib/aws-rds';
-import * as s3 from 'aws-cdk-lib/aws-s3';
-import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
-import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
-import * as lambda from 'aws-cdk-lib/aws-lambda';
-import * as elasticache from 'aws-cdk-lib/aws-elasticache';
-import { Construct } from 'constructs';
-
-export class NairobiSaaSStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
-
-    // VPC with two AZs in af-south-1
-    const vpc = new ec2.Vpc(this, 'NairobiVpc', {
-      maxAzs: 2,
-      natGateways: 1,
-      subnetConfiguration: [
-        { name: 'Public', subnetType: ec2.SubnetType.PUBLIC, cidrMask: 24 },
-        { name: 'Private', subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS, cidrMask: 24 },
-        { name: 'Isolated', subnetType: ec2.SubnetType.PRIVATE_ISOLATED, cidrMask: 24 },
-      ],
-    });
-
-    // Postgres 16 on RDS Multi-AZ, gp3 200 GB, 2 vCPU, 8 GB RAM
-    const db = new rds.DatabaseCluster(this, 'PostgresCluster', {
-      engine: rds.DatabaseClusterEngine.auroraPostgres({
-        version: rds.AuroraPostgresEngineVersion.VER_16_1,
-      }),
-      instances: 2,
-      parameterGroup: rds.ParameterGroup.fromParameterGroupName(
-        this,
-        'PgParams',
-        'default.aurora-postgresql16'
-      ),
-      storageEncrypted: true,
-      vpcSubnets: { subnetType: ec2.SubnetType.PRIVATE_ISOLATED },
-      vpc,
-      removalPolicy: cdk.RemovalPolicy.SNAPSHOT,
-      backup: {
-        retention: cdk.Duration.days(7),
-      },
-      instanceProps: {
-        instanceType: ec2.InstanceType.of(
-          ec2.InstanceClass.BURSTABLE3,
-          ec2.InstanceSize.MEDIUM
-        ),
-        parameterGroup: rds.ParameterGroup.fromParameterGroupName(
-          this,
-          'ClusterParams',
-          'default.aurora-postgresql16'
-        ),
-      },
-    });
-
-    // Redis 7.2 cluster in the private subnet
-    const redisSG = new ec2.SecurityGroup(this, 'RedisSG', { vpc, allowAllOutbound: false });
-    redisSG.addIngressRule(ec2.Peer.ipv4(vpc.vpcCidrBlock), ec2.Port.tcp(6379));
-
-    const redis = new elasticache.CfnCacheCluster(this, 'RedisCluster', {
-      cacheNodeType: 'cache.m6g.large',
-      engine: 'redis',
-      numCacheNodes: 1,
-      clusterName: 'saas-redis',
-      vpcSecurityGroupIds: [redisSG.securityGroupId],
-      preferredAvailabilityZone: vpc.availabilityZones[0],
-      snapshotRetentionLimit: 7,
-    });
-
-    // S3 bucket for uploads, encrypted at rest, versioned, block public access
-    const uploadsBucket = new s3.Bucket(this, 'UploadsBucket', {
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      versioned: true,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-      enforceSSL: true,
-      lifecycleRules: [
-        {
-          id: 'ExpireOldUploads',
-          transitions: [
-            { storageClass: s3.StorageClass.INFREQUENT_ACCESS, transitionAfter: cdk.Duration.days(30) },
-            { storageClass: s3.StorageClass.GLACIER, transitionAfter: cdk.Duration.days(90) },
-          ],
-        },
-      ],
-    });
-
-    // CloudFront distribution fronting the bucket
-    const distribution = new cloudfront.Distribution(this, 'UploadsDist', {
-      defaultBehavior: {
-        origin: new origins.S3Origin(uploadsBucket),
-        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-        allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
-        cachedMethods: cloudfront.CachedMethods.CACHE_GET_HEAD,
-        cachePolicy: new cloudfront.CachePolicy(this, 'UploadsCachePolicy', {
-          queryStringBehavior: cloudfront.CacheQueryStringBehavior.none(),
-          headerBehavior: cloudfront.CacheHeaderBehavior.none(),
-          cookieBehavior: cloudfront.CacheCookieBehavior.none(),
-          defaultTtl: cdk.Duration.seconds(0), // never cache signed URLs
-          maxTtl: cdk.Duration.seconds(0),
-          minTtl: cdk.Duration.seconds(0),
-        }),
-      },
-      errorResponses: [
-        { httpStatus: 403, responseHttpStatus: 200, responsePagePath: '/index.html' },
-        { httpStatus: 404, responseHttpStatus: 200, responsePagePath: '/index.html' },
-      ],
-    });
-
-    // Outputs
-    new cdk.CfnOutput(this, 'DBEndpoint', { value: db.clusterEndpoint.hostname });
-    new cdk.CfnOutput(this, 'RedisEndpoint', { value: redis.attrRedisEndpointAddress });
-    new cdk.CfnOutput(this, 'BucketName', { value: uploadsBucket.bucketName });
-    new cdk.CfnOutput(this, 'DistributionDomain', { value: distribution.distributionDomainName });
-  }
-}
-```
-
-Deploy the stack:
+The way to measure this is to break out usage types:
 
 ```bash
-cdk bootstrap --profile nairobi-saas
-cdk deploy --profile nairobi-saas --require-approval never
+aws ce get-cost-and-usage \
+  --time-period Start=2026-01-01,End=2026-01-08 \
+  --granularity DAILY \
+  --metrics UnblendedCost UsageQuantity \
+  --filter '{"Dimensions":{"Key":"USAGE_TYPE_GROUP","Values":["EC2: Data Transfer - Internet (Out)","EC2: Data Transfer - Regional"]}}'
 ```
 
-After deployment you should see outputs like:
+If inter-region transfer is a meaningful fraction of your bill, the question to ask is whether the replication is serving reads or serving disaster recovery. Read-serving replication can often be replaced by a CDN with a well-configured cache. DR replication cannot, but its volume can sometimes be reduced by replicating snapshots rather than continuous streams.
+
+### CDN and caching
+
+A CDN in front of object storage usually reduces both latency and egress cost, but only if the cache hit ratio is high. A distribution configured to cache nothing is pure overhead: you pay for the CDN request and the origin fetch.
+
+Two configuration mistakes are common:
+
+- **Caching signed URLs.** If your application generates short-lived signed URLs for private objects, and the CDN caches them, the cache key includes the signature. Every request is a cache miss, and worse, a cached response may outlive the URL's validity. Set the minimum, default, and maximum TTL to zero for these behaviours, or use signed cookies with a separate cache policy.
+- **Caching methods that should not be cached.** POST, PUT, and DELETE requests should not be cached. Verify the allowed and cached method sets on each behaviour.
+
+To measure cache effectiveness, use the CloudFront console's cache statistics, or query the access logs:
 
 ```
-NairobiSaaSStack.DBEndpoint = saas-prod-cluster.cluster-xyz.af-south-1.rds.amazonaws.com
-NairobiSaaSStack.RedisEndpoint = saas-redis.xyz.ng.0001.use2.cache.amazonaws.com:6379
-NairobiSaaSStack.BucketName = nairobi-saas-uploadsbucket-xyz
-NairobiSaaSStack.DistributionDomain = d123.cloudfront.net
+# After enabling CloudFront standard logging to S3 and querying with Athena:
+SELECT
+  count(*) AS requests,
+  sum(CASE WHEN sc_status = 200 AND x_edge_result_type = 'Hit' THEN 1 ELSE 0 END) AS hits,
+  sum(CASE WHEN x_edge_result_type = 'Miss' THEN 1 ELSE 0 END) AS misses
+FROM cloudfront_logs
+WHERE date = '2026-01-01'
 ```
 
-I set the cache TTL to 0 seconds for signed URLs because I once cached a temporary grant token and users could access each other’s files for 10 minutes — that cost me an incident report and a customer.
+A hit ratio below roughly 80% for static assets usually indicates a cache key that is too specific — often caused by forwarding query strings, headers, or cookies that do not affect the response.
 
-## Step 3 — handle edge cases and errors
+### Observability
 
-Three edge cases broke us in production.
+Hosted observability platforms bill by ingested volume: metrics, log bytes, trace spans, or some combination. Cost grows with traffic, and it grows fastest during incidents — exactly when you least want to be thinking about sampling.
 
-**1. Lambda@Edge country redirects**
+Two controls matter:
 
-We wanted to redirect users in Kenya to the closest CloudFront edge. The gotcha: Lambda@Edge viewer-request triggers run in the edge POP, but the event object does not expose the viewer’s country by default. You must add a Lambda@Edge function that triggers on viewer-request and uses the CloudFront-Viewer-Address header to geolocate.
+- **Sampling.** Trace sampling at the SDK level, not the collector level, reduces both ingest cost and application overhead.
+- **Log retention.** Logs are usually the largest volume. Set retention per log group rather than keeping everything forever.
 
-```typescript
-// lambda/edge-redirect/index.ts
-import { CloudFrontRequestHandler } from 'aws-lambda';
-
-const COUNTRY_MAP: Record<string, string> = {
-  KE: 'af-south-1',
-  UG: 'af-south-1',
-  RW: 'af-south-1',
-  TZ: 'af-south-1',
-  // ...
-};
-
-exports.handler = async (event) => {
-  const request = event.Records[0].cf.request;
-  const country = request.headers['cloudfront-viewer-country']?.[0]?.value;
-  if (!country) {
-    // fallback to af-south-1
-    return request;
-  }
-  if (COUNTRY_MAP[country]) {
-    // inject a custom header for the origin shield
-    request.headers['x-region'] = [{ key: 'x-region', value: COUNTRY_MAP[country] }];
-  }
-  return request;
-};
+```bash
+aws logs describe-log-groups \
+  --query 'logGroups[*].[logGroupName,retentionInDays,storedBytes]' \
+  --output table
 ```
 
-Deploy the edge function with Node 20 Lambda runtime and a 128 MB memory size. The cold start adds ~80 ms, but we cache the redirect in CloudFront so it only runs once per session.
+Any log group with `retentionInDays` set to null is retaining logs indefinitely. That is a default, not a decision.
 
-**2. Redis failover during elections**
+## Building the attribution pipeline
 
-In 2026 Kenya had a by-election that triggered DoS traffic spikes. Our Redis cluster (cache.m6g.large) had a 30-second failover window. That caused 15 % of API calls to hit the origin, which doubled the RDS CPU for five minutes.
+Cost Explorer's console is fine for a rough look, but attribution by product area, customer tier, or environment requires tags and a queryable export.
 
-Fix: enable Redis multi-AZ with automatic failover. In CDK:
+The mechanism is the Cost and Usage Report (CUR), delivered to S3 and queryable via Athena. The setup is:
 
-```typescript
-redis.addPropertyOverride('PreferredAvailabilityZones', [
-  vpc.availabilityZones[0],
-  vpc.availabilityZones[1],
-]);
+1. Enable CUR in the Billing console, with resource IDs included.
+2. Point it at an S3 bucket with a lifecycle policy.
+3. Create an Athena table over the Parquet output (AWS publishes a CloudFormation template for this).
+4. Query by tag.
+
+Tagging is the part that requires discipline. A tagging policy that covers `Environment`, `Service`, `Owner`, and `CostCenter` is enough to answer most questions. Untagged resources appear as a single line item, which is itself a useful signal — if the untagged total is more than a few percent, the tagging policy is not being enforced.
+
+An illustrative query to split cost by service tag for a given month:
+
+```sql
+SELECT
+  line_item_usage_account_id,
+  resource_tags_user_service AS service,
+  line_item_product_code AS product,
+  sum(line_item_unblended_cost) AS cost
+FROM cur_table
+WHERE month = '1'
+  AND year = '2026'
+GROUP BY 1, 2, 3
+ORDER BY cost DESC
+LIMIT 50
 ```
 
-Also raise the timeout in Django settings:
+Run this weekly. The point is not the report; it is the habit of looking at the trend before it becomes a surprise.
 
-```python
-# settings.py
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://saas-redis.xyz.ng.0001.use2.cache.amazonaws.com:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {
-                "max_connections": 100,
-                "socket_timeout": 5,  # was 1 second; bumped to 5
-            },
-        },
-    }
-}
+## A worked sizing example
+
+The following is arithmetic from stated assumptions, not a measured bill. Assume:
+
+- 500 monthly active users.
+- Two application instances, each `t4g.medium`, running continuously.
+- One managed PostgreSQL primary plus one standby, `db.r6g.large`, 200 GB storage.
+- One Redis-compatible cache node, `cache.m6g.large`.
+- 200 GB object storage, 1 TB monthly CDN egress.
+- One NAT gateway.
+
+Using published on-demand list prices for `af-south-1` at the time of writing (verify current prices before relying on them):
+
+- Application instances: 2 × $0.0336/hr × 730 hr ≈ $49.06
+- Database instances: 2 × $0.2268/hr × 730 hr ≈ $331.13
+- Database storage: 200 GB × $0.138/GB-month ≈ $27.60
+- Cache node: 1 × $0.166/hr × 730 hr ≈ $121.18
+- Object storage: 200 GB × $0.0255/GB-month ≈ $5.10
+- CDN egress: 1,000 GB × $0.085/GB ≈ $85.00
+- NAT gateway: $0.062/hr × 730 hr ≈ $45.26, plus per-GB processing
+- DNS, secrets, and observability: variable, often $50–$200 at this scale
+
+The sum of the fixed components above is roughly $664 before data processing, observability, and any inter-region transfer. At 500 users that is about $1.33 per user per month for infrastructure alone — before the database backup storage, before NAT data processing, and before any DR replication.
+
+The useful takeaway is not the total. It is the shape: the database instances are the largest single line, followed by the cache, followed by the CDN. That ordering tells you where optimization effort pays off first.
+
+## Decision checklist
+
+Before optimizing anything, answer these in writing:
+
+- **Which region, and why?** Latency to the nearest user population, data residency requirements, and service availability all constrain this. Document the choice and the alternatives considered.
+- **What is the failover target?** Single-AZ with fast restore, multi-AZ in one region, or multi-region. Each step roughly doubles the database cost.
+- **What is the retention policy for backups, snapshots, and logs?** State it in days. Enforce it in infrastructure-as-code, not in a runbook.
+- **What is the cache hit ratio target?** If it is not measured, it is not a target.
+- **Which resources are untagged?** Anything untagged cannot be attributed.
+- **What is the traffic growth assumption?** A stack sized for 500 users and a stack sized for 5,000 differ mainly in the database and observability lines.
+
+## Common failure modes
+
+**Snapshot accumulation.** Manual snapshots taken "just in case" and never deleted. Detect by listing snapshots older than the retention policy. Fix by setting retention in code.
+
+**NAT gateway sprawl.** One per availability zone, plus no VPC endpoints, plus a service that talks to S3 constantly. Detect by filtering cost by `NatGateway-Bytes`. Fix by adding gateway endpoints for S3 and DynamoDB, and interface endpoints for other AWS services.
+
+**Cache misses on signed URLs.** A CDN behaviour that caches signed requests produces both cost and correctness problems. Detect by comparing request count to hit count. Fix by setting TTLs to zero for signed behaviours and using signed cookies where caching is desired.
+
+**Indefinite log retention.** Log groups created without a retention setting default to never expiring. Detect with `describe-log-groups`. Fix by setting retention at creation time in your infrastructure code.
+
+**Observability ingest growth during incidents.** A retry storm or a verbose log level increases both the bill and the noise. Detect by graphing ingest volume against request volume. Fix with SDK-level sampling and per-service log levels.
+
+## FAQ
+
+**Should the application run in `af-south-1` or a European region?**
+
+It depends on where the users are and what the application does. `af-south-1` reduces round-trip latency for users in southern and eastern Africa, but service availability and instance selection are narrower than in older regions. The way to decide is to measure: deploy a small test endpoint in each candidate region and record round-trip time from representative user locations. Do not choose based on a blog post, including this one.
+
+**Is a managed cache worth it over running Redis on an instance?**
+
+A managed cache removes operational work — patching, failover, backups — and adds cost. The break-even depends on how much an hour of engineering time is worth to your team and how much downtime costs. For small teams, the managed option is usually the right default; for teams with existing operational maturity and a strong reason to control the deployment, self-managed can be cheaper.
+
+**How do I bill customers in local currency when AWS bills in USD?**
+
+Track the exchange rate you use, the date you applied it, and the margin you added. Round consistently. The important thing for finance is that the rate and the margin are documented and stable, not that they are optimal.
+
+**What is the cheapest way to get a cost breakdown by customer?**
+
+Tag resources per customer where possible (rarely feasible), or attribute shared costs by a documented driver — request count, storage bytes, or seat count. The driver should be one you can measure per customer, not one you estimate.
+
+## One action for the next 30 minutes
+
+Pick the largest line item in your last full month of AWS spend, and find out what it actually is. Run:
+
+```bash
+aws ce get-cost-and-usage \
+  --time-period Start=$(date -d '1 month ago' +%Y-%m-01),End=$(date +%Y-%m-01) \
+  --granularity MONTHLY \
+  --metrics UnblendedCost \
+  --group-by Type=DIMENSION,Key=SERVICE \
+  --output table
 ```
 
-**3. RDS snapshot bloat**
-
-We kept 30 daily snapshots for 90 days — 200 GB × 30 × 90 days × $0.095/GB-month = $513/month of snapshot storage we never used. Switch to a 7-day retention policy and rely on automated backups only.
-
-```typescript
-// in DatabaseCluster props
-backup: {
-  retention: cdk.Duration.days(7),
-  preferredWindow: '03:00-06:00',
-},
-removalPolicy: cdk.RemovalPolicy.DESTROY,  // only for staging
-```
-
-## Step 4 — add observability and tests
-
-We instrument with OpenTelemetry, Grafana Cloud, and custom CloudWatch alarms.
-
-**Metrics**
-- Django 5.1 via `opentelemetry-instrumentation-django==0.44b0`
-- PostgreSQL via RDS Performance Insights (enabled in CDK)
-- Redis via CloudWatch ElastiCache metrics
-- Cost via CUR exported to Athena every 4 hours
-
-**Alarms**
-- RDS CPU > 80 % for 5 min → pager
-- Redis evictions > 1000/min → slack alert
-- CloudFront 5xx > 1 % → opsgenie
-
-**Tests**
-- Locust 2.20.0 load test simulating 1000 users across KE, UG, TZ
-- Django unit tests with pytest 7.4
-- CDK synth and cfn_nag security scan in CI
-
-Add a minimal dashboard in Grafana Cloud:
-
-```yaml
-# grafana/dashboard.yaml
-apiVersion: v1alpha1
-providers:
-- name: default
-  folder: Nairobi
-  type: file
-  disableDeletion: false
-  updateIntervalSeconds: 10
-  allowUiUpdates: true
-  options:
-    path: /var/lib/grafana/dashboards
-    foldersFromFilesStructure: true
-```
-
-Import the AWS billing dashboard template — filter by `af-south-1` and `saas-prod` tags so you see only this stack.
-
-I once left the Performance Insights retention at the default 7 days and missed a 3-hour CPU spike that cost $89 — Grafana now alerts on any RDS CPU > 60 % for 10 min.
-
-## Real results from running this
-
-We ran the stack for 90 days with 500 active users in Kenya, Uganda, and Tanzania. Here’s the bill split by service (af-south-1 only):
-
-| Service | Monthly cost (USD) | % of total | Notes |
-|---|---|---|---|
-| EC2 (t4g.medium, 2 AZ) | $422 | 29 % | Includes bastion host and NAT |
-| RDS (2 × db.r6g.large) | $584 | 40 % | Multi-AZ, 200 GB gp3, 7-day snapshots |
-| ElastiCache (cache.m6g.large) | $89 | 6 % | Redis 7.2, 1 node |
-| S3 (200 GB storage, 1 TB egress) | $24 | 2 % | Includes lifecycle transitions |
-| CloudFront (1 TB transfer) | $110 | 8 % | 90 % cache hit ratio |
-| Lambda@Edge (100k requests) | $12 | 1 % | 80 ms avg latency |
-| Route 53 (5 hosted zones) | $12 | 1 % | Latency routing policies |
-| CloudWatch + Grafana Cloud | $72 | 5 % | Metrics, logs, traces |
-| NAT Gateway (af-south-1) | $54 | 4 % | One per AZ |
-| Secrets Manager + IAM | $6 | 0 % | Secrets stored, not read often |
-| **Total** | **$1,385** | **100 %** | 500 users → $2.77/user/month |
-
-If we add a second region (af-south-1 + eu-west-1) for DR, the bill jumps to $2,240 because inter-region data transfer is $0.09/GB and we replicate 100 GB/day. That’s 62 % more expensive — we decided to keep a nightly backup only.
-
-Latency benchmarks from Nairobi to each component (median, 95th percentile):
-- RDS read: 12 ms / 45 ms
-- Redis: 3 ms / 12 ms
-- S3 GET: 42 ms / 90 ms
-- CloudFront (cached): 18 ms / 35 ms
-- Lambda@Edge: 80 ms / 120 ms
-
-We cut the bill 40 % by switching the EC2 instances from Intel m5.large (0.192 USD/hr) to Graviton t4g.medium (0.116 USD/hr) — same RAM, 20 % cheaper, and 15 % faster in our Django benchmarks.
-
-## Common questions and variations
-
-**Q1: How do I keep the bill under $1 per user at 1000 users?**
-
-At 1000 users the total monthly cost climbs to ~$2,100 without changes. To stay under $1/user, shift to serverless: replace EC2 with Fargate on AWS App Runner or Lightsail. Fargate t4g.small costs $0.035/hr × 730 = $25.55 vs EC2 t4g.medium at $85.60. That alone saves ~$60/month. Pair it with Aurora Serverless v2 (0.5–4 ACUs) and bill drops to ~$1,050 for 1000 users — $1.05/user. If you can tolerate 1–2 s cold starts, it’s worth it.
-
-**Q2: Can I use a cheaper Redis provider?**
-
-Memcached on ElastiCache is 30 % cheaper, but Django’s cache framework expects Redis. If you’re willing to rewrite the cache layer to pymemcache, you can drop from $89 to $61/month. We tested it and lost 15 % throughput on list/set operations, so we stayed on Redis.
-
-**Q3: What happens if I forget to set lifecycle rules on S3?**
-
-Without lifecycle rules, a 1 TB bucket with 10 GB/day uploads will cost ~$25/month for storage plus $120/month for requests if you keep everything in Standard. After 90 days that’s ~$1,200 in avoidable storage fees. Always set lifecycle transitions to IA after 30 days and Glacier after 90.
-
-**Q4: Is RDS Multi-AZ worth the premium in a single-region app?**
-
-Yes, if you can’t afford downtime during election-related spikes. During the 2026 Kenyan elections our Multi-AZ RDS failed over in 2 min 47 s while the single-AZ test took 12 min and caused 30 % 5xx errors. The $140/month premium was cheaper than the support ticket.
-
-**Q5: How do I bill users in KES if my costs are in USD?**
-
-Use a daily FX rate API (we used exchangerate.host) and round to 0.05 KES. At 155 KES/USD, a $12.45 bill becomes 1,930 KES. Keep the FX margin under 1 %; otherwise finance will flag it.
-
-## Where to go from here
-
-Pick one of these concrete next steps and do it in the next 30 minutes:
-
-1. Open the AWS Cost Explorer console, set the date range to last 7 days, and filter by `ServiceName = AmazonEC2` and `UsageType NOT LIKE *:NatGateway*`. Note the top 3 instances by spend. If any instance is older than 30 days, tag it `retire=true` and schedule it for replacement.
-
-2. Run `aws rds describe-db-clusters --db-cluster-identifier saas-prod-cluster --query 'DBClusters[0].BackupRetentionPeriod'` in your terminal. If it’s greater than 7, update it via CDK to 7 days to cut snapshot costs immediately.
-
-3. Clone the CDK project from https://github.com/yourorg/nairobi-saas-cdk, run `npm install && npm run build`, then `cdk deploy --require-approval never` to spin up an identical staging stack. Compare the staging bill after 24 hours to the production bill; any delta > 10 % is a red flag you can fix before it hits prod.
-
-4. Open Grafana Cloud, go to Explore, and query `sum by(service) (rate(http_request_duration_seconds_sum[5m])) / sum by(service) (rate(http_request_duration_seconds_count[5m]))`. If any service has p99 > 500 ms, set an alert threshold at 400 ms and page the on-call engineer.
-
-Do one of these now; the bill won’t fix itself.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 28, 2026
+Then drill into the top service with `--group-by Type=DIMENSION,Key=USAGE_TYPE`. Write down the top three usage types and what resource each one corresponds to. If you cannot name the resource, that is the finding — an unattributable cost is the one most likely to grow without anyone noticing.

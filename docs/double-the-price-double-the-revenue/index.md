@@ -1,343 +1,258 @@
 # Double the price, double the revenue
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+Most pricing advice for developer tools is written for companies that sell to engineering managers with departmental budgets. Indie tools and small SDKs usually sell to solo developers and small teams paying out of pocket. The two audiences behave differently, and a pricing table copied from a large SaaS company often misreads the second group entirely.
 
-## Why I wrote this (the problem I kept hitting)
+This article walks through a four-tier pricing model built around user maturity and willingness to pay, then shows how to enforce it in code with a usage counter, feature gates, and a plan guard. It also covers how to measure whether a pricing change actually helped, because the honest answer to "should I raise prices?" is always "instrument it and find out."
 
-In 2026, the average indie developer tool that hits 10k GitHub stars still makes less than $2k MRR after six months. I’ve shipped three tools that crossed that line — a CLI formatter in Go, a Python SDK for a regional cloud, and a local-first state manager for mobile apps. Each plateaued at around 50 paying teams paying $49–99/month. Then I priced a new one at $199/month and watched MRR double in 12 days.
+## What this model assumes
 
-The mistake wasn’t the code; it was the pricing table. I assumed developers wanted a free tier first, then a cheap paid tier, then a big enterprise one. I copied the pattern from Stripe, Notion, and Vercel without realising those companies sell to engineering managers who have budgets, not indie devs. My users were solo founders and small teams paying out of pocket. They didn’t want free; they wanted predictable pain.
+Before pricing anything, the tool needs evidence of product-market fit. Useful signals include:
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+- A growing set of stars or installs, and more importantly, repeat weekly usage.
+- A clear "aha" moment where a user hits a task the tool solves and returns to it without being prompted.
+- At least a handful of users who would notice if the tool disappeared tomorrow.
 
-What changed? One pricing experiment taught me the market values speed over savings. Teams would rather pay $200/month for a tool that saves them two hours a week than $50/month for a tool that might save them 30 minutes. That insight flipped our pricing from cost-plus to value-plus. This post shows how to price a developer tool in 2026 using data from 47 tools that crossed $10k MRR in the last 18 months.
+If those signals are absent, pricing work is premature. A pricing page cannot manufacture demand; it can only capture demand that already exists. The failure mode to watch for is spending weeks on a pricing table while the underlying product still has no retention.
 
-## Prerequisites and what you'll build
+The model below assumes a CLI, SDK, or library with a recurring usage pattern — formatting, linting, code generation, data sync, or similar. It maps four tiers to user maturity:
 
-You’ll need a tool that already has product-market fit: at least 500 GitHub stars, 20–30 weekly active users, and a clear “aha” moment where users realise they can’t live without it. If you don’t have that, pause pricing and go back to growth loops.
+- **Free** — evaluation, open-source contributors, hobby use.
+- **Starter** — solo developers and micro-teams.
+- **Growth** — teams of roughly 2–10 engineers.
+- **Scale** — funded startups and larger organizations.
 
-We’ll price the tool using a four-tier model that maps user maturity to willingness-to-pay. The tiers are:
-- Free: for evaluation and open-source contributors
-- Starter: for solo devs and micro teams
-- Growth: for teams with 2–10 engineers
-- Scale: for startups pre-Series A and beyond
+Each tier carries a seat limit, a usage allowance, and a feature gate. The enforcement mechanism is deliberately simple: a plan value read from an environment variable or config file, checked against a counter. No multi-tenant billing system, no ORM, no database joins on the hot path.
 
-Each tier has a seat limit and feature gate. We’ll use a single environment variable to toggle the plan for each user, not a complex multi-tenant billing system. That keeps infra costs under $20/month until you hit 10k users.
+## Choosing a billing provider
 
-You’ll need:
-- A GitHub repo (public or private)
-- A simple CLI or SDK (Python 3.11, Node 20 LTS, or Go 1.22)
-- A billing provider that supports seat-based pricing (Paddle 2026, Stripe Billing, or RevenueCat)
-- A usage counter (Redis 7.2 or SQLite with WAL mode)
+The provider handles checkout, tax, and subscription state. What matters for this model is whether it supports seat-based pricing and metered or usage-based billing, because the tiers above combine both.
 
-Expected outcome: a pricing page that converts 8–12% of GitHub visitors into paying customers within 30 days of launch.
+When comparing providers, check these properties rather than brand names:
 
-## Step 1 — set up the environment
+- **Seat-based pricing support** — can a subscription have a quantity that changes mid-cycle, with proration?
+- **Usage metering** — can you report usage events and bill on them, or do you only need the provider to track plan state?
+- **Tax handling** — does the provider act as merchant of record and handle VAT/GST, or do you?
+- **Local payment methods** — card fees in some regions are materially higher than local rails, and offering local options can change conversion.
+- **Webhook reliability** — plan changes must reach your application; check retry behavior and idempotency.
 
-First, pick a billing provider. In 2026, most indie tools use Paddle 2026 for its seat-based pricing and low 2.9% + $0.30 fee without requiring PCI compliance. Teams that need EU VAT handling often switch to Stripe Billing at 2.9% + €0.25.
+A practical split: let the billing provider own money movement and subscription state, and let your application own the fast path — the per-command usage check. The application should never call the billing API synchronously on a user's command. It reads a cached plan value and a local counter.
 
-I chose Paddle 2026 for the CLI formatter. The setup took 15 minutes:
-1. Create a Paddle account and enable seat-based pricing.
-2. Add a product with four price points: free, $19, $199, $999.
-3. Copy the embeddable checkout URL and add it to a pricing page.
+The cost structure is usually a percentage plus a fixed fee per transaction, with the percentage varying by payment method and region. Compute your own effective rate from your actual mix of transactions rather than assuming a headline number.
 
-Cost so far: $0 until you hit $1k revenue, then 2.9% + $0.30 per transaction.
+## Step 1 — set up the usage counter
 
-Next, add a usage tracker. We’ll use Redis 7.2 with a Lua script to increment a counter per user per month. The Redis instance runs on a $5/month DigitalOcean droplet with 1GB RAM and 25GB SSD. Memory usage peaks at 30MB with 10k counters.
+The counter needs to answer one question quickly: how many times has this user or team used the tool this billing period? Two storage options cover most cases.
+
+**Redis** is the right choice when many processes or machines share the counter and you want atomic increments. A single small instance handles a large number of counters comfortably, since each counter is a few bytes.
+
+**SQLite in WAL mode** is the right choice when the tool runs locally and the counter can be reconciled periodically. It avoids a network hop entirely and has no per-month floor cost beyond disk.
+
+Install Redis on a Debian-based system:
 
 ```bash
-# Install Redis 7.2 on Ubuntu 24.04
 sudo apt update
-sudo apt install redis-server=7:7.2* -y
+sudo apt install redis-server -y
 sudo systemctl enable redis-server
-sudo ufw allow 6379
+sudo systemctl start redis-server
 ```
 
-Create a Lua script to increment and read counters safely:
+Do not expose Redis to the public internet. Bind it to localhost or a private interface and restrict access at the firewall. An open Redis port is one of the most common ways small services get compromised.
+
+A Lua script keeps the increment and read atomic, so two concurrent invocations cannot both read a stale count:
 
 ```lua
 -- incr_monthly.lua
+-- KEYS[1] = user or team id
+-- KEYS[2] = plan name
+-- ARGV[1] = period key, e.g. "2026-03"
 local user_id = KEYS[1]
 local plan = KEYS[2]
-local month_key = "usage:" .. os.date("%Y-%m")
-redis.call("HINCRBY", month_key, user_id, 1)
-local count = tonumber(redis.call("HGET", month_key, user_id) or "0")
+local period = ARGV[1]
+local month_key = "usage:" .. period
+
+local count = redis.call("HINCRBY", month_key, user_id, 1)
 return { count, plan }
 ```
 
-Store the script on disk and load it into Redis:
+Note the period is passed in as an argument rather than computed inside the script. Redis's Lua sandbox does not provide a reliable wall-clock date, and relying on the server's clock couples your billing period to server configuration. Let the caller decide the period. Invoke it like this:
 
 ```bash
-redis-cli --eval incr_monthly.lua user123 growth
+redis-cli --eval incr_monthly.lua user123 growth , 2026-03
 ```
 
-I was surprised that Redis 7.2’s Lua sandbox blocked os.date in some environments — it turned out the Docker image I used remapped the environment variables. The fix was to pass the month as an argument from the CLI wrapper.
+The comma separates keys from arguments in `redis-cli --eval`. Getting that separator wrong is a common source of confusing errors.
 
-## Step 2 — core implementation
+## Step 2 — enforce the plan in the CLI
 
-Add a CLI command that runs the usage check before every command. The CLI formatter we built uses Node 20 LTS. Here’s the pricing guard in index.js:
+The plan guard runs before the tool's real work. It reads the plan, increments the counter, and compares the result against the tier's allowance.
 
 ```javascript
-// index.js
-import { execSync } from 'child_process';
-import { readFileSync } from 'fs';
+// plan-guard.js
+import { execFileSync } from 'node:child_process';
 
-const config = JSON.parse(readFileSync('./config.json'));
-const userId = process.env.USER_ID || 'anon';
-const plan = process.env.PRICING_PLAN || 'free';
+const LIMITS = {
+  free: 1000,
+  starter: 5000,
+  growth: 50000,
+  scale: 500000,
+};
 
-function checkUsage() {
-  try {
-    const res = execSync(
-      `redis-cli --eval incr_monthly.lua ${userId} ${plan}`,
-      { encoding: 'utf-8' }
-    ).trim();
-    const [count, plan] = res.split(',');
-    if (plan === 'free' && count > 1000) {
-      console.error('Free limit reached. Upgrade at https://formatter.dev/pricing');
-      process.exit(1);
-    }
-    if (plan === 'starter' && count > 5000) {
-      console.error('Starter limit reached. Upgrade at https://formatter.dev/pricing');
-      process.exit(1);
-    }
-  } catch (e) {
-    console.error('Usage check failed. Retrying without plan gate.');
+const UPGRADE_URL = 'https://example.com/upgrade';
+
+export function checkUsage({ userId, plan, period }) {
+  const limit = LIMITS[plan];
+  if (limit === undefined) {
+    throw new Error(`Unknown plan: ${plan}`);
   }
+
+  let count;
+  try {
+    const out = execFileSync(
+      'redis-cli',
+      ['--eval', 'incr_monthly.lua', userId, plan, ',', period],
+      { encoding: 'utf8', timeout: 200 }
+    ).trim();
+    count = Number(out.split(',')[0]);
+  } catch (err) {
+    // Fail open, but record it. See the failure-mode section below.
+    return { allowed: true, degraded: true, count: null, limit };
+  }
+
+  if (count > limit) {
+    return {
+      allowed: false,
+      degraded: false,
+      count,
+      limit,
+      message:
+        `Usage limit reached: ${count}/${limit} on the ${plan} plan.\n` +
+        `Upgrade for a higher allowance: ${UPGRADE_URL}?plan=starter&source=cli`,
+    };
+  }
+
+  return { allowed: true, degraded: false, count, limit };
 }
-
-checkUsage();
-// rest of the CLI logic
 ```
 
-The pricing guard runs in 4–8ms on a $5 droplet, measured with hyperfine 1.16.1:
+Two details matter here. First, `execFileSync` with an argument array avoids shell interpolation, so a user ID containing spaces or shell metacharacters cannot break the command. Second, the failure path is explicit: if the counter is unreachable, the guard fails open and marks the result as degraded. Blocking a paying user because your counter is down is worse than letting a few extra calls through.
 
+The caller then decides what to do:
+
+```javascript
+const result = checkUsage({ userId, plan, period });
+
+if (!result.allowed) {
+  console.error(result.message);
+  process.exit(1);
+}
+if (result.degraded) {
+  console.error('Usage service unavailable; running without plan enforcement.');
+}
 ```
-Benchmark 1: formatter free
-  Time (mean ± σ):      4.2 ms ±   0.8 ms
-  Range (min … max):    3.5 ms …   7.1 ms
-  100 runs, 1000 loops each
 
-Benchmark 2: formatter with plan gate
-  Time (mean ± σ):      5.1 ms ±   1.2 ms
-  Range (min … max):    4.0 ms …   8.3 ms
-```
-
-Gotcha: the Redis call can block if the droplet is under memory pressure. We added a 50ms timeout with a fallback to SQLite (SQLite 3.45) that syncs to Redis every 60 seconds. The SQLite file sits on a cheap $2/month volume and handles 5k monthly checks without fragmentation.
-
-Feature gating is simpler than you think. We map the plan to a YAML config file:
+Feature gating is separate from usage gating and is simpler still. A plan-to-features map, loaded once at startup, is enough:
 
 ```yaml
 # plans.yml
 plans:
   free:
     seats: 1
-    rate_limit: 1000/month
-    features: ["basic_formatting"]
+    monthly_calls: 1000
+    features: [basic_formatting]
   starter:
     seats: 5
-    rate_limit: 5000/month
-    features: ["basic_formatting", "custom_rules"]
+    monthly_calls: 5000
+    features: [basic_formatting, custom_rules]
   growth:
     seats: 20
-    rate_limit: 50000/month
-    features: ["basic_formatting", "custom_rules", "team_sharing"]
+    monthly_calls: 50000
+    features: [basic_formatting, custom_rules, team_sharing]
   scale:
     seats: 100
-    rate_limit: 500000/month
-    features: ["all_features"]
+    monthly_calls: 500000
+    features: [all_features]
 ```
 
-The CLI loads the plan at startup and refuses to run if the user exceeds seat count or rate limit. No database joins, no ORM overhead.
+The CLI checks `features.includes('custom_rules')` before enabling a code path. No network call, no database lookup.
 
-## Step 3 — handle edge cases and errors
+## Step 3 — handle the failure modes
 
-Edge case 1: users who install the CLI on multiple machines. We solve it by hashing the machine fingerprint (hostname + MAC) and treating it as an extra seat. A small script in the install flow collects the fingerprint and sends it to Paddle’s metadata field.
+Pricing enforcement introduces new ways for a tool to break. Each one deserves an explicit decision.
 
-Edge case 2: offline Redis. We implemented a circuit breaker in Node 20 LTS using the Opossum library 7.2.1. If Redis is down, the CLI falls back to SQLite and syncs later.
+**The counter is unreachable.** Failing closed (blocking the user) turns a Redis outage into a product outage. Failing open (allowing the call) risks a small amount of unbilled usage. For most developer tools, failing open is correct, provided the degraded state is logged so you can reconcile later. A circuit breaker that stops retrying a dead dependency is worth adding once the guard is on the hot path:
 
 ```javascript
 import CircuitBreaker from 'opossum';
 
-const breaker = new CircuitBreaker(async () => {
-  return execSync(`redis-cli --eval incr_monthly.lua ${userId} ${plan}`).trim();
-}, {
-  timeout: 50,
-  errorThresholdPercentage: 50,
-  resetTimeout: 30000
-});
+const breaker = new CircuitBreaker(
+  async () => execFileSync('redis-cli', ['--eval', 'incr_monthly.lua', userId, plan, ',', period], { encoding: 'utf8' }),
+  { timeout: 50, errorThresholdPercentage: 50, resetTimeout: 30000 }
+);
 
-try {
-  await breaker.fire();
-} catch (e) {
-  console.error('Usage service unavailable. Using local counter.');
-  // SQLite fallback here
-}
+breaker.fallback(() => null); // null signals "degraded, allow"
 ```
 
-Edge case 3: plan upgrades mid-month. We use Paddle’s subscription schedule to prorate the new plan. The CLI doesn’t need to know the billing cycle; it only checks the current plan and usage count against the plan’s limits.
+Check the library's current documentation for option names and behavior; circuit breaker APIs change between major versions.
 
-Error handling taught me that users rarely read error messages. We replaced the generic "Free limit reached" with a concrete suggestion:
+**One user, many machines.** A seat is a person, but a person may install the tool on a laptop, a desktop, and a CI runner. Hashing a machine fingerprint and counting each as a seat punishes legitimate use. A better approach is to count distinct authenticated identities, and to treat CI systems as a separate, explicitly allowed class. If you must limit machines, do it as a documented policy with a clear error message, not as a silent failure.
+
+**Plan changes mid-period.** Proration belongs to the billing provider. The application only needs to know the current plan and the current period's usage. When a plan changes, either keep the same counter and apply the new limit, or reset the counter and note the reset in the provider's metadata. Pick one and document it, because users will notice inconsistent behavior.
+
+**Clock and timezone drift.** Billing periods must be defined in a single timezone, usually UTC, and the period key must be computed from that definition. Computing the month from the client's local clock produces off-by-one-day bugs at month boundaries.
+
+**Error messages nobody reads.** A generic "limit reached" message wastes the moment when a user is most willing to pay. Include the actual numbers and a direct upgrade path:
 
 ```
-Free usage exhausted: 1001/1000
-Upgrade to Starter ($19/month) for unlimited formatting.
-https://formatter.dev/upgrade?plan=starter&source=cli
+Usage limit reached: 1001/1000 on the free plan.
+Upgrade for a higher allowance: https://example.com/upgrade?plan=starter&source=cli
 ```
 
-Conversion to the upgrade page jumped from 12% to 28% after we added the exact usage number and a direct link.
+## Step 4 — measure whether it worked
 
-## Step 4 — add observability and tests
+A pricing change is a hypothesis. Treat it like one.
 
-We added three metrics to Grafana Cloud (free tier):
-- plan distribution (count of users per plan)
-- usage vs limit ratio (box plot per plan)
-- conversion funnel from GitHub star to paid upgrade
+**What to instrument.** At minimum, record: plan per active user, usage count per period, the ratio of usage to limit, and every upgrade event with the time since the user last hit a limit. The last one is the most informative — it tells you how much friction precedes a purchase.
 
-The funnel showed that 68% of paid upgrades happened within 48 hours of hitting a limit. That told us to surface the upgrade prompt earlier, not later.
-
-We wrote three levels of tests:
-- Jest 29 for unit tests of the plan logic
-- Playwright 1.44 for E2E CLI tests (macOS, Ubuntu, Windows)
-- k6 0.49 for load tests on the Redis usage endpoint
-
-```javascript
-// plan.test.js
-import { checkPlan } from './plan.js';
-
-test('starter plan allows 5000 usages', () => {
-  expect(checkPlan('starter', 5000)).toBe(true);
-  expect(checkPlan('starter', 5001)).toBe(false);
-});
-```
-
-Load test on Redis 7.2 with k6:
-
-```javascript
-import http from 'k6/http';
-
-export let options = {
-  stages: [
-    { duration: '1m', target: 100 },
-    { duration: '2m', target: 500 },
-    { duration: '1m', target: 0 }
-  ]
-};
-
-export default function () {
-  http.get('http://localhost:6379/incr?user=u1&plan=starter');
-}
-```
-
-Results:
-- 99.8% requests under 10ms
-- 0.02% errors under 200 RPS
-- Memory usage stayed under 40MB
-
-Observability uncovered a spike every Sunday at 14:00 UTC — users running weekly batch jobs. We added a 2x rate limit buffer on Sundays and the error rate dropped to zero.
-
-## Real results from running this
-
-We launched the four-tier pricing on Feb 10 2026. By April 10, MRR went from $1.2k to $4.8k. The breakdown:
-
-| Plan      | Price | Users | MRR     | Conversion rate |
-|-----------|-------|-------|---------|-----------------|
-| Free      | $0    | 8,421 | $0      | 0%              |
-| Starter   | $19   | 214   | $4,066  | 2.5%            |
-| Growth    | $199  | 47    | $9,353  | 0.56%           |
-| Scale     | $999  | 2     | $1,998  | 0.02%           |
-| **Total** |       | 8,684 | **$15,417** | **0.25%**       |
-
-The surprise was the Growth plan: only 47 teams paid $199/month, but they contributed 61% of MRR. Those teams were startups pre-Series A with clear budgets. In contrast, the Starter plan had 214 users but only $4k MRR — too cheap for their actual usage.
-
-Latency didn’t budge. The pricing guard added 5ms on average, and users never noticed. The Redis bill stayed under $7/month even with 8k users.
-
-Cost breakdown for the first 1000 paid users:
-- DigitalOcean droplet: $5/month
-- Redis 7.2: $2/month
-- Paddle fees: 2.9% + $0.30 per transaction → $450/month at $15k MRR
-- Grafana Cloud: $9/month (free tier exhausted)
-
-Total infra + fees: ~10% of MRR.
-
-I expected the Scale plan to dominate, but it only contributed 13% of MRR. The market clearly values predictability over unlimited seats. That insight changed our next feature: we added a usage dashboard so Growth users could see their own consumption, not just a rate limit.
-
-## Common questions and variations
-
-**What if my tool is a library, not a CLI?**
-Use the same four-tier model but gate features at import time. For a Python library, read the plan from an environment variable and raise an ImportError with a upgrade link. Example:
-
-```python
-# formatter/__init__.py
-import os
-import yaml
-
-PLAN = os.getenv('FORMATTER_PLAN', 'free')
-with open(os.path.join(__dirname, 'plans.yml')) as f:
-    plans = yaml.safe_load(f)
-
-if PLAN not in plans:
-    raise ImportError(f"Unsupported plan: {PLAN}. Upgrade at https://formatter.dev/pricing")
-
-if plans[PLAN]['rate_limit'] <= current_usage():
-    raise ImportError(f"Rate limit reached. Upgrade at https://formatter.dev/pricing")
-```
-
-**How do I handle enterprise sales without a sales team?**
-Add a "Scale+" tier at $4999/month with a manual approval flow. Put a simple form on the pricing page that collects company domain and employee count. Route submissions to a shared inbox; 30% convert to paid without any human touch. The form itself is a revenue driver: it filters tire-kickers and surfaces real intent.
-
-**What if my users are in regions with high credit card fees?**
-Use Paddle’s local payment methods: GrabPay in Southeast Asia, PayNow in Singapore, and UPI in India. Fees drop from 2.9% to 1.8–2.1% in those markets. The conversion rate jumps 15–22% when users see their local payment option.
-
-**Should I offer annual discounts?**
-Yes, but only after 3 months of usage data. We tested 20% off annual for Growth users who hit the limit twice. Conversion to annual was 38%, but churn after 12 months was 22% — higher than monthly. Annual works best for mature tools with sticky features; for early tools, stick to monthly.
-
-## Where to go from here
-
-Run an A/B test on your pricing page today. Duplicate your pricing page, change the second tier from $49 to $79, and route 50% of GitHub traffic to the new page. Measure conversions for 7 days. If the new page converts 10% higher, ship it.
-
-Here’s the exact command to start the test using Vercel 36.3:
+**How to measure latency impact.** If the plan guard adds a network hop, measure it. `hyperfine` is a convenient tool for comparing two command variants:
 
 ```bash
-# Install Vercel CLI 36.3
-npm i -g vercel@36.3.0
-
-# Create two pricing pages
-cp pages/pricing.js pages/pricing-v2.js
-
-# Edit pricing-v2.js to change the second price to $79
-sed -i '' 's/49/79/' pages/pricing-v2.js
-
-# Deploy both pages
-vercel --prod --name pricing-v1
-vercel --prod --name pricing-v2
-
-# Create a split test
-vercel env add PRICING_VARIANT v1 v2
+hyperfine --warmup 10 \
+  'formatter --no-plan-check file.txt' \
+  'formatter file.txt'
 ```
 
-Check the conversion rate after 7 days. If v2 wins, update the main pricing page and remove the old version. That single change can lift MRR 15–30% without touching the product.
+Run it on the same machine, ideally the slowest machine your users have. Compare the means and, more importantly, the tail — a guard that is fast on average but occasionally blocks for 200ms is worse than one that is consistently slow.
 
-Do this in the next 30 minutes: open your pricing page repo, change one price, and deploy a split test. The data will tell you everything else.
+**How to measure conversion.** A pricing experiment needs a denominator. Count visitors to the pricing page, count checkout starts, and count completed subscriptions. Report conversion as a rate with its sample size, not as a bare percentage. A "10% lift" on 40 visitors is noise.
 
+**How to run the test.** Split traffic between the current page and a variant, keep the variant live for a fixed period decided in advance, and avoid changing anything else during the window. If the tool is deployed on a platform with built-in A/B routing, use it. Otherwise, serve the variant from a second URL and route a fraction of traffic to it at the edge.
 
----
+**A worked example of the arithmetic.** Suppose a pricing page receives 1,000 visitors over a two-week test. The control page converts 2.0% (20 subscriptions) and the variant converts 2.6% (26 subscriptions). The difference is 6 subscriptions. With samples this small, that difference is well within normal variation — a two-proportion test would not come close to significance. To detect a lift of that size with confidence, you would need roughly an order of magnitude more visitors. This is the single most common mistake in pricing experiments: declaring a winner on a sample that cannot support the claim.
 
-### About this article
+## A decision checklist before you ship
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+- Does the free tier let a new user reach the "aha" moment? If not, the limit is too tight.
+- Does every tier have a stated limit in the same units the user thinks in (calls, projects, seats)?
+- Is the upgrade path reachable from the exact moment the limit is hit?
+- Does the guard fail open, and is the degraded state logged?
+- Is the billing period defined in one timezone and computed the same way everywhere?
+- Can you answer "how many users hit their limit last month?" from your metrics?
+- Have you decided in advance how long the pricing test runs and what result would change your mind?
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+## An FAQ worth answering
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+**What if the tool is a library rather than a CLI?**
+Gate at import time using the same plan map. Read the plan from an environment variable, load the feature list, and raise a clear error when a gated feature is used. Avoid raising on import itself — that breaks tooling and test suites. Raise at the call site, with a message that names the feature and the upgrade URL.
 
-**Last reviewed:** June 30, 2026
+**Should there be an enterprise tier without a self-serve checkout?**
+Often yes. A high-priced tier with a contact form filters out casual inquiries and surfaces real intent. Route submissions to a shared inbox and track response time as a metric. The form is not a sales team; it is a qualification step.
+
+**Do annual plans help?**
+They help mature tools with sticky, recurring usage, because they reduce churn and improve cash flow. For early tools, annual plans can lock in a price before you understand your own costs, and the churn at renewal can be higher than monthly churn. If you offer annual, offer it after you have several months of retention data.
+
+**What about regional payment methods?**
+Card fees and failure rates vary by region. Offering local payment rails can improve conversion in markets where card penetration or card success rates are low. Check your provider's supported methods and the effective fee for each before assuming it is worth the integration.
+
+## Do this in the next 30 minutes
+
+Open your pricing page source, pick the tier directly above your most common paid tier, and raise its price by 50%. Deploy it as a variant behind a 50/50 split, and add one event to your analytics that fires when a user hits a usage limit. You do not need a conclusion today — you need a denominator. The number that matters is not the conversion rate; it is the conversion rate alongside the sample size it was computed from.

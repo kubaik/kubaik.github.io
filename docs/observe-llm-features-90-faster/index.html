@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Observe LLM features 90% faster… - Kubai Kevin</title>
-        <meta name="description" content="Cut LLM observability noise 93% with this wrapper — Prometheus metrics, Redis flags, and a 140-line FastAPI service that works on t3.medium.">
+        <title>Observability for LLM Features: Metrics That Drive Decisions - Kubai Kevin</title>
+        <meta name="description" content="Log one structured event per LLM interaction instead of tracing every token, then alert only on user-facing outcomes that justify keeping a feature.">
         <meta name="keywords" content="LlmObservability, LlmMetrics, FastapiWrapper, RedisFeatureFlags, PrometheusMetrics, LlmCostTracking, LlmLatencyMonitoring, LlmFeatureRollback, Llm, Generativeai, Redis">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-08T14:23:50.999349">
-        <meta property="article:modified_time" content="2026-09-24T03:50:31.854161+00:00">
+        <meta property="article:modified_time" content="2026-10-03T10:58:59.312842+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="Observe LLM features 90% faster…">
-        <meta property="og:description" content="Cut LLM observability noise 93% with this wrapper — Prometheus metrics, Redis flags, and a 140-line FastAPI service that works on t3.medium.">
+        <meta property="og:title" content="Observability for LLM Features: Metrics That Drive Decisions">
+        <meta property="og:description" content="Log one structured event per LLM interaction instead of tracing every token, then alert only on user-facing outcomes that justify keeping a feature.">
         <meta property="og:url" content="https://kubaik.github.io/observe-llm-features-90-faster/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/observe-llm-features-90-faster.png">
-        <meta property="og:image:alt" content="Observe LLM features 90% faster…">
+        <meta property="og:image:alt" content="Observability for LLM Features: Metrics That Drive Decisions">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Observe LLM features 90% faster…">
-        <meta name="twitter:description" content="Cut LLM observability noise 93% with this wrapper — Prometheus metrics, Redis flags, and a 140-line FastAPI service that works on t3.medium.">
+        <meta name="twitter:title" content="Observability for LLM Features: Metrics That Drive Decisions">
+        <meta name="twitter:description" content="Log one structured event per LLM interaction instead of tracing every token, then alert only on user-facing outcomes that justify keeping a feature.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/observe-llm-features-90-faster.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,12 +60,12 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/observe-llm-features-90-faster/#article",
-      "headline": "Observe LLM features 90% faster…",
-      "description": "Cut LLM observability noise 93% with this wrapper — Prometheus metrics, Redis flags, and a 140-line FastAPI service that works on t3.medium.",
+      "headline": "Observability for LLM Features: Metrics That Drive Decisions",
+      "description": "Log one structured event per LLM interaction instead of tracing every token, then alert only on user-facing outcomes that justify keeping a feature.",
       "datePublished": "2026-07-08T14:23:50+00:00",
-      "dateModified": "2026-09-24T03:50:31+00:00",
-      "wordCount": 3213,
-      "timeRequired": "PT16M",
+      "dateModified": "2026-10-03T10:58:59+00:00",
+      "wordCount": 2591,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Observe LLM features 90% faster…",
+          "name": "Observability for LLM Features: Metrics That Drive Decisions",
           "item": "https://kubaik.github.io/observe-llm-features-90-faster/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>Observe LLM features 90% faster…</span>
+            <span>Observability for LLM Features: Metrics That Drive Decisions</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">Observe LLM features 90% faster…</h1>
+                <h1 itemprop="headline">Observability for LLM Features: Metrics That Drive Decisions</h1>
                 
-                <p class="post-lead">Cut LLM observability noise 93% with this wrapper — Prometheus metrics, Redis flags, and a 140-line FastAPI service that works on t3.medium.</p>
+                <p class="post-lead">Log one structured event per LLM interaction instead of tracing every token, then alert only on user-facing outcomes that justify keeping a feature.</p>
                 
                 
                 <div class="tags">
@@ -258,65 +258,81 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3213 words
+                        13 min read
+                        &nbsp;·&nbsp; 2591 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-24
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026 we shipped a government chatbot that answered questions about land titles across five states in Nigeria. By mid-2026 the team had added summarisation, entity extraction, and a “rephrase for clarity” button. The problem wasn’t the new features—it was the noise. Every user message now produced a 15-token system prompt, a 50-token user message, another 40-token assistant reply, plus 20 tokens of metadata we’d started logging for “future observability.” Multiply that by 23 k requests per day and we were drowning in 3.2 million extra tokens a week—roughly 18 GB of plain text logs. The observability pipeline itself had become the bottleneck.</p>
-<p>The real question wasn’t “does the feature work?” but “does the feature matter to the user?”. Token-level tracing gave us megabytes of noise for every byte of signal. We needed a way to see the user-facing outcome without wading through every intermediate token.</p>
-<p>This post is the result. It shows how we built a lightweight observability layer that surfaces only the metrics that actually drive decisions. No vendor lock-in, no extra SaaS bill, and it works on a t3.medium instance.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You’ll need:
-- Python 3.11
-- FastAPI 0.109
-- Redis 7.2 (for cheap, fast feature flags and rate limiting)
-- OpenTelemetry SDK 1.22
-- PostgreSQL 15 with pgvector enabled
-- A running LLM endpoint (we used Llama 3 8B on a single A100 GPU)
-- Node 20 LTS (only for the optional React dashboard)</p>
-<p>What you’ll build in this tutorial:
-- A FastAPI service that wraps any LLM endpoint and adds structured logging at the prompt/response boundary (not token-by-token). - A 34-line Prometheus exporter that surfaces four key metrics:
-  - <code>llm_feature_duration_seconds</code> (histogram)
-  - <code>llm_feature_success_total</code> (counter)
-  - <code>llm_feature_user_feedback</code> (gauge)
-  - <code>llm_feature_cost_cents</code> (counter)
-- A Redis-backed feature flag that toggles the new feature on/off per user segment. - A 120-line Python script that backfills historical data so you can compare before/after metrics without losing history.</p>
-<p>We’ll avoid tracing every token. Instead, we’ll log one structured event per user interaction that contains:
-- user_id
-- feature_name (e.g., "summarise", "extract_entities")
-- model_name (e.g., "llama3-8b-v1")
-- prompt_length
-- response_length
-- duration_ms
-- cost_cents
-- success (bool)
-- user_feedback (1-5)
-- error_message (if any)</p>
-<p>That single row gives us everything we need to decide if a new feature is worth keeping.</p>
+                <p>Most tutorials for wrapping an LLM endpoint stop at the happy path: send a prompt, get a completion, return it. The harder problem starts afterwards, when a service has accumulated several LLM-backed features and nobody can say which ones are worth their compute cost. Token-level tracing produces megabytes of intermediate noise for every byte of user-facing signal.</p>
+<p>This article describes a lightweight observability layer for LLM features: one structured event per user interaction, a small set of Prometheus metrics, and alert rules tied to a stated SLO. It runs comfortably on a small VM, requires no SaaS vendor, and works with any HTTP LLM endpoint.</p>
+<h2 id="the-failure-mode-observability-that-becomes-the-bottleneck">The failure mode: observability that becomes the bottleneck</h2>
+<p>A common pattern in teams that add LLM features incrementally: each feature logs its own prompt, its own response, and some metadata "for future observability." A summarisation call might log a short system prompt, a long user message, an assistant reply, and per-request metadata. None of that is large on its own. The problem is multiplicative.</p>
+<p>Work through the arithmetic with illustrative assumptions:</p>
+<ul>
+<li>20,000 requests per day</li>
+<li>150 tokens logged per request (prompt + response + metadata)</li>
+<li>4 bytes per token as a rough text approximation</li>
+</ul>
+<p>That is 20,000 × 150 = 3,000,000 tokens per day, or 3,000,000 × 4 bytes ≈ 12 MB per day of raw text, roughly 84 MB per week. If the logging format is verbose JSON with envelope fields, the on-disk figure is several times larger. At that point the logging pipeline — not the LLM — is often the thing that saturates disk, slows queries, and makes the dashboard unreadable.</p>
+<p>The deeper problem is that token-level data answers "what did the model produce?" It does not answer "did the user get value?" A team can hold gigabytes of traces and still be unable to decide whether to keep a feature.</p>
+<p>The fix is to log one row per user interaction containing only fields that map to a decision: which feature, which model, how long, how much, did it succeed, and what did the user think.</p>
+<h2 id="prerequisites-and-what-you-will-build">Prerequisites and what you will build</h2>
+<p>Required:</p>
+<ul>
+<li>Python 3.11</li>
+<li>FastAPI</li>
+<li>Redis (for feature flags and a simple circuit breaker)</li>
+<li>PostgreSQL with the <code>pgvector</code> extension (used later for feedback clustering)</li>
+<li>A running LLM HTTP endpoint exposing an OpenAI-compatible chat completions route</li>
+<li>Node 20 LTS (only if you want the optional dashboard)</li>
+</ul>
+<p>You will build:</p>
+<ol>
+<li>A FastAPI service that wraps any LLM endpoint and emits one structured event per call.</li>
+<li>A small Prometheus exporter exposing four metrics:</li>
+<li><code>llm_feature_duration_seconds</code> (histogram)</li>
+<li><code>llm_feature_success_total</code> (counter)</li>
+<li><code>llm_feature_user_feedback</code> (up-down counter)</li>
+<li><code>llm_feature_cost_cents</code> (counter)</li>
+<li>A Redis-backed feature flag that enables a feature per user segment.</li>
+<li>A backfill script that imports historical rows so before/after comparisons remain possible.</li>
+</ol>
+<p>The structured event contains:</p>
+<ul>
+<li><code>user_id</code></li>
+<li><code>feature_name</code> (for example <code>summarise</code>, <code>extract_entities</code>)</li>
+<li><code>model_name</code></li>
+<li><code>prompt_length</code></li>
+<li><code>response_length</code></li>
+<li><code>duration_ms</code></li>
+<li><code>cost_cents</code></li>
+<li><code>success</code> (boolean)</li>
+<li><code>user_feedback</code> (1–5, optional)</li>
+<li><code>error_message</code> (optional)</li>
+</ul>
+<p>That single row is enough to decide whether a feature earns its keep.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<p>Start with a clean virtual environment:</p>
+<p>Create a virtual environment:</p>
 <pre><code class="language-bash">python -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip setuptools wheel
 </code></pre>
 <p>Install the core stack:</p>
-<pre><code class="language-bash">pip install fastapi==0.109.1 uvicorn==0.27.0 redis==4.6.0 opentelemetry-api==1.22.0 opentelemetry-sdk==1.22.0 opentelemetry-exporter-prometheus==0.43b0 prometheus-client==0.19.0 psycopg2-binary==2.9.9 python-dotenv==1.0.0
+<pre><code class="language-bash">pip install fastapi uvicorn redis httpx opentelemetry-api opentelemetry-sdk opentelemetry-exporter-prometheus prometheus-client psycopg2-binary python-dotenv
 </code></pre>
 <p>Create <code>.env</code>:</p>
 <pre><code class="language-ini">LLM_ENDPOINT=http://llama3:8000/v1/chat/completions
+LLM_API_KEY=
 REDIS_URL=redis://redis:6379/0
 DATABASE_URL=postgresql://postgres:postgres@postgres:5432/llm_observability
 PROMETHEUS_PORT=8001
 </code></pre>
-<p>Spin up the services with Docker Compose (<code>docker-compose.yml</code>):</p>
+<p>Bring up the backing services with <code>docker-compose.yml</code>:</p>
 <pre><code class="language-yaml">version: '3.9'
 services:
   redis:
@@ -324,7 +340,7 @@ services:
     ports:
       - &quot;6379:6379&quot;
   postgres:
-    image: ankane/pgvector:0.7.0
+    image: pgvector/pgvector:pg15
     environment:
       POSTGRES_PASSWORD: postgres
     ports:
@@ -343,60 +359,58 @@ services:
 volumes:
   pgdata:
 </code></pre>
-<p>Gotcha: if your LLM endpoint is behind a proxy that requires an API key, load it via <code>LLM_API_KEY</code> in <code>.env</code> and reference it in the wrapper. I once forgot to strip the newline from the key file and spent an hour wondering why every request returned 401.</p>
+<p>A common failure mode when the LLM endpoint sits behind a proxy that requires an API key: the key is loaded from a file and retains a trailing newline, so every request returns 401. Strip whitespace explicitly when reading secrets from files.</p>
 <h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
 <p>Create <code>main.py</code>:</p>
-<pre><code class="language-python">from fastapi import FastAPI, Request, HTTPException
+<pre><code class="language-python">from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 import redis.asyncio as redis
 import httpx
 import time
 import os
-from typing import Optional
 from pydantic import BaseModel
-import logging
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.exporter.prometheus import PrometheusMetricExporter
 from opentelemetry.sdk.metrics import MeterProvider
 from opentelemetry.sdk.resources import Resource
+from opentelemetry.exporter.prometheus import PrometheusMetricExporter
+from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
 
 app = FastAPI()
 
 # --- Observability setup ---
 resource = Resource.create({&quot;service.name&quot;: &quot;llm-feature-proxy&quot;})
-exporter = PrometheusMetricExporter()
-meter_provider = MeterProvider(resource=resource)
+exporter = PrometheusMetricExporter(port=int(os.getenv(&quot;PROMETHEUS_PORT&quot;, &quot;8001&quot;)))
+reader = PeriodicExportingMetricReader(exporter)
+meter_provider = MeterProvider(resource=resource, metric_readers=[reader])
 trace.set_tracer_provider(TracerProvider(resource=resource))
-trace.get_tracer_provider().add_span_processor(BatchSpanProcessor(exporter))
 
 # --- Metrics definitions ---
-from opentelemetry.metrics import Counter, Histogram, UpDownCounter
 meter = meter_provider.get_meter(&quot;llm.feature.metrics&quot;, version=&quot;1.0&quot;)
 feature_duration = meter.create_histogram(
     &quot;llm_feature_duration_seconds&quot;,
     unit=&quot;s&quot;,
-    description=&quot;Duration of a single LLM feature call&quot;
+    description=&quot;Duration of a single LLM feature call&quot;,
 )
 feature_success = meter.create_counter(
     &quot;llm_feature_success_total&quot;,
     unit=&quot;1&quot;,
-    description=&quot;Count of successful feature calls&quot;
+    description=&quot;Count of successful feature calls&quot;,
 )
 feature_feedback = meter.create_updown_counter(
     &quot;llm_feature_user_feedback&quot;,
     unit=&quot;1&quot;,
-    description=&quot;User feedback score (-5 to 5)&quot;
+    description=&quot;User feedback score&quot;,
 )
 feature_cost = meter.create_counter(
     &quot;llm_feature_cost_cents&quot;,
     unit=&quot;cent&quot;,
-    description=&quot;Cost in cents for this feature call&quot;
+    description=&quot;Cost in cents for this feature call&quot;,
 )
 
 # --- Redis feature flag ---
 redis_client = redis.from_url(os.getenv(&quot;REDIS_URL&quot;, &quot;redis://localhost:6379/0&quot;))
+
 
 class FeatureRequest(BaseModel):
     user_id: str
@@ -405,12 +419,12 @@ class FeatureRequest(BaseModel):
     model: str = &quot;llama3-8b-v1&quot;
     max_tokens: int = 256
 
+
 @app.post(&quot;/feature/{feature_name}&quot;)
 async def call_feature(feature_name: str, req: FeatureRequest):
     start = time.time()
     tracer = trace.get_tracer(__name__)
 
-    # Check feature flag
     flag_key = f&quot;feature:{feature_name}:{req.user_id}&quot;
     active = await redis_client.get(flag_key)
     if not active:
@@ -420,14 +434,12 @@ async def call_feature(feature_name: str, req: FeatureRequest):
         span.set_attribute(&quot;user.id&quot;, req.user_id)
         span.set_attribute(&quot;feature.name&quot;, feature_name)
 
-        headers = {&quot;Authorization&quot;: f&quot;Bearer {os.getenv('LLM_API_KEY')}&quot;}
+        headers = {&quot;Authorization&quot;: f&quot;Bearer {os.getenv('LLM_API_KEY', '').strip()}&quot;}
         payload = {
             &quot;model&quot;: req.model,
-            &quot;messages&quot;: [
-                {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: req.prompt}
-            ],
+            &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: req.prompt}],
             &quot;max_tokens&quot;: req.max_tokens,
-            &quot;temperature&quot;: 0.3
+            &quot;temperature&quot;: 0.3,
         }
 
         async with httpx.AsyncClient(timeout=30.0) as client:
@@ -435,111 +447,141 @@ async def call_feature(feature_name: str, req: FeatureRequest):
                 resp = await client.post(
                     os.getenv(&quot;LLM_ENDPOINT&quot;),
                     json=payload,
-                    headers=headers
+                    headers=headers,
                 )
                 resp.raise_for_status()
                 data = resp.json()
                 duration_ms = (time.time() - start) * 1000
-                cost_cents = (data.get(&quot;usage&quot;, {}).get(&quot;total_tokens&quot;, 0) * 0.000002) * 100
+                total_tokens = data.get(&quot;usage&quot;, {}).get(&quot;total_tokens&quot;, 0)
+                cost_cents = total_tokens * 0.0002  # see note below
 
-                # Update metrics
-                feature_duration.record(duration_ms / 1000, {
-                    &quot;feature&quot;: feature_name,
-                    &quot;model&quot;: req.model
-                })
+                feature_duration.record(
+                    duration_ms / 1000,
+                    {&quot;feature&quot;: feature_name, &quot;model&quot;: req.model},
+                )
                 feature_success.add(1, {&quot;feature&quot;: feature_name})
                 feature_cost.add(cost_cents, {&quot;feature&quot;: feature_name})
 
-                return JSONResponse({
-                    &quot;response&quot;: data[&quot;choices&quot;][0][&quot;message&quot;][&quot;content&quot;],
-                    &quot;duration_ms&quot;: duration_ms,
-                    &quot;cost_cents&quot;: cost_cents
-                })
+                return JSONResponse(
+                    {
+                        &quot;response&quot;: data[&quot;choices&quot;][0][&quot;message&quot;][&quot;content&quot;],
+                        &quot;duration_ms&quot;: duration_ms,
+                        &quot;cost_cents&quot;: cost_cents,
+                    }
+                )
             except Exception as e:
                 span.record_exception(e)
                 span.set_status(trace.Status(trace.StatusCode.ERROR))
                 raise
+
 
 @app.post(&quot;/feature/{feature_name}/feedback&quot;)
 async def submit_feedback(feature_name: str, req: dict):
     score = req.get(&quot;score&quot;, 0)
     feature_feedback.add(score, {&quot;feature&quot;: feature_name})
     return {&quot;ok&quot;: True}
-
-if __name__ == &quot;__main__&quot;:
-    import uvicorn
-    uvicorn.run(app, host=&quot;0.0.0.0&quot;, port=8000)
 </code></pre>
-<p>Key decisions:
-- We expose a single POST per feature so you can reuse the same wrapper for summarisation, entity extraction, etc. - The wrapper adds 5–10 ms of overhead—negligible compared to the 400–800 ms LLM latency. - We multiply token count by $0.000002/token (a 2026 estimate for Llama 3 on-demand on a single A100) to get a rough cost. This lets us compare feature value vs. compute cost even before we negotiate enterprise rates.</p>
+<p>A note on the cost multiplier: the value <code>0.0002</code> cents per token above is a placeholder. Replace it with the figure from your own provider agreement, and keep the conversion in one function so it can be updated in a single place. Deriving cost from <code>usage.total_tokens</code> is only as accurate as the provider's usage reporting; see the fallback in the edge-cases section.</p>
+<p>Key design decisions:</p>
+<ul>
+<li>One POST endpoint per feature, so the same wrapper serves summarisation, entity extraction, and anything else.</li>
+<li>Logging happens at the prompt/response boundary, not per token.</li>
+<li>The wrapper adds a small fixed overhead (typically single-digit milliseconds) relative to LLM latency measured in hundreds of milliseconds. Measure it rather than assuming: run <code>wrk</code> or <code>hey</code> against a stubbed endpoint and compare with the raw endpoint.</li>
+</ul>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>Three edge cases broke us in production:</p>
-<ol>
-<li><strong>Timeout cascades</strong>: If the LLM endpoint is slow, the wrapper waits 30 s by default. We added a circuit breaker using <code>redis</code> keys: count failures in the last minute; if &gt;10, return 503 for 30 s. Code:</li>
-</ol>
+<p>Three edge cases tend to appear once a wrapper like this reaches production.</p>
+<p><strong>1. Timeout cascades.</strong> If the LLM endpoint is slow, every request waits for the client timeout. A circuit breaker limits the blast radius. The version below counts failures per feature (not per user, which would fragment the counter) and opens for a fixed window:</p>
 <pre><code class="language-python">from redis.exceptions import RedisError
 
-async def circuit_breaker(feature_name: str, user_id: str):
-    key = f&quot;cb:{feature_name}:{user_id}&quot;
+CIRCUIT_THRESHOLD = 10
+CIRCUIT_WINDOW_SECONDS = 60
+CIRCUIT_OPEN_SECONDS = 30
+
+
+async def check_circuit(feature_name: str):
+    open_key = f&quot;cb:open:{feature_name}&quot;
+    try:
+        if await redis_client.get(open_key):
+            raise HTTPException(status_code=503, detail=&quot;Service temporarily unavailable&quot;)
+    except RedisError:
+        # Fail open: a Redis outage should not take down the wrapper.
+        return
+
+
+async def record_failure(feature_name: str):
+    key = f&quot;cb:fail:{feature_name}&quot;
     try:
         count = await redis_client.incr(key)
         if count == 1:
-            await redis_client.expire(key, 60)  # 1-minute window
-        if count &gt; 10:
-            raise HTTPException(status_code=503, detail=&quot;Service temporarily unavailable&quot;)
+            await redis_client.expire(key, CIRCUIT_WINDOW_SECONDS)
+        if count &gt; CIRCUIT_THRESHOLD:
+            await redis_client.set(open_key := f&quot;cb:open:{feature_name}&quot;, &quot;1&quot;, ex=CIRCUIT_OPEN_SECONDS)
     except RedisError:
-        raise HTTPException(status_code=502, detail=&quot;Redis unavailable&quot;)
+        return
 </code></pre>
-<ol>
-<li>
-<p><strong>Prompt injection</strong>: We log the raw prompt length but truncate it in the trace attributes to 512 bytes to keep spans small. The LLM endpoint itself still receives the full prompt.</p>
-</li>
-<li>
-<p><strong>Cost spikes</strong>: When a new feature goes live we enable it only for 5 % of users via Redis:
-  <code>bash
-  redis-cli SET feature:summarise:beta_users 0.05</code>
-  We use the same key pattern to roll out gradually.</p>
-</li>
-</ol>
-<p>Gotcha: I once forgot to clear the circuit-breaker key after a redeploy and the whole cohort of beta users got 503s for a week. Always pair circuit breakers with a health check endpoint that resets the counters.</p>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<p>Install test deps:</p>
-<pre><code class="language-bash">pip install pytest==7.4.4 pytest-asyncio==0.21.1 httpx==0.26.0
+<p>Two details matter here. First, the circuit state is keyed by feature, not by user, so one slow user does not trip the breaker for everyone. Second, an unreachable Redis fails open — the wrapper proceeds rather than rejecting every request, because Redis is a dependency of the breaker, not of the LLM call itself.</p>
+<p>To verify a breaker behaves as intended, write a test that patches the LLM client to raise, calls the endpoint <code>CIRCUIT_THRESHOLD + 1</code> times, and asserts that the next call returns 503 without contacting the LLM.</p>
+<p><strong>2. Prompt injection and log hygiene.</strong> Log the prompt length, never the raw prompt, in span attributes. If a truncated copy is needed for debugging, cap it at a fixed byte length (512 bytes is a common choice) and store it in a separate, access-controlled table rather than in trace attributes, which are often widely readable.</p>
+<p><strong>3. Cost spikes during rollout.</strong> When a new feature goes live, enable it for a small cohort first. A simple approach uses a deterministic hash of the user id so a given user gets a stable answer:</p>
+<pre><code class="language-python">import hashlib
+
+
+def in_rollout(user_id: str, feature_name: str, percent: float) -&gt; bool:
+    digest = hashlib.sha256(f&quot;{feature_name}:{user_id}&quot;.encode()).hexdigest()
+    bucket = int(digest[:8], 16) / 0xFFFFFFFF
+    return bucket &lt; percent
+</code></pre>
+<p>This avoids the trap of using <code>SET feature:summarise:beta_users 0.05</code> as a bare Redis value, which does not actually gate anything unless the application reads and interprets it as a percentage.</p>
+<p>When a breaker is used, pair it with a health endpoint that reports current state, and make sure the open key always carries an expiry. A breaker key written without a TTL will keep a cohort returning 503s until someone notices.</p>
+<h2 id="step-4-tests-and-alerting">Step 4 — tests and alerting</h2>
+<p>Install test dependencies:</p>
+<pre><code class="language-bash">pip install pytest pytest-asyncio httpx
 </code></pre>
 <p>Create <code>test_main.py</code>:</p>
 <pre><code class="language-python">import pytest
 from fastapi.testclient import TestClient
 from main import app
-import redis.asyncio as redis
 
 client = TestClient(app)
 
+
 @pytest.fixture
-async def mock_redis(mocker):
-    m = mocker.patch(&quot;redis.asyncio.Redis.get&quot;, return_value=b&quot;1&quot;)
-    yield m
+def mock_redis(mocker):
+    mocker.patch(&quot;redis.asyncio.Redis.get&quot;, return_value=b&quot;1&quot;)
+    yield
+
 
 @pytest.mark.asyncio
 async def test_feature_success(mock_redis, mocker):
-    # Mock LLM endpoint
-    mocker.patch(&quot;httpx.AsyncClient.post&quot;, return_value={
-        &quot;choices&quot;: [{&quot;message&quot;: {&quot;content&quot;: &quot;summary&quot;}}],
-        &quot;usage&quot;: {&quot;total_tokens&quot;: 100}
-    })
+    class FakeResponse:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {
+                &quot;choices&quot;: [{&quot;message&quot;: {&quot;content&quot;: &quot;summary&quot;}}],
+                &quot;usage&quot;: {&quot;total_tokens&quot;: 100},
+            }
+
+    async def fake_post(*args, **kwargs):
+        return FakeResponse()
+
+    mocker.patch(&quot;httpx.AsyncClient.post&quot;, side_effect=fake_post)
 
     resp = client.post(
         &quot;/feature/summarise&quot;,
         json={
             &quot;user_id&quot;: &quot;u1&quot;,
             &quot;feature_name&quot;: &quot;summarise&quot;,
-            &quot;prompt&quot;: &quot;long document&quot;
-        }
+            &quot;prompt&quot;: &quot;long document&quot;,
+        },
     )
     assert resp.status_code == 200
-    assert resp.json()[&quot;duration_ms&quot;] &lt; 1000  # sanity
-    assert resp.json()[&quot;cost_cents&quot;] == 0.02  # 100 tokens * 0.000002
+    body = resp.json()
+    assert body[&quot;cost_cents&quot;] == pytest.approx(100 * 0.0002)
 </code></pre>
-<p>Prometheus metrics are exposed on <code>/metrics</code>. We scrape them every 15 s with:</p>
+<p>The original version of this test returned a plain dict from the mocked <code>post</code>, which would fail because the code calls <code>raise_for_status()</code> on the result. The <code>FakeResponse</code> class above fixes that.</p>
+<p>Prometheus scrapes the exporter's port every 15 seconds:</p>
 <pre><code class="language-yaml"># prometheus.yml
 scrape_configs:
   - job_name: 'llm-feature'
@@ -547,160 +589,53 @@ scrape_configs:
     static_configs:
       - targets: ['app:8001']
 </code></pre>
-<p>Alert rules (<code>alert.rules.yml</code>):</p>
+<p>Alert rules:</p>
 <pre><code class="language-yaml">groups:
 - name: llm-feature
   rules:
   - alert: HighFeatureLatency
-    expr: histogram_quantile(0.95, llm_feature_duration_seconds_bucket{feature=&quot;summarise&quot;}) &gt; 2
+    expr: histogram_quantile(0.95, sum(rate(llm_feature_duration_seconds_bucket{feature=&quot;summarise&quot;}[5m])) by (le)) &gt; 2
     for: 5m
     labels:
       severity: page
     annotations:
-      summary: &quot;Summarise feature 95th percentile &gt; 2 s&quot;
+      summary: &quot;Summarise feature 95th percentile above 2s&quot;
 </code></pre>
-<p>We ship these rules to Alertmanager and route pages to Slack. The alert fires when the feature exceeds our SLO of 2 s 95th percentile.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>We ran this wrapper in front of our Llama 3 8B endpoint for three weeks:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before wrapper</th>
-<th>After wrapper</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>API P95 latency</td>
-<td>1.2 s</td>
-<td>1.3 s</td>
-<td>+8 %</td>
-</tr>
-<tr>
-<td>Observability log volume</td>
-<td>18 GB / week</td>
-<td>1.2 GB / week</td>
-<td>–93 %</td>
-</tr>
-<tr>
-<td>Cost visibility</td>
-<td>None</td>
-<td>$14.30 / day</td>
-<td>Immediate</td>
-</tr>
-<tr>
-<td>Alerts that actually mattered</td>
-<td>12 false positives</td>
-<td>3 real pages</td>
-<td>–75 %</td>
-</tr>
-</tbody>
-</table>
-<p>The single biggest win wasn’t the metrics—it was the confidence to kill features. One “rephrase for clarity” button cost $1,240 over two weeks and had a user feedback score of 2.1/5.</p>
-<p>The wrapper also let us A/B test summarisation models without touching the frontend. We ran <code>llama3-8b-v1</code> vs. <code>mistral-7b-instruct-v0.3</code> on the same prompts; the Mistral model cut latency 28 % and cost 19 % less while keeping the same user score.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<p><strong>Frequently Asked Questions</strong></p>
-<p>how do i measure llm feature adoption without user ids? Only collect user_id if your privacy policy allows it. If you can’t, use a hashed uuid derived from the session token. Omit it entirely if you must, but then you lose the ability to segment feedback by cohort. In our Nigerian land-title chatbot we collected the first 6 digits of the phone number hash (after user consent) so we could see north vs south usage differences without storing raw PII.</p>
-<p>what if my llm endpoint doesn’t return token usage? Log the input token count from your client and the output length from the response. Multiply by your best estimate of cost per token. We once used a 3rd-party proxy that only returned the response text; we added a tiny regex to count words and multiplied by 0.0000015 to approximate cost. It was off by 12 % but still gave us a directional signal.</p>
-<p>how do i run this on aws lambda with no budget? Package the wrapper in a Docker image (45 MB) and deploy to Lambda with 1 vCPU and 1 GB memory. Use the Lambda Powertools metrics emitter instead of Prometheus exporter; it pushes to CloudWatch at no extra cost. Cold starts add ~300 ms, so keep the image small and avoid heavy dependencies. We trimmed the Docker image from 180 MB to 45 MB by multi-stage building and removing dev tools.</p>
-<p>when should i switch from redis feature flags to a proper flag service? Switch when you need rule-based targeting (e.g., enable summarise only for users with &gt;5 messages/week) or when your feature flags exceed 1000 keys and Redis memory usage passes 500 MB. At that point migrate to LaunchDarkly or Flagsmith; the migration is a one-line change in your wrapper—just swap the Redis client for their SDK.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>In the next 30 minutes:
-1. Create <code>.env</code> with your actual Redis and LLM endpoint URLs. 2. Run <code>docker compose up -d</code>. 3. Deploy <code>main.py</code> to a t3.medium instance or Lambda. 4. Hit <code>/feature/summarise</code> with a single test payload and verify the Prometheus metrics appear on <code>/metrics</code>.</p>
-<p>Once that’s green, flip the Redis flag for 1 % of your users and watch the new metrics roll in. You’ll know within hours whether the feature is worth scaling—or killing.</p>
-<hr />
-<h3 id="1-advanced-edge-cases-i-personally-encountered">1. Advanced Edge Cases I Personally Encountered</h3>
-<p>After three months running this wrapper in production across Nigeria, Kenya, and Uganda, three edge cases stood out because they didn’t surface during local testing and required creative workarounds with minimal infrastructure.</p>
-<p><strong>Case 1: The “Silent Token Leak” on Low-End A100 Instances</strong></p>
-<p>The wrapper’s cost calculation was based on the response JSON returning <code>usage.total_tokens</code>, but on cheaper instances (especially those spun up by spot requests) the provider sometimes truncated the token count in the response payload to save bandwidth. The API returned a 200 OK, but <code>total_tokens</code> was missing.</p>
-<p>The fix: Add a fallback that counts tokens client-side. We used the <code>tiktoken</code> tokenizer for Llama 3 (model name <code>llama3-8b-v1</code>) and calculated cost based on the client-side count when the server didn’t return usage. The client-side tokenizer added 4 ms per request—still under our SLA of 500 ms P95. We wrapped it in a simple cache keyed by model name to avoid re-initializing the tokenizer on every request:</p>
+<p>The <code>sum(...) by (le)</code> wrapper is required because <code>histogram_quantile</code> needs a single bucket series per <code>le</code> value; without it, multiple label combinations produce ambiguous results.</p>
+<h3 id="how-to-measure-whether-this-is-working">How to measure whether this is working</h3>
+<p>Do not trust a summary table from someone else's deployment. Measure your own. Instrument the following and compare a two-week window before and after the wrapper:</p>
+<ul>
+<li><strong>Log volume:</strong> <code>du -sh /var/log/llm/</code> weekly, or the equivalent metric from your log sink.</li>
+<li><strong>API latency:</strong> the wrapper's own <code>llm_feature_duration_seconds</code> histogram, compared against the LLM endpoint's own reported latency. The difference is the wrapper's overhead.</li>
+<li><strong>Alert quality:</strong> count pages per week and classify each as actionable or not. A useful wrapper should reduce the ratio of non-actionable pages.</li>
+<li><strong>Cost:</strong> sum <code>llm_feature_cost_cents</code> per feature per day. This is the figure that lets you argue for retiring a feature.</li>
+</ul>
+<p>Only after collecting this data can anyone claim a percentage improvement.</p>
+<h2 id="common-questions">Common questions</h2>
+<p><strong>How do I measure LLM feature adoption without user ids?</strong>
+Collect <code>user_id</code> only if your privacy policy permits it. If it does not, derive a stable pseudonymous id from the session token (for example, a salted hash) and store only the hash. Omitting identity entirely means you cannot segment feedback by cohort, which limits the analysis but does not break the metrics.</p>
+<p><strong>What if my LLM endpoint does not return token usage?</strong>
+Count tokens client-side and use that figure. For models with a published tokenizer, use it directly; for others, a word count multiplied by a documented ratio is a rough substitute. Whichever fallback you use, record whether the value was server-reported or estimated, so cost dashboards can distinguish the two.</p>
 <pre><code class="language-python">from functools import lru_cache
-import tiktoken
+
 
 @lru_cache(maxsize=32)
 def get_tokenizer(model_name: str):
+    import tiktoken
     return tiktoken.encoding_for_model(model_name)
+
 
 def safe_token_count(text: str, model_name: str) -&gt; int:
     encoding = get_tokenizer(model_name)
     return len(encoding.encode(text))
 </code></pre>
-<p>Over two weeks, this caught 14 silent token leaks totaling $87 in unbilled compute.</p>
-<hr />
-<p><strong>Case 2: The SMS Gateway That Replays Messages on 502 Errors</strong></p>
-<p>In northern Nigeria, users access the land-title chatbot via SMS through a carrier-grade gateway that retries requests when it gets a 502 from our wrapper. Since the wrapper doesn’t idempotently cache responses, the user would receive duplicate answers to the same query—sometimes three times in a row—if the LLM endpoint was slow or Redis timed out.</p>
-<p>The fix: We added a 1-second in-memory LRU cache per user_id and feature_name using Python’s <code>functools.lru_cache</code> with a max size of 1,024 entries (about 16 MB). The cache stores the raw response text and cost, keyed by <code>(user_id, feature_name, prompt)</code> truncated to 128 characters.</p>
-<pre><code class="language-python">from functools import lru_cache
-import time
-
-@lru_cache(maxsize=1024)
-def cached_llm_response(user_id: str, feature_name: str, prompt: str):
-    # ... call LLM and return response ...
-    return {&quot;response&quot;: &quot;...&quot;, &quot;cost_cents&quot;: 0.01, &quot;duration_ms&quot;: 500}
-
-# In call_feature():
-cache_key = (req.user_id, feature_name, req.prompt[:128])
-cached = cached_llm_response(*cache_key)
-if cached:
-    return JSONResponse(cached)
-</code></pre>
-<p>This reduced duplicate SMS replies by 94 % and cut downstream user frustration. The cache eviction policy (LRU) ensured we didn’t blow memory during traffic spikes. We disabled the cache for the <code>/feedback</code> endpoint to avoid stale ratings.</p>
-<hr />
-<p><strong>Case 3: The Power Outage That Corrupted Redis on a Bare-Metal VPS</strong></p>
-<p>During a rainy season in Nairobi, a power cut caused the bare-metal VPS hosting Redis to reboot uncleanly. The AOF file was partially written, and Redis failed to start. Our wrapper, which relied on Redis for feature flags and circuit breakers, became unresponsive—returning 502s to every user.</p>
-<p>The fix: We switched to Redis with persistence enabled (<code>appendonly yes</code>) and added a 30-second health check endpoint (<code>/health</code>) that pinged Redis and returned 503 if Redis was down or unreachable. This let the chatbot limp along during outages without manual intervention.</p>
-<pre><code class="language-python">@app.get(&quot;/health&quot;)
-async def health():
-    try:
-        pong = await redis_client.ping()
-        if pong:
-            return {&quot;status&quot;: &quot;ok&quot;, &quot;redis&quot;: &quot;up&quot;}
-    except Exception:
-        return {&quot;status&quot;: &quot;degraded&quot;, &quot;redis&quot;: &quot;down&quot;}, 503
-</code></pre>
-<p>We also added a <code>REDIS_FALLBACK_PERCENT</code> env var (default 0.1) to control the fallback cohort size. After this incident, we moved Redis to a managed instance (ElastiCache) in staging, but kept the fallback policy in production as a safety net.</p>
-<hr />
-<h3 id="2-integration-with-real-tools-2026-versions">2. Integration with Real Tools (2026 Versions)</h3>
-<p>Below are three real integrations we shipped in 2026, each adding observability without vendor lock-in.</p>
-<hr />
-<p><strong>Integration 1: Grafana Cloud with Prometheus &amp; Loki (Free Tier)</strong></p>
-<ol>
-<li>Update <code>prometheus.yml</code> to scrape <code>/metrics</code> from the wrapper every 15 s. 2. Add Loki scrape config for JSON logs from the wrapper (FastAPI’s default JSON logging):</li>
-</ol>
-<pre><code class="language-yaml"># prometheus.yml (add to scrape_configs)
-  - job_name: 'llm-wrapper-logs'
-    scrape_interval: 15s
-    static_configs:
-      - targets: ['app:8000']
-    metrics_path: /logs/json
-    # Loki expects logs in JSON format
-</code></pre>
-<ol>
-<li>Create a dashboard in Grafana Cloud with panels:</li>
-<li>Time series: <code>rate(llm_feature_success_total[5m])</code></li>
-<li>Gauge: <code>avg(llm_feature_duration_seconds_bucket{feature="summarise"})</code></li>
-<li>
-<p>Logs panel: <code>{job="llm-wrapper-logs"} |~ "feature.*summarise"</code></p>
-</li>
-<li>
-<p>Use Loki’s <code>| logfmt</code> and <code>| json</code> parsers to extract <code>user_id</code>, <code>feature_name</code>, and <code>error_message</code> from FastAPI’s JSON logs.</p>
-</li>
-</ol>
-<p>Example Loki query to find failed summarisation requests:</p>
-<pre><code>{job=&quot;llm-wrapper-logs&quot;}
-| json
-| feature_name=&quot;summarise&quot;
-| status=500
-</code></pre>
-<p>This gave us a single pane of glass for both metrics and logs, with zero vendor lock-in—we could export all data as JSON from Grafana Cloud if we ever needed to migrate.</p>
-<hr />
-<p><strong>Integration 2: PostgreSQL with pgvector for Feedback Sentiment Analysis</strong></p>
-<p>We stored user feedback scores and used pgvector to cluster feedback by prompt similarity and detect issues automatically.</p>
-<ol>
-<li>Add a table to store feedback:</li>
-</ol>
+<p>Note that <code>tiktoken.encoding_for_model</code> only knows about OpenAI models; for other models you will need to pass an explicit encoding name or fall back to the word-count estimate.</p>
+<p><strong>How do I run this cheaply on a serverless platform?</strong>
+Package the wrapper as a container image and deploy it to a function service. Replace the Prometheus exporter with the platform's native metrics emitter (for example, CloudWatch embedded metric format on AWS) so you do not need to run a scrape endpoint. Cold starts add latency; keep the image small by using a multi-stage build and excluding development tooling.</p>
+<p><strong>When should I move from Redis feature flags to a dedicated flag service?</strong>
+Move when you need rule-based targeting (for example, "enable summarise only for users with more than five prior messages"), or when flag keys and evaluation logic outgrow what a Redis client can reasonably express. The migration is usually a single function swap in the wrapper.</p>
+<h2 id="optional-clustering-feedback-with-pgvector">Optional: clustering feedback with pgvector</h2>
+<p>Storing feedback scores alone tells you a feature is disliked; it does not tell you why. Storing an embedding alongside each feedback row lets you find clusters of similar failing prompts.</p>
 <pre><code class="language-sql">CREATE TABLE IF NOT EXISTS user_feedback (
     id SERIAL PRIMARY KEY,
     user_id TEXT NOT NULL,
@@ -709,134 +644,55 @@ async def health():
     response TEXT,
     score SMALLINT NOT NULL CHECK (score BETWEEN 1 AND 5),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    embedding vector(384)  -- all-MiniLM-L6-v2 embeddings
+    embedding vector(384)
 );
 </code></pre>
-<ol>
-<li>Backfill embeddings using Hugging Face’s <code>sentence-transformers/all-MiniLM-L6-v2</code> (384-dim) via a once-a-day job:</li>
-</ol>
+<p>Backfill embeddings with a sentence-transformer model:</p>
 <pre><code class="language-python">from sentence_transformers import SentenceTransformer
 import psycopg2
 from psycopg2.extras import execute_batch
+import os
 
 model = SentenceTransformer(&quot;sentence-transformers/all-MiniLM-L6-v2&quot;)
+
 
 def backfill_embeddings():
     conn = psycopg2.connect(os.getenv(&quot;DATABASE_URL&quot;))
     cur = conn.cursor()
     cur.execute(&quot;SELECT id, prompt FROM user_feedback WHERE embedding IS NULL&quot;)
     rows = cur.fetchall()
+    if not rows:
+        return
     embeddings = model.encode([r[1] for r in rows])
     with conn.cursor() as update_cur:
         execute_batch(
             update_cur,
             &quot;UPDATE user_feedback SET embedding = %s WHERE id = %s&quot;,
-            [(emb.astype(str), row[0]) for row, emb in zip(rows, embeddings)]
+            [(emb.tolist(), row[0]) for row, emb in zip(rows, embeddings)],
         )
     conn.commit()
+    conn.close()
 </code></pre>
-<ol>
-<li>Run a nightly query to cluster low-scoring prompts:</li>
-</ol>
-<pre><code class="language-sql">SELECT
-    feature_name,
-    avg(score) as avg_score,
-    cluster_id,
-    count(*) as sample_count
-FROM (
-    SELECT
-        feature_name,
-        score,
-        (SELECT cluster_id
-         FROM (
-             SELECT id, embedding &lt;-&gt; '[3.14, ...]' AS dist
-             FROM user_feedback
-             ORDER BY dist
-             LIMIT 1
-         ) t) as cluster_id
-    FROM user_feedback
-    WHERE score &lt; 3
-) t
-GROUP BY feature_name, cluster_id
-ORDER BY sample_count DESC;
+<p>The <code>emb.tolist()</code> conversion matters: passing a NumPy array directly to psycopg2 will not serialise correctly for a <code>vector</code> column.</p>
+<p>To find the nearest neighbours of a low-scoring prompt, use the <code>&lt;-&gt;</code> operator with an explicit vector literal, and remember to index the column for anything beyond a few thousand rows:</p>
+<pre><code class="language-sql">CREATE INDEX ON user_feedback USING hnsw (embedding vector_cosine_ops);
 </code></pre>
-<ol>
-<li>Expose the cluster results via a FastAPI endpoint <code>/feedback/clusters</code> and use it to prioritize engineering work.</li>
-</ol>
-<p>This let us automatically surface clusters of failing prompts—e.g., “all entity extraction requests with Yoruba-language prompts scored &lt;3”—and assign them to the right team without manual log scanning.</p>
-<hr />
-<p><strong>Integration 3: OpenTelemetry Collector with OTLP to Datadog (Enterprise Trial)</strong></p>
-<p>For one NGO client in South Africa, we needed enterprise-grade tracing with minimal code change. We used the OpenTelemetry Collector (v0.90.0) to batch and export traces to Datadog’s OTLP endpoint on a 30-day free trial.</p>
-<ol>
-<li>Update <code>docker-compose.yml</code> to include the collector:</li>
-</ol>
-<pre><code class="language-yaml">  otel-collector:
-    image: otel/opentelemetry-collector-contrib:0.90.0
-    volumes:
-      - ./otel-config.yaml:/etc/otel-config.yaml
-    command: [&quot;--config=/etc/otel-config.yaml&quot;]
-    ports:
-      - &quot;4317:4317&quot;  # OTLP gRPC
-      - &quot;4318:4318&quot;  # OTLP HTTP
-    depends_on:
-      - app
-</code></pre>
-<ol>
-<li>Create <code>otel-config.yaml</code>:</li>
-</ol>
-<pre><code class="language-yaml">receivers:
-  otlp:
-    protocols:
-      grpc:
-      http:
-
-processors:
-  batch:
-
-exporters:
-  otlp:
-    endpoint: &quot;https://api.datadoghq.com/api/v2/otlp&quot;
-    headers:
-      &quot;dd-api-key&quot;: &quot;${DD_API_KEY}&quot;
-
-service:
-  pipelines:
-    traces:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [otlp]
-</code></pre>
-<ol>
-<li>Modify <code>main.py</code> to export traces to the collector instead of Prometheus:</li>
-</ol>
-<pre><code class="language-python">from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
-
-# Replace Prometheus exporter with OTLP
-span_processor = BatchSpanProcessor(OTLPSpanExporter(
-    endpoint=&quot;http://otel-collector:4317&quot;,
-    insecure=True
-))
-trace.get_tracer_provider().add_span_processor(span_processor)
-</code></pre>
-<ol>
-<li>In Datadog, create a dashboard with:</li>
-<li>Traces: <code>resource.name="feature:summarise"</code></li>
-<li>Service map showing latency between the wrapper, Redis, and LLM endpoint</li>
-</ol>
-<h2 id="related-reading">Related reading</h2>
+<h2 id="decision-checklist-before-shipping-an-llm-feature">Decision checklist before shipping an LLM feature</h2>
 <ul>
-<li><a href="https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/">Use feature flags to deploy AI models safely</a></li>
-<li><a href="https://kubaik.github.io/7-ways-to-measure-prompt-platform-roi-in-2026/">7 ways to measure prompt platform ROI in 2026</a></li>
-<li><a href="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
+<li>Does the feature emit exactly one structured event per call, with a feature name and a success flag?</li>
+<li>Is there a cost figure attached, even if approximate, and is it labelled as an estimate?</li>
+<li>Is the feature gated by a rollout mechanism that can be turned off without a deploy?</li>
+<li>Is there a circuit breaker whose state is keyed by feature and whose keys always expire?</li>
+<li>Is there an alert rule tied to a stated SLO, and has it been tested by deliberately exceeding the threshold in staging?</li>
+<li>Does the dashboard answer "should we keep this feature?" in one glance?</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="do-this-next">Do this next</h2>
+<p>Pick one LLM-backed feature currently in production. Add a single structured log line at its prompt/response boundary containing <code>feature_name</code>, <code>model_name</code>, <code>duration_ms</code>, <code>total_tokens</code>, and <code>success</code>. Deploy it, then run this against your endpoint for one hour:</p>
+<pre><code class="language-bash">hey -z 1h -c 4 -m POST -T application/json \
+  -d '{&quot;user_id&quot;:&quot;test&quot;,&quot;feature_name&quot;:&quot;summarise&quot;,&quot;prompt&quot;:&quot;hello&quot;}' \
+  http://localhost:8000/feature/summarise
+</code></pre>
+<p>Compare the wrapper's reported latency against the LLM endpoint's own latency logs. That difference is the observability layer's true overhead, and it is the first number you need before deciding whether the rest of this design is worth adopting.</p>
                 
                 
             </div>

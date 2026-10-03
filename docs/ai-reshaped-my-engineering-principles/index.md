@@ -1,308 +1,209 @@
-# AI reshaped my engineering principles
+# AI Code Generation: Failure Modes and Guardrails
 
-I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+## What AI code assistants actually change
 
-## The conventional wisdom (and why it's incomplete)
+The common framing is that AI assistants are faster autocomplete: they write boilerplate, fix typos, suggest a unit test. That framing holds for trivial tasks. It breaks down once the assistant touches anything that affects state, concurrency, interfaces, or external dependencies.
 
-The standard line is that AI tools are just faster versions of the tools we already have—like a turbocharged linter or a pair programmer that never sleeps. They’ll write boilerplate, fix typos, and maybe suggest a unit test. The advice is usually framed around “productivity gains,” “time saved,” and “consistency.” Tools like GitHub Copilot, Cursor, and Amazon Q Developer are sold as supplements to human review, not replacements. The message is soft: use AI to reduce cognitive load, not to replace judgment.
+The reason is structural. A code assistant optimises for locally plausible code. It has no model of your connection pool size, your DST rules, your event-listener cleanup, or the downstream clients that depend on a field constraint. So the output is often correct in isolation and wrong in context — and it arrives fast enough that review becomes the bottleneck rather than the author.
 
-I bought into this story for a while. I even wrote a post last year saying AI would help small teams ship faster without adding headcount. But the honest answer is that it’s wrong for anything beyond trivial tasks. The tools don’t stop at “suggesting.” They write logic. They refactor modules. They change interfaces. And when they do, they break assumptions that were baked into your system’s design.
+The rest of this article covers the failure modes that recur, the code that produces them, and the checks that catch them. The examples are illustrative; the mechanisms are the point.
 
-The prompt was simple: “Refactor this handler to use async/await and reduce latency.” Copilot produced code that looked correct—at first. It used `asyncio.gather` to parallelize two I/O calls, which in theory should have cut response time. But it ignored the database connection pool size of 10. The result? Connection pool exhaustion after 30 seconds. We lost 42% of requests during peak traffic before we even noticed.
+## Pattern 1: Silent state mutation
 
-The conventional wisdom misses that AI doesn’t just speed up what you do—it changes what you *can* do. It lowers the activation energy for architectural changes, but it doesn’t lower the risk. When AI can refactor your entire module in 10 seconds, you’re no longer reviewing code—you’re reviewing *intent*, and intent is fragile.
+A typical failure mode is an assistant adding a cache without a bound or eviction policy, because the prompt said "add a cache" and nothing said "and bound it."
 
-## What actually happens when you follow the standard advice
+```javascript
+// Illustrative: unbounded in-process cache
+const cache = new Map();
 
-Most teams start with the safe path: use AI for menial work. Generate unit tests. Fill in TODOs. Clean up dead code. Autocomplete boilerplate. This is the “augmentation” narrative—AI as a junior intern that never complains.
+function getUser(id) {
+  if (cache.has(id)) return cache.get(id);
+  const user = db.fetchUser(id);
+  cache.set(id, user);
+  return user;
+}
+```
 
-But the moment you let AI touch anything that affects state, concurrency, or external dependencies, the story changes. I’ve seen four real failure patterns repeat across teams in Brazil, Colombia, and Mexico.
+Nothing here is syntactically wrong. The defect is that `cache` has no TTL, no size cap, and no metrics. Under steady traffic the map grows until the process hits its heap limit. The assistant did not warn about memory growth because unbounded growth is not a property of the code it wrote — it is a property of the workload.
 
-**Pattern 1: Silent state mutations**
+**What to check.** Any assistant-generated cache needs four things stated explicitly: a maximum size, an eviction policy, a TTL, and an exported hit/miss counter. If the prompt does not specify them, the assistant will not invent them.
 
-AI tools often generate code that mutates shared state without documenting it. A recent example: a team in Medellín used Copilot to add a caching layer to a Node 20 LTS service. The generated code used `Map` without a TTL, assuming the cache would be short-lived. In production, the map grew to 500MB and caused the service to OOM after 4 hours. The AI didn’t warn about memory growth—it just wrote the logic. The team spent two days debugging why their Redis 7.2 cache wasn’t being used at all.
+**How to measure whether it matters.** Instrument resident memory and cache entry count as gauges, then run a soak test at realistic request rate for at least the longest expected cache lifetime. Compare heap growth against a flat baseline. A cache that is working shows a plateau; an unbounded one shows a line with positive slope.
 
-**Pattern 2: Assumed concurrency safety**
+## Pattern 2: Assumed concurrency safety
 
-Another team in Bogotá used AI to parallelize a Python 3.11 cron job that processed 12,000 invoices per day. Copilot suggested using `ThreadPoolExecutor` with 16 workers. The code ran fine in staging with 100 invoices. In production, with 12,000, it crashed the database with 500 open connections. The issue? The AI assumed the database could handle concurrent writes, but the team’s connection pool was set to 10 and never tuned. The real error wasn’t in the code—it was in the assumption that AI-generated concurrency patterns are safe by default.
+Assistants reach for parallelism readily, because "make it faster" maps cleanly to `asyncio.gather` or a thread pool. The failure is that the parallelism is added at the call site while the limit lives somewhere else entirely.
 
-**Pattern 3: External dependency drift**
+```python
+# Illustrative: parallelises I/O but ignores pool size
+import asyncio
 
-A client in Mexico City used AI to upgrade their AWS Lambda from Python 3.9 to 3.11. Copilot suggested removing the `python-dateutil` dependency because “it’s included in stdlib now.” The team deployed and immediately got import errors in 3% of cold starts. Turns out, `python-dateutil` was still needed for timezone handling, and the AI’s suggestion ignored edge cases in Latin American time zones where DST rules differ. The error rate spiked to 3% for two hours before rollback.
+async def fetch_all(ids):
+    return await asyncio.gather(*[db.query(i) for i in ids])
+```
 
-**Pattern 4: Interface drift in APIs**
+If the database connection pool is configured to 10 and `ids` has 500 entries, this opens 500 concurrent acquire attempts against a pool of 10. Depending on the driver, you get either a queue that times out or an error storm. The code is fine; the assumption that concurrency is free is not.
 
-A team in São Paulo used AI to add a new field to a REST endpoint. The AI changed the response schema from `{id, name}` to `{id, name, created_at}`, but it also removed the `name` field’s `maxLength` constraint. Clients that relied on that constraint started receiving 400 errors when they sent data longer than 100 characters. The change propagated through the system for 45 minutes before we caught it in logs—long enough for 1,200 client requests to fail.
+**What to check.** Before accepting any generated parallelism, answer three questions: what is the pool size, what is the downstream rate limit, and what happens when concurrency exceeds it? If any answer is "I don't know," the change is not ready.
 
----
+**How to measure.** Load-test with a concurrency level above the pool size and watch the pool's wait-time metric. If wait time grows linearly with concurrency, you are queueing, not parallelising. Compare p99 latency at concurrency 10 and concurrency 100; a healthy system shows sublinear growth.
 
-### Advanced edge cases I personally encountered
+## Pattern 3: External dependency drift
 
-**Case 1: The AI-generated regex that matched nothing**
+Assistants are confident about standard-library contents and frequently wrong. A prompt that says "remove unnecessary dependencies" can produce a removal that is correct for the common case and wrong for the edge case.
 
-We used Copilot 1.112.0 in Cursor 0.32.4 to sanitize user input in a Django 5.0 form handling 500K submissions/day. The prompt was: “Add a regex to validate Brazilian CPF (tax ID) format.” Copilot wrote:
+```python
+# Illustrative: stdlib replacement that drops edge-case handling
+from datetime import datetime, timezone
+
+def to_local(dt: datetime, tz_name: str) -> str:
+    # zoneinfo handles historical and future offset transitions
+    from zoneinfo import ZoneInfo
+    return dt.astimezone(ZoneInfo(tz_name)).isoformat()
+```
+
+The general lesson: when an assistant proposes replacing a third-party library with a standard-library equivalent, the burden of proof is on the replacement. Timezone databases, date parsing, and Unicode normalisation are the usual places where "it's in the stdlib now" is only partly true.
+
+**What to check.** For any dependency removal, diff the behaviour on the inputs your system actually sees, not on the happy path. Keep a fixture set of edge-case inputs — DST boundaries, leap seconds, malformed identifiers — and run both implementations against it before deleting the old import.
+
+**How to measure.** Canary the change to a small percentage of traffic and compare error rate between canary and baseline. A rise in cold-start import errors is the signature of a bad removal.
+
+## Pattern 4: Interface drift
+
+This is the most expensive pattern because it escapes your service boundary. An assistant asked to "add a timestamp to the response" may also normalise the surrounding schema.
+
+```python
+# Illustrative: field added, constraint silently dropped
+from pydantic import BaseModel, Field
+
+class UserOut(BaseModel):
+    id: int
+    name: str = Field(max_length=100)
+    created_at: str
+```
+
+A plausible generated variant drops `max_length` because it looks redundant next to the new field. Downstream clients that relied on the 100-character limit now send longer values and receive 400s from a different layer. The change is invisible in the diff unless you are reading for removals, not additions.
+
+**What to check.** Review interface changes by diffing the generated schema against the previous one, not by reading the new code. Any removed constraint, renamed field, or changed optionality is a breaking change and needs a version bump or a compatibility shim.
+
+**How to measure.** Contract tests that assert the exact serialised shape of responses catch this class of drift. Run them against the previous release's schema, not just the current code.
+
+## A worked example: the CPF regex
+
+This is a compact case that shows how a correct-looking generation fails a domain rule.
 
 ```python
 import re
+
+# Illustrative: format-only validation
 cpf_pattern = re.compile(r'^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})$')
+
+def is_valid_cpf(value: str) -> bool:
+    return bool(cpf_pattern.match(value))
 ```
 
-This regex passes the *format* check but fails the *validity* check. A valid CPF in Brazil must satisfy a modulus-11 checksum, which this regex doesn’t enforce. In production, 18% of valid CPFs were rejected because they didn’t match the pattern. We only caught this after a support ticket spike in São Paulo and Curitiba. Fixing it required adding a 30-line checksum function that the AI never suggested.
+The regex accepts any eleven digits in the right shape. A Brazilian CPF also carries two check digits computed by a modulus-11 algorithm, so the regex accepts invalid identifiers and, depending on formatting assumptions, may reject valid ones. The assistant produced the pattern because the prompt asked for "CPF format validation" — format, not validity.
 
-**Case 2: The async context that leaked memory**
+The fix is to add the checksum and keep the regex only as a preprocessing step:
 
-In a Node.js 20.13.1 microservice processing 12K WebSocket messages/sec, we used Copilot to refactor a memory leak. The prompt: “Refactor this event handler to use async/await and reduce memory usage.” Copilot changed the code to:
+```python
+import re
+
+CPF_PATTERN = re.compile(r'^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})$')
+
+def _check_digit(digits: list[int]) -> int:
+    total = sum(d * w for d, w in zip(digits, range(len(digits) + 1, 1, -1)))
+    remainder = total % 11
+    return 0 if remainder < 2 else 11 - remainder
+
+def is_valid_cpf(value: str) -> bool:
+    if not CPF_PATTERN.match(value):
+        return False
+    digits = [int(c) for c in re.sub(r'\D', '', value)]
+    if len(set(digits)) == 1:
+        return False  # reject repeated-digit placeholders
+    first = _check_digit(digits[:9])
+    second = _check_digit(digits[:9] + [first])
+    return digits[9] == first and digits[10] == second
+```
+
+The reasoning to note: the assistant was not wrong about the format, it was wrong about the requirement. The requirement was never stated. This is the general shape of most AI-generated domain bugs — the model satisfies the literal prompt and the prompt omitted the constraint.
+
+**How to measure.** Build a fixture set with known-valid and known-invalid identifiers, including repeated-digit placeholders and boundary check digits. Run it as a unit test. A regex-only implementation will fail a measurable fraction of the invalid cases; the checksum version should pass all of them.
+
+## The async listener leak
+
+A second compact example, this time in the cleanup path.
 
 ```javascript
+// Illustrative: listener added per connection, never removed
 socket.on('message', async (msg) => {
   const data = await processAsync(msg);
   socket.send(data);
 });
 ```
 
-But it removed the `socket.removeAllListeners()` call in the cleanup handler. Each new connection added a new listener, and after 10K connections, memory usage hit 8GB. The service crashed during Black Friday traffic in Bogotá. It took us 6 hours to trace the leak because the AI never flagged event listener accumulation as a risk.
+Each connection registers a new listener on the shared emitter. Without a matching removal on disconnect, listeners accumulate and every message is processed once per accumulated listener. Memory grows with connection count, and throughput degrades quadratically.
 
-**Case 3: The SQL injection that wasn’t supposed to exist**
+The corrected version keeps the handler reference so it can be removed:
 
-We used Amazon Q Developer 1.2.3 to refactor a legacy Python 3.11 FastAPI endpoint that used raw SQL queries. The prompt: “Refactor this to use SQLAlchemy Core and add type hints.” Copilot generated:
-
-```python
-from sqlalchemy import text
-
-def get_user(user_id: int):
-    query = text("SELECT * FROM users WHERE id = :id")
-    return db.execute(query, {"id": user_id}).fetchone()
-```
-
-This looks safe, but the `text()` constructor bypasses SQLAlchemy’s built-in escaping for identifiers. A client in Medellín used this to inject a table name via a query parameter, resulting in a full table scan on the `users` table during peak hours. The latency jumped from 45ms to 2.3s, and we lost 14% of requests. The fix required rewriting the query to use SQLAlchemy’s `select()` API, which the AI didn’t suggest.
-
-**Case 4: The timezone that broke in production**
-
-We used Cursor 0.33.1 with Copilot 1.114.0 to add timezone support to a scheduling system for a client in Mexico City. The prompt: “Add timezone-aware datetime handling for appointments.” Copilot generated:
-
-```python
-from datetime import datetime, timezone
-import pytz
-
-def schedule_appointment(dt: datetime):
-    tz = pytz.timezone('America/Mexico_City')
-    localized = dt.astimezone(tz)
-    return localized.isoformat()
-```
-
-This worked in staging, but failed in production because `pytz` doesn’t handle Mexico City’s DST changes correctly after 2026. On March 9, 2026, at 2:00 AM, the clocks “spring forward,” but the AI-generated code used the wrong offset. Appointments scheduled between 2:00 AM and 3:00 AM were off by one hour, causing 800 double-bookings. The fix required switching to `zoneinfo` (Python 3.11’s built-in), which the AI didn’t suggest.
-
----
-
-### Integration with real tools (2026 versions)
-
-**Tool 1: GitHub Actions + Copilot CLI (v1.115.0) for automated PR reviews**
-
-We integrated Copilot CLI into our GitHub Actions workflow to auto-review PRs in our Python 3.11 monorepo. Here’s the working snippet:
-
-```yaml
-# .github/workflows/copilot-review.yml
-name: Copilot PR Review
-on: [pull_request]
-
-jobs:
-  review:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - run: pip install copilot-cli==1.115.0
-      - name: Run Copilot review
-        run: |
-          copilot review \
-            --pr $PR_URL \
-            --model gpt-4-turbo-2024-04-09 \
-            --risk-threshold medium \
-            --output json > review.json
-          jq -r '.recommendations[] | "\(.file):\(.line) \(.message)"' review.json >> comments.txt
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Post comments
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const comments = fs.readFileSync('comments.txt', 'utf8').split('\n');
-            for (const comment of comments) {
-              if (comment.trim()) {
-                await github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: comment
-                });
-              }
-            }
-```
-
-We filter out “low” risk issues and only post “medium” or “high” severity findings. In the last 30 days, this caught 42 concurrency issues, 18 state mutation risks, and 7 external dependency drifts before merge. The false positive rate is 12%, which is acceptable for our team size.
-
-**Tool 2: LangChain + Amazon Q Developer (v1.2.4) for multi-agent validation**
-
-We built a multi-agent system in LangChain 0.2.15 to validate AI-generated code across three dimensions: correctness, performance, and security. Here’s the core snippet:
-
-```python
-from langchain_core.agents import AgentExecutor
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_community.chat_models import BedrockChat
-from q_developer import QDeveloperToolkit
-
-# Initialize agents
-safety_agent = BedrockChat(model_id="anthropic.claude-3-sonnet-20240229-v1:0")
-perf_agent = BedrockChat(model_id="mistral.mistral-large-2407-v1:0")
-correctness_agent = BedrockChat(model_id="cohere.command-r-plus-v1:0")
-
-# Amazon Q Developer toolkit
-q_toolkit = QDeveloperToolkit(region="us-east-1")
-
-# Multi-agent chain
-prompt = ChatPromptTemplate.from_template("""
-You are a code reviewer. Review the following Python 3.11 code for {risk_type} risks.
-Code: {code}
-Return a JSON report with:
-- severity: "high", "medium", or "low"
-- issue: description of the problem
-- line: line number
-- fix: suggested code change
-""")
-
-safety_chain = prompt | safety_agent | q_toolkit.safety_validator
-perf_chain = prompt | perf_agent | q_toolkit.performance_validator
-correctness_chain = prompt | correctness_agent | q_toolkit.correctness_validator
-
-# Example usage
-code = """
-async def fetch_data():
-    results = await asyncio.gather(db.query(), api.call())
-    return results
-"""
-report = {
-    "safety": safety_chain.invoke({"code": code, "risk_type": "security"}),
-    "performance": perf_chain.invoke({"code": code, "risk_type": "performance"}),
-    "correctness": correctness_chain.invoke({"code": code, "risk_type": "correctness"})
+```javascript
+function attach(socket) {
+  const handler = async (msg) => {
+    const data = await processAsync(msg);
+    socket.send(data);
+  };
+  socket.on('message', handler);
+  socket.on('close', () => socket.off('message', handler));
 }
 ```
 
-We run this in our CI pipeline for all AI-generated code. In the last quarter, it caught 3 concurrency deadlocks, 2 SQL injection vectors, and 1 memory leak before production. The setup costs ~$180/month for 500 reviews, but saved us ~$12K in incident response.
+**How to measure.** Export a gauge for listener count per emitter, or use the runtime's built-in listener-count accessor. Run a connection churn test — connect and disconnect repeatedly — and assert the count returns to baseline. If it climbs monotonically, you have the leak.
 
-**Tool 3: Sentry + Copilot for real-time anomaly detection**
+## Guardrails that catch these patterns
 
-We integrated Sentry 10.3.0 with Copilot to detect AI-generated anomalies in real time. Here’s the integration snippet:
+The patterns above share a shape: plausible local code, violated global assumption. Guardrails should therefore test assumptions, not code.
 
-```python
-import sentry_sdk
-from sentry_sdk.crons import monitor
-from copilot import CopilotRuntime
+**State the constraints in the prompt.** "Add a bounded cache with a 5-minute TTL, a 10,000-entry cap, and a hit-rate metric" produces different code from "add a cache." The assistant cannot infer limits you did not state.
 
-sentry_sdk.init(
-    dsn="https://...",
-    traces_sampler=lambda context: 0.1,
-)
+**Diff interfaces, not implementations.** For any change that crosses a service boundary, compare the serialised schema before and after. Additions are usually safe; removals and type changes are not.
 
-copilot = CopilotRuntime(api_key="copilot_...")
+**Instrument the assumption.** Pool wait time, heap growth, listener count, cache entry count. These are the signals that fail first when an assistant has made an implicit assumption about scale.
 
-@monitor(monitor_slug="ai-code-review")
-async def review_code(code: str, context: dict):
-    try:
-        review = await copilot.review_code(
-            code=code,
-            language="python",
-            risk_level="high",
-            context=context
-        )
-        if review.severity == "high":
-            sentry_sdk.capture_message(
-                f"AI-generated high-risk code detected: {review.issue}",
-                level="error",
-                extra={
-                    "code": code,
-                    "fix": review.fix,
-                    "file": context.get("file")
-                }
-            )
-    except Exception as e:
-        sentry_sdk.capture_exception(e)
+**Canary dependency changes.** Any removal or replacement of a third-party library goes to a small traffic slice first, with error rate compared against baseline.
 
-# Example usage in FastAPI
-@app.post("/ai-review")
-async def ai_review_endpoint(request: Request):
-    code = await request.json()
-    context = {
-        "file": "handlers/payment.py",
-        "function": "process_payment"
-    }
-    await review_code(code["content"], context)
-    return {"status": "reviewed"}
-```
+**Keep a domain fixture set.** The edge cases your business cares about — check digits, DST boundaries, locale formats — belong in tests, not in prompt text. Tests persist; prompts are per-session.
 
-This caught a critical race condition in a payment handler within 90 seconds of deployment. The anomaly was a 3x latency spike that correlated with a Copilot-generated change. Without this, we would have lost $8K in transaction fees.
+## Choosing where to apply review effort
 
----
+Not every generated line deserves the same scrutiny. A rough triage:
 
-### Before/after comparison: real numbers
+| Change touches | Risk | Review approach |
+|---|---|---|
+| Comments, formatting, local variable names | Low | Skim |
+| Pure functions with existing test coverage | Low | Let tests decide |
+| New code with no test coverage | Medium | Write the test first, then review |
+| Shared mutable state, caches, singletons | High | Instrument before merge |
+| Concurrency, connection pools, rate limits | High | Load-test at production scale |
+| Serialised interfaces, API schemas | High | Diff against previous schema |
+| Dependency additions or removals | High | Canary and compare error rate |
 
-Here’s a breakdown of a real project where we went from manual code review to AI-assisted review with multi-agent validation. The project: a Python 3.11 microservice handling 15K requests/sec, deployed in AWS EC2 (m6i.2xlarge instances).
+The table is a heuristic, not a rule. The point is that review effort should track blast radius, and blast radius is a property of what the code touches, not how it was written.
 
-| Metric                     | Before (Manual Review) | After (AI + Multi-Agent) |
-|----------------------------|------------------------|--------------------------|
-| **Code review time**       | 4 hours                | 15 minutes               |
-| **Lines of code reviewed** | ~2,500                 | ~12,000                  |
-| **Bugs caught pre-merge**  | 12                     | 47                       |
-| **Bugs caught post-merge** | 8                      | 2                        |
-| **Mean time to detect (MTTD)** | 4.2 hours          | 2.1 minutes              |
-| **Mean time to resolve (MTTR)** | 6.8 hours          | 38 minutes               |
-| **Deployment frequency**   | Weekly                 | Daily                    |
-| **Rollback rate**          | 18%                    | 3%                       |
-| **Avg. review cost**       | $120 per PR            | $24 per PR               |
-| **Incident cost (last 6 months)** | $42K          | $8K                      |
-| **CPU latency (p99)**      | 450ms                  | 180ms                    |
-| **Memory usage**           | 2.1GB                  | 1.6GB                    |
-| **Team velocity**          | 1.2 features/week      | 3.5 features/week        |
+## FAQ
 
-**Key observations:**
+**Does this mean AI-generated code is worse than human-written code?**
+No. The failure modes are the same ones humans produce — unbounded caches, unremoved listeners, dropped constraints. The difference is rate. Assistants generate these faster than review can catch them, so the guardrails need to be automated rather than relying on reviewer attention.
 
-1. **False positives dropped by 60%** after we added the multi-agent system. The initial AI-only review had a 22% false positive rate, which overwhelmed the team. The LangChain + Amazon Q setup reduced this to 9%.
+**Do I need a multi-agent validation system?**
+Not by default. Most of the patterns here are caught by instrumentation and schema diffs, which are cheaper and more reliable than a second model reviewing the first. Add model-based review only after you have baseline metrics and a fixture set to measure its false-positive rate against.
 
-2. **Latency improved by 60%** because the AI caught inefficient I/O patterns (e.g., N+1 queries) before merge. The manual review team rarely caught these because they lacked tooling to simulate production load.
+**How do I know if my assistant is making an implicit assumption?**
+You generally don't, from the code alone. The signal is a change in a metric after deployment — pool wait time, heap growth, error rate. Instrument first, then attribute.
 
-3. **Cost savings were driven by reduced incident response**. The $34K reduction in incident costs over 6 months paid for the entire AI tooling stack (Copilot, Bedrock, Sentry) for a year. The $96/week savings in review time (~$5K/year) was a bonus.
+**Is it worth documenting domain quirks in prompts?**
+It helps within a session but does not persist. The durable place for domain rules is a fixture set and a test. If a rule matters, it should fail a build when violated.
 
-4. **The biggest win was velocity**. The team could ship daily without burning out. The tradeoff? We had to add a “risk review” step for all AI-generated code, which added 15 minutes to the PR process. But this was offset by the reduction in post-merge fixes.
+## What to do in the next 30 minutes
 
-5. **The biggest loss was context**. The AI tools don’t understand our domain-specific quirks (e.g., Brazilian CPF validation, Mexican DST rules). We had to manually document these in prompts and validators. Without this, the false negative rate would have been much higher.
-
-**Recommendation for teams in 2026:**
-If you’re using AI for anything beyond boilerplate, pair it with:
-- A multi-agent validation system (LangChain + Bedrock + Q Developer)
-- Real-time anomaly detection (Sentry + Copilot)
-- Automated risk thresholds in CI (GitHub Actions + Copilot CLI)
-- Domain-specific documentation in prompts
-
-The tools are powerful, but they’re not magic. They amplify both your strengths and your blind spots. Use them to scale your judgment, not replace it.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 03, 2026
+Pick one assistant-generated change currently in your codebase that touches shared state, concurrency, or a serialised interface. Diff it against the previous version and list every removed constraint, every new unbounded structure, and every added concurrent call. For each item, write down the assumption it depends on. If you cannot state the assumption, that change needs instrumentation before it ships.

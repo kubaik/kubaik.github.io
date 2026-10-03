@@ -1,73 +1,56 @@
-# AI UI tools broke my React flow — here’s why
+# AI UI Generators: Production Constraints and Fixes
 
-The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.
+AI UI generation tools accept a prompt and return component code. The output is often visually plausible and often fails specific, predictable checks: keyboard access, breakpoint behavior, state ownership, and design-token compliance. This article covers why that happens, how to evaluate the output, and how to structure a workflow where the generated draft is a starting point rather than a finished component.
 
-# AI UI generation tools broke my React flow — here’s why
+## The short version
 
-I spent two weeks rewriting a React dashboard with an AI UI generator, only to scrap half of it and hand-write 400 lines of CSS. The tools sounded perfect: feed a prompt, get pixel-perfect components that match your design system. But in production, they ignored accessibility, duplicated state logic, and created components that looked great in Storybook and broke at 320px viewport width. This post is the guide I wish I’d had before I started — the mismatch between marketing promises and the real constraints of shipping UI in 2026.
+Tools in this category — chat-based code generators, editor-integrated assistants, and design-tool export plugins — are good at producing a first draft of presentational markup. They are not good at inferring constraints you did not state: your breakpoints, your token names, your state ownership model, your accessibility bar, or your bundle budget.
 
-## The one-paragraph version (read this first)
+A reasonable working assumption: budget refactor time per component roughly comparable to the time you would spend writing the component's behavior by hand, and treat the generated markup as free. Whether that trade is worth it depends on how much of your component is markup versus behavior.
 
-AI UI generation tools like Tailwind UI Blocks 2.4, Figma-to-Code 3.1, and v0 by Vercel promise to turn prompts into production-ready React components. They work fine for marketing sites and admin dashboards when you control the viewport and data, but they fall apart when: you need responsive behavior at arbitrary breakpoints, your state model is complex, or you deploy to low-bandwidth regions. My team cut initial component delivery from 2 days to 4 hours using v0, but we still hand-tuned 60% of components for accessibility and performance. Expect to spend 30–60 minutes per component on accessibility, responsive fixes, and state integration — tools don’t handle that automatically.
+## Why the mismatch exists
 
-## Why this concept confuses people
+The confusion is structural, not a bug in any particular tool.
 
-Most tutorials and marketing copy show a happy path: you type a prompt, the AI outputs a clean component, and you copy-paste it into your app. The confusion happens when reality clashes with that promise. Developers new to production UI work assume AI tools will handle responsive design, accessibility, and state management — they won’t. I made that mistake when I tried to generate a responsive table component with sorting and pagination. The AI produced a beautiful table that worked on desktop, but on mobile the pagination controls overlapped the last column. It took me half a day to realize the AI only generated CSS for one breakpoint. That moment made me realize: AI tools are great at generating visual markup, but terrible at generating behavior that adapts to constraints.
+**Generation is optimized for plausibility, not for your constraints.** A language model produces the most likely completion given the prompt. The most likely React table is a desktop-first table with local `useState` and an array index as key. That is a reasonable default in a vacuum and wrong in most applications.
 
-Another source of confusion is the gap between design tools and code. Figma-to-Code tools often produce components that look like the Figma file but don’t respect the underlying constraints of the component model. I once generated a card component that used flexbox for layout, but our design system required CSS Grid. The AI didn’t know that — it just produced valid CSS. It looked fine in the browser, but our design system lint rules flagged it as non-compliant. The tools don’t integrate with your design system’s tokens or lint rules; they only know the visual output.
+**Design tools and code have different models.** A design file describes appearance. A component describes behavior under state, at multiple viewports, with real data. Export tooling can only translate what the design file contains. If the design file has no focus states, no error states, no loading states, and no narrow-viewport layout, the export cannot invent them.
 
-Finally, there’s the promise of “zero refactoring.” AI tools often claim you won’t need to touch the generated code. In practice, you’ll refactor for responsiveness, accessibility, and state management. I generated a modal dialog component that worked when the prompt included “accessible modal.” But when I reused it with dynamic content, the focus trap broke because the AI didn’t account for dynamic focus management. Refactoring is unavoidable when the AI doesn’t understand your application’s state model.
+**The tools have no access to your repository.** Unless you supply them explicitly, a generator does not know your token names, your lint rules, your component library, or your data-fetching conventions. It will produce valid CSS that violates your design system, because validity and compliance are different properties.
 
-## The mental model that makes it click
+**Local state is the path of least resistance.** Generated components tend to own their own state. That is fine for a self-contained widget and wrong for anything that must coordinate with a URL, a cache, or a global store.
 
-Think of AI UI generation tools like a junior designer who’s great at visuals but forgets about constraints. The AI can generate a beautiful button, but it won’t know your design system’s color tokens, spacing scale, or spacing constraints unless you explicitly provide them in the prompt. The tool doesn’t have context about your app’s state model, so it can’t generate the right event handlers or effect dependencies.
+## A worked example: a sortable, paginated table
 
-Here’s a useful analogy: imagine you hire a contractor to build a house. The contractor can build walls, install windows, and paint rooms based on your sketches. But if you don’t tell them about the foundation depth, soil type, or electrical code requirements, the house will have problems when it rains or when the inspector arrives. AI UI tools are like that contractor: they can build visual components fast, but they need explicit constraints to build production-ready code.
+Take a representative prompt: "Create a responsive React table with sorting and pagination." A typical generated result looks like this.
 
-To make this work, you need to treat AI as a pair programmer, not a code generator. You provide the constraints (design tokens, state model, accessibility requirements) and the AI generates the markup. Then you refactor the generated code to fit your real constraints. The workflow looks like this:
-
-- Write a detailed prompt that includes design tokens, accessibility requirements, and state behavior.
-- Generate the component and copy it into your project.
-- Run your accessibility audit (axe-core 4.9), responsive tests (Chrome DevTools Device Mode), and unit tests.
-- Refactor the generated code to match your real state model and constraints.
-- Commit the refactored component.
-
-The key insight is that AI tools speed up the first draft, but you still own the production constraints. The tools don’t replace your design system, state model, or testing strategy — they complement them.
-
-## A concrete worked example
-
-Let’s generate a responsive table with sorting and pagination using v0 by Vercel. We’ll start with a naive prompt, see where it breaks, and then refine it with constraints.
-
-### Step 1: Naive prompt (what most devs try first)
-
-Prompt: “Create a responsive React table with sorting and pagination.”
-
-v0 output:
 ```tsx
-// v0 generated component
 import { useState } from "react";
 
 export default function Table({ data }) {
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" });
   const [currentPage, setCurrentPage] = useState(1);
 
   const sortedData = [...data].sort((a, b) => {
     if (sortConfig.key) {
-      return a[sortConfig.key] > b[sortConfig.key] 
-        ? (sortConfig.direction === 'ascending' ? 1 : -1) 
-        : (sortConfig.direction === 'ascending' ? -1 : 1);
+      return a[sortConfig.key] > b[sortConfig.key]
+        ? sortConfig.direction === "ascending" ? 1 : -1
+        : sortConfig.direction === "ascending" ? -1 : 1;
     }
     return 0;
   });
 
   const pageSize = 10;
   const totalPages = Math.ceil(sortedData.length / pageSize);
-  const paginatedData = sortedData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const paginatedData = sortedData.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   const requestSort = (key) => {
-    let direction = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
     }
     setSortConfig({ key, direction });
   };
@@ -77,9 +60,9 @@ export default function Table({ data }) {
       <table className="min-w-full bg-white border">
         <thead>
           <tr>
-            <th onClick={() => requestSort('name')}>Name</th>
-            <th onClick={() => requestSort('email')}>Email</th>
-            <th onClick={() => requestSort('status')}>Status</n8>
+            <th onClick={() => requestSort("name")}>Name</th>
+            <th onClick={() => requestSort("email")}>Email</th>
+            <th onClick={() => requestSort("status")}>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -93,302 +76,222 @@ export default function Table({ data }) {
         </tbody>
       </table>
       <div className="flex justify-between mt-4">
-        <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))}>Previous</button>
+        <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}>Previous</button>
         <span>Page {currentPage} of {totalPages}</span>
-        <button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}>Next</button>
+        <button onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}>Next</button>
       </div>
     </div>
   );
 }
 ```
 
-At first glance, this looks fine. But let’s run it through production checks:
+### Failure-mode analysis
 
-- Accessibility: No ARIA roles, no keyboard navigation, no focus management.
-- Responsiveness: Uses overflow-x-auto but doesn’t handle mobile column widths or touch targets.
-- State model: Uses array index as key, which breaks when data changes.
-- Design tokens: Hard-coded colors and spacing.
-- Performance: No memoization, so re-renders on every keystroke in a search input (if added).
+Read the code against a checklist rather than against your eyes.
 
-### Step 2: Refined prompt with constraints
+**Keyboard access.** The sortable headers are `<th onClick>`. They are not focusable, have no `tabIndex`, no `role="button"`, and no keyboard handler. A keyboard user cannot sort the table at all. This is the single most common defect in generated table code.
 
-Prompt: “Create a responsive React table with sorting, pagination, and accessibility. Use our design tokens for colors and spacing. Columns: name, email, status. Data shape: { id: string, name: string, email: string, status: 'active' | 'inactive' }. Keys must be unique. Mobile breakpoint: 320px. Accessibility: keyboard navigation, focus trap, screen reader support. State model: use SWR for data fetching and Zustand for pagination/sorting.”
+**Sort state and screen readers.** There is no `aria-sort` on the active column, so assistive technology cannot announce the current sort direction.
 
-v0 output (simplified):
+**React keys.** `key={i}` uses the array index. When the underlying data is reordered, filtered, or paginated from a server, React reuses DOM nodes by position and component state attaches to the wrong row. Any row-level state — an expanded row, an inline edit — will jump to the wrong record. Keys must be stable identifiers.
+
+**Sorting correctness.** The comparator uses `>` on raw values. For strings this is case-sensitive and locale-insensitive; for numbers passed as strings it is lexicographic, so `"10" < "9"`. For dates it compares whatever the values happen to be. It also mutates nothing (`[...data]` is a shallow copy, good) but re-sorts on every render with no memoization.
+
+**Responsiveness.** `overflow-x-auto` makes the table scroll horizontally. That is a legitimate strategy, but it is not the only one and it is not stated as a requirement. On a narrow viewport the table will scroll sideways, which is often worse than a stacked card layout for the same data. The generator picked one option because the prompt did not constrain it.
+
+**Design tokens.** `bg-white` and the Tailwind spacing utilities are hard-coded. If your design system expresses surfaces as a semantic token, this component bypasses it and will not respond to theming.
+
+**State ownership.** Page and sort live in component state. If the URL should carry them — so a link is shareable and the back button works — this is the wrong model. If a server cache should own the data, the component should not be slicing a full array client-side at all.
+
+**Data volume.** `data` is assumed to be the entire dataset, present in memory. For a table of 50 rows that is fine. For 50,000 it is not, and the fix is server-side pagination, which changes the component's shape entirely.
+
+### A corrected version
+
+The prompt must state the constraints. A prompt that includes them looks like this:
+
+```
+Create a React table component.
+Columns: name (string), email (string), status ('active' | 'inactive').
+Row identity: each row has a unique string `id`; use it as the React key.
+Sorting: clicking a column header toggles asc/desc. Headers must be
+  keyboard-focusable and activate on Enter and Space. Set aria-sort on
+  the sorted column to 'ascending' or 'descending'.
+Pagination: server-side. The component receives `page`, `pageSize`,
+  `total`, and calls `onPageChange(nextPage)`.
+Styling: use the design system's semantic surface and text tokens;
+  do not hard-code colors.
+Narrow viewport: below 640px, render each row as a stacked block with
+  a visible label per field instead of a horizontally scrolling table.
+```
+
+A corrected implementation of the parts that matter:
+
 ```tsx
-// Refactored component after prompt refinement
-import { useState, useMemo, useEffect } from "react";
-import { useSWR } from "swr";
-import { useStore } from "zustand";
-import { Button, Pagination, Table, TableHead, TableRow, TableCell } from "@company/ui";
+import { useMemo } from "react";
 
-export default function DataTable({ endpoint }) {
-  const { data, isLoading } = useSWR(endpoint);
-  const { page, setPage, sortBy, setSortBy, sortDirection, setSortDirection } = useStore();
+type Row = { id: string; name: string; email: string; status: "active" | "inactive" };
 
-  const { items, total } = data || { items: [], total: 0 };
+type Props = {
+  rows: Row[];
+  sortBy: keyof Row | null;
+  sortDirection: "asc" | "desc";
+  onSortChange: (key: keyof Row, direction: "asc" | "desc") => void;
+  page: number;
+  pageSize: number;
+  total: number;
+  onPageChange: (page: number) => void;
+};
 
-  const sortedItems = useMemo(() => {
-    return [...items].sort((a, b) => {
-      if (sortBy) {
-        return a[sortBy] > b[sortBy] 
-          ? (sortDirection === 'asc' ? 1 : -1) 
-          : (sortDirection === 'asc' ? -1 : 1);
-      }
-      return 0;
-    });
-  }, [items, sortBy, sortDirection]);
+const columns: { key: keyof Row; label: string }[] = [
+  { key: "name", label: "Name" },
+  { key: "email", label: "Email" },
+  { key: "status", label: "Status" },
+];
 
-  const paginatedItems = useMemo(() => {
-    const start = (page - 1) * 10;
-    return sortedItems.slice(start, start + 10);
-  }, [sortedItems, page]);
+export function DataTable({
+  rows, sortBy, sortDirection, onSortChange,
+  page, pageSize, total, onPageChange,
+}: Props) {
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
-  const handleSort = (key) => {
-    if (sortBy === key) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortBy(key);
-      setSortDirection('asc');
+  const handleSort = (key: keyof Row) => {
+    const next = sortBy === key && sortDirection === "asc" ? "desc" : "asc";
+    onSortChange(key, next);
+  };
+
+  const handleHeaderKeyDown = (e: React.KeyboardEvent, key: keyof Row) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleSort(key);
     }
   };
 
+  const ariaSortFor = (key: keyof Row) =>
+    sortBy === key ? (sortDirection === "asc" ? "ascending" : "descending") : "none";
+
   return (
-    <Table aria-label="User data table" role="grid">
-      <TableHead>
-        <TableRow>
-          <TableCell
-            role="columnheader"
-            aria-sort={sortBy === 'name' ? sortDirection : undefined}
-            onClick={() => handleSort('name')}
-          >
-            Name
-          </TableCell>
-          <TableCell
-            role="columnheader"
-            aria-sort={sortBy === 'email' ? sortDirection : undefined}
-            onClick={() => handleSort('email')}
-          >
-            Email
-          </TableCell>
-          <TableCell
-            role="columnheader"
-            aria-sort={sortBy === 'status' ? sortDirection : undefined}
-            onClick={() => handleSort('status')}
-          >
-            Status
-          </TableCell>
-        </TableRow>
-      </TableHead>
-      <tbody>
-        {paginatedItems.map((row) => (
-          <TableRow key={row.id} role="row">
-            <TableCell role="cell">{row.name}</TableCell>
-            <TableCell role="cell">{row.email}</TableCell>
-            <TableCell role="cell">
-              <span className={`px-2 py-1 rounded-full text-xs ${row.status === 'active' ? 'bg-green-500' : 'bg-gray-500'}`}>
-                {row.status}
-              </span>
-            </TableCell>
-          </TableRow>
-        ))}
-      </tbody>
-    </Table>
+    <div>
+      <table role="grid" aria-rowcount={total} aria-label="Records">
+        <thead>
+          <tr>
+            {columns.map((col) => (
+              <th
+                key={col.key}
+                scope="col"
+                role="columnheader"
+                aria-sort={ariaSortFor(col.key)}
+                tabIndex={0}
+                onKeyDown={(e) => handleHeaderKeyDown(e, col.key)}
+                onClick={() => handleSort(col.key)}
+              >
+                {col.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.id}>
+              <td>{row.name}</td>
+              <td>{row.email}</td>
+              <td>{row.status}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <nav aria-label="Pagination">
+        <button disabled={page <= 1} onClick={() => onPageChange(page - 1)}>
+          Previous
+        </button>
+        <span>Page {page} of {totalPages}</span>
+        <button disabled={page >= totalPages} onClick={() => onPageChange(page + 1)}>
+          Next
+        </button>
+      </nav>
+    </div>
   );
 }
 ```
 
-This version passes accessibility audits (axe-core 4.9), uses design tokens via the company UI library, handles mobile breakpoints via the Table component’s responsive props, and integrates with our state model. The refactor took 45 minutes, but the AI saved us 3 hours of writing boilerplate.
+What changed and why:
 
-## How this connects to things you already know
+- Sort state moved out of the component. The parent owns it, so it can live in the URL or a store.
+- Pagination is server-driven. The component receives a page of rows and a total, so it never needs the full dataset in memory.
+- Headers are focusable and respond to Enter and Space, and `aria-sort` communicates direction.
+- Keys are stable row identifiers.
+- The comparator is gone. Sorting is the data layer's job, and doing it there means it can be done in SQL or an index rather than in the browser.
 
-If you’ve ever worked with Storybook, you’ll recognize the pattern: isolated component development with mocked data and focused stories. AI UI tools extend that pattern by automating the initial markup and props. The difference is that Storybook doesn’t generate code — it just helps you document components. AI tools generate the code, but they don’t understand your app’s constraints.
+Note that this component is now mostly presentational. That is the point: the generator's strength is markup, so the refactor should move behavior out of the generated code and into code you own.
 
-If you’ve used Next.js, you’ll recognize the need for server components and data fetching strategies. AI tools often generate client components with useEffect and useState, which can cause hydration mismatches if you’re using server components. In my case, v0 generated a client component for the table, but our app used server components for data fetching. We had to refactor the table to accept props from a server component, which took 20 minutes but was necessary for performance.
+## How to measure whether it is worth it
 
-If you’ve used Tailwind CSS, you’ll notice that AI tools often generate Tailwind classes. That’s convenient if you’re already using Tailwind, but it becomes a problem if you’re using CSS Modules or styled-components. The tools don’t adapt to your styling strategy — they assume Tailwind. In one project, v0 generated a card component with Tailwind classes, but our team used CSS Modules. We spent 15 minutes converting the classes to module imports, which was trivial but necessary.
+Do not rely on impressions. Instrument the workflow.
 
-The core connection is that AI UI tools are just another tool in your frontend toolbox. They don’t replace your design system, state model, or testing strategy — they accelerate the first draft. You still need to integrate the generated code into your real app, which means adapting it to your constraints.
+**Measure refactor time per component.** Track the wall-clock time from pasting generated code to merging the component. Log it in your issue tracker against the component. After ten components you will have a real distribution rather than an anecdote.
 
-## Common misconceptions, corrected
+**Measure defect escape.** Count how many generated components required a post-merge fix for accessibility, responsive layout, or state bugs. Compare that against hand-written components over the same period. If the generated set has a materially higher rate, the refactor step is not catching enough.
 
-**Misconception 1: AI tools produce production-ready code.**
-Correction: They produce visually correct code. Production-ready code also requires accessible markup, responsive behavior, and integration with your state model. I generated a modal dialog that looked perfect in Storybook but failed axe-core tests because it didn’t trap focus or manage tab order. Tools don’t know your accessibility requirements unless you specify them in the prompt.
+**Run the accessibility audit in CI, not by hand.** Tools such as axe-core can be run against rendered components in a test environment. Wire it into your test command so a violation fails the build. Manual audits do not scale and are skipped under deadline pressure.
 
-**Misconception 2: AI tools save time overall.**
-Correction: They save time on boilerplate and first drafts, but they add time for refactoring. In my team’s case, we cut initial component delivery from 2 days to 4 hours using v0, but we spent an additional 30 minutes per component on accessibility and responsive fixes. The net time saving was 1.5 days per component, but only after we accounted for refactoring.
+**Measure the bundle delta.** If you are generating components with a CSS-in-JS runtime, compare the production bundle size before and after with your bundler's analyzer. A component that adds a runtime dependency to save twenty minutes of typing is usually a bad trade on a performance-sensitive page.
 
-**Misconception 3: AI tools understand your design system.**
-Correction: They understand the visual output of your design system, not the tokens or lint rules. I generated a card component that used our brand’s green-500 color, but our design system uses a semantic token called `--color-surface-primary`. v0 didn’t know that — it just used the visual color. We had to refactor the component to use the token, which broke the AI’s promise of “zero refactoring.”
+**Measure the narrow-viewport behavior.** Load the component at your smallest supported width and check for horizontal overflow. In a browser, the document element's `scrollWidth` exceeding its `clientWidth` indicates horizontal overflow; that is a mechanical check you can automate.
 
-**Misconception 4: AI tools handle state management.**
-Correction: They handle local state for the generated component, but not your app’s global state. v0 generated a table component with local sorting and pagination state, but our app used Zustand for global state. We had to refactor the component to use Zustand stores, which took 20 minutes but was necessary for consistency.
+**Measure the interactivity cost.** Run your production build through Lighthouse or your own performance budget check and compare the interaction metrics for pages that use generated components against pages that do not.
 
-**Misconception 5: AI tools are better than junior developers.**
-Correction: They’re faster at generating visual markup, but they lack judgment. I once generated a form with a submit button that triggered on Enter key, but the form didn’t have client-side validation. The AI didn’t know that our app required validation before submission. A junior developer would have caught that — the AI didn’t.
+## A decision checklist
 
-## The advanced version (once the basics are solid)
+Before generating a component, decide:
 
-Once you’re comfortable with AI UI tools for basic components, you can push them further by automating repetitive UI patterns and integrating them into your CI pipeline. Here’s how:
+1. **Is it mostly markup or mostly behavior?** Pricing sections, empty states, and static cards are mostly markup and generate well. Data tables, comboboxes, and anything with a focus trap are mostly behavior and generate poorly.
+2. **Does it need to be keyboard accessible?** If yes, plan to rewrite the interactive elements regardless of what the generator returns.
+3. **Who owns its state?** If the answer is anything other than "the component itself," plan to lift the state out.
+4. **Does it need to work at multiple viewports?** If yes, write the narrow-viewport layout yourself. Generators rarely infer it.
+5. **Is it on a performance-critical path?** If yes, check the bundle cost before adopting a generated implementation.
+6. **Will it be reused?** If yes, it belongs in your component library with your tokens, not as a one-off in a feature folder.
 
-### Automate repetitive UI patterns
+If a component scores badly on several of these, generating it is likely to cost more than writing it.
 
-If your app has a lot of CRUD tables, forms, and modals, you can automate their generation using a prompt template. For example, here’s a prompt template for a CRUD table:
+## Common misconceptions
 
-```
-Generate a CRUD table for {entity} with the following columns: {columns}. 
-Design tokens: use --color-surface-primary for background, --radius-md for rounded corners.
-Accessibility: use role="grid", keyboard navigation, focus trap.
-State model: use SWR for data, Zustand for create/update/delete.
-Actions: Add, Edit, Delete buttons for each row.
-Mobile breakpoint: 320px. Table should scroll horizontally on small screens.
-```
+**"The output is production-ready."** The output is plausible. Production-ready additionally means keyboard accessible, responsive at your breakpoints, integrated with your state model, and compliant with your tokens. Those are separate properties and the generator does not check them.
 
-Store this template in a Notion page or GitHub repo and reuse it for similar entities. You’ll save time and ensure consistency across tables.
+**"It saves time overall."** It saves time on the first draft. Whether it saves time overall depends on the refactor cost, which depends on the component. The only way to know for your codebase is to measure it, as above.
 
-### Integrate into your CI pipeline
+**"It understands my design system."** It understands the visual appearance you described or showed it. It does not know your token names or your lint rules unless you state them.
 
-You can automate the generation and linting of AI-generated components in your CI pipeline. Here’s a GitHub Actions workflow that generates components using v0 and runs accessibility and responsive tests:
+**"It handles state management."** It handles the local state of the component it produced. It has no knowledge of your store, your cache, or your URL.
 
-```yaml
-name: Generate and lint UI components
+**"It replaces design judgment."** It translates a description into markup. Someone still has to decide what the component should do at 320px, with an empty dataset, with a 200-character name in a cell, and with a screen reader.
 
-on:
-  pull_request:
-    paths:
-      - 'prompts/**'
+## Edge cases worth testing on every generated component
 
-jobs:
-  generate-and-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm install -g @vercel/v0@1.2.3
-      - run: |
-          v0 generate --prompt prompts/table.prompt.ts --output src/components/Table.tsx
-          npm run lint:accessibility -- --file src/components/Table.tsx
-          npm run test:responsive -- --file src/components/Table.tsx
-      - name: Comment PR
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const table = fs.readFileSync('src/components/Table.tsx', 'utf8');
-            const comment = `Generated component:\n\`\`\`tsx\n${table}\n\`\`\`\n
-Accessibility score: 100%\nResponsive: ✅`;
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            });
-```
+- **Empty data.** Does the component render an empty state or a broken shell?
+- **Single row and single page.** Do the pagination controls disappear or stay disabled?
+- **Very long strings.** Does a long name or email break the layout?
+- **Slow network.** Is there a loading state, and does it shift layout when it resolves?
+- **Rapid interaction.** Does clicking sort repeatedly produce a consistent result?
+- **Unusual sort values.** Mixed case, leading spaces, and numeric strings sort incorrectly with a naive comparator.
+- **Reduced motion.** If the component animates, does it respect `prefers-reduced-motion`?
 
-This workflow runs on every PR that touches prompt files, generates the component, and posts the result as a PR comment. It also runs accessibility and responsive tests to catch issues early.
+## FAQ
 
-### Use AI to generate design system documentation
+**Does this apply to non-React frameworks?**
+The failure modes are framework-agnostic: keyboard access, breakpoint behavior, state ownership, and token compliance are properties of the component, not the framework. The specific fixes differ. Generators also tend to be strongest in the framework with the largest training corpus, so output quality varies by target.
 
-You can use AI to generate Storybook stories and documentation for your design system. For example, you can prompt v0 to generate a story file for a button component with all its variants:
+**How do I enforce design tokens in generated output?**
+State the token names in the prompt, then add a lint rule that rejects raw color and spacing literals in component files. The lint rule is the enforcement mechanism; the prompt is only a hint. Without the lint rule, hard-coded values will reappear on the next generation.
 
-```
-Generate a Storybook story for a Button component. Variants: primary, secondary, destructive. Sizes: sm, md, lg. States: enabled, disabled, loading. Use CSF3 format.
-```
+**Can the generated code be tested automatically?**
+Yes, and it should be. Render the component in a test environment, run an accessibility assertion against it, assert keyboard interaction with a testing library's user-event API, and snapshot the narrow-viewport render. These are the same tests you would write for a hand-written component.
 
-This saves time writing boilerplate stories and ensures all variants are documented. In my team, we reduced story writing time from 1 hour to 10 minutes per component.
+**Is it worth using these tools at all?**
+For components that are mostly presentational and low-risk, the first-draft saving is real. For interactive, stateful, or accessibility-critical components, the refactor often exceeds the saving. Sort your component inventory by that distinction before adopting a tool broadly.
 
-### Monitor AI-generated components in production
+**What about design-tool export plugins?**
+They solve a different problem: translating a design file into markup. The same constraints apply. An export can only contain what the design file contains, so focus states, error states, and narrow-viewport layouts must exist in the design file before they can appear in the output.
 
-AI-generated components can introduce performance regressions or accessibility issues in production. Set up monitoring to catch these early:
+## What to do in the next 30 minutes
 
-- Use Lighthouse CI to audit generated components in production.
-- Use axe-core in your E2E tests to catch accessibility issues.
-- Use Real User Monitoring (RUM) to track performance metrics for AI-generated components.
-
-I once deployed a generated modal that caused a 300ms delay on mobile due to unoptimized CSS. Lighthouse CI caught it in 15 minutes, and we rolled back the component before users noticed.
-
-## Quick reference
-
-| Task | Tool | Time saved | Refactoring needed | Best for |
-| --- | --- | --- | --- | --- |
-| Marketing site sections | Tailwind UI Blocks 2.4 | 2–4 hours per page | Low (visual tweaks) | Marketing sites, landing pages |
-| Admin dashboard components | Figma-to-Code 3.1 | 1–2 hours per component | Medium (state integration) | Internal tools, dashboards |
-| Accessible forms and modals | v0 by Vercel 1.2.3 | 3–4 hours per component | High (accessibility, state) | Public-facing apps, accessibility-first teams |
-| Complex data tables | Custom prompt + v0 | 4–8 hours per table | Very high (state, responsive) | CRUD apps, data-heavy apps |
-| Design system documentation | v0 + Storybook | 1 hour per component | Low (formatting) | Design systems, documentation sites |
-
-| Check | Tool | Threshold | What to do if it fails |
-| --- | --- | --- | --- |
-| Accessibility | axe-core 4.9 | 0 violations | Fix violations before merging |
-| Responsiveness | Chrome DevTools Device Mode | 100% at 320px, 768px, 1024px | Refactor responsive behavior |
-| Performance | Lighthouse CI | 90+ score | Optimize CSS, reduce bundle size |
-| State integration | Your state library | No hydration mismatches | Refactor to match your state model |
-| Design tokens | Your design system lint | 100% token usage | Replace hard-coded values with tokens |
-
-## Further reading worth your time
-
-- [v0 documentation](https://v0.dev/docs) — The official docs explain the prompt format and constraints.
-- [Tailwind UI Blocks 2.4 changelog](https://tailwindui.com/updates) — Shows the types of components you can generate and their limitations.
-- [Figma-to-Code 3.1 release notes](https://www.figma.com/community/plugin/842993951959678978) — Explains how the plugin handles responsive design and design tokens.
-- [Accessibility for React developers](https://reactjs.org/docs/accessibility.html) — MDN’s guide to accessible React components.
-- [Storybook accessibility testing](https://storybook.js.org/docs/react/writing-tests/accessibility-testing) — How to test components for accessibility in Storybook.
-- [SWR documentation](https://swr.vercel.app/) — The data fetching library used in many AI-generated components.
-- [State of AI in frontend development (2026)](https://2026.stateofai.dev/frontend) — A survey of frontend teams using AI tools in production.
-
-## Frequently Asked Questions
-
-**What’s the biggest mistake teams make when adopting AI UI tools?**
-Assuming the generated code is production-ready without auditing it. Teams skip accessibility, responsive, and state integration checks, then wonder why components break in production. I made this mistake when I deployed a generated modal that didn’t trap focus, causing keyboard users to lose context. Always run axe-core, responsive tests, and state integration checks before merging.
-
-
-**Do AI UI tools work with any frontend framework?**
-Most tools generate React or Vue components, but they don’t work well with Svelte or Solid due to differences in reactivity models. For example, v0 generates React code with useState and useEffect, which don’t translate cleanly to Svelte’s stores. If you’re using Svelte, consider using a tool like [SvelteLab](https://sveltelab.dev) or hand-writing components.
-
-
-**How do I enforce our design system tokens in AI-generated components?**
-Include your design tokens in the prompt and use a custom post-processing script to replace hard-coded values. For example, if your design system uses `--color-surface-primary`, include that in the prompt: “Use --color-surface-primary for background color.” Then, run a script in your CI pipeline to replace any hard-coded colors with tokens. This is how my team enforces token usage in generated components.
-
-
-**Can AI tools generate components for low-bandwidth regions?**
-Not reliably. AI tools often generate components with large CSS-in-JS bundles or unoptimized assets, which slow down load times in low-bandwidth regions. For example, a generated table component included 12KB of CSS, which doubled the page load time in Nigeria on 2G networks. If you’re targeting low-bandwidth regions, audit the generated bundle size and optimize CSS with PurgeCSS or Tailwind’s JIT mode.
-
-
-**Do AI tools reduce the need for designers?**
-No. AI tools accelerate the translation of design into code, but they don’t replace design judgment. A designer still needs to define the prompt, specify constraints, and review the generated output. In my team, designers spent 30 minutes defining prompts for complex components, which saved us 4 hours of development time — a net win, but not a replacement for design work.
-
-## Let’s fix your workflow today
-
-Pick one component in your app that’s repetitive or time-consuming to write by hand. Write a detailed prompt that includes:
-- Accessibility requirements (ARIA roles, keyboard navigation, focus management)
-- Responsive constraints (breakpoints, touch targets, overflow behavior)
-- Design tokens (colors, spacing, typography)
-- State requirements (data fetching, global state integration)
-
-Use v0 1.2.3 or Tailwind UI Blocks 2.4 to generate the component. Copy it into your project, run axe-core 4.9 and Lighthouse CI, and refactor for your real constraints. Then, measure the time saved — you’ll likely see a 2–4x speedup on the first draft.
-
-If the generated component fails your accessibility or responsive tests, open a PR with the failures and the refactored fix. Share the prompt and the refactored code in your team’s Slack channel — you’ll quickly build a library of reusable prompts and fixes.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 23, 2026
+Pick one generated or hand-written component in your codebase that has an interactive element — a sortable header, a toggle, a modal trigger. Open it and check three things: whether the interactive element is reachable by Tab, whether it responds to Enter and Space, and whether it has an accessible name. If any of the three fails, you have found a defect that a generator would also have produced. Fix it, then add the equivalent assertion to your test suite so the next generated component is checked automatically rather than by eye.

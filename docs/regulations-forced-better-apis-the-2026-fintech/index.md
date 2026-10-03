@@ -1,223 +1,106 @@
 # Regulations forced better APIs: the 2026 fintech
 
-I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+## The problem with the standard playbook
 
-## The conventional wisdom (and why it's incomplete)
+The standard advice for API design is: define resources, keep contracts stable, version carefully, and add idempotency keys for writes. For teams shipping payment products in markets with unreliable networks and prescriptive financial regulators, that advice is necessary but not sufficient.
 
-The standard playbook says: design APIs once, keep them stable, and version carefully. If you ship in Africa, the advice adds a thin layer of localisation: support M-Pesa, Flutterwave, and Paystack, maybe throw in USSD fallbacks. That’s it. The honest answer is that that playbook is wrong for 2026.
+The gap is durability. A synchronous request/response API assumes that the outcome of an operation is known within the lifetime of the connection, or shortly after. Payment systems routinely violate that assumption. A payment service provider (PSP) may acknowledge a debit request immediately but only confirm final settlement hours later. A callback may arrive after a pod has been recycled, a Lambda invocation has timed out, or a deploy has replaced the running binary. If the API has no durable record of the in-flight operation, the callback has nowhere to land.
 
-The API looked solid on staging: we had rate limiting with Redis 7.2, idempotency keys, and webhooks for callbacks. In production, on mobile data, we hit a wall. Customers on 700 ms latency links were seeing timeouts on our 100 ms SLA endpoint. The problem wasn’t our code — it was the regulatory response to failed payments. When a payment fails in Kenya due to insufficient balance or network error, the PSP sends a callback hours later with a new status. Our API was synchronous and short-lived. We assumed callbacks would arrive within seconds. They didn’t.
+A common failure mode looks like this: a team builds a clean REST API with rate limiting, idempotency keys, and webhook callbacks. On staging, everything works. In production, on mobile networks with high latency, some fraction of callbacks arrive after the application server has already returned a timeout to the client. The user sees a failed payment. The money is debited anyway. The status endpoint returns 404 because the original process that held the state is gone.
 
-The conventional wisdom misses the regime shift: regulators now require durable, asynchronous APIs that can survive days of outages, flaky networks, and delayed callbacks. If your API can’t handle a customer retrying a payment three days after the initial attempt, you’re not compliant with the 2026 Kenyan Digital Financial Services Regulations.
+This is not a code bug. It is an architectural mismatch between a synchronous API and an asynchronous reality.
 
-Another misconception: that compliance is a one-time tax. In Nigeria, the 2026 CBN guidelines (still enforced in 2026) mandate that every failed transaction must trigger a retry policy with exponential backoff. That means your API can’t just return a 400 Bad Request when a payment fails. You must queue the failure, retry with jitter, and expose a status endpoint that survives restarts. The old advice assumed idempotency keys were enough. They’re not when the state machine spans days, not seconds.
+## Three predictable failure modes
 
-## What actually happens when you follow the standard advice
+When a synchronous API meets delayed callbacks, three failure modes recur.
 
-Stick to the textbook and you’ll hit three predictable failure modes by mid-2026:
+**Timeout-driven state loss.** Serverless platforms impose hard execution limits. AWS Lambda, for example, has a documented maximum timeout of 15 minutes and a default of 3 seconds. A callback that arrives after the function has returned cannot be handled by that invocation. If the API relies on the original invocation to complete the state transition, the transition is lost. The client sees a timeout; the PSP sees a successful debit.
 
-First, timeouts. A Node 20 LTS service running on AWS Lambda with 512 MB memory and 30-second timeout will drop requests if a callback arrives late. In our production system, 14% of callbacks arrived after 30 seconds. That’s 14% of customers stuck with a failed status, even though the money was later debited. We traced it to a single misconfigured Lambda timeout, but the damage was done.
+**Stateless context loss.** If the API is stateless and runs on ephemeral containers or functions, a callback arriving days later will not find the original request context. The handler may have no way to correlate the callback with the original payment without querying an external store. If that store was never written to, or was written to without a durable key, the correlation is impossible.
 
-Second, state corruption. If your API is stateless and relies on ephemeral Lambda containers or Kubernetes pods, a callback that arrives three days later won’t find the original context. Our ledger service assumed every callback would hit the same pod. After pod restarts, we lost 3% of payment states. We had to rebuild the state from the PSP logs, which cost us a week of engineering time.
+**Rate-limit interference with retries.** Teams often set aggressive rate limits to protect against abuse. But if retries are subject to the same limiter as new traffic, a network outage that triggers a burst of retries can cause the retry queue to back up or the retries to be rejected. A retry that is dropped by a rate limiter is functionally identical to a retry that was never attempted.
 
-Third, rate limit shocks. Many teams set aggressive rate limits to protect against abuse. In Nigeria, the 2026 guidelines require that every retry must be logged and auditable. If your rate limiter blocks retries, you’re non-compliant. We set a limit of 10 requests per second per customer. Within two weeks, we hit that limit during a network outage spike, and our retry queue backed up for 4 hours. We had to raise the limit to 100 rps and add per-IP jitter to avoid throttling legitimate retries.
+None of these failure modes are exotic. They are the normal consequence of running synchronous APIs in an environment where the underlying operations are asynchronous.
 
-The standard advice also underestimates the cost of compliance. A team I worked with in Ghana spent $18,000 in 2026 on Redis Enterprise Cloud for durable queues and Redis Streams to handle delayed callbacks. That’s on top of the $42,000 they spent on PostgreSQL 15 with logical replication for audit trails. The bill shocked the CFO, but the alternative was a fine from the Bank of Ghana for failing to implement the prescribed retry policy.
+## A durability-first mental model
 
-## A different mental model
+Instead of starting with resource design, start with the lifecycle of a payment. A payment has states: initiated, pending, succeeded, failed, reversed, disputed. Transitions between states are driven by events: the initial request, a PSP callback, a timeout, a retry, a manual reversal. The API's job is to record these events durably and expose the current state.
 
-Forget versioning first. Think durability first.
+This leads to a different set of design rules:
 
-Your API’s primary job in 2026 is to survive the regulatory lifecycle of a payment: from initiation to finality, including retries, disputes, and callbacks that arrive days later. That means your API is no longer just a request/response handler. It’s a state machine with a durable log, a retry policy, and an audit trail. The mental model shifts from RESTful resources to event-sourced aggregates.
+- **Every state-changing request must be durably recorded before the response is returned.** A write-ahead log, an append-only table, or an event stream serves this purpose. The goal is that if the process crashes immediately after responding, the request is not lost.
+- **Callbacks must be persisted to a queue that survives process restarts.** A webhook handler that processes callbacks inline and then acknowledges them is fragile. A handler that enqueues the callback and acknowledges immediately is durable.
+- **Retries must be explicit, scheduled, and auditable.** A retry is not an error-handling side effect; it is a first-class operation with its own state, its own schedule, and its own record.
+- **Status endpoints must read from durable storage, not from process memory.** A status endpoint that depends on the original process being alive is not a status endpoint; it is a cache with a very short lifetime.
 
-In practice, this means:
+The mental model shifts from RESTful resources to event-sourced aggregates. The payment is the aggregate. The events are the transitions. The API is a thin layer over a durable log.
 
-- Every API call that changes state must be idempotent and durable. Use a write-ahead log (WAL) before you respond to the client. In our system, we switched from DynamoDB to PostgreSQL 15 with `pg_wal` for the WAL and Redis Streams for the event bus. The WAL write adds 2–3 ms to the p95 latency, but it prevents state loss. - Callbacks must be stored in a queue that survives pod restarts. We moved from SQS to Redis Streams with consumer groups in Redis 7.2. That reduced our callback loss rate from 3% to 0.02%. - Retry policies must be explicit and auditable. We implemented a backoff table in PostgreSQL, storing each retry attempt with a timestamp and reason. The table grew to 2.4 million rows in three months, but it gave us the audit trail the CBN required.
+## Worked example: a retry policy with exponential backoff
 
-The durability-first mental model also changes how you design endpoints. Instead of returning a 200 OK immediately after a payment initiation, your API should return a 202 Accepted and expose a `/status/{payment_id}` endpoint. That endpoint must be able to answer correctly even if the original pod that handled the request has been recycled. In our first design, we returned 200 OK synchronously. After a pod restart, the status endpoint would return 404. We had to rebuild the status cache with a background worker that pre-warmed the cache from the WAL.
+Consider a payment that fails with a transient error code from the PSP. The API should schedule a retry with exponential backoff and jitter, record the attempt, and expose the next retry time.
 
-This mental model also changes error handling. In 2026, a network error isn’t just a 500 Internal Server Error. It’s a signal to queue the request for retry. Our error handler now checks the PSP’s error code. If it’s a transient error (like `PSP_001_INSUFFICIENT_BALANCE`), we enqueue the retry. If it’s a permanent error (like `PSP_002_INVALID_ACCOUNT`), we mark the payment as failed and notify the customer immediately.
+Assume the following policy, stated explicitly so it can be audited:
 
-## Evidence and examples from real systems
+- Maximum of 5 retries.
+- Base delay of 1 second.
+- Exponential backoff: delay = base × 2^attempt.
+- Jitter: add a random value between 0 and 1 second to avoid synchronized retries.
+- Retry state stored in Redis with a 7-day expiry, and mirrored to a durable database table for audit.
 
-Let’s look at three real systems we shipped in Nigeria, Ghana, and Kenya in 2026.
+The retry schedule under this policy, computed step by step:
 
-**System A: Collections API in Nairobi**
+- Attempt 0 fails. Delay = 1 × 2^0 = 1 second. Next retry at T+1s.
+- Attempt 1 fails. Delay = 1 × 2^1 = 2 seconds. Next retry at T+3s.
+- Attempt 2 fails. Delay = 1 × 2^2 = 4 seconds. Next retry at T+7s.
+- Attempt 3 fails. Delay = 1 × 2^3 = 8 seconds. Next retry at T+15s.
+- Attempt 4 fails. Delay = 1 × 2^4 = 16 seconds. Next retry at T+31s.
+- Attempt 5 fails. Maximum retries reached. Mark the payment as failed and notify the customer.
 
-We built a collections API for a micro-lender using Python 3.11 and FastAPI. The API initiates debits from customer accounts via M-Pesa. The conventional approach was to use a synchronous HTTP call to the M-Pesa API, wait for the response, and return to the customer. We did that initially and hit the CBK’s requirement for retry policies head-on.
+These numbers are illustrative of the policy, not a benchmark. The point is that the schedule is computable from stated assumptions and can be verified against the audit table.
 
-After switching to a durability-first design, we added:
-
-- A PostgreSQL 15 table `payment_attempts` with columns: `id`, `payment_id`, `psp_reference`, `status`, `retry_count`, `next_retry_at`, `error_code`. - A background worker using `ARQ` (Redis-based task queue) to process retries with exponential backoff. - A `/status/{payment_id}` endpoint that reads from a Redis cache pre-warmed by a background worker.
-
-The results:
-
-| Metric                     | Synchronous (old) | Durability-first (new) |
-|----------------------------|-------------------|------------------------|
-| Callback loss rate          | 14%               | 0.02%                  |
-| P95 latency for status     | 80 ms             | 110 ms                 |
-| Engineering time to fix    | 3 days            | 1 day                  |
-
-The latency increase was acceptable because the durability gain was critical. The callback loss rate drop meant we stopped getting fines from the CBK for missing retries.
-
-**System B: Payroll disbursement in Accra**
-
-We built a payroll system for a Ghanaian fintech using Go 1.21 and AWS Lambda. The system disburses salaries via Flutterwave. The conventional wisdom said to use Flutterwave’s webhooks for callbacks. We did that, but we assumed the webhooks would arrive within seconds.
-
-In reality, during a network outage in Accra, Flutterwave’s webhooks were delayed by up to 6 hours. Our Lambda functions timed out after 15 minutes. The result: 8% of disbursements were stuck in a failed state, even though the money was later credited.
-
-We redesigned the system:
-
-- Every disbursement request writes to a DynamoDB table with a TTL of 30 days (for audit). - A background worker in ECS Fargate (using Go 1.21) polls Flutterwave’s API every 5 minutes for status updates. - The worker updates the DynamoDB table and triggers a notification if the status changes.
-
-The results:
-
-| Metric                     | Webhook-only (old) | Polling + durable (new) |
-|----------------------------|--------------------|-------------------------|
-| Failed disbursement rate    | 8%                 | 0.1%                    |
-| Lambda invocations         | 12,000/day         | 2,880/day               |
-| Cost per month             | $420               | $310                    |
-
-The cost dropped because we reduced the number of Lambda invocations, and the failure rate dropped to near zero.
-
-**System C: Agent banking in Lagos**
-
-We built an agent banking system for a Nigerian bank using Java 17 and Spring Boot. The system handles cash-in and cash-out via multiple PSPs. The conventional advice was to use a circuit breaker pattern to handle PSP failures.
-
-We did that initially, but we missed the CBN’s requirement for fallback PSPs. If PSP A fails, we must try PSP B or C within 5 seconds. Our circuit breaker only handled one PSP at a time.
-
-We redesigned the system:
-
-- A routing service that maintains a priority list of PSPs per customer. - A retry policy with jitter per PSP. - A fallback service that automatically switches to the next PSP after 3 failures.
-
-The results:
-
-| Metric                     | Single PSP (old) | Multi-PSP with fallback (new) |
-|----------------------------|------------------|-------------------------------|
-| Transaction success rate    | 87%              | 98.2%                         |
-| Average fallback time       | N/A              | 2.1 seconds                   |
-| Cost per transaction        | $0.045           | $0.052                         |
-
-The cost increased slightly, but the success rate improved by 11 percentage points, which justified the expense.
-
-## The cases where the conventional wisdom IS right
-
-Not every API needs the durability-first treatment. If your product is read-heavy, low-stakes, and serves customers on fibre, the old rules still apply. For example:
-
-- A stock price API that serves retail investors in South Africa. - A public API for a government portal that serves static data. - An internal tool for analytics that only runs during business hours.
-
-In these cases, the 2026 regulatory changes don’t force a redesign. A RESTful API with OpenAPI spec, rate limiting, and standard error handling is enough. The key is to know your context.
-
-Another case where the conventional wisdom holds: if you’re building a greenfield product and your market is outside Africa. The EU’s PSD2 and UK’s Open Banking rules are strict, but they don’t require the same level of durability for delayed callbacks. If your product is for European users, you can stick to the standard playbook.
-
-Finally, if you’re building a B2B product where your customers are large enterprises with stable networks, the durability-first approach is overkill. For example, a corporate expense management tool that integrates with SAP. The network outages are rare, and the regulatory requirements are less onerous.
-
-## How to decide which approach fits your situation
-
-Ask three questions:
-
-1. **What’s the regulatory regime?**
-   - If you’re in Nigeria, Ghana, Kenya, Uganda, or Tanzania, assume the 2026 rules apply. - If you’re in South Africa, check the 2023 Conduct of Financial Institutions Bill — it’s still the governing framework in 2026, but it’s less prescriptive than Nigeria’s guidelines. - If you’re outside Africa, assume the conventional wisdom applies unless you’re in a highly regulated sector (like healthcare or payments in the EU).
-
-2. **What’s the user’s network context?**
-   - If your users are on 3G or 4G with frequent drops, assume callbacks will be delayed. - If your users are on Wi-Fi or fibre, assume callbacks will arrive quickly. - Use real data: in Kenya, 68% of mobile data sessions in 2026 are on 4G, but the average session drop rate is 12% per hour. That’s a strong signal to design for delayed callbacks.
-
-3. **What’s the cost of failure?**
-   - If a failed payment means a customer loses money or a business loses revenue, assume durability-first. - If a failed payment is a minor inconvenience, assume the conventional approach. - Use concrete numbers: in Nigeria, the average cost of a failed payment dispute is $120 in fines and customer compensation. In Ghana, it’s $45. In Kenya, it’s $80.
-
-Here’s a decision table:
-
-| Regulatory regime | User network | Cost of failure | Recommended approach |
-|-------------------|--------------|-----------------|----------------------|
-| Strict (NG, GH, KE) | Flaky (3G/4G) | High ($80+)     | Durability-first     |
-| Moderate (SA, UG)  | Stable (Wi-Fi/fibre) | Medium ($40)   | Conventional         |
-| None (outside Africa) | Stable       | Low              | Conventional         |
-
-If you’re unsure, assume durability-first. The cost of retrofitting later is higher than the cost of over-engineering now.
-
-## Objections I've heard and my responses
-
-**Objection 1: "Durability-first APIs are too complex. We’ll slow down feature velocity."**
-
-That’s a real risk. In our Nairobi team, we spent two extra sprints on the durability layer. But the complexity is bounded. Once the durable state machine and retry policy are in place, new features are easier to add. We built a dispute resolution API on top of the durable payment state machine in one sprint. Without the durable foundation, it would have taken three sprints.
-
-The complexity is in the infrastructure, not the business logic. Use managed services where possible: Redis 7.2 for Streams, PostgreSQL 15 for WAL, DynamoDB for audit trails. That reduces the engineering load.
-
-**Objection 2: "Our customers don’t care about delayed callbacks. They just want speed."**
-
-That’s a dangerous assumption. In Kenya, we surveyed 1,200 users in 2026. 62% said they would switch to a competitor if their payment failed and the status wasn’t updated within 24 hours. Speed matters, but reliability matters more. A fast API that loses state is worse than a slow API that survives outages.
-
-**Objection 3: "We can handle callbacks with webhooks and hope for the best."**
-
-That’s what we tried first. In Ghana, during a network outage, Flutterwave’s webhook delivery time spiked to 6 hours. Our synchronous API timed out after 15 minutes. The result: 8% of payments were stuck in a failed state. We had to rebuild the system with a polling layer. The lesson: webhooks are not a durability mechanism. They’re a notification mechanism. If you need durability, you need a queue and a retry policy.
-
-**Objection 4: "The cost of durability is too high for a startup."**
-
-That’s a real constraint. In our Accra team, we started with a Redis Streams queue and a Go worker on ECS Fargate. The monthly cost was $310 for 2,880 invocations. For a startup, that’s significant. But the alternative — fines, customer churn, and lost revenue — is worse. We calculated the cost of a fine from the Bank of Ghana: $15,000 per incident. The durability layer paid for itself after six months.
-
-If you’re a startup, start with the minimal viable durability:
-
-- Use a managed queue (SQS or Redis Streams). - Use a managed database (PostgreSQL 15 or DynamoDB) for audit trails. - Use a managed task queue (ARQ or BullMQ) for retries.
-
-That reduces the engineering load and the cost.
-
-## What I'd do differently if starting over
-
-If I were building a new fintech API in Africa today, here’s what I’d change:
-
-1. **Start with the retry policy first.**
-   Before writing a single endpoint, I’d design the retry policy. What’s the backoff table? How do we store retries? What’s the maximum number of retries? I’d write the PostgreSQL table and the worker code before the API.
-
-2. **Use event sourcing from day one.**
-   I’d model every payment as an event stream. The stream would include: `PaymentInitiated`, `PaymentFailed`, `PaymentSucceeded`, `CallbackReceived`. The API would append to the stream, and the status endpoint would read from it. That makes the API stateless and durable by design.
-
-3. **Avoid synchronous timeouts.**
-   I’d never set a synchronous timeout shorter than the maximum retry window. In Kenya, that’s 72 hours. So I’d never set a Lambda timeout to 30 seconds. I’d use a durable queue and a background worker.
-
-4. **Measure callback latency, not just API latency.**
-   I’d set up a synthetic monitor that simulates a callback arriving 3 days later. I’d measure the p99 latency of the status endpoint after a pod restart. That’s the real metric that matters.
-
-5. **Use idempotency keys, but don’t rely on them alone.**
-   Idempotency keys are great for preventing duplicate requests, but they don’t solve the durability problem. You still need a durable log of the request and its outcome.
-
-Here’s the code I’d write on day one for the retry policy:
+A minimal implementation:
 
 ```python
 # payment/retry_policy.py
 from datetime import datetime, timedelta
+import random
 import redis.asyncio as redis
 
 class RetryPolicy:
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client
         self.max_retries = 5
-        self.base_delay = timedelta(seconds=1)
-        
-    async def next_retry_at(self, payment_id: str, error_code: str) -> datetime:
+        self.base_delay_seconds = 1
+
+    async def next_retry_at(self, payment_id: str, error_code: str):
         key = f"retry:{payment_id}"
-        retries = await self.redis.hget(key, "retries")
-        if not retries:
-            retries = 0
-        else:
-            retries = int(retries)
-            
+        retries_raw = await self.redis.hget(key, "retries")
+        retries = int(retries_raw) if retries_raw else 0
+
         if retries >= self.max_retries:
             return None
-            
-        delay = self.base_delay * (2 ** retries)
-        next_retry = datetime.utcnow() + delay
-        
+
+        delay_seconds = self.base_delay_seconds * (2 ** retries)
+        jitter_seconds = random.uniform(0, 1)
+        next_retry = datetime.utcnow() + timedelta(
+            seconds=delay_seconds + jitter_seconds
+        )
+
         await self.redis.hset(key, mapping={
             "retries": retries + 1,
             "next_retry_at": next_retry.isoformat(),
-            "error_code": error_code
+            "error_code": error_code,
         })
         await self.redis.expire(key, timedelta(days=7).total_seconds())
-        
+
         return next_retry
 ```
 
-And the minimal durable status endpoint:
+Two details matter here. First, the retry counter and the next retry time are stored together, so a worker that picks up the payment can decide whether to retry without consulting any other state. Second, the expiry is longer than the maximum retry window, so the key does not disappear while a retry is still pending.
+
+## Worked example: a durable status endpoint
+
+A status endpoint must answer correctly even if the process that handled the original request no longer exists. That means it must read from durable storage, and it must be able to reconstruct the current state from that storage alone.
 
 ```javascript
 // status.js
@@ -230,58 +113,97 @@ const redis = new Redis(process.env.REDIS_URL);
 
 router.get('/status/:paymentId', async (req, res) => {
   const { paymentId } = req.params;
-  
-  // Check cache first
+
   const cached = await redis.get(`status:${paymentId}`);
   if (cached) {
     return res.json(JSON.parse(cached));
   }
-  
-  // Fallback to database
+
   const payment = await Payment.findByPk(paymentId);
   if (!payment) {
     return res.status(404).json({ error: 'Payment not found' });
   }
-  
-  // Warm the cache
+
   await redis.setex(
     `status:${paymentId}`,
-    300, // 5 minutes
+    300,
     JSON.stringify(payment.toJSON())
   );
-  
+
   res.json(payment.toJSON());
 });
 
 export default router;
 ```
 
-## Summary
+The cache is an optimization, not the source of truth. If the cache is empty, the endpoint falls back to the database. If the database has no record, the endpoint returns 404 — which is the correct answer only if the payment was genuinely never recorded. A payment that was recorded but whose cache entry expired must still be found in the database.
 
-The 2026 fintech regulations in Africa didn’t just change the rules — they changed the architecture. If your API can’t survive days of outages, flaky networks, and delayed callbacks, you’re non-compliant. The old playbook of synchronous REST APIs, short timeouts, and webhook-only callbacks is broken.
+This is the key difference from a synchronous design. In a synchronous design, the status endpoint might read from an in-memory map populated by the original request. In a durable design, the status endpoint reads from storage that outlives any individual process.
 
-The new playbook is durability-first: durable state machines, event-sourced aggregates, and explicit retry policies. The cost is higher, but the alternative is fines, customer churn, and lost revenue. The complexity is bounded if you use managed services and keep the business logic separate from the durability layer.
+## How to measure whether your system needs this
 
-The cases where the old playbook still works are narrow: read-heavy APIs, B2B products, or markets outside Africa. For everyone else, assume durability-first.
+The decision to adopt a durability-first design should be driven by observed behavior, not by assumptions. Three measurements are useful.
 
-If you’re building a fintech API in Africa today, start with the retry policy. Design the backoff table, the durable queue, and the audit trail before you write the first endpoint. That’s the lesson I wish I’d learned before we launched in Kenya.
+**Callback latency distribution.** Instrument the webhook handler to record the time between the PSP's event timestamp and the handler's receipt. Aggregate this into a histogram. If the p99 latency exceeds the application's synchronous timeout, the system is already losing state. The specific threshold depends on the deployment; for a Lambda function with a 30-second timeout, any callback arriving after 30 seconds is at risk.
 
-Now, check your current API’s retry policy. If it doesn’t have a backoff table in the database and a background worker to process retries, open `src/retry_policy.py` (or its equivalent) and add the minimal durable retry logic in the next 30 minutes.
+**State reconstruction failures.** Count the number of times a status endpoint returns 404 or an inconsistent state for a payment that the PSP reports as successful or failed. This is a direct measure of state loss. A non-zero count indicates that the durable record is incomplete or that the status endpoint is reading from the wrong source.
 
----
+**Retry queue depth and age.** Monitor the number of pending retries and the age of the oldest pending retry. If the queue depth grows during network incidents, the retry mechanism is working but the capacity is insufficient. If the age of the oldest retry exceeds the maximum retry window, retries are being dropped or delayed beyond their useful life.
 
-### About this article
+These measurements can be collected with standard tooling: a histogram metric for callback latency, a counter for status endpoint failures, and a gauge for queue depth. No special infrastructure is required.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+## When the conventional approach is still correct
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+Durability-first is not universally necessary. It adds complexity: a durable log, a queue, a worker, and an audit trail. For some systems, that complexity is not justified.
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+The conventional synchronous approach remains appropriate when:
 
-**Last reviewed:** June 20, 2026
+- **The operation is idempotent and cheap to retry by the client.** A read-only API that returns a stock price can be retried by the client without server-side state.
+- **The operation has no financial or regulatory consequence.** An internal analytics endpoint that runs during business hours does not need a durable retry policy.
+- **The network is reliable and the callback latency is bounded.** A B2B integration over a stable connection with a contractual latency SLA may not need a durable queue.
+- **The regulatory regime does not mandate retry policies or audit trails.** Not all jurisdictions impose the same requirements on payment APIs.
+
+The decision should be based on the cost of a lost state transition. If a lost transition means a customer is charged without receiving the service, or a business cannot reconcile its ledger, the durability cost is justified. If a lost transition means a user sees a stale stock price and refreshes the page, it is not.
+
+## A decision checklist
+
+Before choosing an architecture, answer these questions:
+
+1. **What is the maximum time between the initial request and the final outcome?** If it exceeds the application's synchronous timeout, a durable state machine is required.
+2. **What happens if a callback arrives after the original process has exited?** If the answer is "the state is lost," the system is not durable.
+3. **Are retries required by regulation or by the PSP's terms?** If so, the retry policy must be explicit, scheduled, and auditable.
+4. **Can the status endpoint reconstruct the current state from durable storage alone?** If not, the status endpoint is not reliable.
+5. **What is the cost of a lost state transition?** If it is financial, regulatory, or reputational, the durability cost is justified.
+6. **What is the cost of the durability layer?** A queue, a worker, and an audit table add operational overhead. The overhead should be proportional to the risk.
+
+If the answers to questions 1 through 5 point toward durability and the answer to question 6 is acceptable, adopt the durability-first design. If not, the conventional approach is likely sufficient.
+
+## Common objections
+
+**"Durability-first is too complex and will slow feature velocity."**
+
+The complexity is real, but it is bounded and mostly infrastructural. The durable state machine, the retry policy, and the audit trail are built once. Business logic on top of them is typically simpler, because the state transitions are explicit and the failure modes are handled in one place rather than scattered across handlers. The main cost is the initial design work, not ongoing feature development.
+
+**"Users care about speed, not durability."**
+
+Speed and durability are not in opposition. A durable status endpoint can be fast if it is backed by a cache. The difference is that the cache is an optimization over durable storage, not a replacement for it. A fast endpoint that returns the wrong answer is worse than a slightly slower endpoint that returns the right one.
+
+**"Webhooks are enough."**
+
+Webhooks are a notification mechanism, not a durability mechanism. A webhook delivery can fail, be delayed, or arrive out of order. A durable system treats the webhook as one possible source of state transitions, alongside polling, timeouts, and manual intervention. The webhook handler enqueues the event; a worker processes it. The queue is the durability layer.
+
+**"The cost is too high for a small team."**
+
+The minimal viable durability layer is smaller than it appears: a managed queue, a managed database table for audit, and a worker process. The cost scales with the volume of retries and the retention period, both of which can be tuned. For a small team, the relevant comparison is not "durability versus no durability" but "durability versus the cost of a lost payment and the engineering time to reconcile it manually."
+
+## What to do first
+
+The first step is not to rewrite the API. It is to measure the current callback latency distribution and count the state reconstruction failures. If the p99 callback latency exceeds the synchronous timeout, or if the failure count is non-zero, the system already has a durability gap.
+
+The second step is to make the retry policy explicit. Write down the maximum number of retries, the backoff schedule, the jitter, and the retention period. Store the retry state in durable storage. This can be done incrementally, without changing the API's public contract.
+
+The third step is to make the status endpoint read from durable storage. If it currently reads from process memory, change it to read from the database, with a cache in front. This is a small change with a large effect on correctness.
+
+## Action for the next 30 minutes
+
+Open the file that implements your payment retry logic — often named something like `retry_policy.py`, `retry.go`, or `retry.ts`. Check whether it stores the retry count and the next retry time in durable storage, or only in memory. If it stores them only in memory, add a Redis hash or a database row keyed by payment ID with fields for `retries`, `next_retry_at`, and `error_code`, and set an expiry longer than your maximum retry window. That single change converts an in-memory retry counter into an auditable, restart-surviving retry record.

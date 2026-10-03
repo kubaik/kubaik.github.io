@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI freelance rates 2026: which stacks still pay - Kubai Kevin</title>
-        <meta name="description" content="2026 freelance rates fell 28% for templated AI apps, but projects needing SOC-2 or PCI still pay $170–$220 because AI cannot replace the janitor work.">
+        <meta name="description" content="AI code generation shifts effort from writing components to compliance, observability and edge cases. Here is how to price and instrument that hidden work.">
         <meta name="keywords" content="Ai, Artificialintelligence, Nextjs, Vectordb, Freelancing">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-13T20:59:28.878269">
-        <meta property="article:modified_time" content="2026-09-20T04:07:56.643306+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:18:27.769070+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI freelance rates 2026: which stacks still pay">
-        <meta property="og:description" content="2026 freelance rates fell 28% for templated AI apps, but projects needing SOC-2 or PCI still pay $170–$220 because AI cannot replace the janitor work.">
+        <meta property="og:description" content="AI code generation shifts effort from writing components to compliance, observability and edge cases. Here is how to price and instrument that hidden work.">
         <meta property="og:url" content="https://kubaik.github.io/ai-freelance-rates-2026-which-stacks-still-pay/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI freelance rates 2026: which stacks still pay">
-        <meta name="twitter:description" content="2026 freelance rates fell 28% for templated AI apps, but projects needing SOC-2 or PCI still pay $170–$220 because AI cannot replace the janitor work.">
+        <meta name="twitter:description" content="AI code generation shifts effort from writing components to compliance, observability and edge cases. Here is how to price and instrument that hidden work.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-freelance-rates-2026-which-stacks-still-pay.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-freelance-rates-2026-which-stacks-still-pay/#article",
       "headline": "AI freelance rates 2026: which stacks still pay",
-      "description": "2026 freelance rates fell 28% for templated AI apps, but projects needing SOC-2 or PCI still pay $170–$220 because AI cannot replace the janitor work.",
+      "description": "AI code generation shifts effort from writing components to compliance, observability and edge cases. Here is how to price and instrument that hidden work.",
       "datePublished": "2026-06-13T20:59:28+00:00",
-      "dateModified": "2026-09-20T04:07:56+00:00",
-      "wordCount": 1842,
-      "timeRequired": "PT9M",
+      "dateModified": "2026-10-03T11:18:27+00:00",
+      "wordCount": 2361,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI freelance rates 2026: which stacks still pay</h1>
                 
-                <p class="post-lead">2026 freelance rates fell 28% for templated AI apps, but projects needing SOC-2 or PCI still pay $170–$220 because AI cannot replace the janitor work.</p>
+                <p class="post-lead">AI code generation shifts effort from writing components to compliance, observability and edge cases. Here is how to price and instrument that hidden work.</p>
                 
                 
                 <div class="tags">
@@ -257,80 +257,151 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        9 min read
-                        &nbsp;·&nbsp; 1842 words
+                        12 min read
+                        &nbsp;·&nbsp; 2361 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-20
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
-<h2 id="advanced-edge-cases-you-personally-encountered">Advanced edge cases you personally encountered</h2>
-<p>In 2026 I ran into four edge cases that cost real money and almost killed a project’s margin. None of them were predicted by any blog post or sales deck.</p>
-<p><strong>1. The “Prompt Monkey → PCI Breach” cascade</strong>
-Project: a subscription box startup wanted a Next.js 14 portal that let users upgrade plans and store shipping addresses. I used Copilot Enterprise 1.5 to scaffold the checkout page. The first prompt was:
-“Give me a Stripe checkout page in Next.js with plan selection.”
-Copilot returned a beautiful, animated React component that used the deprecated <code>stripe.redirectToCheckout</code> method. The code passed my local tests because the Stripe test keys don’t enforce idempotency. Three days after launch, the first real Stripe webhook arrived with duplicate charges. A PCI auditor flagged us for non-compliant idempotency. Fix: 12 hours of refactoring, $1,320 at $110/hour, plus a $2,400 PCI re-scan. Net margin on that project went from +28 % to –12 %.</p>
-<p><strong>2. The LangChain import that melted the vector budget</strong>
-Project: a mental-health chatbot using LangChain 0.2.3 and pgvector 0.7.0. Copilot generated this import:
-<code>import { StripeWebhookHandler } from '@langchain/stripe';</code>
-The real package is <code>@langchain/community</code>, and the handler lives under <code>langchain/community/tools/stripe</code>. The wrong import compiled, deployed, and immediately started returning 404s in production. The vector DB had already ingested 80k user conversations, so rolling back meant truncating the table and re-indexing. Downtime: 47 minutes. Recovery time: 5 hours. Cost to client: $605 in SLA credits plus my $890 debugging fee. Lesson learned: add a pre-deploy GitHub Action that checks every Copilot-generated import against a curated allow-list of packages.</p>
-<p><strong>3. The SOC-2 artifact that only existed in Copilot’s memory</strong>
-Project: a European fintech client needed SOC-2 Type II evidence for “Change Management.” I used Copilot to draft GitHub Actions workflows that auto-generate evidence artifacts (merged PR diffs, dependency graphs, deployment timestamps). Everything looked perfect in the staging branch—until the auditor asked for the raw logs. Copilot’s workflows had used <code>echo</code> statements instead of the official <code>actions/toolkit</code> logging library, so the logs were stored only in the runner’s ephemeral storage. Evidence collection failed. We had to re-run every pipeline and manually export logs to S3. Extra billable hours: 18. Client paid, but the trust gap widened. Now I always include a clause: “All SOC-2 artifacts must be written to durable storage (S3, GCS) within 5 minutes of generation.”</p>
-<p><strong>4. The latency budget that died at 3 AM on Black Friday</strong>
-Project: a Next.js API that wrapped a fine-tuned Mistral-7B model for real-time customer support. Load test in staging hit p95 = 280 ms. Copilot added a middleware that appended tracing headers to every request. In production, at 1,200 concurrent users, the p95 exploded to 1.4 s because the tracing middleware was doing synchronous disk writes. No one noticed until Black Friday traffic arrived. Fix: rewrite the middleware to use async <code>winston</code> + <code>pino</code> buffered logging, deploy at 3:17 AM. Downtime: 17 minutes. Cost: $950 in SLA credits plus my $1,140 emergency rate. Contract now includes a clause: “Any AI-generated middleware must pass a 2× expected load test before merge.”</p>
-<p>Each of these edge cases taught me the same lesson: AI tools compress the 80 % of code that is obvious, but they inflate the hidden 20 % of compliance, observability, and edge-case handling. Clients only see the upfront savings; they rarely budget for the cascade of small failures that follow. Today, I quote a 15 % “edge-case buffer” on every AI project that touches regulated data.</p>
-<hr />
-<h2 id="integration-with-real-tools-2026-versions">Integration with real tools (2026 versions)</h2>
-<p>Below are three integrations I ship in almost every 2026 freelance project. Each snippet is tested against the exact versions listed and includes the compliance guardrails that prevent the edge cases above.</p>
-<p><strong>Tool 1 – Copilot Enterprise 1.5 + Secure Dev Stack</strong>
-I bundle Copilot Enterprise 1.5 with Snyk Code 1.987 and a pre-approved vector DB (pgvector 0.7.0). The following GitHub Actions workflow enforces the guardrails I learned the hard way.</p>
-<pre><code class="language-yaml"># .github/workflows/secure-dev-stack.yml
-name: Secure Dev Stack
+                <p>AI assistants are good at the visible part of a codebase: components, CRUD handlers, schema drafts, boilerplate. They are indifferent to the invisible part: idempotency, durable audit trails, row-level security, latency budgets under concurrency. A typical failure mode is not that the generated code is obviously wrong — it is that it compiles, passes local tests, and fails in a way that costs money weeks later.</p>
+<p>This article covers four recurring failure patterns, the guardrails that catch them, and how to price the work honestly instead of absorbing the cost silently.</p>
+<h2 id="why-generated-code-fails-late-rather-than-early">Why generated code fails late rather than early</h2>
+<p>Generated code is optimized for the shape of the prompt, not for the shape of production. Three properties of production are systematically underrepresented:</p>
+<ul>
+<li><strong>Concurrency.</strong> Local tests run one request at a time. Duplicate webhooks, retried jobs and simultaneous writes only appear under real traffic.</li>
+<li><strong>Durability.</strong> Code that writes to a container's local filesystem, an ephemeral CI runner, or an in-memory cache looks correct in review and disappears on restart.</li>
+<li><strong>Identity.</strong> Authorization logic that relies on application code passing the right filter breaks the moment a query is written by something else — including a future version of the same assistant.</li>
+</ul>
+<p>None of these are exotic. They are the ordinary reasons production systems need review, and they are exactly the categories that a code generator has no way to verify.</p>
+<h2 id="failure-pattern-1-non-idempotent-payment-handling">Failure pattern 1: non-idempotent payment handling</h2>
+<p>A common scenario: an assistant is asked for a checkout or billing integration and returns a working-looking handler built on a deprecated redirect method or a naive "charge on event" flow. Test keys generally do not enforce idempotency, so the code passes local testing. In production, webhook providers retry on timeouts and non-2xx responses, and the same event can be delivered more than once.</p>
+<p><strong>What to instrument.</strong> Log every inbound webhook with its provider event ID and a hash of the raw body. Count distinct event IDs versus total deliveries per day. A ratio above 1.0 means retries are happening in your environment and your handler must be idempotent.</p>
+<p><strong>What to compare.</strong> Run the handler twice with the same event payload against a test database and assert that the number of side effects (rows written, emails queued, ledger entries) is identical after both runs.</p>
+<p><strong>The guardrail.</strong> Persist a record of each processed event ID in a unique-indexed table and short-circuit on conflict. The database constraint, not application logic, is what makes this safe under concurrency.</p>
+<h2 id="failure-pattern-2-hallucinated-or-deprecated-imports">Failure pattern 2: hallucinated or deprecated imports</h2>
+<p>Assistants frequently produce import paths that look plausible and do not exist, or that existed in an older major version. Because package managers resolve namespaces loosely in some ecosystems, a wrong import can compile and fail only at runtime when the module is loaded.</p>
+<p><strong>What to instrument.</strong> A pre-merge check that extracts every import specifier from changed files and verifies it against the lockfile plus an explicit allow-list of internal aliases. Reject anything not present in both.</p>
+<p><strong>What to compare.</strong> Diff the set of imported packages against <code>dependencies</code> and <code>devDependencies</code> in the manifest. Every external import should have a matching entry; every entry with no import is a candidate for removal.</p>
+<p>A minimal allow-list check in CI:</p>
+<pre><code class="language-bash"># fail the build if any import is not in the manifest or the allow-list
+node - &lt;&lt;'EOF'
+const fs = require('fs');
+const path = require('path');
+const manifest = require('./package.json');
+const known = new Set([
+  ...Object.keys(manifest.dependencies || {}),
+  ...Object.keys(manifest.devDependencies || {}),
+]);
+const allowInternal = [/^@\//, /^\.\.?\//];
+const files = process.argv.slice(2);
+let bad = 0;
+for (const f of files) {
+  const src = fs.readFileSync(f, 'utf8');
+  for (const m of src.matchAll(/from\s+['&quot;]([^'&quot;]+)['&quot;]/g)) {
+    const spec = m[1];
+    if (allowInternal.some(r =&gt; r.test(spec))) continue;
+    const pkg = spec.startsWith('@')
+      ? spec.split('/').slice(0, 2).join('/')
+      : spec.split('/')[0];
+    if (!known.has(pkg)) {
+      console.error(`unknown import ${pkg} in ${f}`);
+      bad++;
+    }
+  }
+}
+process.exit(bad ? 1 : 0);
+EOF
+</code></pre>
+<p>This is deliberately crude. It will not resolve conditional exports or workspace protocols, but it catches the common case — a package name that was invented or renamed — before it reaches a deploy.</p>
+<h2 id="failure-pattern-3-audit-evidence-that-is-not-durable">Failure pattern 3: audit evidence that is not durable</h2>
+<p>Compliance frameworks ask for evidence that is written somewhere it cannot be silently lost. Generated CI workflows often satisfy the <em>shape</em> of that requirement — a step named "export logs", an <code>echo</code> of a timestamp — while writing to the runner's ephemeral filesystem. The pipeline is green; the evidence does not exist an hour later.</p>
+<p><strong>What to instrument.</strong> After each pipeline run, assert that the expected artifact exists at a durable location and that its checksum matches the value recorded in the build log. A missing artifact should fail the pipeline, not a later audit.</p>
+<p><strong>What to compare.</strong> For a given change, confirm that the set of required artifacts (merged diff, dependency graph, deploy timestamp) is present in object storage with a retention policy that exceeds the compliance window.</p>
+<p><strong>The guardrail.</strong> Write evidence to object storage with an explicit retention rule and an immutable-object policy where the provider supports it. Treat any evidence step that writes only to the runner as a bug.</p>
+<h2 id="failure-pattern-4-middleware-that-changes-the-latency-profile">Failure pattern 4: middleware that changes the latency profile</h2>
+<p>A middleware added for tracing, logging or header injection is usually cheap in a single-request test and expensive under concurrency if it performs synchronous I/O. The failure is a step change, not a gradual degradation: p95 looks fine in staging and collapses at production concurrency.</p>
+<p><strong>What to instrument.</strong> Measure p50, p95 and p99 separately for requests with and without the middleware. Record event-loop lag and the time spent in the middleware itself, not just total request duration.</p>
+<p><strong>What to compare.</strong> Run a load test at your expected peak and at twice that value. A component that is acceptable at 1× and unacceptable at 2× is a scheduling problem, not a capacity problem.</p>
+<p>A quick loop-lag probe to keep in a staging environment:</p>
+<pre><code class="language-js">// logs event-loop delay; run during load tests, not in production
+let last = process.hrtime.bigint();
+setInterval(() =&gt; {
+  const now = process.hrtime.bigint();
+  const delayMs = Number(now - last - 1000n * 1000n * 1000n) / 1e6;
+  if (delayMs &gt; 50) console.warn(`event loop lag ${delayMs.toFixed(1)}ms`);
+  last = now;
+}, 1000).unref();
+</code></pre>
+<h2 id="a-guardrail-stack-that-fits-most-projects">A guardrail stack that fits most projects</h2>
+<p>The specific tools matter less than the categories. Any project that touches payments, regulated data, or a latency-sensitive endpoint needs four checks, and they can all run in the same pipeline.</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>What it detects</th>
+<th>Where it runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Import allow-list</td>
+<td>Hallucinated or renamed packages</td>
+<td>Pre-merge</td>
+</tr>
+<tr>
+<td>Dependency and secret scan</td>
+<td>Known-vulnerable versions, committed credentials</td>
+<td>Pre-merge</td>
+</tr>
+<tr>
+<td>Idempotency test</td>
+<td>Duplicate side effects on replay</td>
+<td>Pre-merge</td>
+</tr>
+<tr>
+<td>Artifact durability check</td>
+<td>Evidence written only to ephemeral storage</td>
+<td>Post-deploy</td>
+</tr>
+<tr>
+<td>Load test at 2× peak</td>
+<td>Middleware that degrades non-linearly</td>
+<td>Pre-release</td>
+</tr>
+</tbody>
+</table>
+<p>The pipeline below implements the first and last of these; the idempotency and durability checks are application-specific and belong in the test suite.</p>
+<pre><code class="language-yaml"># .github/workflows/guardrails.yml
+name: Guardrails
 on: [push, pull_request]
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest-4-core
+  checks:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.7
-      - name: Set Node.js 20.12.2
-        uses: actions/setup-node@v4.0.3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20.12.2
-      - name: Install Snyk CLI 1.987
-        run: npm install -g snyk@1.987.0
-      - name: Run Snyk Code
-        run: snyk code test --severity-threshold=high
-      - name: Check Copilot imports
-        run: |
-          # scan every file for non-whitelisted imports
-          import_allowlist=(&quot;next&quot; &quot;@stripe/stripe-js&quot; &quot;pgvector&quot; &quot;langchain/community&quot;)
-          files=$(find pages -name &quot;*.tsx&quot; -o -name &quot;*.ts&quot;)
-          violations=0
-          for file in $files; do
-            while IFS= read -r line; do
-              if [[ $line =~ import[[:space:]]+.*from[[:space:]]+[\&quot;']([^\&quot;']+)[\&quot;'] ]]; then
-                pkg=${BASH_REMATCH[1]}
-                if [[ ! &quot; ${import_allowlist[@]} &quot; =~ &quot; ${pkg} &quot; ]]; then
-                  echo &quot;::error file=$file,line=1::Non-whitelisted import: $pkg&quot;
-                  violations=$((violations + 1))
-                fi
-              fi
-            done &lt; &quot;$file&quot;
-          done
-          if [ $violations -gt 0 ]; then exit 1; fi
+          node-version: 20
+      - run: npm ci
+      - name: Import allow-list
+        run: node scripts/check-imports.js $(git diff --name-only origin/main...HEAD -- '*.ts' '*.tsx')
+      - name: Dependency audit
+        run: npm audit --audit-level=high
+      - name: Duplicate-delivery test
+        run: npm test -- --grep &quot;webhook idempotency&quot;
 </code></pre>
-<p>This workflow runs in ~42 seconds and blocks any PR that tries to smuggle a deprecated Stripe import or a non-whitelisted LangChain package. The Snyk step alone catches 68 % of the dependency drift that used to cause production fires.</p>
-<p><strong>Tool 2 – Idempotent Stripe webhooks with Next.js 14</strong>
-The snippet below is the exact handler I ship for regulated payment flows. It adds idempotency keys, retry logic, and SOC-2 evidence headers.</p>
+<p>Two notes on this shape. First, the import check runs only against changed files, which keeps it fast enough that nobody argues about it. Second, the idempotency test is a real test with a real database, not a mock: mocks cannot reproduce unique-constraint behavior, and the unique constraint is the whole point.</p>
+<h2 id="idempotent-webhook-handling-concretely">Idempotent webhook handling, concretely</h2>
+<p>The handler below is written for a framework with a Web Fetch-style request object and a Postgres-compatible database. The important properties are that the raw body is used for signature verification, and that the event ID is inserted into a unique-indexed table before any side effect occurs.</p>
 <pre><code class="language-ts">// app/api/webhooks/stripe/route.ts
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { unstable_cache } from 'next/cache';
+import { db } from '@/lib/db';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-10-15.acacia',
@@ -338,44 +409,76 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: Request) {
   const body = await req.text();
-  const signature = req.headers.get('stripe-signature')!;
-  const idempotencyKey = req.headers.get('x-stripe-idempotency-key');
-
-  if (!idempotencyKey) {
-    return NextResponse.json({ error: 'Missing idempotency key' }, { status: 400 });
+  const signature = req.headers.get('stripe-signature');
+  if (!signature) {
+    return NextResponse.json({ error: 'missing signature' }, { status: 400 });
   }
 
-  // SOC-2 evidence: store raw body + signature for 7 years
-  const evidenceKey = `stripe-evidence/${new Date().toISOString()}-${crypto.randomUUID()}`;
-  await unstable_cache(async () =&gt; {
-    // durable storage would go here (S3, GCS)
-  }, [evidenceKey])();
+  let event: Stripe.Event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET!,
+    );
+  } catch (err) {
+    // verification failure is a client error, not a server error
+    return NextResponse.json({ error: 'invalid signature' }, { status: 400 });
+  }
+
+  // The unique constraint on event_id is what makes this idempotent.
+  // If the insert conflicts, the event has already been handled.
+  const inserted = await db.query(
+    `INSERT INTO processed_events (event_id, received_at)
+     VALUES ($1, now())
+     ON CONFLICT (event_id) DO NOTHING
+     RETURNING event_id`,
+    [event.id],
+  );
+
+  if (inserted.rowCount === 0) {
+    return NextResponse.json({ received: true, duplicate: true });
+  }
 
   try {
-    const event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET!);
-    // idempotent processing
-    const processed = await unstable_cache(
-      async () =&gt; processStripeEvent(event),
-      [event.id, idempotencyKey],
-      { revalidate: false }
-    )();
-    return NextResponse.json({ received: true });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 400 });
+    await handleEvent(event);
+  } catch (err) {
+    // Roll back the marker so the provider's retry can succeed.
+    await db.query(`DELETE FROM processed_events WHERE event_id = $1`, [event.id]);
+    throw err;
   }
+
+  return NextResponse.json({ received: true });
 }
 
-async function processStripeEvent(event: Stripe.Event) {
-  // business logic here
+async function handleEvent(event: Stripe.Event) {
+  switch (event.type) {
+    case 'checkout.session.completed':
+      // business logic
+      break;
+    default:
+      break;
+  }
 }
 </code></pre>
-<p>Key points:
-- The handler enforces idempotency keys at the HTTP layer; missing keys are rejected immediately. - <code>unstable_cache</code> (Next.js 14) writes every webhook and its signature to durable storage under a SOC-2 evidence key. In 2026, auditors accept this as “immutable log.”
-- The retry logic is implicit in the cache key; repeated calls with the same idempotency key return the cached result.</p>
-<p><strong>Tool 3 – pgvector 0.7.0 + RLS policies for multi-tenant data</strong>
-The following migration adds row-level security (RLS) to prevent gym owners from seeing each other’s data. The schema is generated by Copilot Enterprise and hardened by me.</p>
-<pre><code class="language-sql">-- prisma/migrations/20260405_add_rls/migration.sql
-CREATE TABLE gyms (
+<p>Three details are doing the work here, and each corresponds to a failure pattern above:</p>
+<ol>
+<li><strong>Signature verification uses the raw body.</strong> Parsing the JSON first and re-serializing it will break the signature check in ways that are hard to debug.</li>
+<li><strong>The <code>ON CONFLICT DO NOTHING</code> insert is the idempotency mechanism.</strong> Application-level "have I seen this?" checks race under concurrency; a unique constraint does not.</li>
+<li><strong>The marker is deleted on handler failure.</strong> Without this, a transient downstream error would permanently suppress a legitimate retry.</li>
+</ol>
+<p>A corresponding migration:</p>
+<pre><code class="language-sql">CREATE TABLE processed_events (
+  event_id TEXT PRIMARY KEY,
+  received_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Retain markers at least as long as the provider's retry window.
+CREATE INDEX processed_events_received_at_idx ON processed_events (received_at);
+</code></pre>
+<h2 id="row-level-security-as-a-backstop-not-a-primary-control">Row-level security as a backstop, not a primary control</h2>
+<p>Application-level tenant filtering is a primary control: it is what you intend to happen. Row-level security is a backstop: it is what happens when the application is wrong. Both are worth having for multi-tenant data.</p>
+<pre><code class="language-sql">CREATE TABLE gyms (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   owner_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
@@ -384,128 +487,36 @@ CREATE TABLE gyms (
 ALTER TABLE gyms ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY gym_access_policy ON gyms
-  USING (owner_id = current_setting('request.jwt.claims.sub')::UUID);
-
--- Supabase RLS function
-CREATE OR REPLACE FUNCTION set_gym_rls() RETURNS TRIGGER AS $$
-BEGIN
-  PERFORM set_config('request.jwt.claims.sub', auth.uid(), false);
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
-CREATE TRIGGER set_gym_rls_trigger
-  BEFORE INSERT OR UPDATE ON gyms
-  FOR EACH ROW EXECUTE FUNCTION set_gym_rls();
+  USING (owner_id = current_setting('app.current_user_id', true)::UUID);
 </code></pre>
-<p>This guarantees that even if Copilot writes a buggy query like <code>SELECT * FROM gyms</code>, Postgres will reject it unless the <code>owner_id</code> matches the authenticated user. The policy is enforced at the database layer, so a misconfigured ORM cannot bypass it. The migration adds ~12 minutes to setup but prevents the “prompt monkey → data leak” cascade I described earlier.</p>
-<p>Together, these three snippets cut the edge-case debugging time by ~40 % while keeping the client’s SOC-2 auditor happy.</p>
-<hr />
-<h2 id="beforeafter-comparison-latency-cost-lines-of-code-risk">Before/after comparison (latency, cost, lines of code, risk)</h2>
-<p>The numbers below come from a real project delivered in Q2 2026. The client sells SaaS scheduling software for boutique gyms; stack: Next.js 14, Prisma ORM 5.14.0, Supabase 1.51.0, Stripe, pgvector 0.7.0.</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before AI (hand-written)</th>
-<th>After AI + Guardrails (2026)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Hours billed</strong></td>
-<td>40</td>
-<td>17</td>
-</tr>
-<tr>
-<td><strong>Lines of React code</strong></td>
-<td>312</td>
-<td>220 (Copilot) + 89 (refactor) = 309</td>
-</tr>
-<tr>
-<td><strong>Lines of test code</strong></td>
-<td>189 (100 % coverage)</td>
-<td>254 (127 % coverage, more edge cases)</td>
-</tr>
-<tr>
-<td><strong>Latency p95 (Next.js API)</strong></td>
-<td>120 ms</td>
-<td>185 ms (AI middleware + tracing)</td>
-</tr>
-<tr>
-<td><strong>Peak memory (Node)</strong></td>
-<td>140 MB</td>
-<td>210 MB (vector DB + tracing)</td>
-</tr>
-<tr>
-<td><strong>Monthly infra cost (AWS)</strong></td>
-<td>$89</td>
-<td>$124 (vector DB + tracing)</td>
-</tr>
-<tr>
-<td><strong>Client quote</strong></td>
-<td>$3,800</td>
-<td>$1,870</td>
-</tr>
-<tr>
-<td><strong>Compliance tax</strong></td>
-<td>$0 (no SOC-2)</td>
-<td>$470 (SOC-2 evidence, PCI scan, RLS policies)</td>
-</tr>
-<tr>
-<td><strong>Debugging tax</strong></td>
-<td>$0 (assumed)</td>
-<td>$680 (PCI idempotency bug, vector import bug)</td>
-</tr>
-<tr>
-<td><strong>Net client saving</strong></td>
-<td>—</td>
-<td>42 %</td>
-</tr>
-<tr>
-<td><strong>My margin</strong></td>
-<td>38 %</td>
-<td>29 %</td>
-</tr>
-<tr>
-<td><strong>Hidden risk</strong></td>
-<td>Medium (schema drift, idempotency)</td>
-<td>Low (RLS, idempotency keys, audit trail)</td>
-</tr>
-</tbody>
-</table>
-<p>Key takeaways:</p>
-<ol>
-<li>
-<p><strong>Lines of code are not the bottleneck.</strong> Copilot wrote 220 lines in 2 hours, but the guardrails (RLS policies, idempotency, tracing) added 89 lines of policy code—almost as much as the React component itself. The net delta is –1 line, yet the safety delta is +100 %.</p>
-</li>
-<li>
-<p><strong>Latency budget crept up.</strong> The AI middleware (tracing headers, vector DB) added 65 ms. If the client had demanded p95 &lt; 150 ms, the project would have required extra performance tuning—unpaid scope creep.</p>
-</li>
-<li>
-<p><strong>Infra cost is now visible.</strong> The vector DB + tracing bumped the monthly bill from $89 to $124. Clients rarely notice until the invoice arrives, so I now quote infra as a separate line item.</p>
-</li>
-<li>
-<p>Clients still think they’re saving 51 %; the hidden costs live in the fine print.</p>
-</li>
-<li>
-<p><strong>Risk profile inverted.</strong> Before AI, the biggest risk was schema drift. After AI, the biggest risk is the cascade of small failures I described in the edge-cases section. Guardrails turn invisible risk into billable line items.</p>
-</li>
-</ol>
-<p>Bottom line: AI tools compress the visible work (React components, schemas), but they inflate the invisible work (compliance, observability, edge cases). Quote both.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>The session variable must be set by the connection pool on checkout, not by a trigger on the table. A trigger that sets the variable during <code>INSERT</code> or <code>UPDATE</code> does not protect <code>SELECT</code>, which is the query that leaks data. Set it per transaction:</p>
+<pre><code class="language-sql">-- executed at the start of each request's transaction
+SELECT set_config('app.current_user_id', $1, true);
+</code></pre>
+<p>Two caveats worth stating plainly. First, <code>current_setting(..., true)</code> returns <code>NULL</code> rather than erroring when the variable is unset, and <code>NULL</code> comparisons fail closed only if the policy is written as an equality against a non-null column — verify this with a test that queries without setting the variable and asserts zero rows. Second, table owners and roles with <code>BYPASSRLS</code> are exempt by default, so the application role must not be the table owner.</p>
+<h2 id="pricing-the-invisible-work">Pricing the invisible work</h2>
+<p>The honest way to price AI-assisted work is to separate the visible deliverable from the guardrails, and to make the guardrails a line item rather than a hidden cost.</p>
+<p>A worked example, with all figures illustrative and assumptions stated:</p>
 <ul>
-<li><a href="https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/">7 code review traps when AI writes half your code</a></li>
-<li><a href="https://kubaik.github.io/agent-platform-abstractions-a-case-study/">Agent platform abstractions: a case study</a></li>
-<li><a href="https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/">AI made self-service platforms trivial in 2026</a></li>
+<li>Assume a feature that an assistant drafts in <strong>6 hours</strong> of prompting and review.</li>
+<li>Assume the guardrails — import check, idempotency test, artifact durability check, 2× load test — take <strong>5 hours</strong> to write and wire into CI.</li>
+<li>Assume the guardrails catch two defects that would otherwise have surfaced in production, each costing <strong>4 hours</strong> of incident response plus a client-relationship cost that is not billable.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>The visible work is 6 hours; the invisible work is 5 hours plus the avoided 8 hours. Quoting only the visible work means the 5 hours are absorbed and the 8 hours are a gamble. Quoting both means the client sees an 11-hour estimate for a 6-hour artifact, which is a conversation worth having explicitly rather than discovering at invoice time.</p>
+<p>The same logic applies to infrastructure. A vector store, a tracing backend, or an audit-log bucket adds a recurring cost that did not exist before. Quote it as a separate line so it does not silently erode margin.</p>
+<h2 id="a-decision-checklist-before-shipping-generated-code">A decision checklist before shipping generated code</h2>
+<p>Run through this before merging anything an assistant produced for a system that handles money, personal data, or a stated latency target.</p>
+<ul>
+<li>Does every external import resolve against the lockfile, and is there a CI check that enforces this?</li>
+<li>For every event-driven handler, is there a unique-indexed record of processed event IDs, and a test that replays the same event twice?</li>
+<li>Does every compliance artifact land in storage with a retention policy, and does the pipeline fail if it does not?</li>
+<li>Does any middleware perform synchronous I/O on the request path, and has the system been load-tested at twice expected peak?</li>
+<li>Are tenant-scoped queries protected by both application filtering and a database-level policy, and is the policy tested with the session variable unset?</li>
+<li>Is the recurring infrastructure cost of the guardrails quoted separately from the build cost?</li>
+</ul>
+<p>If any answer is "we will check later", that is the item most likely to become the incident.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Pick one event-driven endpoint in a current project and write a test that sends the same event payload twice, then assert that the number of side effects after the second delivery equals the number after the first. If the test fails, the fix is a unique constraint on the event ID and an <code>ON CONFLICT DO NOTHING</code> insert — and you have just found, in half an hour, a class of bug that otherwise surfaces as duplicate charges.</p>
                 
                 
             </div>
@@ -533,15 +544,15 @@ CREATE TRIGGER set_gym_rls_trigger
                 <div class="related-grid">
                     
                     <a class="related-card" href="/ai-alert-triage-cut-pages-80-in-production/">
-                        <h3>AI alert triage: cut pages 80% in production</h3>
-                        <p>Cut on-call pages 80% with AI alert triage — Prometheus 3.0, Qdrant 1.9 and a 120-line Python router. False negatives below 3% and $8k yearly savings.</p>
-                        <span class="related-meta">10 min read · 12 June 2026</span>
+                        <h3>Designing an AI Alert Triage Layer That Reduces Pages</h3>
+                        <p>How to build an AI alert-triage service between Alertmanager and your pager: fingerprinting, LLM filtering, fail-open rules, and honest measurement.</p>
+                        <span class="related-meta">14 min read · 12 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/personal-ai-assistants-avoid-vendor-lock-in-traps/">
                         <h3>Personal AI assistants: avoid vendor lock-in traps</h3>
-                        <p>Cut 98% of AI assistant costs without vendor lock-in — Redis 7.2 caching, OpenSearch 2.11 search, and vLLM 0.4.0 self-hosted models deliver P95 latency under…</p>
-                        <span class="related-meta">16 min read · 11 June 2026</span>
+                        <p>How to structure a personal AI assistant as replaceable services: contracts, self-hosted embeddings, retries, failure modes, and a checklist to start.</p>
+                        <span class="related-meta">15 min read · 11 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/golden-paths-become-load-bearing-walls/">

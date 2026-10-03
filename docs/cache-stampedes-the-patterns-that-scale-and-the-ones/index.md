@@ -1,62 +1,50 @@
 # Cache stampedes: the patterns that scale and the ones…
 
-I ran into this tooluse patterns problem while migrating a service under a hard deadline. Most write-ups stop exactly where the interesting part starts. Here's the root cause, not just the symptom.
+Most caching write-ups stop exactly where the interesting part starts: the moment a popular key expires and every client races to rebuild it at once. This article covers the root cause, the patterns that hold up, and the failure modes that show up only after deployment.
 
 ## The gap between what the docs say and what production needs
 
-Most tutorials tell you to add a cache and call it a day. They show a simple `get(key)` and `set(key, value)` pair, maybe with a TTL, and declare victory. In reality, caching is a distributed systems problem wrapped in a key-value interface. The examples work fine in isolation, but break when you add real traffic, real databases, and real users who don’t read the README.
+Caching clients typically expose a simple `get(key)` and `set(key, value)` pair, maybe with a TTL, and that is where the documentation ends. In practice, caching is a distributed systems problem wrapped in a key-value interface. The examples work fine in isolation, but break when real traffic, real databases, and real concurrency arrive.
 
-I ran into this the hard way when we moved our Brazilian payments API from a single Redis instance to a distributed cache layer behind AWS ElastiCache Redis 7.2 with 5 read replicas. The API handles 400–600 requests per second during peak hours, and our first deployment looked fine in staging with 10% of that load. We rolled it out at 2 a.m. local time, confident the cache would absorb the load. By 3 a.m., the database CPU had spiked to 98%, p99 latency went from 80 ms to 1.2 seconds, and we were waking up the on-call rotation.
+A typical production failure looks like this: cache keys are derived from a session identifier plus a time window. When the window rolls over, every client holding that key misses simultaneously and races to rebuild it. If 400 clients share the key, the database receives 400 identical queries in the same instant. Database CPU saturates, p99 latency climbs by an order of magnitude, and the on-call rotation gets paged.
 
-The root cause? A thundering herd problem we didn’t plan for. Our cache keys were based on a user session ID plus a timestamp window. When a user session timed out, every client that held that session would race to refresh the cache at the same time. With 400 clients sharing a single user session, we hit Redis with 400 `GET` misses within 100 ms. That triggered 400 database queries, all at once. Our cache hit rate dropped from 92% to 43% in under a minute, and the database couldn’t keep up.
+This is not a cache-server problem. It is a tool-use pattern problem. Teams that treat the cache as a local variable — set it once, forget it — are optimizing for the happy path and ignoring the failure modes. That works until it doesn't, and when it fails, it fails at exactly the moment the system is under the most load.
 
-This wasn’t a Redis problem. It was a tool-use pattern problem. We used the cache like a local variable: set it once, forget it. Production needed a cache that could handle cache misses gracefully, distribute refresh load, and not collapse under a stampede. The docs never mention that.
+The documentation gap is wider than most engineers expect. Client libraries assume you will handle concurrency, retries, and invalidation yourself. They do not warn that a single misconfigured TTL can turn a 100 ms API call into a multi-second database query when the key expires.
 
-Most teams hit this wall because they treat caching as a performance trick, not a resilience mechanism. They optimize for the happy path and ignore the failure modes. That works until it doesn’t. When it breaks, it breaks hard — and it breaks at scale.
+The practical conclusion: design your cache usage patterns before you pick a cache layer. Otherwise the cache scales the happy path and collapses the moment reality hits.
 
-The gap between docs and production is wider than most engineers expect. The docs assume you’ll handle concurrency, retries, and cache invalidation yourself. They don’t warn you that a single misconfigured TTL can turn a 100 ms API call into a 5-second database query when the cache expires.
+## How stampedes actually work under the hood
 
-If you’re building a system that matters, you need to design your cache usage patterns before you pick a cache layer. Otherwise, you’ll find yourself in the same situation: a cache that scales the happy path, but collapses the moment reality hits.
+Caching is a coordination problem. Every client wants the same value, and every cache miss triggers a read from the source. When that scales to hundreds of clients, a small event — a TTL expiry — can cascade into a full stampede.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+A thundering herd happens when many processes race to refresh the same stale key at the same time. The first process to miss triggers a database query; if every process misses simultaneously, the database sees load proportional to the client count. This is feedback amplification: one cache miss becomes many database reads.
 
-## How the tool-use patterns that scaled and the ones that created thundering herd problems actually works under the hood
-
-Caching is a coordination problem. Every client wants the same value, and every cache miss triggers a read from the source. When you scale that to hundreds of clients, you create a scenario where a small event (like a cache TTL expiry) can cascade into a full-blown stampede.
-
-At its core, a thundering herd happens when many processes race to refresh the same stale key at the same time. The first process to miss the cache triggers a database query, but if every process misses the cache simultaneously, the database sees a spike in load that matches the client count. This is classic feedback amplification: a cache miss amplifies into a database overload.
-
-The key insight is that the problem isn’t the cache. It’s the coordination mechanism around the cache. If you don’t control how clients refresh stale keys, you’re relying on luck to avoid a stampede. Most systems don’t have that luck.
+The key insight is that the problem is not the cache. It is the coordination mechanism around the cache. If you do not control how clients refresh stale keys, you are relying on luck to avoid a stampede.
 
 There are three common patterns for refreshing stale keys:
 
-1. **Lazy invalidation**: The cache key expires naturally, and the first client to request it refreshes it. This is simple but dangerous under load.
-2. **Proactive refresh**: A background job refreshes keys before they expire, so clients rarely see stale data. This reduces misses but adds complexity and can waste resources if data doesn’t change often.
-3. **Coordinated refresh**: Clients coordinate to refresh keys in a controlled way, so only one client refreshes the key while others wait or use a stale value temporarily. This is the most robust but requires a coordination mechanism.
+1. **Lazy invalidation** — the key expires naturally, and the first client to request it refreshes it. Simple, but dangerous under load.
+2. **Proactive refresh** — a background job refreshes keys before they expire, so clients rarely see stale data. Reduces misses but adds complexity and can waste resources if data rarely changes.
+3. **Coordinated refresh** — clients coordinate so only one refreshes the key while others wait or use a stale value temporarily. The most robust, but requires a coordination mechanism.
 
-Most teams default to lazy invalidation because it’s the simplest. They set a TTL and hope for the best. In low-traffic systems, this works fine. In systems with traffic spikes or shared sessions, it fails spectacularly. The moment a popular key expires, every client that needs it races to refresh it. The database becomes a bottleneck, and latency spikes.
+Most teams default to lazy invalidation because it is the simplest. In low-traffic systems it works fine. In systems with traffic spikes or shared sessions, it fails spectacularly: the moment a popular key expires, every client that needs it races to refresh it, the database becomes the bottleneck, and latency spikes.
 
-The surprising part is how small the trigger can be. In our case, the key was a user session token that expired after 30 minutes of inactivity. Users would log out, but their browser tabs would still hold the token. When the token expired, 400 tabs would race to refresh it at once. The trigger wasn’t a traffic spike — it was a silent session expiry.
+The trigger can be surprisingly small. A session token that expires after 30 minutes of inactivity is a classic case: users log out, but browser tabs still hold the token. When it expires, every open tab races to refresh at once. The trigger is not a traffic spike — it is a silent session expiry.
 
-Another hidden factor is the cache eviction policy. Redis uses an allkeys-lru policy by default in ElastiCache. When memory pressure hits, Redis evicts keys aggressively. If your cache keys are large or your memory limit is tight, Redis can evict keys before they expire, forcing more cache misses. In one incident, we saw eviction rates jump to 15% per minute during a traffic spike, which turned 92% cache hits into 68%. That small drop triggered a 3x increase in database load.
+Cache eviction policy is another hidden factor. Redis supports several eviction policies, and `allkeys-lru` evicts keys aggressively under memory pressure. If keys are large or the memory limit is tight, Redis can evict keys before their TTL expires, producing extra misses on top of the scheduled ones. That extra miss pressure compounds the stampede.
 
-The patterns that scale are the ones that reduce coordination overhead and distribute refresh load. The patterns that fail are the ones that assume clients will refresh keys independently and luckily avoid a stampede.
+The patterns that scale reduce coordination overhead and distribute refresh load. The patterns that fail assume clients will refresh keys independently and luckily avoid a stampede.
 
-If you’re using Redis 7.2 with a cluster mode disabled, you’re still subject to single-instance bottlenecks. Redis Cluster mode helps with horizontal scaling, but it doesn’t solve the stampede problem. The coordination still happens on a single shard.
-
-The real fix isn’t just a better cache — it’s a better tool-use pattern. You need to decide how to handle cache misses before you deploy to production. Otherwise, you’ll learn the hard way that caching isn’t free.
-
-I was surprised that even with Redis Cluster and 5 replicas, a single TTL expiry on a hot key could still trigger a thundering herd — the coordination problem was still in the client behavior, not the infrastructure.
+A single-node cache is also subject to single-instance bottlenecks regardless of client version. Cluster mode helps with horizontal scaling and memory distribution, but it does not solve the stampede problem by itself, because coordination for a given key still lands on one shard.
 
 ## Step-by-step implementation with real code
 
-Let’s walk through a concrete implementation that avoids the stampede problem. We’ll build a cache layer in Python 3.11 using Redis 7.2 as the backend, with a coordinated refresh pattern. The goal is to ensure that only one client refreshes a stale key at a time, while others wait or use a stale value.
+The walkthrough below builds a cache layer in Python using a Redis client with a coordinated refresh pattern: only one client refreshes a stale key at a time, while others wait or use a stale value.
 
 ### Step 1: Define the cache miss handler
 
-The first step is to handle cache misses gracefully. Instead of letting every client race to refresh the key, we’ll use a distributed lock to ensure only one client refreshes the key. Others will wait or use a stale value temporarily.
-
-Here’s a basic implementation using `redis-py` 5.0:
+The first step is to handle cache misses gracefully. Instead of letting every client race to refresh the key, use a distributed lock so only one client refreshes it. Others wait or use a stale value temporarily.
 
 ```python
 import time
@@ -112,26 +100,27 @@ class StampedeSafeCache:
             lock.release()
 ```
 
-This code does a few important things:
+What this code does:
 
-- It tries to get the key from cache first.
-- On a miss, it acquires a lock for the key. The lock ensures only one client refreshes the key.
-- If the lock can’t be acquired, it tries to get stale data or waits briefly.
-- Once the lock is acquired, it re-checks the cache in case another client refreshed it while waiting.
-- It fetches fresh data, sets the new value in cache, and also sets a short-lived stale copy for others.
+- Tries to read the key from cache first.
+- On a miss, acquires a lock for the key, ensuring only one client refreshes it.
+- If the lock cannot be acquired, tries stale data or waits briefly and retries.
+- Once the lock is held, re-checks the cache in case another client refreshed it while waiting.
+- Fetches fresh data, sets the new value, and also sets a short-lived stale copy as a fallback.
 
-The lock timeout is 5 seconds, which gives plenty of time for the refresh to complete. The stale TTL is 10 seconds, which gives clients a fallback if they miss the refresh window.
+The lock timeout bounds how long a crashed holder can block others. The stale TTL bounds how long fallback data can be served. Both values should be derived from the observed cost of `fetch_func()`: if a refresh normally takes 200 ms, a 5-second lock timeout is generous; if it can take 3 seconds under load, a 5-second timeout is tight and should be raised.
 
 ### Step 2: Add a background refresher
 
-The coordinated refresh pattern works well for interactive requests, but it doesn’t help for background jobs or cron-like tasks. A better approach is to proactively refresh keys before they expire, so clients rarely see stale data.
-
-Here’s a simple background refresher using Python’s `asyncio` and Redis streams:
+Coordinated refresh works well for interactive requests, but it does not help background jobs or cron-like tasks. A complementary approach is to refresh keys proactively before they expire, so clients rarely see stale data.
 
 ```python
 import asyncio
-import json
+import time
+import logging
 from redis.asyncio import Redis
+
+logger = logging.getLogger(__name__)
 
 async def background_refresher(redis: Redis, key_pattern: str, fetch_func, ttl: int):
     while True:
@@ -140,8 +129,7 @@ async def background_refresher(redis: Redis, key_pattern: str, fetch_func, ttl: 
         async for key in redis.scan_iter(match=key_pattern):
             keys.append(key.decode())
 
-        # For each key, refresh if it’s within a "refresh window"
-        now = time.time()
+        # For each key, refresh if it's within a "refresh window"
         for key in keys:
             ttl_remaining = await redis.ttl(key)
             if ttl_remaining <= ttl // 2:  # Refresh when half the TTL is left
@@ -156,15 +144,16 @@ async def background_refresher(redis: Redis, key_pattern: str, fetch_func, ttl: 
         await asyncio.sleep(5)  # Run every 5 seconds
 ```
 
-This refresher scans for keys matching a pattern, and refreshes them when their TTL drops below half. It sets a new TTL and also updates the stale copy. The stale copy has a shorter TTL, so it doesn’t linger too long.
+This refresher scans for keys matching a pattern and refreshes them when their TTL drops below half. It sets a new TTL and updates the stale copy with a shorter TTL so it does not linger.
+
+Two operational notes: `scan_iter` is a cursor-based scan, not a blocking `KEYS` call, so it is safe to run against a live instance, but the loop cost grows with key count. And the 5-second sleep is a starting point, not a recommendation — the correct interval is short enough that the refresher visits every hot key at least twice per refresh window.
 
 ### Step 3: Integrate with your API
-
-Now integrate the cache into your API. Here’s a simple FastAPI 0.109 endpoint that uses the `StampedeSafeCache`:
 
 ```python
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from redis import Redis
 
 app = FastAPI()
 redis = Redis(host='localhost', port=6379, db=0)
@@ -187,68 +176,45 @@ async def get_session(session_id: str, request: Request):
     return session_data
 ```
 
-This endpoint uses the cache to fetch session data. If the cache misses, it uses the `fetch_user_session` function to get the data, and the cache handles the refresh coordination.
+The endpoint uses the cache to fetch session data. On a miss, it calls `fetch_user_session`, and the cache layer handles refresh coordination. Note that the sync Redis client is called from an async endpoint here; in a real deployment, use the async client (`redis.asyncio`) for request paths so the lock wait does not block the event loop.
 
 ### Step 4: Monitor and tune
 
-The last step is to monitor the cache behavior and tune the TTLs, lock timeouts, and stale TTLs based on real traffic. Use Redis metrics to track cache hits, misses, evictions, and memory usage. Set up alerts for when cache hit rate drops below 90% or when lock wait times exceed 1 second.
+The last step is to monitor cache behavior and tune TTLs, lock timeouts, and stale TTLs against real traffic. Instrument at minimum:
 
-In our system, we added Prometheus metrics for:
+- `cache_hits_total` and `cache_misses_total` — the ratio is your hit rate.
+- `cache_lock_wait_seconds` — a histogram, not an average; the tail is what matters.
+- `cache_stale_usage_total` — how often clients fall back to stale data.
+- `cache_refresh_duration_seconds` — how long `fetch_func` actually takes.
+- Database query rate during cache expiry windows.
 
-- `cache_hits_total` and `cache_misses_total`
-- `cache_lock_wait_seconds`
-- `cache_stale_usage_total`
+Alerts should be tied to these signals rather than to a fixed number copied from another system. A reasonable starting rule is to alert when the hit rate drops materially below its trailing baseline, or when the p99 lock wait approaches the lock timeout, because that means clients are starting to time out and fall back.
 
-We also added a SLO for cache hit rate: 95% during peak hours, 90% otherwise. If we drop below that, we investigate immediately.
+## How to measure whether your fix worked
 
-### What surprised me
+Because every workload differs, the useful guidance is a measurement method, not a benchmark table. To evaluate a stampede fix:
 
-I was surprised that even with a coordinated refresh pattern, the stale data mechanism became a lifesaver. In one incident, a background job failed to refresh a key, and the lock expired. Instead of serving a 500 error, clients fell back to stale data for 10 seconds, and the system stayed up. The stale data wasn’t perfect, but it was better than a crash.
+1. **Establish a baseline.** Record p50, p95, and p99 request latency, database queries per second, and cache hit rate under a representative load. A load-testing tool that can simulate many concurrent clients hitting the same key is sufficient; the test script matters more than the tool.
+2. **Reproduce the stampede.** Expire a hot key deliberately while the load test is running, and watch database QPS and p99 latency for the next few seconds. If nothing happens, the key is not hot enough or the load is not concurrent enough.
+3. **Apply the pattern.** Enable coordinated refresh and repeat the identical test.
+4. **Compare the same metrics.** The meaningful comparison is database QPS at the moment of expiry, and the shape of the p99 latency curve across the expiry window, not a single peak number.
+5. **Watch the tail, not the average.** Lock waits and stale fallbacks are tail events. Averages will hide them.
 
-The key lesson is that caching isn’t just about speed — it’s about resilience. The patterns that scale are the ones that handle failure gracefully, not the ones that assume everything will work.
+The expected shape of the improvement is a flat database QPS line through the expiry event, at the cost of a small latency increase for the clients that wait on the lock. Whether that trade is worth it depends on how much headroom the database has.
 
-## Performance numbers from a live system
+## Failure modes nobody warns you about
 
-We deployed the coordinated refresh pattern to our Brazilian payments API in January 2026. Here’s what we saw over the next 8 weeks:
-
-| Metric | Before | After | Change |
-|---|---|---|---|
-| Cache hit rate (peak) | 68% | 94% | +26% |
-| p99 latency (ms) | 1200 | 85 | -93% |
-| Database CPU % (peak) | 98% | 45% | -54% |
-| Database queries/sec (peak) | 1800 | 420 | -77% |
-| Cache misses/sec (peak) | 580 | 30 | -95% |
-
-The numbers speak for themselves. Cache hit rate jumped from 68% to 94%, which meant we were serving 94% of requests from cache. The p99 latency dropped from 1.2 seconds to 85 ms, which is a 93% improvement. Database load dropped by 77%, which meant we could handle more traffic without scaling up.
-
-We also saw a 54% reduction in peak database CPU, which meant our primary database could stay in the lower cost tier. Before, we were on db.r6g.large (2 vCPU, 16 GB RAM). After, we downgraded to db.r6g.medium (2 vCPU, 8 GB RAM) and saved $800/month in AWS costs.
-
-The most surprising number was the cache misses per second. Before, we were seeing 580 cache misses per second at peak, which meant 580 database queries per second. After, it dropped to 30, which is a 95% reduction. That’s the power of coordinated refresh: we turned a stampede into a trickle.
-
-We also tracked lock wait times. The 95th percentile lock wait time was 120 ms, and the 99th was 450 ms. That’s acceptable for a system that needs to handle 600 requests per second. The lock contention was minimal because the background refresher kept keys fresh, so clients rarely had to refresh.
-
-We used Redis 7.2 with `allkeys-lru` eviction policy and 4 GB memory limit. The memory usage stayed around 2.8 GB during peak, which left plenty of headroom for spikes. We didn’t hit eviction pressure even during the largest traffic spikes.
-
-The coordinated refresh pattern didn’t just improve performance — it made the system more predictable. Before, we had unpredictable latency spikes during cache expiry. After, latency was consistent and low.
-
-The only downside was the added complexity. We had to maintain the background refresher, monitor lock contention, and tune TTLs. But the tradeoff was worth it: a system that scales and stays up.
-
-I was surprised that the background refresher reduced lock contention by 85%. Before, clients were racing to refresh keys. After, the refresher did the work, so clients rarely had to.
-
-## The failure modes nobody warns you about
-
-Even with a well-designed cache layer, there are failure modes that sneak up on you. Here are the ones we hit, and how we fixed them:
+Even with a well-designed cache layer, several failure modes appear only after deployment.
 
 ### 1. Lock contention under extreme load
 
-The coordinated refresh pattern uses a lock per key. Under extreme load, if thousands of clients miss the same key at once, they’ll all try to acquire the same lock. The lock acquisition time can spike, and some clients may time out.
+The coordinated refresh pattern uses a lock per key. Under extreme load, if thousands of clients miss the same key at once, they all contend for the same lock, lock acquisition time spikes, and some clients time out.
 
-In our system, we saw lock wait times spike to 2 seconds during a DDoS-like traffic surge (6x normal peak). Clients that timed out (lock blocking_timeout=2.0) would fall back to stale data or retry. That worked, but it added latency.
-
-**Fix:** Use a lock sharding strategy. Instead of one lock per key, use a hash of the key to select a lock from a pool of locks. For example, use `hash(key) % 100` to select a lock from 100 locks. This reduces contention and spreads the load.
+**Fix:** shard the lock. Instead of one lock per key, derive a lock name from a hash of the key so contention spreads across a pool.
 
 ```python
 import hashlib
+from redis.lock import Lock
 
 def get_lock_name(key: str, shard_count=100):
     return f"lock:{hashlib.md5(key.encode()).hexdigest()[:8]}"
@@ -256,39 +222,35 @@ def get_lock_name(key: str, shard_count=100):
 lock = Lock(redis, get_lock_name(key), timeout=lock_timeout)
 ```
 
-This reduced lock wait times by 60% during surges.
+With this scheme, clients waiting on a shard that happens to be occupied will still wait, so the shard count should be chosen so that collisions are rare for your hot-key distribution. The benefit is bounded by how many distinct hot keys exist.
 
 ### 2. Stale data poisoning
 
-The stale data mechanism is useful, but it can poison your cache if the background refresher fails or fetches bad data. If the refresher sets a stale copy with incorrect data, clients may use it for up to the stale TTL (10 seconds in our case).
+The stale-data mechanism is useful, but it can poison the cache if the refresher fails or fetches bad data. If the refresher writes an incorrect stale copy, clients may serve it for the entire stale TTL.
 
-In one incident, a background job failed due to a transient network error, and the refresher set a stale copy with null data. Clients saw null sessions for 10 seconds, which caused API errors.
-
-**Fix:** Add validation to the stale data. Only set the stale copy if the fetched data is valid. Also, add a short TTL to the stale copy (we use 10 seconds) so bad data doesn’t linger.
+**Fix:** validate before writing the stale copy, and keep the stale TTL short.
 
 ```python
 if value is not None and is_valid(value):
     await redis.setex(key + ':stale', self.stale_ttl, value)
 ```
 
+The deeper fix is to make the stale copy a last resort, not a default: log every stale serve, and alert if the rate rises, because that is an early signal that the refresher is failing.
+
 ### 3. Memory bloat from stale copies
 
-Each key has a stale copy with a shorter TTL. If you have millions of keys, the stale copies can add up. In our case, we had 2.5 million keys, and the stale copies added 1.2 GB of memory. That’s 30% of our cache memory.
+Each key has a stale copy with a shorter TTL. At millions of keys, stale copies can consume a meaningful fraction of cache memory, which in turn triggers evictions and more misses.
 
-**Fix:** Use a different eviction policy for stale copies. For example, use `volatile-lru` for stale copies, and set a lower memory limit for them. Or, don’t store stale copies at all — just let clients fall back to the database temporarily.
-
-We switched to storing stale copies only for hot keys (top 10% by access frequency), which reduced memory usage by 80%.
+**Fix:** account for stale copies in capacity planning, or avoid storing them entirely and let clients fall back to the source under a bounded timeout. If you keep them, consider a separate eviction policy or a separate logical namespace so stale copies cannot evict primary entries.
 
 ### 4. Clock skew across clients
 
-If your clients are in different timezones or have skewed clocks, cache TTLs may not expire at the same time. This can cause thundering herds at odd hours.
+If clients have skewed clocks, TTL calculations can differ, and expiries scatter in ways that are hard to predict. In systems spanning multiple regions or observing daylight-saving transitions, some clients may see a TTL expire at one local time and others at another.
 
-In our system, we had clients in São Paulo, Bogotá, and Mexico City. During daylight saving time changes, some clients would see TTLs expire at 2 a.m. local time, while others would see them expire at 3 a.m. This caused scattered cache misses.
-
-**Fix:** Use a consistent time source for TTLs. Store timestamps in UTC, and calculate TTLs based on UTC time. Also, add a small jitter to TTLs to spread out expiry times.
+**Fix:** compute TTLs from a consistent time source, store timestamps in UTC, and add jitter so expiries spread out.
 
 ```python
-import time
+import random
 
 def get_ttl_with_jitter(base_ttl: int, jitter_pct=0.1):
     jitter = int(base_ttl * jitter_pct)
@@ -297,118 +259,55 @@ def get_ttl_with_jitter(base_ttl: int, jitter_pct=0.1):
 ttl = get_ttl_with_jitter(1800)  # 30 minutes ± 180 seconds
 ```
 
-This reduced scattered cache misses by 40%.
+Jitter is the cheapest stampede mitigation available and should be applied even when coordinated refresh is in place, because it reduces the number of keys that expire in the same second.
 
-### 5. Redis failover during cache stampede
+### 5. Cache failover during a stampede
 
-If Redis fails over to a replica during a stampede, the new primary may not have the latest data. Clients that miss the cache will fetch from the database, but the failover can add latency and cause timeouts.
+If the cache fails over to a replica during a stampede, the new primary may not have the latest data, and clients that miss will fetch from the database while the failover is still settling. That combination can produce timeouts and 5xx responses.
 
-In our system, we saw failover times spike from 300 ms to 1.8 seconds during a stampede. Some clients timed out, and the API started returning 500 errors.
-
-**Fix:** Use Redis Cluster mode with enough replicas to handle failover without performance degradation. Also, add client-side retries with exponential backoff for cache misses during failover.
-
-We moved to a Redis Cluster with 3 replicas per shard, and added a 2-second retry window for cache misses during failover. This reduced timeout errors by 90%.
+**Fix:** size replicas so failover does not degrade throughput, and add client-side retries with exponential backoff for cache misses during failover. Note that retries add load to the source, so bound them and pair them with a circuit breaker.
 
 ### The hidden cost of complexity
 
-The biggest failure mode isn’t technical — it’s operational. The coordinated refresh pattern adds complexity. You need to monitor lock contention, stale data usage, and memory bloat. You need to tune TTLs and lock timeouts. If you don’t, the system becomes harder to debug.
+The biggest failure mode is operational. Coordinated refresh adds moving parts: lock contention, stale data usage, memory bloat, TTL tuning. Each one needs a metric and an alert, or the system becomes harder to debug than the stampede it replaced.
 
-We spent two weeks tuning the pattern after deployment. The first version had stale data poisoning issues, and the second had memory bloat. The third version worked well, but it took time to get there.
+The rule that follows: do not add this complexity unless the measurements say you need it. If your hit rate is high and your tail latency is flat through expiry windows, you do not have a stampede problem. If database QPS spikes every time a hot key expires, you do.
 
-The lesson is: don’t add complexity unless you need it. If your cache hit rate is already high and your latency is low, don’t over-engineer. But if you’re hitting thundering herds, the complexity is worth it.
+## Choosing tooling by capability, not by name
 
-I was surprised that the stale data mechanism, which I initially thought was a hack, became the most resilient part of the system. It bought us time to recover from failures without crashing.
+Tool choice matters less than capability. When evaluating a cache and its client for stampede resistance, check for:
 
-## Tools and libraries worth your time
+| Capability | Why it matters | What to check |
+|---|---|---|
+| Atomic set-if-absent | Needed for lock acquisition without races | Documented behavior of the set operation with a conditional flag |
+| TTL introspection | The refresher needs to know remaining TTL | A command that returns remaining TTL per key |
+| Non-blocking key iteration | Refreshers must not stall the server | Cursor-based scan, not a blocking keys command |
+| Scripted atomic operations | Re-check-and-set must be atomic | Server-side scripting support |
+| Cluster-aware locking | Locks must land on the right shard | How the client routes lock keys |
+| Async client | Request paths must not block the event loop | An async API in the client library |
 
-Not all caching tools are created equal. Here are the ones that worked for us, and the ones we tried and abandoned:
-
-| Tool/Library | Version | Use Case | Why it worked | Why we abandoned others |
-|---|---|---|---|---|
-| Redis | 7.2 | Primary cache | Fast, reliable, supports Lua scripts and streams | Older versions lacked cluster-aware locks |
-| redis-py | 5.0 | Python client | Async and sync APIs, supports locks and streams | Earlier versions had flaky connection pooling |
-| FastAPI | 0.109 | API framework | Easy to integrate, supports async | Django’s cache framework was too heavy for our needs |
-| Prometheus | 2.47 | Metrics | Simple, powerful, integrates with Grafana | StatsD was too simple for our needs |
-| Grafana | 10.2 | Dashboards | Easy to set up, supports Redis metrics | Custom dashboards were too slow to build |
-| Celery | 5.3 | Background jobs | Mature, supports retries and task queues | RQ was too simple for our needs |
-| Locust | 2.20 | Load testing | Easy to script, supports distributed load | JMeter was too complex for quick tests |
-
-### Redis 7.2
-
-Redis 7.2 added several features that helped with stampede prevention:
-
-- **Lua script support**: We used Lua scripts to atomically check and set keys, reducing race conditions.
-- **Streams**: We used Redis streams for background job coordination, which is more reliable than pub/sub.
-- **Cluster mode**: We moved to Redis Cluster to scale horizontally, which helped with failover and memory distribution.
-
-The cluster mode was especially helpful. Before, a single Redis instance was a bottleneck. With Redis Cluster, we could distribute load across multiple shards.
-
-### redis-py 5.0
-
-The async API in redis-py 5.0 made it easy to integrate with FastAPI. We used the async client for background refreshers and the sync client for request-scoped cache operations.
-
-The lock support in redis-py 5.0 made it easy to implement coordinated refresh. The lock API is simple and reliable.
-
-### FastAPI 0.109
-
-FastAPI’s async support made it easy to integrate the cache layer. The dependency injection system let us inject the cache into endpoints cleanly.
-
-We also used FastAPI’s background tasks to handle cache refreshes without blocking the request.
-
-### Prometheus 2.47 and Grafana 10.2
-
-Prometheus gave us fine-grained metrics on cache hits, misses, lock wait times, and memory usage. Grafana let us build dashboards that highlighted anomalies quickly.
-
-The combination made it easy to spot thundering herds before they caused outages.
-
-### Celery 5.3
-
-Celery handled our background refresh jobs reliably. We used it to refresh keys in bulk, which reduced lock contention.
-
-We tried RQ, but it didn’t support retries or task prioritization well. Celery was more mature.
-
-### Locust 2.20
-
-Locust let us simulate stampede scenarios easily. We wrote a test that simulated 1000 clients racing to refresh the same key. The test helped us tune lock timeouts and stale TTLs.
-
-We tried JMeter, but it was too complex for quick tests. Locust’s Python API made it easy to iterate.
-
-### Tools we tried and abandoned
-
-- **Memcached**: We tried Memcached early on, but it lacked support for Lua scripts and streams. The lock mechanism was also less reliable than Redis’s.
-- **Django’s cache framework**: We tried it for a prototype, but it was too tied to Django’s ORM. We needed a framework-agnostic solution.
-- **StatsD**: We tried it for metrics, but it lacked the granularity we needed. Prometheus gave us histogram metrics and better querying.
-- **RQ**: We tried it for background jobs, but it didn’t support retries or task prioritization well. Celery was more mature.
-
-The lesson is: pick tools that fit your use case. Don’t pick a tool just because it’s popular.
-
-I was surprised that Celery, which I initially thought was overkill, became the backbone of our background refresh system. It handled retries and task prioritization effortlessly.
+Background job runners and metrics systems should be selected on the same basis: retry semantics, task prioritization, and histogram support respectively. A tool that lacks the capability you need will cost more to work around than it saves.
 
 ## When this approach is the wrong choice
 
-The coordinated refresh pattern isn’t a silver bullet. It adds complexity, latency, and operational overhead. It’s only worth it if:
+Coordinated refresh is not a silver bullet. It adds complexity, latency, and operational overhead. It is worth it only when:
 
-1. **Your cache hit rate is critical to performance.** If your API is already fast and your database can handle the load, don’t over-engineer.
-2. **Your keys are hot and shared.** If each client has its own cache keys, stampedes are unlikely.
-3. **Your traffic is bursty or unpredictable.** If your load is steady and low, the pattern is unnecessary.
-4. **You have the operational maturity.** If you don’t have time to monitor lock contention or tune TTLs, don’t add this complexity.
-5. **You’re not using a distributed cache.** If you’re using a single Redis instance, the coordinated pattern still helps, but the gains are
+1. **Cache misses are expensive.** If the source can absorb the miss load, the pattern adds latency for no benefit.
+2. **Keys are hot and shared.** If each client has its own keys, stampedes are unlikely.
+3. **Traffic is bursty or unpredictable.** Steady, low load rarely produces simultaneous misses.
+4. **You have operational capacity.** Without monitoring for lock contention and stale usage, the pattern can hide problems rather than fix them.
+5. **The cache is genuinely distributed.** A single-node cache can still stampede, but the coordination mechanics and failure modes differ.
 
+A decision checklist for a specific system:
 
----
+- Does a single key expire while more than a handful of clients are waiting on it?
+- Does database QPS spike in a narrow window after expiry?
+- Is the refresh operation idempotent and safe to run once per key?
+- Can the source tolerate the retry load if the lock holder fails?
+- Do you have a metric for lock wait and stale fallback?
 
-### About this article
+If the first two answers are yes and the last three are yes, coordinated refresh is likely worth the complexity. If not, start with jitter and a shorter, staggered TTL, measure again, and only then add locking.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
+## Next 30 minutes
 
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** July 21, 2026
+Pick your single hottest cache key, add jitter to its TTL, and instrument two counters — cache misses and source queries — around its expiry window. Run a load test that expires the key deliberately, and record the source query rate for the ten seconds after expiry. That number tells you whether you have a stampede problem, and it gives you the baseline you need before changing anything else.

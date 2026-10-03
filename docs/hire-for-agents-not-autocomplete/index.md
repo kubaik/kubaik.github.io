@@ -1,68 +1,41 @@
 # Hire for agents, not autocomplete
 
-I've hit the same african engineering mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. This is what I put together after working through it properly.
+Most engineering hiring processes optimise for a skill that production does not reward: producing correct code quickly in a clean, well-lit environment. Take-home tests are CRUD apps with a REST API. Interviews are whiteboard algorithms. Onboarding is a two-week sprint through documentation. Then the new hire meets production, where the network drops packets, the payment gateway retries aggressively, the logs arrive late, and the incident channel is already on fire.
 
-## The gap between what the docs say and what production needs
+The mismatch is not about seniority. It is about what the hiring pipeline measures. A candidate can be excellent at writing clean code and still be ineffective on a system where the dominant constraint is partial information and degraded infrastructure. This article covers how teams reframe hiring and onboarding around that reality: what to test, how to simulate constraints, what code to use, and where the approach breaks down.
 
-I joined a Lagos-based payments company in 2026 to help scale the engineering team from 12 to 65 engineers across Nigeria, Ghana, and Kenya. The playbook we were given all sounded good on paper: hire senior engineers, use standardised take-home tests, and run a two-week onboarding sprint. By mid-2026, we’d hired 38 engineers, but our onboarding completion rate was at 47%. The agents we’d hired weren’t shipping. They were stuck in Slack threads, asking the same questions about M-Pesa webhooks, and shipping code that passed unit tests but failed in production on 3G connections.
+## The gap between what interviews measure and what production demands
 
-The gap wasn’t technical; it was cultural. Our hiring process optimised for autocomplete-style problem-solving — LeetCode, system design docs, whiteboard questions — but our production systems demanded something else entirely. We needed engineers who could:
+A typical failure mode looks like this. A team hires strong engineers from companies with reliable fibre, fast IDEs, and predictable CI. The engineers pass a rigorous take-home test. Onboarding begins. Within weeks, their pull requests are stuck in review loops, their features pass unit tests but fail in staging, and their questions cluster around the same handful of production behaviours: why a webhook retries, why a request times out on a slow connection, why a refund gets processed twice.
 
-- Debug a Paystack webhook retry storm on a 2G connection that drops packets for 10 seconds at a time. - Optimise a Flutterwave refund endpoint so it returns before the user’s USSD session expires (30 seconds max). - Read logs in a terminal over SSH on a phone hotspot with 200ms latency spikes.
+None of those failures are visible in a CRUD take-home test. They are visible only when the environment is hostile. The skills that matter under those conditions are:
 
-Our take-home test was a CRUD app with a REST API. It filtered out 60% of candidates who couldn’t write clean code, but it didn’t surface those who could ship a feature under real constraints. We needed a test that measured agentic skills: autonomy, debugging under constraints, and shipping with partial information.
+- Debugging with incomplete information, often over a high-latency SSH session.
+- Recognising when retry logic is the bug, not the fix.
+- Designing for idempotency and backpressure before writing the happy path.
+- Shipping a partial fix under a deadline rather than a perfect fix after it.
 
-The mistake was assuming seniority implied resilience. Senior engineers from global companies expected fibre, IDEs, and predictable CI. They weren’t used to debugging on a phone in a matatu with 1 bar of signal. In Kenya, our new hires from local startups adapted faster because they’d already shipped features on 3G. In Lagos, the gap was wider.
+These are agentic skills in the sense that they require autonomy and judgment, not just code generation. A candidate who can write a clean endpoint but cannot diagnose a retry storm is not yet ready for a production on-call rotation. The hiring process should surface that gap before the offer letter, not after.
 
-We needed to measure not just what candidates could write, but how they performed when the stack broke. Our benchmark shifted from "Can you write a clean API?" to "Can you ship a feature when the payment gateway is down, the logs are delayed, and the user is on 2G?"
+## What constraint-aware hiring looks like in practice
 
-## How African engineering teams are adapting hiring and onboarding for the agentic era actually works under the hood
+The shift is from abstract problem-solving to problems that mirror real traffic. Two patterns recur across teams that have made this change.
 
-The first wave of agentic hiring in African tech focused on two things: constraint-aware problem-solving and ownership. Teams moved away from LeetCode’s abstract data structures and toward problems that mirror real traffic.
+The first is a simulated incident as the take-home. Instead of a CRUD app, candidates receive a broken service, a staging environment with throttled bandwidth, and a written scenario. They have a fixed window, often 60 to 90 minutes, to identify the root cause, patch it, and prove the fix. The proof matters: a passing local test is not evidence. A captured request that returns the correct status code under simulated latency is.
 
-At one Nairobi fintech, they replaced their take-home test with a 90-minute simulated incident. Candidates received:
+The second is a live debugging session. Candidates get a broken webhook handler, a script that injects packet loss and latency, and a requirement to ship a fix within a short window. Strong performers tend to do three things: fix the immediate bug, add a guard against recurrence (a circuit breaker, a deduplication key, a queue), and write a short post-mortem. Weak performers edit the code, run the local tests, and assume the fix works. Their pull request breaks in staging because they never exercised it under load.
 
-- A Slack thread with a customer complaint about a failed M-Pesa payment. - A staging environment with intentionally throttled 3G bandwidth (simulated via Chrome’s network throttling). - A broken webhook endpoint that retried aggressively, causing duplicate transactions.
+Onboarding mirrors the same principle. A generic two-week sprint through documentation becomes a structured constraint bootcamp: debug a failing CI job under a tight timeout, optimise an endpoint so it returns within a budget on a slow connection, ship a feature on a staging environment with no fibre fallback. The goal is not to teach tools. It is to build muscle memory for shipping when the environment is unreliable.
 
-Candidates had to:
+Teams also replace generic onboarding checklists with failure-mode checklists. Instead of "read the docs," the list contains real production failures and their fixes: how to debug a webhook stuck in a retry loop, how to keep a mobile-money push from timing out on a slow network, how to recover a transaction when the user's session expires. These are written by engineers who have hit the failure, not by product managers, and the tone is direct.
 
-1. Identify the root cause: a race condition in the refund logic. 2. Patch the code to deduplicate refunds. 3. Write a one-line comment explaining the fix. 4. Push the change and capture a cURL command proving the fix.
+## A worked example: the refund endpoint take-home
 
-The pass rate dropped from 80% to 28%. The survivors were engineers who could debug under noise. The failures clustered around candidates who relied on local fibre and IDEs to surface errors.
+The following is an illustrative take-home problem. The numbers are chosen to be plausible and are labelled as such; they are not measured results.
 
-Another Lagos payments startup switched from a 50-question system design doc to a 30-minute live debugging session. Candidates were given:
+The candidate receives a repository containing a FastAPI refund endpoint, retry logic that fires every two seconds without deduplication, a test suite that passes locally but fails under CI's timeout, and instructions: the staging environment simulates 3G latency and packet loss. Ship a fix that deduplicates refunds, returns 200 OK within a budget, logs the refund ID and timestamp, and passes CI.
 
-- A broken Flutterwave webhook handler. - A script that simulated packet loss and latency spikes. - A requirement to ship a fix within 20 minutes.
-
-The top performers didn’t just fix the bug — they added a circuit breaker, logged the failure mode, and wrote a post-mortem in under 5 minutes. The weak performers edited the code, ran the tests locally, and assumed the fix worked. Their PR broke in staging because they never tested under load.
-
-Onboarding followed a similar constraint-first approach. Teams moved from a generic two-week sprint to a structured “constraint bootcamp”:
-
-- Week 1: Debug a failing CI job under 500ms timeout. - Week 2: Optimise an API endpoint so it returns in <200ms on 3G. - Week 3: Ship a feature on a staging environment with no fibre backup.
-
-The bootcamp wasn’t theoretical. Engineers had to SSH into a server over a 2G connection, read logs in Vim, and push a fix within 60 minutes. The goal wasn’t to teach tools; it was to build muscle memory for constraint-aware shipping.
-
-Teams also introduced “agentic checklists” — not the usual “read the docs” checklist, but a list of real production failures and their fixes. Example:
-
-- How to debug a Paystack webhook stuck in retry loop (answer: check idempotency key). - How to optimise a M-Pesa STK push so it doesn’t time out on slow networks (answer: batch requests). - How to recover a failed transaction when the user’s session expires (answer: use a background job with exponential backoff).
-
-These checklists were written by engineers who’d already hit the failure modes, not by product managers. The tone was blunt: “If your API times out on 3G, you didn’t read the docs — the docs say to use a circuit breaker.”
-
-The psychological shift was from “I need to learn the system” to “I need to ship under constraints.” Engineers who thrived in this environment were the ones who could operate autonomously, debug under noise, and ship without hand-holding.
-
-## Step-by-step implementation with real code
-
-Here’s how we rolled out agentic hiring and onboarding at our Lagos fintech, with concrete code and tooling.
-
-### Phase 1: Rewrite the take-home test
-
-We replaced the CRUD app with a constraint-aware problem: “Fix the broken refund endpoint.” Candidates received:
-
-- A GitHub repo with:
-  - A FastAPI refund endpoint (`/refunds/{transaction_id}`). - A broken retry logic that fired every 2 seconds without deduplication. - A test suite that passed locally but failed under CI’s 45-second timeout. - Instructions: “The staging environment simulates 3G latency and 5% packet loss. Ship a fix that:
-  1. Deduplicates refunds. 2. Returns a 200 OK within 4 seconds. 3. Logs the refund ID and timestamp. 4. Passes the CI test suite.”
-
-The repo included a script (`simulate_3g.py`) that wrapped `httpx` with latency spikes and packet loss:
+The repository includes a script that wraps an HTTP client with latency and packet loss:
 
 ```python
 # simulate_3g.py
@@ -71,11 +44,7 @@ import random
 import asyncio
 
 async def slow_http_client():
-    transport = httpx.AsyncHTTPTransport(
-        retries=3,
-        http2=True,
-        network_backoff_factor=0.5,
-    )
+    transport = httpx.AsyncHTTPTransport(retries=3)
     async with httpx.AsyncClient(
         transport=transport,
         timeout=httpx.Timeout(15.0),
@@ -86,7 +55,6 @@ async def slow_http_client():
         )
         return response
 
-# Simulate 3G latency and 5% packet loss
 async def simulate_3g():
     if random.random() < 0.05:
         raise httpx.ReadTimeout("Simulated timeout")
@@ -94,33 +62,60 @@ async def simulate_3g():
     return await slow_http_client()
 ```
 
-Candidates had to:
+Note two corrections relative to naive drafts of this script. `httpx.AsyncHTTPTransport` does not accept `http2` or `network_backoff_factor` arguments; retry behaviour belongs in the transport's `retries` parameter or in an explicit retry policy, and HTTP/2 is negotiated by the server and client configuration rather than forced here. Keeping the script honest matters, because a candidate who trusts a broken simulator learns the wrong lesson.
 
-1. Add a deduplication layer using Redis with a TTL of 5 minutes. 2. Add a circuit breaker using `pybreaker` to stop aggressive retries. 3. Log the refund ID and timestamp using Python’s `structlog`. 4. Ensure the endpoint returns within 4 seconds under 3G.
+The expected solution has four parts:
 
-We measured:
+1. A deduplication layer keyed on the transaction ID, stored in Redis with a short TTL.
+2. A circuit breaker around the outbound refund call so a failing gateway does not trigger unbounded retries.
+3. Structured logging of the refund ID and timestamp.
+4. A response that returns within the stated budget even when the downstream call is slow.
 
-- Did they add Redis? (We provided a local Redis 7.2 instance in Docker.)
-- Did they use a circuit breaker? - Did they log the refund ID? - Did their CI job pass within 45 seconds?
+Grading is on observable behaviour, not on whether the candidate used a particular library. The questions to ask are: does the endpoint return the correct status under simulated latency, does a repeated request produce a single refund, and does the log line contain the fields needed to reconstruct what happened?
 
-The pass rate dropped from 75% to 32%. The survivors were engineers who could ship under noise.
+### How to measure the outcome rather than assert it
 
-### Phase 2: Onboarding constraint bootcamp
+Rather than reporting a pass rate, instrument the test. Record, for each candidate:
 
-Our bootcamp ran for three weeks. Week 1 focused on debugging under constraints. Engineers had to:
+- Whether the endpoint returned within the budget under `simulate_3g.py`, measured by the client's elapsed time.
+- Whether two identical requests produced one refund or two, checked against the datastore.
+- Whether the CI job completed within its timeout, read from the CI log.
+- Whether the fix includes a guard against recurrence, identified by reading the diff.
 
-1. SSH into a staging server over a 2G connection (simulated via `ssh -o ConnectTimeout=30`). 2. Read logs in Vim (`tail -f /var/log/app.log`). 3. Fix a failing CI job within 30 minutes. 4. Push the fix and prove it worked via a cURL command.
+Compare cohorts by these four booleans. If the constraint-aware version of the test filters more candidates than the previous version, that is a signal about the test, not proof that the previous cohort was better. The useful comparison is between candidates who passed the constraint test and their subsequent on-call performance, which requires tracking new hires past their first quarter.
 
-Here’s the actual script we used to simulate 2G SSH:
+## Simulating constraints honestly
+
+The most common mistake in constraint-aware hiring is a simulator that does not resemble the constraint. Browser-based network throttling changes bandwidth and latency but does not reproduce jitter, packet loss, or connection resets. A candidate who passes under browser throttling may still fail on a real mobile network.
+
+On Linux, `tc` (traffic control) with the `netem` queueing discipline can approximate a lossy, high-latency link:
 
 ```bash
-# 2g_ssh.sh
-#!/bin/bash
-# Simulate 2G SSH with high latency and packet loss
+# Apply 5% packet loss and 300ms latency with 100ms jitter to eth0.
+# Requires root and the sch_netem kernel module.
+tc qdisc add dev eth0 root netem loss 5% delay 300ms 100ms
+```
+
+To remove the rule afterwards:
+
+```bash
+tc qdisc del dev eth0 root
+```
+
+This is illustrative configuration, not a measured network profile. The loss and delay values should be chosen to match the worst realistic condition for the product's users, and the resulting behaviour should be verified with a client that reports elapsed time and error types.
+
+For SSH-based exercises, connection options can approximate a slow link without any traffic shaping:
+
+```bash
+# Constrain SSH connect and keepalive behaviour to mimic a slow link.
 ssh -o ConnectTimeout=30 -o ServerAliveInterval=10 -o ServerAliveCountMax=3 user@staging-host "tail -f /var/log/app.log"
 ```
 
-In Week 2, they had to optimise an API endpoint. We gave them a broken Flutterwave webhook handler that timed out on 3G:
+The honest framing for all of these tools is that they are approximations. A simulator that is too gentle produces false positives. A simulator that is too harsh produces false negatives and burns out candidates. The way to calibrate is to run the same exercise on an engineer who already ships to the constrained environment and confirm the exercise is passable in the allotted time.
+
+## A worked example: the webhook handler
+
+A second illustrative exercise uses a broken Flutterwave-style webhook handler that times out on slow connections:
 
 ```javascript
 // webhook.js (broken)
@@ -137,11 +132,9 @@ app.post('/webhook', async (req, res) => {
 });
 ```
 
-They had to:
+The failure modes are visible on inspection: the retry is unbounded, it is not deduplicated, and it responds 500 to the caller while the retry runs, which invites the caller to retry as well. Under a slow network, this produces a retry storm and duplicate refunds.
 
-1. Add a circuit breaker using `opossum` (circuit breaker library). 2. Add a queue using BullMQ (Redis-based queue) to handle retries. 3. Ensure the endpoint returns within 200ms on 3G. 4. Log the transaction ID and retry count.
-
-The fix looked like this:
+A candidate's fix should introduce a bounded failure path. One shape is a circuit breaker around the outbound call plus a queue for deferred work:
 
 ```javascript
 // webhook.js (fixed)
@@ -167,129 +160,62 @@ app.post('/webhook', async (req, res) => {
 });
 ```
 
-In Week 3, they had to ship a feature on staging with no fibre backup. They had to:
+This is not the only correct answer. A candidate who uses a different circuit breaker library, or who implements idempotency keys and an explicit retry budget, may be equally correct. The graded behaviours are: the caller is not told to retry while work is pending, the retry is bounded, and the refund is deduplicated. The queue worker must also be idempotent, or the deduplication problem simply moves downstream.
 
-1. Use a hotspot with <2 bars. 2. SSH into the server. 3. Read logs in Vim. 4. Push a fix and prove it worked via cURL.
+## Failure modes in the hiring process itself
 
-The goal wasn’t to teach tools; it was to build muscle memory for shipping under constraints. Engineers who struggled here never shipped a feature under real conditions.
+**Assuming the simulation is accurate.** A simulator that uses browser throttling will pass candidates who cannot handle real packet loss. The correction is to validate the simulator against a known-constrained link and to include at least one exercise where the candidate must read logs over a high-latency connection.
 
-### Phase 3: Agentic checklists
+**Over-optimising for the wrong constraint.** Some candidates will shave milliseconds off a response while leaving the retry logic untouched. Grade the failure path, not just the happy path. A useful prompt is: "what happens if the downstream call never returns?"
 
-We replaced generic “read the docs” checklists with agentic ones. Example:
+**Assuming staging reflects production.** If staging runs on reliable infrastructure and production does not, the bootcamp teaches the wrong environment. Either shape staging to match, or make the constraint explicit in the exercise.
 
-**How to debug a Paystack webhook stuck in retry loop:**
-- Check the idempotency key in Paystack’s dashboard. - Look for duplicate events in the logs. - Add a deduplication layer using Redis with a TTL of 5 minutes. - Use `curl -v` to verify the webhook returns 200 OK within 200ms.
+**Ignoring the human cost.** Debugging under degraded conditions for a full day is exhausting. Limit constraint exercises to a few hours, and pair the candidate or new hire with a mentor for the rest of the time. A hiring process that burns out the people it selects for is not a process worth running.
 
-**How to optimise a M-Pesa STK push so it doesn’t time out on slow networks:**
-- Batch requests to avoid hitting M-Pesa’s rate limit. - Use a circuit breaker to stop aggressive retries. - Log the STK push ID and timestamp using `structlog`. - Simulate 3G latency with `simulate_3g.py` and verify the endpoint returns within 2 seconds.
-
-**How to recover a failed transaction when the user’s session expires:**
-- Use a background job with exponential backoff. - Store the transaction state in Redis with a TTL of 30 minutes. - Log the recovery attempt and outcome. - Test the recovery flow on a staging environment with no fibre backup.
-
-The checklists were written by engineers who’d already hit these failure modes. The tone was blunt: “If your API times out on 3G, you didn’t read the docs — the docs say to use a circuit breaker.”
-
-## Performance numbers from a live system
-
-We rolled out the agentic hiring and onboarding process at our Lagos fintech in Q1 2026. Here’s what changed:
-
-| Metric | Before (2026) | After (Q2 2026) |
-|---|---|---| 
-| Onboarding completion rate | 47% | 89% |
-| Time to first production PR | 18 days | 7 days |
-| PR review time (median) | 4.2 days | 1.8 days |
-| Production incidents caused by new hires (first 3 months) | 12 | 3 |
-| Agentic checklist adoption rate | 0% | 92% |
-
-The biggest surprise was the drop in production incidents. Before, new hires would ship code that passed unit tests but failed in production on 3G. After the agentic bootcamp, incidents dropped by 75%. The engineers who went through the bootcamp were shipping features that worked under real constraints.
-
-We also measured latency improvements. Before the agentic hiring process, our median API response time on 3G was 1.2 seconds. After rolling out the circuit breaker and queue-based retries, it dropped to 340ms. The 95th percentile dropped from 4.8 seconds to 1.1 seconds.
-
-Cost savings were indirect but real. Before, we had 3 engineers dedicated to onboarding support. After the agentic bootcamp, that dropped to 0.5 FTE (one engineer half-time). The support tickets from new hires also dropped by 68%.
-
-The real win wasn’t the numbers; it was the mindset shift. Engineers who went through the agentic process stopped asking, “Does this code work?” and started asking, “Will this code work on 3G with packet loss?”
-
-## The failure modes nobody warns you about
-
-The first failure mode is assuming your constraint simulation is accurate. We used Chrome’s network throttling to simulate 3G, but it didn’t capture the jitter and packet loss of a real 2G connection in a matatu. Our first round of candidates passed the test locally but failed in staging because they never tested under real noise. The fix was to use `tc` (Linux traffic control) to simulate real packet loss and latency:
-
-```bash
-# Simulate 3G with 5% packet loss and 300ms latency
-tc qdisc add dev eth0 root netem loss 5% delay 300ms 100ms
-```
-
-The second failure mode is over-optimising for the wrong constraint. Some candidates focused on micro-optimisations (e.g., using `asyncio` instead of threads) without addressing the real bottleneck: the aggressive retry logic. The fix was to add a circuit breaker and queue-based retries, not to shave 50ms off the response time.
-
-The third failure mode is assuming your staging environment reflects production. We used a staging environment with fibre backup, but our production traffic ran on 3G. The fix was to add a 3G simulation layer to staging, using `tc` to throttle the network.
-
-The fourth failure mode is ignoring the human factor. Some engineers burned out because they were debugging under constraints for 8 hours a day. The fix was to limit the constraint bootcamp to 4 hours a day, with the rest of the time spent on pair programming and mentorship.
-
-The fifth failure mode is assuming the agentic process scales. It doesn’t. The constraint bootcamp required one mentor per two engineers. When we scaled to 65 engineers, we had to automate parts of the process (e.g., using a script to simulate 3G and grade submissions automatically).
-
-## Tools and libraries worth your time
-
-Here’s a shortlist of tools we used to implement agentic hiring and onboarding:
-
-| Tool/Library | Version | Use case |
-|---|---|---| 
-| pytest | 7.4 | Constraint-aware test suite |
-| FastAPI | 0.109 | API framework with async support |
-| httpx | 0.27 | HTTP client with async and timeout control |
-| Redis | 7.2 | Deduplication, queues, and state management |
-| opossum | 6.1 | Circuit breaker for aggressive retries |
-| BullMQ | 5.3 | Redis-based queue for background jobs |
-| structlog | 24.1 | Structured logging with context |
-| tc (traffic control) | Linux kernel 5.15 | Simulate 3G/2G latency and packet loss |
-| GitHub Actions | 2026 | CI with constraint-aware timeouts (45s max) |
-| Vim | 9.0 | Log reading and debugging on low-bandwidth connections |
-
-The most underrated tool was `tc`. It let us simulate real 3G/2G conditions without buying SIM cards or renting slow networks. We used it to grade candidates and test staging environments.
-
-We also standardised on FastAPI for constraint-aware APIs. Its async support let us write endpoints that returned within 200ms on 3G, even with retries and circuit breakers.
-
-Redis 7.2 was critical for deduplication, queues, and state management. We used it to store refund IDs with a TTL of 5 minutes, preventing duplicate transactions.
+**Assuming the process scales linearly.** Constraint bootcamps need mentors. A rough planning figure is one mentor per two participants; if that ratio cannot be met, reduce the cohort size rather than diluting the supervision.
 
 ## When this approach is the wrong choice
 
-This approach is the wrong choice if your stack is fibre-only and your users are on desktop. If your product is a B2B SaaS tool used by fibre-connected offices, agentic hiring and onboarding will feel like overkill. The constraints (3G, packet loss, SSH over hotspots) won’t match your reality.
+Constraint-aware hiring and onboarding is not universally correct. It is a poor fit when:
 
-It’s also the wrong choice if your team is small (<5 engineers). The constraint bootcamp requires mentorship and dedicated time, which isn’t scalable for tiny teams. In that case, pair programming and a lightweight checklist are better.
+- The product's users are on reliable, high-bandwidth connections and the stack is homogeneous. Simulated packet loss will feel artificial and will not predict on-the-job performance.
+- The team is very small. A structured bootcamp requires mentorship time that a team of a few engineers may not have. Pair programming and a short failure-mode checklist are better first steps.
+- Hiring volume is low. Rewriting a take-home test and building a simulation environment is a fixed cost that is hard to justify for a handful of hires per year.
+- The culture resists constraint-first thinking. If the team expects reliable infrastructure and treats degraded conditions as an anomaly, a full bootcamp will meet resistance. Start with a single 30-minute live debugging session and see whether it surfaces useful signal.
 
-It’s the wrong choice if your hiring volume is low (<10 engineers/year). The upfront cost of rewriting the take-home test and setting up the constraint bootcamp isn’t worth it if you’re only hiring a few engineers a year.
+## Tools and libraries
 
-Finally, it’s the wrong choice if your team culture resists constraint-first thinking. If your engineers expect fibre, IDEs, and predictable CI, they’ll resist the shift. In that case, start with a lightweight constraint simulation (e.g., 30-minute live debugging session) before committing to a full bootcamp.
+The table below lists tools used in the exercises above, with the caveat that version numbers change and should be pinned to whatever the team's own environment supports.
 
-## My honest take after using this in production
+| Tool | Category | Use in the exercise |
+|---|---|---|
+| FastAPI | Python web framework | Scaffold the refund endpoint |
+| httpx | Async HTTP client | Simulate slow outbound calls |
+| pytest | Test runner | Run the constraint-aware test suite |
+| Redis | Key-value store | Deduplication, queues, short-lived state |
+| opossum | Circuit breaker (Node.js) | Bound retries in the webhook handler |
+| BullMQ | Redis-backed queue (Node.js) | Defer refund work off the request path |
+| structlog | Structured logging (Python) | Log refund ID and timestamp |
+| tc / netem | Linux traffic control | Approximate packet loss and latency |
+| GitHub Actions or equivalent | CI | Enforce a timeout budget on the test suite |
+| Vim or any terminal editor | Editor | Read logs over a slow SSH session |
 
-Before, engineers would ask, “Does this code work?” and assume the answer was yes if the tests passed. After the agentic bootcamp, they started asking, “Will this code work on 3G with packet loss?”
+The most commonly overlooked item is `tc`. It is available on most Linux hosts, requires no additional hardware, and can approximate a lossy mobile link closely enough to change candidate behaviour. The most commonly over-trusted item is browser-based throttling.
 
-The biggest win wasn’t the metrics; it was the mindset shift. Engineers who went through the bootcamp stopped assuming the stack was stable. They started designing for failure. They added circuit breakers, logged aggressively, and tested under noise.
+## A decision checklist
 
-The biggest mistake we made was assuming our constraint simulation was accurate. Chrome’s network throttling was a poor substitute for real 3G. The fix was to use `tc` to simulate real packet loss and latency, and to add a 3G simulation layer to staging.
+Before adopting constraint-aware hiring, answer these questions:
 
-The second-biggest mistake was over-optimising for the wrong constraint. Some candidates focused on micro-optimisations without addressing the real bottleneck: aggressive retries. The fix was to add a circuit breaker and queue-based retries.
+1. What is the worst realistic network condition for the product's users, and can it be described in numbers (latency, loss, bandwidth)?
+2. Does the current take-home test exercise that condition at all?
+3. Is there an engineer on the team who already ships under that condition and can calibrate the exercise?
+4. What will be measured, and how will it be recorded? (Elapsed time, duplicate count, CI duration, presence of a recurrence guard.)
+5. How many mentors are available, and what cohort size does that support?
+6. How will the process be evaluated after the first cohort, and against what outcome?
+7. What is the plan if the constraint-aware test filters candidates who would have succeeded?
 
-The third-biggest mistake was ignoring the human factor. Some engineers burned out because they were debugging under constraints for 8 hours a day. The fix was to limit the constraint bootcamp to 4 hours a day, with the rest of the time spent on pair programming and mentorship.
+If the answer to question 3 is no, the exercise cannot be calibrated and should not be used for decisions. If the answer to question 6 is "we'll see," the process will drift back toward what is easy to measure.
 
-Overall, the agentic process worked. Our onboarding completion rate jumped from 47% to 89%, and production incidents caused by new hires dropped by 75%. But the real win was the cultural shift. We stopped hiring for autocomplete-style problem-solving and started hiring for constraint-aware shipping.
+## What to do in the next 30 minutes
 
-## What to do next
-
-Run a 90-minute constraint-aware take-home test this week. Pick a real failure mode from your system (e.g., a Paystack webhook stuck in retry loop), simulate 3G latency and packet loss using `tc`, and grade candidates on their ability to ship a fix within 45 minutes. Use FastAPI or Express to scaffold the problem, and provide a `simulate_3g.py` or `simulate_3g.js` script to simulate real conditions. The goal isn’t to filter candidates; it’s to surface those who can ship under constraints. Start with one problem, one simulation, and one metric: did they add a circuit breaker?
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** August 02, 2026
+Pick one real failure mode from your own system, write it down as a single sentence, and add it to the next take-home test as a required behaviour. For example: "A repeated webhook delivery must produce exactly one refund." Then run the existing test suite under a constrained link using `tc` on a disposable host, and record the elapsed time and the duplicate count. That one measurement tells you whether your current test exercises the constraint at all, and it is the smallest step that produces real signal.

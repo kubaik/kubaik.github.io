@@ -1,125 +1,101 @@
 # 7 patterns for systems that won’t die when networks
 
-The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+## Why network failures break otherwise correct systems
 
-## Why this list exists (what I was actually trying to solve)
+A service can pass every unit test, deploy cleanly, and still collapse the moment a dependency becomes slow rather than unreachable. The failure mode is rarely a clean connection refused. It is a socket that accepts a request, holds it open, and returns nothing for thirty seconds. Every caller waiting on that socket occupies a connection, a worker thread, and a database session. Within minutes the healthy service is saturated by work that will never complete.
 
-The logs showed no errors, just 5-second timeouts on every downstream call. After SSHing into every box and replaying traffic with tcpdump, I discovered the root cause: the retry policy was using a 250 ms backoff that fell into the TCP retransmit window, causing all new requests to pile up behind the retries, exhausting the connection pool in under 120 seconds. Nothing in the app logs flagged this — just an outbound HTTP client with Node 20 LTS defaulting to infinite retries on 5xx responses. That incident cost us $47,000 in lost revenue and 9 hours of on-call time, all because the retry curve looked reasonable on paper but was catastrophic in production. This post is the checklist I wish existed that day.
+The classic trigger is a retry loop with no ceiling. A client library that retries 5xx responses with exponential backoff and no maximum attempt count will keep a failing dependency under load indefinitely, which prevents it from recovering. The retry curve looks reasonable on a whiteboard and is catastrophic in production.
 
-Most consistency guides talk about CAP theorem in abstract terms, but engineers need concrete patterns that work when the network is the enemy. We’re building systems where ‘consistency’ is a sliding scale, not a binary switch. The patterns here aren’t theoretical; they’re the ones we’ve run in production on Node 20 LTS, Python 3.11, and PostgreSQL 16 under 2026 load profiles. They survive partial failures, regional outages, and even the dreaded ‘network partition that lasts longer than your longest timeout’ scenario.
+This article covers seven patterns for making a service survive partial failures: network partitions, slow dependencies, database failovers, and instances that die mid-operation. For each pattern it describes what it does, where it breaks, and how to decide whether it belongs in your system. The patterns are ordered roughly by the cost of adopting them, from least to most invasive.
 
-If you’ve ever seen a 30-second outage cascade into a 3-hour degradation because a cache layer decided to evict everything at once, or watched a queue backlog grow from 200 messages to 180,000 in under five minutes, this list is for you. These are the patterns that kept our systems up through a 2026 US-East-1 outage that lasted 78 minutes and a 2026 EU-Central-1 partial meltdown that took 43 minutes to stabilize. The numbers matter — the 500 ms SLA we hit during the EU outage wasn’t luck; it was a result of applying these patterns systematically.
+Two terms are used throughout:
 
-## How I evaluated each option
+- **At-least-once delivery** means a message may be processed more than once. Duplicates are possible, so handlers must tolerate them.
+- **Idempotent operation** means applying it twice has the same effect as applying it once. It is the property that makes at-least-once delivery safe.
 
-- Partial network partitions (drop 30% of packets between services)
-- Database primary failovers (kill the leader every 3 minutes for 5 seconds)
-- Memory pressure spikes (OOM-kill a replica every 2 minutes)
+Most of the patterns below are ways of converting an unreliable transport into a system that is correct despite duplicates, delays, and reordering.
 
-For each pattern, I measured three metrics with Prometheus in 2026:
+## How to evaluate a resilience pattern honestly
 
-1. **Recovery time** after a 5-second network outage (mean and 99th percentile)
-2. **Data loss window** — how far behind the follower can lag before writes are accepted
-3. **Cost per million requests** — AWS Lambda pricing for Node 20 LTS at 512 MB memory, rounded to cents
+Vendor benchmarks and blog-post tables are usually measured under conditions that do not resemble a real workload. If you want numbers, generate them against your own system. Three measurements matter.
 
-I also tracked the line count of production code we had to write or change for each pattern, because teams rarely adopt solutions that double their codebase overnight. The table below shows the raw results after two weeks of running the chaos suite at 1000 requests per second (RPS).
+**Recovery time after a dependency failure.** Instrument the latency of each outbound call and record the time from the first failure to the point where error rates return to baseline. If you use Prometheus, a histogram on the client call duration plus a counter on failures is enough. Compare the 50th and 99th percentiles separately; a pattern that recovers quickly on average but stalls on the tail is not resilient.
 
-| Pattern | Recovery time (P99) | Max lag (ms) | Cost / 1M req | Lines changed | Outage count |
-|---------|---------------------|---------------|---------------|---------------|--------------|
-| Optimistic locking | 800 ms | 400 | $0.18 | 12 | 2 |
-| Outbox pattern | 1200 ms | 100 | $0.24 | 45 | 1 |
-| Saga orchestration | 1500 ms | 0 | $0.31 | 98 | 0 |
-| Idempotency keys | 1400 ms | 400 | $0.19 | 32 | 3 |
-| Event sourcing | 2100 ms | 0 | $0.38 | 156 | 0 |
-| Compensating tx | 1800 ms | 0 | $0.29 | 87 | 1 |
-| Queue with poison pill | 900 ms | 100 | $0.16 | 28 | 4 |
+**Duplicate-processing rate.** Count the number of times each logical operation is executed. If the count exceeds one under fault injection, your handler is not idempotent, and every at-least-once transport in your stack is a latent bug.
 
-The ‘Outage count’ column counts how many times we had to page someone during the two-week run. Patterns with zero outages are the ones that truly keep the system up when networks break. You’ll notice event sourcing and saga orchestration top the table in reliability but at the cost of complexity. The pattern you choose depends on your tolerance for lag, cost, and code maintenance.
+**Operational cost.** Count the lines of production code the pattern adds, the new infrastructure it requires, and the number of new failure modes it introduces. A pattern that eliminates one failure mode but adds three is usually a net loss.
 
-I also looked at real-world incidents from 2026 and 2026:
+A simple way to run these measurements is a fault-injection harness. A script that periodically closes connections, adds latency, or kills a replica while a load generator runs at a steady rate will surface most of the failure modes described below. The specific tooling matters less than running the harness long enough to see the second-order effects — a five-minute test will miss the cascading failures that appear after ten minutes of sustained pressure.
 
-- The 2026 Twilio breach showed teams that retry storms can saturate rate limits faster than networks can recover
-- The 2026 Shopify outage proved that synchronous writes during failovers can double recovery time
-- The 2026 Stripe incident demonstrated that idempotency keys reduce pager duty load by 40% during partial failures
+The rest of this article assumes you have such a harness, or are willing to build one. Without it, every pattern below is a guess.
 
-The patterns are ordered by a composite score: reliability (outage count and recovery time) × cost efficiency (cost per million requests) × maintainability (lines changed). That’s why the queue with poison pill ranks first even though it’s not the most sophisticated — it simply works.
+## Pattern 1: Bounded retries with jitter and a dead-letter queue
 
-## Building for eventual consistency: the real-world patterns behind systems that stay up — the full ranked list
+**What it does.** Every outbound call has a maximum attempt count, an exponential backoff, and randomized jitter added to each delay. When the attempt count is exhausted, the operation is written to a dead-letter queue (DLQ) for later inspection rather than dropped or retried forever.
 
-### 1. Queue with poison pill + poison queue
+**Why jitter matters.** If a thousand clients all back off on the same schedule, they retry in lockstep and produce a thundering herd every time the backoff expires. Adding a random component to each delay spreads the retries out. A common approach is "full jitter": sleep for a random duration between zero and the computed backoff.
 
-What it does: Routes failed messages to a dead-letter queue (DLQ) and uses a poison queue to isolate messages that repeatedly fail, allowing the system to continue processing new messages even when some are stuck.
+**Where it breaks.** A DLQ is not a solution; it is a place to put problems you have not solved. If nothing consumes the DLQ, it grows without bound and the failures are invisible. Alert on DLQ depth. Also beware of retrying non-idempotent operations: a retried payment charge that succeeds on the first attempt but times out on the response will be charged twice.
 
-Strength: It prevents cascading failures by isolating bad messages without blocking the entire pipeline. During the 2026 EU-Central-1 outage, our queue with poison pill handled 45,000 messages per minute with only 200 poisoned messages diverted — the rest of the system kept serving traffic.
+**How to decide.** Use bounded retries on every network call, without exception. The attempt count should be small — three or four is typical — and the total time budget should be less than the caller's own timeout. If the operation is not idempotent, either make it idempotent (see Pattern 2) or do not retry it at all.
 
-Weakness: You need to tune the poison queue size and retry policy carefully. If your poison queue fills up, the entire system stalls. We once set it to 1000 and watched 4000 messages pile up in under 30 seconds during a schema migration. The recovery required manual intervention and cost us 2 hours of downtime.
+## Pattern 2: Idempotency keys
 
-Best for: Teams that process high-volume async workloads (payments, notifications, inventory updates) and need to keep serving traffic even when some messages are problematic. If your service is synchronous-first, this pattern adds latency overhead.
+**What it does.** The client generates a unique key for each logical operation and sends it with the request. The server stores the key alongside the result. If the same key arrives again, the server returns the stored result instead of re-executing the operation.
 
-Code example (Node 20 LTS, BullMQ 5.1):
-```javascript
-import { Queue, Worker } from 'bullmq';
-import IORedis from 'ioredis';
+**Where it breaks.** The key store itself becomes a dependency. If the store is unavailable, you must decide whether to fail closed (reject the request) or fail open (process it and risk a duplicate). Failing closed is usually correct for financial operations. The bigger risk is unbounded key retention: keys must have a time-to-live, and that TTL must be longer than the maximum retry window of any client. If a client can retry a refund for five days and the key expires after one, the refund can be replayed.
 
-const queue = new Queue('payments', { connection: new IORedis('redis://10.0.1.5:6379') });
-const poisonQueue = new Queue('payments-poison', { connection: new IORedis('redis://10.0.1.5:6379') });
+**Implementation sketch.** The key store is typically a fast key-value store with atomic set-if-not-exists semantics. The sequence is: attempt to reserve the key, and if the reservation succeeds, execute and store the result; if it fails, return the stored result.
 
-const worker = new Worker('payments', async job => {
-  try {
-    await processPayment(job.data);
-  } catch (err) {
-    if (job.attemptsMade >= 3) {
-      await poisonQueue.add(`poison-${job.id}`, job.data);
-      throw new Error('Moved to poison queue after 3 attempts');
-    }
-    throw err;
-  }
-}, { connection: new IORedis('redis://10.0.1.5:6379') });
-```
-
-### 2. Idempotency keys with Redis 7.2
-
-What it does: Clients send a unique idempotency key with each request; the server caches the result for that key, ensuring duplicate requests return the same response without re-processing.
-
-Strength: Reduces database load and duplicate processing by 60–80% during partial failures. In our 2026 load test, services with idempotency keys handled 30% more traffic with the same hardware because they skipped reprocessing duplicate requests.
-
-Weakness: You need to set a TTL on Redis keys and handle cache invalidation during rollbacks. We once forgot to expire keys after a refund, and users could replay the same refund API call for 5 days until we caught it. The cleanup script took 4 hours to run.
-
-Best for: RESTful APIs, payment processors, and any service where duplicate requests are possible. If you’re building a read-heavy service with low write contention, the overhead is minimal.
-
-Code example (Fastify + Redis 7.2):
 ```javascript
 import Fastify from 'fastify';
 import Redis from 'ioredis';
 
 const app = Fastify({ logger: true });
-const redis = new Redis('redis://10.0.1.5:6379');
+const redis = new Redis(process.env.REDIS_URL);
 
 app.post('/charge', async (req, reply) => {
   const idempotencyKey = req.headers['idempotency-key'];
-  const cached = await redis.get(idempotencyKey);
-  if (cached) {
-    reply.status(200).send(JSON.parse(cached));
-    return;
+  if (!idempotencyKey) {
+    return reply.status(400).send({ error: 'idempotency-key header required' });
   }
 
-  const result = await processCharge(req.body);
-  await redis.setex(idempotencyKey, 86400, JSON.stringify(result));
-  reply.status(201).send(result);
+  const cacheKey = `idem:${idempotencyKey}`;
+  // Reserve the key atomically. NX means "only set if it does not exist".
+  const reserved = await redis.set(cacheKey, 'in-progress', 'EX', 86400, 'NX');
+  if (!reserved) {
+    const existing = await redis.get(cacheKey);
+    if (existing === 'in-progress') {
+      // A concurrent request holds the key. Tell the client to retry later.
+      return reply.status(409).send({ error: 'request in progress' });
+    }
+    return reply.status(200).send(JSON.parse(existing));
+  }
+
+  try {
+    const result = await processCharge(req.body);
+    await redis.set(cacheKey, JSON.stringify(result), 'EX', 86400);
+    return reply.status(201).send(result);
+  } catch (err) {
+    // Release the reservation so the client can retry.
+    await redis.del(cacheKey);
+    throw err;
+  }
 });
 ```
 
-### 3. Outbox pattern with Debezium 2.7
+The reservation step is what distinguishes a correct implementation from a naive one. Reading the key, then writing it, leaves a window in which two concurrent requests both see a miss and both execute the operation.
 
-What it does: Applications write events to an outbox table in the same transaction as the business operation. A sidecar or Debezium connector polls the outbox and publishes events to Kafka or Pulsar, guaranteeing that events are published exactly once even if the application crashes.
+**How to decide.** Any endpoint that a client may retry, and any endpoint that mutates state, should accept an idempotency key. The cost is one extra lookup per request; the benefit is that every other pattern in this article becomes safe to use.
 
-Strength: It decouples writes from message publishing, so a database failover doesn’t block event delivery. During a 2026 PostgreSQL failover, our outbox-based service continued publishing events without any noticeable lag, while the synchronous write path took 8 seconds to recover.
+## Pattern 3: The transactional outbox
 
-Weakness: It adds complexity to schema management and requires a change-data-capture (CDC) tool. We spent two weeks debugging Debezium 2.7 when a schema evolution caused tombstone events to be dropped. The fix required a manual offset reset and cost us 4 hours of data.
+**What it does.** Instead of writing to the database and publishing a message as two separate operations, the application writes the business row and an outbox row in a single database transaction. A separate process reads the outbox table and publishes the messages, marking each row as sent.
 
-Best for: Systems that need exactly-once semantics across services (order processing, inventory sync, ledgers). If you’re already using Kafka, this pattern integrates cleanly.
+**Why it matters.** The naive approach — commit, then publish — has a window in which the commit succeeds and the publish fails, producing a database that is inconsistent with the message stream. The reverse order has the opposite problem. The outbox eliminates the window by making both writes atomic.
 
-Code example (Spring Boot + Debezium 2.7):
+**Where it breaks.** The outbox table grows forever unless rows are deleted after publication. The publisher must be idempotent, because it may publish the same row twice if it crashes after publishing but before marking the row as sent. And the publisher is a new component that can fail independently of the application.
+
 ```java
 @Entity
 @Table(name = "orders_outbox")
@@ -131,30 +107,39 @@ public class OrderOutbox {
   @Column(length = 4000)
   private String payload;
   private Instant createdAt;
+  private Instant publishedAt; // null until the publisher confirms
 }
 
 // In the same transaction as order creation:
-orderRepository.save(order);
-outboxRepository.save(new OrderOutbox(
-  UUID.randomUUID().toString(),
-  order.getId(),
-  "OrderCreated",
-  objectMapper.writeValueAsString(order),
-  Instant.now()
-));
+@Transactional
+public Order createOrder(OrderRequest request) {
+  Order order = orderRepository.save(Order.from(request));
+  outboxRepository.save(new OrderOutbox(
+      UUID.randomUUID().toString(),
+      order.getId(),
+      "OrderCreated",
+      objectMapper.writeValueAsString(order),
+      Instant.now(),
+      null
+  ));
+  return order;
+}
 ```
 
-### 4. Saga orchestration with Temporal 1.21
+The publisher then polls for rows where `publishedAt IS NULL`, publishes each, and updates `publishedAt`. Because the publisher may crash between publishing and updating, consumers must deduplicate using the `eventId`.
 
-What it does: Breaks a distributed transaction into a series of local transactions coordinated by a saga orchestrator. Each step has a compensating action that undoes previous steps if the saga fails.
+**How to decide.** Use the outbox whenever a database write must reliably produce a message. If your system already tolerates lost messages, you do not need it. If it does not, the outbox is usually cheaper than the alternative of distributed transactions.
 
-Strength: It keeps services decoupled while guaranteeing that either all steps succeed or all are rolled back. During the 2026 AWS us-east-1 outage, our saga-based checkout flow completed 92% of orders without blocking, compared to 40% for the synchronous alternative.
+## Pattern 4: Saga orchestration with compensating actions
 
-Weakness: Debugging sagas is painful. We once had a saga that failed at step 3 of 5, and the orchestrator replayed steps 1 and 2 multiple times before we realized the compensating action for step 2 had a race condition. It took a senior engineer three days to trace the logs.
+**What it does.** A long-running business process is broken into a sequence of local transactions. A central orchestrator invokes each step and, if a later step fails, invokes a compensating action for each completed step in reverse order.
 
-Best for: Long-running business processes (travel booking, loan applications, multi-step checkout). If your workflow spans more than 3 services, sagas are worth the complexity.
+**Why it matters.** Distributed transactions across services are impractical at scale, and two-phase commit has a well-known failure mode: if the coordinator crashes after the prepare phase, participants can be left holding locks indefinitely. The saga replaces atomicity with a sequence of reversible steps.
 
-Code example (Temporal 1.21 workflow):
+**Where it breaks.** Compensating actions are not rollbacks. A refund is not the inverse of a charge; it is a separate operation that can itself fail, and it may be visible to the customer. The orchestrator must be durable, or a crash mid-saga leaves the system in an indeterminate state. Debugging a saga that failed at step three of five requires reconstructing the state of five services from their logs.
+
+A specific hazard is a compensating action that is not idempotent. If the orchestrator retries a compensation, it may apply it twice. Every compensation should carry an idempotency key, exactly like any other mutating operation.
+
 ```go
 func CheckoutWorkflow(ctx workflow.Context, order Order) (string, error) {
   ao := workflow.ActivityOptions{
@@ -172,10 +157,11 @@ func CheckoutWorkflow(ctx workflow.Context, order Order) (string, error) {
   }
 
   var inventoryResult string
-n  err = workflow.ExecuteActivity(ctx, ReserveInventory, order.Items).Get(ctx, &inventoryResult)
+  err = workflow.ExecuteActivity(ctx, ReserveInventory, order.Items).Get(ctx, &inventoryResult)
   if err != nil {
-    // Compensate: refund payment
-    workflow.ExecuteActivity(ctx, RefundPayment, order.Payment)
+    // Compensate: refund payment. This call must itself be idempotent.
+    compensateCtx := workflow.WithActivityOptions(ctx, ao)
+    _ = workflow.ExecuteActivity(compensateCtx, RefundPayment, order.Payment).Get(compensateCtx, nil)
     return "", err
   }
 
@@ -183,19 +169,18 @@ n  err = workflow.ExecuteActivity(ctx, ReserveInventory, order.Items).Get(ctx, &
 }
 ```
 
-### 5. Optimistic locking with PostgreSQL 16 advisory locks
+**How to decide.** Use a saga when a business process spans more than two or three services and each step has a meaningful inverse. For a two-step process, a simpler pattern — usually the outbox plus an idempotent consumer — is easier to operate. Orchestration is generally easier to debug than choreography, because the state of the process lives in one place.
 
-What it does: Uses a version column or timestamp in every table row to detect concurrent updates. If two clients try to update the same row, one succeeds and the other fails with a version conflict, preventing lost updates without locks.
+## Pattern 5: Optimistic concurrency control
 
-Strength: It scales reads linearly and avoids blocking during high contention. In our 2026 load test with 5000 concurrent users editing the same product listing, optimistic locking handled 96% of requests without retries, while pessimistic locking timed out at 12%.
+**What it does.** Each row carries a version number or timestamp. An update includes the version the client read. If the version has changed, the update affects zero rows and the client is told to retry.
 
-Weakness: You need to handle the retry loop in your application. We once built a single-page app that didn’t implement retries, and users saw ‘version conflict’ errors without understanding why. We had to ship a client-side retry mechanism and educate users on why ‘conflict’ isn’t an error.
+**Why it matters.** Two clients editing the same record concurrently will otherwise overwrite each other, producing a lost update. Optimistic control avoids holding locks during the read, so it scales with read traffic rather than serializing on it.
 
-Best for: High-traffic read/write services (product catalogs, multiplayer state, counters). If your workload is mostly reads, the complexity isn’t worth it.
+**Where it breaks.** The application must handle conflicts. A retry loop with a bounded attempt count is required; without it, users see errors they do not understand. Under very high contention on a single row, optimistic control can livelock, with every attempt conflicting. The usual remedy is to serialize writes to a single hot row through a queue rather than through the database.
 
-Code example (Python 3.11 + SQLAlchemy 2.0):
 ```python
-from sqlalchemy import Column, Integer, String, DateTime, func
+from sqlalchemy import Column, Integer, String, DateTime, func, update
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
@@ -204,245 +189,123 @@ class Product(Base):
     __tablename__ = 'products'
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
-    version = Column(Integer, default=0)
+    version = Column(Integer, default=0, nullable=False)
     updated_at = Column(DateTime, onupdate=func.now())
 
-# In your update handler:
-from sqlalchemy import update
-from sqlalchemy.exc import IntegrityError
-
-def update_product(product_id, new_name):
+def update_product(session, product_id, expected_version, new_name):
     stmt = (
         update(Product)
-        .where(Product.id == product_id, Product.version == Product.version)
-        .values(name=new_name, version=Product.version + 1)
+        .where(Product.id == product_id, Product.version == expected_version)
+        .values(name=new_name, version=expected_version + 1)
         .returning(Product)
     )
-    try:
-        result = session.execute(stmt)
-        session.commit()
-        return result.scalar_one()
-    except IntegrityError:
-        session.rollback()
-        raise VersionConflictError("Product was updated by another user")
+    result = session.execute(stmt)
+    session.commit()
+    row = result.scalar_one_or_none()
+    if row is None:
+        raise VersionConflictError("Product was updated by another writer")
+    return row
 ```
 
-### 6. Event sourcing with EventStoreDB 23.10
+The critical detail is that the version check and the increment happen in the same statement. A separate read-then-write reintroduces the race the pattern exists to prevent.
 
-What it does: Stores every change as an immutable event in an append-only log. The current state is derived by replaying events, enabling time-travel queries and rebuilding state after failures.
+**How to decide.** Use optimistic control for high-read, low-contention write workloads: catalogs, profiles, counters. For rows that are written constantly by many clients, prefer a queue or a single-writer service.
 
-Strength: It provides perfect audit trails and makes it easy to rebuild read models after outages. During a 2026 disk failure, we rebuilt a user profile read model from events in 2 minutes; rebuilding from a snapshot would have taken 45 minutes.
+## Pattern 6: Event sourcing
 
-Weakness: The complexity of rebuilding state and handling schema evolution is brutal. We once tried to migrate from v1 events to v2 and spent a week debugging the projection code because the serializer assumed all events were v1. The cost of ownership is high.
+**What it does.** State is stored as an ordered, append-only log of events rather than as a mutable row. The current state is derived by replaying events. Read models are built by projecting the event log into query-friendly shapes.
 
-Best for: Systems with strict audit requirements (banking, medical records, regulatory compliance). If you don’t need time-travel queries, the overhead isn’t justified.
+**Why it matters.** The event log is an audit trail by construction, and a read model can be rebuilt from scratch if it becomes corrupt. Rebuilding a projection is usually far faster than restoring from a backup, because it only requires replaying the log.
 
-Code example (EventStoreDB 23.10 client):
-```csharp
-using EventStore.Client;
+**Where it breaks.** Schema evolution is the hard part. Events are immutable, so a change to their shape means every consumer must handle both old and new versions. Projections accumulate assumptions about event order and shape, and those assumptions break silently when a new event type appears. The operational cost of an event-sourced system is significantly higher than that of a CRUD system, and it is rarely justified by audit requirements alone.
 
-var settings = EventStoreClientSettings.Create("esdb://10.0.1.5:2113");
-var client = new EventStoreClient(settings);
+**How to decide.** Adopt event sourcing when the history of changes is itself a product requirement — regulatory audit, temporal queries, or the ability to rebuild arbitrary read models. Do not adopt it merely because it sounds more rigorous than storing rows.
 
-// Append an event
-var eventData = new EventData(
-    Uuid.NewUuid(),
-    "OrderCreated",
-    JsonSerializer.SerializeToUtf8Bytes(new { OrderId = orderId })
-);
-await client.AppendToStreamAsync(
-    $"order-{orderId}",
-    StreamRevision.None,
-    new[] { eventData }
-);
-```
+## Pattern 7: Compensating transactions driven by change data capture
 
-### 7. Compensating transactions with Postgres logical decoding
+**What it does.** The database's write-ahead log is read by a change-data-capture (CDC) consumer, which reacts to specific changes by triggering compensating actions. For example, a payment row moving to a `failed` state triggers a refund row.
 
-What it does: Logical decoding captures changes from the write-ahead log (WAL) and allows you to apply compensating actions (refunds, cancellations) when a transaction fails or times out.
+**Why it matters.** The compensating action is decoupled from the original request, so a slow refund does not block the payment path. The WAL is the source of truth, so no event can be missed as long as the consumer's offset is tracked.
 
-Strength: It lets you undo side effects without blocking the primary flow. During a 2026 payment service outage, we used compensating transactions to refund 12,000 orders automatically within 5 minutes of recovery.
+**Where it breaks.** CDC introduces lag between the change and the reaction. Under load, that lag can grow to seconds or more. Any business process that assumes a refund happens immediately after a failure will be wrong. CDC also requires elevated database privileges and adds a component whose failure is silent unless offset lag is monitored.
 
-Weakness: The lag between WAL capture and action can be up to 10 seconds in high-load scenarios. We once had a user cancel an order 8 seconds after it was charged, and the refund arrived 12 seconds later — not ideal for customer trust.
-
-Best for: Payment systems, inventory managers, and any service where side effects need to be rolled back automatically. If your transactions are short-lived, the lag is negligible.
-
-Code example (Postgres 16 logical decoding):
 ```sql
--- Enable logical decoding on the publisher
+-- Publisher configuration (requires a restart to take effect)
 ALTER SYSTEM SET wal_level = logical;
-SELECT pg_reload_conf();
+-- Then restart PostgreSQL.
 
--- Create a publication
 CREATE PUBLICATION payment_events FOR TABLE payments;
+```
 
--- In a consumer service
+```sql
+-- Subscriber
 CREATE SUBSCRIPTION refund_sub
-CONNECTION 'host=10.0.1.5 port=5432 dbname=payments user=repl password=secret'
+CONNECTION 'host=db.internal port=5432 dbname=payments user=repl password=...'
 PUBLICATION payment_events;
-
--- Trigger compensating action on INSERT
-CREATE OR REPLACE FUNCTION refund_on_failure()
-RETURNS TRIGGER AS $$
-BEGIN
-  IF NEW.status = 'failed' THEN
-    INSERT INTO refunds (order_id, amount, reason)
-    VALUES (NEW.order_id, NEW.amount, 'Payment failed');
-  END IF;
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER trg_refund
-AFTER INSERT ON payments
-FOR EACH ROW EXECUTE FUNCTION refund_on_failure();
 ```
 
-## The top pick and why it won
+**How to decide.** Use CDC-driven compensation when side effects must be reversed automatically and the reversal can tolerate a delay. If the reversal must be immediate, it belongs in the request path, not in a CDC consumer.
 
-The **queue with poison pill** wins because it’s simple, cheap, and effective. In our evaluation, it had the lowest cost per million requests ($0.16), the fastest recovery time (900 ms P99), and the smallest code footprint (28 lines changed). It also had the fewest outages (4 during the two-week test), and those were always recoverable without human intervention.
+## A comparison of the seven patterns
 
-The key insight is that eventual consistency doesn’t require complex sagas or event sourcing. It requires isolating failure domains so that one bad message doesn’t sink the entire ship. A poison queue does exactly that: it keeps the main queue flowing while isolating the problem.
+The table below compares the patterns on the dimensions that determine adoption cost. The values are qualitative; the point is to make the trade-offs comparable, not to provide a ranking.
 
-Most teams over-engineer their consistency story. They reach for sagas when a simple queue with poison handling would do. The poison pill pattern is the duct tape of distributed systems — it’s not pretty, but it works when the network breaks.
+| Pattern | Adds infrastructure | Tolerates duplicates | Typical failure mode | Best fit |
+|---|---|---|---|---|
+| Bounded retries + DLQ | A queue for the DLQ | Only if operation is idempotent | DLQ grows unnoticed | Every network call |
+| Idempotency keys | A fast key-value store | Yes, by design | Key TTL shorter than retry window | Any retryable mutation |
+| Transactional outbox | A publisher process | Yes, via event IDs | Outbox table grows unbounded | Database write must emit a message |
+| Saga orchestration | A durable workflow engine | Only if steps are idempotent | Non-idempotent compensation | Multi-service business process |
+| Optimistic concurrency | None | No | Livelock on a hot row | Low-contention shared records |
+| Event sourcing | An event store | Yes, via event IDs | Schema evolution breaks projections | Audit or temporal queries required |
+| CDC compensation | A CDC consumer | Yes, via event IDs | Offset lag grows silently | Automatic reversal of side effects |
 
-We run this pattern at 15,000 RPS on AWS SQS with Node 20 LTS workers and Redis 7.2 for state. The poison queue is sized at 0.1% of the main queue capacity, and we alert on poison queue depth > 100. That’s it. No fancy orchestration, no event sourcing, just a queue that keeps serving traffic even when some messages are stuck.
+A useful rule of thumb: the first three patterns are almost always worth adopting, the middle two depend on your workload, and the last two should be adopted only when a specific requirement demands them.
 
-If you only adopt one pattern from this list, make it the queue with poison pill. It’s the one that will keep your system up when the network decides to hate you.
+## Failure modes to design against explicitly
 
-## Honorable mentions worth knowing about
+**Retry storms.** A client that retries without a bound will keep a failing dependency down. Bound every retry and add jitter.
 
-### Redis Streams with consumer groups (Redis 7.2)
+**Thundering herds.** Many clients that back off on the same schedule will retry simultaneously. Jitter is the fix.
 
-What it does: Redis Streams provide a log-like data structure where multiple consumers can read from the same stream without losing messages. Consumer groups allow you to scale horizontally and handle failures gracefully.
+**Duplicate side effects.** At-least-once delivery is the norm in every practical transport. Every consumer must be idempotent, and every mutating endpoint should accept an idempotency key.
 
-Strength: It’s built into Redis, so you don’t need Kafka. In our 2026 load test, Redis Streams handled 25,000 messages per second with 99.9% delivery success, and the consumer group auto-rebalanced when we killed a node.
+**Unbounded queues.** A DLQ, an outbox table, or a poison queue that is never drained will eventually exhaust its storage. Alert on depth, not just on error rate.
 
-Weakness: Redis Streams don’t persist forever — by default, they trim messages after 60 seconds of inactivity. We once lost audit events because we didn’t set the maxlen correctly. Also, Redis is a single point of failure unless you use Redis Enterprise or cluster mode.
+**Silent offset lag.** A CDC consumer that falls behind produces no errors, only stale data. Monitor the lag explicitly.
 
-Best for: Teams already using Redis who need a lightweight message queue. If you’re processing financial data, the lack of persistence guarantees is a non-starter.
+**Non-idempotent compensation.** A refund that is applied twice is worse than a refund that is applied late. Compensations need idempotency keys like any other mutation.
 
-Code example (Redis 7.2):
-```python
-import redis
+## A decision checklist
 
-r = redis.Redis(host='10.0.1.5', port=6379, db=0)
+Work through these questions in order. The first "yes" usually determines the pattern.
 
-# Create a stream
-r.xadd('orders', {'order_id': '123', 'status': 'created'})
+1. Does the operation mutate state and can the client retry it? If yes, implement idempotency keys first. Nothing else is safe without them.
+2. Does a database write need to reliably produce a message? If yes, use the transactional outbox.
+3. Does the business process span more than two services, with meaningful inverses at each step? If yes, use saga orchestration.
+4. Are concurrent writers likely to edit the same row? If yes, add optimistic concurrency control, and route writes to hot rows through a queue.
+5. Is the history of changes a product requirement? If yes, consider event sourcing — and budget for the operational cost.
+6. Must side effects be reversed automatically, and can the reversal tolerate a delay? If yes, CDC-driven compensation is viable.
 
-# Consumer group
-r.xgroup_create('orders', 'workers', id='0', mkstream=True)
+Notice that the first question is not about which pattern is most sophisticated. It is about the property that makes every other pattern safe. Idempotency is the foundation; the rest are ways of coping with the delays and duplicates that a network partition produces.
 
-# Process messages
-messages = r.xreadgroup('workers', 'worker1', {'orders': '>'}, count=100, block=5000)
-for msg_id, msg_data in messages:
-    process_order(msg_data[b'order_id'].decode())
-    r.xack('orders', 'workers', msg_id)
-```
+## FAQ
 
-### NATS JetStream with stream replays (NATS 2.10)
+**Does an idempotency key need to be stored forever?**
+No. It needs to be stored longer than the maximum time a client might retry the same operation. If clients retry for up to 24 hours, a 48-hour TTL is reasonable. The risk of a too-short TTL is a duplicated side effect; the risk of a too-long TTL is unbounded storage growth.
 
-What it does: NATS JetStream provides a message log with stream replays, allowing consumers to replay messages from any point in time. It’s designed for high-throughput, low-latency messaging.
+**Can a saga be replaced with the outbox pattern?**
+Sometimes. If the process has only two steps and the second step is a message publication, the outbox plus an idempotent consumer is simpler than a saga. Sagas become worthwhile when there are three or more steps and each has a meaningful inverse.
 
-Strength: It’s faster than Kafka for small messages. In our 2026 benchmark, NATS JetStream delivered 100-byte messages at 120,000 ops/sec with 1.2 ms latency, compared to Kafka’s 80,000 ops/sec and 3.4 ms latency.
+**Is optimistic locking safe under high contention?**
+It is safe in the sense that it will not lose updates, but it may livelock: every attempt conflicts and no writer makes progress. For a single hot row, serialize writes through a queue instead.
 
-Weakness: The NATS ecosystem is smaller than Kafka’s. We had to write our own schema registry and monitoring tools because the community tooling wasn’t mature in 2026. Also, JetStream’s persistence model is still evolving — we lost data once when a disk filled up and JetStream didn’t block writes as expected.
+**How much CDC lag is acceptable?**
+That depends entirely on the business process. A refund that arrives ten seconds late is usually acceptable; a refund that arrives ten minutes late may not be. Measure the lag under peak load and decide against a stated requirement, not against a benchmark.
 
-Best for: Teams building real-time systems (gaming, IoT, telemetry) where low latency is critical. If you’re already a Kafka shop, the migration cost isn’t worth it.
+**Do these patterns require a specific database or message broker?**
+No. They are transport-agnostic. The outbox requires a database with transactions and a way to poll or tail a table; idempotency requires a key-value store with atomic set-if-not-exists; CDC requires a database that exposes its change log. The specific products are interchangeable.
 
-### Apache Pulsar with tiered storage (Pulsar 3.2)
+## What to do in the next 30 minutes
 
-What it does: Pulsar separates compute and storage, allowing messages to be offloaded to cloud storage (S3, GCS) while keeping the broker stateless. It also supports multi-tenancy and geographic replication.
-
-Strength: It scales storage independently from brokers. During a 2026 regional outage, we failed over to a secondary cluster and replayed 2 million messages from S3 in 12 minutes — something Kafka couldn’t do without manual intervention.
-
-Weakness: The operational complexity is high. We spent two weeks debugging Pulsar 3.2 when tiered storage caused a deadlock during compaction. Also, the Java client is heavy — our Node.js services saw 30% higher latency compared to NATS.
-
-Best for: Teams with multi-region deployments and long-term message retention requirements. If you’re a single-region shop, Pulsar is overkill.
-
-## The ones I tried and dropped (and why)
-
-### Two-phase commit (2PC) with PostgreSQL 16
-
-We tried 2PC for a distributed ledger in 2026. The promise was atomic commits across three databases. The reality was 4-hour outages every time a participant timed out. PostgreSQL 16’s 2PC implementation doesn’t handle coordinator failures gracefully — if the coordinator crashes after prepare but before commit, the participants are left in prepared state forever. We had to write a manual recovery tool that took us 3 weeks to stabilize. Dropped after the third outage.
-
-### Kafka transactions with idempotent producer (Kafka 3.7)
-
-We enabled Kafka transactions for exactly-once semantics. The latency jumped from 2 ms to 18 ms, and the p99 latency hit 80 ms during a 2026 load test. Also, transactions don’t prevent duplicate messages if the producer restarts — they only prevent duplicates within a transaction. We still had to implement idempotency keys on top. Dropped after realizing the complexity wasn’t buying us much.
-
-### CRDTs with Redis CRDT module (Redis 7.2 CRDT 1.0)
-
-We tried CRDTs for a real-time collaborative editor. The module was experimental and crashed Redis every 4–6 hours under load. Also, merging CRDTs at scale is non-trivial — we spent 2 weeks debugging why our presence indicators flickered. Dropped when we realized the operational overhead outweighed the benefits.
-
-### Saga choreography with RabbitMQ
-
-We built a choreography-based saga using RabbitMQ topics. The debuggability was nonexistent. When a payment failed, we had to trace messages across 7 queues to find the root cause. Also, RabbitMQ doesn’t guarantee message ordering in a cluster, so we saw out-of-order deliveries that broke our saga logic. Dropped after the second incident.
-
-The lesson: avoid choreography for anything more complex than a 2-step saga. Orchestration is worth the complexity for long-running workflows.
-
-## How to choose based on your situation
-
-Pick **queue with poison pill** if:
-- You process async workloads (payments, notifications, inventory updates)
-- Your SLA is measured in seconds, not milliseconds
-- You want the least code and the lowest cost
-- You’re okay with occasional manual cleanup of poison queues
-
-Pick **idempotency keys** if:
-- You run a REST API with possible duplicate requests
-- Your users retry failed payments or form submissions
-- You want to reduce database load by 60–80%
-- You’re okay with a Redis dependency and key expiration logic
-
-Pick **outbox pattern** if:
-- You need exactly-once message delivery across services
-- Your writes and events are in the same transaction
-- You’re already using Kafka or Debezium
-- You can tolerate 1–2 seconds of lag during failovers
-
-Pick **saga orchestration** if:
-- Your workflow spans 3+ services
-- You need compensating actions for every step
-- You can debug complex state machines
-- Your SLA is minutes, not seconds
-
-Pick **optimistic locking** if:
-- You have high read/write contention on the same rows
-- Your users edit shared resources (product listings, counters)
-- You’re using PostgreSQL 16 and SQLAlchemy 2.0
-- You can handle version conflict errors in your UI
-
-Pick **event sourcing** if:
-- You need audit trails or time-travel queries
-- Your events are immutable and schema-evolvable
-- You’re building a system with regulatory requirements
-- You can afford the operational complexity
-
-Pick **compensating transactions** if:
-- You run financial systems where side effects need rollback
-- Your transactions are short-lived (< 5 seconds)
-- You’re using PostgreSQL 16 logical decoding
-- You can tolerate 5–10 seconds of lag
-
-Use this decision table to shortlist:
-
-| Situation | Best pattern
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 14, 2026
+Open the source of the busiest mutating endpoint you own. Search for every outbound network call it makes and check whether each one has a bounded retry count and jitter. If any call retries without a limit, add the limit now — that single change will prevent the most common cascading failure, and it takes minutes to implement.

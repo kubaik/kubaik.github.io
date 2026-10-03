@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>LLM metrics that stop wasting time - Kubai Kevin</title>
-        <meta name="description" content="A seemingly minor change — adding a one-sentence preamble — can increase the output token count by 15%.">
+        <meta name="description" content="A practical guide to LLM evaluation in production: grounding checks, drift detection, cost and latency metrics, and how to measure each one.">
         <meta name="keywords" content="Llm, Generativeai">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-14T00:02:18.806821">
-        <meta property="article:modified_time" content="2026-09-29T17:53:46.359969+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:00:08.515793+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM metrics that stop wasting time">
-        <meta property="og:description" content="A seemingly minor change — adding a one-sentence preamble — can increase the output token count by 15%.">
+        <meta property="og:description" content="A practical guide to LLM evaluation in production: grounding checks, drift detection, cost and latency metrics, and how to measure each one.">
         <meta property="og:url" content="https://kubaik.github.io/llm-metrics-that-stop-wasting-time/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="LLM metrics that stop wasting time">
-        <meta name="twitter:description" content="A seemingly minor change — adding a one-sentence preamble — can increase the output token count by 15%.">
+        <meta name="twitter:description" content="A practical guide to LLM evaluation in production: grounding checks, drift detection, cost and latency metrics, and how to measure each one.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/llm-metrics-that-stop-wasting-time.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/llm-metrics-that-stop-wasting-time/#article",
       "headline": "LLM metrics that stop wasting time",
-      "description": "A seemingly minor change — adding a one-sentence preamble — can increase the output token count by 15%.",
+      "description": "A practical guide to LLM evaluation in production: grounding checks, drift detection, cost and latency metrics, and how to measure each one.",
       "datePublished": "2026-06-14T00:02:18+00:00",
-      "dateModified": "2026-09-29T17:53:46+00:00",
-      "wordCount": 3717,
-      "timeRequired": "PT19M",
+      "dateModified": "2026-10-03T11:00:08+00:00",
+      "wordCount": 2486,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">LLM metrics that stop wasting time</h1>
                 
-                <p class="post-lead">A seemingly minor change — adding a one-sentence preamble — can increase the output token count by 15%.</p>
+                <p class="post-lead">A practical guide to LLM evaluation in production: grounding checks, drift detection, cost and latency metrics, and how to measure each one.</p>
                 
                 
                 <div class="tags">
@@ -242,393 +242,205 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3717 words
+                        12 min read
+                        &nbsp;·&nbsp; 2486 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-29
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
-<h1 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h1>
-<p>Most teams start their LLM evaluation by copying the benchmarks from the model card: MMLU, HumanEval, or the latest HellaSwag snapshot. You run the numbers, pick a model, and move on — only to find your users complaining about hallucinations in production. That disconnect isn’t about the model; it’s about the metric.</p>
-<p>Within 48 hours, support tickets were flooding in because the bot confidently cited non-existent policies. The model card didn’t mention <em>groundedness</em> — the percentage of answers that could be traced back to the provided context. That one metric cost us a week of rollback and a lot of credibility.</p>
-<p>The docs assume you’re comparing models on a static test set. Production isn’t static. Your prompt changes daily. Your retrieval corpus is updated weekly. Your users ask in Swahili one day and in Shona the next. Static benchmarks give you a false sense of precision. They answer: “Which model was better <em>last month</em>?” but not “Which model is better <em>right now</em>?”</p>
-<p>We started with eval sets from the model card, but they didn’t reflect our actual prompt distribution. We tried the standard RAG benchmarks: NQ, TriviaQA, and MS MARCO. They’re great for research, but they don’t stress-test a prompt that includes a product catalog and a dynamic discount engine. The mismatch became obvious when we A/B tested two models with identical scores but wildly different user satisfaction. One model hallucinated discount codes; the other cited the correct SKU. The static benchmarks couldn’t tell the difference.</p>
-<p>The real gap isn’t about the model’s latent capability; it’s about the <em>operational context</em>. Models are judged on capability, but users are judged on safety, cost, and latency. A model that scores 0.92 on MMLU can still cost 3× more to run and crash your SLA when the context window fills up. The metrics that matter are the ones that predict <em>production pain</em>: hallucination rate under load, prompt drift over time, and cost per 1000 tokens when the cache misses.</p>
-<p>In practice, teams conflate three different evaluation problems:</p>
-<ol>
-<li>Model selection — which base model to fine-tune</li>
-<li>Prompt selection — which prompt template to ship</li>
-<li>Runtime selection — which model to serve given the prompt and context</li>
-</ol>
-<p>Most tooling only solves #1. For the other two, you need metrics that evolve with your data and your users. Static benchmarks won’t cut it.</p>
-<h2 id="how-evaluating-llm-output-quality-at-scale-the-metrics-that-actually-matter-actually-works-under-the-hood">How Evaluating LLM output quality at scale: the metrics that actually matter actually works under the hood</h2>
-<p>Under the hood, evaluation isn’t about a single score; it’s about a feedback loop that connects three systems: the prompt engine, the model server, and the user feedback collector. The metrics that matter are the ones that can be computed <em>in real time</em> and <em>at scale</em> without melting your credit card.</p>
-<p>First, you need to define what “quality” means for your system. Is it factual accuracy? Speed? Cost? Safety? In our case, it was a weighted blend: 0.4 factual correctness, 0.3 latency SLA, 0.2 cost per 1000 tokens, 0.1 safety violations. We didn’t pull these weights from a research paper; we pulled them from the quarterly OKR review where our CFO asked why our token spend doubled after we upgraded the model.</p>
-<p>The second insight is that you can’t evaluate at the <em>output</em> level alone. You have to trace every answer back to its source: the prompt, the retrieval call, the model version, and the user session ID. Without that trace, you can’t debug why the bot suddenly started hallucinating discount codes on Tuesdays.</p>
-<p>We built a pipeline using AWS Step Functions to fan out evaluation jobs. Each job pulls a batch of user sessions, computes metrics, and writes the results to an Amazon Timestream table. The trick is to compute the metrics <em>incrementally</em>. Instead of running a full RAGAS suite on every answer, we compute a lightweight <em>signal</em> per answer — for example, the fraction of claims that can be grounded in the retrieved context — and store it as a tag on the session. Later, we aggregate these signals into a daily dashboard. This reduces the compute cost from hundreds of dollars per day to single digits.</p>
-<p>A common mistake is to rely solely on automated metrics. We learned this the hard way when our “factual correctness” metric started drifting upward even though hallucinations were increasing. The issue? The metric was based on an internal embedder trained on our product catalog. When we updated the catalog, the embedder’s notion of “similarity” changed, making the metric look better even though user complaints rose. We had to introduce <em>human-in-the-loop</em> validation using a small pool of paid annotators on Upwork. We pay them $12/hour to label 100 sessions per week. It costs us less than $600/month and catches regressions that automated metrics miss.</p>
-<p>Another surprise was how sensitive the cost metric is to the prompt template. A seemingly minor change — adding a one-sentence preamble — can increase the output token count by 15%. Over a month, that adds up to an extra $2,400 in inference costs if you’re running 10k sessions/day. We now measure <em>prompt efficiency</em> as a metric: the ratio of output tokens to input tokens. We flag any change that increases this ratio by more than 5%.</p>
-<p>The feedback loop isn’t complete without a safety metric. We use Azure Content Safety to scan every output for violence, self-harm, and hate speech. But the real surprise was the <em>latent</em> safety issue: when the model is under heavy load, it starts emitting lower-quality safety classifications. We discovered this when our safety classifier started missing hate speech during peak hours. The fix wasn’t tuning the classifier; it was adding a circuit breaker in the model server to shed load when the safety API latency exceeds 500 ms.</p>
-<p>Here’s the architecture we ended up with:</p>
+                <h2 id="why-static-benchmarks-stop-being-useful-after-launch">Why static benchmarks stop being useful after launch</h2>
+<p>Model cards and public benchmarks answer a narrow question: which model performed better on a frozen test set at a point in time. MMLU, HumanEval and similar suites are useful for that. They are not designed to answer the question that matters six months into production: is the system answering correctly <em>right now</em>, for <em>these</em> users, with <em>this</em> prompt and <em>this</em> retrieval corpus.</p>
+<p>The gap is not about model capability. It is about operational context. A model can score well on a public benchmark and still fail in a specific deployment because:</p>
 <ul>
-<li><strong>Prompt engine</strong>: FastAPI service that renders prompts from a Jinja template and sends them to the model server</li>
-<li><strong>Model server</strong>: vLLM 0.5.3 on AWS SageMaker g5.4xlarge with NVIDIA A10G GPUs, running 1.3B parameter fine-tune</li>
-<li><strong>Retrieval</strong>: Amazon OpenSearch 2.11 with hybrid search (BM25 + e5-mistral-7b-instruct embeddings)</li>
-<li><strong>Evaluation pipeline</strong>: Step Functions → Lambda → Timestream → QuickSight dashboard</li>
-<li><strong>Human feedback</strong>: Upwork annotators with a custom React app for labeling</li>
-<li><strong>Safety scan</strong>: Azure Content Safety with a 200 ms timeout and a fallback to a cached safety cache</li>
+<li>The prompt template includes domain data (a product catalog, a discount engine) that the benchmark never saw.</li>
+<li>The retrieval corpus changes weekly, so the notion of "supported by context" changes with it.</li>
+<li>Users write in languages and registers the benchmark does not cover.</li>
+<li>Cost and latency constraints mean the model you <em>can</em> serve is not the model you would pick on accuracy alone.</li>
 </ul>
-<p>The key is to compute metrics <em>as close to the user as possible</em>. If you wait until the end of the day to run evals, you’ve already lost the chance to catch a regression. We compute two sets of metrics:</p>
+<p>A useful framing is that there are three distinct evaluation problems, and most tooling only addresses the first:</p>
 <ol>
-<li><strong>Real-time signals</strong>: per-session metrics like hallucination score, safety violation, and latency</li>
-<li><strong>Daily aggregates</strong>: trends in hallucination rate, cost per session, and safety misses</li>
+<li><strong>Model selection</strong> — which base model to fine-tune or serve.</li>
+<li><strong>Prompt selection</strong> — which prompt template to ship.</li>
+<li><strong>Runtime selection</strong> — which model, context and parameters to use for a given request.</li>
 </ol>
-<p>This split allows us to trigger alerts when the real-time signal crosses a threshold (e.g., hallucination score &gt; 0.05) while still maintaining a long-term view for trend analysis.</p>
-<p>The final piece is the <em>traceability</em> requirement. Every metric must be traceable to a specific user session, prompt template version, model version, and retrieval corpus version. Without this, you can’t answer the question: <em>Why did this answer change?</em> We use OpenTelemetry to instrument every step and store the traces in AWS X-Ray. The traces include the full prompt, the retrieved documents, the model output, and the user feedback.</p>
-<p>This architecture isn’t about fancy models or expensive benchmarks. It’s about connecting the dots between the user experience, the infrastructure cost, and the safety risk — all at scale.</p>
-<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
-<p>Here’s how we built it. We’ll focus on three things: computing a lightweight hallucination score per answer, aggregating it at scale, and triggering alerts when it drifts.</p>
-<h3 id="step-1-lightweight-hallucination-detection">Step 1: Lightweight hallucination detection</h3>
-<p>We don’t run a full RAGAS suite on every answer. Instead, we use a two-step heuristic:</p>
+<p>Problems 2 and 3 are continuous. Every prompt edit, catalog update and traffic shift changes the answer to "is this good?". Metrics that only exist as a one-off benchmark run cannot track that.</p>
+<h2 id="define-quality-as-a-weighted-objective-before-you-measure-anything">Define quality as a weighted objective before you measure anything</h2>
+<p>Before instrumenting anything, write down what "good" means for the system as a number you can compute per request. A typical weighted objective looks like this:</p>
+<pre><code>score = w1 * (1 - hallucination_rate)
+      + w2 * latency_sla_pass        # 1 if p95 under target, else 0
+      + w3 * (1 - normalized_cost)
+      + w4 * (1 - safety_violation_rate)
+</code></pre>
+<p>The weights are a policy decision, not a research result. They should come from whoever owns the product trade-off — usually a combination of product, finance and engineering. Two properties matter more than the exact numbers:</p>
+<ul>
+<li><strong>The weights are written down and versioned.</strong> If you cannot say which weights produced a given alert, you cannot debug it.</li>
+<li><strong>The objective is per-request, not per-batch.</strong> A daily average hides the tail where the failures live.</li>
+</ul>
+<p>A worked example, with arithmetic shown. Suppose you decide the following weights and targets:</p>
+<ul>
+<li>w1 = 0.4, w2 = 0.3, w3 = 0.2, w4 = 0.1</li>
+<li>Latency SLA: p95 under 500 ms</li>
+<li>Cost target: $0.01 per 1,000 output tokens</li>
+<li>Safety violations: any violation counts as a full miss for that request</li>
+</ul>
+<p>For one request with hallucination_rate = 0.25, latency 620 ms, cost $0.008 per 1k tokens, no safety violation:</p>
+<pre><code>0.4 * (1 - 0.25)      = 0.300
+0.3 * 0                 = 0.000   # latency SLA missed
+0.2 * (1 - 0.008/0.01)  = 0.040
+0.1 * (1 - 0)           = 0.100
+total                   = 0.440
+</code></pre>
+<p>The same request with latency 420 ms scores 0.740. That difference is what makes the objective useful: it lets you compare a fast, slightly hallucinating answer against a slow, accurate one on a single axis. The weights are arbitrary in the sense that no external authority blesses them, but they are not arbitrary in the sense that they are explicit, reviewable and tunable against labelled data.</p>
+<h2 id="metric-1-grounding-aka-hallucination-rate">Metric 1: grounding (a.k.a. hallucination rate)</h2>
+<p>Grounding asks: what fraction of the factual claims in the output can be traced back to the retrieved context? This is the metric that catches the failure mode where a model confidently cites policies, prices or SKUs that do not exist.</p>
+<h3 id="how-to-measure-it">How to measure it</h3>
+<p>The cheapest useful implementation is a two-step heuristic:</p>
 <ol>
-<li><strong>Claim extraction</strong>: Use a small model to extract atomic claims from the output</li>
-<li><strong>Grounding check</strong>: For each claim, check if it’s supported by the retrieved context</li>
+<li><strong>Claim extraction</strong> — split the answer into atomic factual claims.</li>
+<li><strong>Grounding check</strong> — for each claim, test whether it is supported by the retrieved context.</li>
 </ol>
-<p>Here’s the Python code using <code>transformers</code> 4.40.1 and <code>sentence-transformers</code> 2.7.0:</p>
-<pre><code class="language-python">from transformers import pipeline, AutoTokenizer, AutoModelForSeq2SeqLM
+<p>Both steps can be done with small local models. The code below uses <code>transformers</code> and <code>sentence-transformers</code>; pin the versions you test with, because embedding behavior changes between releases.</p>
+<pre><code class="language-python">from transformers import pipeline
 from sentence_transformers import SentenceTransformer
 import numpy as np
 
-# Load the claim extractor
 claim_extractor = pipeline(
     &quot;text2text-generation&quot;,
     model=&quot;facebook/bart-large-cnn&quot;,
-    tokenizer=&quot;facebook/bart-large-cnn&quot;,
-    device=&quot;cpu&quot;
+    device=&quot;cpu&quot;,
 )
 
-# Load the embedding model
 embedding_model = SentenceTransformer(&quot;all-MiniLM-L6-v2&quot;, device=&quot;cpu&quot;)
 
 def extract_claims(text: str) -&gt; list[str]:
-    &quot;&quot;&quot;Extract atomic claims from text.&quot;&quot;&quot;
-    prompt = f&quot;Extract the factual claims in this text. Return a list of claims only, one per line:\n{text}&quot;
+    &quot;&quot;&quot;Extract atomic factual claims, one per line.&quot;&quot;&quot;
+    prompt = (
+        &quot;Extract the factual claims in this text. &quot;
+        &quot;Return a list of claims only, one per line:\n&quot; + text
+    )
     output = claim_extractor(prompt, max_length=512, num_beams=4, early_stopping=True)
-    claims = [c.strip() for c in output[0][&quot;generated_text&quot;].split(&quot;\n&quot;) if c.strip()]
-    return claims
+    return [c.strip() for c in output[0][&quot;generated_text&quot;].split(&quot;\n&quot;) if c.strip()]
 
-def is_grounded(claim: str, context: list[str], threshold: float = 0.85) -&gt; bool:
-    &quot;&quot;&quot;Check if a claim is grounded in the context.&quot;&quot;&quot;
+def is_grounded(claim: str, context_embeddings, threshold: float = 0.85) -&gt; bool:
     claim_embedding = embedding_model.encode(claim, convert_to_tensor=True)
-    context_embeddings = embedding_model.encode(context, convert_to_tensor=True)
-    similarities = np.dot(context_embeddings, claim_embedding.T)
-    max_similarity = similarities.max().item()
-    return max_similarity &gt;= threshold
+    similarities = np.dot(context_embeddings, claim_embedding)
+    return float(similarities.max()) &gt;= threshold
 
 def compute_hallucination_score(output: str, context: list[str]) -&gt; float:
-    &quot;&quot;&quot;Compute a hallucination score from 0 (all grounded) to 1 (all hallucinated).&quot;&quot;&quot;
+    &quot;&quot;&quot;0 = every claim grounded, 1 = nothing grounded.&quot;&quot;&quot;
     claims = extract_claims(output)
     if not claims:
-        return 1.0  # no claims → assume hallucinated
-    grounded = sum(1 for claim in claims if is_grounded(claim, context))
+        return 1.0
+    context_embeddings = embedding_model.encode(context, convert_to_tensor=True)
+    grounded = sum(1 for c in claims if is_grounded(c, context_embeddings))
     return 1.0 - (grounded / len(claims))
 </code></pre>
-<p>This runs in ~120 ms per answer on a CPU. We cache the embeddings for the context to avoid recomputing them for every claim. We also cap the maximum context length to 2048 tokens to keep latency predictable.</p>
-<h3 id="step-2-real-time-metric-aggregation">Step 2: Real-time metric aggregation</h3>
-<p>We push every session’s hallucination score to an Amazon Timestream table. The table schema looks like this:</p>
-<pre><code>session_id (varchar)
-model_version (varchar)
-prompt_version (varchar)
-retrieval_corpus_version (varchar)
-output (varchar)
-context (varchar)
-hallucination_score (float)
-latency_ms (int)
-cost_tokens (int)
-safety_violation (bool)
-timestamp (timestamp)
-</code></pre>
-<p>We use a Lambda function triggered by the model server’s output stream. The Lambda writes to Timestream and computes a rolling 5-minute average of the hallucination score. If the average exceeds 0.05, it triggers an SNS alert.</p>
-<p>Here’s the Lambda handler in Python 3.11:</p>
-<pre><code class="language-python">import os
-import json
-import boto3
-from datetime import datetime
-
-ssm = boto3.client(&quot;ssm&quot;)
-timestream = boto3.client(&quot;timestream-write&quot;)
-sns = boto3.client(&quot;sns&quot;)
-
-ALERT_THRESHOLD = float(os.environ.get(&quot;ALERT_THRESHOLD&quot;, &quot;0.05&quot;))
-ALERT_TOPIC_ARN = os.environ[&quot;ALERT_TOPIC_ARN&quot;]
-
-def lambda_handler(event, context):
-    # Parse the event from the model server
-    payload = json.loads(event[&quot;body&quot;])
-    hallucination_score = payload[&quot;hallucination_score&quot;]
-    session_id = payload[&quot;session_id&quot;]
-    model_version = payload[&quot;model_version&quot;]
-    prompt_version = payload[&quot;prompt_version&quot;]
-    retrieval_corpus_version = payload[&quot;retrieval_corpus_version&quot;]
-    latency_ms = payload[&quot;latency_ms&quot;]
-    cost_tokens = payload[&quot;cost_tokens&quot;]
-    safety_violation = payload[&quot;safety_violation&quot;]
-
-    # Write to Timestream
-    write_records = [
-        {
-            &quot;Dimensions&quot;: [
-                {&quot;Name&quot;: &quot;session_id&quot;, &quot;Value&quot;: session_id},
-                {&quot;Name&quot;: &quot;model_version&quot;, &quot;Value&quot;: model_version},
-                {&quot;Name&quot;: &quot;prompt_version&quot;, &quot;Value&quot;: prompt_version},
-                {&quot;Name&quot;: &quot;retrieval_corpus_version&quot;, &quot;Value&quot;: retrieval_corpus_version},
-            ],
-            &quot;MeasureName&quot;: &quot;hallucination_score&quot;,
-            &quot;MeasureValue&quot;: str(hallucination_score),
-            &quot;MeasureValueType&quot;: &quot;DOUBLE&quot;,
-            &quot;Time&quot;: str(int(datetime.utcnow().timestamp() * 1000)),
-            &quot;TimeUnit&quot;: &quot;MILLISECONDS&quot;,
-        },
-        {
-            &quot;Dimensions&quot;: [
-                {&quot;Name&quot;: &quot;session_id&quot;, &quot;Value&quot;: session_id},
-            ],
-            &quot;MeasureName&quot;: &quot;latency_ms&quot;,
-            &quot;MeasureValue&quot;: str(latency_ms),
-            &quot;MeasureValueType&quot;: &quot;DOUBLE&quot;,
-        },
-        {
-            &quot;Dimensions&quot;: [
-                {&quot;Name&quot;: &quot;session_id&quot;, &quot;Value&quot;: session_id},
-            ],
-            &quot;MeasureName&quot;: &quot;safety_violation&quot;,
-            &quot;MeasureValue&quot;: str(int(safety_violation)),
-            &quot;MeasureValueType&quot;: &quot;DOUBLE&quot;,
-        },
-    ]
-
-    timestream.write_records(DatabaseName=&quot;llm_eval&quot;, TableName=&quot;sessions&quot;, Records=write_records)
-
-    # Compute 5-minute rolling average (simplified for example)
-    # In reality, we use a window function in Timestream
-    avg_score = compute_rolling_avg(session_id, window_minutes=5)
-
-    if avg_score &gt; ALERT_THRESHOLD:
-        sns.publish(
-            TopicArn=ALERT_TOPIC_ARN,
-            Message=f&quot;Hallucination score {avg_score:.2f} above threshold {ALERT_THRESHOLD} for session {session_id}&quot;,
-            Subject=&quot;LLM Hallucination Alert&quot;,
-        )
-
-    return {&quot;statusCode&quot;: 200}
-</code></pre>
-<p>The Lambda runs in ~80 ms and costs $0.000015 per invocation. We run 10k sessions/day, so the Lambda cost is ~$0.15/day.</p>
-<h3 id="step-3-daily-trend-dashboard">Step 3: Daily trend dashboard</h3>
-<p>We use Amazon QuickSight to build a dashboard that shows:</p>
+<p>Two notes on correctness and cost:</p>
 <ul>
-<li>Daily hallucination rate (7-day rolling average)</li>
-<li>Cost per 1000 tokens (by model version)</li>
-<li>Safety violation rate (by retrieval corpus version)</li>
-<li>Latency SLA compliance (P95 latency by hour)</li>
+<li><strong>Cache context embeddings.</strong> The code above embeds the context once per call. If you evaluate many claims against the same context, embed the context once and reuse it. The naive version re-embeds the context on every request, which is the dominant cost.</li>
+<li><strong>The threshold is a tunable, not a truth.</strong> A cosine threshold of 0.85 is a starting point. Calibrate it against a labelled sample: for each candidate threshold, compute precision and recall of "grounded" against human labels, and pick the point that matches your tolerance for false positives.</li>
 </ul>
-<p>We also include a breakdown by prompt template version to catch regressions when we update the prompt.</p>
-<p>The dashboard updates every 4 hours using a scheduled Athena query. We store the raw data in S3 as Parquet files partitioned by date. The query computes the metrics in ~2 seconds per day, so the Athena cost is negligible.</p>
-<p>Here’s the Athena query we use to compute the daily hallucination rate:</p>
-<pre><code class="language-sql">SELECT 
-    date_trunc('day', timestamp) as day,
-    model_version,
-    prompt_version,
-    retrieval_corpus_version,
-    avg(hallucination_score) as avg_hallucination_score,
-    count(*) as sessions
-FROM llm_eval.sessions
-WHERE timestamp &gt;= current_date - interval '7' day
-GROUP BY 1, 2, 3, 4
-ORDER BY 1 DESC, 5 DESC
-</code></pre>
-<h3 id="step-4-human-feedback-loop">Step 4: Human feedback loop</h3>
-<p>We built a simple React app for annotators to label sessions. The app shows the user’s question, the model’s answer, the retrieved context, and the annotator’s options:</p>
+<h3 id="what-this-metric-misses">What this metric misses</h3>
+<p>Embedding similarity measures <em>lexical and semantic closeness</em>, not entailment. A claim can be close to a context sentence and still be contradicted by it. This is the single most common source of false confidence in grounding metrics. Two mitigations:</p>
 <ul>
-<li>✅ Fully factual</li>
-<li>⚠️ Partially factual</li>
-<li>❌ Hallucinated</li>
-<li>❓ Unsure</li>
+<li>Add a second, stricter check (an entailment model or a small LLM judge) for claims near the threshold.</li>
+<li>Track the metric's <em>agreement with human labels</em> over time. If agreement drops, the metric has drifted, not the model.</li>
 </ul>
-<p>We pay annotators $12/hour and require them to label 100 sessions/week. We use this feedback to recalibrate the hallucination score.</p>
-<p>The app is hosted on AWS Amplify and uses Cognito for authentication. The total cost is ~$30/month.</p>
-<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>We’ve been running this system for 12 weeks on a customer-support chatbot serving 10k sessions/day. Here are the numbers that actually matter:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Baseline (static benchmark)</th>
-<th>Live system (12 weeks)</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Hallucination rate</td>
-<td>0.08 (from model card)</td>
-<td>0.02</td>
-<td>-75%</td>
-</tr>
-<tr>
-<td>Cost per 1000 tokens</td>
-<td>$0.042 (gpt-3.5-turbo)</td>
-<td>$0.006 (1.3B fine-tune on SageMaker)</td>
-<td>-86%</td>
-</tr>
-<tr>
-<td>Latency P95</td>
-<td>650 ms (cloud API)</td>
-<td>320 ms (local vLLM)</td>
-<td>-51%</td>
-</tr>
-<tr>
-<td>Safety violations</td>
-<td>0.004 (Azure safety scan)</td>
-<td>0.0008</td>
-<td>-80%</td>
-</tr>
-<tr>
-<td>Human annotation cost</td>
-<td>$0 (none)</td>
-<td>$600/month</td>
-<td>+$600</td>
-</tr>
-</tbody>
-</table>
-<p>The most surprising number was the cost saving. The fine-tune runs on SageMaker g5.4xlarge instances at $1.24/hour each. We run 2 instances for redundancy and scale to 4 during peak hours. The total inference cost is ~$2,400/month, down from ~$13,000 with the API.</p>
-<p>The latency improvement was also unexpected. The key was using vLLM 0.5.3 with PagedAttention and KV cache reuse. The model server now handles 200 sessions/second with a P95 latency of 320 ms.</p>
-<p>We discovered that when we updated the product catalog on Mondays, the old embeddings caused the model to hallucinate new product names. By tracking the retrieval corpus version, we could correlate hallucinations with catalog updates and add a cache warm-up step.</p>
-<p>The safety violation rate surprised us in the opposite direction. We thought the fine-tune would reduce safety issues, but it introduced new ones: the model started outputting discount codes in a format that triggered the hate-speech classifier. We had to add a post-processing step to strip discount codes from hate-speech-like patterns.</p>
-<p>Human annotation cost was the only negative surprise. We’re now experimenting with active learning: we only send borderline cases to annotators, reducing the volume by 60% while keeping the same error rate.</p>
-<p>Another unexpected finding was the prompt efficiency metric. A seemingly minor change — adding a one-sentence preamble — increased the output token count by 15%, raising the inference cost by 18%. We now measure prompt efficiency as a metric and block any change that increases it by more than 5%.</p>
-<p>The system also caught a hidden cost driver: retrieval latency. When the OpenSearch cluster was under load, the retrieval latency spiked to 800 ms, causing the model server to time out and retry. The retry storm increased the hallucination rate by 300%. The fix cost us 5 minutes of code change but saved us $1,200/month in retry costs.</p>
-<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
-<p>There are three failure modes that almost every team hits when they try to scale LLM evaluation. The first is the <em>latent metric drift</em>. The hallucination score you compute today may not reflect the hallucination rate tomorrow because the retrieval corpus changes, the prompt changes, or the user behavior changes. We learned this when our hallucination score dropped from 0.08 to 0.02 after we updated the retrieval corpus. The metric looked better, but the user complaints rose. The issue? The new corpus included more product names, and the model started hallucinating product names that didn’t exist. The metric was blind to this because it only checked grounding against the corpus, not against reality.</p>
-<p>The second failure mode is the <em>prompt drift</em>. A prompt that works today may fail tomorrow because the model’s behavior drifts, the retrieval corpus drifts, or the user’s expectations drift. We saw this when we added a new product line. The prompt template included a placeholder for the product name, but the model started outputting placeholder values like “{product_name}” in 3% of answers. The prompt efficiency metric caught it, but only because we were measuring token efficiency, not correctness.</p>
-<p>The third failure mode is the <em>cost explosion</em>. The metrics that matter for users — latency, safety, correctness — often conflict with the metrics that matter for cost. A model that’s 20% more accurate may cost 3× more to run. A prompt that’s 10% more efficient may reduce hallucinations by 5%. You need a way to trade off these metrics. We built a simple scoring function:</p>
-<pre><code class="language-python">weighted_score = (
-    0.4 * (1 - hallucination_score) +
-    0.3 * (1 if latency_ms &lt; 500 else 0) +
-    0.2 * (1 - cost_per_1000_tokens / max_cost) +
-    0.1 * (1 - safety_violation_rate)
-)
-</code></pre>
-<p>But the weights are arbitrary. We had to tune them using historical data. The tuning process itself took 2 weeks and required 50k labeled sessions.</p>
-<p>Another hidden failure mode is the <em>safety false positive</em>. Our safety classifier started flagging legitimate discount codes as hate speech because the discount code format matched a hate-speech pattern. We had to add a post-processing step to whitelist discount codes. The fix was simple, but the debugging took a day.</p>
-<p>The final failure mode is the <em>traceability black hole</em>. Without end-to-end tracing, you can’t debug why an answer changed. We once rolled back a model update that reduced hallucinations, only to find that the new model increased safety violations. The metrics showed both improvements, but the tracing revealed that the new model was outputting longer answers that triggered the safety classifier more often. Without tracing, we would have kept the worse model.</p>
-<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
-<p>Here’s the tooling we’ve found reliable for production-scale LLM evaluation. I’ve included version numbers and the specific pain points we hit with each.</p>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Version</th>
-<th>Use case</th>
-<th>Pain point we hit</th>
-<th>Fix</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>vLLM</td>
-<td>0.5.3</td>
-<td>Model serving with PagedAttention</td>
-<td>High memory usage on long contexts</td>
-<td>Set <code>max_model_len=2048</code>, use <code>enable_prefix_caching=True</code></td>
-</tr>
-<tr>
-<td>AWS SageMaker</td>
-<td>2.215</td>
-<td>Model hosting</td>
-<td>Cold start latency on g5 instances</td>
-<td>Use <code>AsyncInferenceConfig</code> with <code>output_path</code> in S3</td>
-</tr>
-<tr>
-<td>Amazon OpenSearch</td>
-<td>2.11</td>
-<td>Retrieval</td>
-<td>Cluster instability under load</td>
-<td>Set <code>circuit_breaker_enabled=true</code> and <code>search_backpressure_enabled=true</code></td>
-</tr>
-<tr>
-<td>Azure Content Safety</td>
-<td>1.0</td>
-<td>Safety scanning</td>
-<td>High latency during peak hours</td>
-<td>Add 200 ms timeout and fallback to cached safety cache</td>
-</tr>
-<tr>
-<td>AWS Step Functions</td>
-<td>3.71</td>
-<td>Evaluation pipeline</td>
-<td>Step timeout on long evals</td>
-<td>Split evals into chunks of 1000 sessions, use <code>Map</code> state</td>
-</tr>
-<tr>
-<td>Amazon Timestream</td>
-<td>3.4</td>
-<td>Metric storage</td>
-<td>Slow queries on high-cardinality dimensions</td>
-<td>Use <code>DISTINCT</code> filters and pre-aggregate daily metrics</td>
-</tr>
-<tr>
-<td>Upwork annotators</td>
-<td>$12/hr</td>
-<td>Human feedback</td>
-<td>Inconsistent labeling</td>
-<td>Provide 10 labeled examples per annotator, weekly calibration</td>
-</tr>
-<tr>
-<td>Prometheus + Grafana</td>
-<td>2.47 + 10.2</td>
-<td>Real-time dashboards</td>
-<td>Alert fatigue on noisy metrics</td>
-<td>Use <code>rate()</code> and <code>increase()</code> for rolling windows</td>
-</tr>
-<tr>
-<td>AWS Amplify</td>
-<td>12.3</td>
-<td>React hosting</td>
-<td>Slow CI/CD</td>
-<td>Use <code>amplify env checkout</code> in GitHub Actions</td>
-</tr>
-</tbody>
-</table>
-<p>A few tools we tried and abandoned:</p>
+<h2 id="metric-2-drift-detection">Metric 2: drift detection</h2>
+<p>Drift is the failure mode where your metric improves while user complaints rise. It happens because the inputs to the metric changed, not the model quality. Three drift channels matter:</p>
 <ul>
-<li><strong>LangSmith 0.3.18</strong>: Great for debugging, but the pricing scales with session volume. We hit $1,200/month at 10k sessions/day and switched to our own Timestream pipeline. - <strong>Ragas 0.2.1</strong>: The hallucination metric required 500 ms per answer on CPU. We replaced it with our lightweight claim extractor. - <strong>Dspy 2.4.7</strong>: The optimizer loop ran for 4 hours on 1k examples. We switched to a simpler grid search over prompt templates.</li>
+<li><strong>Corpus drift</strong> — the retrieval index was rebuilt with new documents. "Grounded in context" now means something different.</li>
+<li><strong>Prompt drift</strong> — the template changed, tokens shifted, output length shifted.</li>
+<li><strong>Distribution drift</strong> — user traffic moved to a new language, product line or intent.</li>
 </ul>
-<p>The most surprising tool was <strong>Amazon Timestream</strong>. The cost is $0.0001 per query, so we run them every 4 hours without blinking.</p>
-<p>Another surprise was <strong>vLLM 0.5.3</strong>. The PagedAttention feature cut our memory usage by 40% and improved latency by 51%. The only downside is the lack of GPU support for some fine-tunes, but the CPU version is fast enough for our 1.3B parameter model.</p>
-<p>We also tried <strong>Azure ML Prompt Flow</strong>, but the YAML-based evaluation graphs were brittle under CI/CD. We switched to Step Functions and never looked back.</p>
+<h3 id="how-to-measure-it_1">How to measure it</h3>
+<p>Instrument every request with four version identifiers and log them alongside the metric:</p>
+<pre><code>session_id, model_version, prompt_version, corpus_version, metric_value, timestamp
+</code></pre>
+<p>Then compute the metric <em>per version combination</em>, not globally. A dashboard that shows one hallucination line for the whole system will hide a regression in a single prompt version. A dashboard that shows one line per <code>(prompt_version, corpus_version)</code> will not.</p>
+<p>For corpus drift specifically, a useful check is to re-run a fixed "golden set" of questions against the new corpus and compare the grounding score to the previous run. The golden set should be small (dozens of questions), stable, and manually verified. If the score moves by more than your noise floor, investigate before shipping the corpus update.</p>
+<p>For prompt drift, track two derived quantities:</p>
+<ul>
+<li><strong>Output/input token ratio</strong> per prompt version. A small preamble can change output length materially; measure it rather than assuming.</li>
+<li><strong>Claim count per answer.</strong> If the model starts emitting more claims, grounding scores get noisier and safety classifiers see more surface area.</li>
+</ul>
+<h2 id="metric-3-cost-and-latency-measured-per-request">Metric 3: cost and latency, measured per request</h2>
+<p>Cost and latency are not second-class citizens. In many deployments they are the metrics that determine whether the system survives. The mistake is to measure them as monthly aggregates rather than per request with version tags.</p>
+<h3 id="what-to-instrument">What to instrument</h3>
+<ul>
+<li><strong>Input tokens, output tokens, cached tokens</strong> per request.</li>
+<li><strong>Time to first token</strong> and <strong>total latency</strong> per request.</li>
+<li><strong>Retrieval latency</strong> as a separate span from generation latency. Retries and timeouts in retrieval dominate tail latency more often than generation does.</li>
+<li><strong>Cache hit rate</strong> for prompt prefixes and retrieval results.</li>
+</ul>
+<h3 id="how-to-convert-tokens-to-money">How to convert tokens to money</h3>
+<p>The arithmetic is straightforward once you have per-request token counts:</p>
+<pre><code>monthly_cost = sum_over_requests(output_tokens) * price_per_output_token
+             + sum_over_requests(input_tokens)  * price_per_input_token
+</code></pre>
+<p>Do this per model version. If you serve two models behind a router, an aggregate cost number is meaningless. The useful comparison is cost per <em>successful</em> request, where "successful" is defined by the weighted objective above. A cheap model that fails 20% of requests is not cheap.</p>
+<h3 id="a-note-on-retry-storms">A note on retry storms</h3>
+<p>A failure mode worth instrumenting explicitly: when retrieval latency spikes, the model server may time out and retry, which multiplies both cost and hallucination rate (retries often use degraded context). Track retries per request and alert on the retry rate, not just on latency. A circuit breaker that sheds load when a dependency's p95 exceeds a threshold is a standard mitigation and is cheaper than tuning the model.</p>
+<h2 id="metric-4-safety-including-the-false-positive-side">Metric 4: safety, including the false-positive side</h2>
+<p>Safety scanning is usually framed as catching harmful outputs. In practice, two failure modes matter equally:</p>
+<ul>
+<li><strong>False negatives</strong> — harmful output passes the classifier, often because the classifier itself degrades under load.</li>
+<li><strong>False positives</strong> — legitimate output is blocked, often because a domain-specific pattern (a discount code, an ID format) matches a harmful pattern.</li>
+</ul>
+<p>Both should be measured. The false-positive rate is easy to ignore because it does not generate an incident, but it generates user frustration and support tickets.</p>
+<h3 id="how-to-measure-it_2">How to measure it</h3>
+<p>Run the classifier on a fixed labelled set of benign and harmful examples on a schedule, not just on live traffic. This gives you a stable estimate of classifier behavior independent of traffic mix. Log classifier latency alongside the verdict; if latency climbs, treat the classifier as degraded and consider a fallback path.</p>
+<p>A practical mitigation for false positives is a post-processing allowlist for known-safe patterns in your domain, applied <em>after</em> the classifier. This is a targeted fix, not a general solution, and it should be reviewed whenever the domain patterns change.</p>
+<h2 id="a-minimal-reference-architecture">A minimal reference architecture</h2>
+<p>The components below are the ones that consistently earn their keep. Substitute equivalent managed services where convenient; the shape matters more than the vendor.</p>
+<ul>
+<li><strong>Prompt engine</strong> — renders prompts from a versioned template. Every render is tagged with a <code>prompt_version</code>.</li>
+<li><strong>Model server</strong> — serves the model with prefix caching enabled where supported. Emits per-request metrics.</li>
+<li><strong>Retrieval</strong> — hybrid search over a versioned index. Emits retrieval latency and the <code>corpus_version</code> used.</li>
+<li><strong>Metric computation</strong> — a lightweight per-request grounding score plus token and latency counters, computed close to the request.</li>
+<li><strong>Metric store</strong> — a time-series store keyed by session, model, prompt and corpus versions.</li>
+<li><strong>Dashboard</strong> — per-version views, not global aggregates.</li>
+<li><strong>Human review</strong> — a small labelled sample per week, used to calibrate the automated metrics, not to replace them.</li>
+</ul>
+<p>The single most important design choice is that <strong>metrics are computed per request and stored with version tags</strong>. Everything else is downstream of that.</p>
+<h2 id="human-in-the-loop-what-it-is-for">Human-in-the-loop: what it is for</h2>
+<p>Automated metrics drift. The fix is not to trust them more; it is to periodically check them against human labels on a small, stable sample. Two rules make this practical:</p>
+<ul>
+<li><strong>Sample deliberately, not randomly.</strong> Include borderline cases (grounding score near the threshold), cases from each prompt version, and cases flagged by users. Random sampling wastes annotation budget on easy cases.</li>
+<li><strong>Use the labels to calibrate, not to score.</strong> The output of annotation is a correction to the automated metric — a threshold, a prompt fix, or a note that the metric is no longer valid — not a headline number.</li>
+</ul>
+<p>Active learning is worth trying once you have a working pipeline: send only borderline cases to annotators and keep the easy cases automated. This reduces annotation volume without changing the metric's calibration, provided you re-check the calibration periodically on a random sample.</p>
+<h2 id="failure-modes-and-what-they-look-like">Failure modes and what they look like</h2>
+<p><strong>Latent metric drift.</strong> The grounding score improves because the corpus changed, not because the model improved. <em>Symptom:</em> metric improves, user complaints rise. <em>Mitigation:</em> version the corpus, run a golden set on every corpus update, and alert on metric-vs-label agreement.</p>
+<p><strong>Prompt drift.</strong> A template change alters output length or claim density. <em>Symptom:</em> token ratio shifts, grounding noise increases. <em>Mitigation:</em> track output/input token ratio and claim count per prompt version; gate prompt changes on these.</p>
+<p><strong>Cost explosion from retries.</strong> A dependency slows down, the model server retries, cost and hallucination rate both rise. <em>Symptom:</em> latency p95 up, retry count up, cost up. <em>Mitigation:</em> circuit breaker on dependency latency; alert on retry rate.</p>
+<p><strong>Safety false positives.</strong> A domain pattern matches a harmful pattern. <em>Symptom:</em> legitimate outputs blocked; support tickets. <em>Mitigation:</em> post-classifier allowlist; measure false-positive rate on a labelled benign set.</p>
+<p><strong>Traceability black hole.</strong> You cannot answer "why did this answer change?". <em>Symptom:</em> rollbacks without a clear cause. <em>Mitigation:</em> propagate <code>session_id</code>, <code>model_version</code>, <code>prompt_version</code> and <code>corpus_version</code> through every span, and store them with every metric.</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
-<p>This approach isn’t for every team. It’s overkill for a single API call or a demo. It’s also not for teams that can’t afford the upfront cost of labeling. Here are the cases where you should step back:</p>
-<ol>
-<li><strong>Low volume</strong>: If you’re serving fewer than 1k sessions/day, the cost of running Timestream, Lambda, and annotation outweighs the benefit. A simple Prometheus metric and a weekly manual review are enough. 2. <strong>Static prompts</strong>: If your prompt never changes and your retrieval corpus is fixed, static benchmarks like RAGAS or TruLens are sufficient. You don’t need real-time metrics. 3. <strong>No budget for labeling</strong>: If you can’t pay $600/month for annotation, you’ll have to rely on automated metrics alone. The risk of missing regressions is high, but it’s better than nothing. 4. <strong>Regulated environments</strong>: If you’re in healthcare or finance, you may need full auditability and traceability that goes beyond OpenTelemetry. Consider a dedicated compliance tool like AWS Audit Manager. 5. <strong>Research-only</strong>: If you’re only comparing models in a notebook, don’t</li>
-</ol>
-<h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/">LLM evals: skip the hype, track these 4 metrics</a></li>
-<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
-<li><a href="https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/">LLM output metrics that actually move the needle</a></li>
+<li><strong>Low volume.</strong> Below roughly a thousand sessions a day, the operational cost of a time-series store, a streaming pipeline and annotation may exceed the benefit. A structured log and a weekly manual review are often enough.</li>
+<li><strong>Static prompts and static corpus.</strong> If neither changes, a one-off evaluation is sufficient and continuous metrics add little.</li>
+<li><strong>No annotation budget.</strong> Without any human labels, automated metrics cannot be calibrated and will drift silently. If this is the constraint, at minimum keep a small golden set that is manually verified once and re-run on every change.</li>
+<li><strong>Regulated environments.</strong> Auditability requirements may exceed what general-purpose tracing provides. Plan for that explicitly rather than retrofitting.</li>
+<li><strong>Research and comparison only.</strong> If you are comparing models in a notebook, use the standard benchmarks. The production machinery described here is for systems that serve users.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before adding a metric, ask:</p>
+<ol>
+<li>What user-visible failure does this metric predict?</li>
+<li>What is the action if it crosses a threshold?</li>
+<li>How is it calibrated against human labels, and how often?</li>
+<li>Which version identifiers does it carry?</li>
+<li>What is the cost of computing it per request, and does that cost scale with traffic?</li>
+<li>What is the false-positive rate, and who is paged when it fires?</li>
+</ol>
+<p>If you cannot answer 2 and 3, the metric will become noise.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one production endpoint and add four fields to its structured log line: <code>prompt_version</code>, <code>model_version</code>, <code>corpus_version</code> and <code>output_token_count</code>. Deploy it. You now have the minimum data needed to attribute any future quality regression to a specific change, and every metric described above becomes computable from logs you already have.</p>
                 
                 
             </div>

@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Big model API vs fine-tune: the 2026 math - Kubai Kevin</title>
-        <meta name="description" content="I’ve seen teams burn six weeks perfecting a prompt only to hit a 12% drop in accuracy when their top user started asking questions in German.">
+        <meta name="description" content="A practical framework for deciding between prompting a large model API and fine-tuning a small model, with instrumentation, failure modes and cost math.">
         <meta name="keywords" content="Apis, Finetuning">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T12:15:47.905920">
-        <meta property="article:modified_time" content="2026-09-18T14:03:46.318165+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:01:31.309984+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Big model API vs fine-tune: the 2026 math">
-        <meta property="og:description" content="I’ve seen teams burn six weeks perfecting a prompt only to hit a 12% drop in accuracy when their top user started asking questions in German.">
+        <meta property="og:description" content="A practical framework for deciding between prompting a large model API and fine-tuning a small model, with instrumentation, failure modes and cost math.">
         <meta property="og:url" content="https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Big model API vs fine-tune: the 2026 math">
-        <meta name="twitter:description" content="I’ve seen teams burn six weeks perfecting a prompt only to hit a 12% drop in accuracy when their top user started asking questions in German.">
+        <meta name="twitter:description" content="A practical framework for deciding between prompting a large model API and fine-tuning a small model, with instrumentation, failure modes and cost math.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/big-model-api-vs-fine-tune-the-2026-math.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/#article",
       "headline": "Big model API vs fine-tune: the 2026 math",
-      "description": "I’ve seen teams burn six weeks perfecting a prompt only to hit a 12% drop in accuracy when their top user started asking questions in German.",
+      "description": "A practical framework for deciding between prompting a large model API and fine-tuning a small model, with instrumentation, failure modes and cost math.",
       "datePublished": "2026-07-03T12:15:47+00:00",
-      "dateModified": "2026-09-18T14:03:46+00:00",
-      "wordCount": 3344,
-      "timeRequired": "PT17M",
+      "dateModified": "2026-10-03T11:01:31+00:00",
+      "wordCount": 2954,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Big model API vs fine-tune: the 2026 math</h1>
                 
-                <p class="post-lead">I’ve seen teams burn six weeks perfecting a prompt only to hit a 12% drop in accuracy when their top user started asking questions in German.</p>
+                <p class="post-lead">A practical framework for deciding between prompting a large model API and fine-tuning a small model, with instrumentation, failure modes and cost math.</p>
                 
                 
                 <div class="tags">
@@ -242,66 +242,88 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        17 min read
-                        &nbsp;·&nbsp; 3344 words
+                        15 min read
+                        &nbsp;·&nbsp; 2954 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The official documentation for finetuning small is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
+                <p>The official documentation for fine-tuning small models is good at explaining the mechanics. What it rarely covers is the operational reality six months into production, when prompts have drifted, edge cases have accumulated, and the original cost model no longer describes what is actually being spent. This article fills that gap with a decision framework, instrumentation recipes, and a failure-mode catalogue.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>In 2026, the marketing pages still show a single curve: larger models are always more accurate, smaller ones are always cheaper. That’s not reality. Their prompt engineering team had already squeezed every token, but the bill was still $14k/month for a 1.2B parameter model served via AWS Bedrock. The difference wasn’t in the code—it was in the assumptions.</p>
-<p>The docs assume you can tune the prompt until the model behaves. In production, prompts degrade over time as the domain drifts, user phrasing changes, and new edge cases appear. Fine-tuning on domain-specific data with LoRA kept the score flat for months. The hidden cost of prompt engineering is maintenance, not just the API calls.</p>
-<p>Cost models also ignore the cold-start penalty of large-model APIs. A 30B parameter model served by Bedrock or Vertex has a cold-start latency of 1.8–2.4 seconds on first request after 15 minutes of idle time. In a user-facing chat, that latency spike converts to 8–12% abandonment. Fine-tuned small models on GPU instances don’t suffer this tax because they’re already resident in memory.</p>
-<p>Another gap: docs rarely mention the compliance surface. If your prompts contain PII, you’re already inside the SOC2 audit scope when using Bedrock’s zero-data-retention mode. But if you fine-tune on-premise with a 7B parameter model on a single A100, you control the data path end-to-end. That single checkbox changed a client’s security review from 6 weeks to 2 days.</p>
-<p>The math changes again when you need structured output. A large model prompted to return JSON often requires 2–4 retries because 12–18% of responses are malformed. Each retry costs the same as the first call. Fine-tuning a small model to return strict JSON cut retries to 0.5% and saved 18% of total compute cost in a month-long A/B test.</p>
-<h2 id="how-fine-tuning-small-models-vs-prompting-large-ones-the-2026-cost-accuracy-tradeoff-actually-works-under-the-hood">How Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff actually works under the hood</h2>
-<p>Under the hood, the tradeoff isn’t just model size versus prompt length; it’s memory bandwidth versus compute throughput, plus data movement and serialization overhead. A 70B parameter model in BF16 uses 140 GB of memory. Serving it with vLLM on a single A100 with 80 GB VRAM requires tensor parallelism across two GPUs and a 100 Gbps NVLink to keep the pipeline fed. The prompt context window of 8k tokens adds another 2 GB of KV cache per request. The effective batch size drops to 4–6 concurrent users before hitting latency SLA of 200 ms.</p>
-<p>A fine-tuned 70M parameter model, by contrast, fits entirely in L2 cache on a single GPU. With FlashAttention-v2 and 4-bit quantization, the active parameters occupy 140 MB. The same A100 can serve 48 concurrent users at 85 ms latency. The compute cost per request is 0.00012 A100-minutes vs 0.0032 for the 70B model — a 26x difference.</p>
-<p>Tokenization is the hidden tax. Large models often use proprietary tokenizers with 130k+ vocabularies. Tokenizing 100k characters of user input can take 45 ms on CPU before the GPU even starts. Switching to a sentencepiece tokenizer trained on domain text cut tokenization time to 8 ms and cut total latency by 22%.</p>
-<p>In a production trace of 50k requests, the 70B model’s KV cache accounted for 68% of total memory residency, not the model weights. Quantizing the KV cache to 8-bit with vLLM’s PagedAttention reduced memory by 42% and slashed cold-start latency by 310 ms.</p>
-<p>The networking layer matters too. Prompting large models over REST with 200 ms round-trip time (RTT) adds 1.2 seconds of network overhead for 6 round trips (prompt + response). Fine-tuning on-premise with a local GPU cuts RTT to 0.2 ms and removes those round trips entirely. In a global deployment, that saved 40% of total latency for users in APAC.</p>
-<p>Security boundaries shift as well. When you use a managed API, your prompts traverse the provider’s network, hit their audit logs, and may be used for model improvement unless you opt out. Fine-tuning on your own infra keeps the data in your VPC and lets you enforce your own secrets rotation policy. That single change cut our SOC2 evidence collection time from 10 days to 3.</p>
-<p>Finally, the lifecycle cost of updates. A large model API receives weekly model updates. Each update can change the output distribution, forcing a prompt re-engineering cycle. Fine-tuned small models can be updated monthly with a targeted LoRA adapter; the base weights remain frozen. Over a year, that saved 15 engineering days and avoided three emergency rollbacks.</p>
-<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
-<p>The repo started at 320 lines of Python and ended at 142 lines after deduplication and cleanup. The accuracy delta stayed within 0.3% F1, and the GPU bill dropped from $14k to $1.8k per month.</p>
-<p>The distribution was long-tailed: 62% English, 23% Spanish, 8% French, 7% German. We split by timestamp to preserve temporal drift.</p>
-<p>The tokenizer vocab size is 32k tokens. Training took 4.5 hours on a single A100 with 80 GB VRAM using Python 3.11 and sentencepiece 0.2. The tokenizer achieved 94% subword compression vs 81% for the default tiktoken vocabulary.</p>
-<p>Next, we fine-tuned with LoRA. We used bitsandbytes 0.43.0 for 4-bit quantization and peft 0.10.0 for LoRA adapters. The adapter rank was 16, alpha 32, dropout 0.05. Training ran for 8 epochs with AdamW 3e-4, batch size 32, gradient accumulation 4. Total training time was 2.3 hours. The final adapter size is 54 MB.</p>
-<p>Here’s the training script. Save it as train_lora.py.</p>
+<p>Marketing pages tend to present a single curve: larger models are more accurate, smaller ones are cheaper. Production rarely looks like that curve. Teams commonly find that after months of prompt optimisation the bill for a managed API has not fallen much, because the cost driver was never the prompt text — it was the request volume, the retries, and the latency budget.</p>
+<p>Documentation implicitly assumes a prompt can be tuned until the model behaves. In production, prompts degrade as the domain drifts, user phrasing changes, and new edge cases appear. Fine-tuning on domain-specific data with a parameter-efficient adapter can hold a metric flat for longer, because the behaviour lives in the weights rather than in text that must be re-edited every time the domain shifts. The hidden cost of prompt engineering is maintenance, not just the API calls.</p>
+<p>Cost models also tend to ignore cold-start behaviour. Managed large-model endpoints can exhibit elevated first-request latency after an idle period, depending on the provider's warm-pool policy. In a user-facing chat, a latency spike at the wrong moment shows up as abandonment. A small fine-tuned model resident in GPU memory does not suffer the same tax because there is no cold path to warm.</p>
+<p>Another gap is the compliance surface. If prompts contain personal data, the data path through a managed provider is already inside the audit scope, even with zero-data-retention options enabled. Fine-tuning on infrastructure you control keeps the data path end-to-end inside your own boundary, which can materially shorten a security review. The exact saving depends on the reviewer and the regime, so treat any specific number as illustrative rather than a benchmark.</p>
+<p>The math changes again when structured output is required. A large model prompted to return JSON often needs retries because a fraction of responses are malformed. Each retry costs the same as the first call. Fine-tuning a small model on strict JSON targets typically reduces retries substantially, because the output format is part of the learned behaviour rather than an instruction the model may ignore.</p>
+<h2 id="how-the-cost-accuracy-tradeoff-works-under-the-hood">How the cost-accuracy tradeoff works under the hood</h2>
+<p>The tradeoff is not simply model size versus prompt length. It is memory bandwidth versus compute throughput, plus data movement and serialisation overhead.</p>
+<p>A 70B parameter model in BF16 occupies roughly 140 GB of parameter memory. Serving it on a single 80 GB accelerator requires tensor parallelism across at least two devices, and the interconnect must keep the pipeline fed. An 8k-token context adds KV cache on top of the weights, and the effective batch size drops before a latency target is reached. The arithmetic is simple: 70 billion parameters times 2 bytes per parameter equals 140 GB, which does not fit in 80 GB.</p>
+<p>A fine-tuned model in the tens-of-millions-of-parameters range, by contrast, can fit comfortably in a single accelerator alongside its KV cache. With quantisation and a modern attention implementation, the active weights occupy a small fraction of memory. The same accelerator can serve a much higher concurrency at lower latency. The compute cost per request is correspondingly lower, though the exact multiple depends on batch size, sequence length and hardware.</p>
+<p>Tokenisation is a frequently overlooked tax. Large models often ship with very large vocabularies. Tokenising a long user input can consume measurable CPU time before the accelerator starts work. A tokeniser trained on domain text can reduce token counts and therefore both latency and cost. The size of the win depends on how far the domain vocabulary diverges from the tokeniser's training distribution.</p>
+<p>In production traces, KV cache often dominates memory residency rather than the model weights, especially at long context lengths. Quantising the KV cache and using paged attention can reduce memory pressure and improve cold-start behaviour. The magnitude of the improvement is workload-specific.</p>
+<p>The networking layer matters too. Prompting a managed model over REST adds round-trip time for each call. A local deployment cuts that to near zero and removes the round trips entirely. For globally distributed users, the latency saving can be substantial.</p>
+<p>Security boundaries shift as well. With a managed API, prompts traverse the provider's network and appear in their audit logs. With self-hosted inference, data stays inside your VPC and your secrets rotation policy applies directly. That change can reduce the evidence-collection effort for an audit, though the exact reduction depends on the control framework.</p>
+<p>Finally, the lifecycle cost of updates. A managed large-model API may receive model updates on the provider's schedule. Each update can change the output distribution and force a prompt re-engineering cycle. A fine-tuned small model can be updated on your schedule with a targeted adapter while the base weights remain frozen. Over a year, that difference in update cadence can translate into engineering days and avoided rollbacks.</p>
+<h2 id="a-worked-example-deciding-with-numbers-you-can-measure">A worked example: deciding with numbers you can measure</h2>
+<p>Rather than trusting a vendor benchmark, build a small decision model from your own measurements. The steps below produce the inputs.</p>
+<p>First, instrument your current path. Log per-request: input token count, output token count, wall-clock latency, retry count, and whether the response parsed successfully. If you are on a managed API, export these from your own gateway rather than relying on provider dashboards, because you need the retry and parse-failure dimensions.</p>
+<p>Second, compute an effective cost per successful request:</p>
+<pre><code>effective_cost = (api_price_per_request * attempts_per_success)
+                 + (retry_compute_cost)
+                 + (engineering_hours_per_month * loaded_hourly_rate / successful_requests_per_month)
+</code></pre>
+<p>The third term is the one most teams omit. If a prompt requires two hours of maintenance per month and the loaded rate is, say, 80 currency units per hour, that is 160 units per month of engineering time spread across all successful requests. At 100,000 requests per month, that is 0.0016 units per request — small. At 5,000 requests per month, it is 0.032 units per request, which may exceed the API price itself. This is arithmetic from stated assumptions, not a measured benchmark.</p>
+<p>Third, estimate the fine-tuning path. The dominant costs are: labelled data creation, one-off training compute, inference compute, and ongoing retraining. Training compute for a parameter-efficient adapter on a small model is typically a few accelerator-hours; the exact figure depends on dataset size and sequence length. Inference compute is dominated by concurrency and sequence length, not by model size once the model fits in memory.</p>
+<p>Fourth, compare on the metric that matters to the business. If the metric is cost per successful request, the fine-tuned path usually wins above some volume threshold. If the metric is time-to-first-useful-output, the managed API often wins because there is no data-labelling phase. If the metric is accuracy on a narrow, well-defined task with abundant labelled data, fine-tuning usually wins. If the task requires broad world knowledge or open-ended reasoning, prompting a large model usually wins.</p>
+<p>To measure the accuracy side honestly, hold out a temporally separated test set. Split by timestamp, not randomly, because random splits leak future phrasing into training and overstate quality. Report per-class precision and recall, not just a single aggregate, because rare classes are where fine-tuned models most often fail.</p>
+<h2 id="implementation-training-a-parameter-efficient-adapter">Implementation: training a parameter-efficient adapter</h2>
+<p>The example below trains a sequence-classification adapter on a small encoder model. It uses a custom tokeniser, a CSV dataset with a temporal split, and a LoRA-style adapter. The code is illustrative; substitute your own model identifier and dataset paths.</p>
+<p>Save as <code>train_lora.py</code>.</p>
 <pre><code class="language-python">import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
+from transformers import (
+    AutoTokenizer,
+    AutoModelForSequenceClassification,
+    TrainingArguments,
+    Trainer,
+)
 from peft import LoraConfig, get_peft_model, TaskType
 from datasets import load_dataset
 import evaluate
 
-# Load custom tokenizer
-tokenizer = AutoTokenizer.from_pretrained(&quot;ticket_tokenizer_2026&quot;)
+# Load a domain tokeniser trained on your own text
+tokenizer = AutoTokenizer.from_pretrained(&quot;./ticket_tokenizer&quot;)
 tokenizer.pad_token = tokenizer.eos_token
 
-# Load dataset
-raw_datasets = load_dataset(&quot;csv&quot;, data_files={
-    &quot;train&quot;: &quot;train_tickets_2024_2025.csv&quot;,
-    &quot;validation&quot;: &quot;val_tickets_2026.csv&quot;,
-})
+# Temporal split: train on older data, validate on newer data
+raw_datasets = load_dataset(
+    &quot;csv&quot;,
+    data_files={
+        &quot;train&quot;: &quot;train_tickets_2024_2025.csv&quot;,
+        &quot;validation&quot;: &quot;val_tickets_2026.csv&quot;,
+    },
+)
 
 def tokenize_function(examples):
-    return tokenizer(examples[&quot;text&quot;], truncation=True, max_length=512)
+    return tokenizer(
+        examples[&quot;text&quot;],
+        truncation=True,
+        max_length=512,
+    )
 
 tokenized_datasets = raw_datasets.map(tokenize_function, batched=True)
 
-# Load base model
+# Load a small base model appropriate for classification
 model = AutoModelForSequenceClassification.from_pretrained(
     &quot;microsoft/deberta-v3-small&quot;,
     num_labels=15,
     ignore_mismatched_sizes=True,
 )
 
-# LoRA config
+# Parameter-efficient adapter configuration
 lora_config = LoraConfig(
     task_type=TaskType.SEQ_CLS,
     inference_mode=False,
@@ -312,9 +334,8 @@ lora_config = LoraConfig(
 )
 
 model = get_peft_model(model, lora_config)
-model.print_trainable_parameters()  # Should show ~2.1M trainable params
+model.print_trainable_parameters()
 
-# Training args
 training_args = TrainingArguments(
     output_dir=&quot;./lora_checkpoint&quot;,
     evaluation_strategy=&quot;epoch&quot;,
@@ -330,12 +351,15 @@ training_args = TrainingArguments(
     fp16=True,
 )
 
-# Metrics
 def compute_metrics(eval_pred):
     metric = evaluate.load(&quot;f1&quot;)
     logits, labels = eval_pred
     predictions = torch.argmax(torch.tensor(logits), dim=-1)
-    return metric.compute(predictions=predictions, references=labels, average=&quot;macro&quot;)
+    return metric.compute(
+        predictions=predictions,
+        references=labels,
+        average=&quot;macro&quot;,
+    )
 
 trainer = Trainer(
     model=model,
@@ -350,17 +374,20 @@ trainer.train()
 model.save_pretrained(&quot;./lora_model_final&quot;)
 tokenizer.save_pretrained(&quot;./lora_model_final&quot;)
 </code></pre>
-<p>Next, we wrapped the fine-tuned model in a FastAPI service. The service uses vLLM 0.5.0 with PagedAttention for efficient batching. We added a custom prompt template that forces JSON output and validates the schema. The endpoint latency at 95th percentile is 85 ms on an A100 with 4 concurrent users. Here’s the service code. Save it as app.py.</p>
+<p>Two notes on correctness. First, <code>ignore_mismatched_sizes=True</code> is required when the number of labels differs from the base model's classification head. Second, the adapter is saved separately from the base weights; at inference you must load the base model and then attach the adapter, or merge the adapter into the base weights before saving.</p>
+<h2 id="implementation-serving-the-adapter">Implementation: serving the adapter</h2>
+<p>The service below wraps the fine-tuned model behind an HTTP endpoint. It uses a high-throughput inference server with adapter support. Replace the model path and adapter configuration with your own.</p>
+<p>Save as <code>app.py</code>.</p>
 <pre><code class="language-python">from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from vllm import LLM, SamplingParams
+from vllm.lora.request import LoRARequest
 import json
 
 app = FastAPI()
 
-# Load LoRA model
 llm = LLM(
-    model=&quot;./lora_model_final&quot;,
+    model=&quot;microsoft/deberta-v3-small&quot;,
     tokenizer=&quot;./lora_model_final&quot;,
     tensor_parallel_size=1,
     dtype=&quot;float16&quot;,
@@ -369,252 +396,117 @@ llm = LLM(
     trust_remote_code=True,
 )
 
+lora_request = LoRARequest(
+    lora_name=&quot;ticket_classifier&quot;,
+    lora_int_id=1,
+    lora_local_path=&quot;./lora_model_final&quot;,
+)
+
 class TicketRequest(BaseModel):
     text: str
     language: str = &quot;en&quot;
 
 @app.post(&quot;/classify&quot;)
 def classify(request: TicketRequest):
-    prompt = f&quot;&quot;&quot;
-    Classify the following support ticket into one of these categories:
-    [&quot;billing&quot;, &quot;shipping&quot;, &quot;account&quot;, &quot;feature_request&quot;, &quot;bug&quot;, &quot;other&quot;]
-    Return JSON only, no extra text.
-    Ticket: {request.text}
-    &quot;&quot;&quot;
+    prompt = (
+        &quot;Classify the following support ticket into one of these categories: &quot;
+        '[&quot;billing&quot;, &quot;shipping&quot;, &quot;account&quot;, &quot;feature_request&quot;, &quot;bug&quot;, &quot;other&quot;]. '
+        &quot;Return JSON only, no extra text.\n&quot;
+        f&quot;Ticket: {request.text}\n&quot;
+    )
     sampling_params = SamplingParams(
         temperature=0.0,
         max_tokens=16,
-        stop=[&quot;\n&quot;, &quot;&lt;/s&gt;&quot;]
+        stop=[&quot;\n&quot;],
     )
-    output = llm.generate(prompt, sampling_params)
+    output = llm.generate(
+        prompt,
+        sampling_params,
+        lora_request=lora_request,
+    )
     try:
-        result = json.loads(output[0].outputs[0].text)
-        return result
+        return json.loads(output[0].outputs[0].text)
     except json.JSONDecodeError:
-        raise HTTPException(status_code=500, detail=&quot;Invalid model output&quot;)
+        raise HTTPException(
+            status_code=500,
+            detail=&quot;Invalid model output&quot;,
+        )
 
 if __name__ == &quot;__main__&quot;:
     import uvicorn
     uvicorn.run(app, host=&quot;0.0.0.0&quot;, port=8000)
 </code></pre>
-<p>We containerized the service with Docker and pushed to an internal registry. The image is 2.1 GB and deploys in 45 seconds on a g5g.xlarge instance. The Terraform snippet is below.</p>
-<pre><code class="language-hcl">resource &quot;aws_instance&quot; &quot;llm_service&quot; {
-  ami           = &quot;ami-0abcdef1234567890&quot; # Ubuntu 22.04 with NVIDIA drivers 535
-  instance_type = &quot;g5g.xlarge&quot;
-  key_name      = &quot;llm-key&quot;
-  vpc_security_group_ids = [aws_security_group.llm.id]
+<p>Note that the base model and the adapter are loaded separately. Loading the adapter as if it were a full model will fail or produce incorrect results. Also note that <code>max_model_len</code> must be at least as large as your longest tokenised input; setting it too high wastes memory, and setting it too low truncates silently.</p>
+<h2 id="instrumentation-what-to-measure-and-how">Instrumentation: what to measure and how</h2>
+<p>The following measurements are the ones that actually change decisions. None of them require a benchmark suite.</p>
+<p>Latency. Record wall-clock time from request receipt to response completion, and break it into queue time, prefill time, decode time, and post-processing. The 95th percentile matters more than the mean. Alert on the 95th percentile crossing your SLA for a sustained window.</p>
+<p>Token counts. Log input and output token counts per request. A sudden jump in input tokens usually means a tokeniser mismatch or a new user pattern. A jump in output tokens usually means the model is failing to stop.</p>
+<p>Retry rate. Count requests that required more than one attempt, separated by cause: parse failure, timeout, rate limit, or validation failure. Parse failure is the one that responds to fine-tuning.</p>
+<p>Memory residency. Track peak GPU memory and the split between weights, KV cache, and activations. If KV cache dominates, look at quantisation and paged attention before buying more hardware.</p>
+<p>Concurrency. Measure the maximum concurrent requests that meet your latency SLA. This number, not raw throughput, determines how much hardware you need.</p>
+<p>Accuracy in production. Sample a fixed number of requests per week, label them, and compute per-class precision and recall. Track the trend, not the absolute value. A downward trend is the signal to retrain.</p>
+<p>A minimal Prometheus exposition for these metrics:</p>
+<pre><code class="language-python">from prometheus_client import Counter, Histogram, Gauge
 
-  root_block_device {
-    volume_size = 200
-    volume_type = &quot;gp3&quot;
-  }
-
-  user_data = &lt;&lt;-EOF
-              #!/bin/bash
-              apt-get update
-              apt-get install -y docker.io nvidia-container-toolkit
-              systemctl enable docker
-              systemctl start docker
-              usermod -aG docker ubuntu
-              EOF
-}
+REQUEST_LATENCY = Histogram(
+    &quot;llm_request_latency_seconds&quot;,
+    &quot;End-to-end request latency&quot;,
+    buckets=[0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5],
+)
+INPUT_TOKENS = Counter(
+    &quot;llm_input_tokens_total&quot;,
+    &quot;Total input tokens processed&quot;,
+)
+OUTPUT_TOKENS = Counter(
+    &quot;llm_output_tokens_total&quot;,
+    &quot;Total output tokens generated&quot;,
+)
+PARSE_FAILURES = Counter(
+    &quot;llm_parse_failures_total&quot;,
+    &quot;Responses that failed schema validation&quot;,
+)
+GPU_MEMORY = Gauge(
+    &quot;llm_gpu_memory_bytes&quot;,
+    &quot;GPU memory in use&quot;,
+)
 </code></pre>
-<p>We added a Prometheus metrics endpoint that exposes latency, throughput, and GPU utilization. The alerting rule triggers when 95th percentile latency exceeds 200 ms for 5 minutes or GPU memory hits 90%.</p>
-<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>The fine-tuned small model cut GPU cost by 87% and reduced latency by 63%. Here are the key metrics.</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Prompted 1.2B API</th>
-<th>Fine-tuned 70M LoRA</th>
-<th>Delta</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>95th percentile latency</td>
-<td>1.24 s</td>
-<td>85 ms</td>
-<td>-93%</td>
-</tr>
-<tr>
-<td>GPU cost per 1k requests</td>
-<td>$0.32</td>
-<td>$0.04</td>
-<td>-87%</td>
-</tr>
-<tr>
-<td>Cold-start latency</td>
-<td>1.8–2.4 s</td>
-<td>25 ms</td>
-<td>-99%</td>
-</tr>
-<tr>
-<td>Retry rate (JSON parse fail)</td>
-<td>18%</td>
-<td>0.5%</td>
-<td>-97%</td>
-</tr>
-<tr>
-<td>SOC2 audit hours saved</td>
-<td>10 days</td>
-<td>3 days</td>
-<td>-70%</td>
-</tr>
-<tr>
-<td>Peak concurrent users</td>
-<td>48</td>
-<td>48</td>
-<td>0%</td>
-</tr>
-</tbody>
-</table>
-<p>The fine-tuned model’s accuracy stayed within 0.3% F1 of the large model across all languages. We measured per-language F1: English 0.91, Spanish 0.87, French 0.85, German 0.84. The large model scored 0.92, 0.89, 0.86, 0.85 respectively. The delta is within margin of error for our use case.</p>
-<p>Memory usage was the surprise. The fine-tuned model used 1.8 GB VRAM at rest vs 68 GB for the large model. That allowed us to run two models on a single A100—one for production, one for canary—without swapping. The large model required two A100s in tensor parallel mode.</p>
-<p>We also tracked tokenization cost. The large model’s tokenizer averaged 45 ms per request on CPU. The custom sentencepiece tokenizer averaged 8 ms. Over 120k requests, that saved 4.6 compute-hours on the CPU tier.</p>
-<p>Cost breakdown for GPU compute (AWS g5g.xlarge, on-demand) in us-east-1:
-- Prompted 1.2B model: $0.752 per GPU-hour
-- Fine-tuned 70M model: $0.096 per GPU-hour
-- Difference: $0.656 per GPU-hour saved
-- Running 24/7: $472/month saved</p>
-<p>The fine-tuned model’s adapter is 54 MB. Updating the adapter costs $0.002 per upload via S3 and takes 90 seconds to deploy. The large model API receives weekly updates that can change output distribution; each update requires prompt re-engineering that costs 2–4 engineering days.</p>
-<p>I expected the fine-tuned model to struggle with rare classes, but the LoRA adapter’s low-rank updates generalized better than expected. The rarest class (1.2% of tickets) went from 62% precision to 81% precision after fine-tuning.</p>
-<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
-<p>First failure mode: tokenization drift. If your tokenizer’s vocabulary doesn’t cover new user slang or product names, token count can explode. A single new emoji or brand name can add 12–18 tokens, doubling compute per request. We saw this when a client launched a new product line with a hyphenated name. Token count jumped from 48 to 92, and latency spiked from 85 ms to 210 ms. The fix was retraining the tokenizer on the new product names—took 6 hours and one GPU-hour.</p>
-<p>Second failure mode: adapter collapse. If you train too long or use too high a learning rate, the LoRA adapter overfits and the model starts ignoring the base weights. The symptom is sudden accuracy drop on out-of-domain examples. We saw this after 15 epochs with alpha=64. Rolling back to epoch 8 restored accuracy. Lesson: always keep checkpoints and monitor validation loss.</p>
-<p>Third failure mode: GPU memory fragmentation. vLLM’s PagedAttention helps, but if you serve multiple adapters or switch models frequently, memory can fragment. We hit this when we tried to hot-swap three adapters for multilingual support. The solution was to pre-allocate contiguous memory with <code>--paged_attention_allow_new_chunks false</code> and limit the number of adapters loaded simultaneously. Memory usage dropped from 92% to 65%.</p>
-<p>Fourth failure mode: serialization overhead in production. Fine-tuned models often use safetensors for weights to avoid pickle exploits. But converting to safetensors adds 3–5 minutes to the build pipeline. We measured it: 320 MB model took 4.2 minutes to convert vs 5.8 seconds for a binary torch save. The workaround was to pre-convert in CI and cache the artifact.</p>
-<p>Fifth failure mode: locale drift. A model fine-tuned on English data can degrade when users start writing in Spanish or French. The solution is to include balanced multilingual data during fine-tuning. In our case, adding 8k Spanish tickets brought F1 back to 0.87.</p>
-<p>Sixth failure mode: dependency rot. Transformers 4.40 dropped support for a deprecated LoRA config we used. The error message was opaque: "KeyError: 'base_model.model.model.layers.0.attention.self.key_layer'." The fix was pinning transformers to 4.39.0 and peft to 0.9.0 until we upgraded the adapter format.</p>
-<p>Seventh failure mode: monitoring blind spots. The vLLM metrics endpoint doesn’t expose per-request token usage. We had to add a custom interceptor to log token count and input length. Without it, we missed a regression where token count jumped from 512 to 1024 mid-deployment.</p>
-<p>Eighth failure mode: cold GPU on spot instances. If you use spot instances for cost savings, the GPU can take 2.1–3.4 minutes to initialize after a preempt. We mitigated it by using warm pools with on-demand capacity and keeping the instance alive for 2 hours after last request.</p>
-<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
-<p>Below are the tools we actually use in production now. All are pinned to 2026 releases.</p>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Version</th>
-<th>Purpose</th>
-<th>Why it matters</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>vLLM</td>
-<td>0.5.0</td>
-<td>High-throughput LLM serving with PagedAttention</td>
-<td>26x higher batch throughput than naive transformers</td>
-</tr>
-<tr>
-<td>peft</td>
-<td>0.10.0</td>
-<td>LoRA and adapter training</td>
-<td>Reduces trainable parameters by 98% with minimal accuracy loss</td>
-</tr>
-<tr>
-<td>bitsandbytes</td>
-<td>0.43.0</td>
-<td>4-bit quantization</td>
-<td>Cuts memory by 50% and speeds up inference by 30%</td>
-</tr>
-<tr>
-<td>sentencepiece</td>
-<td>0.2.0</td>
-<td>Custom tokenizers</td>
-<td>Domain-specific vocab cuts token count by 25%</td>
-</tr>
-<tr>
-<td>FastAPI</td>
-<td>0.111.0</td>
-<td>Microservice wrapper</td>
-<td>JSON schema validation prevents 18% of parsing errors</td>
-</tr>
-<tr>
-<td>prometheus-client</td>
-<td>0.20.0</td>
-<td>Metrics export</td>
-<td>Exposes latency, throughput, and GPU memory for alerting</td>
-</tr>
-<tr>
-<td>safetensors</td>
-<td>0.4.3</td>
-<td>Secure model serialization</td>
-<td>Prevents pickle exploits in CI/CD</td>
-</tr>
-<tr>
-<td>Terraform</td>
-<td>1.7.5</td>
-<td>Infrastructure as code</td>
-<td>Reproducible GPU instance provisioning</td>
-</tr>
-<tr>
-<td>Docker</td>
-<td>25.0.3</td>
-<td>Containerization</td>
-<td>Consistent runtime across dev, staging, prod</td>
-</tr>
-</tbody>
-</table>
-<p>One surprise: peft’s LoRA config changed between 0.9 and 0.10. The new config requires explicit task_type and inference_mode flags. Old configs break silently. Pin peft to 0.10.0 and test before upgrading.</p>
-<p>Another surprise: vLLM 0.5.0’s PagedAttention can cause OOM if you set max_model_len too high. The default 2048 is fine for most use cases, but we tried 4096 and hit memory fragmentation. The fix was to cap max_model_len at 1024 when using LoRA adapters.</p>
-<p>We also evaluated TensorRT-LLM 0.9.0 for production. It shaved another 12% latency off vLLM but added 30 minutes to the build pipeline and required CUDA 12.4. The latency gain wasn’t worth the complexity for our 85 ms SLA.</p>
-<p>For monitoring, we use Grafana 10.4 with the NVIDIA GPU dashboard. The dashboard shows real-time GPU utilization, memory, and power draw. We added a custom panel for token throughput per second.</p>
-<p>For CI/CD, we use GitHub Actions with self-hosted runners on GPU instances. The workflow builds the Docker image, runs unit tests, converts to safetensors, pushes to ECR, and deploys to staging. The entire pipeline takes 12 minutes on a g5g.xlarge.</p>
-<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
-<p>This approach is wrong if your problem is fundamentally a retrieval task. Fine-tuning a small model won’t help if the answer is already in your knowledge base. In that case, a RAG pipeline with a 7B parameter model is better. Switching to a RAG pipeline with a 7B model dropped hallucinations to 0.3%.</p>
-<p>It’s also wrong if you need multi-modal output. Fine-tuning small models for image captioning or audio transcription falls apart when the input is not text. Switching to a 1.5B audio-specific model cut WER to 4%.</p>
-<p>If your latency requirement is sub-50 ms, prompting a large model with optimized tokenization might still win. The cost was $0.0032 per request vs $0.0004 for the fine-tuned model—a 8x cost difference. If sub-50 ms is mandatory, the large model wins on latency despite the higher cost.</p>
-<p>It’s wrong if your data is too small or too noisy. Fine-tuning requires at least 5k high-quality labeled examples to avoid overfitting. If you have 2k examples, prompting a large model is safer.</p>
-<p>Finally, if your compliance regime forbids on-premise GPU compute, the managed API route is unavoidable. SOC2 Type II, HIPAA, or FedRAMP often require data to stay within the provider’s boundary. Fine-tuning on-premise isn’t an option in those cases.</p>
-<p>I once assumed that fine-tuning would always beat prompting for accuracy. That assumption cost us six weeks of rework when the client’s legal team forbade on-premise GPUs.</p>
-<h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>After running this in production for 9 months, here’s what I believe:</p>
+<p>Wrap the request handler so that latency is observed and token counts are incremented on every path, including failures. Metrics that only fire on the happy path will hide exactly the regressions you care about.</p>
+<h2 id="failure-modes-to-plan-for">Failure modes to plan for</h2>
+<p>Tokenisation drift. If the tokeniser vocabulary does not cover new user slang or product names, token counts can grow sharply. A new brand name or emoji can add several tokens per occurrence, multiplying compute per request. The fix is to retrain or extend the tokeniser on the new vocabulary and re-validate token counts before deployment.</p>
+<p>Adapter collapse. Training too long or with too high a learning rate can overfit the adapter until it ignores the base weights. The symptom is a sudden accuracy drop on out-of-domain examples while in-domain metrics stay flat. Keep checkpoints and monitor validation loss; roll back to the best checkpoint rather than continuing to train.</p>
+<p>Memory fragmentation. Paged attention helps, but serving multiple adapters or hot-swapping models can fragment memory. Limit the number of adapters loaded simultaneously and pre-allocate contiguous memory where the server supports it. Measure peak memory after each change.</p>
+<p>Serialisation overhead. Safe serialisation formats avoid unsafe deserialisation, but conversion adds time to the build pipeline. Pre-convert in CI and cache the artefact rather than converting on every deploy.</p>
+<p>Locale drift. A model fine-tuned on one language degrades when users write in another. Include balanced multilingual data during fine-tuning, and monitor per-language metrics separately so the degradation is visible.</p>
+<p>Dependency rot. Adapter and inference libraries change their configuration formats between minor versions. Pin versions, and test an upgrade in a staging environment before promoting it. Silent config changes are worse than loud failures.</p>
+<p>Monitoring blind spots. Some inference servers do not expose per-request token usage by default. Add an interceptor that logs token counts and input lengths, or a regression in token usage will go unnoticed until the bill arrives.</p>
+<p>Cold start on preemptible capacity. If you use preemptible instances for cost savings, initialisation after a preemption can take minutes. Mitigate with a warm pool of on-demand capacity, or keep instances alive for a grace period after the last request.</p>
+<h2 id="when-fine-tuning-is-the-wrong-choice">When fine-tuning is the wrong choice</h2>
+<p>Fine-tuning is the wrong choice when the task is fundamentally retrieval. If the answer already exists in a knowledge base, a retrieval-augmented pipeline over a general model is usually better than fine-tuning, because fine-tuning cannot reliably memorise facts that change.</p>
+<p>It is the wrong choice for multi-modal input. Fine-tuning a text-only small model for image or audio tasks falls apart because the input is not text. Use a model designed for the modality.</p>
+<p>It is the wrong choice when latency is extremely tight and the managed path already meets it. If a managed model with optimised tokenisation already meets a sub-50 ms budget, the operational cost of self-hosting may not be justified by the per-request saving alone.</p>
+<p>It is the wrong choice when labelled data is scarce or noisy. Parameter-efficient fine-tuning still needs enough high-quality examples to avoid overfitting. If only a few thousand labelled examples exist, prompting a large model is safer, and the labelling effort is better spent on retrieval quality.</p>
+<p>It is the wrong choice when the compliance regime forbids self-hosted compute. Some frameworks require data to remain inside the provider's boundary. In those cases the managed API is the only route, regardless of cost.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Answer these in order. The first "no" determines the branch.</p>
 <ol>
-<li>
-<p>Fine-tuning small models is the right choice for 70% of text-classification and text-generation tasks in 2026. The cost savings, latency wins, and control over data are worth the upfront effort. The 30% where it fails are multi-modal, retrieval-heavy, or latency-critical.</p>
-</li>
-<li>
-<p>The real bottleneck isn’t the model—it’s the tokenizer and the data. I’ve seen teams spend months tweaking LoRA configs while ignoring tokenization inefficiencies. That’s backwards. A bad tokenizer can erase 25% of your latency gains. Spend 20% of your time on tokenization, 50% on data quality, and 30% on model tuning.</p>
-</li>
-<li>
-<p>The managed API model is a debt machine. Every prompt update triggers a new model version, and every version can change the output distribution. That’s fine for experimentation, but production systems need determinism. Fine-tuned small models give you that determinism.</p>
-</li>
-<li>
-<p>Security and compliance are the hidden ROI. Moving from a Bedrock API to an on-premise fine-tuned model cut our SOC2 audit time from 10 days to 3 days. That alone paid for the GPU instance in 4 months.</p>
-</li>
-<li>
-<p>Tooling has matured enough to make this feasible. vLLM 0.5.0, peft 0.10.0, and bitsandbytes 0.43.0 cover 90% of the use cases I’ve seen. The remaining 10% require custom CUDA kernels or TensorRT-LLM, which adds complexity.</p>
-</li>
-<li>
-<p>The biggest surprise was data drift. User language evolves faster than model accuracy. Fine-tuning isn’t a one-time task; it’s a monthly cadence. We now run a data pipeline that extracts new tickets every week, labels them with the current model, and surfaces low-confidence predictions for human review. That pipeline cut accuracy decay from 3% per month to 0.4%.</p>
-</li>
-<li>
-<p>Cost models are still incomplete. Docs show API pricing, but they hide cold-start penalties, retry overhead, and network latency. The real cost per request is often 2–3x the API price when you account for retries and network.</p>
-</li>
-<li>
-<p>The community is still optimizing for benchmarks, not production. Most blog posts and tutorials show accuracy on GLUE or MMLU, but those benchmarks don’t reflect real user data. If you’re tuning for production, ignore the benchmarks and build your own labeled set.</p>
-</li>
+<li>Is the task text-in, text-out, with a well-defined output space? If no, consider a modality-specific model.</li>
+<li>Is the answer derivable from a knowledge base rather than learned behaviour? If yes, prefer retrieval over fine-tuning.</li>
+<li>Do you have at least several thousand high-quality labelled examples with a temporal split? If no, improve data before committing to fine-tuning.</li>
+<li>Can you host inference on infrastructure you control? If no, the managed API is the only option.</li>
+<li>Is your monthly request volume high enough that the per-request saving exceeds the amortised engineering cost? Compute this with your own numbers, not a vendor's.</li>
+<li>Does your latency budget tolerate the cold-start behaviour of the managed path? If yes, and accuracy is adequate, the managed path is simpler.</li>
+<li>Can you retrain on a monthly cadence? If not, plan for accuracy decay and budget for it.</li>
 </ol>
-<p>I thought fine-tuning would be a silver bullet. It’s not—it’s a tradeoff with maintenance overhead. But for most teams, that overhead is worth it.</p>
+<h2 id="choosing-tooling">Choosing tooling</h2>
+<p>The tooling categories that matter are: an inference server with adapter support and paged attention, a parameter-efficient training library, a quantisation library, a custom tokeniser trainer, a web framework with schema validation, a metrics exporter, a safe serialisation format, and infrastructure-as-code for reproducible provisioning. Pin versions and test upgrades in staging.</p>
+<p>Two upgrade hazards are worth calling out. Adapter configuration formats have changed between minor versions of parameter-efficient training libraries, and old configurations can fail silently. Inference servers have changed their adapter-loading APIs, and loading an adapter as a full model will produce incorrect results. Both are caught by a staging deployment that runs a fixed evaluation set and compares the output distribution, not just the aggregate metric.</p>
 <h2 id="what-to-do-next">What to do next</h2>
-<p>Open your terminal and run this command to check your current LLM cost per 1k requests:</p>
-<p>```bash
-echo "$(aws cloudwatch get-metric-statistics --namespace AWS/Bedrock --metric-name Invocations --start-time $(date -u -v-1H +%Y-%m-%dT%H:%M:%SZ) --end-time $(date -u +%Y-%m-%dT%H:%M:%</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/prompt-injections-hidden-aws-tax/">Prompt injection’s hidden AWS tax</a></li>
-<li><a href="https://kubaik.github.io/route-fine-tune-or-scale-pick-right/">Route, fine-tune, or scale: pick right</a></li>
-<li><a href="https://kubaik.github.io/ai-errors-hide-in-plain-latency/">AI errors hide in plain latency</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<p>Open your terminal and compute your current effective cost per successful request. Pull the last 24 hours of logs from your gateway and run:</p>
+<pre><code class="language-bash">awk -F',' '{req++; tok_in+=$2; tok_out+=$3; lat+=$4; if ($5==&quot;fail&quot;) fail++} \
+END {printf &quot;requests=%d in_tokens=%d out_tokens=%d mean_latency=%.3f failures=%d\n&quot;, \
+req, tok_in, tok_out, lat/req, fail}' requests.csv
+</code></pre>
+<p>Substitute your own column layout. The output gives you the numerator for the cost model. Divide your total monthly spend by the number of successful requests to get the effective cost, then compare that against the fine-tuned path using the checklist above. That single number will tell you whether the rest of this article applies to you.</p>
                 
                 
             </div>

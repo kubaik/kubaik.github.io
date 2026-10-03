@@ -1,41 +1,50 @@
-# AI alert triage: cut pages 80% in production
+# Designing an AI Alert Triage Layer That Reduces Pages
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+Most alert-triage tutorials stop at the happy path: an alert arrives, a model classifies it, a decision is emitted. Production adds the parts that decide whether the system helps or hurts — duplicate storms, stale metrics, a vector store that vanishes, and a model endpoint that times out at the worst moment. This article covers the full design, including the failure modes that cause AI triage layers to increase noise instead of reducing it.
 
-## Why I wrote this (the problem I kept hitting)
+## The problem AI triage is supposed to solve
 
-By 2026, every mid-size tech team I know runs at least two AI alert-triage tools side-by-side. I did too—until I realized we were still paging humans for 30 % of alerts that the AI had already marked "investigate later." Worse, our best engineers were waking up for false positives that cost the company $24k a month in lost focus time.
+Alert fatigue is a routing problem before it is a machine-learning problem. A typical on-call rotation receives a long tail of alerts that are technically firing but operationally uninteresting: a single pod restarting repeatedly, a scrape target that flaps, a warning that self-resolves within two minutes. Each of those consumes attention, and attention is the scarce resource.
 
-I spent two weeks debugging why the AI kept saying "high memory" when the pod was actually hitting its limit because the node’s OOM killer had already evicted the container a minute earlier. The root cause was a 5-second skew between the AI’s data source (metrics scraped every 15 s) and the kubelet’s own state. That’s the gap this post closes: how to make AI triage accurate enough that it actually reduces pages instead of just adding noise.
+A triage layer sits between Alertmanager and the paging provider. It does not replace Alertmanager's grouping, inhibition, or silencing — those still run first. It adds three decisions on top:
 
-Most tutorials stop at “install a SaaS tool and set thresholds.” Production never works that way. You’ll still get paged at 3 a.m. for something that should have been auto-closed. In this post I’ll show the exact filters, fallbacks, and dashboards I built to cut our on-call load from 12 pages a week to 2, while keeping the false-negative rate below 3 %.
+1. **Auto-close** — the alert matches a known-benign pattern or a recent duplicate, so it is resolved without human contact.
+2. **Queue** — the alert is real but not urgent; it is recorded and surfaced in a digest.
+3. **Page** — a human is woken now.
 
-## Prerequisites and what you'll build
+The value of the layer is entirely determined by how well it distinguishes these three. A triage service that pages on everything is pure overhead. A triage service that drops real pages is worse than no triage at all. Everything below is in service of getting that boundary right and being able to prove where it sits.
 
-You’ll need a Kubernetes cluster running in 2026 with Prometheus 3.0 (or Grafana Agent 0.45) already scraping pods every 15 s. If you’re on EKS/GKE/AKS, the managed Prometheus add-ons are good enough for this exercise.
+## Prerequisites and what you will build
 
-You’ll also need:
-- A vector database: we’ll use Qdrant 1.9 (Docker image qdrant/qdrant:v1.9.0) to store incident fingerprints.
-- A Python 3.11 runtime with packages: `pydantic 2.7`, `prometheus-api-client 0.5.0`, `trailrunner 0.2`, and `fastapi 0.111`.
-- An on-call router: PagerDuty REST API v2, or Opsgenie v2 if you prefer.
+The reference implementation assumes:
 
-What we’ll build is a lightweight alert router that:
-1. Pulls every alert from Prometheus Alertmanager.
-2. Matches it against a rolling fingerprint of recent incidents.
-3. Runs a small LLM filter (mistral-7b-instruct-0.3) to decide “page now,” “add to queue,” or “auto-close.”
-4. Sends only the filtered list to PagerDuty (or Opsgenie).
-5. Logs every decision so you can audit why the AI said “yes” or “no.”
+- A Kubernetes cluster with Prometheus scraping pod metrics on a fixed interval (15s is a common choice).
+- A vector database for storing incident fingerprints. Any store with approximate nearest-neighbour search works; the examples use Qdrant because its API is small and it runs as a single container.
+- A Python 3.11+ runtime. The service uses `fastapi`, `pydantic`, `httpx`, `qdrant-client`, and `prometheus-client`.
+- An LLM endpoint. This can be a hosted chat-completions API or a locally served model behind an OpenAI-compatible or Ollama-compatible HTTP interface. The code below treats the endpoint as a configurable URL and model name.
+- A paging provider with an events or incidents API. PagerDuty and Opsgenie both expose REST APIs suitable for this; the example uses the PagerDuty Events API shape.
 
-By the end you’ll have a 120-line Python service you can deploy as a sidecar to Alertmanager. It drops your alert volume from 12 pages to 2 without writing a single new alert rule.
+What you will build is a small FastAPI service that:
 
-## Step 1 — set up the environment
+1. Receives Alertmanager webhook payloads at `/ingest`.
+2. Computes a stable fingerprint per alert.
+3. Looks up recent incidents with that fingerprint in the vector store.
+4. Applies deterministic rules first (known-bad list, cooldown, duplicate window).
+5. Falls back to a short LLM call only when the deterministic rules are inconclusive.
+6. Routes the surviving alerts to the paging provider and logs every decision.
 
-Start with a fresh namespace:
+The goal is not to write new alert rules. It is to make the existing ones route better.
+
+## Step 1 — environment setup
+
+Create a namespace for the service:
+
 ```bash
 kubectl create ns alert-router
 ```
 
-Install Prometheus 3.0 via the Prometheus Operator if you haven’t already:
+Prometheus should already be scraping. If you run the Prometheus Operator, a minimal scrape configuration looks like this:
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
@@ -51,7 +60,7 @@ spec:
       memory: 2Gi
 ```
 
-Deploy Qdrant in the same cluster so the Python service can reach it on `qdrant.alert-router.svc.cluster.local:6333`.
+Deploy the vector store in the same namespace so the service can reach it over cluster DNS:
 
 ```yaml
 apiVersion: apps/v1
@@ -91,309 +100,385 @@ spec:
     - port: 6333
 ```
 
-Spin up the Python service next. Here’s the minimal `requirements.txt`:
-```
+The Python dependencies:
+
+```text
 pydantic==2.7.0
-prometheus-api-client==0.5.0
 fastapi==0.111.0
 uvicorn[standard]==0.29.0
-trailrunner==0.2.0
 qdrant-client==1.9.0
+httpx==0.27.0
+prometheus-client==0.20.0
 ```
 
-I assumed a managed LLM endpoint from Mistral AI at `https://api.mistral.ai/v1/chat/completions` with a 0.3 token. If you’re running Ollama locally, swap the endpoint to `http://ollama:11434/api/chat` and use the `llama3.2` model. The code is identical—only the URL and model name change.
+Run the service locally to test the fingerprinting logic before deploying:
 
-Run the service locally first to test the fingerprinting logic:
 ```bash
 uvicorn router:app --reload --port 8000
 ```
 
-You should see `GET /health` return `{"status":"ok"}` and `POST /ingest` accept Prometheus alert payloads. I got bitten here because the Prometheus webhook receiver expects a JSON body with a specific structure; my first attempt missed the `receiver` field and the service silently dropped every alert.
+`GET /health` should return `{"status":"ok"}` and `POST /ingest` should accept Alertmanager-shaped payloads.
+
+A common first failure: Alertmanager's webhook body has a specific structure, and a service that expects a different shape will silently drop every alert. Log the raw payload on the first deploy and confirm the fields you depend on are present.
 
 ## Step 2 — core implementation
 
-The heart is a small FastAPI app that acts as a reverse proxy between Alertmanager and PagerDuty. Every alert that Alertmanager POSTs to `/ingest` is immediately fingerprinted, compared to the last 100 incidents, and rerouted.
-
-Here’s the core logic in `router.py`:
+The service is a reverse proxy between Alertmanager and the paging provider. Every alert posted to `/ingest` is fingerprinted, compared against recent incidents, and routed.
 
 ```python
+import hashlib
+import json
+import os
+import time
+from typing import Any
+
+import httpx
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from prometheus_api_client import PrometheusConnect
 from qdrant_client import QdrantClient, models
-from trailrunner import run_task
-import httpx, os, json
 
 app = FastAPI()
 
-# Config — swap these for your cluster
 PROM_URL = os.getenv("PROM_URL", "http://prometheus-operated.monitoring.svc:9090")
 QDRANT_HOST = os.getenv("QDRANT_HOST", "qdrant.alert-router.svc.cluster.local")
 PD_API_KEY = os.getenv("PD_API_KEY")
 PD_ROUTING_KEY = os.getenv("PD_ROUTING_KEY")
+LLM_URL = os.getenv("LLM_URL", "https://api.example-llm-provider.com/v1/chat/completions")
+LLM_MODEL = os.getenv("LLM_MODEL", "small-instruct")
+LLM_KEY = os.getenv("LLM_KEY")
 
-prom = PrometheusConnect(url=PROM_URL, disable_ssl=True)
 qdrant = QdrantClient(host=QDRANT_HOST, port=6333)
+
+COOLDOWN_SECONDS = 60
 
 class Alert(BaseModel):
     receiver: str
     status: str
-    alerts: list[dict]
+    alerts: list[dict[str, Any]]
     externalURL: str
+
+def fingerprint(alert: dict[str, Any]) -> str:
+    """Stable hash over the labels that identify this alert class."""
+    labels = alert.get("labels", {})
+    seed = json.dumps(
+        {
+            "alertname": labels.get("alertname"),
+            "namespace": labels.get("namespace"),
+            "pod": labels.get("pod"),
+        },
+        sort_keys=True,
+    )
+    return hashlib.sha256(seed.encode()).hexdigest()
+
+def recent_hits(fp: str, limit: int = 10) -> int:
+    """Count recent incidents with the same fingerprint."""
+    results = qdrant.scroll(
+        collection_name="alert_fingerprints",
+        scroll_filter=models.Filter(
+            must=[
+                models.FieldCondition(
+                    key="fingerprint",
+                    match=models.MatchValue(value=fp),
+                ),
+                models.FieldCondition(
+                    key="ts",
+                    range=models.Range(gte=time.time() - COOLDOWN_SECONDS),
+                ),
+            ]
+        ),
+        limit=limit,
+    )
+    return len(results[0])
 
 @app.post("/ingest")
 async def ingest(alert: Alert):
+    handled = 0
     for a in alert.alerts:
-        # 1. Build a fingerprint: labels + annotations + startsAt
-        fingerprint = hash(frozenset(a.get("labels", {}).items()))
-        # 2. Query Qdrant for recent incidents with the same fingerprint
-        search_result = qdrant.search(
-            collection_name="alert_fingerprints",
-            query_vector=[float(fingerprint)],
-            limit=10,
-        )
-        # 3. If we have >2 recent incidents, auto-close
-        if len(search_result.points) > 2 and a["status"] == "firing":
-            a["status"] = "resolved"
-            a["annotations"]["ai_decision"] = "auto_closed"
-        # 4. Otherwise ask the LLM
+        fp = fingerprint(a)
+        hits = recent_hits(fp)
+
+        # Deterministic rules first.
+        if hits > 0 and a.get("status") == "firing":
+            a.setdefault("annotations", {})["ai_decision"] = "auto_closed_duplicate"
+            handled += 1
+            continue
+
+        decision = await llm_decide(a)
+        a.setdefault("annotations", {})["ai_decision"] = decision
+
+        if decision == "page":
+            await send_to_pagerduty(a)
+            handled += 1
         else:
-            decision = await llm_decide(a)
-            if decision == "page":
-                await send_to_pagerduty(a)
-            else:
-                a["status"] = "resolved"
-                a["annotations"]["ai_decision"] = decision
-        # 5. Store the fingerprint for next time
+            a["status"] = "resolved"
+            handled += 1
+
         qdrant.upsert(
             collection_name="alert_fingerprints",
-            points=models.PointStruct(
-                id=fingerprint,
-                vectors=[float(fingerprint)],
-                payload={"labels": a.get("labels", {}), "startsAt": a.get("startsAt")}
-            ),
+            points=[
+                models.PointStruct(
+                    id=hashlib.sha256(f"{fp}:{time.time()}".encode()).hexdigest(),
+                    vector=[0.0] * 8,  # placeholder; real embeddings optional
+                    payload={
+                        "fingerprint": fp,
+                        "labels": a.get("labels", {}),
+                        "startsAt": a.get("startsAt"),
+                        "ts": time.time(),
+                    },
+                )
+            ],
         )
-    return {"status": "ok", "handled": len(alert.alerts)}
+    return {"status": "ok", "handled": handled}
 
-async def llm_decide(alert: dict) -> str:
-    prompt = f"""
-    Alert: {json.dumps(alert)}
-    Decide: should we wake a human right now?
-    Output one word only: page or queue.
-    """
+async def llm_decide(alert: dict[str, Any]) -> str:
+    prompt = (
+        "You are an on-call triage assistant. Given the alert below, "
+        "decide whether a human should be paged now. "
+        "Reply with exactly one word: page or queue.\n\n"
+        f"Alert: {json.dumps(alert)}\n"
+    )
     async with httpx.AsyncClient() as client:
         resp = await client.post(
-            "https://api.mistral.ai/v1/chat/completions",
-            headers={"Authorization": f"Bearer {os.getenv('MISTRAL_KEY')}"},
+            LLM_URL,
+            headers={"Authorization": f"Bearer {LLM_KEY}"},
             json={
-                "model": "mistral-7b-instruct-0.3",
+                "model": LLM_MODEL,
                 "messages": [{"role": "user", "content": prompt}],
                 "max_tokens": 5,
+                "temperature": 0,
             },
             timeout=2.0,
         )
         resp.raise_for_status()
-        return resp.json()["choices"][0]["message"]["content"].strip().lower()
+        text = resp.json()["choices"][0]["message"]["content"].strip().lower()
+        return "page" if text.startswith("page") else "queue"
 
-async def send_to_pagerduty(alert: dict):
+async def send_to_pagerduty(alert: dict[str, Any]):
     dedup_key = alert.get("labels", {}).get("alertname", "unknown")
-    resp = await httpx.AsyncClient().post(
-        "https://api.pagerduty.com/incidents",
-        headers={
-            "Authorization": f"Token token={PD_API_KEY}",
-            "Content-Type": "application/json",
-            "Accept": "application/vnd.pagerduty+json;version=2",
-        },
-        json={
-            "incident": {
-                "type": "incident",
-                "title": alert.get("labels", {}).get("alertname", "Alert"),
-                "service": {"id": PD_ROUTING_KEY, "type": "service_reference"},
-                "body": {"type": "incident_body", "details": json.dumps(alert)},
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            "https://events.pagerduty.com/v2/enqueue",
+            headers={"Content-Type": "application/json"},
+            json={
+                "routing_key": PD_ROUTING_KEY,
+                "event_action": "trigger",
                 "dedup_key": dedup_key,
-            }
-        },
-        timeout=3.0,
-    )
-    resp.raise_for_status()
+                "payload": {
+                    "summary": alert.get("labels", {}).get("alertname", "Alert"),
+                    "source": alert.get("labels", {}).get("instance", "unknown"),
+                    "severity": alert.get("labels", {}).get("severity", "warning"),
+                    "custom_details": alert,
+                },
+            },
+            timeout=3.0,
+        )
+        resp.raise_for_status()
 ```
 
-Why this works:
-- Fingerprints collapse 10 similar CPU alerts into one incident stream.
-- The LLM filter is tiny (<5 tokens) so it runs in 20–50 ms.
-- Storing every fingerprint in Qdrant keeps the comparison set small (100–200 points) and fast.
+Several design choices here are load-bearing:
 
-The gotcha I hit was Prometheus sending duplicate alerts every 2 minutes while the pod was still unhealthy. The fingerprint matched, but the LLM decided “page” because the alert was still firing. Fix: add a 60-second cooldown in Qdrant so the same fingerprint can’t trigger twice inside that window.
+- **Deterministic rules run before the model.** Duplicate suppression is exact and cheap. Sending every duplicate to an LLM wastes latency and money and introduces a chance of inconsistent decisions on identical inputs.
+- **The fingerprint is a hash, not an embedding.** For alert triage, the identity of an alert class is its label set, not its semantic meaning. Hashing labels is reproducible and debuggable; embeddings are neither unless you also store the source text.
+- **The vector store is used as a time-windowed key-value index.** The `vector` field is a placeholder. The lookup that matters is the payload filter on `fingerprint` and `ts`. This is deliberate: it keeps the store's role honest and avoids pretending semantic similarity is doing work it is not.
+- **The LLM call has a hard timeout.** Two seconds is generous for a five-token completion; anything slower should be treated as an outage, not a slow path.
 
-## Step 3 — handle edge cases and errors
+A frequent bug in this design: using Python's built-in `hash()` for fingerprints. It is salted per process, so the value changes across restarts and replicas. Use `hashlib.sha256` over a canonical JSON serialization instead.
 
-Here are the edge cases that woke us up at 2 a.m. and how we fixed them:
+## Step 3 — edge cases and fail-open behaviour
 
-| Edge case | Detection | Fix | Latency impact |
-|---|---|---|---|
-| Alertmanager retries every 30 s | `alertmanager_alerts_received_total` > 2 in 60 s | Drop duplicates by `startsAt` | +2 ms per duplicate |
-| Prometheus scrape lag >15 s | `prometheus_tsdb_head_samples_appended_total` lag >20 s | Fail open: route to PagerDuty immediately | 0 ms (fast path) |
-| Qdrant unavailable | Connection refused | Route to PagerDuty immediately | 3 ms (health check) |
-| LLM endpoint 500 error | HTTP 500 from Mistral | Route to PagerDuty immediately | 120 ms (timeout) |
-| Fingerprint collision | Two different alerts hash to same int | Add `namespace` to fingerprint seed | +1 ms per collision check |
+The triage layer is on the critical path between an alert firing and a human being notified. Every failure mode must resolve in the direction of paging, not silence.
 
-The collision fix is subtle: two alerts from different namespaces can have identical labels (e.g., `pod=nginx` in `default` vs `kube-system`). Adding `namespace` to the seed dropped collisions from 12 % to <0.5 %.
+| Failure | Detection signal | Correct action |
+|---|---|---|
+| Alertmanager retries the same alert | Same fingerprint within cooldown window | Drop duplicate, do not re-page |
+| Prometheus scrape lag exceeds the alert's evaluation window | Scrape timestamp freshness metric | Fail open: page immediately |
+| Vector store unreachable | Connection error on lookup | Fail open: page immediately |
+| LLM endpoint errors or times out | Non-2xx response or timeout | Fail open: page immediately |
+| Fingerprint collision across namespaces | Two distinct alerts hash identically | Include `namespace` in the fingerprint seed |
+| Triage service itself is down | Health endpoint fails | Paging provider must be reachable directly as a fallback |
 
-We also added a “known-bad” list for alerts that should never page, like `Watchdog` or `Info` alerts. Maintain it as a JSON file and reload every hour:
+The collision case deserves detail. Two alerts with `alertname=PodRestarting` in `default` and `kube-system` have different operational meaning. If the fingerprint is seeded only on `alertname` and `pod`, they collide. Including `namespace` in the seed separates them. This is not a percentage improvement to be quoted — it is a correctness fix, and you can verify it by constructing two such alerts and asserting their fingerprints differ.
+
+The fail-open rule is the single most important line in the service. Implement it explicitly:
 
 ```python
-BAD_ALERTS = set()
-
-def load_bad_alerts():
-    global BAD_ALERTS
-    with open("bad_alerts.json") as f:
-        BAD_ALERTS = set(json.load(f))
-
-@app.on_event("startup")
-async def startup():
-    load_bad_alerts()
-    # run every hour
-    run_task(load_bad_alerts, interval=3600)
+async def llm_decide(alert: dict[str, Any]) -> str:
+    try:
+        async with httpx.AsyncClient() as client:
+            resp = await client.post(
+                LLM_URL,
+                headers={"Authorization": f"Bearer {LLM_KEY}"},
+                json={
+                    "model": LLM_MODEL,
+                    "messages": [{"role": "user", "content": build_prompt(alert)}],
+                    "max_tokens": 5,
+                    "temperature": 0,
+                },
+                timeout=2.0,
+            )
+            resp.raise_for_status()
+            text = resp.json()["choices"][0]["message"]["content"].strip().lower()
+            return "page" if text.startswith("page") else "queue"
+    except Exception:
+        # Any failure to classify means a human decides.
+        return "page"
 ```
 
-Without the list, we were still paging for `Info` alerts titled “Kubelet is healthy.”
+A known-bad list handles alerts that should never page regardless of model output — `Watchdog`, `Info`-severity notifications, and anything your team has explicitly agreed is noise. Keep it in a ConfigMap and reload it periodically rather than baking it into the image:
 
-Finally, add a health endpoint that PagerDuty can call if our service is down:
+```python
+import json
+
+BAD_ALERTS: set[str] = set()
+
+def load_bad_alerts(path: str = "/etc/alert-router/bad_alerts.json") -> None:
+    global BAD_ALERTS
+    with open(path) as f:
+        BAD_ALERTS = set(json.load(f))
+
+def is_known_bad(alert: dict[str, Any]) -> bool:
+    return alert.get("labels", {}).get("alertname") in BAD_ALERTS
+```
+
+Call `is_known_bad` before the LLM path. Without it, informational alerts will occasionally be classified as page-worthy, and the model has no way to know your team's conventions.
+
+Finally, expose a health endpoint that actually checks the dependencies:
 
 ```python
 @app.get("/health")
 async def health():
     try:
         qdrant.get_collection("alert_fingerprints")
-        return {"status": "ok", "llm_endpoint": os.getenv("MISTRAL_URL")}
     except Exception as e:
         raise HTTPException(status_code=503, detail=str(e))
+    return {"status": "ok"}
 ```
 
-I discovered this the hard way when the cluster autoscaler killed our Qdrant pod and every alert silently disappeared. PagerDuty never saw them.
+If the vector store is gone and the health check is superficial, alerts can disappear silently. The health endpoint exists so that an external monitor notices before your on-call rotation does.
 
-## Step 4 — add observability and tests
+## Step 4 — observability and tests
 
-We run three dashboards:
-1. **Alert volume**: Prometheus counter `alert_router_handled_total{decision="page"}` vs `decision="queue"`.
-2. **LLM latency**: histogram `alert_router_llm_duration_seconds_bucket`.
-3. **False negatives**: Grafana panel that compares `alertmanager_alerts_resolved_total` with `alert_router_handled_total{decision="page"}` and raises if the gap >10 %.
+Three signals matter:
 
-Here’s a minimal test harness using pytest 7.4:
+1. **Decision mix.** A counter labelled by decision (`page`, `queue`, `auto_closed_duplicate`) tells you the ratio the layer is producing. If `page` is not meaningfully lower than the pre-triage rate, the layer is not doing its job.
+2. **LLM latency and error rate.** A histogram of call duration and a counter of failures, both labelled by endpoint. This is where you discover that your timeout is too tight or your provider is degrading.
+3. **False negatives.** The hardest and most important signal. There is no automatic ground truth, but a workable proxy is: alerts that were queued or auto-closed and then re-fired within a short window. That pattern usually means the first decision was wrong.
 
 ```python
-import pytest
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+from fastapi import Response
+
+DECISIONS = Counter(
+    "alert_router_decisions_total",
+    "Triage decisions by outcome",
+    ["decision"],
+)
+LLM_LATENCY = Histogram(
+    "alert_router_llm_duration_seconds",
+    "LLM classification latency",
+)
+LLM_ERRORS = Counter(
+    "alert_router_llm_errors_total",
+    "LLM classification failures",
+)
+
+@app.get("/metrics")
+def metrics():
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+```
+
+Increment `DECISIONS.labels(decision=...)` at each branch, wrap the LLM call in `LLM_LATENCY.time()`, and increment `LLM_ERRORS` in the exception handler. These three are enough to answer "is the layer working" without a bespoke dashboard.
+
+Tests should cover the deterministic paths exhaustively and the LLM path only for its contract:
+
+```python
+from unittest.mock import patch
+
 from fastapi.testclient import TestClient
+
 from router import app
 
 client = TestClient(app)
 
-def test_auto_close_duplicate():
-    # Fire the same alert twice within 60 s
-    resp1 = client.post("/ingest", json={...})
-    resp2 = client.post("/ingest", json={...})
-    assert resp1.status_code == 200
-    assert resp2.json()["handled"] == 0  # duplicates dropped
+def make_payload(alertname: str, namespace: str = "default") -> dict:
+    return {
+        "receiver": "alert-router",
+        "status": "firing",
+        "externalURL": "http://alertmanager",
+        "alerts": [
+            {
+                "status": "firing",
+                "labels": {
+                    "alertname": alertname,
+                    "namespace": namespace,
+                    "pod": "nginx-0",
+                },
+                "annotations": {},
+                "startsAt": "2026-01-01T00:00:00Z",
+            }
+        ],
+    }
 
-def test_llm_fallback_on_error():
-    # Mock the LLM to return 500
-    with patch("router.llm_decide", side_effect=Exception("LLM down")):
-        resp = client.post("/ingest", json={...})
-        assert resp.status_code == 200
-        assert "ai_decision" in resp.json()["alerts"][0]["annotations"]
+def test_duplicate_is_auto_closed():
+    payload = make_payload("PodRestarting")
+    first = client.post("/ingest", json=payload)
+    second = client.post("/ingest", json=payload)
+    assert first.status_code == 200
+    assert second.status_code == 200
+    assert second.json()["handled"] == 1
+
+def test_llm_failure_pages():
+    with patch("router.llm_decide", side_effect=Exception("endpoint down")):
+        resp = client.post("/ingest", json=make_payload("HighCPU"))
+    assert resp.status_code == 200
+
+def test_namespace_separates_fingerprints():
+    from router import fingerprint
+    a = make_payload("PodRestarting", "default")["alerts"][0]
+    b = make_payload("PodRestarting", "kube-system")["alerts"][0]
+    assert fingerprint(a) != fingerprint(b)
 ```
 
-Add a Prometheus `/metrics` endpoint so the tests can assert on counters:
+The third test is the one that catches the collision bug. It is worth writing before you deploy, because the failure is silent and only shows up as a missed page weeks later.
 
-```python
-from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+## Measuring whether it actually helps
 
-PAGE_COUNTER = Counter("alert_router_pages", "Alerts paged to humans")
-QUEUE_COUNTER = Counter("alert_router_queued", "Alerts queued for later")
+The original claim — "cut pages 80%" — is the kind of number that should never be asserted without a measurement plan. Here is how to produce your own, honestly.
 
-@app.get("/metrics")
-def metrics():
-    return generate_latest(), 200, {"Content-Type": CONTENT_TYPE_LATEST}
-```
+Define the baseline window before deployment. For at least two weeks, record:
 
-I spent half a day debugging why Grafana showed zero pages—turns out I forgot to increment `PAGE_COUNTER` when the decision was “page.”
+- Pages delivered to humans, per week, from the paging provider's API.
+- Alerts received by Alertmanager, per week.
+- On-call acknowledgements and the time between page and acknowledgement.
 
-## Real results from running this
+After deployment, record the same three. The ratio of pages to alerts tells you whether the layer is filtering or merely relabelling. The acknowledgement time tells you whether the remaining pages are the ones that matter.
 
-We rolled this out to a 40-node EKS cluster in March 2026. After two weeks of tuning we hit these numbers:
+For false negatives, instrument the re-fire proxy described above and review the queued and auto-closed decisions weekly. A sample of twenty reviewed decisions per week is enough to estimate the error rate with useful precision; a sample of zero is how a triage layer quietly becomes a source of missed incidents.
 
-| Metric | Before | After |
-|---|---|---|
-| Pages per week | 12 | 2 |
-| False negatives (missed pages) | 1 % | 2.8 % |
-| Median LLM latency | — | 34 ms |
-| AWS cost (t3.small for Qdrant + t3.micro for Python) | $182 | $208 |
-| On-call interrupt time (engineer minutes) | 420 min | 72 min |
+Two illustrative calculations, with assumptions stated:
 
-The 2.8 % false-negative rate is acceptable because our escalation policy now pages the on-call engineer only when the AI queue length >3. That gives us a buffer: if three alerts hit the queue in five minutes, a human is still paged.
+- If a team receives 500 alerts per week and 40 of them currently page, and the triage layer routes 10 of those 40 to the queue, the page reduction is 25%, not 80%. The arithmetic is `(40 - 30) / 40`. Any larger reduction requires the baseline to contain far more auto-resolvable pages.
+- If the LLM call costs $0.0002 per classification and the layer classifies 2,000 alerts per week, the weekly cost is `2000 * 0.0002 = $0.40`. That figure is illustrative and depends entirely on the provider's pricing and the prompt length; substitute your own.
 
-We also saved $8k annually by downgrading our PagerDuty plan from “Enterprise” to “Advanced” once the volume dropped from 12 to 2 pages per week.
+The honest framing is that the achievable reduction depends on how much of your alert volume is genuinely auto-resolvable. Measure that first, then decide whether the layer is worth operating.
 
-The biggest surprise was how much the LLM filter improved after we added the namespace to the fingerprint seed. Without it, we were still paging 30 % of alerts that were duplicates across namespaces.
-
-## Common questions and variations
-
-**How do I handle secrets like the Mistral API key?**
-Store them in Kubernetes Secrets and mount as environment variables. I used:
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: ai-router-secrets
-  namespace: alert-router
-type: Opaque
-stringData:
-  MISTRAL_KEY: "sk-xxx"
-  PD_API_KEY: ""
-```
-Then reference in the Deployment:
-```yaml
-envFrom:
-- secretRef:
-    name: ai-router-secrets
-```
-
-**Can I run the LLM locally instead of Mistral?**
-Yes. Use Ollama 0.3 with the `llama3.2` model. The endpoint changes to `http://ollama:11434/api/chat` and you must pull the model first:
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-ollama pull llama3.2
-```
-Latency with Ollama on a t3.medium node is ~60 ms—still fast enough.
-
-**What if my cluster doesn’t run Kubernetes?**
-The same logic works outside K8s. Replace the Prometheus scrape with any metrics endpoint (Datadog, New Relic, or even a custom exporter). The fingerprints and LLM filter are transport-agnostic.
+## Common questions
 
 **Does this replace Alertmanager?**
-No. Alertmanager still handles deduplication and throttling. Our service only decides whether to page or queue after Alertmanager has done its job.
+No. Alertmanager still does grouping, inhibition, silencing, and routing. The triage layer sits downstream and only decides page versus queue.
 
-## Where to go from here
+**Can the LLM run locally?**
+Yes. Any HTTP endpoint that accepts a chat-completions-shaped request works. A locally served model removes the external dependency but adds GPU or CPU capacity requirements and a new failure mode: the model server can be unavailable. The fail-open rule covers it either way.
 
-Spend the next 30 minutes doing this exact check: open your Grafana for the last 7 days and run the query `sum(rate(alertmanager_alerts_firing_total[5m])) by (alertname)`. Count how many unique alert names fired at least once. If the number is above 40, your team is burning cycles on too many noisy rules. Pick the top 5 alert names that fire most often, add them to the `bad_alerts.json` file, and redeploy the router. That single change will drop your pages the fastest.
+**What if we are not on Kubernetes?**
+The logic is transport-agnostic. Replace the Alertmanager webhook with whatever your monitoring stack emits, and replace the vector store with any indexed store that supports time-windowed lookups. The fingerprinting and decision rules are unchanged.
 
+**Why not just use Alertmanager's existing grouping?**
+Grouping reduces the number of notifications for related alerts. Triage decides whether a group should notify at all. They are complementary, and the triage layer assumes grouping has already happened.
 
----
+**How do we handle secrets?**
+Mount them as environment variables from a Kubernetes Secret, and never bake them into the image. The service reads `PD_ROUTING_KEY`, `LLM_KEY`, and the endpoint URLs from the environment.
 
-### About this article
+## Do this in the next 30 minutes
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 12, 2026
+Open your monitoring UI and run a query that counts alerts by name over the last seven days, for example `sum by (alertname) (increase(alertmanager_alerts_received_total[7d]))`. Sort descending and look at the top five. For each one, answer a single question: if this alert fires at 3 a.m., does a human need to act before morning? Every alert where the answer is no is a candidate for the known-bad list or the queue path. Write those five names into a `bad_alerts.json` and load it into the service. That change alone is measurable, reversible, and requires no model tuning.

@@ -1,341 +1,239 @@
 # Postgres 17 swallowed Redis, Kafka, Timescale
 
-I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.
+## What the consolidation argument actually claims
 
-## Why this comparison matters right now
+Postgres has accumulated extensions that cover ground once owned by separate systems: in-database job scheduling, partitioned tables with automatic retention, approximate vector search, and queue-style message tables. The pitch is that a single Postgres deployment can absorb three categories of infrastructure — a cache, a lightweight event bus, and a time-series store — and that the reduction in moving parts outweighs the loss of specialised features.
 
-In 2026, Postgres 17 with the `pgvector`, `pg_cron`, `pg_partman`, and `pgmq` extensions is quietly replacing three separate tools in many stacks: Redis for ephemeral caches, Kafka for simple event streaming, and TimescaleDB for time-series data. The reason isn’t just Postgres getting faster — it’s that the ecosystem finally caught up with the workloads teams actually run.
+That pitch is sometimes right. It is most often wrong when it is stated as a blanket rule. This article lays out what each substitution really costs, where each one breaks, and how to measure the trade-off on your own workload rather than trusting a comparison table.
 
-I ran into this when we hit a wall scaling a Jakarta-based payments service. We started with Redis 7.2 for rate limiting, Kafka 3.7 for async ledger events, and TimescaleDB 2.13 for metrics. Our AWS bill for these three boxes hit $14k/month while the Postgres RDS instance sat at $8k. After a 48-hour migration weekend, we cut the monthly bill to $6k and shaved 450ms off our p99 API response time. The scary part? We didn’t change a single line of application code — just pointed our services at a single Postgres endpoint and enabled the right extensions.
+The framing to keep in mind throughout: you are not choosing between "Postgres" and "Redis". You are choosing between one operational surface with weaker primitives, and three operational surfaces with stronger ones. The question is whether your workload actually depends on the stronger primitives.
 
-The shift isn’t just about cost. It’s about cognitive load. Instead of juggling three separate query languages (Lua for Redis, SQL + Kafka Streams for events, SQL with Timescale hypertables), we now run everything through a single PostgreSQL 17.1 connection. The operational blast radius shrinks from three systems to one, and the mental model for debugging goes from "Why is Kafka lagging?" to "Why is this query plan doing a seq scan?"
+## The three substitutions, stated precisely
 
-But don’t take my word for it. This comparison is built on three months of load testing on a 200GB dataset split across 12 r7g.4xlarge instances in us-east-1, with 50k writes/sec and 300k reads/sec during peak. We measured everything: connection churn, cache hit ratios, replication lag, and the hidden cost of cross-service debugging. The results surprised even the Postgres core team — not because the features are new, but because the combination finally works at scale.
+Each of the three replacements is a different kind of bet.
 
-I was surprised that the `pgmq` extension, designed for simple message queues, handled 120k messages/sec with sub-millisecond latency under load. That’s faster than Kafka 3.7 in our tests, and it didn’t require ZooKeeper, KRaft, or any tuning beyond `shared_preload_libraries = 'pgmq'`.
+**Cache.** Redis is an in-memory data structure server with its own eviction policies, TTL semantics, pub/sub, and persistence modes. Postgres has a buffer pool that caches disk blocks, plus unlogged tables and temporary tables. The substitution is not "Postgres is a cache"; it is "for read-mostly hot data, the buffer pool plus a small unlogged table may be fast enough that a network hop to a separate cache is not worth it."
 
-If you’re running Redis for short-lived data, Kafka for fire-and-forget events, or TimescaleDB for metrics, you’re likely paying for infrastructure that Postgres 17 can do better — and with fewer moving parts.
+**Event bus.** Kafka is a partitioned, replicated, ordered log with consumer groups, offset management, and configurable retention. Postgres queue extensions are tables with visibility timeouts and archive functions. The substitution is "for fire-and-forget work where per-key ordering and replay are not required, a table-backed queue is adequate."
 
+**Time series.** A dedicated time-series database typically offers columnar compression, continuous aggregates, and retention policies tuned for append-heavy metric data. Postgres offers declarative partitioning plus a scheduler that can pre-create and drop partitions. The substitution is "for metrics where you control the retention window and query patterns, partitioned Postgres tables may be sufficient."
 
-## Option A — how it works and where it shines
+None of these substitutions is free. Each one moves complexity from infrastructure into SQL and schema design.
 
-Postgres 17 with the right extensions isn’t just a database — it’s a polyglot runtime disguised as SQL. The core magic happens in three extensions that turn Postgres into a cache, a message broker, and a time-series engine without leaving the SQL surface.
+## Cache: what you gain and what you lose
 
-### The cache layer: `pg_cron` + `pg_temp` + `pg_buffercache`
+### The mechanism
 
-Instead of Redis 7.2 sitting between your app and Postgres, the cache lives inside the same database using temporary tables and a background job scheduler. The trick is to use `pg_cron` to refresh materialized views or temporary tables on a schedule, and to rely on Postgres’s buffer cache (`pg_buffercache`) for in-memory hits.
-
-Here’s how we built a rate-limiting cache that survives restarts:
+A common pattern is an unlogged table keyed by the entity you want to cache, written on read miss and read on subsequent hits, relying on the buffer pool to keep hot pages resident. Unlogged tables skip WAL for their contents, which makes writes cheaper at the cost of being truncated after a crash — acceptable for data you can rebuild.
 
 ```sql
--- Step 1: Create a temporary table for rate limits
-CREATE TEMP TABLE rate_limits (
-  user_id bigint PRIMARY KEY,
-  request_count bigint NOT NULL DEFAULT 0,
-  last_updated timestamptz NOT NULL DEFAULT now()
-) ON COMMIT DROP;
+CREATE UNLOGGED TABLE session_cache (
+  session_id   uuid PRIMARY KEY,
+  payload      jsonb NOT NULL,
+  expires_at   timestamptz NOT NULL,
+  last_access  timestamptz NOT NULL DEFAULT now()
+);
 
--- Step 2: Add a helper function to increment counts
-CREATE OR REPLACE FUNCTION increment_rate_limit(user_id bigint) 
-RETURNS bigint AS $$
-DECLARE
-  current_count bigint;
-BEGIN
-  UPDATE rate_limits 
-  SET request_count = request_count + 1, 
-      last_updated = now()
-  WHERE user_id = $1 
-  RETURNING request_count INTO current_count;
+CREATE INDEX session_cache_expires_idx ON session_cache (expires_at);
 
-  IF NOT FOUND THEN
-    INSERT INTO rate_limits (user_id) VALUES ($1) 
-    RETURNING request_count INTO current_count;
-  END IF;
-
-  RETURN current_count;
-END;
-$$ LANGUAGE plpgsql;
-
--- Step 3: Schedule a cleanup job every 5 minutes
-SELECT cron.schedule('cleanup-rate-limits', '*/5 * * * *', $$
-  DELETE FROM rate_limits WHERE last_updated < now() - interval '1 hour'
-$$);
+-- Upsert on write
+INSERT INTO session_cache (session_id, payload, expires_at)
+VALUES ($1, $2, now() + interval '30 minutes')
+ON CONFLICT (session_id)
+DO UPDATE SET payload = EXCLUDED.payload,
+              expires_at = EXCLUDED.expires_at,
+              last_access = now();
 ```
 
-This cache lives entirely in the Postgres buffer pool. On an r7g.4xlarge with 128GB RAM, our buffer cache hit ratio for rate limits was 98.7% during peak load. That’s not because we configured anything special — it’s because Postgres already caches hot blocks in shared_buffers by default.
+Expiry is enforced by a scheduled job rather than by the storage engine:
 
-The downside? Temporary tables disappear on transaction end, so you need to use `ON COMMIT PRESERVE ROWS` or schedule refresh jobs. In our case, we used `pg_cron` to rebuild a materialized view every minute instead of using temp tables directly.
+```sql
+DELETE FROM session_cache WHERE expires_at < now();
+```
 
+If the `pg_cron` extension is installed and listed in `shared_preload_libraries`, that statement can be scheduled:
 
-### The event bus: `pgmq`
+```sql
+SELECT cron.schedule('expire-sessions', '* * * * *',
+  $$DELETE FROM session_cache WHERE expires_at < now()$$);
+```
 
-`pgmq` implements a simple message queue inside Postgres using two tables: one for messages and one for receipts. It’s not Kafka — you can’t replay partitions or shard by topic — but for asynchronous workflows like sending receipts or updating search indexes, it’s more than enough.
+### What this costs you
 
-Here’s a minimal producer-consumer pattern:
+The expiry job is a full scan of the expiry index on every run. At small table sizes that is irrelevant; at large ones it becomes a background write load that competes with your foreground traffic. Redis expires keys lazily and in a background cycle without you writing the sweep.
 
-```python
-import psycopg
-from psycopg_pool import ConnectionPool
+Eviction is the sharper problem. Redis will evict under memory pressure according to a policy you choose. Postgres has no per-table eviction policy. When the table outgrows `shared_buffers`, reads start hitting disk, and a cache that hits disk is slower than no cache at all because you now pay both the lookup and the miss. A cache in front of Postgres usually degrades gracefully; a cache inside Postgres degrades into a disk read.
 
-pool = ConnectionPool(
-  conninfo="postgresql://user:pass@postgres:5432/db",
-  min_size=5,
-  max_size=20,
-  max_lifetime=3600,
-  max_idle=30,
+The failure mode to watch for: latency looks fine during testing, then a data growth event pushes the working set past `shared_buffers` and p99 read latency steps up without any error being logged. Instrument `pg_stat_user_tables` hit ratios and `pg_statio_user_tables` read counts for the cache table specifically, and alert when the hit ratio for that table drops below your threshold.
+
+### How to measure whether it is worth it
+
+Do not run a synthetic benchmark. Instrument the real path.
+
+1. Record the current p50, p95 and p99 latency of the code path that talks to the cache, and the cache's own hit ratio.
+2. Record the query count and rows returned for that path from `pg_stat_statements`.
+3. Build the Postgres version behind a flag, and split traffic so both paths run concurrently.
+4. Compare p99 and the number of disk reads per request for the cache table.
+
+The decision rule that matters is not "is Postgres faster". It is "does the added p99 from disk reads exceed the p99 of the network round trip to the existing cache". On a same-host or same-cluster deployment the network hop is often sub-millisecond, which sets a low bar for the in-database version to clear.
+
+## Event bus: what you gain and what you lose
+
+### The mechanism
+
+Table-backed queues generally work by inserting a row, marking rows as invisible for a visibility timeout when a consumer reads them, and either deleting or archiving the row when processing succeeds. The exact function names differ between implementations, but the shape is consistent.
+
+```sql
+CREATE TABLE outbound_events (
+  id           bigserial PRIMARY KEY,
+  topic        text NOT NULL,
+  payload      jsonb NOT NULL,
+  visible_at   timestamptz NOT NULL DEFAULT now(),
+  attempts     int NOT NULL DEFAULT 0,
+  created_at   timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX outbound_events_ready_idx
+  ON outbound_events (topic, visible_at)
+  WHERE attempts < 5;
+```
+
+Consumers claim work with a locking read that skips rows already held by another transaction:
+
+```sql
+WITH claimed AS (
+  SELECT id FROM outbound_events
+  WHERE topic = $1 AND visible_at <= now() AND attempts < 5
+  ORDER BY id
+  FOR UPDATE SKIP LOCKED
+  LIMIT 10
 )
-
-# Enqueue a message
-with pool.connection() as conn:
-    with conn.cursor() as cur:
-        cur.execute("SELECT pgmq.send('receipts', %s)", (json.dumps({"order_id": 123}),))
-
-# Poll for messages
-with pool.connection() as conn:
-    with conn.cursor() as cur:
-        cur.execute("SELECT * FROM pgmq.poll('receipts', 1000, 10)")
-        messages = cur.fetchall()
-        for msg_id, msg in messages:
-            print(f"Processing message {msg_id}: {msg}")
-            # Acknowledge after processing
-            cur.execute("SELECT pgmq.archive('receipts', %s)", (msg_id,))
+UPDATE outbound_events e
+SET visible_at = now() + interval '30 seconds',
+    attempts = attempts + 1
+FROM claimed
+WHERE e.id = claimed.id
+RETURNING e.id, e.payload;
 ```
 
-In our load tests, `pgmq` handled 120k messages/sec with 0.8ms median latency and 2.3ms p99. That’s faster than Redis Streams in our benchmarks and 3x cheaper than running Kafka 3.7 on three m6i.large brokers. The catch is that `pgmq` doesn’t persist messages forever — you need to archive or delete them, or the queue grows unbounded.
+This is the core primitive. Everything else — retry backoff, dead-letter handling, metrics — is application code you now own.
 
+### What this costs you
 
-### The time-series layer: `pg_partman` + `timescaledb` compatibility mode
+The queue and the business data share one resource. A long-running analytics query that holds snapshots for minutes will block vacuum on the queue table, and a queue table that is never vacuumed accumulates bloat until the index scan that claims work becomes the slowest query in the system. This is a real and common failure mode, and it does not exist when the queue lives in a separate system with its own storage.
 
-For metrics and telemetry, we combined `pg_partman` for automatic table partitioning with TimescaleDB’s compression in "compatibility mode." The trick is to create hypertables implicitly by enabling Timescale’s extension and letting `pg_partman` handle the partition pruning.
+Ordering is the second cost. `FOR UPDATE SKIP LOCKED` gives you no ordering guarantee across concurrent consumers. If two workers claim rows 5 and 6, row 6 may commit first. If your workflow requires that events for a given entity be processed in order, you must add a per-entity lock or a single-consumer-per-key scheme, and both reduce throughput.
+
+Replay is the third. Kafka retains a log you can rewind. A table-backed queue that deletes processed rows cannot be replayed. If you archive instead of delete, you can replay, but the archive table grows without bound unless you partition it and drop old partitions on a schedule.
+
+The failure mode to watch for: consumer lag grows during a traffic spike, the queue table bloats, autovacuum cannot keep up, and claim queries slow down, which reduces consumer throughput further. Instrument the claim query's duration and the table's dead tuple count together; a rising claim duration with a rising dead tuple count is this failure in progress.
+
+### How to measure whether it is worth it
+
+1. Instrument the current broker's publish-to-consume latency at p50 and p99, and the consumer lag in messages.
+2. Instrument the claim query duration and the queue table's dead tuple ratio.
+3. Run both paths concurrently with a traffic split, and compare the tail latency of the end-to-end workflow, not just the enqueue step.
+4. Watch dead tuple count on the queue table during the test. If it climbs and does not recover between load pulses, the queue is not keeping up with its own garbage.
+
+The decision rule: if your workflow tolerates out-of-order processing and at-least-once delivery, the table-backed queue is likely adequate. If it needs per-key ordering, replay, or fan-out to independent consumer groups with independent offsets, the broker is doing work you would otherwise have to build.
+
+## Time series: what you gain and what you lose
+
+### The mechanism
+
+Declarative partitioning on a time column, plus a scheduler that pre-creates future partitions and drops expired ones, reproduces the retention half of a time-series database.
 
 ```sql
--- Enable TimescaleDB in compatibility mode
-CREATE EXTENSION IF NOT EXISTS timescaledb WITH CASCADE;
+CREATE TABLE api_metrics (
+  recorded_at timestamptz NOT NULL,
+  service     text NOT NULL,
+  route       text NOT NULL,
+  latency_ms  numeric NOT NULL
+) PARTITION BY RANGE (recorded_at);
 
--- Create a metrics table with Timescale's time partitioning
-SELECT create_hypertable('api_metrics', 'timestamp', 
-                         chunk_time_interval => INTERVAL '1 day');
-
--- Let pg_partman manage the chunks
-CREATE EXTENSION IF NOT EXISTS pg_partman;
-SELECT partman.create_parent('api_metrics', 'timestamp', 'daily', 'pg_partman');
+CREATE TABLE api_metrics_2026_01
+  PARTITION OF api_metrics
+  FOR VALUES FROM ('2026-01-01') TO ('2026-02-01');
 ```
 
-This gives us TimescaleDB-like compression ratios (87% storage reduction for metrics older than 7 days) without installing TimescaleDB as a separate service. The query planner in Postgres 17 is smart enough to prune partitions based on the time column, and `pg_partman` ensures old chunks get archived or dropped automatically.
+Queries that filter on `recorded_at` benefit from partition pruning, which is the main reason this works at all. A query without a time filter will scan every partition and will be slower than the same query against a single table, because the planner has more work to do.
 
+Retention becomes a `DROP TABLE` on the oldest partition, which is a metadata operation and effectively instant, unlike a bulk `DELETE` that has to write WAL and wait for vacuum.
 
-## Option B — how it works and where it shines
+### What this costs you
 
-The alternative is sticking with the original three tools: Redis 7.2 for caching, Kafka 3.7 for events, and TimescaleDB 2.13 for time-series. This is the stack we used before the Postgres migration, and it’s what most teams default to when they outgrow a monolith.
+Compression. A columnar time-series engine stores each column contiguously and compresses runs of similar values, which is why metrics compress so well. Postgres stores rows, and its built-in compression applies to variable-length values within a row. If your metric rows have many columns and you query only one or two of them, you are paying to read and decompress the others.
 
-### Redis 7.2 — the cache king
+Continuous aggregates. A time-series engine can maintain a materialised rollup incrementally as data arrives. In Postgres you build this yourself with a materialised view and a refresh job. A full refresh recomputes the whole window; a concurrent refresh blocks less but still does the full computation. For high-cardinality rollups this becomes the dominant cost.
 
-Redis 7.2 is still the fastest in-memory store for ephemeral data. With Redis 7.2’s new `RESP3` protocol and automatic memory defragmentation, it handles 500k ops/sec on a single node with sub-millisecond latency. The problem isn’t performance — it’s operational overhead.
+Cardinality. Partitioning by time does not help when the expensive part of the query is grouping by a high-cardinality label. The planner still has to aggregate across all matching rows in each partition.
 
-In our Jakarta cluster, we ran Redis in cluster mode with 5 shards. The setup required:
-- 5 `cache.r7g.large` nodes ($180/month each)
-- Redis Sentinel for failover
-- Lua scripts for rate limiting
-- Separate connection pools in each service
-- A custom exporter for Prometheus metrics
+The failure mode to watch for: partition count grows faster than expected because the interval is too fine, and planning time — not execution time — becomes the bottleneck. Every query against a partitioned table pays planning cost proportional to the number of partitions. Instrument planning time separately from execution time; if planning dominates on simple queries, widen the partition interval.
 
-The total cost: $900/month. After switching to Postgres’s buffer cache, we cut that to $8/month (the extra RAM on the Postgres instance) while improving hit ratios from 92% to 98.7%.
+### How to measure whether it is worth it
 
-The real killer is debugging. When a key disappears, is it:
-- An eviction policy issue?
-- A Lua script bug?
-- A network partition?
-- A failover in progress?
+1. Capture the ten most frequent metric queries and their current p99, with their row counts.
+2. Recreate the same data in partitioned Postgres tables with the same retention window.
+3. Compare p99 execution time, and separately compare planning time.
+4. Measure the size on disk of both representations for the same data and retention window.
+5. Measure the wall-clock time of the retention operation in both systems — dropping a partition versus whatever the existing system does.
 
-With Postgres, the answer is always "a query plan issue."
+The decision rule: if your metric queries are dominated by time-range filters and simple aggregations, partitioning is likely sufficient. If they depend on incremental rollups over high-cardinality dimensions, or on compression ratios that row storage cannot reach, the specialised engine is earning its keep.
 
+## A worked sizing example
 
-### Kafka 3.7 — the event backbone
+Here is the arithmetic for a hypothetical service, with every assumption stated so you can substitute your own.
 
-Kafka 3.7 with KRaft mode removed ZooKeeper, but it didn’t remove the complexity. Our Kafka cluster ran on 3 `kafka.r6g.2xlarge` brokers ($450/month each) with 3-day retention and replication factor 3. Total cost: $1,350/month.
+Assume an event rate of 2,000 events per second, sustained. Each event row is 400 bytes including the payload and row overhead.
 
-We used Kafka for:
-- Ledger events (order created, payment processed)
-- Audit logs
-- Async receipt generation
-- Search index updates
+- Rows per day: 2,000 × 86,400 = 172,800,000.
+- Bytes per day: 172,800,000 × 400 = 69,120,000,000 bytes ≈ 64 GiB per day before any index overhead.
+- With a 30-day retention window: 64 × 30 = 1,920 GiB ≈ 1.9 TiB of table data.
 
-Each topic had its own partition count and retention policy. The operational surface area included:
-- Topic configuration drift
-- Consumer group lag
-- Exactly-once semantics tuning
-- Schema registry schema evolution
-- MirrorMaker for cross-region replication
+Now add indexes. A primary key on a `bigserial` plus a composite index on `(topic, visible_at)` might add 30 to 50 bytes per row depending on fill factor and key width. Take 40 bytes:
 
-In our Postgres migration, we replaced Kafka with `pgmq` for everything except the highest-throughput topics. The tipping point was when we measured 120k messages/sec through `pgmq` with 0.8ms median latency — faster than Kafka’s 3.2ms median in our tests.
+- Index bytes per day: 172,800,000 × 40 = 6,912,000,000 bytes ≈ 6.4 GiB per day.
+- Over 30 days: 6.4 × 30 = 192 GiB.
 
-The catch is that `pgmq` doesn’t guarantee ordering per partition like Kafka does. If your workflow requires strict ordering (e.g., financial transactions), you’re better off keeping Kafka. But for 90% of async workflows, `pgmq` is enough.
+Total steady-state footprint is roughly 1.9 TiB plus 0.19 TiB, or about 2.1 TiB. That is the number you compare against the storage and memory of the broker you would otherwise run, and against the disk size you must provision for Postgres.
 
+The more important number is the write path. At 2,000 rows per second with WAL enabled, you are generating WAL at roughly the row size plus WAL record overhead — call it 500 bytes per row, so about 1 MB per second, or roughly 86 GiB per day of WAL. Your archive strategy and checkpoint tuning have to sustain that, and your replica has to apply it. This is the constraint that usually decides the question, not storage.
 
-### TimescaleDB 2.13 — the metrics engine
+Run the same arithmetic with your own event rate, row size and retention window before you commit to anything.
 
-TimescaleDB 2.13 is still the gold standard for time-series data. It compresses 100GB of metrics into 13GB using columnar storage and provides SQL extensions like `time_bucket` and `last`. The problem is that it’s a separate database, which means:
-- Another connection pool to manage
-- Another backup strategy
-- Another replication lag metric to watch
-- Another place for schema drift
+## A decision checklist
 
-We ran TimescaleDB on a `db.r6g.2xlarge` instance ($540/month) with 30 days retention and compression enabled. The storage savings were real — 87% reduction for old data — but the operational cost of running a second database was higher than the storage savings.
+Work through these in order. A "no" early on is a strong signal to stop.
 
-With Postgres 17 and `pg_partman`, we replicated 90% of the compression benefits without installing TimescaleDB. The remaining 10% (advanced compression algorithms) wasn’t worth the operational overhead.
+1. Does the workload tolerate at-least-once delivery with possible reordering? If not, keep the broker.
+2. Is the cache working set comfortably smaller than the memory you can dedicate to Postgres, with headroom for growth? If not, keep the external cache.
+3. Are the metric queries dominated by time-range filters over a fixed retention window? If not, keep the time-series engine.
+4. Can your team write and review PL/pgSQL, and debug query plans? If not, the consolidation moves work to the people least equipped to absorb it.
+5. Can you run both stacks concurrently behind a traffic split for long enough to observe a full traffic cycle, including a peak? If not, you cannot measure the trade-off, and you should not make the change.
+6. Do you have monitoring on the specific failure modes named above — cache table hit ratio, queue dead tuple ratio, partition planning time? If not, build that first.
 
+## FAQ
 
-## Head-to-head: performance
+**Does an unlogged table survive a crash?**
 
-We ran a synthetic load test for 72 hours on both stacks. The goal was to simulate a Jakarta-based payments service with 50k writes/sec and 300k reads/sec during peak. Here’s what we measured:
+No. Unlogged tables are truncated after an unclean shutdown. They are appropriate for data you can rebuild from a source of truth, and inappropriate for anything you would be upset to lose.
 
-| Metric                          | Postgres 17 + Extensions | Redis 7.2 + Kafka 3.7 + TimescaleDB 2.13 |
-|---------------------------------|---------------------------|------------------------------------------|
-| P99 API latency (ms)            | 120                       | 580                                      |
-| P95 API latency (ms)            | 45                        | 180                                      |
-| Cache hit ratio                 | 98.7%                     | 92%                                      |
-| Message queue throughput (msg/s)| 120,000                   | 85,000                                   |
-| Metrics query time (p99 ms)     | 42                        | 210                                      |
-| Cost per month (AWS us-east-1)  | $6,200                    | $14,100                                  |
-| Deployment blast radius         | 1 system                  | 3 systems                                |
-| Debugging time (hours/week)     | 2                         | 8                                        |
+**Can a table-backed queue provide exactly-once processing?**
 
-The Postgres stack won on every metric except one: Redis 7.2 still has lower latency for pure in-memory lookups (0.5ms vs 2ms for Postgres). But in a real application, the overhead of crossing the network to Redis often negates that advantage. Our API service runs in the same Kubernetes cluster as Postgres, so the network hop is negligible.
+No. You can get at-least-once delivery plus idempotent consumers, which produces the same observable effect if every consumer operation is idempotent. That requires designing idempotency into the consumer, not configuring it in the queue.
 
-The biggest surprise was the message queue throughput. `pgmq` beat Kafka in raw throughput (120k vs 85k msg/s) while using 73% less CPU. The secret is that `pgmq` doesn’t do replication or partitioning — it’s just a thin wrapper over Postgres tables. For fire-and-forget events, that’s more than enough.
+**Why is planning time a problem with many partitions?**
 
+The planner considers each partition when building the plan. With thousands of partitions, planning cost grows and can exceed execution time for simple queries. Widening the partition interval reduces the count at the cost of coarser retention granularity.
 
-## Head-to-head: developer experience
+**Is a partitioned Postgres table as fast as a columnar store for analytics?**
 
-Switching from three tools to one changes how developers write code. Here’s what we measured:
+For narrow time-range scans over a few columns, it can be competitive. For wide scans over many columns, or for queries that benefit from per-column compression, row storage reads more data than necessary and the columnar store wins. Measure with your own column count and query shape.
 
-**Code complexity**
-- Postgres stack: 1 connection string, 1 schema, 1 set of SQL queries
-- Original stack: 3 connection strings, 3 query languages (Lua, SQL, Kafka Streams), 3 sets of operational docs
+**What is the first thing to instrument before attempting this?**
 
-**Onboarding time**
-- New hire onboarding dropped from 5 days to 2 days. The primary time sink was no longer "learn Kafka Streams" but "learn Postgres advanced features."
+The tail latency of the specific code path you intend to move, split by hit and miss where applicable. Without a baseline for that path alone, an aggregate system metric will not tell you whether the change helped or hurt.
 
-**Debugging surface**
-- Postgres stack: 1 query plan to inspect, 1 set of logs to tail
-- Original stack: Redis Lua scripts, Kafka consumer groups, TimescaleDB chunk pruning
+## Do this in the next 30 minutes
 
-**Schema changes**
-- Postgres stack: One `ALTER TABLE` statement propagates to cache, events, and metrics
-- Original stack: Three separate migrations, each with its own downtime window
-
-The biggest win was removing the need for Lua scripts. Our rate-limiting logic went from 47 lines of Lua in Redis to a 15-line PL/pgSQL function. The code is easier to test, easier to debug, and easier to refactor.
-
-
-## Head-to-head: operational cost
-
-AWS pricing in us-east-1 as of 2026:
-
-| Service                     | Instance Type   | Monthly Cost | Notes                          |
-|-----------------------------|-----------------|--------------|--------------------------------|
-| Postgres 17.1               | db.r7g.4xlarge  | $3,200       | 128GB RAM, 16 vCPU, gp3 500GB  |
-| Redis 7.2                   | cache.r7g.large | $180         | 5 shards = $900/month          |
-| Kafka 3.7 (3 brokers)       | kafka.r6g.2x    | $450         | KRaft mode, 3-day retention    |
-| TimescaleDB 2.13            | db.r6g.2xlarge  | $540         | 30-day retention               |
-| **Total**                   |                 | **$14,100**  |                                |
-
-After switching to Postgres 17:
-
-| Service                     | Monthly Cost | Notes                          |
-|-----------------------------|--------------|--------------------------------|
-| Postgres 17.1               | $3,200       | 128GB RAM, 16 vCPU, gp3 500GB  |
-| Extensions (pgmq, pg_cron)  | $0           | Bundled with Postgres          |
-| **Total**                   | **$6,200**   | 56% cost reduction              |
-
-The cost saving isn’t just hardware — it’s people. Our DevOps team spent 12 hours/week managing Redis failovers, Kafka consumer lag, and TimescaleDB chunk pruning. After the migration, that dropped to 2 hours/week. The 10 hours saved per week is worth more than the $7,900/month hardware saving.
-
-
-## The decision framework I use
-
-When I evaluate whether to consolidate tools, I ask three questions:
-
-1. **Is the data ephemeral or durable?**
-   - Ephemeral (rate limits, sessions): Strong candidate for Postgres cache
-   - Durable (audit logs, financial transactions): Keep Kafka/TimescaleDB
-
-2. **Does the workflow require ordering guarantees?**
-   - Strict ordering per partition: Keep Kafka
-   - Best-effort ordering: `pgmq` is enough
-
-3. **What’s your team’s SQL comfort level?**
-   - If your team writes mostly ORM-generated SQL, Postgres extensions are a natural fit
-   - If your team lives in Kafka Streams and Lua, the learning curve might not be worth it
-
-I also run a 48-hour load test on the consolidated stack. If the p99 latency degrades more than 20% or the CPU spikes above 70%, I fall back to the original tools. In our case, the p99 stayed flat at 120ms, and CPU hovered around 55% — a clear win.
-
-
-## My recommendation (and when to ignore it)
-
-**Use Postgres 17 + extensions if:**
-- Your cache hit ratio is above 85% (meaning most data is hot and lives in RAM)
-- Your event volume is below 200k msg/s (Kafka scales higher, but `pgmq` is simpler)
-- Your team ships SQL daily (PL/pgSQL is easier to review than Kafka Streams)
-- You want to cut operational overhead by 70%
-
-**Ignore this recommendation if:**
-- You need strict ordering per partition (financial transactions, inventory deduplication)
-- Your event volume exceeds 200k msg/s (Kafka scales better)
-- Your team is allergic to SQL (if everyone writes Go and Lua, Postgres is a hard sell)
-- You’re already running Aurora PostgreSQL with Babelfish for SQL Server compatibility (the extensions add overhead)
-
-The one scenario where I’d push back is if your Redis cluster is already sharded and replicated across multiple regions. The cost of migrating to Postgres might not justify the savings, especially if your Redis hit ratio is already 99%.
-
-
-## Final verdict
-
-In 2026, Postgres 17 with the right extensions is the best default choice for small-to-medium workloads that currently use Redis, Kafka, and TimescaleDB. It’s not the fastest in every micro-benchmark, but it’s the fastest to ship, debug, and operate. The 56% cost reduction and 4x drop in debugging time more than make up for the slight latency trade-offs.
-
-I spent three weeks fighting with Kafka consumer lag during a Black Friday sale. After the migration, the same event path that used to take 3 hours to debug now takes 15 minutes. The stack is simpler, cheaper, and more maintainable — and it’s all running on a single Postgres 17.1 instance in us-east-1.
-
-
-**Next step:** Open your `pg_stat_statements` extension and check the top 20 slowest queries. If any of them are hitting Redis or Kafka with a simple key lookup, they’re prime candidates for consolidation. Start with one query this afternoon and measure the p99 delta.
-
-
-## Frequently Asked Questions
-
-**How do I migrate from Redis to Postgres cache without downtime?**
-
-Use a dual-write pattern: read from Redis first, but write to both Redis and Postgres. Once your hit ratio in Postgres stabilizes above 95%, switch to Postgres-only. We used a 7-day migration window with a background job that warmed the Postgres cache from Redis snapshots.
-
-**What about Redis persistence? I can’t lose data on restart.**
-
-Postgres’s WAL (Write-Ahead Log) is your persistence layer. If you need durability, set `synchronous_commit = on` and `wal_level = replica`. For rate limits and sessions, temporary tables with `ON COMMIT PRESERVE ROWS` are enough. For critical data like user sessions, use a regular table with `INSERT` + `UPDATE`.
-
-**Kafka has exactly-once semantics. pgmq doesn’t. When does that matter?**
-
-Exactly-once semantics matter for financial transactions or inventory deduplication. If your workflow requires idempotency guarantees, keep Kafka for those specific topics. For 80% of async workflows, at-least-once delivery is enough, and `pgmq`’s `archive` function gives you idempotent processing.
-
-**TimescaleDB compression is better than Postgres’s. Why switch?**
-
-TimescaleDB 2.13 compresses 100GB of metrics to 13GB using columnar storage. Postgres 17 with `pg_partman` + Timescale compatibility mode achieves 87% reduction for old data, but not the full 93% of TimescaleDB. The trade-off is worth it for 80% of metrics workloads — the remaining 20% that need extreme compression should stay on TimescaleDB.
-
-**What’s the biggest mistake teams make when consolidating?**
-
-They try to replicate every Kafka feature in `pgmq`. Kafka has partitions, replication, and consumer groups — `pgmq` has none of that. Teams that try to build a Kafka clone on top of Postgres tables end up with worse performance than using Kafka. Use `pgmq` only for simple queues where ordering isn’t critical.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 02, 2026
+Pick the single highest-traffic code path that currently talks to your external cache, broker or time-series store. Find it in `pg_stat_statements` if it already touches Postgres, or in your tracing if it does not. Write down its current p99 latency, its request rate, and the size of the data it reads. That one row of numbers is the baseline you need before any consolidation decision is worth making.

@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Nigeria’s 2026 API rules broke our microservices - Kubai Kevin</title>
-        <meta name="description" content="Cut API compliance risk 8% with transaction boundaries — why Nigeria’s 2026 PSMR rules broke microservices and what to do instead">
+        <title>Designing Fintech Backends Around Audit Deadlines - Kubai Kevin</title>
+        <meta name="description" content="Regulatory audit deadlines change how you should split services. A worked example of transaction boundaries, outbox patterns and WAL-based audit reads.">
         <meta name="keywords" content="Psmr2026Compliance, PostgresqlWalAudit, Apis, Postgresql, Microservices">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T08:55:38.998495">
-        <meta property="article:modified_time" content="2026-09-19T11:42:21.843593+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:28:07.701636+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="Nigeria’s 2026 API rules broke our microservices">
-        <meta property="og:description" content="Cut API compliance risk 8% with transaction boundaries — why Nigeria’s 2026 PSMR rules broke microservices and what to do instead">
+        <meta property="og:title" content="Designing Fintech Backends Around Audit Deadlines">
+        <meta property="og:description" content="Regulatory audit deadlines change how you should split services. A worked example of transaction boundaries, outbox patterns and WAL-based audit reads.">
         <meta property="og:url" content="https://kubaik.github.io/nigerias-2026-api-rules-broke-our-microservices/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/nigerias-2026-api-rules-broke-our-microservices.png">
-        <meta property="og:image:alt" content="Nigeria’s 2026 API rules broke our microservices">
+        <meta property="og:image:alt" content="Designing Fintech Backends Around Audit Deadlines">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Nigeria’s 2026 API rules broke our microservices">
-        <meta name="twitter:description" content="Cut API compliance risk 8% with transaction boundaries — why Nigeria’s 2026 PSMR rules broke microservices and what to do instead">
+        <meta name="twitter:title" content="Designing Fintech Backends Around Audit Deadlines">
+        <meta name="twitter:description" content="Regulatory audit deadlines change how you should split services. A worked example of transaction boundaries, outbox patterns and WAL-based audit reads.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/nigerias-2026-api-rules-broke-our-microservices.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,12 +60,12 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/nigerias-2026-api-rules-broke-our-microservices/#article",
-      "headline": "Nigeria’s 2026 API rules broke our microservices",
-      "description": "Cut API compliance risk 8% with transaction boundaries — why Nigeria’s 2026 PSMR rules broke microservices and what to do instead",
+      "headline": "Designing Fintech Backends Around Audit Deadlines",
+      "description": "Regulatory audit deadlines change how you should split services. A worked example of transaction boundaries, outbox patterns and WAL-based audit reads.",
       "datePublished": "2026-07-03T08:55:38+00:00",
-      "dateModified": "2026-09-19T11:42:21+00:00",
-      "wordCount": 2717,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-10-03T11:28:07+00:00",
+      "wordCount": 2571,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Nigeria’s 2026 API rules broke our microservices",
+          "name": "Designing Fintech Backends Around Audit Deadlines",
           "item": "https://kubaik.github.io/nigerias-2026-api-rules-broke-our-microservices/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>Nigeria’s 2026 API rules broke our microservices</span>
+            <span>Designing Fintech Backends Around Audit Deadlines</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">Nigeria’s 2026 API rules broke our microservices</h1>
+                <h1 itemprop="headline">Designing Fintech Backends Around Audit Deadlines</h1>
                 
-                <p class="post-lead">Cut API compliance risk 8% with transaction boundaries — why Nigeria’s 2026 PSMR rules broke microservices and what to do instead</p>
+                <p class="post-lead">Regulatory audit deadlines change how you should split services. A worked example of transaction boundaries, outbox patterns and WAL-based audit reads.</p>
                 
                 
                 <div class="tags">
@@ -255,130 +255,176 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2717 words
+                        13 min read
+                        &nbsp;·&nbsp; 2571 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
-<p><strong>## The conventional wisdom (and why it's incomplete)</strong></p>
-<p>If you’ve read any fintech architecture guide from 2026–2026, you know the drill: break your backend into microservices, give each service its own database, and expose clean REST or GraphQL APIs. The justification is scalability and independent deploys. In 2026, that advice is still everywhere — but it’s wrong for Nigerian-regulated fintech.</p>
-<p>Here’s the contradiction: Nigeria’s 2026 Payment System Management Regulations (PSMR) require every financial transaction to be auditable within 30 seconds, with full traceability across every hop. When you route a transfer from a wallet to a bank via three services — auth, ledger, and settlement — you now have three separate databases, three transaction logs, and potentially three 30-second windows where the audit trail is incomplete. That’s a compliance violation, not a scalability win.</p>
-<p>We were following the Google SRE playbook: separate services, separate deploys, separate failure domains. Then we got a notice from our Nigerian compliance team: “Your transaction ID is missing in the audit log at T+32 seconds.” It turned out that the Kafka topic between auth and ledger had a 5-second lag spike. The audit system counted that as a gap.</p>
-<p>The honest answer is this: the microservices playbook assumes you control the entire stack. In fintech under PSMR 2026, you don’t. Third-party services, card switches, and bank APIs add latency and failures you can’t fix. You can’t shard your way out of a compliance clock.</p>
-<p><strong>## What actually happens when you follow the standard advice</strong></p>
-<p>Most teams start with the canonical stack: Node 20 LTS backend, PostgreSQL 16, Redis 7.2 for caching, and a message bus like AWS SQS or Kafka. They wrap each capability in a service: UserService, LedgerService, NotificationService. Each service owns its own Postgres schema. They expose REST endpoints with OpenAPI specs. They deploy with Helm to EKS clusters across two AZs in us-east-1.</p>
-<p>Then they hit Nigeria’s 2026 requirement: “Every transaction must be traceable across all components within 30 seconds.” At first glance, this looks like a logging problem. Add a trace ID, log to CloudWatch, done.</p>
-<p>But here’s the catch: trace IDs don’t cross service boundaries cleanly when services fan out or fan in. Let’s say a user sends 50 kobo to a bank. Your AuthService validates the token (40ms), LedgerService updates the balance (120ms), and SettlementService calls the bank via an HTTP API that sometimes times out in 4 seconds (not 300ms). If SettlementService retries three times, your total is now 12 seconds — but the audit system samples every 5 seconds. At T+15s, the audit system sees no trace for that transaction ID in SettlementService. It flags it as missing.</p>
-<p>We saw this in production on Black Friday 2026. The Kafka producer was configured with <code>acks=1</code>, so a leader flip in us-east-1-az2 caused a 2-second delay. The audit system’s 5-second sampling window missed the trace insertion event.</p>
-<p>Worse, our PostgreSQL write-ahead log (WAL) shipping lagged to 400ms under peak load. The trace system relied on logical replication from Postgres to a ClickHouse datastore every second. At 400ms lag, 400ms of writes were invisible to the audit system. That’s 400ms over 30 seconds — not a big number, but enough to trigger a flag when you’re auditing 40k txns/min.</p>
-<p>We tried sharding the ledger by user ID to reduce write contention. The sharding key was <code>user_id % 1024</code>. But SettlementService still had to fan out to multiple ledgers during batch settlements. The fan-out introduced 100ms of latency per hop. Under load, fan-out latency spiked to 400ms. The audit system’s 5-second sampling window couldn’t distinguish between “in-flight” and “missing.”</p>
-<p>The result?</p>
-<p><strong>## A different mental model</strong></p>
-<p>Forget “scalable microservices.” Think “cohesive transaction boundary.” A transaction boundary is any unit of work that must complete within a regulatory deadline. In PSMR 2026, that deadline is 30 seconds for every financial operation.</p>
-<p>Instead of splitting services by domain (auth, ledger, settlement), split by transaction boundary. Group all steps that must complete atomically into one logical service. If one step fails, the whole transaction rolls back. That means auth, ledger update, and settlement call must live in the same process or in a strongly consistent transactional outbox.</p>
-<p>The ledger is the transaction boundary.</p>
-<p>This doesn’t mean monolith. It means “modular monolith with strict transaction boundaries.” You can still have multiple code modules and even separate Docker containers, but they must share a transactional outbox and a single connection to the ledger database. The outbox pattern (Debezium-style) writes to a local WAL and then emits to Kafka. The audit system reads the WAL directly, not the Kafka topic. That closes the 5-second sampling gap.</p>
-<p>We rebuilt our system this way. We kept three modules: Auth, Ledger, and Settlement. But they all live in one Kubernetes pod with a shared volume for the WAL. The pod runs on a single R5.large instance with 16 GB RAM. The whole stack serves 5,000 RPS with P99 latency of 280ms under load. The audit system reads the WAL every 200ms and reports 0% missing traces.</p>
-<p><strong>## Evidence and examples from real systems</strong></p>
-<p>Let’s look at three real systems we audited in 2026:</p>
-<table>
-<thead>
-<tr>
-<th>System</th>
-<th>Architecture</th>
-<th>P99 Latency (ms)</th>
-<th>Audit Gap %</th>
-<th>Compliance Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Legacy Split Services</td>
-<td>3 services, 3 databases, Kafka between them</td>
-<td>420ms</td>
-<td>8%</td>
-<td>Failed PSMR audit</td>
-</tr>
-<tr>
-<td>Monolith with outbox</td>
-<td>Single process, PostgreSQL WAL, Debezium outbox</td>
-<td>280ms</td>
-<td>0%</td>
-<td>Passed PSMR audit</td>
-</tr>
-<tr>
-<td>Hybrid Microservices</td>
-<td>Services split by domain, but ledger is a single DB</td>
-<td>310ms</td>
-<td>0%</td>
-<td>Passed PSMR audit</td>
-</tr>
-</tbody>
-</table>
-<p>The hybrid microservices approach is the one we ended up shipping. It’s not a monolith, but it’s not a free-for-all microservices either. We split AuthService and NotificationService into separate pods, but we kept LedgerService and SettlementService together in one pod. The ledger pod uses PostgreSQL 16 with synchronous replication to a standby in a second AZ. The pod publishes to Kafka via a local outbox with <code>max.in.flight.requests.per.connection=1</code> to avoid reordering.</p>
-<p>Why did this work? Because the transaction boundary — ledger update + settlement call — completes in one pod. The audit system reads the PostgreSQL WAL every 200ms. Even if Kafka lags for 2 seconds, the WAL has the trace. The audit system sees the trace within 200ms of commit.</p>
-<p>We benchmarked this with Locust. 10k txns over 10 minutes, 100 concurrent users. The legacy split services showed 8% audit gaps during a 2-second Kafka lag. The hybrid system showed 0% gaps. The hybrid system’s P99 latency was 310ms vs 420ms for the split system. The hybrid system used 30% less CPU because it avoided network hops between services.</p>
-<p>We also tried Redis 7.2 as a cache for user profiles in AuthService. It cut latency from 80ms to 12ms. But it introduced a new problem: cache invalidation. When a user’s balance changes in LedgerService, we have to invalidate the cache in AuthService. If the invalidation fails, AuthService serves stale data. We solved this by using Redis Streams as a reliable invalidation channel. Every ledger update publishes an invalidation event to a Redis Stream. AuthService subscribes and invalidates the cache asynchronously. This adds 5ms of latency on the write path, but it’s worth it to avoid stale reads.</p>
-<p><strong>## The cases where the conventional wisdom IS right</strong></p>
-<p>Not every Nigerian fintech needs to merge services. The conventional wisdom still works in three scenarios:</p>
+                <h2 id="why-the-standard-microservices-playbook-can-conflict-with-audit-rules">Why the standard microservices playbook can conflict with audit rules</h2>
+<p>Most fintech architecture guidance says the same thing: split the backend into microservices, give each service its own database, and expose REST or GraphQL APIs. The stated benefits are independent deploys and horizontal scalability. That advice is reasonable in general, but it becomes questionable when a regulator imposes a hard, wall-clock deadline on how quickly every financial transaction must be reconstructable from logs.</p>
+<p>Suppose a rule states that every financial transaction must be fully traceable across every component within 30 seconds of the initiating request. Now consider a transfer that a wallet routes to a bank through three services: authentication, ledger, and settlement. Each service owns its own database and its own transaction log. A trace ID is generated at the edge and propagated downstream. If any hop is delayed — a broker lag, a replication lag, a retry against a slow bank API — the audit reader can observe a window in which the transaction ID exists upstream but not yet downstream. Depending on how the regulator defines "traceable", that window can be recorded as a gap.</p>
+<p>The important nuance is that the deadline is not a performance target you can tune away. It is a property of the whole path, including components you do not control: card switches, bank APIs, and third-party processors. You cannot shard your way out of a clock.</p>
+<h2 id="a-concrete-failure-mode-fan-out-plus-sampling">A concrete failure mode: fan-out plus sampling</h2>
+<p>Consider a small transfer. The authentication service validates a token in roughly 40 ms. The ledger service updates a balance in roughly 120 ms. The settlement service calls a bank over HTTP. That call is the problem: it may respond in 300 ms on a good day and time out after several seconds on a bad one. If the client retries three times, the elapsed time before the transaction is recorded as settled can reach double-digit seconds.</p>
+<p>Now add an audit reader that samples or polls on an interval — say every five seconds. At a poll boundary, the reader may see the transaction ID in the auth log and the ledger log but not yet in the settlement log. Whether that counts as a violation depends on the rule's wording, but in practice auditors often treat "not yet visible" and "missing" as the same thing unless the system can prove otherwise.</p>
+<p>A second, subtler failure mode is replication lag. If the audit reader queries a logical replica rather than the primary, any lag between commit on the primary and visibility on the replica is a window in which a committed transaction is invisible to the auditor. At moderate load, that lag may be a few hundred milliseconds. At peak load, it can grow by an order of magnitude. The absolute number may look small next to a 30-second budget, but it is not the only source of delay in the path, and the delays compound.</p>
+<p>A third failure mode is broker configuration. If a producer is configured with <code>acks=1</code>, a leader election can delay acknowledgement while a new leader is chosen. During that window, the message exists in the producer's buffer but not in any log the auditor can read. The fix is not to make the broker faster; it is to stop treating the broker as the audit source of truth.</p>
+<h2 id="a-different-mental-model-the-transaction-boundary">A different mental model: the transaction boundary</h2>
+<p>Instead of splitting services by domain (auth, ledger, settlement, notification), split by transaction boundary. A transaction boundary is any unit of work that must complete atomically with respect to a regulatory deadline. For a financial operation with a 30-second traceability requirement, the boundary typically includes the ledger write and any synchronous external call that must succeed or fail together with it.</p>
+<p>The practical implication is that the ledger and the settlement call should live in the same deploy unit, sharing one database connection and one transactional outbox. Authentication and notification can usually live outside the boundary, because they do not need to commit atomically with the money movement.</p>
+<p>This is not a call for a monolithic codebase. It is a call for a modular monolith with explicit transaction boundaries. You can keep separate modules, separate packages, and even separate containers, provided the boundary components share a single durable log that the audit reader can consume.</p>
+<p>The mechanism that makes this work is the transactional outbox:</p>
 <ol>
-<li><strong>Non-critical paths.</strong> If a service is not part of a financial transaction boundary — say, a marketing email service or a blog — you can split it freely. No regulatory clock applies. 2. <strong>Third-party integrations with strong SLAs.</strong> If you’re calling Flutterwave, M-Pesa, or a bank API with a 200ms SLA and 99.9% uptime, you can split that service. But you must wrap the call in a circuit breaker and a 30-second timeout. If the call times out, fail the transaction and log the error. Don’t let it block the ledger. 3. <strong>Read-heavy analytics.</strong> If you’re building a reporting dashboard or a customer analytics service, read replicas and eventual consistency are fine. The PSMR clock only applies to financial operations, not analytics.</li>
+<li>Begin a database transaction.</li>
+<li>Write the business state change (for example, the balance update).</li>
+<li>Write a row into an <code>outbox</code> table in the same transaction, containing the event payload and the trace ID.</li>
+<li>Commit. At this point the state change and the intent to publish are durable together.</li>
+<li>A separate publisher process reads the <code>outbox</code> table and emits to the message broker. If publishing fails, the row remains and is retried.</li>
 </ol>
-<p>We built a reporting service this way. It reads from a read replica of the ledger database. It serves 10k RPS with P99 latency of 45ms. No compliance clock applies. We deployed it as a separate service with GraphQL API and Redis 7.2 caching. It works fine.</p>
-<p><strong>## How to decide which approach fits your situation</strong></p>
-<p>Here’s a decision tree we use internally:</p>
-<ol>
-<li><strong>Is this a financial transaction boundary?</strong> If yes, keep it in one service or at least one deploy unit. If no, you can split freely. 2. <strong>Does the service call a third-party API with an SLA &lt; 30 seconds?</strong> If yes, wrap it in a circuit breaker and a 30-second timeout. If no, you can split. 3. <strong>Is the service read-heavy with no writes?</strong> If yes, split it. If no, keep it in the transaction boundary.</li>
-</ol>
-<p>We also use a cost heuristic: if splitting a service saves us 20% in cloud costs and doesn’t introduce audit gaps, we split. Otherwise, we keep it in the boundary. In 2026, audit compliance is the higher cost.</p>
-<p><strong>## Objections I've heard and my responses</strong></p>
-<p><strong>Objection 1:</strong> “But microservices let us deploy faster.”
-My response: Yes, but at what cost? If every deploy requires a manual audit sign-off because you changed a service in the transaction boundary, the speed gain disappears. We measured it: a monolithic deploy takes 2 minutes to validate. A microservices deploy in the boundary takes 10 minutes. Outside the boundary, it’s 1 minute. So the speed gain only applies to non-boundary services. And those don’t need microservices anyway.</p>
-<p><strong>Objection 2:</strong> “What about horizontal scaling? A single pod can’t handle 100k RPS.”
-My response: You don’t need to. The ledger pod we run on an R5.large handles 5k RPS with P99 280ms. For 100k RPS, we shard the ledger by user ID, but we keep each shard as a single deploy unit with its own outbox and WAL. Each shard is a separate pod, but it’s not a microservice — it’s a sharded monolith. We use PostgreSQL logical replication to replicate each shard to a reporting read replica. This scales horizontally without breaking the transaction boundary.</p>
-<p><strong>Objection 3:</strong> “Event sourcing and CQRS let us split writes and reads.”
-My response: Yes, but event sourcing adds latency. Every event must be written to a durable log before the transaction commits. In our benchmarks, event sourcing added 150ms of latency to the write path. Under PSMR 2026, that’s a risk. We tried it for a month. The audit system flagged 3% of transactions as missing because the event wasn’t in the log within 30 seconds. We rolled back to the outbox pattern.</p>
-<p><strong>Objection 4:</strong> “Kubernetes pods die. What if the ledger pod crashes mid-transaction?”
-My response: We use PostgreSQL synchronous replication with <code>synchronous_commit = remote_apply</code> to a standby in a second AZ. The pod runs with a <code>preStop</code> hook that drains the WAL to the standby before shutdown. The audit system reads from the standby WAL. Even if the pod crashes, the transaction is durable. We tested this by killing the pod mid-transaction. The audit system saw the trace within 200ms of the commit.</p>
-<p><strong>## What I'd do differently if starting over</strong></p>
-<p>If I were building a Nigerian-regulated fintech in 2026, here’s what I’d do:</p>
-<ol>
-<li><strong>Start with a modular monolith.</strong> Don’t split into microservices until you hit 10k RPS or a clear non-transactional need. We wasted 6 months splitting AuthService from LedgerService. It didn’t help scale and broke compliance. 2. <strong>Use PostgreSQL 16 with synchronous replication and <code>remote_apply</code>.</strong> Forget Kafka for the audit trail. Read the WAL directly. We spent 3 months debugging Kafka lag spikes. The WAL is simpler and faster. 3. <strong>Put Redis 7.2 in front of anything read-heavy, but use Redis Streams for invalidation.</strong> Cache misses are 80ms faster, but stale data is a compliance risk. The Streams pattern is reliable. 4. <strong>Wrap third-party calls in a circuit breaker with a 30-second timeout.</strong> Don’t let a bank API block your ledger. Fail fast and log the error. 5. <strong>Ship a simple audit dashboard on day one.</strong> The dashboard should show trace IDs, timestamps, and gaps in red. We built ours in Grafana. It caught 8% of audit gaps in our first week. 6. <strong>Use Node 20 LTS with <code>pg</code> driver and <code>pino</code> for structured logging.</strong> We tried Python and Go for different services. The Node stack was faster to debug and had better library support for structured logs. 7. <strong>Avoid event sourcing unless you have a clear read/write separation need.</strong> It adds latency and complexity. The outbox pattern is simpler.</li>
-</ol>
-<p>I made one mistake I’d avoid: I assumed Kafka was the source of truth for audit trails. It’s not. The WAL is. Kafka is a transport. The audit system should read the WAL directly, not Kafka. That one change cut our audit gap from 8% to 0%.</p>
-<p><strong>## Summary</strong></p>
-<p>Nigeria’s 2026 Payment System Management Regulations changed the game. The microservices playbook that worked in 2026 is broken in 2026. The new rule is simple: every financial transaction must be traceable within 30 seconds. That forces you to keep the transaction boundary in one deploy unit, or at least in a strongly consistent outbox.</p>
-<p>The conventional wisdom still works for non-critical paths, read-heavy analytics, and third-party integrations with strong SLAs. But for the ledger and settlement, you need to merge services or shard as a single deploy unit. The audit system must read the PostgreSQL WAL directly, not Kafka. Redis 7.2 is great for caching, but use Redis Streams for invalidation. Wrap third-party calls in circuit breakers with 30-second timeouts.</p>
-<p>This post is what I wish I had found then.</p>
-<p><strong>## Frequently Asked Questions</strong></p>
-<p><strong>How do I implement the outbox pattern in Node 20 LTS?</strong></p>
-<p>Use the <code>pg</code> driver with <code>BEGIN</code> and <code>COMMIT</code> in a transaction. After <code>COMMIT</code>, insert the outbox record into a table called <code>outbox</code>. Use <code>LISTEN/NOTIFY</code> or a polling loop to poll the <code>outbox</code> table every 100ms. Publish each record to Kafka with <code>max.in.flight.requests.per.connection=1</code> to avoid reordering.</p>
-<p><strong>What’s the latency cost of synchronous replication in PostgreSQL 16?</strong></p>
-<p>In our benchmarks, synchronous replication with <code>synchronous_commit = remote_apply</code> added 2–5ms to the write path. Under peak load, it added 10ms. That’s acceptable for a 30-second compliance window. The alternative — async replication — risks WAL lag spikes that break the audit system.</p>
-<p><strong>Can I use Redis 7.2 as a cache for user balances?</strong></p>
-<p>Yes, but with invalidation via Redis Streams. Every ledger update publishes an invalidation event to a Redis Stream. The auth service subscribes and invalidates the cache. Without Streams, we saw stale reads under load. With Streams, cache invalidation is reliable.</p>
-<p><strong>What’s the simplest way to comply with PSMR 2026 in 2026?</strong></p>
-<p>Start with a modular monolith. Keep auth, ledger, and settlement in one service. Use PostgreSQL 16 with synchronous replication. Use Redis 7.2 for caching with Streams for invalidation. Read the WAL directly for audit trails. Ship an audit dashboard on day one. If you hit 10k RPS, shard the ledger by user ID, but keep each shard as a single deploy unit.</p>
-<p>Now, open your <code>docker-compose.yml</code> and check if your ledger service is split from auth. If it is, merge them today. That’s your next actionable step.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>Because the business change and the outbox row commit atomically, there is no window in which money moved but no event exists. The audit reader can consume the outbox table or the database's write-ahead log directly, rather than waiting for the broker.</p>
+<h2 id="reading-the-write-ahead-log-instead-of-the-broker">Reading the write-ahead log instead of the broker</h2>
+<p>Every relational database that supports crash recovery writes a write-ahead log (WAL) before applying changes to data files. In PostgreSQL, that log is the authoritative record of what committed. Logical decoding, whether via built-in logical replication slots or a change-data-capture tool, can stream committed changes to a consumer.</p>
+<p>The architectural point is simple: the WAL is the source of truth for "did this transaction commit", and the broker is a transport for downstream consumers. If your audit reader consumes the broker, it inherits the broker's latency, its reordering behaviour, and its failure modes. If it consumes the WAL or a logical replica fed from the WAL, it inherits only database replication latency, which you can measure and bound.</p>
+<p>To measure the relevant lag, instrument two timestamps: the commit timestamp recorded by the database, and the timestamp at which the audit reader observes the row. The difference is your audit visibility latency. Track it as a histogram, not an average, because the tail is what breaks compliance. A useful command-level check is to compare <code>pg_current_wal_lsn()</code> on the primary with the last received LSN reported by the replica's WAL receiver, and to alert when the byte gap exceeds a threshold you have tied to your deadline.</p>
+<h2 id="what-this-looks-like-in-code">What this looks like in code</h2>
+<p>A minimal outbox write inside a single transaction, using the Node <code>pg</code> driver:</p>
+<pre><code class="language-js">// db.js
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  max: 20,
+});
+
+module.exports = { pool };
+</code></pre>
+<pre><code class="language-js">// ledger.js
+const { pool } = require('./db');
+
+async function applyTransfer({ traceId, fromAccount, toAccount, amountMinor }) {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    await client.query(
+      'UPDATE accounts SET balance_minor = balance_minor - $1 WHERE id = $2',
+      [amountMinor, fromAccount]
+    );
+    await client.query(
+      'UPDATE accounts SET balance_minor = balance_minor + $1 WHERE id = $2',
+      [amountMinor, toAccount]
+    );
+
+    await client.query(
+      `INSERT INTO outbox (trace_id, event_type, payload)
+       VALUES ($1, $2, $3)`,
+      [traceId, 'transfer.applied', JSON.stringify({ fromAccount, toAccount, amountMinor })]
+    );
+
+    await client.query('COMMIT');
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+
+module.exports = { applyTransfer };
+</code></pre>
+<p>The publisher polls the outbox and marks rows as sent. It must not delete rows until the audit reader has confirmed consumption, or you lose the ability to replay.</p>
+<pre><code class="language-js">// publisher.js
+const { pool } = require('./db');
+const { producer } = require('./kafka');
+
+async function publishBatch() {
+  const client = await pool.connect();
+  try {
+    const { rows } = await client.query(
+      `SELECT id, trace_id, event_type, payload
+         FROM outbox
+        WHERE published_at IS NULL
+        ORDER BY id
+        LIMIT 100
+        FOR UPDATE SKIP LOCKED`
+    );
+
+    for (const row of rows) {
+      await producer.send({
+        topic: 'ledger.events',
+        messages: [{
+          key: row.trace_id,
+          value: JSON.stringify({
+            traceId: row.trace_id,
+            type: row.event_type,
+            payload: row.payload,
+          }),
+        }],
+      });
+
+      await client.query(
+        'UPDATE outbox SET published_at = now() WHERE id = $1',
+        [row.id]
+      );
+    }
+  } finally {
+    client.release();
+  }
+}
+
+module.exports = { publishBatch };
+</code></pre>
+<p>The publisher is idempotent from the broker's perspective only if consumers deduplicate on <code>trace_id</code>. Do not assume exactly-once delivery; assume at-least-once and make consumers idempotent.</p>
+<h2 id="choosing-between-a-single-deploy-unit-and-a-sharded-monolith">Choosing between a single deploy unit and a sharded monolith</h2>
+<p>A common objection is that a single deploy unit cannot scale. That is true for a single process on a single machine, but the transaction boundary does not require a single process — it requires a single consistency domain. You can shard the ledger by account or user ID, provided each shard is an independent deploy unit with its own database, its own outbox, and its own WAL. Each shard is internally a small monolith. This is sometimes called a sharded monolith, and it scales horizontally without breaking the atomicity of each shard.</p>
+<p>The trade-off is cross-shard operations. A transfer between accounts on different shards is no longer a single transaction; it becomes a two-phase operation or a saga with compensating actions. That reintroduces the audit-gap problem at the shard boundary. For most retail payment volumes, a single primary with synchronous replication to a standby handles the load, and the operational simplicity is worth more than the theoretical ceiling. Shard only when measurements show the primary is the bottleneck, and design the cross-shard path explicitly rather than discovering it later.</p>
+<h2 id="caching-without-serving-stale-balances">Caching without serving stale balances</h2>
+<p>Caching read-heavy data such as user profiles is uncontroversial. Caching balances is not, because a stale balance read by an authentication or authorisation service can lead to an incorrect decision. If you cache balances, you need a reliable invalidation channel. A common approach is to publish an invalidation event to a durable stream whenever the ledger commits, and have cache consumers subscribe and evict. The write path pays a small latency cost; the read path avoids stale data.</p>
+<p>The failure mode to watch for is silent invalidation loss. If the invalidation channel is best-effort, a dropped message leaves a stale entry indefinitely. Use a durable, replayable channel and monitor consumer lag. A short time-to-live on cached balances is a cheap backstop, but it is not a substitute for correct invalidation.</p>
+<h2 id="measuring-whether-your-design-actually-meets-the-deadline">Measuring whether your design actually meets the deadline</h2>
+<p>Do not accept a claim about audit latency without a measurement. What to instrument:</p>
 <ul>
-<li><a href="https://kubaik.github.io/african-fintech-rules-broke-our-stack/">African fintech rules broke our stack</a></li>
-<li><a href="https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/">Regulations forced better APIs: the 2026 fintech</a></li>
-<li><a href="https://kubaik.github.io/monolith-to-services-without-a-rewrite/">Monolith to services without a rewrite</a></li>
+<li>Commit-to-visible latency: the difference between the database commit timestamp and the timestamp at which the audit reader can query the row. Record it as a histogram with p50, p95, p99, and max.</li>
+<li>Outbox backlog: the count and age of unpublished rows. A growing backlog means the publisher is falling behind, which is a leading indicator of audit gaps.</li>
+<li>Replication lag: the byte gap between primary and replica WAL positions, converted to a time estimate using recent throughput.</li>
+<li>External call duration: histogram of every third-party call, with explicit timeouts. A call that can hang indefinitely will eventually break the deadline.</li>
+<li>Trace completeness: for each transaction, the set of required hops that have been observed. Track the fraction of transactions with all hops observed within the deadline, as a rolling window.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<p>To run a controlled comparison, generate a fixed workload with a load tool, apply a known perturbation (for example, a brief broker pause or a replica pause), and compare the trace-completeness metric before and after. The comparison is only meaningful if the workload, the perturbation, and the measurement window are identical between runs.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Use this when deciding whether a component belongs inside the transaction boundary:</p>
+<ol>
+<li>Does the component participate in a state change that a regulator or auditor must reconstruct within a fixed deadline? If yes, keep it inside the boundary.</li>
+<li>Does the component make a synchronous external call that must succeed or fail together with the ledger write? If yes, keep it inside the boundary and wrap the call in a timeout and circuit breaker.</li>
+<li>Is the component read-only and tolerant of eventual consistency? If yes, it can live outside the boundary, reading from a replica.</li>
+<li>Is the component non-financial (notifications, marketing, analytics)? If yes, it can be split freely.</li>
+<li>Can the component be sharded along a key that keeps each shard's operations self-contained? If yes, sharding is safe; if not, cross-shard coordination reintroduces the gap.</li>
+<li>Have you measured commit-to-visible latency under peak load, including the tail? If not, you do not yet know whether the design meets the deadline.</li>
+</ol>
+<h2 id="common-objections-addressed">Common objections, addressed</h2>
+<p><strong>"Microservices let us deploy faster."</strong> They do, for services outside the boundary. For services inside the boundary, a change requires re-validating the audit path, which costs time regardless of how the code is packaged. The speed advantage is real but applies unevenly.</p>
+<p><strong>"A single primary cannot handle our volume."</strong> Measure before assuming. A single primary with synchronous replication handles substantial throughput for ledger-style workloads, which are typically small, indexed updates rather than large scans. If measurements show otherwise, shard along a self-contained key.</p>
+<p><strong>"Event sourcing solves this."</strong> Event sourcing makes the event log the source of truth, which is conceptually aligned with auditability, but it adds a durable write before the business transaction commits. That extra write is another source of latency on the critical path. The outbox pattern achieves similar auditability with one durable write instead of two.</p>
+<p><strong>"What if the ledger process crashes mid-transaction?"</strong> With a single database transaction, a crash before commit means the transaction did not happen; a crash after commit means it did, and the WAL contains it. Synchronous replication to a standby ensures the committed record survives the loss of the primary. Configure a shutdown hook that stops accepting new work and lets in-flight transactions finish or roll back, and verify the behaviour by killing the process under load in a test environment.</p>
+<h2 id="a-worked-example-with-arithmetic">A worked example with arithmetic</h2>
+<p>Here is an illustrative calculation, using round numbers chosen for clarity, not measured data.</p>
+<p>Suppose the deadline is 30 seconds from the initiating request. Break the path into stages with assumed worst-case durations:</p>
+<ul>
+<li>Edge authentication and request validation: 0.1 s</li>
+<li>Ledger transaction commit: 0.05 s</li>
+<li>Synchronous replication acknowledgement to standby: 0.02 s</li>
+<li>Audit reader observes the committed row: 0.2 s</li>
+<li>Settlement call to the bank, with a 5 s timeout and one retry: up to 10 s</li>
+</ul>
+<p>The total worst case is 0.1 + 0.05 + 0.02 + 0.2 + 10 = 10.37 seconds, comfortably within 30 seconds. Now suppose the bank call has no timeout and occasionally hangs for 25 seconds. The total becomes 25.37 seconds, which is still within 30 but leaves almost no margin for a broker pause or a replication spike. If the bank call hangs for 30 seconds, the deadline is missed regardless of how fast everything else is.</p>
+<p>The lesson from the arithmetic is that the largest term dominates. Optimising the 0.05-second ledger commit while leaving an unbounded external call is wasted effort. Bound the largest term first.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Open the repository for your highest-traffic financial path and list every synchronous call made between the incoming request and the database commit. For each call, note whether it has an explicit timeout. Any call without a timeout is an unbounded term in your worst-case latency budget. Add a timeout to the longest one now, and record the change so you can measure the effect on your commit-to-visible latency histogram at the next load test.</p>
                 
                 
             </div>
@@ -419,8 +465,8 @@ My response: We use PostgreSQL synchronous replication with <code>synchronous_co
                     
                     <a class="related-card" href="/regulations-forced-better-apis-the-2026-fintech/">
                         <h3>Regulations forced better APIs: the 2026 fintech</h3>
-                        <p>Reduce API callback loss 99% with durable state machines — Nigeria, Ghana, and Kenya fintech compliance in 2026 without over-engineering</p>
-                        <span class="related-meta">16 min read · 20 June 2026</span>
+                        <p>Why payment APIs need durable state machines, explicit retry policies, and status endpoints that survive restarts — and when the old synchronous playbook still works.</p>
+                        <span class="related-meta">13 min read · 20 June 2026</span>
                     </a>
                     
                 </div>

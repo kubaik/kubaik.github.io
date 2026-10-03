@@ -1,255 +1,213 @@
 # Price your remote salary: 4-step script
 
-The tutorials all showed the happy path. This post shows what comes after.
+Most remote-salary advice stops at "use a cost-of-living multiplier." That leaves the actual negotiation without a number. This article builds one: a worksheet that turns a local net salary band into a single USD gross ask you can defend in writing, plus the failure modes that quietly corrupt the result.
 
-## Why I wrote this (the problem I kept hitting)
+The method has four steps: gather inputs, compute the local target, convert to gross and then to USD, and add checks so you notice when a constant goes stale. Everything below is arithmetic on stated assumptions. Substitute your own figures; none of the numbers here are measurements of anyone's outcomes.
 
-Three years ago I took my first fully-remote job from Bogotá to a U.S. fintech in Austin. My monthly budget in Colombia was $1,200; their offer was $1,900 gross. I said yes. Six months later I was onboarding to the U.S. 401(k) and realized I had just priced myself 8 % below the local market for mid-level engineers in Texas. I had no idea how to translate cost-of-living or local salary bands into a number that felt fair to both sides.
+## What the worksheet produces
 
-The worst part was that every public source I found either quoted U.S. numbers in isolation or lumped Latin America into a single bucket. I needed a repeatable way to turn “I live in X city with Y expenses” into “I need Z USD to cover my costs and still save 20 %”.
+The output is one of three shapes:
 
-Most articles stop at “use cost-of-living multipliers” without giving you the raw data or the exact math so you can defend your number in Slack.
+1. A single target salary, e.g. 95,000 USD gross.
+2. A range with a stated spread, e.g. 92,000–106,000 USD gross.
+3. A cost-of-living-indexed range that re-derives itself if you change city.
 
-This post is the calculator I wish existed. It combines:
-- Local salary bands for 12 Latin American cities (median + 75th percentile)
-- Cost-of-living multipliers from Numbeo 2026 with rent-heavy and rent-light profiles
-- Exchange-rate risk buffers based on 5-year rolling volatilities from 2026-2026
-- A simple 4-step script you can run in Google Sheets or Python 3.11
+A single number is easier to defend than a range, because a range invites the counterparty to anchor at the bottom. Compute the range internally, then present the midpoint unless asked.
 
-If you’re in Colombia, Argentina, Mexico, Brazil, or Peru and you’re negotiating a fully-remote salary with a U.S., Canadian, or European company, this is the sheet you’ll walk away with.
+## Step 1 — Gather and verify the inputs
 
-## Prerequisites and what you'll build
+You need six inputs. Each has a specific failure mode, listed alongside.
 
-You don’t need to be a spreadsheet ninja or a Python expert to follow this. You only need:
-- One of the following: Google Sheets, Excel 365, or Python 3.11 on any OS. - 15 minutes to plug in your numbers. - A willingness to treat salary negotiation like a technical spec: inputs, constants, and outputs.
+| Input | Where it comes from | Typical failure mode |
+|---|---|---|
+| Local net salary band (median, p75) | Local job boards, recruiter conversations, published national statistics | Mixing net and gross figures from different sources |
+| Cost-of-living index for your city | A public cost-of-living index, or your own basket | Using a single headline index instead of rent-heavy and rent-light profiles |
+| Effective local income tax rate | The current national tax schedule | Using last year's brackets after a reform |
+| USD/local spot rate | A central bank or market rate feed | Using an informal rate for a formal contract, or vice versa |
+| FX volatility estimate | Rolling standard deviation of the pair over several years | Copying a figure from an article instead of recomputing it |
+| Target savings rate | Your own budget | Setting it from aspiration rather than last year's actuals |
 
-What you will build is a defensible USD number in one of three forms:
-1. A single target salary (e.g., $95,000 USD gross)
-2. A target range with a 15 % spread (e.g., $92k–$106k USD gross)
-3. A cost-of-living-indexed range that adjusts automatically if you move to another city
+Two of these deserve more than a table row.
 
-I’ll give you both a Google-Sheets template (ready to copy) and a Python 3.11 script that pulls the same data from a public API and writes a CSV so you can version-control your negotiation history.
+**Cost-of-living profiles.** A headline index blends rent, groceries, transport and services. Rent is the line item that varies most between a downtown two-bedroom and a shared flat on the edge of the city. If your index has a rent-heavy variant, use it; if not, build two baskets yourself and compute both. A single headline number can move the final ask by several thousand dollars a year, which is enough to lose a negotiation or underprice yourself.
 
-## Step 1 — set up the environment
+**FX volatility.** Do not copy a volatility figure. Compute it: download the daily USD/local series for the last five years from your central bank, take log returns, and compute the annualised standard deviation. In a spreadsheet:
 
-### Option A: Google Sheets (zero install)
-1. Open a blank sheet and name it `Remote Salary Calculator - [YourCity]`.
-2. In cell A1, paste the following formula to pull the 2026 Numbeo COL index for your city:
 ```
-=IMPORTDATA("https://www.numbeo.com/api/cpi?api_key=YOUR_KEY&city=Cali,Colombia")
-```
-You need a free Numbeo API key (sign up at https://www.numbeo.com/api/keys). It’s rate-limited to 1,000 calls/day, which is plenty for personal use.
-
-3. In cell B1, compute the local COL multiplier:
-```
-=INDEX(IMPORTDATA("https://www.numbeo.com/api/cpi?api_key=YOUR_KEY&city=Medellin,Colombia"),2,3)/100
-```
-This gives you the index where 100 = U.S. average.
-
-4. Create four named ranges:
-- `local_salary_median` → median engineer salary in your city (Numbeo 2026, “Average Monthly Salary Net (After Tax) – Software Engineer”)
-- `local_salary_p75` → 75th percentile for senior engineers in your city
-- `desired_savings_pct` → your target savings rate as a decimal (e.g., 0.20 for 20 %)
-- `ex_rate_volatility` → 5-year rolling volatility of USD/COP from 2026-206 (I use 12 % for COP; see table below)
-
-### Option B: Python 3.11 script
-Install dependencies once:
-```bash
-pip install httpx pandas numpy tabulate requests-cache
+daily_return = LN(rate_today / rate_yesterday)
+annualised_vol = STDEV(daily_return_range) * SQRT(252)
 ```
 
-the script uses the same Numbeo endpoint and a local CSV for salary bands I scraped from 2026 LinkedIn and Glassdoor listings. You can clone the repo:
-```bash
-git clone https://github.com/kubaikevin/remote-salary-calc.git
-cd remote-salary-calc
-python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
-pip install -r requirements.txt
+252 is the conventional number of trading days per year. The result is the one-sigma annual move. Most people use it directly as a buffer, which is a choice, not a law — a one-sigma buffer covers roughly a two-in-three outcome. If you want more coverage, use 1.5x or 2x the computed figure and say so explicitly in your notes.
+
+**Verify the tax schedule.** Tax brackets change. Re-download the current schedule each January, and re-derive the effective rate for your target net rather than reusing a percentage. The worked example below shows why.
+
+## Step 2 — Compute the local net target
+
+Start from the p75 local net figure, not the median. The median describes the middle of the market; p75 describes what a strong candidate in that market can already earn, which is the relevant floor for a remote role priced against a foreign employer.
+
+```
+local_net_target = local_p75_net * (1 + desired_savings_pct) * rent_heavy_col_multiplier
 ```
 
-The repo includes:
-- `salary_bands_2026.csv` – 12 Latin American cities, 12 roles, median and p75
-- `col_index.py` – fetches Numbeo COL index
-- `calculator.py` – computes target range and exports to CSV
+Worked example. Suppose the p75 net for a senior backend engineer in your city is 3,100 units of local currency per month, your target savings rate is 25%, and your rent-heavy cost-of-living multiplier is 1.35.
 
-### Constants you must verify
-| Constant | Source | 2026 value | How to update |
-|---|---|---|---|
-| U.S. median software engineer gross | U.S. BLS 2026 Q2 | $122,000 | Check bls.gov every quarter |
-| Exchange-rate volatility (USD/COP) | 5-year rolling std 2026-2026 | 12 % | Download from Banco de la República CSV |
-| Rent-heavy COL multiplier | Numbeo 2026 | 1.35 (Bogotá) | `=IMPORTDATA(...)` or `col_index.py` |
-| Desired savings rate | Your personal finance | 0.25 | Change in sheet or `config.yaml` |
-
-I made a mistake early on by using the headline COL index from Numbeo without separating rent-heavy vs rent-light profiles. In Bogotá, headline COL is 1.28, but if you rent a 2-bed downtown apartment the effective COL jumps to 1.47. That single row in the sheet threw my whole target off by $3,400 annually. Always split COL into two profiles.
-
-## Step 2 — core implementation
-
-### Google Sheets formula workflow
-1. In cell C1, compute the local salary needed to match U.S. purchasing power:
 ```
-=local_salary_p75 * (1 + desired_savings_pct) * rent_heavy_col_multiplier
-```
-For a Bogotá senior making $3,100 net (p75) who wants to save 25 % and lives in a rent-heavy zone, the formula gives $4,168 net.
-
-2. Convert that net to gross using your local effective tax rate. I pulled Bogotá’s 2026 IRPF table from the DIAN website and built a simple VLOOKUP:
-```
-=VLOOKUP(net_salary, tax_brackets_bogota_2026, 2, TRUE)
-```
-For $4,168 net, the gross is $5,800.
-
-3. Add exchange-rate risk buffer. I use 12 % volatility on COP, so I multiply gross by 1.12 to get the USD ask:
-```
-=gross_local / usd_cop_spot * (1 + ex_rate_volatility)
-```
-At a 4,200 COP/USD spot, $5,800 gross becomes $13,800 gross. That’s only 11 % of the U.S. p75 ($122k), but it’s enough to cover my Bogotá expenses and save 25 %.
-
-### Python 3.11 script workflow
-Run `calculator.py` with your city and role:
-```bash
-python calculator.py --city "Medellin" --role "Senior Backend Engineer" --savings 0.20
+local_net_target = 3,100 * 1.25 * 1.35
+                 = 3,875 * 1.35
+                 = 5,231.25
 ```
 
-Inside `calculator.py`:
-1. `salary_bands_2026.csv` is loaded as a pandas DataFrame. 2. The Numbeo COL index is fetched via `col_index.py` and cached for 24 h with `requests-cache`. 3. The script computes:
-   - local_net = p75 * (1 + savings)
-   - local_gross = local_net / (1 - tax_rate)
-   - usd_gross = local_gross / usd_local_spot * (1 + ex_vol)
-   - usd_range_low, usd_range_high = usd_gross * 0.925, usd_gross * 1.075
-4. Results are written to `output/calculator_medellin_2026-06-12.csv`.
+Note what the multiplier is doing. It is not adjusting for the fact that you live in a cheaper city; the p75 band already reflects that. It is adjusting for the fact that a remote employer paying a developed-market rate is competing for your time against local employers, and your reservation price should reflect your actual cost structure, not the local average.
 
-I keep a git repo of these CSVs so I can replay negotiations if a counter comes in months later. It’s saved me when a client tried to lowball me by quoting a 2026 salary band.
+If you skip the cost-of-living multiplier entirely, you are pricing your labour at local market rates while selling it into a foreign market. That is the single most common way remote workers underprice themselves.
 
-### Hard numbers from the sheet
-| City | Local p75 net | Target net (25 % savings) | Local gross | USD gross ask | % of U.S. p75 |
-|---|---|---|---|---|---|
-| Bogotá | $3,100 | $4,168 | $5,800 | $13,800 | 11.3 % |
-| Medellín | $2,900 | $3,867 | $5,400 | $12,850 | 10.5 % |
-| Lima | $2,700 | $3,600 | $5,050 | $12,020 | 9.9 % |
-| Monterrey | $2,400 | $3,200 | $4,480 | $10,660 | 8.7 % |
-| São Paulo | $4,200 | $5,600 | $7,850 | $18,700 | 15.3 % |
+## Step 3 — Gross up, then convert
 
-All USD numbers assume a 4,200 COP/USD spot. Volatility buffer already baked in.
+### Gross-up
 
-### Exchange-rate buffer sanity check
-I once accepted a $14,000 offer from a U.S. company while the spot was 3,800 COP/USD. By the time I onboarded three months later, the rate was 4,350. My real purchasing power dropped 12 %. The buffer of 12 % I baked into the ask covered it exactly. If I hadn’t added the buffer, I would have been short $1,300 annually.
+Local salary bands are usually quoted net. Offers are usually made gross. Convert:
 
-## Step 3 — handle edge cases and errors
-
-### Edge case 1: 1099 vs W2 vs PE
-If the client wants to pay you as a 1099 contractor instead of a W2 employee, you need to gross-up for self-employment tax (15.3 % in the U.S. in 2026) plus any local VAT or IVA. In the sheet, add a column:
 ```
-=usd_gross / (1 - 0.153 - vat_rate)
+local_gross = local_net_target / (1 - effective_tax_rate)
 ```
-For Colombia, vat_rate = 0.19, so the gross-up factor is 1.43. A $13,800 W2 ask becomes a $19,700 1099 ask. That difference is why I refuse 1099 gigs from U.S. clients unless the rate is 35 %–40 % above W2.
 
-### Edge case 2: partial remote with local entity
-If the client opens a local entity in your country (e.g., a Bogotá SAS) and pays you in COP, you lose the exchange-rate buffer. You still need to price for local COL and local taxes. In the sheet, set `ex_rate_volatility = 0` and drop the USD conversion. Your target is simply the local gross you computed in Step 2.
+The effective tax rate is not the marginal rate. It is total tax divided by gross income, which for most progressive schedules is meaningfully lower than the top bracket. Compute it by running your target net through the actual bracket table:
 
-### Edge case 3: equity or RSUs
-Most Latin American engineers undervalue equity because they don’t know the U.S. vesting math. A 0.1 % RSU grant at a $2 B valuation with 4-year vesting is worth roughly $200 at grant date if you’re outside the 80 % cliff window. In the sheet, I add a column:
+1. Lay out the brackets: threshold, marginal rate.
+2. Guess a gross figure.
+3. Apply the brackets to that gross figure to get tax.
+4. Subtract tax from gross to get net.
+5. Compare to your target net. Adjust the guess and repeat.
+
+Two or three iterations converge. A spreadsheet `VLOOKUP` against a bracket table will not do this correctly on its own, because progressive brackets are cumulative, not a single lookup.
+
+Worked example. Suppose the effective tax rate at your target is 28%.
+
 ```
-=expected_rsu_value_usd / 2 + usd_gross
+local_gross = 5,231.25 / (1 - 0.28)
+            = 5,231.25 / 0.72
+            = 7,265.63
 ```
-Only include the RSU value if it vests within 12 months of signing. Otherwise it’s a lottery ticket.
 
-### Edge case 4: local currency inflation
-Argentina’s official inflation in 2026 is projected at 150 % YoY. The Numbeo COL index doesn’t capture that. If you live in Buenos Aires, use the informal “dólar blue” rate and a 1-year forward buffer of 30 %. In the sheet, set `ex_rate_volatility = 0.30`.
+If a reform moves the effective rate to 32%:
 
-### Error I caught late
-I once forgot to update the tax brackets after Colombia’s 2026 tax reform. The sheet gave me a gross target of $5,800 when the new brackets pushed it to $6,200. I only caught it when I ran the numbers through the DIAN simulator. Always re-download tax tables each January.
+```
+local_gross = 5,231.25 / (1 - 0.32)
+            = 5,231.25 / 0.68
+            = 7,693.01
+```
 
-## Step 4 — add observability and tests
+The gross figure rises by about 6% from a four-point change in the effective rate. This is why the tax schedule has to be re-verified rather than assumed.
 
-### Google Sheets version
-Add a dashboard tab with three KPIs:
-1. Purchasing-power parity ratio: `=usd_gross / us_median_gross`
-2. Savings rate after tax and COL: `=1 - (local_net / usd_gross * usd_local_spot)`
-3. Exchange-rate buffer used: `=ex_rate_volatility_used / ex_rate_volatility_actual * 100`
+### Convert to USD with a buffer
 
-Color-code KPIs red if the buffer used exceeds 80 % of the actual volatility; that’s a warning.
+```
+usd_ask = (local_gross / usd_local_spot) * (1 + fx_buffer)
+```
 
-### Python 3.11 version
-I added a pytest 7.4 test suite that validates:
-- COL index is not older than 30 days
-- Tax brackets are from the current year
-- The gross-up formula matches a manual calculation in a reference case
-- The CSV output has the correct columns
+Worked example, with a spot of 4,200 local units per USD and a computed annualised volatility of 12%, used directly as the buffer:
 
-Example test in `tests/test_calculator.py`:
+```
+usd_ask = (7,693.01 / 4,200) * 1.12
+        = 1.8317 * 1.12
+        = 2.0515
+```
+
+That is roughly 2,052 USD per month, or about 24,600 USD per year on a twelve-month basis. If the local p75 was a monthly net figure, keep every intermediate step monthly and only annualise at the end, otherwise you will silently mix units.
+
+### The FX buffer is not optional
+
+A contract signed at one spot rate and paid at another exposes you to the full move. If the local currency weakens 15% against the dollar over a year, an un-buffered contract loses 15% of its real value with no renegotiation trigger. The buffer converts that risk into a slightly higher headline number, which is easier to negotiate once than to renegotiate later.
+
+Sanity check for the buffer: ask what happens at the 5th percentile of the historical move, not the average. If a 15% adverse move would put you below your local net target, the buffer is too small.
+
+## Step 4 — Add checks so stale data is visible
+
+A worksheet is only as good as its constants. Build three checks and run them every time you touch the sheet.
+
+**Freshness checks.** Each constant carries a date. Flag any constant older than 90 days, and any tax schedule not from the current year.
+
+**Recomputation check.** For one reference case, compute the answer by hand and assert the sheet matches. If they diverge, a formula has been edited.
+
+**Range check.** Divide your USD ask by the U.S. median gross for the same role and check the ratio lands where you expect. A ratio far below your target band usually means a unit error (monthly vs annual, net vs gross) rather than a genuinely low number.
+
+In Python, these become ordinary tests:
+
 ```python
 import pytest
 from calculator import compute_target_range
 
-def test_medellin_senior_2026():
-    result = compute_target_range(city="Medellin", role="Senior Backend Engineer", savings=0.20)
-    assert result["usd_gross_ask"] == pytest.approx(12850, rel=0.01)
-    assert result["col_index"] == pytest.approx(1.31, rel=0.01)
+def test_reference_case():
+    result = compute_target_range(
+        local_p75_net=3100,
+        savings=0.25,
+        col_multiplier=1.35,
+        effective_tax_rate=0.28,
+        spot=4200,
+        fx_buffer=0.12,
+    )
+    assert result["local_net_target"] == pytest.approx(5231.25, rel=0.001)
+    assert result["local_gross"] == pytest.approx(7265.63, rel=0.001)
+    assert result["usd_monthly_ask"] == pytest.approx(1937.5, rel=0.01)
+
+def test_tax_schedule_is_current_year():
+    from calculator import load_tax_schedule
+    schedule = load_tax_schedule()
+    assert schedule["year"] == 2026
 ```
 
-I run the tests every time I update the salary bands CSV. It caught a data-entry error where I typed 1.31 instead of 1.37 for Medellín’s COL index.
+The first test pins the arithmetic. The second pins the data. Together they catch the two failure modes that actually occur: a formula edit and a stale constant.
 
-### Alerting
-Add a simple Google Apps Script that emails you if the COL index changes by more than 5 % in a month. I set it to run on the 1st of every month. The script is 12 lines and lives in `alert_col_change.gs`.
+For the spreadsheet version, put the same three checks in a separate tab: a cell comparing the sheet's output to a hard-coded expected value, a cell showing the age in days of each constant, and a conditional format that turns red past the threshold.
 
-## Real results from running this
+## Failure modes worth naming
 
-I used this sheet for three job changes in 2026–2026:
+**Mixing net and gross.** The most common error by a wide margin. Job boards quote net, offers quote gross, and some sources do not say which. Label every number in your sheet with its basis.
 
-1. Bogotá → Austin fintech (W2): Asked $105k → Accepted $110k (4.8 % above ask). 2. Medellín → Canadian SaaS (W2): Asked $95k CAD → Accepted $98k CAD (3.2 % above ask). 3. Lima → U.S. e-commerce (1099): Asked $12,500/mo → Accepted $13,200/mo (5.6 % above ask, but after self-employment tax it’s only $11,200 real). I turned it down and waited for a W2 offer.
+**Using the marginal tax rate as the effective rate.** It overstates tax and understates the gross you need. Compute the effective rate from the bracket table.
 
-In every case the client accepted within two rounds of counter-offers. The key was having a single defensible number backed by a public data source and a local COL profile. No client challenged the methodology; they only haggled on the percentage above the ask.
+**Treating the cost-of-living index as a salary index.** They are different things. A city can be 30% cheaper than another and still pay 40% less in nominal terms. The index adjusts your cost base, not the market rate for your skills.
 
-I tracked the actual savings rate after one year:
-- Bogotá: 27 % (target 25 %)
-- Medellín: 24 % (target 20 %)
-- Lima: 18 % (target 25 % – the 1099 bite)
+**Ignoring the payment currency.** If the client pays in USD to a foreign entity, you carry the FX risk. If they pay in local currency through a local entity, you do not — but you also lose access to the foreign market rate. Set the buffer to zero in the second case and price off the local gross.
 
-The Lima case taught me to avoid 1099 unless the rate is 35 %+ above W2. I now add a red flag in the sheet: “1099 ask ≥ W2 ask × 1.35”.
+**Contractor versus employee.** If you invoice as an independent contractor, you absorb employer-side contributions that an employee would not. In the U.S., self-employment tax is 15.3% on net earnings, and you may also owe local VAT on services. Gross up:
 
-## Common questions and variations
+```
+contractor_ask = employee_ask / (1 - self_employment_rate - vat_rate)
+```
 
-### Frequently Asked Questions
+With a 15.3% self-employment rate and 19% VAT, the divisor is 0.657, so the contractor ask is roughly 1.52x the employee ask. If a client offers a contractor rate less than about 1.35x the equivalent employee rate, the difference is being paid out of your pocket.
 
-**How do I adjust if I have a spouse and kids?**
-Use the “family” COL profile in Numbeo. In São Paulo, the family COL index is 1.52 vs 1.28 headline. If you’re a senior engineer with two kids, your target net jumps from $5,600 to $7,000 net, which is $17,000 USD gross after tax and buffer. Budget an extra 20 % for healthcare if you’re outside the U.S. employer plan.
+**Equity treated as cash.** Vesting schedules, cliffs and liquidity events mean equity is not salary. Value only the portion that vests within twelve months of signing and treat the rest as zero for negotiation purposes.
 
-**What if the client wants to pay in EUR to a German entity?**
-Switch the sheet to EUR/COP volatility (8 % in 2026) and use the German income-tax table. The target drops because EUR is stronger than USD. For Bogotá, the ask becomes €9,800 gross, which is ~$10,600 USD at 1.10 FX. Always price in the currency the client will actually send.
+**Inflation not captured by the index.** A cost-of-living index is a snapshot. In a high-inflation environment it goes stale within months. Recompute quarterly, and consider indexing the contract itself if the client will agree to it.
 
-**Should I disclose my local salary band to the recruiter?**
-Never. Use the band only to compute your ask, then present the ask as a single USD number. If pressed, say “My target is based on cost-of-living parity with U.S. benchmarks and a 25 % savings rate.” Recruiters will often lowball you if they see your local number.
+## A decision checklist before you send a number
 
-**How do I handle stock options from a U.S. startup?**
-Only value options that vest within 12 months of your start date. For a typical 4-year vesting with 1-year cliff, the expected value at grant is roughly 25 % of the Black-Scholes value. I use a simple rule: stock ask = (expected value / 2) × 0.75. In Bogotá, that might add $2,500–$4,000 to your ask. Anything beyond that is a bonus, not a base.
+- Every constant has a date and a source.
+- Net and gross are labelled on every figure.
+- The effective tax rate was derived from the current bracket table, not assumed.
+- The FX buffer was computed from a historical series, not copied.
+- The cost-of-living profile matches your actual housing situation.
+- The contractor gross-up is applied if you are invoicing.
+- The reference-case test passes.
+- The USD ask is written as a single number with the currency and the period stated.
 
-## Where to go from here
+## FAQ
 
-Pick one of the two paths:
+**Should I disclose my local salary band?**
+Disclosing a local band hands the counterparty an anchor that is usually below the foreign market rate. Compute your ask from the band, then present only the ask. If pressed for a basis, describe the method — cost-of-living parity plus a stated savings rate — rather than the underlying local figure.
 
-1. Google Sheets path (5 minutes):
-Go to https://sheets.new, paste the template from `remote-salary-calc/template_sheet.xlsx` into your drive, and replace the city, savings rate, and tax brackets. Export the result as a PDF and attach it to your next negotiation thread. That single sheet will cut your negotiation rounds from 3–4 to 1–2.
+**What if the client pays in a third currency?**
+Price in the currency the client will actually send. Convert your local target into that currency using the relevant pair, and compute the buffer from that pair's historical volatility, not from USD/local.
 
-2. Python path (15 minutes):
-Clone the repo, run `pip install -r requirements.txt`, and execute `python calculator.py --city "Lima" --role "Backend Engineer" --savings 0.25`. Open `output/calculator_lima_2026-06-12.csv` and copy the USD ask into your counter email. Keep the CSV in git and update it every time you move or renegotiate.
+**How often should the worksheet be rebuilt?**
+Re-verify the tax schedule annually, the FX volatility quarterly, and the local salary bands every six months. Rebuild the whole sheet before any negotiation rather than reusing a number from a previous round.
 
-Before you hit send, run one sanity check: divide your ask by the U.S. median ($122k) and ensure it’s between 8 % and 15 %. Anything below 8 % signals you’re accepting poverty wages; anything above 15 % triggers sticker shock. Adjust your savings rate or COL profile until you land in that band.
+**Does a lower local cost of living justify a lower ask?**
+It justifies a lower reservation price, which is different. Your reservation price is the minimum you will accept. Your ask should be anchored to the value of the role to the employer, tempered by your reservation price. Confusing the two is what produces offers at the local market rate for remote work.
 
-Do the math today, export the number, and attach it to your next counter-offer. The single most effective move is to send a hard USD ask instead of a vague “market rate” reply.
+## Do this in the next 30 minutes
 
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-[please contact me](/contact/) — corrections are applied within 48 hours.
-
-**Last reviewed:** June 08, 2026
+Open a blank spreadsheet and create six rows: local p75 net, cost-of-living multiplier, target savings rate, effective tax rate, spot rate, FX buffer. Fill in the first three from your own situation. Then compute the effective tax rate by running your target net through the current bracket table by hand, and compute the FX buffer by downloading five years of daily rates and taking the annualised standard deviation of log returns. Convert the result to a single monthly USD figure. That number, with its inputs visible, is the counter-offer you can defend.

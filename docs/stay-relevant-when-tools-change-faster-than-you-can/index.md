@@ -1,236 +1,231 @@
 # Stay relevant when tools change faster than you can
 
-The short version: the conventional advice on stay technically is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.
+New tools arrive faster than any individual can evaluate them. The failure is rarely "we missed a tool"; it is usually "we adopted the wrong thing at the wrong time and paid for it in rework," or "we ignored a platform upgrade and paid for it in an emergency." A repeatable filter beats enthusiasm in both directions.
 
-## The one-paragraph version (read this first)
+## The one-paragraph version
 
-You can’t learn every new tool that lands on Hacker News, but you can learn how to recognize which ones are worth your time and how to integrate them without derailing your work. This post shows a repeatable system I’ve used since 2026 to stay technically sharp without burning out, including the exact commands and rules I apply when a new runtime, package, or framework lands on my radar. The system splits the world into three tiers—new toys, emerging patterns, and proven platforms—and tells you how to treat each one. I’ll walk through a real example where I had to decide whether to adopt Go 1.22’s new ‘for range’ iteration order in a production service, and why I ultimately chose to wait even though benchmarks showed a 12% speedup. By the end you’ll have a checklist you can run in under 10 minutes whenever a new tool appears.
+You cannot learn every new tool, and you do not need to. What you need is a consistent way to classify what shows up on your radar, so your limited learning budget goes to the changes that actually affect your system. A workable approach splits the landscape into three tiers — core platforms, emerging patterns, and new toys — and assigns each tier a different budget, a different decision rule, and a different rollback plan. The rest of this article explains how to classify a tool, how to measure whether it helps, and how to adopt it without betting the roadmap on it.
 
-## Why this concept confuses people
+## Why this is harder than it looks
 
-Most advice about staying relevant boils down to “learn everything,” which is impossible once you’re past the first few years of your career. The confusion comes from treating all change as equally important. In 2026 I joined a team that had just moved from Flask to FastAPI; within six months the migration guide for FastAPI 0.110 changed the recommended dependency injection syntax. Half the engineers kept updating their code every time the docs changed, while the other half froze on 0.99 and missed critical security patches. Neither approach is sustainable.
+Most advice on staying current reduces to "learn everything," which stops being possible after a few years and stops being useful much earlier than that. The confusion comes from treating all change as equally important. A patch release that changes a hashing algorithm and a pre-1.0 framework that will be renamed twice are not the same kind of event, but they arrive in the same feed.
 
-The real issue isn’t speed of change; it’s that we don’t have a consistent filter for deciding what deserves our attention. We end up in one of two traps:
-- Over-adoption: we migrate to every new shiny thing, only to roll back when it breaks in production.
-- Paralysis: we ignore everything new and fall behind on critical upgrades.
+Two failure modes dominate.
 
-I fell into the second trap in 2026 when I decided to skip Bun 1.0 for a critical microservice because I assumed it was just another Node wrapper. Three months later a security advisory forced me to rebuild the service around Node 20 LTS anyway—and I had to rewrite all the TypeScript types because Bun’s earlier JSDoc parser had diverged. That week cost me the equivalent of two sprints. A better filter would have saved a month of rework.
+**Over-adoption.** A team migrates to the newest runtime or framework, discovers an edge case in production, and rolls back. The cost is not just the migration; it is the context switching, the half-migrated code paths, and the loss of trust in the next proposal.
 
-## The mental model that makes it click
+**Paralysis.** A team decides no new tool is worth the risk and freezes. This works until a dependency reaches end of life or a security advisory lands, at which point the upgrade is no longer optional and must be done under time pressure, with no rehearsal. The emergency upgrade is almost always more expensive than the planned one would have been.
 
-Think of the software landscape as three concentric circles, not a flat timeline.
+Both failure modes come from the same root cause: no filter. The filter below is not about being conservative or aggressive. It is about matching the size of the bet to the size of the evidence.
 
-1. Core Platforms
-   These are the runtime, language spec, and foundational libraries your project already depends on. Examples in 2026: Python 3.11+, Node 20 LTS, OpenJDK 21, .NET 8. Core platforms change slowly (major releases every 12-24 months) and have long-term support windows. You should plan to upgrade every 18 months at most; skipping two major versions is risky.
+## The three-tier model
 
-2. Emerging Patterns
-   These are idioms, architectural shifts, and ecosystem-wide defaults that spread across multiple stacks. Examples: dependency injection in Go, structured logging in Rust, or the rise of WASM components. Patterns take 2-5 years to become mainstream and usually arrive with a stable reference implementation in one language before spreading.
+Think of the landscape as three tiers with different rates of change, not a flat timeline of releases.
 
-3. New Toys
-   These are single-package releases, experimental runtimes, or pre-1.0 frameworks. Examples: Zig 0.11, Deno Fresh 1.5, or Yew 0.21. New toys change weekly and are rarely worth adopting before version 1.0 hits unless you are explicitly building on them.
+### Tier 1: core platforms
 
-The filter is simple: spend 80% of your learning budget on Core Platform upgrades, 15% on Emerging Patterns that directly improve your system’s maintainability, and 5% on New Toys—only if you can afford to discard them.
+The runtime, language, and foundational libraries your project already depends on: the language version, the web framework, the database driver, the container base image. These change slowly — major releases typically every 12 to 24 months — and carry long support windows and published deprecation schedules.
 
-I learned this the hard way while running a Django 3.2 monolith in 2026. I kept ignoring Django 4.x patch notes until a zero-day in the ORM forced an emergency upgrade across 47 services. The upgrade took three days and uncovered a subtle incompatibility with Celery 5.3 that had been lurking since 2026. Had I followed the 18-month rule and upgraded to Django 4.2 when it dropped in October 2026, the zero-day would have been patched months earlier and the Celery breakage would have been caught in staging.
+The useful rule is to stay within one major version of the current stable release, and never skip two. Skipping two major versions means the upgrade path is no longer documented as a supported jump, and the intermediate deprecations you would have handled incrementally arrive all at once.
 
-## A concrete worked example
+### Tier 2: emerging patterns
 
-Let’s walk through a real decision I faced in Q1 2026: whether to adopt Rust 1.75’s new const generics for array sizes in a high-frequency trading engine.
+Idioms and architectural shifts that spread across multiple stacks: structured logging, dependency injection conventions, component models, build-time rendering strategies. Patterns usually appear as a stable reference implementation in one ecosystem before spreading. They take years to become default, and their value is mostly in maintainability and hiring, not in raw performance.
 
-**Step 1 – Risk score**
-I used a simple 0-to-5 scale:
-- Breaking changes in core std: +2
-- Compiler regressions reported in GitHub issues: +1
-- Migration effort in our codebase: +1
-- Security surface area: +1
+### Tier 3: new toys
 
-Rust 1.75 scored 4. I’ve seen teams burn weeks on similar compiler upgrades when the const-generics stabilisation subtly changed trait bounds.
+Single-package releases, experimental runtimes, pre-1.0 frameworks, anything whose API can change between minor versions. These change weekly. Adopting one before 1.0 is reasonable only if you are explicitly building on it, can discard it cheaply, or are running a time-boxed experiment.
 
-**Step 2 – Benchmark**
-I ran a controlled benchmark on a 100k-message replay in production-like conditions:
+A rough budget split that holds up in practice: most of your learning time on tier 1, a smaller slice on tier 2 patterns that directly affect your system, and a small slice on tier 3 experiments with a hard deadline. The exact percentages matter less than the ordering. If tier 3 is consuming more of your time than tier 1, you have the ratio inverted.
+
+## Classifying a tool you have just heard about
+
+Classification is the part that still requires judgment, and it takes about ten minutes per tool once you have the questions written down. Ask them in order and stop at the first confident answer.
+
+1. **Is it already in my dependency tree, directly or transitively?** If yes, it is tier 1 by definition. You do not get to ignore it.
+2. **Does it have a published support policy and a documented deprecation process?** A versioning policy with dates is the strongest signal of tier 1 or tier 2. "We follow semver" without a support window is weaker.
+3. **Does it replace a component I already run, or add a new one?** Replacements are cheaper to evaluate because the interface is already defined by the thing being replaced.
+4. **Has it been in production, outside its authors' organisation, for more than a year?** Two independent production deployments you can name is a reasonable bar for tier 2.
+5. **If it disappeared tomorrow, what would break?** If the answer is "nothing outside the experiment," it is tier 3.
+
+The classification is not permanent. A tool moves up a tier when it accumulates evidence: a stable release, a support policy, independent adopters. It moves down when its maintainers abandon it or when a competing approach wins.
+
+## A worked example: deciding on a compiler-level optimisation
+
+Suppose a new language release stabilises a feature that would let you replace a heap allocation with a fixed-size buffer in a hot path. The decision is not "is this feature good" — it is "what is the evidence, and what is the exit."
+
+**Step 1: score the risk.** A simple additive scale, applied to the release rather than the feature:
+
+- Breaking changes in the standard library or core semantics: +2
+- Known compiler or runtime regressions in the tracker: +1
+- Migration effort across your codebase: +1
+- Change to the security surface: +1
+
+A release with a semantics change and a migration cost scores 4 out of 5. That does not mean "do not upgrade." It means "upgrade behind a gate, in staging first."
+
+**Step 2: measure, and isolate the variable.** The tempting comparison is "old code versus new code," but that comparison is contaminated by everything else that differs. Isolate one change at a time.
 
 ```rust
-// Before: dynamic Vec allocation per message
+// Variant A: heap allocation per message
 let buf = Vec::with_capacity(1024);
-// After: const-generic fixed-size array
+
+// Variant B: fixed-size buffer, no allocation
 let buf = FixedBuf::<1024>::default();
 ```
 
-Results on a 2026 M3 Max (using Rust 1.74 vs 1.75):
-- Latency p99 drop: 82 µs → 67 µs (18% improvement)
-- Throughput increase: 1.21 M msg/s → 1.38 M msg/s (14%)
-- Build time regression: +0.9 s per crate (negligible for 42 crates)
+To get a number you can trust:
 
-**Step 3 – Rollback plan**
-I added a Cargo feature gate `use_const_generics` behind a nightly toolchain flag. The compile-time overhead was 15 ms per crate, so I could disable the feature globally with one line in Cargo.toml and revert in under a minute.
+- Build both variants from the same commit, changing only the buffer type.
+- Pin the toolchain version explicitly for each build.
+- Run the benchmark on the same machine, with the same allocator, and record which allocator was used.
+- Report p50, p99, and p99.9 latency plus throughput, not a single average.
+- Repeat the run at least five times and report the spread, not just the best run.
 
-**Step 4 – Decision**
-Upgrade to Rust 1.75 in staging with the feature disabled by default. After two weeks of soak tests with synthetic load at 2× normal traffic, I enabled the feature for 1% of traffic. Error rates stayed flat, so I rolled it out to 100% and disabled the legacy path in the next patch release.
+A single before/after pair is a hypothesis, not a result. If the difference disappears when you swap the allocator, you measured the allocator, not the feature.
 
-**Outcome**
-We shipped the change in Rust 1.76 one month later and saved $18k/year in cloud costs by reducing message buffering latency. The rollback plan never triggered, but having it gave us the confidence to move fast.
+**Step 3: write the rollback before the adoption.** Put the new code path behind a feature flag or a build-time feature, defaulted off, so reverting is a one-line change rather than a revert commit across many files.
 
-I spent two weeks on this before realising the benchmark numbers were lying: the allocator cache in Jemalloc 5.3 interacted with the new array sizes and hid a 4% latency regression in steady state. Only when I switched to mimalloc did the real numbers surface. Lesson: always isolate the allocator when measuring microbenchmarks.
+**Step 4: decide.** Enable in staging with the flag off by default, run the existing test suite and a soak test, then enable incrementally.
 
-## How this connects to things you already know
+**Step 5: record the outcome.** Note the measured numbers, the conditions, and the decision. The next person facing the same question should not have to redo the measurement.
 
-This three-circle model is just a formalisation of how you already operate when you upgrade a database or switch a frontend framework.
+## Measuring instead of guessing
 
-- When you migrate from PostgreSQL 14 to 16, you’re upgrading a Core Platform. You read the release notes, check the upgrade scripts, and schedule downtime. The same mental model applies to language runtimes.
+Benchmarks are the most commonly misused evidence in tool adoption, because they are easy to produce and hard to produce honestly. A benchmark that ignores steady-state behaviour will flatter almost anything. What to do instead:
 
-- When you adopt structured logging with zerolog in Go, you’re adopting an Emerging Pattern. The pattern spreads to other services once you publish a shared library.
+- **Measure steady state, not burst.** Run the workload for long enough that caches are warm, connection pools are saturated, and any garbage collector has run many cycles. A short run measures startup.
+- **Compare like with like.** Same hardware, same data, same concurrency, same allocator, same compiler flags. Change one variable.
+- **Report the distribution.** p50 tells you about the median request. p99 and p99.9 tell you about the users who complain. A tool that improves the median and worsens the tail is usually a regression.
+- **Soak for at least several times your expected peak duration.** If your peak traffic window is an hour, run for several hours. Memory growth that is invisible in a five-minute test is obvious in a five-hour one.
+- **Check the failure path.** Kill a dependency mid-run and observe what happens. Recovery behaviour is rarely in the benchmark and frequently the reason a rollback happens.
 
-- When you experiment with Zig’s comptime for JSON parsing, you’re playing with a New Toy. You isolate it in a scratch repo and delete it if it doesn’t pan out.
+For a platform upgrade, the equivalent measurement is the regression suite plus a canary deployment. The number you care about is not throughput; it is the count of tests that fail and the error rate on the canary compared with the baseline.
 
-The key insight is that the same decision criteria scale from personal projects to enterprise systems. In 2026 I helped a team at a Series B startup adopt Python 3.12’s per-interpreter GIL. We treated it as a Core Platform upgrade because their entire stack (Django, Celery, FastAPI) depended on it. The upgrade took one sprint and eliminated the need for manual GIL patching, saving the team an estimated 15 engineering days per quarter.
+## Versioning does not protect you
 
-Here’s the pattern in code you already run:
+Semantic versioning constrains the declared API. It says nothing about behaviour, performance, or output. A patch release can legitimately change a hash function, a default timeout, a sort order, or the precision of a serialisation format, because none of those are part of the declared interface.
+
+The practical consequences:
+
+- Pin core platform dependencies to a narrow range, and treat every bump as a change that needs the test suite to run.
+- Do not auto-merge patch bumps for components on the critical path unless your tests actually cover their behaviour.
+- When a dependency's output feeds something persistent — a cache key, a stored blob, a database column — treat any version change as potentially breaking regardless of the version number.
+
+The same reasoning applies to AI code assistants. They are useful for explaining unfamiliar syntax and generating boilerplate. They are not a source of truth about which version of a library is current, stable, or safe, because their training data has a cutoff and they do not have access to your dependency tree or your regression suite. Treat generated code as a draft that needs the same review as any other draft.
+
+## Platform risk: the fourth dimension
+
+Once the three tiers are familiar, add a fourth question: how likely is it that the ecosystem around this tool moves away from it?
+
+Platform risk is high when:
+
+- A single company controls the tool and its roadmap, and your interests may diverge from theirs.
+- The tool introduces a paradigm that requires the rest of your stack to change to get value from it.
+- The tool is pre-1.0 but widely discussed, so adoption is driven by attention rather than production evidence.
+- The tool's value depends on a companion project that is maintained separately and has its own release cadence.
+
+The mitigation is an abstraction boundary: keep the tool behind a thin interface, an adapter module, or a feature flag, so that replacing it means writing a new implementation of a small interface rather than editing every call site. This costs a little code up front and converts a multi-week migration into a contained change later.
+
+A concrete shape for that boundary in a Python service:
 
 ```python
-# Django 4.2 -> 5.0 migration snippet
-# requirements.txt pin kept loose
-Django>=5.0,<5.1
-# One-time check in CI
-python manage.py check --deploy
+# storage.py — the only module that knows which engine is in use
+class MessageStore:
+    def write(self, key: str, payload: bytes) -> None: ...
+    def read(self, key: str) -> bytes | None: ...
+
+def build_store() -> MessageStore:
+    if settings.STORE_BACKEND == "async":
+        return AsyncStore(settings.DATABASE_URL)
+    return SyncStore(settings.DATABASE_URL)
 ```
 
-That one-liner enforces the Core Platform upgrade rule: stay within one minor version of the latest stable release.
+Callers depend on `MessageStore`, not on the driver. When the driver's API changes, one module changes. The flag also gives you a rollback that does not require a deploy of the whole service.
 
-## Common misconceptions, corrected
+## Time-boxed experiments
 
-**Misconception 1: “If I don’t learn every new tool, I’ll be obsolete.”**
-Reality: Obscelescence comes from ignoring Core Platform upgrades, not from missing a single package release. In 2026 a colleague refused to move from Node 16 to Node 20 because “it’s just another LTS.” Six months later a critical vulnerability in the Node 16 stream forced an emergency upgrade that took a team of four engineers a week to validate. The real risk is falling behind on the platform itself, not the toys.
+Reserve a small slice of each iteration for evaluating tier 3 tools, and make the experiment produce three artefacts:
 
-**Misconception 2: “AI code assistants will keep me up to date automatically.”**
-In practice, AI assistants are great at explaining new syntax but terrible at telling you whether that syntax is stable. I tested Cursor and GitHub Copilot in early 2026 for Go 1.22’s new range-over-int feature. Both assistants confidently generated code using the old iteration order until the Go team changed it in RC3. The assistants never flagged the breaking change because their training data froze at Go 1.21. Treat AI tools as accelerators, not oracles.
+1. A working prototype in a scratch repository, not in the main codebase.
+2. A rollback plan — for a scratch repository, that is "delete the repository."
+3. A one-page decision note with explicit go/no-go criteria written before the experiment starts.
 
-**Misconception 3: “Benchmarks prove the tool is production-ready.”**
-Benchmarks lie when they ignore steady-state behavior. I once benchmarked Bun 1.0 vs Node 20 on a CPU-bound JSON validator service. Bun won by 22% on a 5-second burst test, but when I ran it for 10 minutes under constant load the memory usage grew linearly due to a leak in the WASM runtime. The fix landed in Bun 1.1, but by then the team had already rewritten the service’s build pipeline around Bun. Always run soak tests at least 3× the expected production tail latency.
+If the criteria are not met within the time box, stop. This is the part teams skip. An experimental branch that survives for months is not an experiment; it is unowned code with no tests. The cost of recreating it later is usually lower than the cost of maintaining a half-finished branch nobody understands.
 
-**Misconception 4: “Semantic versioning protects me.”**
-SemVer only guarantees API compatibility, not behavior compatibility. Python 3.11 changed the hashing algorithm for str in 3.11.3, breaking a hash-table-heavy service I worked on. The change was a patch release, so SemVer didn’t flag it. Pin your dependency ranges tightly for Core Platforms (e.g., `Python~=3.11.3`) and treat minor versions as upgrades that need testing.
+Writing the go/no-go criteria first matters because it prevents the most common failure: deciding after the fact that the prototype "basically works" and promoting it without ever testing the thing you were worried about.
 
-## The advanced version (once the basics are solid)
+## Automating tier 1 upgrades
 
-Once you’re comfortable with the three-circle model, add a fourth layer: **platform risk**. Platform risk is the chance that the entire ecosystem around a tool will shift away. In 2026, React Server Components were declared stable in Next.js 14, but the ecosystem around RSC was still volatile. Teams that bet their entire frontend stack on RSC in Q1 2026 had to migrate again when the Remix team deprecated the RSC adapter in Q3. Platform risk is highest when:
-
-- The tool is controlled by a single company (e.g., Deno Fresh, SvelteKit 2.0).
-- The tool introduces a new paradigm (e.g., Qwik’s resumability in 2026).
-- The tool is pre-1.0 but gaining hype (e.g., Tauri 2.0 RC).
-
-The advanced technique is to build an **abstraction boundary** around any Emerging Pattern or New Toy you adopt. That boundary is usually a thin interface or a feature flag. When the platform risk materialises, you swap the implementation without touching the callers.
-
-Example: I added a feature flag to a Python service to toggle between synchronous SQLAlchemy and async SQLAlchemy 2.0 when the project started using FastAPI 0.110’s new async endpoints. Six weeks later SQLAlchemy 2.1 changed the async driver API, breaking our integration. Because the flag hid the implementation behind a single module, the rollback took 47 minutes.
-
-Another tactic is **time-boxed experiments**. Reserve 2% of each sprint for a spike on a New Toy. The spike must produce:
-- A working prototype in a scratch repo.
-- A rollback plan (delete the repo).
-- A one-page decision doc with go/no-go criteria.
-
-If the experiment doesn’t meet its criteria in two weeks, delete it. I’ve seen teams keep experimental branches for months because “we might need it someday.” Delete it anyway; the search cost of rediscovering the branch later is higher than the cost of recreating it.
-
-Finally, automate the Core Platform upgrade pipeline. In 2026 I use Renovate with these presets:
+Platform upgrades should be routine, not events. The mechanism is a dependency automation bot that opens pull requests on a schedule, combined with a test suite that is actually trusted. The configuration below is a starting point; the specific preset names depend on the bot and its version, so check the documentation for the one you use.
 
 ```json
 {
   "extends": [
-    "helpers:disableTypesNodeMajor",
-    "helpers:disableNodeMajorUpdate",
     "schedule:weekly",
     "group:allNonMajor"
   ],
   "rangeStrategy": "bump",
   "enabledManagers": ["docker-compose", "github-actions", "pip"],
-  "assignees": ["kubai"],
   "prConcurrentLimit": 1,
   "rebaseWhen": "behind-base-branch"
 }
 ```
 
-Renovate automatically opens a PR to bump Python 3.11 → 3.12, Node 20 → 20.12, etc., every Monday. The PR runs the same test suite as production, so when the upgrade lands it’s already green. This single automation cut our platform-upgrade incidents from 3 per quarter to zero in 2026.
+Two things make this work rather than create noise:
 
-## Quick reference
+- **One pull request at a time.** A queue of twenty upgrade PRs is a queue nobody reviews.
+- **Grouped non-major updates.** Patch and minor bumps for unrelated packages can share a PR, because the failure mode is the same: the test suite fails and you bisect.
 
-| Tier | Examples (2026) | Learning budget | Decision rule | Rollback plan | Typical timeline |
-|---|---|---|---|---|---|
-| Core Platform | Python 3.11+, Node 20 LTS, OpenJDK 21, .NET 8, Rust 1.75 | 80% | Upgrade every 18 months or when CVEs appear | Full regression suite | 1–3 days |
-| Emerging Pattern | Dependency injection in Go, structured logging in Rust, WASM components | 15% | Adopt when two independent codebases in your org use it | Feature flag or abstraction boundary | 1–4 weeks |
-| New Toy | Zig 0.11, Deno Fresh 1.5, Yew 0.21 | 5% | Only if disposable or explicitly prototyped | Delete repo or revert PR | 1–2 weeks |
+Major version upgrades should not be auto-merged. They should open a PR that fails until someone does the migration work, which is exactly the signal you want.
 
-Key rules to remember:
-- Never skip two major versions of a Core Platform.
-- Treat every Emerging Pattern adoption as an experiment with a deadline.
-- Delete 80% of New Toy prototypes before they become legacy.
-- Automate Core Platform upgrades; manual upgrades are technical debt.
-- Measure steady-state behavior, not peak burst numbers.
+The result is that upgrades happen continuously and in small pieces. The alternative — a large upgrade every two years — concentrates all the risk into one change that nobody wants to own.
 
-Tools I actually use for this:
-- Renovate 37.424.0 for dependency automation
-- GitHub Actions with reusable workflows for platform upgrades
-- pytest 7.4 for Python regressions
-- cargo-audit 0.20 for Rust security checks
-- Nextest 0.9 for Rust test parallelism
-- Docker Buildx 0.12 for multi-arch images
+## Common misconceptions
 
-## Further reading worth your time
+**"If I don't learn every new tool, I'll be obsolete."** Obsolescence comes from falling behind on core platforms, not from missing a package release. The engineer who is two major versions behind on their runtime has a real problem; the engineer who has not tried the framework of the month does not.
 
-1. *The Art of Readable Code* by Dustin Boswell — chapter 4 on incremental change is the closest print analogue to the three-circle model.
-2. *Staff Engineer* by Will Larson — chapter 6 on platform risk and abstraction boundaries.
-3. The Go 1.22 release notes on range-over-int: https://go.dev/doc/go1.22#language
-4. Rust RFC 3308 on const generics 2.0 stability: https://rust-lang.github.io/rfcs/3308-const-generics-2.html
-5. The Bun 1.0 postmortem on memory leaks: https://bun.sh/blog/bun-v1.0#memory-leaks-in-production
-6. Python 3.11.3 release notes on str hashing: https://docs.python.org/3.11/whatsnew/changelog.html#python-3-11-3
+**"The benchmark says it's faster, so it's ready."** A benchmark measures the scenario its author chose. It rarely measures your data shape, your failure modes, or your steady state. Reproduce the measurement on your workload before believing it.
 
-## Frequently Asked Questions
+**"Semantic versioning means patch releases are safe."** Semver constrains the declared interface, not behaviour. Pin tightly on the critical path and let the tests decide.
 
-**Why should I trust your mental model more than the latest Hacker News thread?**
-I’ve tested this model across four companies and 17 production migrations since 2026. The pattern emerged when I realised that every “urgent” migration I’d rushed into either (a) broke in production or (b) was obsoleted by the next shiny thing within six months. The three-circle filter isn’t theoretical; it’s the distillation of what worked and what didn’t. The concrete numbers in this post come from real migrations: Rust 1.75’s 14% throughput gain, Django 5.0’s 0 incident upgrades after Renovate automation, and the Node 16 emergency that cost four engineers a week.
+**"AI assistants keep me current."** They explain syntax well and have no reliable knowledge of which version is stable or what changed in the last release. Use them to draft, not to decide.
 
-**How do I know when a tool has crossed from New Toy to Emerging Pattern?**
-Look for two independent production deployments inside your organisation. In 2026 at a Series B startup, the data team adopted DuckDB 0.9 for internal analytics, and the mobile team used it for offline-first caching. That dual adoption signalled it was safe to standardise on DuckDB 1.0 across the org. Until then, keep the implementations isolated behind feature flags. If you don’t have two teams, treat it as a New Toy and time-box the experiment.
+**"We'll adopt it properly later."** A prototype that is not time-boxed becomes production code without the review, tests, or rollback plan it would have received if it had been proposed honestly.
 
-**What’s the smallest actionable slice of this system I can test today?**
-Create a Renovate config that targets your oldest Core Platform dependency and sets it to auto-merge after CI passes. For most readers that means a Rust 1.60 project or a Python 3.9 project. Pick the dependency that is (a) past EOL or (b) has open CVEs. Run `renovate --dry-run` and open the PR. If CI passes, merge it. If it fails, you’ve just validated your regression suite. This single experiment will teach you more about your platform upgrade process than reading a dozen blog posts.
+## Reference
 
-**I work in a monolith with no tests. How do I apply this without risking production?**
-Start with the New Toy tier. Pick a non-critical part of the monolith—maybe a cron job or a background worker—and rewrite it in a modern stack (e.g., Rust or Go) behind a feature flag. Run the cron job for two weeks with synthetic load. If it survives, gradually expand the flag coverage. The key is isolation: never touch the core request path until you have proof the new stack is stable. I’ve seen teams use this tactic to migrate from PHP 7.4 monoliths to Go microservices without downtime.
+| Tier | What it is | Budget | Decision rule | Rollback |
+|---|---|---|---|---|
+| Core platform | Runtime, language, foundational libraries already in the dependency tree | Largest share | Stay within one major version; never skip two | Full regression suite plus canary |
+| Emerging pattern | Idioms and architecture spreading across stacks | Some | Adopt when two independent codebases in your organisation use it | Feature flag or adapter boundary |
+| New toy | Pre-1.0 packages, experimental runtimes | Small, time-boxed | Only if disposable or explicitly prototyped | Delete the scratch repository |
 
-## What readers ask me most often
+Rules worth keeping:
 
-**What about AI pair programmers? Won’t they keep me up to date automatically?**
-AI assistants are great at explaining syntax but terrible at telling you which syntax is safe. I tested Cursor on a Go 1.22 migration in March 2026. The assistant confidently generated code using the old iteration order even after the breaking change landed in RC3. AI tools lack the context of your regression suite and your organisation’s risk tolerance. Treat them as accelerators, not oracles.
+- Never skip two major versions of a core platform.
+- Treat every pattern adoption as an experiment with a deadline.
+- Delete most tier 3 prototypes before they become legacy.
+- Automate core platform upgrades; manual upgrades are deferred risk.
+- Measure steady state, not peak burst.
+- Pin tightly on the critical path and let the tests decide.
 
-**How do I convince my manager to let me spend 2% of sprint time on experiments?**
-Frame it as risk reduction. Present the experiment as a spike that either (a) proves the tool is safe to adopt or (b) eliminates the fear of missing out. In 2026 I convinced a manager by showing that a two-week spike on Rust 1.75 saved $18k/year in cloud costs. The manager agreed because the spike cost one sprint and paid for itself in six weeks. Bring data: benchmark numbers, rollback plans, and a one-page decision doc.
+## FAQ
 
-**Is there a tool that automates the three-circle filter for me?**
-Not yet. Renovate automates Core Platform upgrades, but nothing I know of automatically classifies a new package as Core, Emerging, or Toy. That classification still requires human judgment. The best you can do is build a simple script that queries package registries and applies heuristics like release age, maintainer count, and downstream adoption. Until such a tool exists, treat classification as part of your weekly engineering time—no more than 30 minutes.
+**How do I know when a tool has moved from toy to pattern?**
+Two independent production deployments you can name, outside the maintainers' organisation. If you cannot name two, keep it isolated behind an adapter and time-box the experiment.
 
-**What do I do when my company mandates a tool I classified as a New Toy?**
-Push for a time-boxed experiment with a rollback plan. In 2026 a CTO mandated Tauri 2.0 for a new desktop app. I negotiated a two-week spike with a feature flag that toggled between Tauri and Electron. The spike proved Tauri’s memory usage grew unbounded under real user load, so we kept Electron. The rollback plan meant we delivered on time without risking the product. Always negotiate an exit ramp before you start.
+**What if I work in a codebase with no tests?**
+Start with tier 3. Pick a non-critical component — a scheduled job, a background worker — and run the candidate there behind a flag. The absence of tests is itself the finding: building a regression suite for the critical path is the prerequisite for any tier 1 upgrade, and it should be the first project.
+
+**What if a tool is mandated from above?**
+Negotiate the experiment rather than the outcome. Ask for a time box, a defined success criterion, and a rollback path. A two-week spike with a flag that toggles between the old and new implementation gives you evidence either way, and gives the sponsor a way to succeed without betting the product.
+
+**Is there a tool that classifies dependencies for me?**
+Dependency bots automate the upgrade mechanics for tier 1. Classification — deciding whether something is a platform, a pattern, or a toy — still requires human judgment about your system. Budget a small amount of recurring time for it rather than looking for a tool that removes it.
+
+**How long should an experiment run?**
+Long enough to cover the failure modes you are worried about. If the concern is memory growth, that is hours, not minutes. If the concern is API stability, that is at least one upstream release cycle.
 
 ---
 
-Your next 30-minute action: open your oldest Core Platform dependency in requirements.txt or package.json and run `renovate --dry-run` locally. If Renovate suggests an upgrade, open the PR and check the CI logs. If CI passes, merge it. You just applied the three-circle model to your real codebase.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 09, 2026
+Your next 30-minute action: open your dependency manifest, find the component that is furthest behind its current stable version, and check whether it has an open security advisory or has passed its end-of-life date. If either is true, write down the upgrade as a tier 1 task with a named owner and a date, and run your test suite against the newer version in a branch. That single check converts an unknown risk into a scheduled one.

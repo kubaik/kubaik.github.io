@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Agents 24/7 vs on-demand: $42k bill shock - Kubai Kevin</title>
-        <meta name="description" content="Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.">
+        <title>Always-On vs On-Demand Agents: Real Cost Trade-offs - Kubai Kevin</title>
+        <meta name="description" content="Always-on containers bill for idle time; on-demand functions bill per invocation. Compare latency, retries, cold starts, and the failure modes that decide which fits.">
         
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-05T05:04:40.986262">
-        <meta property="article:modified_time" content="2026-09-19T15:39:47.305584+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:05:23.850917+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="Agents 24/7 vs on-demand: $42k bill shock">
-        <meta property="og:description" content="Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.">
+        <meta property="og:title" content="Always-On vs On-Demand Agents: Real Cost Trade-offs">
+        <meta property="og:description" content="Always-on containers bill for idle time; on-demand functions bill per invocation. Compare latency, retries, cold starts, and the failure modes that decide which fits.">
         <meta property="og:url" content="https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/agents-247-vs-on-demand-42k-bill-shock.png">
-        <meta property="og:image:alt" content="Agents 24/7 vs on-demand: $42k bill shock">
+        <meta property="og:image:alt" content="Always-On vs On-Demand Agents: Real Cost Trade-offs">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Agents 24/7 vs on-demand: $42k bill shock">
-        <meta name="twitter:description" content="Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.">
+        <meta name="twitter:title" content="Always-On vs On-Demand Agents: Real Cost Trade-offs">
+        <meta name="twitter:description" content="Always-on containers bill for idle time; on-demand functions bill per invocation. Compare latency, retries, cold starts, and the failure modes that decide which fits.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/agents-247-vs-on-demand-42k-bill-shock.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,12 +60,12 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/#article",
-      "headline": "Agents 24/7 vs on-demand: $42k bill shock",
-      "description": "Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.",
+      "headline": "Always-On vs On-Demand Agents: Real Cost Trade-offs",
+      "description": "Always-on containers bill for idle time; on-demand functions bill per invocation. Compare latency, retries, cold starts, and the failure modes that decide which fits.",
       "datePublished": "2026-07-05T05:04:40+00:00",
-      "dateModified": "2026-09-19T15:39:47+00:00",
-      "wordCount": 3808,
-      "timeRequired": "PT19M",
+      "dateModified": "2026-10-03T11:05:23+00:00",
+      "wordCount": 2349,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Agents 24/7 vs on-demand: $42k bill shock",
+          "name": "Always-On vs On-Demand Agents: Real Cost Trade-offs",
           "item": "https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>Agents 24/7 vs on-demand: $42k bill shock</span>
+            <span>Always-On vs On-Demand Agents: Real Cost Trade-offs</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">Agents 24/7 vs on-demand: $42k bill shock</h1>
+                <h1 itemprop="headline">Always-On vs On-Demand Agents: Real Cost Trade-offs</h1>
                 
-                <p class="post-lead">Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.</p>
+                <p class="post-lead">Always-on containers bill for idle time; on-demand functions bill per invocation. Compare latency, retries, cold starts, and the failure modes that decide which fits.</p>
                 
                 
             </header>
@@ -228,428 +228,254 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3808 words
+                        12 min read
+                        &nbsp;·&nbsp; 2349 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The official documentation for real cost is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
-<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Most docs sell you on the idea that running agents 24/7 is the only way to keep your API responsive and your users happy. They talk about ‘always-on availability’ and ‘zero latency spikes’ like it’s free. Spoiler: it isn’t.</p>
-<p>The docs gloss over the reality that AWS charges you for every second your container is running, even if it’s sleeping. Fargate’s pricing model is brutal: $0.04048 per vCPU per hour and $0.004445 per GB of memory per hour, whether the agent is processing requests or just idling. That’s $293.47 per month for a single 0.25 vCPU / 0.5 GB container running nonstop. Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.</p>
-<p>The real cost isn’t just the compute; it’s the compounding pain of debugging memory leaks in long-running processes, the cognitive load of monitoring 24/7, and the sheer number of times you’ll wake up to a PagerDuty page because an agent silently crashed after 30 days of uptime.</p>
-<p>The on-demand model flips the script. With AWS Lambda, you pay only for the time your code executes, rounded up to the nearest 1ms. For our agent logic, that meant an average execution time of 187ms per request and a cost of $0.00000021 per invocation. At 120k requests per day, that’s $25.20 monthly — less than 2.5% of the Fargate bill. The docs mention this, but they don’t scream it from the rooftops because it cuts into their narrative of ‘always-on is the only way to be reliable.’</p>
-<p>Where the docs fail is in the edge cases. They won’t tell you that Lambda cold starts can add 500ms to your response time, or that a misconfigured provisioned concurrency can turn your $25 bill into a $250 one. They won’t warn you that running agents in Lambda means rethinking how you handle background jobs, retries, and state. Most teams I talk to assume on-demand is slower or less reliable, so they default to 24/7 — and they end up paying for it in ways that aren’t obvious until the bill arrives.</p>
-<p>The gap between the marketing and the reality is why I’m writing this. Here’s what actually happens when you run agents 24/7 versus on-demand, with the numbers from our production setup and the pain points that surprised me.</p>
-<hr />
-<h2 id="how-agents-247-vs-on-demand-actually-works-under-the-hood">How agents 24/7 vs on-demand actually works under the hood</h2>
-<p>Running an agent 24/7 means it’s always in memory, always connected to your message queue, and always ready to process the next task. In practice, this translates to a long-running process that listens for events, processes them, and then waits for more. For us, this was a Python service running in AWS ECS Fargate, using FastAPI as the web server and Celery for background tasks.</p>
-<p>The on-demand model flips this entirely. Instead of a persistent process, you have a stateless function that boots up when a message arrives, processes the task, and then shuts down. In our case, this was a Lambda function triggered by messages from Amazon SQS, with the function itself written in Python 3.11 and using the AWS Lambda Powertools library for structured logging and tracing.</p>
-<p>Under the hood, the 24/7 model is simpler to reason about because you’re dealing with a known, persistent environment. You can cache connections to databases, maintain in-memory state, and rely on the process staying alive. The catch is that AWS bills you for every second that process is alive, regardless of whether it’s doing work. Fargate’s pricing is per-second, but the minimum chargeable duration is 1 second, so even a 100ms idle loop costs you a full second’s worth of compute.</p>
-<p>The on-demand model is more complex because it forces you to externalize state. You can’t rely on in-memory caches or persistent connections; every invocation starts fresh. This means you need to manage state in an external store like Redis or DynamoDB, and you need to handle retries and idempotency at the function level. The upside is that you’re only paying for the time your code is actually running.</p>
-<p>For our agent logic, the cold start added an average of 420ms to the first request after a period of inactivity. That’s not terrible, but it’s noticeable when your users expect sub-200ms responses. We mitigated this by using provisioned concurrency, which kept a fixed number of functions warm. The trade-off was a 3x increase in cost for those functions — from $25 monthly to $78 monthly — but it brought the cold start latency down to 80ms on average.</p>
-<p>Another surprise was the cost of retries. In the 24/7 model, retries are handled by the process itself, so there’s no additional cost beyond the CPU cycles. In the on-demand model, every retry is a new invocation, and AWS charges you for each one. For a job with a high retry rate, this can quickly inflate your bill.</p>
-<p>The operational overhead is also different. With 24/7 agents, you need to monitor the process for crashes, memory leaks, and CPU spikes. You need to set up alarms for high latency and configure auto-restarts. With on-demand, you’re monitoring invocations, error rates, and duration — but you’re also dealing with the unpredictability of cold starts and the need to tune provisioned concurrency.</p>
-<p>Here’s a quick breakdown of the underlying mechanics:</p>
-<table>
-<thead>
-<tr>
-<th>Model</th>
-<th>Runtime Environment</th>
-<th>Billing Granularity</th>
-<th>State Management</th>
-<th>Latency Profile</th>
-<th>Operational Overhead</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>24/7 (Fargate)</td>
-<td>Persistent container</td>
-<td>Per-second</td>
-<td>In-memory</td>
-<td>Predictable, low jitter</td>
-<td>High (process health, restarts)</td>
-</tr>
-<tr>
-<td>On-demand (Lambda)</td>
-<td>Ephemeral function</td>
-<td>Per ms, rounded up</td>
-<td>External (Redis, DynamoDB)</td>
-<td>Cold starts, variable jitter</td>
-<td>Medium (invocations, concurrency)</td>
-</tr>
-</tbody>
-</table>
-<p>The key insight is that the 24/7 model optimizes for developer convenience, while the on-demand model optimizes for cost efficiency. The docs won’t tell you that the convenience comes at a premium — and they definitely won’t tell you how much.</p>
-<hr />
-<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
-<p>Moving from 24/7 agents to on-demand required rewriting our agent logic to fit the Lambda model. Here’s how we did it, with the pitfalls we hit along the way.</p>
-<h3 id="step-1-define-the-agent-logic-as-a-lambda-function">Step 1: Define the agent logic as a Lambda function</h3>
-<p>Our agent was originally a FastAPI endpoint that listened for SQS messages, processed them, and returned a response. The FastAPI part was overkill for an agent that only needed to process tasks, so we stripped it down to a pure function that could run in Lambda.</p>
+                <h2 id="why-the-always-on-versus-on-demand-decision-matters">Why the always-on versus on-demand decision matters</h2>
+<p>Agent workloads are usually bursty. A request arrives, the agent reasons, calls a model or a tool, writes a result, and goes quiet. Between bursts, nothing happens. The infrastructure choice determines whether that idle time costs money, and whether the burst path is fast or slow.</p>
+<p>The two common shapes are:</p>
+<ul>
+<li><strong>Always-on</strong>: a persistent container or VM running the agent loop, listening on a queue or HTTP endpoint. Billing accrues per second of wall-clock time, whether or not work is flowing.</li>
+<li><strong>On-demand</strong>: a stateless function invoked per event. Billing accrues per invocation and per millisecond of execution, rounded up.</li>
+</ul>
+<p>The trade-off is not "serverless is cheaper." It is a set of coupled decisions about state, latency, retry semantics, and operational surface. This article walks through the mechanics, a worked cost model, a migration path with code, the failure modes that only appear in production, and a decision checklist for when each model is wrong.</p>
+<h2 id="how-each-model-actually-works">How each model actually works</h2>
+<h3 id="always-on-agents">Always-on agents</h3>
+<p>A persistent agent is a long-running process that subscribes to a work source and processes tasks in a loop. Typical implementations use a container orchestrator (ECS, Kubernetes, Nomad) or a plain VM with a supervisor.</p>
+<p>What you get:</p>
+<ul>
+<li><strong>Warm state.</strong> In-memory caches, open database connections, loaded models, and connection pools survive across tasks.</li>
+<li><strong>Predictable latency.</strong> No boot cost on the request path. Tail latency is dominated by the work itself, not by infrastructure.</li>
+<li><strong>Simple local reasoning.</strong> You can hold a lock, keep a counter, or maintain a session in process memory.</li>
+</ul>
+<p>What you pay for:</p>
+<ul>
+<li><strong>Idle billing.</strong> The container is billed for every second it exists, including the seconds it spends waiting.</li>
+<li><strong>Long-uptime failure modes.</strong> Memory leaks, file descriptor exhaustion, connection pool drift, and slow degradation over days or weeks of uptime.</li>
+<li><strong>Restart semantics you must design.</strong> Crash recovery, graceful shutdown, and in-flight task handling are your responsibility.</li>
+</ul>
+<h3 id="on-demand-agents">On-demand agents</h3>
+<p>A function-based agent is invoked per event, runs to completion, and exits. The runtime is torn down or frozen between invocations.</p>
+<p>What you get:</p>
+<ul>
+<li><strong>Billing tied to work.</strong> You pay for invocation count and execution duration. Idle time is free.</li>
+<li><strong>Elastic concurrency.</strong> The platform scales out horizontally without you provisioning capacity.</li>
+<li><strong>Crash isolation.</strong> A failed invocation does not poison a long-lived process; the next invocation starts clean.</li>
+</ul>
+<p>What you pay for:</p>
+<ul>
+<li><strong>Cold starts.</strong> The first invocation after a period of inactivity pays a boot cost that varies with runtime, package size, and initialization work.</li>
+<li><strong>Externalized state.</strong> No in-memory state survives. Caches, sessions, and locks move to Redis, DynamoDB, or another store, adding a network hop.</li>
+<li><strong>Retry semantics you must design.</strong> Automatic retries are helpful for transient errors and dangerous for non-idempotent work.</li>
+</ul>
+<h3 id="billing-granularity-in-practice">Billing granularity in practice</h3>
+<p>The mechanical difference is granularity. Container billing is per second with a minimum chargeable duration of one second. Function billing is per invocation plus per millisecond of execution, rounded up to the nearest millisecond. A function that runs for 187ms is billed for 187ms. A container that idles for 59 minutes and works for one minute is billed for 60 minutes.</p>
+<p>That asymmetry is the entire cost argument. Whether it wins depends on duty cycle: the fraction of wall-clock time the workload is actually doing work.</p>
+<h2 id="a-worked-cost-model-you-can-reproduce">A worked cost model you can reproduce</h2>
+<p>Do not trust a cost comparison that does not show its assumptions. Here is a model you can fill in with your own numbers.</p>
+<h3 id="step-1-measure-the-duty-cycle">Step 1: Measure the duty cycle</h3>
+<p>Instrument the always-on service to record, per task, the wall-clock time spent processing. Divide total processing time by total uptime over a representative window (a week is a reasonable start).</p>
+<pre><code>duty_cycle = total_processing_seconds / total_uptime_seconds
+</code></pre>
+<p>If an agent processes tasks for 40 seconds out of every 600 seconds of uptime, the duty cycle is roughly 0.067, or 6.7%. That number, not the request count, drives the comparison.</p>
+<h3 id="step-2-price-the-always-on-container">Step 2: Price the always-on container</h3>
+<p>Container pricing is quoted per vCPU-hour and per GB-hour. The arithmetic:</p>
+<pre><code>monthly_cost = (vcpu * vcpu_price_per_hour + memory_gb * memory_price_per_hour)
+             * hours_per_month
+</code></pre>
+<p>Using a 0.25 vCPU / 0.5 GB container and the published Fargate rates of $0.04048 per vCPU-hour and $0.004445 per GB-hour, with 730 hours in a month (illustrative arithmetic):</p>
+<pre><code>vcpu_cost   = 0.25 * 0.04048 * 730 = 7.39
+memory_cost = 0.5  * 0.004445 * 730 = 1.62
+monthly     = 9.01 per container
+</code></pre>
+<p>Four such containers cost about $36.04 per month at those rates. The exact figure depends on region and current pricing; re-derive it with the rates on your bill rather than reusing these.</p>
+<h3 id="step-3-price-the-on-demand-function">Step 3: Price the on-demand function</h3>
+<p>Function pricing is quoted per invocation and per GB-second of execution. The arithmetic:</p>
+<pre><code>gb_seconds   = memory_gb * execution_seconds
+monthly_cost = invocations * (per_invocation_price + gb_seconds * per_gb_second_price)
+</code></pre>
+<p>With 120,000 invocations per month, 0.5 GB memory, and 0.187 seconds average execution, the workload consumes:</p>
+<pre><code>gb_seconds = 120000 * 0.5 * 0.187 = 11,220 GB-seconds
+</code></pre>
+<p>Multiply by the published per-GB-second rate for your region and add the per-invocation charge. The point is not the final dollar figure; it is that the function cost scales with work performed, while the container cost scales with time elapsed.</p>
+<h3 id="step-4-add-the-costs-that-are-easy-to-forget">Step 4: Add the costs that are easy to forget</h3>
+<p>A comparison that stops at compute is wrong. Add:</p>
+<ul>
+<li><strong>Provisioned concurrency</strong>, if you use it. It is billed as capacity held, not work done, so it reintroduces idle cost.</li>
+<li><strong>State store traffic.</strong> Every invocation that reads or writes Redis or DynamoDB adds latency and cost.</li>
+<li><strong>Log ingestion.</strong> Verbose structured logging is cheap per line and expensive at volume.</li>
+<li><strong>NAT and data transfer.</strong> Functions in a private subnet that reach the internet pay for NAT gateway hours and per-GB processing.</li>
+<li><strong>Retry amplification.</strong> Every retry is a billed invocation. A job with a 10% retry rate costs 10% more than its success count suggests.</li>
+</ul>
+<h3 id="step-5-find-the-crossover">Step 5: Find the crossover</h3>
+<p>The crossover is the duty cycle at which container cost equals function cost for the same workload. Below it, on-demand wins on compute. Above it, always-on wins. Compute it once with your own rates and revisit it when either your traffic shape or your provider's pricing changes.</p>
+<h2 id="migrating-agent-logic-to-an-on-demand-model">Migrating agent logic to an on-demand model</h2>
+<p>The migration is mostly about removing assumptions that only hold in a persistent process.</p>
+<h3 id="step-1-reduce-the-entry-point-to-a-pure-handler">Step 1: Reduce the entry point to a pure handler</h3>
+<p>A persistent agent often carries an HTTP framework it does not need. Strip the handler down to the event-processing logic.</p>
 <pre><code class="language-python"># agent_lambda.py
 import json
 import os
 from aws_lambda_powertools import Logger, Tracer
-from aws_lambda_powertools.event_handler import SQSEvent
 from aws_lambda_powertools.utilities.typing import LambdaContext
+from aws_lambda_powertools.utilities.data_classes import SQSEvent
 
 logger = Logger()
 tracer = Tracer()
 
+
 @tracer.capture_lambda_handler
 @logger.inject_lambda_context(log_event=True)
 def lambda_handler(event: SQSEvent, context: LambdaContext) -&gt; None:
     for record in event.records:
+        task_id = None
         try:
             payload = json.loads(record.body)
-            task_id = payload.get('task_id')
-            logger.info(f&quot;Processing task {task_id}&quot;)
+            task_id = payload.get(&quot;task_id&quot;)
+            logger.info(&quot;Processing task&quot;, extra={&quot;task_id&quot;: task_id})
 
-            # Your agent logic here
-            result = process_task(payload)
+            process_task(payload)
 
-            logger.info(f&quot;Task {task_id} completed successfully&quot;)
-        except Exception as e:
-            logger.error(f&quot;Failed to process task {task_id}: {str(e)}&quot;)
+            logger.info(&quot;Task completed&quot;, extra={&quot;task_id&quot;: task_id})
+        except Exception:
+            logger.exception(&quot;Task failed&quot;, extra={&quot;task_id&quot;: task_id})
             raise
+
 
 def process_task(payload: dict) -&gt; dict:
-    # Replace with your actual agent logic
+    # Replace with the actual agent logic.
     return {&quot;status&quot;: &quot;completed&quot;, &quot;output&quot;: &quot;success&quot;}
 </code></pre>
-<p>The first mistake I made was not handling batching properly. SQS can send messages in batches of up to 10, and if you don’t process them in a loop, you’ll end up with orphaned messages. The <code>SQSEvent</code> handler in Powertools handles this for you, but I initially tried to process each message individually, which led to timeouts and retries.</p>
+<p>Two things to note. First, <code>SQSEvent</code> from the Powertools data classes iterates records safely; do not assume a single message per invocation, because batch size is configurable. Second, re-raising the exception is deliberate: it tells the platform the batch failed so the retry policy applies. Swallowing the error silently is how messages disappear.</p>
 <h3 id="step-2-externalize-state">Step 2: Externalize state</h3>
-<p>In the 24/7 model, our agent maintained an in-memory cache of task states using a simple dictionary. With Lambda, this had to move to an external store. We chose Redis 7.2 for its speed and simplicity.</p>
-<pre><code class="language-python">import redis
+<p>Any in-memory dictionary, cache, or lock must move to a shared store. Redis is a common choice for low-latency key-value state.</p>
+<pre><code class="language-python">import json
+import os
+import redis
 
 redis_client = redis.Redis(
-    host=os.getenv(&quot;REDIS_HOST&quot;),
-    port=int(os.getenv(&quot;REDIS_PORT&quot;, &quot;6379&quot;))
+    host=os.environ[&quot;REDIS_HOST&quot;],
+    port=int(os.environ.get(&quot;REDIS_PORT&quot;, &quot;6379&quot;)),
+    socket_timeout=1.0,
+    socket_connect_timeout=1.0,
 )
 
-# Store task state
-redis_client.set(f&quot;task:{task_id}&quot;, json.dumps({&quot;status&quot;: &quot;processing&quot;}))
+def mark_processing(task_id: str) -&gt; None:
+    redis_client.set(f&quot;task:{task_id}&quot;, json.dumps({&quot;status&quot;: &quot;processing&quot;}))
 
-# Retrieve task state
-state = redis_client.get(f&quot;task:{task_id}&quot;)
+def get_state(task_id: str) -&gt; dict | None:
+    raw = redis_client.get(f&quot;task:{task_id}&quot;)
+    return json.loads(raw) if raw else None
 </code></pre>
-<p>The surprise here was the latency. We mitigated this by using Redis pipelining and batching operations where possible.</p>
-<h3 id="step-3-handle-retries-and-idempotency">Step 3: Handle retries and idempotency</h3>
-<p>Lambda retries failed invocations automatically, which is great for transient errors but problematic for idempotent operations. We had to implement our own retry logic with exponential backoff to avoid duplicate processing.</p>
-<pre><code class="language-python">import backoff
-import boto3
+<p>Set explicit socket timeouts. A function that blocks on a hung connection burns billed time and holds concurrency slots that other invocations need.</p>
+<h3 id="step-3-make-the-work-idempotent">Step 3: Make the work idempotent</h3>
+<p>Automatic retries are the norm in event-driven systems. If a retry can charge a card twice, send a duplicate email, or double-append to a ledger, the design is broken. Idempotency keys are the standard fix.</p>
+<pre><code class="language-python">import hashlib
+import json
 
-sqs = boto3.client('sqs')
+def idempotency_key(payload: dict) -&gt; str:
+    canonical = json.dumps(payload, sort_keys=True, separators=(&quot;,&quot;, &quot;:&quot;))
+    return hashlib.sha256(canonical.encode(&quot;utf-8&quot;)).hexdigest()
 
-@backoff.on_exception(backoff.expo, Exception, max_tries=3)
-def process_with_retry(payload: dict) -&gt; dict:
-    try:
-        result = process_task(payload)
-        return result
-    except Exception as e:
-        logger.error(f&quot;Retrying task due to error: {str(e)}&quot;)
-        raise
+def process_once(payload: dict, store, handler) -&gt; dict:
+    key = idempotency_key(payload)
+    existing = store.get(f&quot;idem:{key}&quot;)
+    if existing is not None:
+        return json.loads(existing)
 
-# Send the message back to the queue if all retries fail
-try:
-    result = process_with_retry(payload)
-except Exception:
-    sqs.send_message(
-        QueueUrl=os.getenv(&quot;DLQ_QUEUE_URL&quot;),
-        MessageBody=json.dumps(payload)
-    )
+    result = handler(payload)
+    store.set(f&quot;idem:{key}&quot;, json.dumps(result), ex=86400)
+    return result
 </code></pre>
-<p>The version of <code>backoff</code> we used was 2.2.1. It worked well, but we hit a bug where the exponential backoff didn’t respect the <code>max_tries</code> parameter correctly when running in Lambda’s ephemeral environment. Upgrading to 2.3.0 fixed it, but it cost us a day of debugging.</p>
-<h3 id="step-4-configure-provisioned-concurrency">Step 4: Configure provisioned concurrency</h3>
-<p>To reduce cold start latency, we enabled provisioned concurrency for our Lambda function. This keeps a fixed number of functions warm and ready to handle requests.</p>
-<pre><code class="language-yaml"># serverless.yml
-functions:
-  agent:
-    handler: agent_lambda.lambda_handler
-    events:
-      - sqs:
-          arn: !GetAtt TaskQueue.Arn
-          batchSize: 10
-    provisionedConcurrency: 5  # Keep 5 functions warm
-    reservedConcurrency: 100   # Limit concurrent invocations
-</code></pre>
-<p>The catch was that provisioned concurrency costs the same as regular invocations, even when idle.</p>
-<h3 id="step-5-set-up-monitoring-and-alarms">Step 5: Set up monitoring and alarms</h3>
-<p>We used Amazon CloudWatch Alarms to monitor Lambda invocations, errors, and duration. We also set up custom metrics for task success and failure rates.</p>
-<pre><code class="language-python">from aws_lambda_powertools.metrics import MetricUnit, Metrics
-
-metrics = Metrics(namespace=&quot;AgentMetrics&quot;)
-
-@metrics.log_metrics(capture_cold_start_metric=True)
-@tracer.capture_lambda_handler
-@logger.inject_lambda_context(log_event=True)
-def lambda_handler(event: SQSEvent, context: LambdaContext) -&gt; None:
-    for record in event.records:
-        try:
-            payload = json.loads(record.body)
-            task_id = payload.get('task_id')
-
-            result = process_task(payload)
-            metrics.add_metric(name=&quot;SuccessfulTasks&quot;, unit=MetricUnit.Count, value=1)
-        except Exception as e:
-            metrics.add_metric(name=&quot;FailedTasks&quot;, unit=MetricUnit.Count, value=1)
-            logger.error(f&quot;Failed to process task {task_id}: {str(e)}&quot;)
-            raise
-</code></pre>
-<p>The first time we deployed this, we didn’t set up alarms for high error rates. Lesson learned: always set up alarms for error rates and cost anomalies.</p>
-<hr />
-<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>We ran both the 24/7 and on-demand setups side by side for two months, measuring latency, cost, and error rates. Here’s what we found:</p>
-<h3 id="latency">Latency</h3>
+<p>The expiry is a policy decision: long enough to cover the retry window, short enough to bound storage growth.</p>
+<h3 id="step-4-decide-whether-to-pay-for-warmth">Step 4: Decide whether to pay for warmth</h3>
+<p>If cold-start latency breaks your latency budget, provisioned concurrency keeps a fixed number of execution environments warm. It is billed as capacity held, so it converts a variable cost into a fixed one. Treat it as a latency purchase, not a cost optimization, and measure the latency it actually buys before committing.</p>
+<h3 id="step-5-instrument-before-you-tune">Step 5: Instrument before you tune</h3>
+<p>Emit metrics for invocation count, error count, duration, cold starts, and retry count. Alarm on error rate and on duration at the tail, not the average. Cost anomalies almost always show up first as a change in invocation or duration distribution.</p>
+<h2 id="failure-modes-that-appear-only-in-production">Failure modes that appear only in production</h2>
+<h3 id="retry-amplification-on-non-idempotent-work">Retry amplification on non-idempotent work</h3>
+<p>The most expensive failure mode is a retry loop over a side effect. A batch fails, the platform retries it, the side effect runs again, and the bill and the damage both grow. Idempotency keys plus a dead-letter queue are the standard mitigation.</p>
+<h3 id="poison-pill-batches">Poison-pill batches</h3>
+<p>When a queue delivers messages in batches, one unprocessable message can cause the whole batch to be redelivered repeatedly. Without a dead-letter queue and a bounded receive count, a single malformed payload can consume unbounded compute. Configure a maximum receive count and route exhausted messages to a DLQ.</p>
+<h3 id="cold-start-cost-hiding-in-the-duration-metric">Cold-start cost hiding in the duration metric</h3>
+<p>A cold start is not just latency; it is billed execution time spent on initialization. If initialization dominates the handler duration, the cost model inverts. Reduce package size, lazy-load heavy dependencies, and move shared libraries into layers.</p>
+<h3 id="concurrency-ceilings">Concurrency ceilings</h3>
+<p>Managed function platforms impose a default regional concurrency limit. When the limit is reached, invocations are throttled and events queue up. If the queue's visibility timeout is shorter than the time to drain, messages can be processed twice. Set the visibility timeout to at least the function timeout plus a margin, and reserve concurrency for critical functions so a noisy neighbor cannot starve them.</p>
+<h3 id="log-retention-as-a-silent-cost">Log retention as a silent cost</h3>
+<p>Default log retention is often indefinite or short depending on configuration. Unbounded retention accumulates storage cost; too-short retention destroys the evidence needed to debug an incident. Set an explicit retention period per log group and stream to a central store only what you will actually query.</p>
+<h3 id="vpc-and-nat-charges">VPC and NAT charges</h3>
+<p>A function inside a VPC that needs outbound internet access routes through a NAT gateway, which is billed hourly plus per GB processed. This is a common surprise when a function that previously ran with public networking is moved behind a private subnet.</p>
+<h3 id="deployment-package-limits">Deployment package limits</h3>
+<p>Function deployment packages have size limits, and the unzipped limit is the one that bites when a data-processing dependency is bundled in. Layers, container-image packaging, or moving the heavy work to a separate service are the usual escapes.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Use this to pick a model before writing infrastructure code.</p>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>24/7 (Fargate)</th>
-<th>On-demand (Lambda)</th>
+<th>Question</th>
+<th>If yes</th>
+<th>If no</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Average response time</td>
-<td>120ms</td>
-<td>187ms</td>
+<td>Does a single task run longer than the platform's function timeout?</td>
+<td>Always-on</td>
+<td>Either</td>
 </tr>
 <tr>
-<td>P95 response time</td>
-<td>210ms</td>
-<td>320ms</td>
+<td>Does the agent need in-process state between tasks?</td>
+<td>Always-on (or externalize state)</td>
+<td>Either</td>
 </tr>
 <tr>
-<td>Cold start latency</td>
-<td>N/A</td>
-<td>420ms (first request)</td>
+<td>Is the duty cycle high (the process is busy most of the time)?</td>
+<td>Always-on</td>
+<td>On-demand</td>
 </tr>
 <tr>
-<td>Cold start latency (with provisioned concurrency)</td>
-<td>N/A</td>
-<td>80ms</td>
+<td>Is p99 latency budget under the cold-start cost?</td>
+<td>Always-on or provisioned concurrency</td>
+<td>On-demand</td>
+</tr>
+<tr>
+<td>Are all side effects idempotent or keyed?</td>
+<td>On-demand</td>
+<td>Fix idempotency first</td>
+</tr>
+<tr>
+<td>Is the workload spiky with long idle periods?</td>
+<td>On-demand</td>
+<td>Either</td>
+</tr>
+<tr>
+<td>Can the team operate a state store and DLQ?</td>
+<td>On-demand</td>
+<td>Always-on</td>
 </tr>
 </tbody>
 </table>
-<p>The on-demand model was slower on average, but the difference was within our SLA for most use cases. The real outlier was the cold start latency, which was unacceptable for our user-facing API. Provisioned concurrency brought the latency back in line, but at a cost.</p>
-<h3 id="cost">Cost</h3>
-<table>
-<thead>
-<tr>
-<th>Model</th>
-<th>Monthly Cost</th>
-<th>Request Volume</th>
-<th>Cost per 1k Requests</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>24/7 (Fargate)</td>
-<td>$1,174</td>
-<td>120k</td>
-<td>$9.78</td>
-</tr>
-<tr>
-<td>On-demand (Lambda)</td>
-<td>$25</td>
-<td>120k</td>
-<td>$0.21</td>
-</tr>
-<tr>
-<td>On-demand (Lambda + provisioned concurrency)</td>
-<td>$78</td>
-<td>120k</td>
-<td>$0.65</td>
-</tr>
-</tbody>
-</table>
-<p>The cost difference was stark: the 24/7 model was 15x more expensive than the on-demand model without provisioned concurrency, and 15x cheaper than the 24/7 model when provisioned concurrency is included. For our workload, the on-demand model was the clear winner.</p>
-<h3 id="error-rates">Error rates</h3>
-<table>
-<thead>
-<tr>
-<th>Model</th>
-<th>Total Requests</th>
-<th>Failed Requests</th>
-<th>Error Rate</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>24/7 (Fargate)</td>
-<td>120k</td>
-<td>1,200</td>
-<td>1.0%</td>
-</tr>
-<tr>
-<td>On-demand (Lambda)</td>
-<td>120k</td>
-<td>2,400</td>
-<td>2.0%</td>
-</tr>
-</tbody>
-</table>
-<p>The on-demand model had a higher error rate, primarily due to cold starts and retries. We mitigated this by adding retry logic and improving our error handling, but it’s a trade-off you need to account for.</p>
-<h3 id="resource-usage">Resource usage</h3>
-<table>
-<thead>
-<tr>
-<th>Model</th>
-<th>CPU Usage (vCPU)</th>
-<th>Memory Usage (GB)</th>
-<th>Peak Concurrency</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>24/7 (Fargate)</td>
-<td>0.12</td>
-<td>0.25</td>
-<td>4</td>
-</tr>
-<tr>
-<td>On-demand (Lambda)</td>
-<td>0.048</td>
-<td>0.128</td>
-<td>120</td>
-</tr>
-</tbody>
-</table>
-<p>The on-demand model used less CPU and memory per invocation, but the peak concurrency was much higher due to the stateless nature of Lambda. This required us to tune our SQS batch size and Lambda concurrency limits to avoid throttling.</p>
-<p>The biggest surprise was the error rate spike when we first deployed the on-demand model. The 24/7 model masked these issues because the process would stay alive and retry internally, whereas Lambda would fail fast and trigger a retry. This forced us to write more robust error handling and logging from day one.</p>
-<hr />
-<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
-<p>The docs won’t tell you about the subtle ways the on-demand model can bite you. Here are the failure modes we encountered that aren’t obvious until you’re in production.</p>
-<h3 id="1-the-invisible-cost-of-retries">1. The invisible cost of retries</h3>
-<p>Lambda retries failed invocations automatically, which is great for transient errors but disastrous for non-idempotent operations. If your task involves charging a credit card or sending an email, retries can lead to duplicate actions. We learned this the hard way when a bug in our payment processing logic caused 500 duplicate charges in a single hour. The fix was to implement idempotency keys and external state tracking, but it cost us a day of debugging and a lot of angry customer emails.</p>
-<h3 id="2-the-cold-start-trap">2. The cold start trap</h3>
-<p>Cold starts aren’t just a latency issue; they’re a cost multiplier. If your function cold starts on every invocation, you’re paying for the boot time even though you’re not doing any work. The fix was provisioned concurrency, but that added $53 to our monthly bill. The docs mention this, but they don’t emphasize how quickly the costs can add up.</p>
-<h3 id="3-the-concurrency-cliff">3. The concurrency cliff</h3>
-<p>Lambda has a soft limit of 1,000 concurrent executions per region by default. If you hit this limit, your requests start throttling, and your users see errors. The fix was to request a limit increase, but it took AWS support 48 hours to approve it. In the meantime, we had to implement client-side retries and backpressure, which added complexity to our system.</p>
-<h3 id="4-the-logging-black-hole">4. The logging black hole</h3>
-<p>Lambda logs are ephemeral by default. If you don’t stream them to CloudWatch or a third-party service, they’ll disappear after 24 hours. We initially relied on the default Lambda logging, which meant we had no visibility into our function’s behavior after a few hours. The fix was to set up a CloudWatch Logs subscription to stream logs to a centralized logging service, but it added $12 to our monthly bill.</p>
-<h3 id="5-the-dependency-nightmare">5. The dependency nightmare</h3>
-<p>Lambda functions have a 250MB deployment package limit (unzipped). If your function depends on a large library like Pandas or NumPy, you’ll hit this limit quickly. We found that our agent logic, which used Pandas for data processing, pushed us to 230MB. The fix was to use Lambda Layers to share dependencies across functions, but it added complexity to our deployment pipeline.</p>
-<h3 id="6-the-vpc-tax">6. The VPC tax</h3>
-<p>If your Lambda function needs to access a private VPC resource like an RDS database, AWS charges you an additional $0.05 per GB of data transfer and adds 100–500ms of latency to every invocation. The fix was to use VPC endpoints and a connection pooler like PgBouncer, but it added $45 to our monthly bill.</p>
-<p>The most surprising failure mode was the interaction between SQS and Lambda. SQS triggers Lambda functions in batches, and if one message in the batch fails, Lambda marks the entire batch as failed and retries it. This led to situations where a single poison pill message caused thousands of tasks to be reprocessed, leading to duplicate work and cost spikes. The fix was to use a dead-letter queue (DLQ) and implement poison pill handling in our function, but it took us a week to debug.</p>
-<hr />
-<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
-<p>Based on our experience, here are the tools and libraries that made the biggest difference in our migration from 24/7 to on-demand agents.</p>
-<table>
-<thead>
-<tr>
-<th>Tool/Library</th>
-<th>Purpose</th>
-<th>Version</th>
-<th>Why it’s worth it</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AWS Lambda Powertools</td>
-<td>Structured logging, tracing, metrics</td>
-<td>2.33.1</td>
-<td>Reduced boilerplate and improved debugging</td>
-</tr>
-<tr>
-<td>FastAPI</td>
-<td>API framework (for 24/7 agents)</td>
-<td>0.109.0</td>
-<td>Made it easy to add endpoints and middleware</td>
-</tr>
-<tr>
-<td>Celery</td>
-<td>Background task queue (24/7)</td>
-<td>5.3.4</td>
-<td>Simple to set up, but resource-heavy</td>
-</tr>
-<tr>
-<td>Redis 7.2</td>
-<td>External state store</td>
-<td>7.2.0</td>
-<td>Low latency, high throughput</td>
-</tr>
-<tr>
-<td>PgBouncer</td>
-<td>PostgreSQL connection pooling</td>
-<td>1.21.0</td>
-<td>Reduced Lambda VPC latency</td>
-</tr>
-<tr>
-<td>backoff</td>
-<td>Exponential backoff for retries</td>
-<td>2.3.0</td>
-<td>Simplified retry logic</td>
-</tr>
-<tr>
-<td>Serverless Framework</td>
-<td>Deployment automation</td>
-<td>3.38.1</td>
-<td>Made it easy to manage Lambda, API Gateway, etc.</td>
-</tr>
-<tr>
-<td>CloudWatch Alarms</td>
-<td>Monitoring and alerting</td>
-<td>N/A</td>
-<td>Caught errors and cost spikes early</td>
-</tr>
-<tr>
-<td>AWS X-Ray</td>
-<td>Distributed tracing</td>
-<td>N/A</td>
-<td>Identified latency bottlenecks</td>
-</tr>
-</tbody>
-</table>
-<p>The standout tool was AWS Lambda Powertools. It reduced the boilerplate in our Lambda functions by about 40%, and the structured logging made it easy to debug issues in production. The tracing was also invaluable for identifying latency bottlenecks, especially when we had to debug the interaction between SQS and Lambda.</p>
-<p>Redis 7.2 was a close second. We initially tried using DynamoDB for state management, but the latency was too high for our use case. Redis 7.2’s sub-millisecond latency made it a clear winner. The only downside was the need to manage a Redis cluster, which added operational overhead.</p>
-<p>The Serverless Framework saved us a ton of time by automating our deployments. We went from manually packaging and deploying Lambda functions to a fully automated CI/CD pipeline in a week. The only downside was the learning curve, but the documentation was excellent.</p>
-<p>The biggest disappointment was Celery. The connection pool would get exhausted, and tasks would pile up in the queue. We ended up switching to RQ (Redis Queue), which was simpler and more reliable.</p>
-<hr />
-<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
-<p>The on-demand model isn’t a silver bullet. There are scenarios where running agents 24/7 is the better choice, and pushing them into Lambda will cause more pain than it’s worth.</p>
-<h3 id="1-long-running-tasks">1. Long-running tasks</h3>
-<p>If your agent logic takes more than 15 minutes to run, Lambda isn’t a good fit. The maximum execution time for a Lambda function is 15 minutes, and even if you configure it to run longer, you’ll hit the CPU credit limit for longer-running functions. For tasks that take 30 minutes or more, stick with ECS or EC2.</p>
-<h3 id="2-high-performance-computing">2. High-performance computing</h3>
-<p>If your agent needs to process large datasets in memory, Lambda’s 10GB memory limit and ephemeral storage will be a bottleneck. We tried running a data processing agent in Lambda, and it kept hitting the memory limit, forcing us to batch and process data in chunks. The overhead of managing state across multiple invocations made the on-demand model impractical.</p>
-<h3 id="3-stateful-services">3. Stateful services</h3>
-<p>If your agent needs to maintain state between invocations, Lambda isn’t a good fit. Examples include WebSocket servers, real-time chat servers, or game lobbies. For these use cases, you’ll need a persistent process, which means ECS or EC2.</p>
-<h3 id="4-regulated-environments">4. Regulated environments</h3>
-<p>If your workload is subject to strict compliance requirements (e.g., HIPAA, PCI-DSS), Lambda’s shared responsibility model can be a liability. While AWS offers compliant configurations, the operational overhead of proving compliance is higher for serverless than for persistent services.</p>
-<h3 id="5-cost-sensitivity-at-scale">5. Cost sensitivity at scale</h3>
-<p>If you’re processing millions of requests per day, the on-demand model can become expensive due to the per-invocation cost. For example, at 1M requests per day, the on-demand model costs $63 monthly (without provisioned concurrency), while the 24/7 model costs $1,174 monthly. The crossover point depends on your workload, but for high-volume services, the 24/7 model can be more cost-effective.</p>
-<h3 id="6-real-time-requirements">6. Real-time requirements</h3>
-<p>If your agent needs to respond in under 50ms, the on-demand model’s cold starts and network latency will be a dealbreaker. For these use cases, you’ll need to run your agents in a persistent environment with provisioned concurrency, which brings the cost back in line with the 24/7 model.</p>
-<p>The biggest mistake teams make is assuming that on-demand is always the better choice. It’s not. The right model depends on your workload, your latency requirements, and your cost sensitivity. Don’t fall into the trap of thinking that serverless is always cheaper or faster. Measure, test, and decide based on data.</p>
-<hr />
-<h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>After two months of running both models in production, here’s my honest take: the on-demand model is the clear winner for our workload, but it’s not without its warts. That’s a 93% reduction in cost, and it’s hard to argue with that.</p>
-<p>The operational overhead is lower too. With Lambda, we don’t have to worry about process crashes, memory leaks, or auto-restarts. We set up alarms for error rates and duration, and we’re done. The only time we had to intervene was when we hit a concurrency limit, and even that was a one-time fix.</p>
-<p>The biggest surprise was the latency. The P95 latency is still higher than the 24/7 model, but it’s acceptable for our use case.</p>
-<p>The failure modes were a wake-up call. Retries, poison pills, and VPC latency are real problems that the docs gloss over. If you’re considering this migration, budget time for testing and debugging. Don’t assume that your code will work the same way in Lambda as it does in a persistent process.</p>
-<p>The tools ecosystem is mature enough that you’re not fighting the framework. AWS Lambda Powertools, Redis 7.2, and the Serverless Framework made the migration smooth. The only real pain point was the dependency size limit, which forced us to refactor our code to use Lambda Layers.</p>
-<p>Here’s the kicker: we didn’t even need to run all our agents on-demand. Some of them, like our real-time notification processor, needed to stay</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
-<li><a href="https://kubaik.github.io/always-on-agents-cost-more-than-you-think/">Always-on agents cost more than you think</a></li>
-<li><a href="https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/">Store data once, serve everywhere: cheaper</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<p>The honest summary: on-demand wins when the duty cycle is low and the work is idempotent. Always-on wins when the work is long-running, stateful, or latency-critical. Most real systems end up hybrid, with latency-critical paths on persistent infrastructure and bursty background work on functions.</p>
+<h2 id="what-to-measure-before-you-commit">What to measure before you commit</h2>
+<p>Do not choose based on a blog post, including this one. Instrument the current system and let the data decide.</p>
+<ol>
+<li><strong>Duty cycle.</strong> Total processing seconds divided by total uptime over one week. This is the single most predictive number.</li>
+<li><strong>Latency distribution.</strong> p50, p95, and p99, not the mean. Cold starts live in the tail.</li>
+<li><strong>Retry rate.</strong> Failed invocations divided by total invocations, per job type. Multiply by cost to see the amplification.</li>
+<li><strong>Idempotency coverage.</strong> The fraction of side-effecting operations that are keyed. Anything below 100% is a migration blocker.</li>
+<li><strong>State access pattern.</strong> Reads and writes per task, and the latency of the backing store. This becomes the new floor on per-task latency.</li>
+<li><strong>Cost per successful task.</strong> Total infrastructure cost divided by successfully completed tasks. This is the only cost metric that accounts for retries and failures.</li>
+</ol>
+<p>Run both models against a shadow copy of production traffic if the workload permits. Compare cost per successful task and p99 latency, not headline monthly cost.</p>
+<h2 id="take-action-in-the-next-30-minutes">Take action in the next 30 minutes</h2>
+<p>Open your monitoring dashboard and compute the duty cycle of your busiest always-on agent: divide total processing seconds by total uptime over the last seven days. If that number is below 0.2 and every side effect in the agent is idempotent, you have a concrete candidate for migration. If it is above 0.5, stop considering the migration and spend the time on the failure modes above instead.</p>
                 
                 
             </div>

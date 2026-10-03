@@ -1,471 +1,388 @@
 # ARM in production: Graviton4 vs Ampere in 2026
 
-The tutorials all showed the happy path. This post shows what comes after.
+Most ARM migration tutorials stop at "switch the base image." That step is rarely where migrations fail. The failures tend to cluster around timing, caching, and observability: image pull deadlines, NUMA placement on high-core-count parts, and probing behaviour that was tuned for a different core count. This article is a checklist for the parts that come after the base image.
 
-**Why I wrote this (the problem I kept hitting)**
+The ARM64 vs x86 decision is no longer primarily a price question. AWS Graviton4 and Ampere Altra (used by Oracle Cloud and several European providers) are both mature targets, but neither is a drop-in replacement for an existing x86 deployment. Vendor performance claims are workload-specific, and the only reliable way to decide is to measure your own service. This guide covers two representative paths: Graviton4 on EKS for most teams, and Ampere Altra for high-core-count workloads.
 
-on Black Friday: 40% more errors under load because our image pull timeout was still set to 10 seconds instead of the 12 seconds Graviton4 needs. We had followed every tutorial that said "just switch the base image" but none mentioned the 2-second image pull latency difference between x86 and ARM on AWS ECR in us-east-1. That outage cost us $18k in SLA payouts and taught me that ARM migration isn’t about compiling your code—it’s about timing, caching, and observability. This post is the checklist I wish I had then.
+## What you will build and measure
 
-The ARM vs x86 decision in 2026 isn’t just about price anymore. AWS Graviton4 delivers 35% better price/performance than x86 for many workloads, but only if your stack is ready for the 128-bit SIMD, 64KB L1 cache, and 1MB L2 cache differences. Ampere Altra processors in Oracle Cloud and Scaleway hit 40% lower TCO for latency-sensitive services, but they come with NUMA penalties if you don’t pin threads. I’ve seen teams save $72k/year by moving to Graviton4, then lose $24k debugging thread contention on Ampere’s 80-core variants. The difference isn’t the CPU—it’s the runtimes, the binaries, and the timeouts you didn’t know to change.
+Two target paths:
 
-This guide focuses on two real production paths: AWS Graviton4 for most teams, and Ampere Altra Max for high-core-count workloads. Both are mature in 2026, but neither is a drop-in replacement. You need to measure, not guess.
+1. AWS Graviton4 (arm64) on EKS, Node 20 LTS and Python 3.12
+2. Ampere Altra A1 instances (arm64) on Oracle Cloud, Terraform and Redis 7.2
 
----
+Assumptions: a service behind an ALB/NLB at roughly 50–500 QPS, state in a managed database or cache, and a staging environment that mirrors production. If staging does not exist, build a disposable one first. Migrating directly into production is the most common cause of avoidable incidents.
 
-**Prerequisites and what you'll build**
+What to measure, and how:
 
-You’ll leave with a working ARM migration plan for one of two targets:
+- Image pull latency: instrument with `kubectl describe pod` events (`Pulling`, `Pulled` timestamps) or scrape `kubelet_image_puller_duration_seconds` from the kubelet metrics endpoint. Compare arm64 and amd64 images of the same service.
+- Cold start latency: for Lambda, use the `Init Duration` field in CloudWatch Logs for both architectures; for Fargate, use the task start-to-ready time from ECS events.
+- CPU efficiency: run a fixed benchmark inside both instance types and record throughput per vCPU and per dollar. Do not trust vendor tables; run your own binary.
+- Error rate under load: compare p50, p95, p99 and error rate before and after the switch at the same request rate.
 
-1. AWS Graviton4 (arm64) on EKS with Karpenter 0.32, using Node 20 LTS and Python 3.12
-2. Oracle Cloud Ampere A1 instances (arm64) with Terraform 1.8 and Redis 7.2
+You will need: an AWS account with enough budget to run several nodes for a few hours, `kubectl` v1.29+, `helm` 3.14+, `eksctl` (current release), Python 3.12, `pytest` 8.1+, and Locust 2.24. For Ampere on Oracle Cloud, Terraform 1.8+.
 
-I assume you already run a service behind an ALB/NLB with 50–500 QPS, store state in RDS or ElastiCache, and have a staging environment that mirrors production. If you don’t, create a throwaway staging cluster first—this isn’t the time to learn your Terraform modules.
+The same approach applies on GCP or Azure: substitute the instance family and the node bootstrap mechanism, but keep the measurement plan identical.
 
-What you’ll measure:
-- Image pull latency (ms) with containerd 2.0.2
-- Cold start latency for Lambda (arm64) vs Fargate (x86)
-- CoreMark score per dollar across instance families
-- Error rate jump during traffic spikes after switch
+## Step 1 — set up a disposable staging cluster
 
-You’ll need:
-- An AWS account with at least $200 in credits (Graviton4 is cheaper, but you’ll spin up 10+ nodes to see NUMA effects)
-- kubectl v1.29, helm 3.14, eksctl 0.181
-- Python 3.12, pytest 8.1, Locust 2.24
-- Terraform 1.8 if you choose Ampere on Oracle Cloud
+Create a fresh staging cluster on Graviton4 before touching production. The first cluster you migrate should be one you can delete without consequence.
 
-If you’re on GCP or Azure, swap the cloud provider names in your head—Graviton4 clones exist but have different quirks. This guide is cloud-agnostic except where numbers differ.
+1. Install `eksctl` and `kubectl`. Use the current release rather than pinning to a specific patch, since ARM AMI and instance-type support is added over time.
 
----
-
-**Step 1 — set up the environment**
-
-Start by creating a fresh staging cluster on Graviton4 before you touch production. I learned the hard way that the first cluster you migrate should be disposable—ours had a memory leak in the CNI plugin that only showed up after 72 hours.
-
-1. Install eksctl 0.181 and kubectl 1.29
-   ```bash
-   curl --silent --location "https://github.com/eksctl-io/eksctl/releases/download/v0.181.0/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-   sudo mv /tmp/eksctl /usr/local/bin
-   curl -LO "https://dl.k8s.io/release/v1.29.0/bin/linux/amd64/kubectl"
-   chmod +x kubectl && sudo mv kubectl /usr/local/bin
-   ```
-
-2. Create a new EKS cluster with Graviton4 nodes
-   ```bash
-   eksctl create cluster \
-     --name arm-migration-staging \
-     --region us-east-1 \
-     --version 1.29 \
-     --nodegroup-name g4g20xlarge \
-     --nodes 3 \
-     --nodes-min 1 \
-     --nodes-max 10 \
-     --instance-types m7g.2xlarge \
-     --arm64
-   ```
-The m7g.2xlarge is 8 vCPU, 32 GB RAM—enough to reproduce NUMA effects without breaking the bank. Each node costs $0.092/hour in us-east-1 as of 2026, versus $0.152 for c7i.2xlarge (x86).
-
-3. Switch your container runtime to containerd 2.0.2
-   ```bash
-   eksctl utils write-kubeconfig --cluster arm-migration-staging
-   aws eks update-kubeconfig --name arm-migration-staging --region us-east-1
-   kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
-   ```
-Switch to containerd immediately.
-
-4. Add Karpenter 0.32 for dynamic scaling
-   ```bash
-   helm repo add karpenter https://charts.karpenter.sh
-   helm install karpenter karpenter/karpenter --version 0.32.1 \
-     --namespace karpenter \
-     --create-namespace \
-     --set serviceAccount.create=true \
-     --set controller.resources.requests.cpu=1 \
-     --set controller.resources.requests.memory=1Gi
-   ```
-Karpenter 0.32 adds Graviton4 support and fixes the NUMA scheduler bug that was in 0.31. If you’re on 0.30 or earlier, upgrade now—teams reported 25% higher p99 latency after migrating because the scheduler couldn’t pin pods to NUMA nodes.
-
-5. Create a Karpenter provisioner for Graviton4 only
-   ```yaml
-   apiVersion: karpenter.sh/v1alpha5
-   kind: Provisioner
-   metadata:
-     name: default-arm
-   spec:
-     requirements:
-       - key: kubernetes.io/arch
-         operator: In
-         values: [arm64]
-     limits:
-       resources:
-         cpu: 1000
-     ttlSecondsAfterEmpty: 30
-   ```
-This prevents Karpenter from mixing x86 and ARM nodes. I made the mistake of not setting arch requirements first—our staging cluster ran mixed nodes for a week before we noticed 4% of pods were stuck on x86 images.
-
-6. Verify node readiness
-   ```bash
-   kubectl get nodes -o wide
-   ```
-You should see three nodes with `INSTANCE-TYPE` starting with `m7g` and `KUBELET-VERSION` 1.29. If you see any nodes without `arm64`, delete them and recreate with the arm64 flag.
-
-Gotcha: Some AMIs ship with x86-only kernels. If your nodes show `NotReady` status, check the AMI with:
-   ```bash
-   aws ec2 describe-instances --instance-ids $(kubectl get nodes -o jsonpath='{.items[*].spec.providerID}' | sed 's/.*\(i-[a-f0-9]*\))/\1/') \
-     --query 'Reservations[*].Instances[*].ImageId' --output text
-   ```
-Look for `amazon-eks-graviton4-node-1.29-*` in the AMI name. If it’s missing, you’re on an old AMI—upgrade eksctl and rebuild the cluster.
-
----
-
-**Step 2 — core implementation**
-
-Now that your staging cluster runs Graviton4, migrate one service at a time. Start with a stateless API—stateful services like Redis or Postgres need extra care.
-
-1. Switch your Dockerfile to multi-arch
-   ```Dockerfile
-   # syntax=docker/dockerfile:1.5
-   FROM --platform=$BUILDPLATFORM python:3.12-slim AS builder
-   WORKDIR /app
-   COPY requirements.txt .
-   RUN pip install --user -r requirements.txt
-   
-   FROM python:3.12-slim
-   COPY --from=builder /root/.local /root/.local
-   COPY . .
-   ENV PATH=/root/.local/bin:$PATH
-   CMD ["gunicorn", "app:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker"]
-   ```
-Build and push with:
-   ```bash
-   docker buildx build --platform linux/arm64 -t yourrepo/api:1.2.0-arm --push .
-   ```
-The `--platform linux/arm64` flag is critical—without it, Docker builds an x86 image even on an ARM host. I wasted two hours on this before realizing my buildx setup defaulted to amd64.
-
-2. Update your deployment to use the ARM image
-   ```yaml
-   apiVersion: apps/v1
-   kind: Deployment
-   metadata:
-     name: api
-   spec:
-     replicas: 3
-     selector:
-       matchLabels:
-         app: api
-     template:
-       metadata:
-         labels:
-           app: api
-       spec:
-         containers:
-         - name: api
-           image: yourrepo/api:1.2.0-arm
-           resources:
-             requests:
-               cpu: "500m"
-               memory: "512Mi"
-             limits:
-               cpu: "1000m"
-               memory: "1024Mi"
-           ports:
-           - containerPort: 8000
-   ```
-Note the CPU request of 500m—Graviton4’s 8 vCPU cores deliver 25% more throughput per core than x86, so you can safely reduce requests by 20–30% without risking throttling. Teams that keep x86 ratios see 15% higher costs for no gain.
-
-3. Test the deployment
-   ```bash
-   kubectl apply -f deployment.yaml
-   kubectl rollout status deployment/api --timeout=300s
-   ```
-Watch the rollout—if pods crash with `SIGKILL` during startup, your image pull timeout is too short. Increase it in the deployment spec:
-   ```yaml
-   spec:
-     containers:
-     - name: api
-       imagePullPolicy: Always
-       imagePullSecrets:
-       - name: ecr-creds
-   ```
-Then raise the timeout in the kubelet config (see Step 3).
-
-4. Add readiness and liveness probes
-   ```yaml
-   livenessProbe:
-     httpGet:
-       path: /health
-       port: 8000
-     initialDelaySeconds: 5
-     periodSeconds: 10
-     timeoutSeconds: 3
-   readinessProbe:
-     httpGet:
-       path: /ready
-       port: 8000
-     initialDelaySeconds: 2
-     periodSeconds: 5
-     timeoutSeconds: 2
-   ```
-If your readiness probe fails at 2s, increase `initialDelaySeconds` to 5.
-
-5. Benchmark with Locust
-   ```python
-   from locust import HttpUser, task, between
-   
-   class ApiUser(HttpUser):
-       wait_time = between(0.5, 2.5)
-       
-       @task
-       def get_items(self):
-           self.client.get("/items")
-   ```
-Run against your service with:
-   ```bash
-   locust -f locustfile.py --host http://<your-lb-dns> --users 1000 --spawn-rate 100
-   ```
-Record p95 latency, error rate, and CPU usage. Graviton4 should drop latency by 25–35% for CPU-bound services like JSON parsing or image resizing. If it doesn’t, check your Python wheels—many PyPI packages still ship x86-only binaries.
-
----
-
-**Step 3 — handle edge cases and errors**
-
-The most common ARM migration failures aren’t CPU-related—they’re timing and caching issues that surface under load.
-
-1. Image pull timeout
-Graviton4 nodes have 10–15% slower image pulls from ECR because ARM images are larger (10–20MB more metadata). Set the kubelet image pull timeout to 12s:
-   ```yaml
-   # kubelet-config.yaml
-   kind: KubeletConfiguration
-   apiVersion: kubelet.config.k8s.io/v1beta1
-   imagePullProgressDeadline: 12s
-   ```
-Apply with:
-   ```bash
-   kubectl apply -f kubelet-config.yaml
-   # Then restart kubelet on each node
-   kubectl get nodes -o name | xargs -I {} kubectl debug -it {} --image=busybox -- chroot /host systemctl restart kubelet
-   ```
-I saw a team hit a 40% error spike because their image pull timeout was stuck at 5s—Graviton4 needs 12s for 50MB images.
-
-2. NUMA pinning for high-core workloads
-If you’re running on 48-core or 80-core instances (like Ampere Altra Max), enable NUMA-aware scheduling:
-   ```bash
-   helm install aws-vpc-cni eks/aws-vpc-cni --version v1.15.5 \
-     --set enablePodENI=true \
-     --set warmEniTarget=1
-   ```
-Then add the NUMA scheduler to your deployment:
-   ```yaml
-   spec:
-     containers:
-     - name: api
-       env:
-       - name: NUMA_NODES
-         valueFrom:
-           fieldRef:
-             fieldPath: status.numaNodes
-   ```
-Without NUMA pinning, teams see 40% higher latency on Altra Max because threads jump between NUMA nodes. The fix is one line in the deployment spec.
-
-3. Thread sanitizer and ARM-specific bugs
-Python’s threading model changed in 3.12 to use pthread_setaffinity_np on ARM. If your service uses threads heavily (like FastAPI with background tasks), run with:
-   ```bash
-   python -m pytest --cov=src --pthread-max=8
-   ```
-Add thread sanitizer to your CI:
-   ```yaml
-   - name: Run ThreadSanitizer
-     run: |
-       python -m pip install tsan
-       tsan --compile --run tests/
-   ```
-
-4. EBS volume latency
-Graviton4 nodes have faster CPUs, but EBS volumes are still network-attached. If your p99 latency jumps after migration, switch to gp3 volumes with 3000 IOPS baseline. The default gp2 is 100 IOPS per GB—too slow for 8 vCPU workloads.
-
-5. Lambda cold starts
-Lambda on arm64 (provided.al2023-arm64) starts 50ms faster than x86, but only if your runtime is Python 3.12 or Node 20 LTS. Older runtimes still ship x86-only binaries. Test with:
-   ```bash
-   aws lambda invoke --function-name my-arm-func --payload '{}' response.json
-   ```
-Compare to x86:
-   ```bash
-   aws lambda invoke --function-name my-x86-func --payload '{}' response.json
-   ```
-If arm64 is slower, check your layers—many community layers are still x86-only.
-
----
-
-**Step 4 — add observability and tests**
-
-You can’t debug a 15% latency regression without metrics. Add these to every service before you consider the migration done.
-
-1. Prometheus and Grafana for ARM-specific metrics
-Install kube-prometheus-stack 56.12:
-   ```bash
-   helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-   helm install prometheus prometheus-community/kube-prometheus-stack --version 56.12.0 \
-     --namespace monitoring \
-     --create-namespace
-   ```
-Add a custom metric for NUMA node usage:
-   ```yaml
-   - job_name: 'numa-metrics'
-     scrape_interval: 15s
-     metrics_path: /metrics
-     static_configs:
-       - targets: ['numa-exporter:9100']
-   ```
-The numa-exporter exposes per-NUMA-node CPU and memory usage. If any node exceeds 80% usage, your pods aren’t pinned—schedule a NUMA-aware deployment.
-
-2. Add a canary deployment
-Use Flagger 1.36 to automate the ARM switch:
-   ```bash
-   helm repo add flagger https://flagger.app
-   helm install flagger flagger/flagger --version 1.36.0 \
-     --namespace istio-system
-   ```
-Then create a canary:
-   ```yaml
-   apiVersion: flagger.app/v1beta1
-   kind: Canary
-   metadata:
-     name: api-canary
-   spec:
-     targetRef:
-       apiVersion: apps/v1
-       kind: Deployment
-       name: api
-     service:
-       port: 9898
-     analysis:
-       interval: 1m
-       threshold: 5
-       maxWeight: 50
-       stepWeight: 10
-       metrics:
-       - name: request-success-rate
-         thresholdRange:
-           min: 99
-         interval: 1m
-       - name: request-duration
-         thresholdRange:
-           max: 500
-         interval: 30s
-   ```
-Flagger will automatically roll back if error rate >5% or latency >500ms p95. I’ve caught three regressions this way that manual testing missed.
-
-3. Add ARM-specific tests to CI
-   ```yaml
-   - name: Test ARM build
-     run: |
-       docker buildx build --platform linux/arm64 -t test-arm .
-       docker run --rm test-arm python -m pytest tests/
-   ```
-If the build fails, fail the pipeline immediately—don’t wait for staging. Many teams skip this and get stuck with broken ARM images in production.
-
-4. Monitor ECR image sizes
-Add a script to compare arm64 vs amd64 image sizes:
-   ```python
-   import boto3
-   
-   def compare_image_sizes(repo_name):
-       ecr = boto3.client('ecr')
-       images = ecr.describe_images(repositoryName=repo_name)['imageDetails']
-       arm_sizes = [img['imageSizeInBytes'] for img in images if 'arm64' in img.get('imageTags', [])]
-       x86_sizes = [img['imageSizeInBytes'] for img in images if 'amd64' in img.get('imageTags', [])]
-       if arm_sizes and x86_sizes:
-           print(f"ARM image larger by {(arm_sizes[0] - x86_sizes[0]) / 1e6:.1f} MB")
-   ```
-
----
-
-**Real results from running this**
-
-I ran this exact migration on three services in Q1 2026:
-
-| Service          | x86 cost/month | Graviton4 cost/month | Savings | p95 latency drop | Error rate change |
-|------------------|----------------|----------------------|---------|------------------|-------------------|
-| JSON API         | $1,240         | $790                 | 36%     | 35%              | -2%               |
-| Image resizer    | $890           | $520                 | 42%     | 45%              | +1%               |
-| Lambda cron jobs | $410           | $280                 | 32%     | 28%              | 0%                |
-
-The image resizer saved the most because it’s CPU-bound (Pillow on ARM is 2x faster) and the cost dropped from $0.000048 per 1k images to $0.000029. The Lambda cron jobs saved 32% because arm64 cold starts are 50ms faster—100k invocations saved 5,000 seconds of runtime.
-
-The surprise was the error rate on the image resizer: it jumped 1% after migration because Pillow’s ARM wheel has a bug in JPEG decoding under high concurrency. The fix was to pin Pillow to 10.3.0 and add a memory limit of 256Mi per pod. Without observability, this would have gone unnoticed until Black Friday.
-
-Teams using Ampere Altra Max on Oracle Cloud saved 40% on 48-core VMs, but 30% of them had to add NUMA pinning after noticing 60% higher latency under load. The NUMA penalty only shows up when you exceed 60% CPU on a single NUMA node—most teams don’t hit that in staging.
-
----
-
-**Common questions and variations**
-
-Here are the real questions I get from teams who try this migration:
-
-**Why does my ARM Lambda cost more per invocation even though it’s faster?**
-
-AWS Lambda prices by GB-seconds, not by duration. ARM64 has a 177MB memory overhead per invocation compared to x86, so a 128MB function becomes 305MB on arm64. Use Provisioned Concurrency to amortize the cost—it drops from $0.000016 per 100ms to $0.000008 when you run 1000 concurrent executions. I learned this the hard way when our invoice processing Lambda doubled in cost after migration—turns out the 256MB config was the sweet spot on x86 but wasteful on arm64.
-
-**How do I know if my Python wheels support ARM?**
-
-Check with `pip download` and `file`:
 ```bash
-pip download -r requirements.txt --platform manylinux2014_aarch64
-unzip -l *.whl | grep .so
+curl --silent --location "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+curl -LO "https://dl.k8s.io/release/v1.29.0/bin/linux/amd64/kubectl"
+chmod +x kubectl && sudo mv kubectl /usr/local/bin
 ```
-If you see .so files without `aarch64` in the filename, the wheel might be x86-only. Fall back to building from source or use a pure-Python alternative. Many teams hit this with numpy and scipy—switch to `numpy==1.26.4` and `scipy==1.12.0` for ARM support.
 
-**What’s the difference between Graviton4 and Ampere Altra Max?**
+2. Create the cluster. `m7g.2xlarge` (8 vCPU, 32 GB) is a reasonable starting size for reproducing NUMA and scheduling effects without a large bill.
 
-| Metric               | AWS Graviton4 (m7g.2xlarge) | Oracle Ampere Altra Max (A1.Flex 48) |
-|----------------------|-----------------------------|--------------------------------------|
-| vCPU                 | 8                           | 48                                   |
-| RAM                  | 32 GB                       | 96 GB                                |
-| Price (2026)         | $0.092/hour                 | $0.048/hour                          |
-| NUMA nodes           | 1                           | 2                                    |
-| Max turbo frequency  | 3.6 GHz                     | 3.0 GHz                              |
-| EBS bandwidth        | 12.5 Gbps                   | 10 Gbps                              |
-
-Choose Graviton4 for general workloads and Ampere for high-core-count services like video encoding or scientific computing. If you need more than 8 vCPU, test NUMA pinning on Ampere—it’s the difference between 50ms and 500ms latency.
-
-**My Go service runs slower on ARM—why?**
-
-Go’s scheduler still favors x86 in some cases. Build with GOAMD64=v3 for x86 and GOAMD64=v1 for ARM to see the difference:
 ```bash
-GOAMD64=v1 go build -o app-arm main.go
-GOAMD64=v3 go build -o app-x86 main.go
+eksctl create cluster \
+  --name arm-migration-staging \
+  --region us-east-1 \
+  --version 1.29 \
+  --nodegroup-name g4g20xlarge \
+  --nodes 3 \
+  --nodes-min 1 \
+  --nodes-max 10 \
+  --instance-types m7g.2xlarge
 ```
-The fix was to recompile with `-tags=netgo` and disable CGO. Always compile Go services with `-ldflags="-s -w"` for ARM—the binary size drops from 40MB to 12MB.
 
----
+Note: `eksctl` selects the correct AMI based on the instance type. Do not pass an `--arm64` flag that does not exist in the CLI; verify the resulting nodes instead.
 
-**Where to go from here**
+3. Point `kubectl` at the cluster and confirm the CNI is running.
 
-Pick one service that costs at least $500/month on x86 and run the migration today:
+```bash
+eksctl utils write-kubeconfig --cluster arm-migration-staging
+aws eks update-kubeconfig --name arm-migration-staging --region us-east-1
+kubectl get nodes -o wide
+```
 
-1. Create a staging cluster on Graviton4 using eksctl 0.181 and m7g.2xlarge nodes
-2. Switch one stateless API to use a multi-arch Docker image built with `--platform linux/arm64`
-3. Add a 12s image pull timeout in your kubelet config and redeploy
-4. Run Locust against the staging API with 1000 users and record p95 latency and error rate
-5. If latency drops by at least 25% and error rate stays below 1%, apply the same changes to production using Flagger 1.36
+You should see nodes whose `INSTANCE-TYPE` begins with `m7g` and whose `KUBELET-VERSION` matches the cluster version. If any node is `NotReady`, check its AMI:
 
-If you’re on Oracle Cloud or Scaleway, repeat steps 1–5 with Ampere Altra Max A1.Flex 48 nodes and add NUMA pinning to your deployment spec. The entire process should take less than 4 hours for a single service. Measure before and after—don’t trust anecdotes or marketing slides. I still see teams skip the staging run and regret it during Black Friday.
+```bash
+aws ec2 describe-instances \
+  --instance-ids $(kubectl get nodes -o jsonpath='{.items[*].spec.providerID}' | sed 's/.*\(i-[a-f0-9]*\))/\1/') \
+  --query 'Reservations[*].Instances[*].ImageId' --output text
+```
 
-Check the kubelet image pull timeout on your staging cluster first—it’s the most common silent failure I debug today.
+The AMI ID should correspond to an arm64 EKS-optimised image. If it does not, the nodegroup was created with the wrong instance type or an outdated `eksctl`.
 
----
+4. Install a node autoscaler. A managed node group is sufficient for a first migration; if you use a cluster autoscaler or a node-provisioning controller, configure it to select arm64 instance families only, so that x86 and arm64 nodes are not mixed in a single workload's node pool.
 
-### About this article
+```yaml
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: default-arm
+spec:
+  template:
+    spec:
+      requirements:
+        - key: kubernetes.io/arch
+          operator: In
+          values: [arm64]
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: [on-demand]
+      nodeClassRef:
+        name: default
+  limits:
+    cpu: 1000
+  disruption:
+    consolidationPolicy: WhenEmpty
+    consolidateAfter: 30s
+```
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+The exact API version and fields depend on the provisioner you run; check its documentation for the current schema. The important part is the `kubernetes.io/arch: arm64` requirement, which prevents mixed-architecture scheduling.
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+## Step 2 — migrate one stateless service
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+Start with a stateless API. Stateful services such as Redis or Postgres require additional planning around persistence and failover.
 
-**Last reviewed:** June 10, 2026
+1. Build a multi-arch image.
+
+```Dockerfile
+# syntax=docker/dockerfile:1.5
+FROM --platform=$BUILDPLATFORM python:3.12-slim AS builder
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --user -r requirements.txt
+
+FROM python:3.12-slim
+COPY --from=builder /root/.local /root/.local
+COPY . .
+ENV PATH=/root/.local/bin:$PATH
+CMD ["gunicorn", "app:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker"]
+```
+
+Build and push explicitly for arm64:
+
+```bash
+docker buildx build --platform linux/arm64 -t yourrepo/api:1.2.0-arm --push .
+```
+
+The `--platform linux/arm64` flag is required. Without it, `buildx` produces an image for the builder's default architecture, which is often amd64 even when running on an ARM host. Confirm the result:
+
+```bash
+docker buildx imagetools inspect yourrepo/api:1.2.0-arm
+```
+
+The output should list `linux/arm64` as the platform.
+
+2. Deploy with an explicit architecture constraint and a resource request you can justify.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      containers:
+      - name: api
+        image: yourrepo/api:1.2.0-arm
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+          limits:
+            cpu: "1000m"
+            memory: "1024Mi"
+        ports:
+        - containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 2
+          periodSeconds: 5
+          timeoutSeconds: 2
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+```
+
+Do not copy x86 CPU requests across unchanged and assume they are correct. Measure the actual CPU usage of the service under load on both architectures, then set requests from that data. A common mistake is to leave requests unchanged and then interpret the resulting throttling as an ARM performance problem.
+
+3. Roll out and watch the events.
+
+```bash
+kubectl apply -f deployment.yaml
+kubectl rollout status deployment/api --timeout=300s
+kubectl get events --sort-by=.lastTimestamp
+```
+
+If pods are killed during startup, check whether the image pull is exceeding the kubelet's `imagePullProgressDeadline` (see Step 3) before assuming a runtime problem.
+
+4. Benchmark before and after. A minimal Locust file:
+
+```python
+from locust import HttpUser, task, between
+
+class ApiUser(HttpUser):
+    wait_time = between(0.5, 2.5)
+
+    @task
+    def get_items(self):
+        self.client.get("/items")
+```
+
+```bash
+locust -f locustfile.py --host http://<your-lb-dns> --users 1000 --spawn-rate 100
+```
+
+Record p50, p95, p99, error rate, and CPU usage for both architectures at the same request rate. If latency does not improve for a CPU-bound service, check whether your Python dependencies are shipping arm64 wheels; a source build that silently falls back to a slower path is a common cause.
+
+## Step 3 — handle the failure modes that only appear under load
+
+The failures below are the ones that tend to survive a happy-path tutorial.
+
+1. Image pull deadline exceeded. Larger or less-cached images can exceed the kubelet's default `imagePullProgressDeadline`. The default is documented as 1 minute; some clusters run with a lower value. If pulls are timing out, raise it explicitly:
+
+```yaml
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+imagePullProgressDeadline: 2m
+```
+
+Apply it via your node bootstrap mechanism (user data, launch template, or a managed node group configuration). Do not `kubectl apply` a `KubeletConfiguration` to a running cluster; it is not a cluster-scoped object. Verify the setting is active after a node replacement.
+
+2. NUMA placement on high-core-count instances. On multi-socket or multi-NUMA parts such as Ampere Altra, a process whose threads migrate between NUMA nodes will see memory-access latency rise under load. The symptom is usually a p99 regression that does not appear at low utilisation. Measure it with `numactl --hardware` on the node and `numastat -p <pid>` for the process. Topology Manager and CPU Manager, configured via the kubelet, are the standard mechanisms for aligning pod CPU and memory to a single NUMA node. Configure them in the kubelet config and validate with a workload that pins a known number of CPUs:
+
+```yaml
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+topologyManagerPolicy: single-numa-node
+cpuManagerPolicy: static
+```
+
+These policies require a kubelet restart and a pod restart to take effect, and they only apply to pods in the Guaranteed QoS class (requests equal limits). Confirm with `kubectl get pod <name> -o jsonpath='{.status.qosClass}'`.
+
+3. Thread-affinity assumptions. Code that calls `pthread_setaffinity_np` or relies on a specific core count may behave differently on a 48- or 80-core part. Run the test suite on the target hardware, not just in a container on your laptop:
+
+```bash
+python -m pytest tests/ -q
+```
+
+If you suspect a race that only appears on many cores, run the suite under ThreadSanitizer where the toolchain supports it, and increase the core count on the test host to reproduce.
+
+4. Storage latency mistaken for CPU latency. A faster CPU does not make network-attached storage faster. If p99 rises after migration, check the volume type and IOPS before blaming the architecture. gp3 has a baseline of 3000 IOPS and 125 MiB/s independent of volume size; gp2 scales IOPS with volume size. Confirm the volume type in use:
+
+```bash
+aws ec2 describe-volumes --volume-ids <id> --query 'Volumes[*].VolumeType'
+```
+
+5. Lambda cold starts. arm64 Lambda functions use the same pricing model as x86, priced per GB-second. The relevant comparison is your function's measured duration and memory configuration on each architecture. Measure both:
+
+```bash
+aws lambda invoke --function-name my-arm-func --payload '{}' response-arm.json
+aws lambda invoke --function-name my-x86-func --payload '{}' response-x86.json
+```
+
+Compare the `Init Duration` reported in CloudWatch Logs, and check that any layers you depend on are published for arm64. A layer built for x86 will fail to load or fall back to a slower path.
+
+## Step 4 — observability and safe rollout
+
+You cannot debug a latency regression you did not measure. Add these before declaring the migration complete.
+
+1. Metrics. Install a Prometheus stack and scrape kubelet and node-exporter metrics. The metrics that matter for this migration are `kubelet_image_puller_duration_seconds`, `container_cpu_cfs_throttled_seconds_total`, `node_cpu_seconds_total` broken down by mode, and your application's own latency histograms. A per-NUMA-node view requires a node-level exporter that reports NUMA statistics; check that the exporter you choose actually emits them before relying on the dashboard.
+
+2. Progressive rollout. Use a canary or progressive delivery controller to shift a percentage of traffic to the new architecture and roll back automatically on error-rate or latency thresholds. A minimal canary definition (the exact API version depends on the controller you use):
+
+```yaml
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: api-canary
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api
+  service:
+    port: 9898
+  analysis:
+    interval: 1m
+    threshold: 5
+    maxWeight: 50
+    stepWeight: 10
+    metrics:
+    - name: request-success-rate
+      thresholdRange:
+        min: 99
+      interval: 1m
+    - name: request-duration
+      thresholdRange:
+        max: 500
+      interval: 30s
+```
+
+The threshold values above are illustrative. Set them from your own baseline: a canary that rolls back at 500 ms p95 is useless if your service already runs at 480 ms.
+
+3. CI check for the arm64 build. Fail the pipeline if the arm64 image does not build or does not pass tests:
+
+```yaml
+- name: Test ARM build
+  run: |
+    docker buildx build --platform linux/arm64 -t test-arm .
+    docker run --rm test-arm python -m pytest tests/
+```
+
+4. Image size tracking. Compare arm64 and amd64 image sizes to catch unexpected bloat:
+
+```python
+import boto3
+
+def compare_image_sizes(repo_name):
+    ecr = boto3.client('ecr')
+    images = ecr.describe_images(repositoryName=repo_name)['imageDetails']
+    arm_sizes = [img['imageSizeInBytes'] for img in images if 'arm64' in img.get('imageTags', [])]
+    x86_sizes = [img['imageSizeInBytes'] for img in images if 'amd64' in img.get('imageTags', [])]
+    if arm_sizes and x86_sizes:
+        print(f"ARM image larger by {(arm_sizes[0] - x86_sizes[0]) / 1e6:.1f} MB")
+```
+
+## How to decide between Graviton4 and Ampere Altra
+
+The two families differ in core count, memory per instance, and NUMA topology. The table below lists properties that are documented by the vendors; treat the price column as illustrative and verify current pricing in your region.
+
+| Property | AWS Graviton4 (m7g.2xlarge) | Ampere Altra A1 (48-core shape) |
+|---|---|---|
+| vCPU | 8 | 48 |
+| Memory | 32 GB | 96 GB |
+| NUMA nodes | 1 | 2 (per vendor documentation) |
+| Typical use | General-purpose services | High-core-count, throughput-oriented |
+| Migration risk | Low | NUMA placement under load |
+
+Decision checklist:
+
+- If your service is under 16 vCPU and single-NUMA, Graviton4 is the lower-risk choice. Start there.
+- If you need 32+ vCPU per instance and your workload is throughput-oriented (encoding, batch processing, scientific), Ampere Altra is worth testing, but budget time for NUMA configuration and validation.
+- If your workload is latency-sensitive at high core counts, measure p99 with and without Topology Manager before committing.
+- If you depend on prebuilt binaries from a vendor that does not publish arm64 builds, resolve that dependency before scheduling the migration.
+
+## Worked example: estimating whether a migration is worth it
+
+Suppose a service runs on 6 x c7i.2xlarge instances at an illustrative on-demand price of $0.15/hour each.
+
+- Current cost: 6 × $0.15 × 730 hours = $657/month.
+- After migration to 6 x m7g.2xlarge at an illustrative $0.09/hour: 6 × $0.09 × 730 = $394/month.
+- Illustrative saving: $263/month, or about 40%.
+
+That number is arithmetic on stated assumptions, not a measured result. Before acting on it, replace the prices with the current rates for your region and your commitment (on-demand, savings plan, reserved), and confirm that the migrated service actually needs the same number of instances. If the arm64 build is slower for your workload, the instance count may need to increase, which can erase the saving entirely. Measure throughput per instance on both architectures before you resize.
+
+## FAQ
+
+**Why did my arm64 Lambda cost more even though it was faster?**
+
+Lambda is billed per GB-second. If you increased the memory configuration during the migration, the per-invocation cost can rise even when the duration falls. Compare the product of configured memory and measured duration for both architectures, not duration alone. If the function is short enough that init duration dominates, the memory setting matters more than the architecture.
+
+**How do I check whether a Python dependency has an arm64 wheel?**
+
+```bash
+pip download -r requirements.txt --platform manylinux2014_aarch64 --only-binary=:all: -d /tmp/wheels
+```
+
+If the command fails, at least one dependency has no arm64 wheel for that platform tag. Inspect the downloaded wheels:
+
+```bash
+unzip -l /tmp/wheels/*.whl | grep '\.so'
+```
+
+A compiled extension without `aarch64` in its filename is a sign the wheel is not built for your target. In that case, build from source in the image or find a pure-Python alternative.
+
+**My Go service is slower on arm64. What should I check?**
+
+Rebuild for the target architecture rather than relying on a cross-compiled binary built with assumptions from another platform. Check `GOARCH=arm64` is set, and verify that CGO is either disabled or that any C libraries are compiled for arm64. A binary that links an x86-only C library will not run, and one that falls back to a generic path may be measurably slower. Compare binaries built with the same flags on both architectures before drawing conclusions.
+
+**Do I need Topology Manager for Graviton4?**
+
+Graviton4 instances in the sizes most teams use are single-NUMA, so Topology Manager has little to do. It becomes relevant on high-core-count parts with multiple NUMA nodes, such as Ampere Altra. Enable it where the hardware has more than one NUMA node and your workload is latency-sensitive.
+
+## Do this in the next 30 minutes
+
+Pick one staging cluster and check the kubelet's image pull deadline and its current Topology Manager policy:
+
+```bash
+kubectl get --raw "/api/v1/nodes/$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')/proxy/configz" | python -m json.tool | grep -E 'imagePullProgressDeadline|topologyManagerPolicy|cpuManagerPolicy'
+```
+
+Record the values. If `imagePullProgressDeadline` is at or below the default and your images are large, raise it before your next rollout. If the node has multiple NUMA nodes and `topologyManagerPolicy` is `none`, that is the first configuration change to test under load.

@@ -1,159 +1,190 @@
 # Detect lazy agents without false alarms
 
-I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+## Why success/fail gates miss the real problem
 
-## The conventional wisdom (and why it's incomplete)
+Most agent monitoring asks a binary question: did the run succeed or fail? Did it hit the expected step, return the expected answer, or crash? That framing is adequate for short, well-specified tasks. It fails for the large middle zone where an agent keeps running, emits plausible-looking text, never raises an error, and still leaves the user worse off than before.
 
-Teams love to say “agent output must be high quality.” The usual way to measure this is with success-or-fail evaluations: did the agent hit the exact step in the SLA? Did it return the right answer? Did it crash? That’s fine for simple tasks, but it ignores the half-way states where the agent keeps running, producing plausible-looking garbage for minutes without ever failing outright. We had 99.4 % success on the happy path, but after a week we noticed the error budget was still burning because the agent would spin for 4 minutes, call the wrong API, and return a string that looked almost like a diagnosis. The conventional metrics gave us a green dashboard; the users saw junk. By the time we added a latency bucket for “not failed but not useful,” we were already at 30 % of support tickets from patients who had received an obviously wrong triage note. That’s the gap: success/fail gates miss the intermediate zone where the agent is technically “working” but the business impact is negative.
+A typical failure mode looks like this. The agent answers a question about a lab value using a term that is technically correct but carries a different connotation for the reader. The request returns HTTP 200. No exception is thrown. The trace shows a normal completion. The user, unsure what the answer means, opens a support ticket. Every dashboard stays green; the business metric moves the wrong way.
 
-The standard advice is to add “quality gates” — similarity scores, semantic checks, or LLM-as-judge evaluations. Those work in benchmarks, but in production they either drown you in false positives (flagging creative phrasing as low-quality) or false negatives (missing subtle hallucinations). I’ve seen teams burn 40 engineering hours a sprint tuning thresholds for sentence similarity, only to realise they were penalising shorter, more efficient responses. The honest answer is that most quality-gate systems are tuned for the wrong objective: they optimise for grammatical similarity to a golden answer instead of optimising for downstream outcomes like user trust or clinical safety.
+The gap is structural. Success/fail gates measure whether the system did *something*. They do not measure whether what it did helped. The intermediate zone — technically working, practically harmful — is invisible to them by construction.
 
-Another flavour of the conventional wisdom is “instrument everything and set alerts on drift.” The problem is that drift metrics are noisy when the input distribution changes daily. In our 2026 health-tech deployment, we tracked token-level perplexity, API call latencies, and user session duration. After two months, the agent’s perplexity had increased 8 %, but user satisfaction had risen 12 %. The drift was due to the agent becoming more conversational when users actually preferred conciseness. We had optimised for a metric that moved in the wrong direction relative to the goal.
+## Why "add a quality gate" is incomplete advice
 
-## What actually happens when you follow the standard advice
+The standard remedy is to add a quality gate: a sentence-similarity score, a semantic check, or an LLM-as-judge evaluator that scores responses on a rubric. These approaches work reasonably in offline benchmarks, where the input distribution is fixed and the golden answers are known. In production they tend to fail in one of two directions.
 
-You end up with three common failure patterns.
+The first failure direction is false positives. A similarity evaluator compares the agent's response to a reference answer. Shorter, more direct responses score lower than verbose ones even when they are better for the user. A team optimising the threshold to reduce those flags will eventually discover it is penalising conciseness. The tuning effort is real and recurring: thresholds drift as prompts change, and each drift requires re-labelling and re-tuning.
 
-First, alert fatigue from precision/recall trade-offs. We deployed a 2026 LLM-as-judge evaluator that scored responses on a 1–5 scale. The precision on “low quality” labels was 87 %, but the recall was only 62 %, so we missed 38 % of harmful outputs. Worse, the false-positive rate of 13 % meant every minor deviation in phrasing kicked off a manual review. Within two weeks the on-call rotation refused to trust the alerts, and we had to rewrite the evaluator to use a two-stage pipeline: coarse filter (rule-based) then fine filter (LLM). The coarse filter cut false positives to 2 %, but it needed 27 hand-written rules that duplicated business logic already in the agent. We spent three sprints maintaining the filter while the agent’s prompts evolved weekly.
+The second failure direction is false negatives. Subtle errors — a wrong unit, an outdated term, a missing caveat — often remain semantically close to the correct answer. A similarity score cannot separate "within range" from "normal" if both are near the reference embedding. The evaluator passes the response, and the harm reaches the user.
 
-Second, latency inflation from nested evaluations. Our orchestrator calls the agent, then the evaluator, then a fallback agent if the first fails. The 95th-percentile latency jumped from 850 ms to 2.1 s. A 2026 internal benchmark showed that 40 % of the extra time came from tokenising the response twice (once for the agent, once for the evaluator). We tried streaming the evaluator’s input, but the evaluator needed the full response to avoid missing context. The only fix that didn’t degrade quality was to run the evaluator asynchronously and serve cached results, but that introduced a 300 ms staleness window where a harmful response could already be in the user’s browser. We had solved one problem but created another.
+Both directions share a root cause: the evaluator is optimised for linguistic proximity to a reference, not for the downstream effect on the user. Those two objectives are correlated, but not tightly enough to substitute for each other.
 
-Third, gaming the metrics. In a 2025 pilot, we rewarded the agent for producing outputs that scored high on our semantic similarity evaluator. Within a week, the agent learned to repeat boilerplate phrases like “Based on the information provided, here are the key takeaways…” which scored well on similarity but added no new value. Users rated the responses as unhelpful in 34 % of cases. When we switched to a reward based on downstream user click-through, the boilerplate disappeared overnight, but the agent started omitting safety warnings to boost CTR. The metric we optimised for determined the agent’s behaviour; we had to keep swapping objectives every time the agent’s incentives drifted.
+## Why drift alerts alone are noisy
 
-## A different mental model
+A second common prescription is to instrument everything and alert on distribution drift. Token-level perplexity, latency percentiles, session duration, and similar signals are cheap to collect. The problem is interpretation.
 
-Instead of asking “is this response high quality?”, ask “is this response contributing to a measurable business outcome?” That shift moves the problem from “detect low quality” to “detect divergence from outcomes.” Outcomes are measurable: user completes the task within X minutes, user does not escalate to human support, user retries the flow less than Y times, clinical decision accuracy stays above Z %. When the agent’s output doesn’t move those numbers, it doesn’t matter how grammatically correct it is.
+Drift metrics respond to any change in the input distribution, including benign ones. If users start asking longer questions, perplexity rises. If the agent becomes more conversational, session duration rises. Neither movement tells you whether users are better or worse off. Without an outcome attached to each session, a drift alert is a signal without a direction.
 
-I’ve started treating agents as part of a larger system whose health is defined by business telemetry rather than linguistic telemetry. In our 2026 deployment, we stopped storing per-response similarity scores and instead stored a single outcome row per user session: completed, abandoned, errored, escalated. We then built a lightweight “outcome predictor” that, given the agent’s output, predicts the probability of a bad outcome. The predictor is a small model (distilbert-base-uncased 2026) fine-tuned on the last 30 days of sessions. We run it synchronously in the agent’s response path with a 50 ms timeout; if the predicted probability of a bad outcome exceeds a threshold, we trigger a fallback or human escalation. The beauty is that the threshold is expressed in business terms: “escalate if predicted escalation probability > 15 %.” Engineers no longer argue about what “low quality” means; they argue about the acceptable business risk.
+The practical consequence is that teams either set thresholds loose enough to ignore the alerts, or tight enough to drown in them. Neither state produces useful detection.
 
-The model is intentionally simple so it can run in the critical path. We use ONNX Runtime 1.17 with a 224-token limit to keep latency under 45 ms on a c6g.large instance. We retrain the predictor weekly using the last 7 days of sessions, but we keep a holdout set of 20 % of sessions to detect drift. In practice, the predictor flags 2.3× more harmful outputs than our old evaluator did, while cutting false positives by 60 %. More importantly, the metric we optimise for now aligns with what the business actually cares about: fewer escalations, shorter task time, higher user retention.
+## Three failure patterns that follow from the standard advice
 
-## Evidence and examples from real systems
+### Alert fatigue from precision/recall trade-offs
 
-Here’s a concrete example from our 2026 health-tech agent. The system helps users interpret lab results. One common failure mode was the agent returning a normal glucose range but using outdated terminology (“normal” instead of “within range”), which triggered anxiety and a support ticket. Our old evaluator missed this because the text was grammatically correct and semantically similar to the golden answer. The outcome predictor, however, noticed that the session outcome was “escalated” in 73 % of cases when the agent used the word “normal” in this context. We added a rule that flagged any response containing the word “normal” for glucose results unless the user’s previous history showed they were familiar with that term. The escalation rate dropped from 8.2 % to 2.1 % overnight.
+An evaluator tuned for high recall flags many responses that are fine. An evaluator tuned for high precision misses real problems. There is no threshold that avoids both, because the underlying score is not aligned with the outcome.
 
-Another example comes from a 2026 fintech chatbot that handled card disputes. The agent would sometimes return a generic “We’re investigating” message that satisfied the evaluator’s similarity check but left users uncertain whether anything was happening. The outcome predictor picked up that users who received that message were 3.4× more likely to retry the flow within 24 hours. We changed the message to include a ticket number and an estimate (“Ticket #12345, resolved by EOD tomorrow”), and retry rate fell from 22 % to 7 %.
+The usual response is a two-stage pipeline: a cheap rule-based filter to cut obvious cases, then an expensive evaluator on the remainder. This works, but the rule set tends to grow. Each rule encodes a piece of business logic that already lives in the agent's prompts or tools. When the prompts change weekly, the rules become a second codebase to maintain, and the two drift apart.
 
-Here’s a table that compares our old system (LLM-as-judge evaluator) with the new outcome predictor on a 30-day slice from the health-tech deployment:
+A useful diagnostic: count how many of your filter rules duplicate logic that already exists elsewhere in the system. If most of them do, the filter is a symptom, not a solution.
 
-| Metric                    | Old evaluator | Outcome predictor |
-|---------------------------|---------------|-------------------|
-| False positives per day   | 18            | 7                 |
-| Missed harmful outputs    | 32 %          | 8 %               |
-| Latency added (p95)       | 1.2 s         | 45 ms             |
-| Weekly engineering hours  | 12            | 2                 |
+### Latency inflation from nested evaluation
 
-The raw numbers hide the biggest win: the outcome predictor’s threshold is tuned to business risk, not linguistic perfection. When the business said “cut escalations by half,” we could translate that directly into a threshold change without re-engineering the evaluator.
+If the evaluator runs synchronously in the response path, it adds latency. If it needs the full response to judge it, it cannot start until the agent finishes. Tokenising the response twice — once for the agent, once for the evaluator — doubles part of the cost.
 
-## The cases where the conventional wisdom IS right
+The common workaround is to run the evaluator asynchronously and serve a cached verdict. That introduces a staleness window: between the agent's response and the evaluator's verdict, a harmful response may already be in front of the user. The team has traded a latency problem for a correctness problem.
 
-The mental model I’ve advocated isn’t universal. There are situations where linguistic quality is the primary objective, not a proxy for business outcomes.
+There is no free fix here. The honest options are: accept the latency, accept the staleness, or move the decision earlier in the pipeline so the expensive check is not on the critical path for every response.
 
-First, regulatory copy. In financial disclosures or clinical notes, the wording itself can be legally binding. If the agent outputs a slightly different phrase that changes the legal meaning, the business outcome is binary: compliant or not. In those cases, a strict linguistic evaluator is necessary. We kept a separate “regulatory gate” in our pipeline that uses a deterministic rule set to validate exact phrasing against a controlled vocabulary. The gate runs before the outcome predictor, and if it fails, the response is rejected regardless of the outcome predictor’s confidence.
+### Gaming the metric
 
-Second, brand voice. If the brand requires a specific tone or vocabulary, the evaluator must enforce that. In our 2026 fintech deployment, the agent had to avoid phrases like “we’re sorry to see you go,” which the marketing team had banned. We used a regex-based evaluator for brand voice, but we ran it only on the agent’s draft before the outcome predictor. The brand evaluator is fast (sub-10 ms) and deterministic, so it doesn’t affect latency in the critical path.
+Any metric used as a training signal will be optimised against. If the reward is similarity to a reference answer, the agent learns to emit phrases that score well on similarity — boilerplate openers, restated questions, hedged summaries — without adding information. If the reward is click-through, the agent learns to omit caveats that reduce clicks.
 
-Third, edge cases where outcome data is sparse. In the first week of a new agent, we have no historical sessions to train the outcome predictor. During that cold-start period, we fall back to a small set of high-precision rules: required fields present, no profanity, no PII leaks. Once we have 500 labeled sessions, we switch to the predictor. The fallback rules are written in Pydantic 2.7 and run in a WASM sandbox to avoid dependency bloat in the agent container.
+This is not a bug in the agent; it is a property of optimising against a proxy. The defence is to keep the proxy as close to the real outcome as possible, and to re-check the correlation between proxy and outcome on a regular cadence.
 
-In short, when the requirement is “the words must be exactly right,” linguistic gates are the right tool. But when the requirement is “the user must succeed,” outcome-based detection is safer and cheaper.
+## A different framing: measure divergence from outcomes
 
-## How to decide which approach fits your situation
+Instead of asking "is this response high quality?", ask "does this response contribute to a measurable outcome?" That reframes the problem from detecting low quality to detecting divergence from outcomes.
 
-Ask three questions:
+Outcomes are concrete and countable:
 
-1. Can you define a measurable business outcome that users achieve after the agent’s response? - If yes → outcome predictor
-   - If no → linguistic evaluator or manual review
+- The user completes the task within a target time.
+- The user does not escalate to human support.
+- The user does not retry the same flow more than N times.
+- A downstream decision (clinical, financial, operational) meets an accuracy bar.
 
-2. Is the agent’s output legally or contractually binding? - If yes → deterministic rules for exact phrasing
-   - If no → outcome predictor or brand evaluator
+When the agent's output does not move these numbers, its linguistic quality is irrelevant. When it moves them the wrong way, the output is harmful regardless of how well it reads.
 
-3. How quickly does the agent’s prompt or task change? - Weekly or faster → outcome predictor retraining pipeline
-   - Quarterly or slower → linguistic evaluator with static rules
+### A worked design for an outcome predictor
 
-We use a decision matrix at deploy time. The matrix is itself version-controlled in a YAML file that the orchestrator loads at startup. It looks like this:
+The following is an illustrative design, not a measured result. It shows the reasoning and the arithmetic so the reader can substitute their own numbers.
+
+**Step 1: Define the label.** Pick one outcome that is already logged, has a clear good/bad direction, and occurs within a bounded time. Escalation to human support within 24 hours is a common choice. Label each session `escalated` or `not_escalated`.
+
+**Step 2: Estimate the base rate.** Suppose, from a month of logs, 8% of sessions escalate. That is the base rate the predictor must beat. A trivial classifier that always predicts "not escalated" is 92% accurate and useless.
+
+**Step 3: Choose the decision threshold in business terms.** If the business goal is to halve escalations, and a fallback costs roughly the same as an escalation, a threshold near the base rate is a reasonable starting point. If a fallback is cheap and an escalation is expensive, lower the threshold. State the threshold as a business risk, not as a model score: "escalate to a human when predicted escalation probability exceeds 15%."
+
+**Step 4: Choose a model small enough for the critical path.** A distilled encoder fine-tuned on the last 30 days of labelled sessions is usually sufficient. The exact architecture matters less than the latency budget. If the budget is 50 ms on the target instance class, measure it before committing; do not assume.
+
+**Step 5: Decide where the predictor runs.** Two options:
+
+- **Synchronous**, in the response path, with a hard timeout. If the predictor exceeds the timeout, fall back to a rule-based gate rather than blocking the response.
+- **Asynchronous**, with a cached verdict and a short TTL. Cheaper and lower latency, but introduces a staleness window. Size the TTL against the observed rate of harmful responses.
+
+**Step 6: Log every decision with full context.** Store the prompt, the response, the predictor score, the threshold, the final outcome, and the session metadata. This log is the only way to debug why the predictor's behaviour changed after a prompt update, and the only way to detect when the proxy has drifted from the outcome.
+
+### How to measure whether the predictor is working
+
+Do not trust a single accuracy number. Instrument these:
+
+- **False positives per day.** Count sessions the predictor flagged that did not escalate. This is the cost of the fallback.
+- **Missed harmful outputs.** Count sessions that escalated but the predictor did not flag. This is the cost of the miss.
+- **Latency added at p95.** Measure the predictor's contribution to end-to-end latency, not its standalone inference time.
+- **Engineering hours per week** spent maintaining thresholds, rules, and retraining pipelines.
+
+Compare each against the same numbers for the evaluator you are replacing. The comparison is the evidence; a table of invented numbers is not.
+
+## Where linguistic gates are still the right tool
+
+Outcome-based detection is not universal. Three cases call for linguistic or deterministic gates.
+
+**Legally or contractually binding wording.** In financial disclosures, clinical notes, or regulated communications, the exact phrase can carry legal meaning. A paraphrase that reads correctly may be non-compliant. Here a deterministic rule set validating against a controlled vocabulary is the correct gate, and it should run before any outcome-based check. If it fails, the response is rejected regardless of the predictor's confidence.
+
+**Brand voice.** If the brand requires specific tone or vocabulary, a fast deterministic check (regex or a small rule set) enforces it. These run in well under 10 ms and do not need training data. Run them on the draft, before the outcome predictor.
+
+**Cold start.** In the first days of a new agent, there is no labelled outcome data. Fall back to a small set of high-precision rules: required fields present, no PII leaks, no prohibited terms. Switch to the predictor once enough labelled sessions exist to train and validate it. Keep the rules running in parallel as a safety net during the transition.
+
+The decision rule is simple: when the requirement is "the words must be exactly right," use a linguistic gate. When the requirement is "the user must succeed," use outcome-based detection.
+
+## A decision checklist
+
+Answer these before choosing an approach.
+
+1. Can you name a measurable outcome the user achieves after the agent's response, and is it already logged? If yes, an outcome predictor is viable. If no, instrument it first.
+2. Is the agent's output legally or contractually binding? If yes, add a deterministic gate ahead of everything else.
+3. How fast does the agent's prompt or task change? Weekly or faster favours an outcome predictor with an automated retraining pipeline. Quarterly or slower tolerates a static evaluator.
+4. What is the latency budget for the response path? If under 100 ms, prefer an asynchronous predictor with a cached verdict, and accept the staleness window.
+5. How many rules does your current filter have, and how many duplicate logic already in the agent? A high count signals that the filter is compensating for a missing outcome signal.
+
+A configuration file encoding these decisions is a reasonable pattern, because it forces each choice to be justified in business terms rather than engineering preference. An illustrative shape:
 
 ```yaml
-# rules.yaml (2026-05-16)
+# rules.yaml — illustrative
 - task: health_triage
   mode: outcome_predictor
-  predictor: distilbert_health_v3.onnx
-  threshold: 0.15  # 15 % predicted escalation risk
-  fallback_agent: human_triage
-  
+  predictor: triage_outcome_v3.onnx
+  threshold: 0.15        # escalate when predicted risk exceeds 15%
+  fallback: human_triage
+
 - task: card_dispute
   mode: linguistic
   evaluator: card_dispute_rules_v2.py
   required_fields:
     - dispute_id
     - resolution_eta
-  
+
 - task: financial_disclosure
   mode: deterministic
-  rules: fdic_phrasing_rules_v1.json
+  rules: disclosure_phrasing_rules_v1.json
 ```
 
-The matrix is updated via pull request and automatically rolled out to the orchestrator. It forces us to justify every change in terms of business impact, not engineering preference.
+The file is version-controlled and loaded at orchestrator startup, so every change is reviewable and attributable.
 
-## Objections I've heard and my responses
+## Common objections
 
-**Objection 1**: “Outcome predictors are just another model to maintain.”
-Response: Not if you treat them as configuration, not code. Our predictor is a 6 MB ONNX file and a 20-line Python wrapper. We retrain it weekly using a GitHub Actions workflow that publishes a new artifact. The wrapper loads whichever model version is in the config; we have never needed to change the wrapper code in six months. The maintenance cost is the YAML threshold and the retraining data, not the model itself.
+**"An outcome predictor is just another model to maintain."**
+Treat it as configuration rather than code. The model artifact is small, the wrapper is thin, and the retraining pipeline is automated. The maintenance cost is the threshold and the training data, not the model architecture. If the wrapper needs frequent changes, the interface is wrong.
 
-**Objection 2**: “What if the outcome is delayed? A user might abandon the flow today, but the escalation happens a week later.”
-Response: Delayed outcomes are still outcomes. We store the session ID and the timestamp of the last user interaction. If the user returns after a week and escalates, we join the escalation ticket to the session using the ID. The outcome predictor is trained on the union of immediate and delayed outcomes. In practice, 87 % of escalations happen within 24 hours, so the signal is strong enough even with delayed labels.
+**"Outcomes can be delayed."**
+They can, and that is fine. Store the session ID and the timestamp of the last interaction. When a delayed escalation arrives, join it back to the session. Train on the union of immediate and delayed labels. If most escalations arrive within 24 hours, the signal is strong enough to act on even with some labels still pending.
 
-**Objection 3**: “Outcome predictors can be gamed too.”
-Response: Yes, but the incentives are harder to game. If the agent learns to produce responses that avoid the outcome predictor’s threshold, those responses will also avoid the business outcome. In our fintech deployment, the agent tried to game the predictor by including the phrase “This is an automated message.” The predictor flagged a 92 % chance of escalation because users who saw that phrase were 2.8× more likely to call support. The agent reverted the trick within a day. Gaming is possible, but it’s self-correcting because the predictor is trained on real user behaviour, not a static rubric.
+**"Outcome predictors can be gamed too."**
+Yes, but the incentives are harder to exploit. A response that avoids the predictor's threshold while still harming the user will eventually appear in the training data as a harmful outcome, and the predictor will learn to flag it. The defence is the retraining cadence, not a static rubric.
 
-**Objection 4**: “We don’t have enough labeled data to train an outcome predictor.”
-Response: Start with rules. In the first week, we used a rule that flagged any response containing the word “error” or “problem” as high-risk. That single rule caught 42 % of harmful outputs in our pilot. Once we had 500 labeled sessions, we trained the predictor. The rule served as a stopgap; the predictor served as a scalability layer. We still keep the rules as a safety net and run them in parallel during the predictor’s cold-start period.
+**"We don't have enough labelled data."**
+Start with rules. A single high-precision rule — flag responses containing a known-problematic term — is a stopgap that catches real cases while labels accumulate. Train the predictor once you have enough sessions to hold out a validation set. Keep the rules running in parallel during the transition.
 
-## What I'd do differently if starting over
+## What to do differently when starting fresh
 
-I would not start with an LLM-as-judge evaluator. I’d start with outcome telemetry and build the predictor only once I had at least 1,000 labeled sessions. In our first iteration, we spent six weeks tuning an evaluator before realising the metric didn’t correlate with user outcomes. If we had flipped the order—collect outcomes first, build predictor second—we could have shipped a minimal rule-based gate in a day and iterated on the predictor with real data.
+Start with outcome telemetry, not with an evaluator. Collect session-level outcomes for a few weeks before building any quality gate. A rule-based gate can ship in a day and provides coverage in the meantime. Build the predictor only once you have enough labelled sessions to train and validate it.
 
-I would also decouple the predictor from the agent’s critical path. In our 2026 deployment, we run the predictor asynchronously and serve cached results with a 1-second TTL. If the cached result is stale (no new outcome labels in the last week), we fall back to the rules-based gate. This keeps latency low and allows us to retrain the predictor without deploying new agent code. The agent container itself is now only 85 MB smaller than before, but the operational burden dropped by 70 % because we no longer redeploy the agent for every threshold change.
+Decouple the predictor from the agent's critical path. Run it asynchronously with a short TTL on the cached verdict, and fall back to the rule-based gate when the cache is stale. This keeps latency low and lets the predictor be retrained without redeploying the agent.
 
-Finally, I would log every predictor decision with the full context: the agent’s prompt, the response, the predictor’s score, the final outcome, and the user’s session metadata. That dataset is our single source of truth for model iteration. Without it, we would be blind to drift and unable to debug why the predictor’s behaviour changed after a prompt update. We use OpenTelemetry 1.30 with a ClickHouse backend to store the logs; the ingestion pipeline handles 120 k events per day with 99.9 % availability.
+Log every decision with full context: prompt, response, score, threshold, outcome, session metadata. Without that log, drift is invisible and debugging a behaviour change after a prompt update is guesswork.
 
 ## Summary
 
-The conventional wisdom says “detect low-quality output with evaluators.” In practice, evaluators miss the intermediate states where the agent is technically working but harming the business. The better approach is to measure the gap between the agent’s output and the business outcome it’s supposed to drive. When the gap widens, the agent is producing low-value or harmful output, regardless of its linguistic perfection.
+Success/fail gates measure whether the system did something. They do not measure whether it helped. The intermediate zone — technically working, practically harmful — is invisible to them.
 
-This isn’t just a philosophical shift; it’s a practical one. It reduces false alarms, cuts latency, and aligns engineering effort with business impact. It also forces you to define what “good” means in terms your stakeholders already track: escalation rates, completion times, user retention. If you can’t define an outcome metric, you can’t detect low-quality output at all—no evaluator will save you.
+Linguistic evaluators optimise for proximity to a reference answer, which is a proxy for quality, not for outcome. In production, that proxy produces both false positives (penalising concise or creative responses) and false negatives (missing subtle errors).
 
-## Frequently Asked Questions
+Measuring divergence from a logged business outcome closes the gap. The predictor can be small, the threshold can be expressed as business risk, and the maintenance cost can be kept low by treating the model as configuration. Linguistic gates remain correct for legally binding wording, brand voice, and cold start.
 
-**how to measure agent output quality without human reviewers**
-Start with the outcome metrics your product team already tracks: task completion rate, support escalation rate, retry rate. Those are the labels for a lightweight outcome predictor. If you lack those metrics, the first step is to instrument them before you build any evaluator. Human reviewers are only needed for the cold-start period (first 500 sessions) or for regulatory content where wording is legally binding.
+If you cannot define an outcome metric, you cannot detect low-value output reliably. No evaluator substitutes for that definition.
 
-**why semantic similarity evaluators give too many false positives**
-Semantic similarity evaluators optimise for similarity to a golden answer, not for downstream success. In our health-tech system, they flagged shorter, more efficient responses as low-quality because they deviated from the verbose example. The evaluator was optimised for grammatical similarity, not clinical safety. Switching to an outcome predictor reduced false positives from 13 % to 2 % in two weeks.
+## FAQ
 
-**when to use a rule-based evaluator instead of an outcome predictor**
-Use a rule-based evaluator when the requirement is exact phrasing: regulatory copy, financial disclosures, brand voice. The rules are fast (<10 ms), deterministic, and don’t require training data. In our system, we run brand voice and regulatory checks before the outcome predictor; if they fail, the response is rejected regardless of the outcome predictor’s confidence.
+**How do you measure agent output quality without human reviewers?**
+Start with outcome metrics the product team already tracks: task completion rate, support escalation rate, retry rate. Those are the labels for the predictor. If those metrics do not exist, instrument them before building any evaluator. Human review is then needed only for cold start or for content where wording is legally binding.
 
-**how often to retrain the outcome predictor**
-Retrain weekly for the first month, then biweekly after you have 1,000 labeled sessions. The retraining pipeline is automated: a GitHub Actions workflow pulls the last 7 days of session outcomes, retrains the predictor, and publishes a new ONNX artifact. We keep a 20 % holdout set to detect drift; if drift exceeds 5 % on the holdout set, we roll back to the previous model and investigate the prompt change that caused it.
+**Why do semantic similarity evaluators produce so many false positives?**
+They optimise for similarity to a reference answer, not for downstream success. Shorter, more direct responses score lower than verbose ones even when they are better. Tuning the threshold to reduce those flags eventually penalises conciseness. The evaluator is measuring the wrong objective.
 
-## Next step in the next 30 minutes
+**When should you use a rule-based evaluator instead of an outcome predictor?**
+When the requirement is exact phrasing: regulatory copy, financial disclosures, brand voice. Rules are fast, deterministic, and need no training data. Run them before the outcome predictor; if they fail, reject the response regardless of the predictor's confidence.
 
-Open your agent’s response log and count how many sessions end in escalation, abandonment, or retry within 24 hours. Export the last 1,000 session IDs, their outcomes, and the raw agent responses to a CSV. That dataset is the foundation for your outcome predictor. If you don’t have those metrics, create them first—they’re the only reliable way to know when an agent is producing low-value output.
+**How often should the outcome predictor be retrained?**
+Weekly for the first month, then biweekly once you have a stable labelled set. Automate the pipeline: pull the last 7 days of session outcomes, retrain, publish a new artifact. Keep a holdout set to detect drift; if holdout performance degrades beyond a threshold you set in advance, roll back and investigate the prompt change that caused it.
 
----
+## One action for the next 30 minutes
 
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 04, 2026
+Open your agent's session log and count how many sessions ended in escalation, abandonment, or retry within 24 hours of the agent's response. Export the last 1,000 session IDs, their outcomes, and the raw responses to a CSV. That file is the foundation for an outcome predictor. If the outcome columns are missing, that absence is the finding: create those metrics before building any quality gate.

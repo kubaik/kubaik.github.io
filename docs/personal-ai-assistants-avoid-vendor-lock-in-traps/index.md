@@ -1,46 +1,46 @@
 # Personal AI assistants: avoid vendor lock-in traps
 
-The official documentation for building personal is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.
+The documentation for building a personal AI assistant usually covers the happy path: one model call, a few function hooks, a working demo. What it rarely covers is what happens months later, when the edge cases appear and the quickest integration has quietly become the hardest thing to replace. This article is about closing that gap.
 
 ## The gap between what the docs say and what production needs
 
-When I first started building personal AI assistants for dev workflows in 2026, I assumed a simple setup: one LLM call, a few function hooks, and done. The docs promised 200ms response times with a single API key. Reality hit on day three — our staging environment started timing out at 3.2s per assistant call, with CPU throttling on the 4 vCPU instance we’d picked based on the quickstart guide. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+A first prototype of a personal AI assistant for developer workflows often looks trivial: one LLM call, a few function hooks, done. Marketing pages for hosted APIs tend to quote optimistic latency figures, assuming a warm model, a single call, and no failures.
 
-The disconnect between marketing copy and production reality isn’t unique to AI. It shows up in three predictable places:
+The disconnect between demo conditions and production conditions shows up in three predictable places.
 
-1. **Latency budget delusion**: Most docs quote latency numbers that assume cold-start-free, single-model, no-failure scenarios. Real assistants chain 4–7 tools (lint, search, codegen, test, diff), each with its own 95th-percentile P99 latency. If you budget 200ms per model call and chain seven, you’re already at 1.4s before network hops, retries, or tool execution time.
+1. **Latency budget delusion**: Published latency numbers typically assume cold-start-free, single-model, no-failure scenarios. A real assistant chains several tools — lint, search, codegen, test, diff — and each has its own tail latency. If a single model call is budgeted at 200ms and seven calls are chained, that is already 1.4s before network hops, retries, or tool execution time. The arithmetic is simple and worth doing on paper before writing code: sum the P95 of every hop, add retry probability times retry cost, and compare that to your target.
 
-2. **Tooling sprawl**: The docs list one or two integration libraries. Production teams end up wiring together half a dozen: an embeddings store (pgvector 0.7.4), a code search engine (OpenSearch 2.11), a caching layer (Redis 7.2), a secrets backend (Vault 1.16), and a task queue (Celery 5.3 with Redis). Each adds latency variance, version drift, and dependency conflicts.
+2. **Tooling sprawl**: Docs usually list one or two integration libraries. Production teams end up wiring together many more: an embeddings store, a code search engine, a caching layer, a secrets backend, and a task queue. Each adds latency variance, version drift, and dependency conflicts. The sprawl is not inherently bad; the problem is when these components are glued together with vendor-specific SDKs instead of narrow contracts, so replacing one requires touching all of them.
 
-3. **Vendor lock-in by convenience**: The quickest path to a working assistant is often the vendor’s SDK — but that SDK wires you into their prompt format, embedding model, and billing model. Switching later means rewriting prompts, retraining embeddings, and re-architecting tooling. I learned this when our legal team flagged that the vendor’s embedding model wasn’t GDPR-compliant. Migrating our 47GB vector store took two weeks and a data residency audit.
+3. **Vendor lock-in by convenience**: The quickest path to a working assistant is often the vendor's SDK, but that SDK wires the prompt format, the embedding model, and the billing model into your code. Switching later means rewriting prompts, re-embedding the corpus, and re-architecting tooling. The lock-in is rarely a single dependency; it is the accumulated assumption that the vendor's shape is your shape.
 
-The pattern is simple: docs optimize for the happy path; production optimizes for failure, latency, and cost. The only reliable way to bridge that gap is to design the assistant like a distributed system from day one — even if it starts as a single function.
+The pattern is consistent: docs optimize for the happy path; production optimizes for failure, latency, and cost. The reliable way to bridge that gap is to design the assistant like a small distributed system from day one — even if it starts as a single function.
 
-## How Building personal AI assistants for developer workflows without vendor lock-in actually works under the hood
+## How a lock-in-resistant assistant works under the hood
 
-A vendor-lock-in-free assistant is a graph of small, stateless services wired together with open protocols. Each node owns one responsibility: embed, search, lint, diff, commit, test, or notify. The edges use JSON over HTTP or gRPC with strict schema contracts. This isn’t a new idea — it’s the Unix philosophy applied to AI workflows.
+A vendor-lock-in-resistant assistant is a graph of small, mostly stateless services wired together with open protocols. Each node owns one responsibility: embed, search, lint, diff, commit, test, or notify. The edges use JSON over HTTP or gRPC with strict schema contracts. This is the Unix philosophy applied to AI workflows.
 
-Under the hood, the system looks like this:
+Under the hood, the system has these parts:
 
-- **Embedding service**: Takes code or text, chunks it (128-token blocks), and produces embeddings using a local model (sentence-transformers 2.2.2) or a self-hosted API (vLLM 0.4.0 on a single A10G GPU). No external vendor embeddings, no API key sprawl.
+- **Embedding service**: Takes code or text, chunks it, and produces embeddings using a local model (for example, a sentence-transformers model) or a self-hosted inference server. No external vendor embeddings, no API key sprawl.
 
-- **Search service**: Uses OpenSearch 2.11 with a custom similarity function tuned for code. The index keeps both embeddings and metadata (file path, language, last commit hash).
+- **Search service**: A vector or hybrid search engine holding both embeddings and metadata (file path, language, last commit hash). The choice of engine matters less than the fact that it is queried through your own client interface, not the vendor's.
 
-- **Tooling layer**: Each tool is a tiny service. A linter service runs pylint 3.1.2 or eslint 9.3.0 in a container with a 500MB memory limit. A diff service computes git diffs and applies them in-memory without touching disk. A commit service signs commits with Sigstore cosign 2.2.1 and pushes to GitHub via the REST API.
+- **Tooling layer**: Each tool is a small service. A linter service runs a linter in a container with a memory limit. A diff service computes git diffs and applies them in-memory. A commit service signs commits with a keyless signing tool and pushes via a forge's REST API.
 
-- **Orchestrator**: A lightweight coordinator (FastAPI 0.109) that fans out assistant requests to the right tools, aggregates results, and streams back to the user. It owns the prompt template, retries with exponential backoff, and enforces rate limits.
+- **Orchestrator**: A lightweight coordinator that fans out assistant requests to the right tools, aggregates results, and streams back to the user. It owns the prompt template, retries with exponential backoff, and enforces rate limits.
 
-- **Cache and state**: Redis 7.2 sits in front of every service for caching, rate limiting, and distributed locks. We use Redis Streams for task queues and pub/sub for tool notifications. No third-party SaaS queues.
+- **Cache and state**: A Redis instance in front of every service for caching, rate limiting, and distributed locks. Redis Streams can serve as task queues and pub/sub for tool notifications, avoiding a third-party SaaS queue.
 
-The key insight: every service is replaceable. Swap vLLM for Ollama 0.1.13 locally? Change one container tag. Swap OpenSearch for Qdrant 1.8.0? Update the search client and re-index. No SDK rewrites, no prompt migrations.
+The key property is replaceability. To swap the local inference server for another, change one container tag. To swap the search engine, update the search client and re-index. No SDK rewrites, no prompt migrations.
 
 ## Step-by-step implementation with real code
 
-Here’s how we built a personal code assistant that answers questions like “What changed in the auth module since last week?” without touching a single vendor API.
+The following builds a personal code assistant that answers questions like "What changed in the auth module since last week?" without touching a vendor API.
 
 ### 1. Define the assistant schema
 
-We use JSON Schema to enforce contract boundaries. The assistant accepts a user query and returns a list of tool calls and a final answer.
+Use JSON Schema to enforce contract boundaries. The assistant accepts a user query and returns a list of tool calls and a final answer.
 
 ```json
 {
@@ -67,7 +67,7 @@ We use JSON Schema to enforce contract boundaries. The assistant accepts a user 
 
 ### 2. Split the query
 
-We use a lightweight router written in Python 3.11 that classifies the intent and fans out to the right tools.
+A lightweight router classifies the intent and fans out to the right tools. The example below uses keyword rules for clarity; a real router would use a small classifier or a model call, but the contract stays the same.
 
 ```python
 from fastapi import FastAPI, HTTPException
@@ -111,7 +111,7 @@ async def assistant(request: AssistantRequest):
                     "args": {"diff": diff_result}
                 }
             ],
-            "answer": "Here’s the diff since last week"
+            "answer": "Here's the diff since last week"
         }
 
     else:
@@ -120,7 +120,7 @@ async def assistant(request: AssistantRequest):
 
 ### 3. Self-hosted embeddings
 
-We run sentence-transformers 2.2.2 locally using ONNX for speed. The embedder runs in a Docker container with 2 vCPUs and 4GB RAM. We cache embeddings in Redis 7.2 with a TTL of 7 days to avoid recomputing.
+A local sentence-transformers model running on CPU is enough for many code retrieval tasks. Cache embeddings in Redis with a TTL to avoid recomputing.
 
 ```python
 from sentence_transformers import SentenceTransformer
@@ -140,13 +140,14 @@ async def embed(text: str) -> list[float]:
     return embedding
 ```
 
+Note that `hash(text)` is not stable across processes in Python by default; use a deterministic digest such as `hashlib.sha256(text.encode()).hexdigest()` for a cache key that survives restarts and works across workers.
+
 ### 4. Distributed search with OpenSearch
 
-We index code with metadata and use cosine similarity for retrieval. The search service is a FastAPI endpoint that returns file paths and line numbers.
+Index code with metadata and retrieve by keyword or vector similarity. The search service is an endpoint that returns file paths and line numbers.
 
 ```python
 from opensearchpy import AsyncOpenSearch
-from opensearchpy.helpers import async_streaming_bulk
 
 client = AsyncOpenSearch(
     hosts=[{"host": "localhost", "port": 9200}],
@@ -173,10 +174,9 @@ async def search_code(query: str, limit=5):
 
 ### 5. Tool isolation with containers
 
-Each tool runs in its own container with a memory limit and a health check. We use Docker Compose to wire them together. Here’s the lint service:
+Each tool runs in its own container with a memory limit and a health check. Docker Compose wires them together.
 
 ```yaml
-title: lint-service
 services:
   lint:
     image: python:3.11-slim
@@ -195,10 +195,10 @@ services:
 
 ### 6. Orchestrator with retries and rate limits
 
-The orchestrator uses a semaphore for rate limiting and retries tools with exponential backoff. We use Redis for distributed locks to prevent duplicate tool runs.
+The orchestrator uses a semaphore for rate limiting and retries tools with exponential backoff. Redis provides distributed locks to prevent duplicate tool runs.
 
 ```python
-import asyncio
+import httpx
 import backoff
 from redis.asyncio import Redis
 
@@ -220,7 +220,7 @@ async def run_tool(tool_name: str, args: dict):
 
 ### 7. Streaming responses back to the user
 
-We stream the assistant’s response as markdown using Server-Sent Events (SSE) so users can see partial results. The client reconnects if the stream breaks.
+Stream the assistant's response as markdown using Server-Sent Events (SSE) so users see partial results.
 
 ```python
 from fastapi.responses import StreamingResponse
@@ -238,9 +238,9 @@ async def stream_response(query: str):
     return StreamingResponse(generate(), media_type="text/event-stream")
 ```
 
-### 8. Local development with Tilt
+### 8. Local development with a watch-and-rebuild tool
 
-We use Tilt 0.35 to spin up the entire stack with one command. Tilt watches for file changes and rebuilds services automatically. No need for ngrok or cloud tunnels during development.
+Local development stacks benefit from a tool that watches files and rebuilds services automatically, so the whole graph runs locally without cloud tunnels. Any equivalent watch mode works; the point is to keep the local topology close to production.
 
 ```yaml
 apiVersion: tilt.dev/v1alpha1
@@ -259,140 +259,105 @@ deploy:
           image: lint-service
 ```
 
-## Performance numbers from a live system
+## How to measure performance instead of trusting a table
 
-We’ve run this system in production for 6 months with 87 active developers. Here are the numbers we track daily:
+Benchmark tables from other people's systems are not evidence about yours. Latency depends on your repository size, your chunking, your cache hit rate, and the hardware you actually run on. The honest approach is to instrument and measure.
 
-| Metric                     | P50  | P95  | P99  | Notes                                  |
-|----------------------------|------|------|------|----------------------------------------|
-| Assistant response time    | 450ms| 1.2s | 2.8s | Includes tool chaining and retries     |
-| Tool latency (lint)        | 180ms| 320ms| 600ms| 512MB container, pylint 3.1.2          |
-| Tool latency (diff)        | 30ms | 80ms | 210ms| In-memory diff, no disk I/O            |
-| Embedding latency          | 12ms | 25ms | 45ms | ONNX, all-MiniLM-L6-v2, CPU only        |
-| Search latency             | 20ms | 45ms | 95ms | OpenSearch 2.11, 5 shards              |
-| Memory per assistant       | 220MB| 410MB| 780MB| Includes orchestrator and tool caches  |
-| Cost per 1000 assistant calls | $0.12 | —    | —    | AWS t4g.xlarge (4 vCPU, 16GB)        |
+What to instrument, per request:
 
-The biggest surprise was the diff service. I expected it to be the fastest tool because diffing is a simple algorithm. In practice, git diffs on large repos (50k+ files) hit worst-case O(n) time and can spike to 1.2s. We mitigated it by caching diffs in Redis for 5 minutes and returning stale diffs when the repo is large.
+- Total wall-clock time, split into time in the orchestrator, time in each tool call, and time in the model or embedder.
+- Cache hit and miss counts for embeddings and search.
+- Retry counts and the reason for each retry.
+- Peak resident memory of the orchestrator process.
 
-Another surprise was the embedding cache. We initially set a 1-day TTL, but code rarely changes daily. Bumping to 7 days cut embedding CPU usage by 42% and reduced latency variance by 30%. The cache hit rate jumped from 68% to 89%.
+How to measure:
 
-Cost surprised us too. Our first cloud bill assumed 1000 assistant calls per day at $0.08 per call. Reality: we hit 8000 calls/day on heavy days, but our self-hosted stack cost $0.12 per 1000 calls — a 98% reduction compared to vendor assistants at $5.60 per 1000 calls.
+- For an HTTP endpoint, `curl -w "%{time_total}\n" -o /dev/null <url>` repeated at least 20 times gives you a rough distribution. Report the median and the 95th percentile, not just the average.
+- For in-process functions, wrap them with a timing decorator and log to a structured sink; then aggregate with a query rather than eyeballing logs.
+- For memory, sample `ps` or a process metrics exporter every few seconds over a full working day, including after the assistant has been idle overnight.
 
-## The failure modes nobody warns you about
+What to compare: measure the same query set before and after each change. A change that improves the median but worsens the tail is often a regression for interactive tools.
 
-1. **Prompt drift with tool changes**: When we swapped vLLM for Ollama, the prompt template broke because Ollama returns slightly different JSON formatting. We spent two days debugging why the orchestrator got malformed responses. Lesson: pin tool output schemas in the contract.
+## The failure modes worth planning for
 
-2. **Cache stampede on cold starts**: After a weekend, 20 developers hit “refresh” at the same time. The embedding service got hammered, and latency spiked to 4.2s. We added a request coalescing layer in Redis using Redlock — now only one request per cache key runs at a time.
+1. **Prompt drift with tool changes**: Swapping one model server for another can change JSON formatting slightly, and an orchestrator that assumes a specific shape will receive malformed responses. Pin tool output schemas in the contract and validate every response against them before use.
 
-3. **Tool version drift across repos**: Some teams run Python 3.10, others 3.12. The lint service worked locally but failed in CI because of a missing dependency. We pinned every tool’s runtime in a container and added a pre-flight health check that fails the assistant if any tool is unhealthy.
+2. **Cache stampede on cold starts**: After a quiet period, many users may hit the same uncached key at once. Without request coalescing, the embedder or search service gets hammered. A single-flight layer keyed by cache key ensures only one request computes each value while others wait.
 
-4. **State explosion in Redis**: We used a single Redis instance for locks, caches, and queues. When we hit 10k+ keys, the instance memory ballooned to 8GB and started evicting keys. We split Redis into three instances: one for locks (low memory), one for caches (high memory), and one for queues (persistence). Latency dropped from 120ms to 15ms.
+3. **Tool version drift across repos**: If some services run one Python version and others another, a tool can work locally and fail in CI. Pin every tool's runtime in a container and add a pre-flight health check that fails the assistant early if any tool is unhealthy.
 
-5. **Memory leaks in long-running assistants**: The assistant orchestrator accumulated tool results in memory until it OOM’d after 8 hours. We added a 10MB cap on the result buffer and stream results instead of buffering them. The fix took 15 minutes but prevented daily crashes.
+4. **State explosion in one Redis instance**: Using a single Redis for locks, caches, and queues mixes workloads with very different memory and persistence needs. Splitting them is a common fix; measure before and after, because the improvement depends on your access patterns.
 
-6. **Network partitions during tool calls**: When the diff service’s container restarted, the orchestrator kept retrying with the same timeout, creating a thundering herd. We added circuit breakers using Redis-backed state — after 3 failures, the tool is marked unhealthy for 5 minutes.
+5. **Memory growth in long-running orchestrators**: An orchestrator that accumulates tool results in memory will eventually run out. Cap the result buffer and stream results instead of buffering them.
 
-## Tools and libraries worth your time
+6. **Network partitions during tool calls**: When a tool container restarts, an orchestrator that keeps retrying with the same timeout can create a thundering herd. Circuit breakers, backed by shared state, let the orchestrator mark a tool unhealthy for a short window after repeated failures.
 
-| Tool/Library          | Version | Use case                                  | Why it stands out                                                                          |
-|-----------------------|---------|-------------------------------------------|---------------------------------------------------------------------------------------------|
-| FastAPI               | 0.109   | Orchestrator and API gateway              | Async-first, OpenAPI-first, and tiny memory footprint. 30ms cold starts in production.    |
-| OpenSearch            | 2.11    | Vector and keyword search                 | Supports approximate nearest neighbor (ANN) with HNSW. No vendor lock-in for embeddings.    |
-| sentence-transformers | 2.2.2   | Local embeddings                          | ONNX runtime gives 3x speedup vs PyTorch on CPU.                                            |
-| vLLM                  | 0.4.0   | Local LLM serving                         | 24k token context window, supports FlashAttention. Self-hosted inference at 30 tokens/sec. |
-| Ollama                | 0.1.13  | Local LLM CLI                             | Simple API, supports multiple models, and runs on a single GPU or CPU.                     |
-| Redis                 | 7.2     | Caching, locks, queues                    | Streams, Redlock, and 100k ops/sec on a t4g.small. No cloud vendor needed.                 |
-| Docker                | 25.0.3  | Containerization                          | Build once, run anywhere. Tilt makes local dev seamless.                                    |
-| Tilt                  | 0.35    | Local Kubernetes-like dev                 | Watch mode rebuilds services on file change. No need for kubectl or helm in dev.            |
-| Sigstore/cosign       | 2.2.1   | Commit signing                            | Sign commits with keyless identity. No need for GPG keys or vendor signing services.        |
-| backoff               | 2.2.1   | Exponential backoff and retries           | 5 lines of code to add to any async function.                                               |
-| Pydantic              | 2.6     | Data validation and schema contracts      | Runtime type checking and OpenAPI schema generation.                                       |
+## Choosing components without locking yourself in
 
-What surprised me here was Ollama. I expected it to be a toy project, but it’s production-ready for small models like phi-3-mini. Teams using it cut their embedding costs to zero and gained offline capability.
+The table below compares categories of choice, not specific vendors. The decision that matters most is whether each component is reachable through your own interface.
 
-I was also surprised by how little we needed a message queue. Redis Streams handled our 8k/day task volume with zero tuning. We avoided Kafka’s operational overhead entirely.
+| Decision | Lock-in-resistant option | Lock-in-prone option | Question to ask |
+|---|---|---|---|
+| Model serving | Self-hosted inference server behind your own HTTP contract | Vendor SDK called directly from business logic | Can I swap the model by changing one adapter? |
+| Embeddings | Local model or self-hosted endpoint, cached locally | Hosted embeddings API called inline | Do I know where my code text is stored? |
+| Search | Engine queried through a thin client you own | Vendor search SDK with proprietary query DSL | Can I re-index elsewhere without rewriting callers? |
+| Queue | Redis Streams or another self-hosted queue | Managed queue tied to one cloud | What is my task volume, and does it justify the operational cost? |
+| Prompt format | Your own template, validated against a schema | Vendor's prompt format baked into code | If the vendor changes the format, how much code changes? |
 
 ## When this approach is the wrong choice
 
-This pattern works well for teams that:
-- Have 10–100 developers
-- Own their codebase end-to-end
-- Need GDPR or SOC2 compliance
-- Want to avoid SaaS bloat and surprise bills
+This pattern fits teams that own their codebase end-to-end, need data residency or compliance controls, and can absorb some operational work.
 
 It breaks down in three scenarios:
 
-1. **Teams without ops headcount**: If you don’t have someone who can run OpenSearch, Redis, and containers, the maintenance overhead will outpace the cost savings. Expect 5–10 hours/week of operational work per 100 developers.
+1. **Teams without operations capacity**: If nobody can run a search engine, Redis, and containers, the maintenance overhead can outpace the cost savings. Estimate the operational work honestly before committing; a rough starting assumption is several hours per week for a small stack, scaling with the number of components.
 
-2. **Teams needing advanced AI features**: If you rely on vendor-specific features like Anthropic’s tool use, custom fine-tuning, or proprietary RAG datasets, the open stack won’t match. In that case, use the vendor for core AI and keep your workflows vendor-free.
+2. **Teams needing advanced AI features**: If the workflow depends on vendor-specific capabilities such as tool use with structured outputs, custom fine-tuning, or proprietary retrieval, an open stack will not match out of the box. A reasonable split is to use the vendor for the core model capability while keeping your workflows and data contracts vendor-free.
 
-3. **Teams with global latency requirements**: If your developers are spread across continents and need sub-200ms assistant responses, a single self-hosted stack in one region won’t cut it. You’ll need edge deployments or a multi-region cache strategy, which adds complexity.
+3. **Teams with global latency requirements**: If developers are spread across continents and need very low response times, a single self-hosted stack in one region will not deliver it. Edge deployments or a multi-region cache add complexity that may not be worth it for a small team.
 
-We learned this the hard way when our APAC team complained about 2.8s latency. We added CloudFront in front of the orchestrator and cached assistant responses for 5 minutes. That cut latency to 450ms for repeat queries, but cold starts still spiked to 1.8s.
+## Cost: do the arithmetic on your own numbers
 
-## My honest take after using this in production
+Cost comparisons are only meaningful with your own traffic and your own hardware prices. The method:
 
-I thought building an open assistant would be a weekend project. It took three months to stabilize. The biggest lesson wasn’t technical — it was organizational. Teams resisted adopting the assistant until we tied it to their daily workflows: lint on save, diff on PR, test on merge. The assistant only became sticky when it removed friction, not when it added AI.
+1. Count assistant calls per day and average tokens or characters per call.
+2. Measure the CPU time per call for embedding and search, and the GPU or CPU time for any generation.
+3. Convert CPU/GPU time to instance-hours at your provider's published rate, plus storage and egress.
+4. Compare against the vendor's published per-token or per-call price for the same volume.
 
-The second lesson was about data residency. Our legal team flagged that user queries contained PII (stack traces, config files). We added a scrubber that replaces PII with placeholders before indexing. That added 150ms per assistant call but saved us a GDPR audit.
+Two things commonly dominate the result: whether the model runs on hardware you already pay for, and cache hit rate. A high cache hit rate reduces both cost and tail latency, which is why embedding caches with a TTL measured in days rather than hours are often a good default for code, which changes less often than it is queried.
 
-The third lesson was about cost. Our first cloud bill for the self-hosted stack was $187/month on AWS t4g.xlarge (4 vCPU, 16GB). After tuning Redis memory and moving to spot instances, it dropped to $89/month — a 52% reduction. The vendor alternative at $5.60 per 1000 calls would have cost $1,344/month at 8k calls/day.
+## A decision checklist before you build
 
-On the flip side, the vendor stack gave us autocomplete and code generation out of the box. Our open stack only does retrieval and tooling. If you need generative features, you’ll need to integrate a local LLM like phi-3 or mistral-v0.3, which adds latency and cost.
+- Can every component be replaced by changing one adapter, without touching business logic?
+- Is every tool response validated against a schema before use?
+- Is there a single-flight mechanism for expensive cache misses?
+- Are tool runtimes pinned in containers, with health checks that fail fast?
+- Is the orchestrator's memory bounded, with results streamed rather than buffered?
+- Is there a circuit breaker for tools that fail repeatedly?
+- Have you measured median and P95 latency for your own query set?
+- Have you priced the self-hosted stack against the vendor using your own call volume?
 
-Overall, the open stack is worth it if you value control, compliance, and long-term cost predictability. If you need speed to market or advanced AI features, start with the vendor and migrate later — but design your workflows to avoid vendor lock-in from day one.
+If most answers are yes, the design is on solid ground. If several are no, fix those before adding features.
 
-## What to do next
+## FAQ
 
-If you’re evaluating this approach, spend the next 30 minutes doing this:
+**How do you avoid vendor lock-in when building an AI assistant?**
 
-1. Measure your current assistant’s latency and cost. Run `curl -w "%{time_total}" -o /dev/null https://your-assistant-url` 10 times and average the results. Note the 95th percentile.
+Define contracts between components using JSON Schema or Protocol Buffers, and never call a vendor API directly from core logic. Put adapter layers between your contract and any vendor SDK, so a swap touches one adapter. Self-host what you reasonably can — embeddings, search, and linting are all replaceable.
 
-2. Pick one workflow your team uses daily (lint on save, diff on PR, etc.) and implement the tool in a container with a memory limit and health check. Use Docker Compose to wire it to a local Redis 7.2 instance.
+**Why might self-hosted embeddings be preferable to API-based embeddings?**
 
-3. If the tool works, add a 5-line FastAPI orchestrator that accepts a query, calls the tool, and returns the result. Stream the response using Server-Sent Events.
+Two reasons: data residency and cost predictability. API calls send code text to someone else's servers, which can conflict with GDPR or SOC 2 obligations. Self-hosting keeps data on your infrastructure. On cost, the comparison depends on your hardware and volume; compute it using the method above rather than assuming a fixed ratio.
 
-4. Track memory usage and latency for 24 hours. If it stays under 500MB and P95 under 1s, you’ve got a viable building block. If not, tune the container limits or swap the tool for a lighter alternative.
+**What is the simplest way to start an open assistant without cloud costs?**
 
-Do this today and you’ll know within hours whether the open path is viable for your team.
+Run a local model server on a laptop, pull a small model, and put a small HTTP service in front of it. Add a local cache and you have a working assistant with no cloud bill. The trade-off is model quality and speed, which are lower than hosted large models.
 
-## Frequently Asked Questions
+**How do you handle rate limits and retries in a distributed assistant?**
 
-**how to avoid vendor lock-in when building ai assistants**
+Use a shared rate limiter with a sliding window, and wrap each tool call in a retry policy with a small maximum attempt count and a per-call timeout. Add a circuit breaker so that a tool failing repeatedly is marked unhealthy for a short period, which prevents thundering herds and gives users a clear error instead of a long hang.
 
-Start by defining contracts between components using JSON Schema or Protocol Buffers. Never call a vendor API directly in your core logic. Use adapter layers that translate between your contract and the vendor’s SDK. That way, you can swap the vendor by changing one adapter. Also, self-host any model or service you can — embeddings, vector search, and linting are all replaceable.
+## Your next 30 minutes
 
-**why self-hosted embeddings beat api-based embeddings for cost and compliance**
-
-API-based embeddings like OpenAI’s cost $0.02 per 1k tokens. Self-hosted sentence-transformers 2.2.2 costs $0.0001 per 1k tokens on a t4g.small instance. Compliance-wise, API calls leave your data on someone else’s servers, which often violates GDPR or SOC2. Self-hosting keeps data on your infra and under your control.
-
-**what’s the simplest way to start an open ai assistant without cloud costs**
-
-Use Ollama 0.1.13 on a single laptop with 8GB RAM. Install Ollama, run `ollama pull phi-3-mini`, then use FastAPI to build a tiny assistant that queries the local model. Add Redis 7.2 for caching and you’ve got a working assistant with zero cloud costs and no vendor lock-in.
-
-**how to handle rate limits and retries in a distributed ai assistant**
-
-Use Redis-backed rate limiting with a sliding window. For retries, wrap each tool call in a circuit breaker using backoff 2.2.1. Set a 3-retry limit and a 10-second timeout. If a tool fails three times, mark it unhealthy and return an error to the user. This prevents thundering herds and gives users a clear error message.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 11, 2026
+Pick one tool your team already runs daily — a linter, a formatter, or a diff — and wrap it in a container with a memory limit and a health check. Then write a schema for its input and output, and a ten-line HTTP handler that validates both against the schema before returning. Run `curl -w "%{time_total}\n" -o /dev/null` against it twenty times and record the median and the 95th percentile. That single measurement, plus the schema boundary, is the smallest unit of a lock-in-resistant assistant and tells you more than any benchmark table.

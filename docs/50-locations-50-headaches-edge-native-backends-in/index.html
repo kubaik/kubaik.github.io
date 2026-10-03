@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>50 locations, 50 headaches: edge-native backends in - Kubai Kevin</title>
-        <meta name="description" content="Cut API latency 60 % by running your backend in 50 locations — connection pooling, replication lag, and the $12k mistake most teams make in 2026.">
+        <meta name="description" content="How to design edge-native backends: bounded staleness, write fan-out cost, leader-based writes, and how to measure P99 latency per POP.">
         <meta name="keywords" content="EdgeNativeBackend, GlobalApiLatency, Multi, EdgeFunctionCost, Fly.ioPostgres16, CloudflareWorkers4.0, BoundedStaleness, Backend, Softwareengineering, Postgresql">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-22T07:49:49.144918">
-        <meta property="article:modified_time" content="2026-09-19T08:27:13.356698+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:27:34.227624+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="50 locations, 50 headaches: edge-native backends in">
-        <meta property="og:description" content="Cut API latency 60 % by running your backend in 50 locations — connection pooling, replication lag, and the $12k mistake most teams make in 2026.">
+        <meta property="og:description" content="How to design edge-native backends: bounded staleness, write fan-out cost, leader-based writes, and how to measure P99 latency per POP.">
         <meta property="og:url" content="https://kubaik.github.io/50-locations-50-headaches-edge-native-backends-in/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="50 locations, 50 headaches: edge-native backends in">
-        <meta name="twitter:description" content="Cut API latency 60 % by running your backend in 50 locations — connection pooling, replication lag, and the $12k mistake most teams make in 2026.">
+        <meta name="twitter:description" content="How to design edge-native backends: bounded staleness, write fan-out cost, leader-based writes, and how to measure P99 latency per POP.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/50-locations-50-headaches-edge-native-backends-in.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/50-locations-50-headaches-edge-native-backends-in/#article",
       "headline": "50 locations, 50 headaches: edge-native backends in",
-      "description": "Cut API latency 60 % by running your backend in 50 locations — connection pooling, replication lag, and the $12k mistake most teams make in 2026.",
+      "description": "How to design edge-native backends: bounded staleness, write fan-out cost, leader-based writes, and how to measure P99 latency per POP.",
       "datePublished": "2026-06-22T07:49:49+00:00",
-      "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 2312,
-      "timeRequired": "PT12M",
+      "dateModified": "2026-10-03T11:27:34+00:00",
+      "wordCount": 2187,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">50 locations, 50 headaches: edge-native backends in</h1>
                 
-                <p class="post-lead">Cut API latency 60 % by running your backend in 50 locations — connection pooling, replication lag, and the $12k mistake most teams make in 2026.</p>
+                <p class="post-lead">How to design edge-native backends: bounded staleness, write fan-out cost, leader-based writes, and how to measure P99 latency per POP.</p>
                 
                 
                 <div class="tags">
@@ -259,71 +259,72 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2312 words
+                        11 min read
+                        &nbsp;·&nbsp; 2187 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on edgenative backends is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>Running an API from 50 edge locations isn’t scaling horizontally—it’s scaling geographically, and that changes latency, consistency, cost, and debugging. In 2026 the tooling has finally caught up: Cloudflare Workers 4.0 with Durable Objects, Fly.io’s Postgres and Redis on every region, and AWS Lambda@Edge with SnapStart means you can push code to 50 POPs without rewriting your app. But the real trap is thinking you can reuse your single-region mental model. Replication lag, eventual consistency, and cold-start costs explode when you distribute state.</p>
+                <p>The conventional advice on edge-native backends is incomplete. It holds in the simple case and breaks in a specific way under load. This article describes the fuller picture: what changes when an API runs from many points of presence (POPs), which patterns bound staleness, and how to measure the things that actually go wrong.</p>
+<h2 id="the-one-paragraph-version">The one-paragraph version</h2>
+<p>Running an API from 50 edge locations is not horizontal scaling — it is geographic scaling, and it changes latency, consistency, cost, and debugging at the same time. The tooling has matured enough that pushing code to many POPs no longer requires rewriting an application. The trap is reusing a single-region mental model. Replication lag, eventual consistency, and cold-start costs do not scale the way instance count does, because state is now distributed across a network you do not control.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most developers are taught to scale by adding more instances in one region. We know how to shard, how to keep a single source of truth, and how to debug a single cloud bill. Edge-native turns that upside down: every POP is both a cache and a source of truth, and the network is now part of your data layer. That’s why teams get stuck on three questions:</p>
+<p>Most developers learn to scale by adding instances inside one region. Sharding, keeping a single source of truth, and reading one cloud bill are all well-understood. Edge-native inverts that: every POP is both a cache and a potential source of truth, and the network becomes part of the data layer. Teams get stuck on three questions:</p>
 <ol>
-<li><strong>Where is my data?</strong> It might be in Singapore, but only if the last write went there. Otherwise it’s stale in São Paulo. 2. <strong>Why is my bill 3× higher?</strong> Edge functions cost 10× more per invocation than regional lambdas, and replication writes add up. 3. <strong>How do I debug a race condition that only happens in Tokyo at 3 AM?</strong></li>
+<li><strong>Where is my data?</strong> It may be in Singapore, but only if the last write landed there. Otherwise a reader in São Paulo sees a stale value.</li>
+<li><strong>Why did the bill grow faster than traffic?</strong> Edge function invocations are priced differently from regional ones, and replication writes multiply egress by the number of replicas.</li>
+<li><strong>How do you debug a race condition that only reproduces in one POP under specific packet loss?</strong></li>
 </ol>
-<p>The logs looked fine; the metrics didn’t even show the POP. Only after I pulled raw packet captures from Cloudflare’s tcpdump endpoint did the picture emerge.</p>
-<p>The confusion isn’t technical—it’s a shift from “scale up” to “scale out, everywhere.”</p>
+<p>The confusion is not technical detail — it is a shift from "scale up" to "scale out, everywhere."</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of the edge as a giant, globally distributed CDN with compute attached. Every POP is a mini data-center that can run your API, but it’s not always in sync with the others. The key abstraction is <strong>eventual consistency with bounded staleness</strong>.</p>
+<p>Think of the edge as a globally distributed CDN with compute attached. Each POP is a small data center that can run your API, but it is not always in sync with the others. The key abstraction is <strong>eventual consistency with bounded staleness</strong>.</p>
 <ul>
-<li><strong>Reads</strong> can be served from the nearest POP, but they might be reading stale data. - <strong>Writes</strong> fan out to every POP, but only after the write is durable in the origin.</li>
+<li><strong>Reads</strong> can be served from the nearest POP, but they may return stale data.</li>
+<li><strong>Writes</strong> fan out to replicas, but only become durable once the authoritative copy accepts them.</li>
 </ul>
-<p>In practice, you choose one of three patterns:</p>
+<p>In practice, three patterns cover most systems:</p>
 <table>
 <thead>
 <tr>
 <th>Pattern</th>
 <th>Staleness bound</th>
-<th>Cost</th>
+<th>Cost profile</th>
 <th>Best for</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Active-active with CRDTs</td>
-<td>&lt; 100 ms</td>
-<td>High</td>
-<td>Collaborative editing, gaming state</td>
+<td>Low (sub-second)</td>
+<td>High — every replica merges</td>
+<td>Collaborative editing, game state</td>
 </tr>
 <tr>
-<td>Active-passive with leader election</td>
-<td>~500 ms</td>
+<td>Leader-based writes with read-through cache</td>
+<td>Bounded by cache TTL</td>
 <td>Medium</td>
-<td>E-commerce inventory, user profiles</td>
+<td>User profiles, inventory, sessions</td>
 </tr>
 <tr>
-<td>Active-cache with TTL</td>
-<td>~2 s</td>
+<td>Read-through cache with TTL only</td>
+<td>Bounded by TTL</td>
 <td>Low</td>
 <td>Product catalogs, static content</td>
 </tr>
 </tbody>
 </table>
-<p>I picked the active-passive pattern for a user-service in 2026 and still regret it. The leader election used Etcd 3.5, but in a POP with high packet loss Etcd would flip the leader every 30 seconds. Users in São Paulo saw their profile reset to the last leader’s state. The fix was to switch to a Raft-based leader in a single home region and let every POP read from that leader, caching locally with a 2 s TTL. The staleness went from “who knows” to “2 s max,” and the bill dropped 40 %.</p>
+<p>A common failure mode is choosing leader election per POP. Under high packet loss, a consensus group can lose and regain leadership repeatedly, so clients in a distant region observe their state "resetting" to whichever leader last won. The usual fix is to pin the leader to a single home region and let every POP read from it, caching locally with a short TTL. Staleness then becomes a number you chose rather than a number you discovered.</p>
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>We’ll build a simple global counter that increments a value and returns it. We’ll run it on Fly.io, which gives us a Postgres cluster in every region and a global Anycast network for the app.</p>
+<p>Build a global counter that increments a value and returns it. The example uses a Node HTTP handler and a Postgres connection pool; the deployment target is a platform that runs the app in multiple regions with a regional Postgres primary.</p>
 <h3 id="step-1-app-skeleton">Step 1: App skeleton</h3>
 <pre><code class="language-javascript">// src/index.js
-import { FlyGlobal } from '@fly/global';
-import { postgres } from '@fly/global/postgres';
+import { Pool } from 'pg';
 
-const pool = postgres.connect({
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   max: 20,
   idleTimeoutMillis: 30000,
@@ -331,16 +332,29 @@ const pool = postgres.connect({
 });
 
 export default async function handler(req) {
-  const { count } = await pool.query('SELECT value FROM global_counter WHERE id = 1 FOR UPDATE');
-  const next = count + 1;
-  await pool.query('UPDATE global_counter SET value = $1 WHERE id = 1', [next]);
-  return new Response(String(next));
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const { rows } = await client.query(
+      'SELECT value FROM global_counter WHERE id = 1 FOR UPDATE'
+    );
+    const next = rows[0].value + 1;
+    await client.query('UPDATE global_counter SET value = $1 WHERE id = 1', [next]);
+    await client.query('COMMIT');
+    return new Response(String(next));
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
 }
 </code></pre>
-<h3 id="step-2-fly-configuration">Step 2: Fly configuration</h3>
+<p>Note the explicit transaction. The original version issued <code>FOR UPDATE</code> and the update as two separate statements outside a transaction, which releases the row lock between them and allows lost updates. Wrapping both in <code>BEGIN</code>/<code>COMMIT</code> is what makes the increment correct.</p>
+<h3 id="step-2-configuration">Step 2: Configuration</h3>
 <pre><code class="language-toml"># fly.toml
 app = &quot;global-counter&quot;
-primary_region = &quot;iad&quot; # Virginia
+primary_region = &quot;iad&quot;
 
 [build]
   dockerfile = &quot;Dockerfile&quot;
@@ -348,6 +362,7 @@ primary_region = &quot;iad&quot; # Virginia
 [[services]]
   protocol = &quot;tcp&quot;
   internal_port = 3000
+
   [[services.ports]]
     port = 80
     handlers = [&quot;http&quot;]
@@ -356,80 +371,61 @@ primary_region = &quot;iad&quot; # Virginia
   port = 9090
   path = &quot;/metrics&quot;
 </code></pre>
-<h3 id="step-3-deploy-to-50-locations">Step 3: Deploy to 50 locations</h3>
+<h3 id="step-3-deploy-to-many-regions">Step 3: Deploy to many regions</h3>
 <pre><code class="language-bash">flyctl deploy --config fly.toml --strategy rolling
 flyctl scale count 50 --process-group app
 </code></pre>
-<h3 id="step-4-observe-the-pain">Step 4: Observe the pain</h3>
-<p>After deployment I ran a global load test:</p>
+<h3 id="step-4-measure-do-not-guess">Step 4: Measure, do not guess</h3>
+<p>The point of this step is to produce numbers you can defend. Before changing anything, record:</p>
+<ul>
+<li><strong>P50/P95/P99 latency per POP</strong>, not globally. A global average hides the slowest region.</li>
+<li><strong>Replication lag</strong> between the primary and each read replica, sampled every few seconds.</li>
+<li><strong>Write throughput</strong> on the primary, plus its network egress.</li>
+<li><strong>Row lock wait time</strong>, which shows up as autovacuum contention on hot rows.</li>
+</ul>
+<p>A load generator such as <code>vegeta</code> or <code>k6</code> can drive the traffic:</p>
 <pre><code class="language-bash">vegeta attack -rate 100 -duration 30s -targets targets.txt | vegeta report
 </code></pre>
-<p>The P95 latency was 480 ms, but the P99 in Mumbai was 2.1 s. Digging into the logs, I saw:</p>
-<ul>
-<li>30 % of requests hitting Mumbai were reading a stale value. - The leader in IAD had written the increment, but the replication lag to Mumbai was 1.8 s. - The FOR UPDATE lock in Postgres blocked the leader’s vacuum process, causing autovacuum to throttle writes.</li>
-</ul>
-<p>The fix was to switch to a Raft-based leader in IAD and let every POP read from it while caching locally with a 2 s TTL. The staleness became bounded, and the P99 in Mumbai dropped to 650 ms.</p>
+<p>Then compare the per-POP P99 against the replication lag series. If P99 in a distant region tracks replication lag, the bottleneck is consistency, not compute. If P99 tracks row-lock wait, the bottleneck is the write path itself.</p>
+<h3 id="step-5-apply-the-fix-and-re-measure">Step 5: Apply the fix and re-measure</h3>
+<p>Switch to leader-based writes in one home region, and let every POP read through a local cache with a 2-second TTL. Then re-run the same load test and the same lag sampling. The claim to verify is narrow: does P99 in the distant region now track the cache TTL rather than the replication lag? If yes, staleness is bounded. If no, the cache is not absorbing reads and the problem is elsewhere.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>If you’ve used Redis Cluster, you’re familiar with the idea that data is sharded and each shard has a leader. Edge-native extends that to every POP. The main differences are:</p>
+<p>If you have used Redis Cluster, the sharding-plus-leader idea will feel familiar. Edge-native extends it to every POP. The differences matter:</p>
 <ul>
-<li>
-<p><strong>No single control plane</strong>
-  Redis Cluster has a single redis-cli that can reshard. Edge-native POPs are mostly independent; you manage them via GitOps or a control plane like Fly.io’s.</p>
-</li>
-<li>
-<p><strong>Network partitions are normal</strong>
-  In a single region, you can assume the control plane is reachable. In 50 POPs, a network partition in São Paulo is not an outage—it’s a normal condition you must handle.</p>
-</li>
-<li>
-<p><strong>Cold starts cost money</strong>
-  A regional Lambda costs ~$0.20 per million requests. An edge Lambda (Cloudflare Workers 4.0) costs ~$5 per million requests. But the real cost is the replication writes: every write fans out to every POP, so a 1 KB write becomes 50 KB of egress.</p>
-</li>
+<li><strong>No single control plane.</strong> Redis Cluster has one CLI that can reshard. Edge POPs are largely independent and are usually managed through GitOps or a provider control plane.</li>
+<li><strong>Network partitions are normal.</strong> In one region, the control plane is assumed reachable. Across many POPs, a partition in one location is a routine condition to handle, not an outage.</li>
+<li><strong>Cold starts and egress cost money.</strong> A regional function is cheap per invocation; an edge function is priced higher. But the larger cost is replication writes: a 1 KB write fanned out to 50 replicas is 50 KB of egress per write. At 1,000 writes/sec, that is 50 MB/s of egress, or roughly 4.3 TB/day. Multiply by the provider's per-GB egress rate to see whether fan-out-to-all is viable for your write volume.</li>
 </ul>
-<p>I once assumed I could reuse my regional Redis Cluster and just put a Cloudflare Worker in front. The bill for replication writes alone was $12 k in one month. Switching to a leader-based pattern cut that to $3 k.</p>
+<p>A common mistake is putting an edge function in front of a regional Redis Cluster and assuming the bill stays flat. It does not, because every write now crosses the network once per replica. Leader-based writes with a local read cache cut that traffic to one write per replica-set rather than one per POP.</p>
 <h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
 <ol>
-<li>
-<p><strong>“Edge functions are always cheaper.”</strong>
-   False. Workers are cheap for simple logic, but if you fan out writes to every POP you pay for bandwidth and CPU in every region. A single 1 KB write becomes 50 KB of egress if you replicate to 50 POPs.</p>
-</li>
-<li>
-<p><strong>“Eventual consistency is fine for everything.”</strong>
-   Not if your users see stale data. In a shopping cart, stale data means overselling inventory. In a banking app, it means double spends. Bounded staleness (e.g., 2 s) is the minimum you should aim for.</p>
-</li>
-<li>
-<p><strong>“You can treat every POP as a mini-region.”</strong>
-   You can’t. POPs have limited CPU, memory, and disk. A 1 vCPU 512 MB Workers instance is not the same as a t3.medium EC2 instance. I once tried to run a full-text search index in a Workers instance—it OOM’d in 30 seconds.</p>
-</li>
-<li>
-<p><strong>“Debugging is the same everywhere.”</strong>
-   It isn’t. Cloudflare’s tcpdump endpoint, Fly.io’s host metrics, and AWS’s X-Ray for Lambda@Edge all have different quirks.</p>
-</li>
-<li>
-<p><strong>“You can use a single database everywhere.”</strong>
-   You can, but it becomes a bottleneck. PostgreSQL 16 with logical replication can fan out writes to 50 POPs, but the leader will saturate its network link at ~10 k writes/sec. For higher throughput, you need sharding or a multi-master setup like CockroachDB 23.1.</p>
-</li>
+<li><strong>"Edge functions are always cheaper."</strong> False. They are cheap for simple, read-mostly logic. If writes fan out to every POP, you pay bandwidth and CPU in every region.</li>
+<li><strong>"Eventual consistency is fine for everything."</strong> Not when users observe the staleness. In a shopping cart, stale data means overselling. In a banking app, it means double spends. Bounded staleness — a TTL or a lag ceiling you enforce — is the minimum bar.</li>
+<li><strong>"Every POP is a mini-region."</strong> It is not. POPs have limited CPU, memory, and disk. A small edge isolate is not equivalent to a general-purpose VM, and memory-heavy workloads such as a full-text index will fail fast.</li>
+<li><strong>"Debugging is the same everywhere."</strong> It is not. Packet capture, host metrics, and tracing are exposed differently by each provider, and the tooling changes faster than regional equivalents.</li>
+<li><strong>"One database everywhere is fine."</strong> It can be, until the primary's network link saturates. A single primary replicating to 50 regions has a hard ceiling set by its uplink. Beyond that, you need sharding or a multi-region database with its own consensus layer.</li>
 </ol>
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>Once you have a bounded-staleness pattern working, the next step is <strong>multi-region transactions</strong> and <strong>global rollbacks</strong>.</p>
+<h2 id="the-advanced-version">The advanced version</h2>
+<p>Once bounded staleness works, the next problems are multi-region transactions and global rollbacks.</p>
 <h3 id="multi-region-transactions">Multi-region transactions</h3>
-<p>Use a saga pattern with compensating transactions. Each write is wrapped in a saga that records the intent and the compensating action. If a POP fails, the saga coordinator (a small service running in a home region) replays the compensating action.</p>
-<p>Example with Node 20 LTS and PostgreSQL 16:</p>
+<p>Use a saga with compensating actions. Each write records its intent and its inverse. If a step fails, a coordinator replays the compensating actions in reverse.</p>
 <pre><code class="language-javascript">// saga.js
 import { Pool } from 'pg';
 const pool = new Pool({ connectionString: process.env.SAGA_DB });
 
 async function runSaga(steps) {
   const client = await pool.connect();
+  const completed = [];
   try {
     await client.query('BEGIN');
     for (const step of steps) {
       await step.execute(client);
+      completed.push(step);
     }
     await client.query('COMMIT');
   } catch (err) {
     await client.query('ROLLBACK');
-    // replay compensating steps
-    for (const step of steps.reverse()) {
+    for (const step of completed.reverse()) {
       if (step.compensate) await step.compensate(client);
     }
     throw err;
@@ -438,82 +434,71 @@ async function runSaga(steps) {
   }
 }
 </code></pre>
+<p>Two details matter. First, only steps that actually completed should be compensated — the original version reversed the entire list, including steps that never ran. Second, compensation itself must be idempotent, because the coordinator may retry after a crash.</p>
 <h3 id="global-rollbacks">Global rollbacks</h3>
-<p>Fly.io’s Postgres clusters in 2026 support <strong>bi-directional logical replication</strong> with conflict resolution. You can push a schema change to every region and roll it back if it breaks in one POP. The trick is to use a <strong>change data capture (CDC)</strong> tool like Debezium 2.4 to stream changes to a home region, where a rollback service can replay them in reverse.</p>
-<p>The rollback took 8 minutes in the home region and propagated to every POP in under 2 minutes. Without CDC, it would have been a manual restore from S3.</p>
+<p>A schema or logic change pushed to every region needs a reverse path. The standard approach is a change-data-capture stream from each region into a home-region log, so a rollback service can replay changes in reverse order. The measurement that matters is <strong>time to rollback</strong>: how long from detection to every region running the previous version. Instrument the detection timestamp and the last-region-confirmed timestamp; the difference is your real rollback time, and it is usually dominated by detection, not propagation.</p>
 <h3 id="cost-control">Cost control</h3>
-<p>Edge-native backends can explode your bill if you’re not careful. Use these levers:</p>
+<p>Use these levers deliberately, and measure each one before and after:</p>
 <table>
 <thead>
 <tr>
 <th>Lever</th>
-<th>Impact on latency</th>
-<th>Impact on bill</th>
+<th>Latency effect</th>
+<th>Bill effect</th>
 <th>When to use</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Cache reads at POP with 1 s TTL</td>
-<td>+0 ms to +50 ms</td>
-<td>-30 %</td>
-<td>Product catalogs, static content</td>
+<td>Cache reads at POP with short TTL</td>
+<td>Small increase</td>
+<td>Lower egress and compute</td>
+<td>Catalogs, static content</td>
 </tr>
 <tr>
-<td>Fan-out writes only to 5 closest POPs</td>
-<td>+200 ms</td>
-<td>-60 %</td>
-<td>User profiles, session state</td>
+<td>Fan out writes to a small subset of POPs</td>
+<td>Higher for distant writers</td>
+<td>Much lower egress</td>
+<td>Profiles, session state</td>
 </tr>
 <tr>
-<td>Use CRDTs for small, hot state</td>
-<td>+10 ms</td>
-<td>+20 %</td>
+<td>CRDTs for small, hot state</td>
+<td>Low</td>
+<td>Higher — merge cost</td>
 <td>Collaborative apps</td>
 </tr>
 <tr>
-<td>Use leader-based writes with read-through cache</td>
-<td>+150 ms</td>
-<td>-50 %</td>
-<td>E-commerce inventory</td>
+<td>Leader-based writes with read-through cache</td>
+<td>Bounded by TTL</td>
+<td>Lower</td>
+<td>Inventory, user data</td>
 </tr>
 </tbody>
 </table>
-<p>The latency penalty was 180 ms, which is acceptable for a user profile.</p>
+<p>The trade-off is explicit: you are choosing a staleness ceiling in exchange for lower cost and predictable latency. Pick the ceiling first, then pick the pattern.</p>
 <h2 id="quick-reference">Quick reference</h2>
 <ul>
-<li><strong>Latency:</strong> P95 200–500 ms, P99 500–1000 ms (bounded staleness 2 s). - <strong>Cost:</strong> $0.05–$0.20 per 1k requests for Workers, $0.02–$0.10 for Lambda@Edge. Replication writes add $0.01–$0.05 per KB. - <strong>Throughput:</strong> 1k–10k writes/sec per leader. Shard if you need more. - <strong>Staleness:</strong> Choose 100 ms (CRDTs), 500 ms (leader-based), or 2 s (cache with TTL). - <strong>Debugging:</strong> Start with the home region’s leader. If it’s slow, drill down into the POP with the highest latency. - <strong>Tools:</strong> Cloudflare Workers 4.0, Fly.io Postgres 16, AWS Lambda@Edge 2026, Redis 7.2 (as cache only), PostgreSQL 16 (as source of truth). - <strong>Pattern:</strong> Leader-based writes + read-through cache with TTL. - <strong>Fallback:</strong> If a POP is down, route to the next closest POP. Failover should take &lt; 500 ms.</li>
+<li><strong>Latency:</strong> Expect P95 in the low hundreds of milliseconds and P99 up to roughly a second when staleness is bounded by a TTL. Measure per POP.</li>
+<li><strong>Cost:</strong> Driven mostly by egress from write fan-out, not by invocation count. Compute egress as (write size) × (replica count) × (writes/sec).</li>
+<li><strong>Throughput:</strong> A single primary has a hard ceiling set by its uplink. Shard when you approach it.</li>
+<li><strong>Staleness:</strong> Choose a ceiling — sub-second for CRDTs, cache-TTL for leader-based reads, seconds for plain caching.</li>
+<li><strong>Debugging:</strong> Start at the leader. If the leader is healthy, compare per-POP P99 against replication lag and row-lock wait.</li>
+<li><strong>Pattern:</strong> Leader-based writes plus a read-through cache with a TTL is the simplest correct default.</li>
+<li><strong>Fallback:</strong> Route a failed POP to the next closest one, and measure the failover time rather than assuming it.</li>
 </ul>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<ul>
-<li>Cloudflare’s <a href="https://blog.cloudflare.com/durable-objects-2026">Durable Objects 2026 design doc</a> — how they solved stateful edge compute. - Fly.io’s <a href="https://fly.io/docs/postgres/">Postgres multi-region guide</a> — how to shard and replicate. - AWS’s <a href="https://aws.amazon.com/blogs/compute/introducing-lambda-snapstart/">Lambda@Edge SnapStart</a> — how they cut cold starts. - CockroachDB’s <a href="https://www.cockroachlabs.com/blog/global-consistency-without-consensus/">Global consistency without consensus</a> — the theory behind multi-region transactions. - Redis 7.2’s <a href="https://redis.io/docs/management/replication/">Active Replication</a> — how Redis handles edge replicas.</li>
-</ul>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>What is the biggest surprise after going edge-native?</strong></p>
-<p>Most teams expect latency to drop, but they don’t plan for replication lag. A user in Tokyo might read a stale value that was written in São Paulo 1.2 seconds ago. The surprise is that you have to design for that staleness, not fight it. I saw this in a banking app where users were getting “insufficient funds” errors because the balance hadn’t propagated yet.</p>
-<p><strong>How do I pick the number of POPs to fan out writes to?</strong></p>
-<p>Start with the 5 closest POPs to the user. Measure the latency penalty and the bill impact. For most apps, 5 POPs is the sweet spot. If you need stronger consistency, use a leader in a home region and let every POP read from it. I tried fan-out-to-all-50 at first and the bill exploded—5 was the magic number.</p>
-<p><strong>Is PostgreSQL the only option for the source of truth?</strong></p>
-<p>No, but it’s the most mature. CockroachDB 23.1 and YugabyteDB 2.16 both support multi-region writes with strong consistency. Redis 7.2 can be used as a read-through cache, but it’s not a source of truth for writes. I used PostgreSQL 16 for the source of truth and Redis 7.2 for caching—it’s the simplest combo.</p>
-<p><strong>How do I debug a race condition that only happens in a specific POP?</strong></p>
-<p>Start with the home region’s leader. If the issue isn’t there, pull raw packet captures from the POP using Cloudflare’s tcpdump endpoint or Fly.io’s host metrics. Look for TCP retransmits, buffer sizes, and connection churn.</p>
-<p><strong>What’s the one thing most teams get wrong?</strong></p>
-<p>They assume they can reuse their single-region mental model. They treat every POP as a mini-region, but POPs are not mini-regions—they’re mini-data-centers with limited resources and higher latency to the control plane. The fix is to design for eventual consistency with bounded staleness, not strong consistency.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>What surprises teams most about going edge-native?</strong>
+Latency usually drops, but replication lag is rarely planned for. A reader in one region may see a value written in another region a second earlier. The design implication is to choose a staleness bound rather than fight for strong consistency everywhere.</p>
+<p><strong>How many POPs should receive writes?</strong>
+Start with the smallest set that covers your write-heavy users, measure the latency penalty and the egress cost, and expand only if the numbers justify it. Fan-out-to-all is rarely the cheapest option.</p>
+<p><strong>Is Postgres the only source of truth?</strong>
+No. Any database with a documented replication model works, but the model must be understood. A cache is not a source of truth for writes, regardless of how fast it is.</p>
+<p><strong>How do you debug a race condition in one POP?</strong>
+Start at the leader. If the leader is clean, capture packets at the affected POP and look for retransmits, buffer sizes, and connection churn. Correlate those with the application's lock waits.</p>
+<p><strong>What do teams get wrong most often?</strong>
+Treating every POP as a mini-region. POPs are resource-constrained and have higher latency to any control plane. Design for bounded staleness instead of assuming strong consistency is available.</p>
 <h2 id="close-the-gap-in-30-minutes">Close the gap in 30 minutes</h2>
-<p>Open your API’s read path. Add a 1-second TTL cache using Redis 7.2 in the same POP. Measure the latency drop and the bill impact. If the latency drops by more than 50 % and the bill stays flat, you’ve just taken your first step toward an edge-native backend.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/">Run APIs in 50 spots: what breaks first</a></li>
-<li><a href="https://kubaik.github.io/which-agent-stack-survives-3g/">Which agent stack survives 3G?</a></li>
-<li><a href="https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/">Store data once, serve everywhere: cheaper</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>Open your API's read path and add a one-second TTL cache in front of the most frequently read query, then measure two things before and after: P95 latency for that endpoint, and egress bytes per minute. If latency drops and egress stays flat, the cache is doing useful work and you have a measured starting point for the rest of the design.</p>
                 
                 
             </div>

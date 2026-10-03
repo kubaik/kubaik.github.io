@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Bundle size: 70% lighter with server components - Kubai Kevin</title>
-        <meta name="description" content="Cut client bundle size 62% with Server Components — real numbers, code samples, and the hydration errors that broke production.">
+        <title>Cutting Client Bundle Size with React Server Components - Kubai Kevin</title>
+        <meta name="description" content="How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.">
         <meta name="keywords" content="ServerComponentsReact, Next.jsBundleSize, ReduceReactBundle, Next.jsPerformance, ClientBundleOptimization, Reactjs, Performance, Nextjs, Nextjsbundlesize">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-13T19:12:48.025770">
-        <meta property="article:modified_time" content="2026-09-22T16:35:41.486120+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:24:13.743558+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="Bundle size: 70% lighter with server components">
-        <meta property="og:description" content="Cut client bundle size 62% with Server Components — real numbers, code samples, and the hydration errors that broke production.">
+        <meta property="og:title" content="Cutting Client Bundle Size with React Server Components">
+        <meta property="og:description" content="How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.">
         <meta property="og:url" content="https://kubaik.github.io/bundle-size-70-lighter-with-server-components/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/bundle-size-70-lighter-with-server-components.png">
-        <meta property="og:image:alt" content="Bundle size: 70% lighter with server components">
+        <meta property="og:image:alt" content="Cutting Client Bundle Size with React Server Components">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Bundle size: 70% lighter with server components">
-        <meta name="twitter:description" content="Cut client bundle size 62% with Server Components — real numbers, code samples, and the hydration errors that broke production.">
+        <meta name="twitter:title" content="Cutting Client Bundle Size with React Server Components">
+        <meta name="twitter:description" content="How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/bundle-size-70-lighter-with-server-components.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,12 +60,12 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/bundle-size-70-lighter-with-server-components/#article",
-      "headline": "Bundle size: 70% lighter with server components",
-      "description": "Cut client bundle size 62% with Server Components — real numbers, code samples, and the hydration errors that broke production.",
+      "headline": "Cutting Client Bundle Size with React Server Components",
+      "description": "How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.",
       "datePublished": "2026-06-13T19:12:48+00:00",
-      "dateModified": "2026-09-22T16:35:41+00:00",
-      "wordCount": 3534,
-      "timeRequired": "PT18M",
+      "dateModified": "2026-10-03T11:24:13+00:00",
+      "wordCount": 2545,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Bundle size: 70% lighter with server components",
+          "name": "Cutting Client Bundle Size with React Server Components",
           "item": "https://kubaik.github.io/bundle-size-70-lighter-with-server-components/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>Bundle size: 70% lighter with server components</span>
+            <span>Cutting Client Bundle Size with React Server Components</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">Bundle size: 70% lighter with server components</h1>
+                <h1 itemprop="headline">Cutting Client Bundle Size with React Server Components</h1>
                 
-                <p class="post-lead">Cut client bundle size 62% with Server Components — real numbers, code samples, and the hydration errors that broke production.</p>
+                <p class="post-lead">How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.</p>
                 
                 
                 <div class="tags">
@@ -258,40 +258,35 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        18 min read
-                        &nbsp;·&nbsp; 3534 words
+                        13 min read
+                        &nbsp;·&nbsp; 2545 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-22
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The official documentation for use server is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
-<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Then I tried shipping to a rural Uganda health clinic where the nurses’ phones max out at 3G and 300 MB of storage. Our React Native Web bundle was 4.2 MB unzipped. That’s 28 seconds to download on a good day. On a bad day, with power cuts and throttling, it was 90 seconds and a phone that refused to install.</p>
-<p>The client’s bundle ballooned to 5.1 MB after adding Tailwind and a few third-party charts. We thought React Server Components would magically shrink it. It didn’t. Not until we stopped treating RSC as a feature toggle and started treating it like a deployment constraint.</p>
-<p>The docs tell you to move logic to the server. That’s fine if your server is in the same AWS region as your users. But in Kigali or Lagos, latency matters more than server location. The real trick is not “move it to the server,” it’s “move the heavy parts to the server and keep the user flow on the client.”</p>
-<p>What surprised me was how much weight came from things I didn’t expect: date-fns locale bundles, moment-timezone, and a single 300 KB SVG sprite that included every country flag. None of those are React components, but they still bloat the client. Server Components can only help if you audit the entire dependency tree, not just the React files.</p>
-<p>If you’re coming from a traditional SPA, your bundle size is probably 60–70% dependencies. That’s the first place to look. Move the dependency-heavy modules to the server, then stream the minimal UI to the client.</p>
-<h2 id="how-how-i-use-server-components-to-cut-client-bundle-size-without-rewriting-everything-actually-works-under-the-hood">How How I use server components to cut client bundle size without rewriting everything actually works under the hood</h2>
-<p>Server Components run on the server and return plain data or lightweight UI snippets. The client never downloads the component code. Instead, the server streams a serialized representation that React can render without re-executing the full component.</p>
-<p>Here’s the key insight: the client only pays for the serialized output, not the component source. In Next.js 14, a Server Component renders to a special format called the “React Server Component Payload” (RSC Payload). The browser receives this payload and hydrates only the parts that need interactivity.</p>
-<p>The client’s React runtime (React 18.3 with the new RSC implementation) resolves those references lazily. That’s why a 5.1 MB bundle can become 1.6 MB after moving heavy modules to Server Components.</p>
-<p>The real magic happens in the compiler. Next.js 14’s compiler strips out Server Component code from the client build. You don’t need to rewrite your app as a monolith. You can keep your client-side hooks, context, and reducers. Just mark the components that render heavy data or third-party modules with <code>'use server'</code> or the <code>'use client'</code> directive.</p>
-<p>What I didn’t expect was that the compiler also removes any dependency only referenced by a Server Component. If you import date-fns in a Server Component, the client bundle no longer includes it. That’s the hidden lever most docs miss.</p>
-<p>Here’s a quick mental model:
-- Client Components: interactive, client-side logic, hooks, state. - Server Components: data fetching, heavy dependencies, rendering logic. - Shared modules: utilities used by both, but compiled away from the client if only used in Server Components.</p>
-<p>The boundary isn’t just about where the code runs—it’s about what the client downloads. Move the heavy lifting to the server, and the client only pays for the rendered markup and minimal hydration code.</p>
-<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
-<p>We started with a Next.js 14 app bootstrapped with <code>create-next-app@14.2.3</code>. The initial client bundle was 4.2 MB. Our goal was to cut it to under 1.5 MB without rewriting the entire app.</p>
-<h3 id="step-1-audit-the-dependency-tree">Step 1: Audit the dependency tree</h3>
-<p>We used <code>next-bundle-analyzer@0.6.8</code> to visualize the bundle:</p>
-<pre><code class="language-bash">npm install --save-dev next-bundle-analyzer@0.6.8
+                <p>React Server Components (RSC) are usually introduced as a data-fetching feature. In practice, their most measurable effect is on the client bundle: code that only ever executes on the server does not need to be shipped to the browser. That sounds trivial, and the documentation states it plainly, but the consequences are easy to misjudge. Teams routinely expect a large drop from adding a directive to one or two files and see almost nothing, because the weight was never in the React components — it was in the dependency tree underneath them.</p>
+<p>This article covers what RSC actually removes from the client build, how to find the removable weight, a worked migration with code, how to measure the result honestly, and the failure modes that show up after the first successful deploy.</p>
+<h2 id="what-the-client-actually-downloads">What the client actually downloads</h2>
+<p>A Server Component runs on the server and produces a serialized description of UI rather than JavaScript that the browser must execute. The browser receives that serialized output — in the React ecosystem usually called the RSC payload — and renders it. The component's own source code is never part of the client bundle.</p>
+<p>The important detail is transitive. If a module is imported only by Server Components, the bundler can drop that module and everything it pulls in from the client graph. The saving is not limited to the component file. A single <code>import</code> of a date library inside a Server Component can remove that library, its locale data, and its transitive dependencies from what the browser downloads.</p>
+<p>That leads to a useful mental model:</p>
+<ul>
+<li><strong>Client Components</strong> — interactive, hold state, use hooks and browser APIs. Their code and dependencies ship to the browser.</li>
+<li><strong>Server Components</strong> — fetch data, render markup, import heavy libraries. Their code does not ship.</li>
+<li><strong>Shared modules</strong> — used by both. They ship if any Client Component reaches them.</li>
+</ul>
+<p>The boundary is therefore not primarily about where code executes. It is about what the client is forced to download. A module used by exactly one Server Component and nothing else is free, from the browser's point of view.</p>
+<p>Two caveats matter from the start. First, the RSC payload itself has a size; a Server Component that renders an enormous tree produces a large payload even though no component code ships. Second, the client still ships the framework runtime and every Client Component, so there is a floor you cannot go below.</p>
+<h2 id="finding-the-removable-weight">Finding the removable weight</h2>
+<p>Before changing anything, get a picture of the client bundle. The standard approach is a bundle analyzer that produces a treemap of the client build.</p>
+<pre><code class="language-bash">npm install --save-dev @next/bundle-analyzer
 </code></pre>
-<p>Then in <code>next.config.js</code>:</p>
-<pre><code class="language-javascript">const withBundleAnalyzer = require('@next/bundle-analyzer')({
+<pre><code class="language-javascript">// next.config.js
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
@@ -299,314 +294,173 @@ module.exports = withBundleAnalyzer({
   // ... rest of config
 });
 </code></pre>
-<p>Running <code>ANALYZE=true npm run build</code> gave us a treemap. The biggest offenders:
-- <code>date-fns-tz@2.3.0</code>: 280 KB minified
-- <code>react-datepicker@6.1.0</code>: 180 KB
-- <code>react-icons@5.2.1</code>: 220 KB (SVG sprites)
-- <code>lodash-es@4.17.21</code>: 60 KB (used in one utility function)</p>
-<p>Total: 740 KB of dependencies that could be moved to the server.</p>
-<h3 id="step-2-identify-the-server-component-candidates">Step 2: Identify the Server Component candidates</h3>
-<p>We looked for components that:
-- Fetch data (API calls, database queries)
-- Render large datasets (tables, charts, lists)
-- Use heavy third-party libraries (date formatting, icons, maps)</p>
-<p>The <code>DashboardPage</code> component was a clear candidate. It fetched patient records and rendered a chart with <code>react-datepicker</code> and <code>date-fns-tz</code>.</p>
-<h3 id="step-3-convert-to-server-component">Step 3: Convert to Server Component</h3>
-<p>We changed the file name from <code>DashboardPage.client.js</code> to <code>DashboardPage.server.js</code> and removed the <code>'use client'</code> directive. Then we moved the date picker logic to a separate Client Component.</p>
-<p>Old (Client Component):</p>
+<p>Then build with analysis enabled:</p>
+<pre><code class="language-bash">ANALYZE=true npm run build
+</code></pre>
+<p>What to look for, in order:</p>
+<ol>
+<li><strong>Large third-party libraries reached from a single page or component.</strong> Date formatting, timezone data, icon sets, charting, map tiles, rich-text editors, and syntax highlighters are common offenders. These are frequently used in exactly one place.</li>
+<li><strong>Locale and dataset bundles.</strong> A date library that imports all locales, or an icon package that bundles every icon as a sprite, can dwarf the code that uses it.</li>
+<li><strong>Utility libraries pulled in for one function.</strong> A full utility package imported for a single <code>debounce</code> or <code>cloneDeep</code> is pure overhead.</li>
+<li><strong>Duplicated framework copies.</strong> Two versions of the same library in the graph usually indicate a version mismatch somewhere in the tree.</li>
+</ol>
+<p>A useful heuristic: for each large chunk, ask whether any interactive behaviour depends on it. If the library only produces markup or transforms data before render, it is a candidate for the server.</p>
+<h2 id="a-worked-migration">A worked migration</h2>
+<p>The following is a representative refactor of a dashboard page. The numbers used are illustrative and chosen to make the arithmetic checkable; the method is what matters, and the section after this explains how to measure your own.</p>
+<p>Suppose a client bundle of 1.4 MB (minified, before compression) breaks down roughly like this:</p>
+<ul>
+<li>Framework runtime and router: 300 KB</li>
+<li>Date/timezone library plus locale data: 280 KB</li>
+<li>Date picker component: 180 KB</li>
+<li>Icon set bundled as SVG sprites: 220 KB</li>
+<li>Application components and state: 420 KB</li>
+</ul>
+<p>The date library, picker, and icon set total 680 KB. If all three are used only to render static or semi-static markup, they are candidates for removal from the client graph. The realistic target is not zero for those modules — the picker is interactive and must stay client-side — but the date library and icon set may be removable entirely.</p>
+<h3 id="step-1-split-data-fetching-from-interactivity">Step 1: Split data fetching from interactivity</h3>
+<p>The original page is a Client Component that fetches data, formats dates, renders icons, and hosts a date picker.</p>
 <pre><code class="language-javascript">'use client';
+import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { format } from 'date-fns-tz';
 
 export default function DashboardPage() {
   const [startDate, setStartDate] = useState(new Date());
-  // ...
-  return &lt;DatePicker selected={startDate} onChange={setStartDate} /&gt;;
-}
-</code></pre>
-<p>New (Server Component for data, Client Component for interactivity):</p>
-<p><code>DashboardPage.server.js</code>:</p>
-<pre><code class="language-javascript">// No 'use client' directive
-import { fetchPatients } from '@/lib/patients';
-import PatientTable from '@/components/PatientTable.server';
-import ChartCard from '@/components/ChartCard.server';
+  const [patients, setPatients] = useState([]);
 
-export default async function DashboardPage() {
-  const patients = await fetchPatients();
+  useEffect(() =&gt; {
+    fetch('/api/patients')
+      .then((r) =&gt; r.json())
+      .then(setPatients);
+  }, []);
+
   return (
     &lt;div&gt;
-      &lt;PatientTable patients={patients} /&gt;
-      &lt;ChartCard startDate={patients[0]?.createdAt} /&gt;
+      &lt;p&gt;Last updated {format(new Date(), 'yyyy-MM-dd')}&lt;/p&gt;
+      &lt;DatePicker selected={startDate} onChange={setStartDate} /&gt;
+      {/* table of patients */}
     &lt;/div&gt;
   );
 }
 </code></pre>
-<p><code>ChartCard.server.js</code>:</p>
-<pre><code class="language-javascript">// Still a Server Component
+<h3 id="step-2-move-fetching-and-formatting-to-a-server-component">Step 2: Move fetching and formatting to a Server Component</h3>
+<p>The page becomes a Server Component. It fetches directly and formats dates on the server. Only the picker remains a Client Component.</p>
+<pre><code class="language-javascript">// app/dashboard/page.js  (Server Component - no 'use client')
+import { format } from 'date-fns-tz';
+import { fetchPatients } from '@/lib/patients';
+import PatientTable from '@/components/PatientTable';
 import DatePickerClient from '@/components/DatePicker.client';
 
-export default function ChartCard({ startDate }) {
-  return &lt;DatePickerClient initialDate={startDate} /&gt;;
+export default async function DashboardPage() {
+  const patients = await fetchPatients();
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Last updated {format(new Date(), 'yyyy-MM-dd')}&lt;/p&gt;
+      &lt;DatePickerClient initialDate={patients[0]?.createdAt ?? null} /&gt;
+      &lt;PatientTable patients={patients} /&gt;
+    &lt;/div&gt;
+  );
 }
 </code></pre>
-<p><code>DatePicker.client.js</code>:</p>
-<pre><code class="language-javascript">'use client';
+<pre><code class="language-javascript">// components/PatientTable.js  (Server Component)
+import { formatInTimeZone } from 'date-fns-tz';
+
+export default function PatientTable({ patients }) {
+  return (
+    &lt;table&gt;
+      &lt;tbody&gt;
+        {patients.map((p) =&gt; (
+          &lt;tr key={p.id}&gt;
+            &lt;td&gt;{p.name}&lt;/td&gt;
+            &lt;td&gt;{formatInTimeZone(p.createdAt, 'UTC', 'yyyy-MM-dd HH:mm')}&lt;/td&gt;
+          &lt;/tr&gt;
+        ))}
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  );
+}
+</code></pre>
+<pre><code class="language-javascript">// components/DatePicker.client.js
+'use client';
+import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 
 export default function DatePickerClient({ initialDate }) {
-  const [startDate, setStartDate] = useState(initialDate);
-  return &lt;DatePicker selected={startDate} onChange={setStartDate} /&gt;;
-}
-</code></pre>
-<p>Notice how <code>date-fns-tz</code> is only imported in the Server Component. The client never sees it.</p>
-<h3 id="step-4-stream-the-rsc-payload">Step 4: Stream the RSC payload</h3>
-<p>Next.js 14 streams the RSC payload automatically when you use <code>next/stream</code>. You don’t need to do anything extra unless you’re using streaming manually for large datasets.</p>
-<p>We added a simple loading UI in <code>app/layout.js</code>:</p>
-<pre><code class="language-javascript">import { Suspense } from 'react';
-
-export default function RootLayout({ children }) {
-  return (
-    &lt;html lang=&quot;en&quot;&gt;
-      &lt;body&gt;
-        &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
-          {children}
-        &lt;/Suspense&gt;
-      &lt;/body&gt;
-    &lt;/html&gt;
-  );
-}
-</code></pre>
-<p>The browser receives the RSC payload as a stream and hydrates the Client Components as they become ready.</p>
-<h3 id="step-5-verify-the-client-bundle">Step 5: Verify the client bundle</h3>
-<p>After the changes, we rebuilt with <code>ANALYZE=true</code> and saw the client bundle drop to 1.6 MB. The <code>date-fns-tz</code>, <code>react-datepicker</code>, and <code>react-icons</code> no longer appeared in the client bundle. They were either compiled away or included in the server-side Node.js runtime.</p>
-<p>We also confirmed the RSC payload was small (under 20 KB) and loaded quickly even on slow networks.</p>
-<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>We deployed this to a Next.js 14 app serving clinics in Nairobi and Kampala. The app runs on a t3.medium EC2 instance in us-east-1, with CloudFront in front. Users access it via low-end Android phones on 3G.</p>
-<h3 id="bundle-size-reduction">Bundle size reduction</h3>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before</th>
-<th>After</th>
-<th>Reduction</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Client bundle (unzipped)</td>
-<td>4.2 MB</td>
-<td>1.6 MB</td>
-<td>62%</td>
-</tr>
-<tr>
-<td>First meaningful paint (3G)</td>
-<td>3.8 s</td>
-<td>1.1 s</td>
-<td>71%</td>
-</tr>
-<tr>
-<td>Time to interactive (3G)</td>
-<td>8.2 s</td>
-<td>2.4 s</td>
-<td>71%</td>
-</tr>
-<tr>
-<td>Lighthouse performance score</td>
-<td>47</td>
-<td>89</td>
-<td>+42 pts</td>
-</tr>
-</tbody>
-</table>
-<p>The 62% reduction came from moving 740 KB of dependencies to the server. The remaining 1.6 MB includes React runtime, Next.js client code, and a few lightweight utilities.</p>
-<h3 id="real-user-metrics-30-days">Real user metrics (30 days)</h3>
-<ul>
-<li>95th percentile TTI on 3G: 2.8 s (was 9.1 s)</li>
-<li>Crash-free rate: 99.8% (was 98.1%)</li>
-<li>App size after install: 4.3 MB (was 8.7 MB)</li>
-</ul>
-<p>The most surprising result was the crash-free rate. On low-end devices, large bundles cause memory pressure and crashes during install. Cutting the bundle in half eliminated most of those failures.</p>
-<h3 id="cost-impact">Cost impact</h3>
-<p>We run 12 EC2 t3.medium instances across two regions. Before the change, CPU utilization was 65% during peak hours. After, it dropped to 42% because the server spends less time serializing large component trees. The CloudFront cache hit ratio improved from 78% to 91% because the response size decreased.</p>
-<p>That’s $270/month for a single app serving a few hundred users. Scale that to 10 apps, and it’s real money.</p>
-<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
-<h3 id="1-server-side-timeouts-breaking-interactivity">1. Server-side timeouts breaking interactivity</h3>
-<p>I hit this when a Server Component fetched a list of 5,000 patient records and tried to render them all at once. The server timed out after 30 seconds, and the client showed a blank screen. The error message was cryptic: <code>Error: RSC payload exceeded size limit</code>.</p>
-<p>The fix was to use React’s <code>Suspense</code> boundary and stream the data in chunks. We switched to a paginated query and added a loading state:</p>
-<pre><code class="language-javascript">// DashboardPage.server.js
-import { fetchPatientsPaginated } from '@/lib/patients';
-
-export default async function DashboardPage() {
-  return (
-    &lt;Suspense fallback={&lt;PatientsTableSkeleton /&gt;}&gt;
-      &lt;PatientsTable page={1} /&gt;
-    &lt;/Suspense&gt;
-  );
-}
-</code></pre>
-<p>The <code>PatientsTable</code> component fetches one page at a time and streams the HTML to the client. The server only holds the current page in memory.</p>
-<h3 id="2-client-components-breaking-server-component-boundaries">2. Client Components breaking Server Component boundaries</h3>
-<p>If you import a Client Component inside a Server Component without the correct directive, Next.js throws an error. The error message is not helpful: <code>Error: Only Server Components can be async</code>.</p>
-<p>The fix is to mark the file with <code>'use client'</code> and ensure you’re not accidentally importing hooks or browser APIs in the Server Component.</p>
-<h3 id="3-third-party-libraries-that-assume-client-side-execution">3. Third-party libraries that assume client-side execution</h3>
-<p>Some libraries like <code>react-hook-form</code> or <code>framer-motion</code> expect to run in the browser. If you import them in a Server Component, you’ll get runtime errors when the server tries to execute browser APIs like <code>window</code> or <code>document</code>.</p>
-<p>We hit this with <code>react-hook-form@7.51.0</code>. The server threw <code>ReferenceError: window is not defined</code>. The fix was to move the form to a Client Component and pass the initial values from the Server Component:</p>
-<pre><code class="language-javascript">// Form.server.js
-import FormClient from '@/components/Form.client';
-
-export default function FormServer({ initialData }) {
-  return &lt;FormClient initialData={initialData} /&gt;;
-}
-</code></pre>
-<h3 id="4-over-fetching-and-slow-responses">4. Over-fetching and slow responses</h3>
-<p>Moving data fetching to the server doesn’t automatically make it fast. If your Server Component fetches 100 KB of data and streams 500 KB of HTML, the client still waits.</p>
-<p>We use <code>ioredis@5.4.1</code> for caching:</p>
-<pre><code class="language-javascript">import { Redis } from 'ioredis@5.4.1';
-const redis = new Redis(process.env.REDIS_URL);
-
-async function fetchPatientsCached() {
-  const cached = await redis.get('patients:latest');
-  if (cached) return JSON.parse(cached);
-  const patients = await fetchPatients();
-  await redis.set('patients:latest', JSON.stringify(patients), 'EX', 300);
-  return patients;
-}
-</code></pre>
-<p>Redis cut the data fetch time by 80% and reduced server load.</p>
-<h3 id="5-hydration-mismatches">5. Hydration mismatches</h3>
-<p>If the server renders a different tree than the client expects, React throws a hydration error. We saw this when a Server Component returned a <code>&lt;select&gt;</code> with a default value, but the Client Component on the client had a different default. The error was <code>Warning: Text content does not match server-rendered HTML</code>.</p>
-<p>The fix was to ensure the initial props passed to the Client Component match exactly what the Server Component rendered. We added a <code>useEffect</code> on the client to sync state after hydration:</p>
-<pre><code class="language-javascript">'use client';
-import { useEffect, useState } from 'react';
-
-export default function DatePickerClient({ initialDate }) {
-  const [date, setDate] = useState(initialDate);
-  useEffect(() =&gt; {
-    if (date !== initialDate) setDate(initialDate);
-  }, [initialDate]);
+  const [date, setDate] = useState(initialDate ? new Date(initialDate) : new Date());
   return &lt;DatePicker selected={date} onChange={setDate} /&gt;;
 }
 </code></pre>
-<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
-<table>
-<thead>
-<tr>
-<th>Tool/Library</th>
-<th>Version</th>
-<th>Why it matters</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Next.js</td>
-<td>14.2.3</td>
-<td>Built-in RSC, streaming, and App Router</td>
-</tr>
-<tr>
-<td><code>next-bundle-analyzer</code></td>
-<td>0.6.8</td>
-<td>Visualize client bundle before/after</td>
-</tr>
-<tr>
-<td><code>ioredis</code></td>
-<td>5.4.1</td>
-<td>Fast Redis client for caching</td>
-</tr>
-<tr>
-<td><code>@tanstack/react-query</code></td>
-<td>5.40.0</td>
-<td>Data fetching with caching and retries</td>
-</tr>
-<tr>
-<td><code>date-fns</code></td>
-<td>2.30.0</td>
-<td>Smaller than moment, modular imports</td>
-</tr>
-<tr>
-<td><code>@next/font</code></td>
-<td>14.2.3</td>
-<td>Self-host fonts to avoid layout shift</td>
-</tr>
-<tr>
-<td><code>react-server-dom-webpack</code></td>
-<td>18.3.1</td>
-<td>Low-level RSC utilities if you need them</td>
-</tr>
-</tbody>
-</table>
-<p>You can fetch data in a Server Component and pass the result to a Client Component via props. The client doesn’t download the query logic because it only runs in the Server Component.</p>
-<p>We also use <code>@next/font@14.2.3</code> to self-host Inter and Fira Code. Without it, the browser would download Google Fonts, adding 300 KB and blocking rendering. Self-hosting cut our font load time from 1.2 s to 180 ms.</p>
-<p>If you’re using TypeScript, enable <code>strict: true</code> in <code>tsconfig.json</code>. The RSC compiler is stricter than regular React, and you’ll catch errors early.</p>
-<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
-<h3 id="1-your-team-cant-reason-about-async-boundaries">1. Your team can’t reason about async boundaries</h3>
-<p>Server Components introduce a new mental model. If your team isn’t comfortable with async data fetching or streaming, the complexity will outweigh the benefits. I’ve seen teams spend weeks debugging hydration errors because they didn’t understand how Server Components work.</p>
-<h3 id="2-youre-building-a-real-time-dashboard">2. You’re building a real-time dashboard</h3>
-<p>Server Components are great for static or semi-static pages. If you need WebSocket connections or frequent updates, keep the logic client-side. We tried using Server Components for a live patient monitoring dashboard, and the polling overhead made the client bundle grow back to 3.8 MB.</p>
-<h3 id="3-your-server-is-in-a-different-region">3. Your server is in a different region</h3>
-<p>If your Next.js server is in us-east-1 and your users are in Lagos, the latency will hurt more than the bundle size helps. In that case, consider an edge runtime like Cloudflare Workers or Vercel Edge Functions. The RSC payload will still be small, but the round-trip time might negate the benefits.</p>
-<h3 id="4-you-rely-on-browser-only-apis">4. You rely on browser-only APIs</h3>
-<p>Libraries like <code>localStorage</code>, <code>sessionStorage</code>, <code>navigator</code>, or WebRTC won’t work in Server Components. You’ll need to move those to Client Components. We hit this with a feature that stored user preferences in <code>localStorage</code>. The server threw <code>localStorage is not defined</code>, and we had to refactor the state to use cookies or server-side sessions.</p>
-<h3 id="5-your-app-is-a-pure-spa-with-no-server-rendering">5. Your app is a pure SPA with no server rendering</h3>
-<p>If you’re building a closed-system SPA (like an internal tool with no public API), Server Components add complexity without benefit. The client bundle won’t shrink much because you’re not using heavy dependencies. We saw this with a dashboard for a single NGO office. The bundle was already 1.2 MB, and moving logic to the server only saved 200 KB.</p>
-<h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>Server Components are not a silver bullet, but they’re the best tool I’ve found for cutting client bundle size without a full rewrite. The biggest win wasn’t the 62% reduction—it was the 30% drop in crash reports. Low-end devices just handle smaller bundles better.</p>
-<p>The downside is the cognitive overhead. You have to think about where data lives, how it’s fetched, and how it’s passed to the client. It’s not as simple as “move it to the server.” You have to design your components with the boundary in mind.</p>
-<p>I also underestimated how much weight comes from non-React dependencies. Moving <code>date-fns</code> and <code>react-icons</code> to the server saved more than moving the React components themselves. The docs don’t talk about this enough.</p>
-<p>If you’re coming from a traditional SPA, expect to spend a week refactoring. The first few components will feel clunky. But once you get the pattern, it becomes second nature.</p>
-<p>The real surprise was how much faster the app felt even on high-end devices. The smaller bundle meant less memory pressure, fewer GC pauses, and smoother animations. It wasn’t just a 3G optimization—it improved the experience for everyone.</p>
-<h2 id="what-to-do-next">What to do next</h2>
-<p>Open your client bundle report right now. Run <code>ANALYZE=true npm run build</code> and look at the top 10 largest chunks. Pick the chunk that’s &gt;200 KB and not core React/Next.js. Ask: “Can this dependency be moved to the server?”</p>
-<p>If the answer is yes, create a Server Component and move the import there. Then verify the client bundle size drops. Do this for three chunks today, and you’ll cut at least 600 KB from your bundle.</p>
-<p>If you don’t have a bundle analyzer, install <code>next-bundle-analyzer@0.6.8</code> and run the command above. It takes 10 minutes and gives you the data you need to make decisions.</p>
-<p>Don’t wait for a rewrite. Start with one component, measure, and iterate.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How do I know if a component should be Server or Client?</strong></p>
-<p>Start by asking: does this component fetch data, render heavy markup, or use browser-only APIs? If yes, it should be a Server Component. If it’s interactive (forms, buttons, drag-and-drop), it’s a Client Component. The boundary isn’t about size—it’s about what the client needs to download and execute.</p>
-<p><strong>What about React context and state management?</strong></p>
-<p>Server Components can’t use React context that depends on client state. If you need global state, use a library like Zustand or Jotai and initialize it in a Client Component. Pass the initial state as props from a Server Component. We use <code>zustand@4.5.2</code> with a <code>useHydrate</code> pattern to sync state after hydration.</p>
-<p><strong>Can I use Server Components with legacy code?</strong></p>
-<p>Yes, but you’ll need to add <code>'use client'</code> directives to any component that uses hooks or browser APIs. Start by identifying the root components that need interactivity, mark them as Client Components, and work your way up. Avoid mixing <code>'use client'</code> and <code>'use server'</code> in the same file.</p>
-<p><strong>What’s the smallest bundle size I can achieve?</strong></p>
-<p>The theoretical minimum is the React runtime (40 KB) plus Next.js client code (80 KB) plus your minimal UI markup. In practice, 1.2–1.8 MB is achievable for a medium-sized app. We hit 1.6 MB with 12 pages and 8 third-party dependencies. If you’re under 1 MB, you’re doing well.</p>
-<p><strong>Do Server Components work with dynamic imports?</strong></p>
-<p>Yes, but dynamic imports in Server Components are resolved on the server. The client never downloads the code. If you need code-splitting for large components, use <code>React.lazy</code> in Client Components or dynamic imports in Server Components with <code>next/dynamic</code>. We use <code>next/dynamic@14.2.3</code> for code-splitting heavy charts.</p>
-<p><strong>What about SEO and crawlers?</strong></p>
-<p>Server Components render on the server, so crawlers see the full HTML. The RSC payload is for hydration, not SEO. We saw no drop in Google rankings after switching to Server Components. In fact, the faster page loads improved our Core Web Vitals scores, which indirectly boosts SEO.</p>
-<p><strong>How do I debug hydration errors?</strong></p>
-<p>Hydration errors happen when the server and client render different trees. Use React’s <code>useEffect</code> to log the rendered tree on the client:</p>
-<pre><code class="language-javascript">'use client';
-import { useEffect } from 'react';
+<p>After this change, <code>date-fns-tz</code> is reachable only from Server Components, so it leaves the client graph. <code>react-datepicker</code> remains, because the picker is interactive.</p>
+<h3 id="step-3-stream-slow-sections">Step 3: Stream slow sections</h3>
+<p>If a section is slow to produce, wrap it in a Suspense boundary so the rest of the page can be sent first. In the App Router, a <code>loading.js</code> file next to a route segment provides the fallback automatically; an explicit boundary gives finer control.</p>
+<pre><code class="language-javascript">import { Suspense } from 'react';
+import PatientTable from '@/components/PatientTable';
+import { fetchPatients } from '@/lib/patients';
 
-export default function DebugTree() {
-  useEffect(() =&gt; {
-    console.log(document.getElementById('root').innerHTML);
-  }, []);
-  return null;
+export default function DashboardPage() {
+  return (
+    &lt;section&gt;
+      &lt;Suspense fallback={&lt;p&gt;Loading patients…&lt;/p&gt;}&gt;
+        &lt;Patients /&gt;
+      &lt;/Suspense&gt;
+    &lt;/section&gt;
+  );
+}
+
+async function Patients() {
+  const patients = await fetchPatients();
+  return &lt;PatientTable patients={patients} /&gt;;
 }
 </code></pre>
-<p>Compare the server-rendered HTML with the client HTML. The mismatch is usually a missing prop or a conditional render that behaves differently on the client.</p>
-<p><strong>Can I use Server Components with a REST API?</strong></p>
-<p>Yes, but wrap the API calls in a utility function and cache the results. We use <code>@tanstack/react-query@5.40.0</code> for data fetching in Server Components. The query runs on the server, and the result is passed to the client as props. If you’re using REST without caching, you’ll negate the performance benefits of Server Components.</p>
-<p><strong>What’s the performance impact on the server?</strong></p>
-<p>Server Components add CPU overhead because the server serializes the component tree to the RSC payload. In our tests, the CPU usage per request increased by 12–18% compared to static HTML. However, the total server load decreased because the client bundles were smaller and required less hydration. The net effect was a 25% reduction in EC2 costs.</p>
-<p><strong>How do I handle authentication and user-specific data?</strong></p>
-<p>Use Next.js middleware to set auth cookies or headers, then read them in Server Components via <code>cookies()</code> or <code>headers()</code>. Never store tokens in the RSC payload. We use NextAuth.js@4.24.5 with a custom session adapter that reads the session in middleware and passes it to Server Components via props.</p>
-<p><strong>What if I need to use a browser API in a Server Component?</strong></p>
-<p>You can’t. Move the code to a Client Component and pass the result as props. If you absolutely need a browser API, use a workaround like a hidden iframe or a service worker, but that’s a last resort. We tried using <code>document.cookie</code> in a Server Component and spent three days debugging before realizing it was impossible.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>Streaming changes perceived performance rather than bundle size. It is worth doing, but it is not a substitute for removing weight.</p>
+<h3 id="step-4-re-measure">Step 4: Re-measure</h3>
+<p>Rebuild with the analyzer and compare the same chunks you recorded before. The date library should be gone from the client graph; the picker should remain. If a module you expected to disappear is still present, something on the client still imports it — often a shared utility file, a barrel export, or a type-only import that was not marked as such.</p>
+<h2 id="how-to-measure-the-result-honestly">How to measure the result honestly</h2>
+<p>Bundle size claims are easy to make and hard to verify, so measure in a way that can be repeated.</p>
+<p><strong>Client bundle size.</strong> Record the size of the client JavaScript reported by the build output, before and after. Report both minified and gzipped or brotli-compressed figures, and state which. A useful convention is to report the total of all client chunks plus the framework runtime.</p>
+<p><strong>RSC payload size.</strong> The payload is a separate transfer. Inspect it in the browser's network panel by filtering for the document or the RSC request, and record its compressed size. A payload that grows to hundreds of kilobytes can offset the JavaScript you removed.</p>
+<p><strong>Interaction timing.</strong> Use Lighthouse or the browser's performance panel in a throttled profile that matches your target device and network. Record first contentful paint and time to interactive. Run each measurement several times and report a range, not a single number; variance on throttled mobile profiles is large.</p>
+<p><strong>Real-user data.</strong> If you have field data (for example from a web-vitals reporting library), compare the same percentile before and after: p75 or p95 for the metrics you care about. Aggregate field data is the only honest source for claims about real users.</p>
+<p><strong>Server cost.</strong> Watch CPU time per request and memory per instance, because serializing large trees costs server CPU. Compare request latency percentiles before and after, and watch for regressions in the server-rendered path.</p>
+<p>A worked arithmetic example, using illustrative figures: if the client JavaScript drops from 1.4 MB to 0.9 MB minified, that is a 500 KB reduction, or roughly 36% of the original. If the same assets compress to about 30% of their minified size, the transfer drops from roughly 420 KB to 270 KB. State the assumption (the compression ratio) explicitly, because it varies with content.</p>
+<h2 id="failure-modes">Failure modes</h2>
+<p>These are the problems that tend to appear after the first successful migration.</p>
+<h3 id="oversized-payloads">Oversized payloads</h3>
+<p>A Server Component that renders thousands of rows produces a large serialized payload, and the browser still has to parse it. The symptom is a page that ships little JavaScript but still feels slow, with a large document transfer. The fix is pagination or virtualization on the server side, plus streaming so the shell arrives first. The payload is a real cost, not a free channel.</p>
+<h3 id="client-libraries-that-assume-a-browser">Client libraries that assume a browser</h3>
+<p>Many libraries touch <code>window</code>, <code>document</code>, or <code>localStorage</code> at import time or during render. Importing one into a Server Component produces a <code>ReferenceError</code> on the server. The fix is to keep the library in a Client Component and pass data in as props. When a library's entry point has import-time side effects, even a type-only or unused import can trigger the error; check that imports are genuinely server-safe.</p>
+<h3 id="hydration-mismatches">Hydration mismatches</h3>
+<p>If the server renders different markup than the client produces on first render, React reports a mismatch. Common causes are <code>Date.now()</code>, <code>Math.random()</code>, locale-dependent formatting, and reading a value that differs between environments. The reliable fix is to render the same value on both sides: compute it on the server and pass it down, or defer the differing part to an effect after mount. Adding an effect that rewrites state to match a prop is usually a symptom of a value that should have been passed correctly in the first place.</p>
+<h3 id="accidental-client-imports">Accidental client imports</h3>
+<p>A shared utility file that imports a heavy library will pull that library into the client bundle for every consumer, even if the heavy function is never called on the client. Barrel files that re-export everything are a common cause. Split shared modules so that server-only helpers live in files that no Client Component imports.</p>
+<h3 id="cache-and-data-fetching-regressions">Cache and data-fetching regressions</h3>
+<p>Moving a fetch to the server does not make it fast. A slow query now blocks the server render instead of showing a client-side spinner, which can make perceived performance worse. Cache aggressively where the data allows, and stream the slow parts so the rest of the page is not held hostage.</p>
+<h3 id="server-cpu-growth">Server CPU growth</h3>
+<p>Serializing component trees costs CPU. On high-traffic routes this can shift load from the client to the server in a way that shows up as higher instance CPU and latency. Measure server CPU per request before and after, and consider caching rendered output for routes that are expensive and rarely change.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<p>RSC is not universally beneficial. It is a poor fit when:</p>
 <ul>
-<li><a href="https://kubaik.github.io/nextjs-15-vs-remix-vs-sveltekit-2026-choices/">Next.js 15 vs Remix vs SvelteKit: 2026 choices</a></li>
-<li><a href="https://kubaik.github.io/react-19-compiler-my-components-changed-how/">React 19 compiler: my components changed how</a></li>
-<li><a href="https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/">AI UI tools broke my React flow — here’s why</a></li>
+<li><strong>The page is inherently real-time.</strong> Live dashboards driven by sockets or frequent polling keep their logic on the client; the server-rendered path adds overhead without removing much weight.</li>
+<li><strong>Server and users are far apart.</strong> If the server is in one region and users are on another continent, added round trips can cost more than the bundle saving. Edge runtimes can help, but the latency budget should be measured, not assumed.</li>
+<li><strong>The bundle is already small.</strong> If the app has few heavy dependencies, moving logic to the server saves little and adds a new mental model. A small internal tool may gain nothing.</li>
+<li><strong>The team is not comfortable with async boundaries.</strong> Server and Client Components have different rules, and mistakes surface as runtime errors rather than compile-time ones. The cost of confusion can exceed the benefit.</li>
+<li><strong>Browser APIs are central.</strong> Anything relying on <code>localStorage</code>, <code>navigator</code>, or device APIs must stay on the client. If most of the app is like this, the boundary buys little.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I decide whether a component should be a Server or Client Component?</strong></p>
+<p>Ask what the component needs. If it fetches data, renders large markup, or imports heavy libraries, it can be a Server Component. If it holds state, uses effects, or attaches event handlers, it must be a Client Component. The decision is about the component's needs, not its size.</p>
+<p><strong>Can Server Components use React context?</strong></p>
+<p>Server Components cannot read context that is created and updated on the client. If global state is needed, keep the provider in a Client Component and pass initial values from a Server Component as props. State libraries that support hydration from server-provided initial state work well here.</p>
+<p><strong>Do dynamic imports help?</strong></p>
+<p>Dynamic imports inside a Server Component are resolved on the server and do not ship to the client. On the client, <code>React.lazy</code> or the framework's dynamic import helper still provides code splitting. Use the client-side form where the goal is to defer interactive code.</p>
+<p><strong>Does this affect SEO?</strong></p>
+<p>Server-rendered output is available to crawlers as HTML. The RSC payload is for hydration. As with any server-rendered framework, verify with your own crawl or a rendering test rather than assuming.</p>
+<p><strong>How do I debug a hydration mismatch?</strong></p>
+<p>Compare the server-rendered HTML with what the client produces on first render. The usual culprits are time, randomness, and locale-dependent formatting. Remove the non-determinism by computing values on the server and passing them down.</p>
+<p><strong>Can I mix Server and Client Components in the same tree?</strong></p>
+<p>Yes. A Server Component can render a Client Component, and a Client Component can render another Client Component. A Client Component cannot import a Server Component directly, but it can receive one as a <code>children</code> prop. This is the mechanism for composing interactive shells around server-rendered content.</p>
+<h2 id="a-30-minute-action">A 30-minute action</h2>
+<p>Open a terminal in your project and run your build with bundle analysis enabled. Find the single largest client chunk that is not framework runtime, and check whether anything interactive depends on it. If nothing does, move that import into a Server Component, rebuild, and compare the same chunk's size before and after. One measured change, with the number written down, is worth more than a plan to migrate everything.</p>
                 
                 
             </div>

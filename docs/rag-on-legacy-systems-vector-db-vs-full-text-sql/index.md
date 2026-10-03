@@ -1,246 +1,189 @@
 # RAG on legacy systems: vector DB vs. full-text SQL
 
-After reviewing a lot of code that touches claude gpt5, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.
+## The real problem: retrofitting retrieval onto systems that predate JSON
 
-## Why this comparison matters right now
+Adding retrieval-augmented generation to an existing enterprise system is usually framed as an AI problem. It is not. It is a data plumbing problem, and the plumbing was installed long before anyone expected a chat completion endpoint to be attached to it.
 
-In 2026, every legacy enterprise system is getting a RAG layer slapped on top like it’s the latest JavaScript framework. I’ve watched teams burn six-figure cloud budgets chasing semantic search that ends up slower than their 2018 Oracle queries. This post is what I wish I had before my first production RAG rollout.
+A typical legacy stack looks like this: a Java or .NET application server, an Oracle or SQL Server database, a message queue for internal integration, and a strict change-control process around the database schema. None of these components were designed to store or query high-dimensional vectors, and none of them speak the HTTP/JSON conventions that most AI services assume. The team's job is to make retrieval work without breaking the SLA that the existing system already meets.
 
-The core problem isn’t the vector search itself. It’s wiring RAG into systems built before JSON existed. Most enterprise stacks still run on Java 8 or .NET Framework 4.8, with Oracle 11g or SQL Server 2016 under the hood. Those systems don’t speak REST natively, let alone chat completions. You’re not migrating to cloud-native; you’re retrofitting a 2026 AI feature onto a 2014 infrastructure.
+Two architectural patterns dominate this retrofit:
 
-Two patterns dominate today:
-- **Vector DB approach**: keep the legacy store dumb, ship vectors out to a dedicated vector database (Weaviate 1.22, Milvus 2.4, or pgvector 0.7). - **Full-text SQL approach**: extend the existing relational schema with vector columns and functions (PostgreSQL 16 + pgvector 0.7, SQL Server 2026 with vector search).
+- **Dedicated vector database**: keep the legacy store unchanged, publish document chunks and their embeddings to a separate vector service, and query it over the network.
+- **In-database vector search**: add vector columns and an approximate-nearest-neighbour (ANN) index to the existing relational database, so retrieval happens inside the same transaction boundary the application already uses.
 
-I’ve run both in production for a year. The first cost $42k/month in inference and vector DB hosting; the second cut that to $8k/month while keeping the same SLA. This comparison is the raw trade-off data I wish I had when my CFO asked why the AI pilot budget exploded.
+The rest of this article compares them on latency, cost, operational burden, and developer experience, and ends with a decision checklist and a 30-minute experiment you can run to get your own numbers.
 
-## Option A — how it works and where it shines
+## Option A: a dedicated vector database
 
-The vector DB pattern offloads retrieval into a dedicated service. You push document chunks through an embedding model (all-MiniLM-L6-v2 for English, multilingual-e5-large for global users), store the vectors in a vector DB, then run semantic search via ANN queries. The legacy app only sees a REST call that returns a list of IDs.
+In this pattern the legacy application never stores embeddings. A separate ingestion job chunks documents, calls an embedding model, and writes the vectors to a vector service. At query time the application sends the user's text to an embedding endpoint, sends the resulting vector to the vector service, and receives a list of document IDs. The legacy database is only consulted afterwards, to fetch the full text of the matched documents.
 
-Here’s the minimal setup that worked in our Jakarta call-center app:
+The appeal is isolation. The vector service owns sharding, replication, and ANN index tuning. The legacy application only needs an HTTP client. This matters when the database is under a change freeze or when the application runs on a platform whose toolchain cannot be recompiled on demand.
+
+A minimal retrieval service looks like this:
 
 ```python
 # requirements.txt
-sentence-transformers==2.7.0  # Jan 2026 release
-weaviate-client==4.5.4        # Weaviate 1.22
-fastapi==0.110.2              # Jan 2026
-```
+sentence-transformers==2.7.0
+fastapi==0.110.2
 
-```python
 from fastapi import FastAPI
-from weaviate import Client
 from sentence_transformers import SentenceTransformer
 
 app = FastAPI()
-model = SentenceTransformer('all-MiniLM-L6-v2')
-client = Client('https://weaviate-cluster.prod.internal')
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
-@app.post('/retrieve')
+@app.post("/retrieve")
 def retrieve(query: str, limit: int = 3):
     vector = model.encode(query, convert_to_numpy=True)
-    result = client.query.get('DocumentChunk', ['document_id', 'chunk_text'])
-        .with_near_vector({'vector': vector.tolist()})
-        .with_limit(limit)
-        .do()
-    return [r['document_id'] for r in result['data']['Get']['DocumentChunk']]
+    results = vector_store.search(vector.tolist(), limit=limit)
+    return [r["document_id"] for r in results]
 ```
 
-The shine comes from isolation. Your 2014 ERP doesn’t need to know about embeddings. Weaviate/Milvus handle sharding, replication, and ANN index tuning separately. This is perfect when your legacy stack is frozen on quarterly patches and you can’t recompile the CICS module.
+The `vector_store` object is whatever client your chosen service provides. The important property is that it is a network call, with all the latency and failure characteristics of one.
 
-But the isolation is also the trap. Every hop between system A (legacy) and system B (vector DB) adds latency. In Manila, our cross-AZ Weaviate cluster added 28ms round-trip. Multiply that by three hops (app → API gateway → vector DB → embedding model), and you’re at 110ms before you even compute the LLM call. That’s 200ms total for simple queries, which violates the 150ms SLA our Manila call-center agents expect.
+### Where the isolation hurts
 
-Cost is another surprise. Weaviate Cloud on AWS m6g.xlarge costs $0.54/hr per node. We needed four nodes for 99.9% availability. That’s $3,888/month just for the vector DB. Add embedding model inference (3.2M tokens/day at $0.0004/1k tokens) and the bill hits $42k/month. The CFO nearly fired me.
+Every network hop adds latency. A request that traverses the application, an API gateway, the embedding service, and the vector service accumulates round-trip time at each step. On a well-provisioned cluster inside one availability zone this might be a few milliseconds per hop; across availability zones it is routinely tens of milliseconds. For a chat interface a 100 ms floor is tolerable. For an agent-facing search box with a 150 ms p95 target it is not.
 
-Where it shines:
-- Document schema changes require zero legacy downtime. - Vector index tuning happens in isolation; you can swap HNSW to ScaNN without touching the ERP. - Global scale: deploy vector DB in EU, US, and APAC regions; keep the legacy app regional.
+Cost has a similar shape. A managed vector service is typically priced per node per hour, and production availability requires more than one node. Embedding inference is priced per token. Both scale with query volume and document volume rather than with the number of users, which is unfamiliar to teams used to sizing for concurrent sessions.
 
-Where it fails:
-- Every extra hop costs latency and money. - Legacy apps that use COBOL copybooks or fixed-width files can’t serialize vectors without middleware. - Security model mismatch: legacy apps expect DCOM or MQ messaging; vector DB speaks REST + OAuth2. You’ll need a gateway service, another moving part.
+The isolation also creates a security seam. Legacy systems often authenticate with a message-queue credential or a database user. A vector service authenticates with an API key or an OAuth2 token. Bridging the two usually means writing a gateway service, which is one more component to deploy, monitor, and patch.
 
-## Option B — how it works and where it shines
+### Where it genuinely wins
 
-The full-text SQL pattern embeds vectors directly into the legacy database. PostgreSQL 16 added `pgvector 0.7` as an extension. SQL Server 2026 added `vector_search()` T-SQL functions. Your existing connection pool, transaction manager, and backup scripts all stay the same.
+- The legacy schema never changes, so no DBA approval is required for the retrieval feature itself.
+- The ANN index can be tuned or replaced without touching the application database.
+- Regional deployment is straightforward: run a vector service in each region and keep the legacy database where it is.
+- If the embedding model changes frequently, only the ingestion job and the retrieval service change.
 
-Here’s the minimal pattern we rolled out to our Lagos branch finance system (PostgreSQL 16 on RDS, 16 vCPU, 64GB RAM):
+## Option B: vector search inside the existing database
+
+In this pattern the embeddings live in the same database as the rest of the application data. PostgreSQL with the `pgvector` extension is the most common choice because it is open source and widely available on managed platforms. Other relational databases have added native vector types and distance operators, and the SQL below is representative of the general shape rather than specific to one vendor.
 
 ```sql
--- Enable pgvector
-CREATE EXTENSION vector;
+-- Enable the extension (requires privileges)
+CREATE EXTENSION IF NOT EXISTS vector;
 
--- Table for document chunks
 CREATE TABLE document_chunks (
     id bigserial PRIMARY KEY,
     document_id varchar(64) NOT NULL,
     chunk_text text NOT NULL,
-    embedding vector(384) NOT NULL  -- from all-MiniLM-L6-v2
+    embedding vector(384) NOT NULL
 );
 
--- Add HNSW index
-CREATE INDEX ON document_chunks USING hnsw (embedding vector_l2_ops);
+-- Approximate nearest-neighbour index
+CREATE INDEX ON document_chunks
+    USING hnsw (embedding vector_l2_ops);
 
--- Search function
-CREATE OR REPLACE FUNCTION semantic_search(query text, match_count int default 3)
+CREATE OR REPLACE FUNCTION semantic_search(query text, match_count int DEFAULT 3)
 RETURNS TABLE (document_id varchar(64), chunk_text text, score float) AS $$
 DECLARE
     query_embedding vector(384);
 BEGIN
-    query_embedding := (SELECT all_minilm_l6v2_embedding(query));
+    query_embedding := embed_text(query);
     RETURN QUERY
-    SELECT document_id, chunk_text, 1 - (embedding <=> query_embedding) as score
-    FROM document_chunks
-    ORDER BY embedding <=> query_embedding
+    SELECT
+        dc.document_id,
+        dc.chunk_text,
+        1 - (dc.embedding <=> query_embedding) AS score
+    FROM document_chunks dc
+    ORDER BY dc.embedding <=> query_embedding
     LIMIT match_count;
 END;
 $$ LANGUAGE plpgsql;
 ```
 
-The shine is obvious: one hop, one transaction, one backup policy. We cut our Jakarta call-center latency from 200ms to 85ms because we eliminated two network hops. The embedding model still runs on a dedicated GPU node (we use NVIDIA L4 24GB at $0.50/hr), but the search itself happens inside PostgreSQL. The total stack cost dropped from $42k/month to $8k/month.
+`embed_text` is a placeholder for whatever mechanism you use to turn a query string into a vector. It might be a call to an external embedding API, a call into a local model served over HTTP, or a database function that shells out to an inference runtime. The database does not embed text by itself.
 
-Where it shines:
-- Single hop means 60–70% latency reduction in our tests. Your 150ms SLA suddenly becomes achievable. - Cost collapse: no extra vector DB cluster; just more RAM for the buffer pool and a GPU for embeddings. - Operational simplicity: one connection string, one firewall rule, one backup job.
+### Where the consolidation helps
 
-Where it fails:
-- Schema changes still require DBA approval, and DBAs hate vectors. We had to fight for 16 hours to get the `pgvector` extension approved in our PCI-compliant environment. - Vector index tuning is harder inside PostgreSQL. HNSW works, but you’ll hit out-of-memory errors if your buffer pool is too small. We bumped shared_buffers to 24GB and still saw 15% cache hit ratio drops under heavy embedding generation. - Cross-region replication becomes tricky. PostgreSQL logical replication doesn’t copy vectors by default; you must write a custom trigger.
+The retrieval query and the follow-up query that fetches document metadata run in the same connection, often in the same transaction. There is no extra network hop, no second authentication scheme, and no second backup policy. Latency is dominated by the ANN index scan and the embedding call rather than by round trips.
 
-Our 2016 backup script assumed tables were under 2GB. pgvector chunks for 50k documents hit 12GB. The restore failed at 3am until we rewrote the script to use pg_dump with `--jobs 8`.
+Operationally, this is the smallest possible change. Existing connection pools, monitoring, and failover procedures apply unchanged. The main new requirement is memory: an HNSW index is held largely in memory, so the database instance must be sized for the index plus the working set.
 
-## Head-to-head: performance
+### Where it hurts
 
-We measured both patterns on identical hardware (AWS m6g.2xlarge, 8 vCPU, 32GB RAM, gp3 200GB) in three regions: US-East, EU-Central, AP-South-1. Load was 500 QPS for 30 minutes with JMeter. Here’s the raw data.
+- Schema changes require the same approval process as any other migration. In regulated environments, adding an extension can be a multi-week review.
+- Index builds and rebuilds consume memory and I/O. On a database that is already near its memory limit, a rebuild can push it over.
+- Logical replication does not automatically carry vector columns in all configurations; cross-region topologies need explicit handling.
+- The database now has a new failure mode that the operations team may not have seen before.
 
-| Metric | Vector DB (Weaviate 1.22) | Full-text SQL (PostgreSQL 16 + pgvector 0.7) |
-|--------|----------------------------|-----------------------------------------------|
-| p50 latency | 110ms | 45ms |
-| p95 latency | 210ms | 85ms |
-| p99 latency | 420ms | 190ms |
-| Throughput (QPS) | 480 | 510 |
-| Memory RSS (service) | 4.2GB (Weaviate) | 1.8GB (PostgreSQL) |
-| Cost (monthly) | $3,888 (cluster) + $38k (inference) | $672 (RDS) + $800 (GPU) |
+## Comparing latency honestly
 
-The table hides a nasty edge case: our Jakarta call-center agents use 3G networks. A 110ms hop feels slower when the client is on 400ms RTT. The full-text SQL pattern’s single hop reduced their perceived latency from 510ms to 235ms—just enough to hit the 300ms SLA.
+Published latency comparisons between vector databases and in-database search are rarely useful, because the result depends on index type, dimensionality, dataset size, hardware, and network topology. Two systems with identical software can differ by an order of magnitude based on whether the query crosses an availability zone.
 
-Another surprise: connection pooling. Weaviate’s Go client maintained 120 idle connections; PostgreSQL used 32. The vector DB pattern needed an additional Redis 7.2 cluster to cache embeddings, adding 18ms per cache miss. The full-text pattern reuses the existing PgBouncer pool; no extra hop.
+What you can do is measure your own. The instrumentation that matters is:
 
-Under high concurrency (500 QPS), the HNSW index built in-memory temporary files that spiked disk IO to 1,200 IOPS. The vector DB pattern’s Weaviate cluster handled the same load with 280 IOPS. Lesson: pgvector needs fast NVMe disks or you’ll hit the dreaded `out of shared memory` error.
+- **End-to-end p50/p95/p99** at the client, not at the service. Client-side percentiles capture the network path that users actually experience.
+- **Per-hop timing**: time spent in the embedding call, in the vector search, and in the follow-up metadata fetch. Without this breakdown, a slow embedding service is easily mistaken for a slow vector index.
+- **Recall@k** against an exact brute-force search on a sample of queries. ANN indexes trade recall for speed, and a latency win that drops recall is not a win.
 
-## Head-to-head: developer experience
+A simple load test with `wrk` or `k6` against your retrieval endpoint, run for at least ten minutes to reach steady state, will produce numbers you can act on. Compare the two architectures under the same concurrency, the same document set, and the same embedding model. Anything else is a comparison of two different workloads.
 
-Developer experience is not about IDE plugins; it’s about how quickly a Java/.NET team can ship without upsetting the legacy DBAs.
+The one structural difference that measurement will consistently reveal is the number of network hops. A dedicated vector service adds at least one hop that in-database search does not. Whether that hop costs 2 ms or 40 ms depends entirely on your topology, and it is the single largest source of variance between teams.
 
-Vector DB pattern:
-- **Pros**: clear separation. Java team writes REST client; DBAs don’t see vectors. - **Cons**: every new vector model requires a new endpoint. We ended up with `/retrieve-v1`, `/retrieve-v2`, `/retrieve-e5` to support three embedding models. Legacy code now calls three APIs, each with different auth scopes. - **Tooling**: OpenAPI 3.1 specs auto-generated from FastAPI, but the Java team had to write a 400-line client stub. The stub broke twice because Weaviate’s pagination changed between 1.21 and 1.22.
+## Comparing cost honestly
 
-Full-text SQL pattern:
-- **Pros**: one code path. The same DAO class calls either `findByKeyword` or `semanticSearch`. No new endpoints. - **Cons**: vectors live inside the database, so every JUnit test needs a pgvector container. Our build time increased from 4m to 8m. The DBAs insisted on nightly schema migrations, which sometimes broke vector index rebuilds. - **Tooling**: IntelliJ Ultimate 2026’s database plugin now shows vector distances in the results grid. That saved us hours of debugging.
+Cost comparisons are similarly easy to get wrong. The components that recur in both patterns are:
 
-Here’s the surprising part: legacy developers prefer the full-text pattern. They already know SQL. They don’t want to learn REST clients or OpenAPI. The vector DB pattern feels like a new microservice—something they’ve been burned by before.
+- **Embedding inference**, priced per token. This is usually the dominant line item and is identical in both architectures if the same model is used.
+- **Storage and compute for the index**, priced per node-hour or per provisioned capacity unit.
+- **Network egress**, which is zero for intra-zone traffic and non-zero for cross-zone or cross-region traffic.
+- **Operational labour**, which is real but hard to quantify and should be tracked as engineer-hours rather than dollars.
 
-Our PCI environment required a security scan for every new vector endpoint. The full-text pattern only needed a one-time scan of the `pgvector` extension. The scan passed in 4 hours; the REST endpoints took 10 days.
+The structural difference is that the dedicated vector service adds a second compute cluster and, in most designs, a second network path. The in-database pattern adds memory to an existing instance instead.
 
-## Head-to-head: operational cost
+To estimate your own costs, start with three inputs: average tokens per query, queries per day, and the current price per thousand tokens for your embedding model. Multiply them to get a daily inference cost, then multiply by 30 for a monthly figure. Do the same arithmetic for the vector service's node count times node-hour price times 730. These are arithmetic, not benchmarks; the point is to make the assumptions explicit so they can be challenged.
 
-Cost isn’t just cloud bills; it’s the hidden tax of running two systems.
+A worked example with illustrative numbers: assume 200,000 queries per day, 400 tokens per query (prompt plus document text sent to the model), and a price of $0.0004 per thousand tokens. Daily tokens are 200,000 × 400 = 80,000,000. At $0.0004 per thousand tokens that is 80,000 × $0.0004 = $32 per day, or roughly $960 per month. If the same workload requires a three-node vector cluster at $0.50 per node-hour, that adds 3 × $0.50 × 730 = $1,095 per month. The inference cost and the cluster cost are then comparable, which is worth knowing before choosing an architecture. Substitute your own figures; the arithmetic is the same.
 
-| Cost bucket | Vector DB pattern | Full-text SQL pattern |
-|-------------|-------------------|-----------------------|
-| Vector DB hosting | $3,888/mo (Weaviate Cloud, 4 nodes) | $0 (built-in) |
-| Inference (embedding) | $38,400/mo (8x NVIDIA L4, 24/7) | $9,600/mo (2x L4, batch off-peak) |
-| Bandwidth (cross-AZ) | $1,200/mo | $0 (intra-AZ) |
-| Connection pool | $180/mo (Redis 7.2 cluster) | $0 (PgBouncer already paid) |
-| DBA time (schema + index) | 24 hours/mo | 8 hours/mo |
-| **Total** | **$43,668/mo** | **$9,672/mo** |
+## Operational and developer experience
 
-The vector DB pattern looks cheaper at first glance—until you add the embedding GPU nodes. We tried sharing the GPU between inference and vector search, but the memory pressure caused 3% timeouts. We isolated it to dedicated nodes.
+The difference that teams notice after deployment is rarely latency. It is the number of systems that must be understood to debug a problem.
 
-The full-text SQL pattern’s big win is consolidation. We shut down two Redis clusters and one Elasticsearch cluster. The net cost drop paid for the GPU upgrade in three months.
+With a dedicated vector service, a retrieval bug can originate in the application, the gateway, the embedding service, the vector service, or the network between them. Each has its own logs, metrics, and deployment cadence. Tracing a slow query requires correlation IDs across all of them. This is a well-understood problem, but it is work that did not exist before.
 
-I made a mistake early on: I sized the Weaviate cluster for peak load, but the embedding model was CPU-bound. We over-provisioned by 40%. The bill shock at month-end was brutal. The full-text pattern let us right-size the GPU by using batch embedding during off-peak hours (01:00–05:00 UTC).
+With in-database search, the retrieval query appears in the same slow-query log as everything else. A developer who already knows the schema can read the query plan. The cost is that the database team now owns a new class of index, and the application team must learn the distance operators and index parameters.
 
-Another hidden cost: training. We had to train 24 call-center agents on the new REST endpoint. With the full-text pattern, the training was a 30-minute SQL demo. The vector DB pattern required a 2-hour workshop plus cheat sheets. The difference in adoption speed saved us one sprint.
+On the developer side, the in-database pattern usually wins on familiarity. Application developers already write SQL. Adding one more query to an existing data-access layer is a smaller conceptual step than introducing a new service client, a new authentication scheme, and a new deployment target. Teams that have been burned by microservice sprawl tend to prefer it for that reason alone.
 
-## The decision framework I use
+The trade-off is testability. Tests that exercise vector search need a database with the extension installed and the index built, which slows down local and CI runs. Tests against a vector service need a running service or a mock, which is a different kind of friction.
 
-I’ve used the same framework for three enterprise RAG rollouts. It’s simple: three yes/no gates.
+## Decision checklist
 
-**Gate 1: Can you modify the legacy schema?**
-- If yes → full-text SQL pattern wins. One hop, one backup, one DBA. - If no → vector DB pattern is your only option.
+Work through these in order. The first question that produces a clear answer usually decides the architecture.
 
-**Gate 2: Is your legacy app latency-sensitive (<200ms p95)?**
-- If yes → full-text SQL because the extra hop kills you. - If no → vector DB gives you flexibility to swap models without touching the legacy app.
+1. **Can the schema be changed?** If the database is under a change freeze, or if adding an extension requires a review that will not complete in the project's timeframe, the dedicated vector service is the only option.
+2. **Does the database support vector types and ANN indexes?** Older releases of most relational databases do not. If not, the choice is between upgrading the database and using a dedicated service.
+3. **Is the p95 latency budget tight?** If the target is under roughly 200 ms including the language model call, the extra network hop of a dedicated service is a significant fraction of the budget. Measure it before committing.
+4. **How often will the embedding model change?** Frequent changes favour a dedicated service, because re-embedding and rebuilding an index inside a production database is disruptive.
+5. **What is the operations team's appetite?** A team with no experience running a vector index inside a relational database will need to learn it. A team with no experience running a stateful service will need to learn that instead. Neither is free.
+6. **Is cross-region replication required?** Check whether your database's replication mechanism carries vector columns. If it does not, plan for a custom mechanism or prefer the dedicated service.
 
-**Gate 3: Is your team allergic to database changes?**
-- If yes → vector DB. DBAs will fight pgvector upgrades for years. - If no → full-text SQL because developers prefer SQL.
+## Common failure modes
 
-We used this framework on a 12-month rollout:
-- Jakarta call-center: full-text SQL (Gate 1 yes, Gate 2 yes, Gate 3 no). - Manila claims system: vector DB (Gate 1 no—Oracle 11g can’t run pgvector). - Lagos branch finance: full-text SQL (Gate 1 yes, Gate 2 borderline, Gate 3 yes).
+**Mismatched vector dimensions.** The column type must match the embedding model's output dimension exactly. A model that produces 384-dimensional vectors cannot be stored in a column declared as 1536. Choosing a smaller model where quality permits reduces index size and build time proportionally, but the dimension must be consistent across ingestion and query.
 
-The framework isn’t perfect. Gate 3 failed us once: a team insisted on full-text SQL, but their DBAs refused the pgvector extension. We had to pivot to vector DB anyway, incurring 6 weeks of rework. The lesson: always preflight the DBA approval.
+**Index build during peak hours.** Building or rebuilding an ANN index is memory- and I/O-intensive. Schedule it outside peak traffic and monitor the database's memory headroom during the build. On a database already near its memory limit, a rebuild can cause query failures.
 
-Another edge case: SQL Server 2016 can’t run pgvector. If your legacy is SQL Server, you’re forced to either upgrade to 2026 or use the vector DB pattern. We upgraded a 2016 instance to 2022 in a weekend; the DBAs hated it but the trade-off was worth the downtime.
+**Assuming the database embeds text.** Relational vector extensions store and compare vectors. They do not call embedding models. The embedding step is always a separate component, whether it is an external API, a locally served model, or an inference runtime, and it must be sized and monitored like any other dependency.
 
-## My recommendation (and when to ignore it)
+**Treating recall as a free parameter.** ANN indexes are approximate. Increasing the search breadth improves recall at the cost of latency. If retrieval quality drops after switching index parameters, measure recall against an exact search before assuming the model is at fault.
 
-**Recommendation: use full-text SQL (PostgreSQL 16 + pgvector 0.7) when you can modify the schema and your latency SLA is tight.**
+## FAQ
 
-It’s cheaper, faster, and simpler to operate. The operational cost drop from $43k to $9k per month is real, and the latency wins are measurable. It also future-proofs you for 2027 when PostgreSQL adds vector search to logical replication, eliminating the cross-region headache.
+**Can vector search be added to a database that does not support it natively?**
+Not without changing the database. The usual approach is to keep the legacy database as the system of record and run a separate retrieval service alongside it, with the application calling both. The integration layer between them is the main engineering effort.
 
-**Ignore this recommendation when:**
-- Your legacy database is Oracle 11g, DB2, or any pre-2026 SQL Server. pgvector won’t run. - Your DBAs have a policy against extensions. We saw one team forced to use vector DB because the security team banned `CREATE EXTENSION` in production. - Your embedding model changes weekly. The pgvector HNSW index rebuilds can lock the table for minutes under 100k rows. Use the vector DB pattern if you’re swapping models often.
+**How much memory does an in-database ANN index need?**
+It scales with the number of vectors and their dimensionality. The index is largely resident in memory, so the instance must be sized for the index plus the existing working set plus headroom for maintenance operations. Measure the index size after a representative load rather than estimating from documentation.
 
-We tried a hybrid once: pgvector for English queries, Weaviate for multilingual. The hybrid added two hops for multilingual, and the latency regression was 60ms. We ripped it out after one sprint.
+**Does the embedding model have to run on a GPU?**
+Smaller models run acceptably on CPU for low query volumes. Larger models and higher throughput generally require a GPU. This cost is identical in both architectures and should be evaluated separately from the choice of vector store.
 
-Another gotcha: vector dimensions. pgvector 0.7 defaults to 1536 dimensions (from text-embedding-3-large). Our call-center agents only needed 384 (all-MiniLM-L6-v2). Shrinking the vector to 384 cut memory usage by 75% and index build time by 40%. Always match the dimension to your embedding model.
+**What happens to retrieval quality when the document set grows?**
+Recall at a fixed index parameter setting tends to degrade as the dataset grows, because the approximate search has more candidates to miss. Re-evaluate recall after significant growth and adjust index parameters if needed.
 
-## Final verdict
+## Your next 30 minutes
 
-Pick full-text SQL if you can. The numbers don’t lie: 60% cost cut, 60% latency cut, one less moving part. But if your legacy database is frozen in 2016, the vector DB pattern is your only viable path.
-
-The biggest mistake I see teams make is assuming RAG is a greenfield problem. It’s not. It’s retrofitting AI onto systems built before JSON existed. The teams that succeed treat RAG as a data plumbing problem first, an AI problem second.
-
-Before you schedule the migration, run this experiment:
-
-1. Spin up PostgreSQL 16 on RDS (or Azure SQL Hyperscale). 2. Install pgvector 0.7 and the embedding model you plan to use. 3. Load 10k documents and run 100 queries. Measure p95 latency and memory. 4. Compare to a Weaviate 1.22 cluster sized for the same load.
-
-The experiment will show you the exact latency and cost gap for your workload. Don’t trust marketing benchmarks; your data is different.
-
-Now go measure your own gap. Don’t assume—measure.
-
-Check your legacy database’s extension policy tonight. If `CREATE EXTENSION vector` is allowed, you’re one ALTER TABLE away from a 70% cost cut and 60% latency cut. If not, start budgeting for a vector DB cluster and a new REST gateway. Either way, the clock is ticking—legacy systems don’t get younger.
-
-
-## Frequently Asked Questions
-
-**how to add pgvector to a locked down oracle 11g environment**
-
-Oracle 11g can’t run pgvector. Your only option is the vector DB pattern. Build a FastAPI service that wraps Weaviate or Milvus, then expose a SOAP endpoint that your COBOL program can call. Use Oracle AQ or IBM MQ to queue the messages—legacy middleware still works. Expect to spend 6–8 weeks wiring the plumbing; the alternative is a database upgrade you probably can’t get approved.
-
-**what’s the smallest postgres instance that can run pgvector 0.7 decently**
-
-In production, we ran pgvector 0.7 on a 16 vCPU, 64GB RAM, 200GB gp3 instance. Memory pressure spiked above 80% when the HNSW index rebuilt under 50k rows. If you’re under 10k rows, a 4 vCPU, 16GB RAM, 100GB instance works for dev. Don’t go below 16GB RAM; pgvector uses a lot of memory for the index.
-
-**why did my weaviate cluster cost so much more than expected**
-
-Weaviate Cloud charges by node size and replica count. A single m6g.xlarge node costs $0.54/hr, but Weaviate needs at least three nodes for 99.9% availability. That’s $3,888/month before you add GPUs for embeddings. Most teams underestimate the inference cost: 1M tokens/day at $0.0004/1k tokens is $400/month, but 10M tokens/day jumps to $4k/month. Check your token count against the invoice—billing surprises are common.
-
-**how to avoid cache stampede when pgvector index rebuilds**
-
-pgvector 0.7 rebuilds the HNSW index in-place. Under high concurrency, queries during rebuild hit the temporary file and spike disk IO. Mitigations:
-- Schedule rebuilds during off-peak (01:00–05:00 UTC). - Increase `shared_buffers` to 25% of RAM to cache more of the index. - Use connection pooling (PgBouncer) to limit concurrent rebuild queries. - Monitor `pg_stat_activity` for long-running `CREATE INDEX`—kill them if they exceed 30 minutes.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 30, 2026
+Open a connection to a copy of your target database and run `CREATE EXTENSION IF NOT EXISTS vector;`. If it succeeds, you have confirmed that in-database vector search is at least technically possible in your environment, and you can proceed to size the instance and measure latency on a representative sample. If it fails, you have confirmed that the dedicated vector service is the path, and you can start scoping the integration layer. Either result is more useful than any benchmark you will read.

@@ -1,263 +1,181 @@
 # Postgres 17 buried Redis, S3, cron
 
-I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.
+## Why this comparison keeps coming up
 
-## Why this comparison matters right now
+A recurring architectural question is whether a single Postgres instance can replace three separate systems: a cache, a blob store, and a scheduler. The appeal is obvious. Every additional service adds a connection pool to tune, a backup strategy to test, a dashboard to maintain, and a failure mode to page someone about. Consolidation reduces that surface area.
 
-In 2026, Postgres has quietly become the Swiss Army knife of backend infrastructure. Teams in Jakarta, Dublin, and São Paulo are waking up to a single database holding JSON caches, scheduled jobs, and file blobs—all while outperforming the separate Redis, S3, and cron stacks they used last year. My own team made the jump six months ago after a 3-day outage hunting a Redis connection leak that cost us $14k in egress fees.
+The counter-argument is equally obvious: Postgres is not a cache, and treating it like one can produce latency cliffs, index bloat, and connection starvation that a purpose-built cache would never hit.
 
-The shift isn’t hype. Postgres 17, released in October 2025, added features that quietly obliterate three separate tools:
-- pg_cron for cron replacement (jobs run inside the database, not a sidecar that dies at 3am)
-- pg_largeobject and TOAST for file storage under 1GB (cheaper than S3 in 7 regions I checked)
-- JSONB with GiST indexes for hot caches (10x faster than Redis for our read-heavy workloads)
+This article covers where Postgres genuinely substitutes for the three tools, where it does not, and how to measure the difference on your own workload rather than relying on someone else's numbers. It uses Postgres 17 as the reference version, but the relevant features (JSONB, GiST indexes, TOAST, large objects, and the `pg_cron` extension) are not new in 17 and behave similarly on recent major versions. Verify extension availability on your platform before planning anything.
 
-That last point is the kicker: Redis is no longer the default cache for everyone. When your JSON payload is under 1MB and you already trust Postgres to be highly available, the network hop to Redis becomes the slowest part of your stack. I benchmarked a 95th percentile cache hit of 12ms over Redis vs 2ms to Postgres on an m7g.4xlarge in us-west-2. The gap is only 10ms, but in a 200ms SLA world, that’s half your budget gone before you do any real work.
+## What Postgres actually provides
 
-The operational cost of maintaining three systems—Redis for caching, S3 for blobs, cron for jobs—adds up fast. A 2026 cost audit at my company showed:
-- Redis instance running 3 replicas in us-west-2: $1,842/month
-- S3 Standard storage for 42GB of user uploads: $93/month
-- EC2 m6i.large for cron jobs: $112/month
-Total: $2,047/month + the 12 engineer-hours we spent wiring them together.
+Three capabilities are relevant here.
 
-With Postgres alone, we cut storage to $38/month (gp3 50GB), dropped the Redis and EC2 lines, and saved $1,956/month. The switch took 12 days of engineering time—mostly writing the migration script and testing rollback. I still remember the moment we turned off the Redis cluster and everything kept working. That’s not supposed to happen when you consolidate.
+**Scheduling.** `pg_cron` is an extension that runs scheduled SQL inside the database. Jobs are stored in a table and executed by a background worker:
 
-This comparison is real. I’ve used both stacks in production for 12 months. The new stack isn’t perfect—pg_cron can still wedge itself into a deadlock if you’re not careful, and TOAST has a 1GB soft limit you’ll hit eventually—but it’s good enough that we no longer wake up at 2am because a cron job failed or Redis evicted a key we needed.
-
-If you’re running any three of these: a cache, a scheduler, or a blob store, it’s time to measure before you migrate. The break-even point for most teams is under six weeks once you factor in the engineering cost of maintaining the old stack. I’ve seen teams save $30k/year and cut incident pages by 40% by consolidating to Postgres. The rest of this post shows exactly how that happened.
-
-## Option A — how it works and where it shines
-
-Postgres 17 (released October 2025) is the engine we run. It’s not just a database anymore; it’s a runtime with batteries included. The three features that matter are pg_cron, TOAST/pg_largeobject, and JSONB with GiST indexes.
-
-pg_cron is a cron replacement that runs inside Postgres. You schedule jobs with SQL:
 ```sql
-SELECT cron.schedule('cleanup-old-sessions', '0 4 * * *', $$DELETE FROM sessions WHERE last_used < NOW() - INTERVAL '30 days'$$);
+CREATE EXTENSION IF NOT EXISTS pg_cron;
+
+SELECT cron.schedule(
+  'cleanup-old-sessions',
+  '0 4 * * *',
+  $$DELETE FROM sessions WHERE last_used < NOW() - INTERVAL '30 days'$$
+);
 ```
-That job runs on every primary and standby. No sidecar, no Docker container to manage, no 3am pager when the cron host reboots. We migrated 18 cron jobs in one afternoon; the longest part was testing that the DELETE didn’t lock the sessions table during peak traffic. The lock held for 800ms on a table with 2M rows—fine for us, but your mileage may vary.
 
-For file storage under 1GB, TOAST and pg_largeobject give you a cheap blob store. We store user avatars here. A 250KB image costs 0.00000037 cents per month in gp3 storage vs $0.023/GB in S3 Standard. That’s 62x cheaper for small files, and you get ACID semantics on upload. The catch: you can’t stream the file directly from Postgres to a client; you have to proxy it through an API. But for 90% of our avatars, that’s acceptable.
+The important operational detail is that `pg_cron` runs on the primary only. It does not run independently on standbys, and it does not give you the distributed locking semantics of a real job scheduler. If your database fails over, the schedule moves with the primary. That is usually fine for cleanup jobs and usually not fine for anything that must run exactly once across a fleet.
 
-JSONB with GiST indexes powers our hot cache. We cache user profiles that change once per day:
+**Blob storage.** Postgres stores large values in two ways. TOAST automatically moves oversized column values out of line into a side table, transparently, up to about 1GB per value. `pg_largeobject` provides a separate chunked storage API with its own access functions. Both give you transactional writes: a blob and the row that references it commit together, which is genuinely difficult to get right across two systems.
+
+The practical limits matter more than the feature list. Reading a blob through TOAST means the value passes through the normal buffer cache and WAL path. Every write is logged. A workload that writes many multi-megabyte objects will generate WAL and backup volume proportional to that traffic, and will compete with ordinary query traffic for shared buffers. This is the single most common way a blob-in-Postgres migration goes wrong: storage cost looks cheap, but WAL, replication bandwidth, and backup time do not.
+
+**JSON caching.** JSONB columns with a GIN or GiST index support containment queries:
+
 ```sql
-CREATE INDEX idx_user_profile_cache ON user_profiles USING GIST ((profile_data::jsonb) jsonb_path_ops);
+CREATE INDEX idx_profile_data ON user_profiles USING GIN (profile_data jsonb_path_ops);
+
+SELECT profile_data
+FROM user_profiles
+WHERE profile_data @> '{"preferences": {"theme": "dark"}}';
 ```
-The index lets us query with `@>` for partial matches:
+
+`jsonb_path_ops` produces a smaller index than the default `jsonb_ops` and supports `@>` containment, which covers most cache-lookup patterns. The index does not support key-existence operators like `?` or `?|`, so choose deliberately.
+
+The key property is that this is not a cache. There is no eviction policy, no TTL, no memory ceiling you can set independently of the table. Rows stay until something deletes them. If the working set exceeds shared buffers, reads go to disk, and the latency profile changes from memory access to storage access. That transition is the whole ballgame, and it is invisible until it happens.
+
+## The old stack, honestly described
+
+Redis, S3, and a cron host each do one thing well.
+
+Redis is an in-memory data structure store with configurable eviction. It gives you a hard memory ceiling and predictable behavior when you hit it. It supports pub/sub and streams, which have no direct Postgres equivalent. Its persistence model is different from Postgres's, and its failover semantics are different too — worth understanding before assuming either system is a drop-in for the other.
+
+S3 (or any object store) is built for durability and scale-out reads. Clients fetch objects directly without proxying through your application. There is no WAL amplification, no shared buffer contention, and no backup window that grows with object count. For objects over a few megabytes, or objects read by many clients concurrently, this is a fundamentally better fit than a database.
+
+A cron host is simple until it isn't. The classic failure mode: the instance reboots, the timer is lost, and nobody notices until a downstream report is missing. Distributed schedulers exist precisely because this problem is common. Running jobs inside the database removes the separate host but introduces its own failure modes, covered below.
+
+## How to measure before you decide
+
+Do not migrate based on someone else's benchmark. The relevant variables — working set size, query shape, read/write ratio, latency target — differ enough between systems that published numbers rarely transfer. Measure your own.
+
+**Step 1: Characterize the cache working set.**
+
+Instrument your application to log, per cache key: the key size in bytes, the read frequency, and the write frequency. Aggregate over a representative period, ideally at least a week to capture weekly patterns.
+
 ```sql
-SELECT profile_data FROM user_profiles WHERE profile_data @> '{"preferences": {"theme": "dark"}}';
+-- After loading measurements into a table, compute the working set
+-- that covers the hottest N% of reads.
+SELECT
+  SUM(value_bytes) AS bytes_for_top_90pct_reads
+FROM (
+  SELECT value_bytes,
+         SUM(read_count) OVER (ORDER BY read_count DESC) AS cumulative_reads,
+         SUM(read_count) OVER () AS total_reads
+  FROM cache_key_stats
+) t
+WHERE cumulative_reads <= total_reads * 0.90;
 ```
-On a dataset of 500k users, the median query is 2ms with a 99th percentile of 12ms. That beats Redis for our read pattern because the data never leaves the database host.
 
-The operational surface area shrinks dramatically. One database, one connection pool, one backup strategy. We went from 12 Terraform resources to 3. The Terraform diff was +15 lines, not +200. Our on-call rota went from 6 services to 2.
+Compare `bytes_for_top_90pct_reads` against the shared buffers you can actually dedicate to this table. If the hot set fits comfortably, Postgres is viable. If it does not, expect disk reads and measure accordingly.
 
-We hit that once during a schema migration and had to manually kill the backend. It’s rare, but it’s a gap you need to plan for.
+**Step 2: Measure latency at the 99th percentile, not the median.**
 
-## Option B — how it works and where it shines
+Instrument the query path with timing that captures p50, p95, and p99 separately. A median of 2ms with a p99 of 200ms is a different system from a median of 5ms with a p99 of 8ms, even though the medians look similar.
 
-The old stack—Redis for caching, S3 for blobs, cron on an EC2 m6i.large—is still the safe default in 2026. Redis 7.2 (released March 2025) is stable, battle-tested, and the best-in-class cache. It’s also the most expensive single service in most stacks.
+```sql
+SELECT
+  query,
+  calls,
+  mean_exec_time,
+  stddev_exec_time,
+  total_exec_time
+FROM pg_stat_statements
+ORDER BY mean_exec_time DESC
+LIMIT 20;
+```
 
-Redis 7.2 introduced several features that keep it relevant:
-- RedisJSON for native JSON operations (faster than SET/GET for structured data)
-- Redis Functions for Lua scripting (reduces network round trips)
-- Active Replication for multi-AZ setups (RPO < 1ms)
-- Redis on Flash for cheaper large caches (but adds complexity)
+`pg_stat_statements` gives you mean and standard deviation, not percentiles. For percentiles, log per-request timings in the application or use `auto_explain` with `log_min_duration_statement` set to a threshold near your target, then count how often it fires.
 
-We ran Redis 7.2 with 3 replicas in us-west-2, m7g.4xlarge, 16GB RAM. The cluster cost $1,842/month plus $89/month for Multi-AZ replication. The cache hit rate was 94%, and p99 latency for GET requests was 4ms. That’s hard to beat for a cache.
+**Step 3: Measure the write amplification of blob storage.**
 
-For blobs, S3 Standard is still the cheapest durable storage for files over 1GB. At 42GB of user uploads, the bill was $93/month. The durability is 11 nines, and the API is everywhere. No proxying needed—clients stream directly.
+Before moving blobs into Postgres, measure the WAL volume generated per gigabyte written:
 
-Cron jobs ran on an EC2 m6i.large ($112/month) with systemd timers. The jobs were simple: nightly batch jobs, report generation, cleanup. The failure mode was a reboot at 3am that killed the instance and left the job unscheduled until someone noticed. We had 3 incidents in 6 months.
+```sql
+SELECT pg_current_wal_lsn();
+-- write a known quantity of blob data
+SELECT pg_current_wal_lsn();
+```
 
-The Redis stack is mature and predictable. You can tune eviction policies, connection pools, and replica lag without touching Postgres internals. The downside is the operational overhead: connection leaks, failover drills, IAM policies for S3, backup scripts for cron jobs. It adds up.
+Convert the LSN delta to bytes and compare against the payload size. The ratio tells you how much WAL, replication traffic, and backup volume each gigabyte of blob data costs you. For small objects the ratio is close to 1; for large objects with full-page writes it can be considerably higher.
 
-A 2026 hiring trend survey showed that teams with Redis experience command 12% higher salaries in London and 8% in Bangalore. The skill is still valuable, even if the cost isn’t.
+**Step 4: Measure scheduler reliability under failover.**
 
-## Head-to-head: performance
+If you are considering `pg_cron`, test what happens to in-flight and scheduled jobs during a controlled failover. This is the failure mode that documentation tends to understate and that only a test will reveal.
 
-We ran a synthetic workload to compare the two stacks. The goal: measure p99 latency for a read-heavy workload that fits in memory.
+## Failure modes to plan for
 
-**Test setup:**
-- Dataset: 500k user profiles (250MB JSON each)
-- Query: SELECT profile_data FROM user_profiles WHERE profile_data @> '{"preferences": {"theme": "dark"}}';
-- Warm cache: 100k keys loaded into Redis
-- Postgres: m7g.4xlarge (16 vCPU, 64GB RAM, gp3 50GB)
-- Redis: m7g.4xlarge (16 vCPU, 16GB RAM, 3 replicas)
-- Load generator: 1000 RPS for 30 minutes
+**Connection pool exhaustion.** Moving cache reads into Postgres means every cache lookup now consumes a connection. Under load, a cache that previously absorbed traffic with no database involvement now competes with transactional queries for pool slots. Size the pool for the combined load, and consider a separate pool for cache-path queries so a cache stampede cannot starve writes.
 
-| Metric                | Postgres JSONB+GiST | Redis 7.2 JSON   |
-|-----------------------|---------------------|------------------|
-| p50 latency           | 1.2ms               | 0.8ms            |
-| p95 latency           | 4.1ms               | 2.3ms            |
-| p99 latency           | 12ms                | 4ms              |
-| Memory usage          | 2.1GB               | 8.4GB            |
-| Cost per million ops  | $0.0012             | $0.0031          |
+**Index bloat from high-churn JSON.** A JSONB index on a table with frequent updates accumulates dead tuples faster than a read-mostly table. Autovacuum settings tuned for ordinary tables may not keep up. Monitor index size and dead tuple counts, and expect to tune `autovacuum_vacuum_scale_factor` downward for these tables.
 
-The gap widens under load. At 2000 RPS, Postgres p99 jumps to 22ms while Redis stays at 6ms. But at 1000 RPS, Postgres is acceptable for many teams, especially if you’re already paying for the database.
+**TOAST read amplification.** A query that selects a TOASTed column detoasts the whole value. Selecting `profile_data` when you only need one field forces a full read and decompression. Project only the fields you need, or store frequently accessed fields as separate columns.
 
-That’s because the GiST index on JSONB is larger than the raw data. For us, it was within our margin, but if you’re on a smaller box, watch your RAM.
+**Scheduler single point of failure.** `pg_cron` jobs stop when the database is down. If a job's absence causes user-visible problems, that job needs an external check — a monitor that alerts when the expected side effect has not occurred within its window.
 
-The cost per million operations favors Postgres by 2.6x. That’s before you factor in the Redis cluster and S3 bills. For a high-traffic API, the savings can fund a junior engineer.
+**Backup and restore time.** A database holding blobs takes longer to back up and longer to restore. Measure restore time, not just backup time. The restore is the number that matters during an incident.
 
-**When Redis wins:**
-- Your cache is larger than available RAM (use Redis on Flash or cluster mode)
-- You need sub-millisecond p99 (< 2ms)
-- Your JSON queries are complex or require Lua scripting
+## A decision checklist
 
-**When Postgres wins:**
-- Your cache fits in memory and stays warm
-- You’re already paying for Postgres HA
-- You want to avoid cross-service latency
-- Your queries are simple JSON path queries
+Work through these in order. Stop at the first item that disqualifies the consolidation.
 
-The break-even point for us was 800 RPS. Below that, Postgres was good enough; above it, we kept Redis. Your mileage may vary.
+1. **Does the hot cache working set fit in shared buffers with headroom?** If the hot 90% of reads exceeds roughly half of available shared buffers, keep a dedicated cache.
+2. **Is your p99 latency target above the measured Postgres p99 for your query shape?** Measure; do not assume.
+3. **Are your cache queries simple containment lookups?** If you depend on pub/sub, streams, or server-side scripting, those have no Postgres equivalent and you keep Redis.
+4. **Are your blobs small and written infrequently?** If writes are large or frequent, the WAL and backup cost usually outweighs the storage saving.
+5. **Can every scheduled job tolerate running on the primary only, and stopping during failover?** If not, keep an external scheduler for those jobs.
+6. **Have you measured restore time for the combined database?** If it exceeds your recovery objective, split the blobs out.
 
-## Head-to-head: developer experience
+If all six pass, consolidation is worth piloting. If any fails, keep the specialized system for that workload and consolidate only the parts that pass.
 
-The developer experience of Postgres in 2026 is surprisingly good for a kitchen-sink approach.
+## Worked example: reasoning through a decision
 
-**Schema changes:**
-- Postgres 17 supports online DDL for JSONB indexes (ALTER TABLE ... ADD INDEX CONCURRENTLY)
-- No need to restart the application or warm a separate cache
-- We added a new JSON field to user_profiles in 4 minutes during peak traffic
+Suppose an application has these measured characteristics, all from instrumentation rather than assumption:
 
-**Testing:**
-- Tests run inside the same container as the app (no Redis mock needed)
-- We deleted 3 Redis test fixtures and saved 200 lines of setup code
-- Integration tests that used to mock Redis now hit a local Postgres instance
+- Hot cache working set: 4 GB, read-heavy, 95% reads.
+- Shared buffers available for this table: 12 GB.
+- p99 latency target: 20 ms.
+- Measured Postgres p99 for the containment query: 9 ms.
+- Blob writes: 200 objects per day, average 300 KB, total 60 MB per day.
+- Scheduled jobs: nightly cleanup, weekly report, both idempotent.
 
-**Observability:**
-- pg_stat_statements shows cache hit ratio and slow queries in one place
-- No need to stitch metrics from Redis, S3, and cron
-- A single Grafana dashboard covers 90% of our debugging needs
+Working through the checklist: the working set (4 GB) fits well within available shared buffers (12 GB), so item 1 passes. The measured p99 (9 ms) is under the target (20 ms), so item 2 passes. The queries are containment lookups, so item 3 passes. Blob writes are small and infrequent — 60 MB per day produces manageable WAL growth — so item 4 passes. Both jobs are idempotent, so a missed run during failover is recoverable by the next run, and item 5 passes. Restore time is the remaining unknown and must be measured before committing.
 
-**Migrations:**
-- We migrated 500k keys from Redis to Postgres in a single night
-- The script was 120 lines of Python using psycopg3 and redis-py 5.0
-- Rollback was a feature flag toggling the cache source
-- Downtime: 0 seconds (we used a dual-write phase for 30 minutes)
+This is a case where consolidation is defensible. Change one variable — a 40 GB working set, or a p99 target of 2 ms — and the conclusion flips.
 
-The Redis stack had better tooling for cache invalidation. We used RedisGears to automate TTL updates, which was slick until it wedged itself into a deadlock during a failover. Postgres doesn’t have a built-in cache invalidation story, but we replaced it with a simple TTL column and a cron job that deletes stale rows. It’s less elegant, but it works.
+## When to keep the specialized systems
 
-**When Redis is easier:**
-- You’re already using Redis for pub/sub or streams
-- Your team has deep Redis expertise and tooling
-- You need Lua scripting for complex cache logic
+Keep a dedicated cache when your working set exceeds available memory, when you need sub-millisecond p99, or when you depend on Redis data structures like sorted sets, streams, or pub/sub.
 
-**When Postgres is easier:**
-- Your team already knows Postgres
-- You’re tired of mocking Redis in tests
-- You want one less service to debug
+Keep an object store when objects are large, when clients should fetch them directly without proxying through your application, or when write volume would generate unacceptable WAL and backup overhead.
 
-The biggest surprise was how little code we had to change. The application layer didn’t know it was talking to Postgres instead of Redis. We swapped the cache adapter, and the rest worked. That’s the power of a drop-in replacement.
+Keep an external scheduler when jobs must run exactly once across a fleet, when they must survive database failover, or when their absence has immediate user-visible consequences.
 
-## Head-to-head: operational cost
+None of these is a permanent decision. The measurement steps above are cheap to run and can be repeated as your workload changes.
 
-The cost comparison isn’t just the invoice; it’s the engineering hours, the incident pages, and the context switches.
+## Action for the next 30 minutes
 
-**Direct costs (us-west-2, 2026 prices):**
+Run this against your production database and record the output:
 
-| Service               | Instance type | Monthly cost | Notes                          |
-|-----------------------|---------------|--------------|--------------------------------|
-| Postgres 17           | m7g.4xlarge   | $332         | 3-node cluster, gp3 50GB       |
-| Redis 7.2             | m7g.4xlarge   | $1,842       | 3 replicas, Multi-AZ           |
-| S3 Standard           | -             | $93          | 42GB, 1M PUTs                  |
-| EC2 m6i.large         | -             | $112         | cron host                      |
-| **Old stack total**   |               | $2,379       |                                |
-| **New stack total**   |               | $332         |                                |
+```sql
+SELECT
+  query,
+  calls,
+  mean_exec_time,
+  stddev_exec_time,
+  total_exec_time
+FROM pg_stat_statements
+ORDER BY mean_exec_time DESC
+LIMIT 10;
+```
 
-The savings are real: $2,047/month or $24,564/year. For a 20-person team, that’s two junior salaries or one senior hire.
-
-**Indirect costs:**
-- Old stack: 12 Terraform resources, 3 dashboards, 2 on-call rotations
-- New stack: 3 Terraform resources, 1 dashboard, 1 on-call rotation
-- Old stack: 3 incident pages/month related to cron or Redis
-- New stack: 0 incident pages/month from the consolidated services
-
-The indirect savings are harder to quantify but matter more. Fewer moving parts mean fewer surprises. We went from a 300-line Ansible playbook for Redis failover to a 15-line script for Postgres failover. The playbook was written by an engineer who left in 2026; we still run the script.
-
-The break-even for the migration was 12 days of engineering time. We spent 3 days writing the migration script, 4 days testing, and 5 days in dual-write. The script reused 80% of our existing Postgres connection pool code, so it wasn’t greenfield work.
-
-**When the old stack is cheaper:**
-- Your cache is larger than 16GB RAM (use Redis Cluster or on Flash)
-- Your blobs are larger than 1GB and rarely accessed (S3 is still cheaper)
-- You need Redis pub/sub or streams
-
-**When the new stack is cheaper:**
-- Your cache fits in memory and is warm most of the time
-- Your blobs are under 1GB and accessed via an API anyway
-- You want to reduce operational overhead
-
-I still run a Redis cluster for a high-traffic feature that needs sub-millisecond p99. The cache is 32GB and warm, and the queries are complex. But that’s the exception, not the rule.
-
-## The decision framework I use
-
-I use a simple framework to decide whether to consolidate to Postgres or keep Redis and S3. It’s based on three measurements:
-
-1. **Cache size vs. RAM**
-   - If your cache is larger than 70% of available RAM, keep Redis or use Redis on Flash
-   - If it’s under 70%, Postgres can handle it
-
-2. **Query pattern**
-   - Simple JSON path queries (e.g., `@>`, `jsonb_path_exists`): Postgres
-   - Complex Lua scripting or pub/sub: Redis
-
-3. **SLA**
-   - If p99 must be < 2ms: Redis
-   - If p99 can be 5–15ms: Postgres
-
-We built a small CLI tool to measure these in production. It runs every 5 minutes and logs:
-- Cache size vs. RAM
-- p95 and p99 latency for the top 10 queries
-- Cost per million operations
-
-The tool is 80 lines of Go and runs in our metrics container. It’s saved us from at least two migrations we would have regretted.
-
-**Hard numbers from the framework:**
-- Cache size: 500MB (Postgres RAM: 64GB) → proceed with consolidation
-- p99 latency target: 10ms → Postgres is acceptable
-- Complex queries: none → no need for Redis Lua
-
-The framework is opinionated but works. It’s not a silver bullet—we still keep Redis for one feature—but it’s a reliable gut check.
-
-## My recommendation (and when to ignore it)
-
-Recommendation: **Use Postgres 17 as your cache, scheduler, and blob store if your cache is under 16GB, your p99 latency target is under 15ms, and your queries are simple JSON path queries.**
-
-That’s a narrow window, but it’s where most teams live. The operational savings are real, the performance is acceptable, and the developer experience is better. We cut incident pages by 40% and saved $24k/year by doing it.
-
-But ignore this recommendation if:
-- You run a high-traffic cache that needs sub-millisecond p99
-- Your cache is larger than 16GB RAM (use Redis Cluster or on Flash)
-- You rely on Redis pub/sub or streams for real-time features
-- Your blobs are larger than 1GB and rarely accessed (S3 is still cheaper)
-
-I still run Redis for a feature that streams real-time events to clients. The p99 must be under 1ms, and the payload is 2KB JSON. Postgres can’t match that, so we keep Redis. It’s the exception that proves the rule.
-
-The recommendation is conditional, not absolute. Measure first, then decide.
-
-## Final verdict
-
-Postgres 17 in 2026 is the best default for most teams that were using Redis, S3, and cron separately. It’s not the best at any one thing, but it’s good enough at all three to eliminate the operational overhead of running them as separate services. The break-even point for most teams is under six weeks once you factor in engineering time and incident costs.
-
-The switch isn’t free. You’ll need to test your cache queries, tune your connection pool, and monitor p99 latency. But the upside is real: fewer services, fewer dashboards, fewer pages, and a measurable cost cut.
-
-I still wake up some nights wondering if we should have kept Redis for the cache. But the data is clear: at our scale and latency targets, Postgres is the better choice. Your numbers may differ, so measure before you migrate.
-
-**Action for the next 30 minutes:** Open `pg_stat_statements` in your Postgres instance and run `SELECT query, calls, total_exec_time, mean_exec_time FROM pg_stat_statements ORDER BY mean_exec_time DESC LIMIT 10;`. If your top 10 queries are simple JSON path queries with mean_exec_time under 10ms and total cache size under 16GB, start the consolidation. If not, keep Redis for the cache and revisit this in a month.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 26, 2026
+For each of the top ten queries, note whether it is a simple containment lookup, how often it runs, and its mean execution time. Then check the size of the table it reads from against your shared buffers setting (`SHOW shared_buffers;`). If your hottest queries are containment lookups whose tables fit comfortably in shared buffers, you have a candidate for consolidation and a baseline to measure against. If not, you have just saved yourself a migration.

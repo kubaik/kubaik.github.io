@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI codebase onboarding: 2 paths tested - Kubai Kevin</title>
-        <meta name="description" content="Cut onboarding time 60% with guided generation in AI codebases — tooling cost, CI queue drops, and the exact prompts that worked">
+        <meta name="description" content="Two onboarding paths for AI-heavy repos: passive shadow-mode review versus guided scaffolding, with decision criteria and failure modes.">
         <meta name="keywords" content="AiCodebaseOnboarding, Ai, Generativeai">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-24T01:35:30.792495">
-        <meta property="article:modified_time" content="2026-09-20T04:07:56.366265+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:32:34.693936+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI codebase onboarding: 2 paths tested">
-        <meta property="og:description" content="Cut onboarding time 60% with guided generation in AI codebases — tooling cost, CI queue drops, and the exact prompts that worked">
+        <meta property="og:description" content="Two onboarding paths for AI-heavy repos: passive shadow-mode review versus guided scaffolding, with decision criteria and failure modes.">
         <meta property="og:url" content="https://kubaik.github.io/ai-codebase-onboarding-2-paths-tested/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI codebase onboarding: 2 paths tested">
-        <meta name="twitter:description" content="Cut onboarding time 60% with guided generation in AI codebases — tooling cost, CI queue drops, and the exact prompts that worked">
+        <meta name="twitter:description" content="Two onboarding paths for AI-heavy repos: passive shadow-mode review versus guided scaffolding, with decision criteria and failure modes.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-codebase-onboarding-2-paths-tested.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-codebase-onboarding-2-paths-tested/#article",
       "headline": "AI codebase onboarding: 2 paths tested",
-      "description": "Cut onboarding time 60% with guided generation in AI codebases — tooling cost, CI queue drops, and the exact prompts that worked",
+      "description": "Two onboarding paths for AI-heavy repos: passive shadow-mode review versus guided scaffolding, with decision criteria and failure modes.",
       "datePublished": "2026-06-24T01:35:30+00:00",
-      "dateModified": "2026-09-20T04:07:56+00:00",
-      "wordCount": 2632,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-03T11:32:34+00:00",
+      "wordCount": 2285,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI codebase onboarding: 2 paths tested</h1>
                 
-                <p class="post-lead">Cut onboarding time 60% with guided generation in AI codebases — tooling cost, CI queue drops, and the exact prompts that worked</p>
+                <p class="post-lead">Two onboarding paths for AI-heavy repos: passive shadow-mode review versus guided scaffolding, with decision criteria and failure modes.</p>
                 
                 
                 <div class="tags">
@@ -247,242 +247,171 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2632 words
+                        11 min read
+                        &nbsp;·&nbsp; 2285 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-20
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
-<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>If your repo has 10,000+ lines already touched by an LLM, the usual checklist of README, CI, and a pull-request template won’t cut it. The first three PRs I opened failed CI because the generated code used a deprecated AWS SDK method that the team had already patched in 2026.</p>
-<p>In 2026, two approaches dominate how teams bring a new engineer up to speed in an AI-heavy codebase:</p>
-<ol>
-<li><strong>Shadow-mode onboarding</strong> – the new hire reads PRs, runs tests locally, and only writes code after 2–3 weeks of passive observation. 2. <strong>Guided generation</strong> – the IDE or a CLI tool actively scaffolds tickets, PR descriptions, and even tests from natural-language prompts tied to the repo’s architecture.</li>
-</ol>
-<p>Both paths sound reasonable until you hit edge cases like non-deterministic diffs, flaky tests that pass locally but fail in CI, or generated code that silently imports a library banned by your security policy. The difference between a 2-week ramp-up and a 6-week slog often comes down to which approach you anchor on day one.</p>
-<p>Below I compare both using real metrics from two production systems I helped migrate last year:</p>
+                <h2 id="the-problem-this-comparison-addresses">The problem this comparison addresses</h2>
+<p>A repository where a large share of code was produced by an LLM fails the standard onboarding checklist. A README, a CI pipeline and a pull-request template assume that the code in the repo was written by people who are still around to explain it. Generated code breaks that assumption in specific, predictable ways:</p>
 <ul>
-<li>System A: 22 kLOC Go 1.22, 40 % AI-generated, AWS Lambda with arm64, running on Ubuntu 24.04. - System B: 15 kLOC TypeScript 5.6, 35 % AI-generated, Node 20 LTS on AWS ECS Fargate, Redis 7.2 for session caching.</li>
+<li><strong>Stale API usage.</strong> The model was trained on a snapshot and reproduces methods that the team has since deprecated or replaced.</li>
+<li><strong>Non-deterministic diffs.</strong> Re-running the same prompt produces different output, so "regenerate it and see" is not a reliable debugging step.</li>
+<li><strong>Locally green, CI red.</strong> Generated tests often mock the wrong boundary, so they pass on a laptop and fail in a pipeline with real dependencies.</li>
+<li><strong>Policy violations that compile.</strong> Imports of banned libraries, unbounded retries, hardcoded timeouts, and functions that exceed the repo's length limit all pass a type checker.</li>
 </ul>
-<h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
-<p>Shadow-mode onboarding treats the AI snippet like a junior teammate: you watch what it does before you touch anything. The playbook is simple:</p>
+<p>Two onboarding strategies are commonly used to get a new engineer productive in this environment:</p>
 <ol>
-<li>Clone the repo, run <code>make bootstrap</code> (which installs Go 1.22, golangci-lint 1.63, and AWS CLI v2). 2. Open the PR queue in GitHub and filter for files with <code>// generated by cursor</code> or similar markers. 3. Read the generated diff, run the tests (<code>go test ./... -race -count=1</code>), and open Slack threads asking why the AI chose a certain pattern. 4. After you can predict the next 10 generated files from the prompt, you’re allowed to open your first ticket.</li>
+<li><strong>Shadow-mode onboarding.</strong> The new hire reads merged PRs, runs the test suite locally, and traces how the AI-generated code fits together before writing anything. Code ownership comes later.</li>
+<li><strong>Guided generation.</strong> Tooling scaffolds the ticket, the prompt, the tests, and the PR description from a repo-aware template, so the new hire directs the model rather than reading its output.</li>
 </ol>
-<p>The strongest signal that shadow-mode works is when senior engineers stop second-guessing the AI’s imports.</p>
-<p>Where it shines:
-- <strong>Security reviews stay auditable</strong>: every change hits the same review queue as human PRs, so you can grep for <code>aws-sdk-go-v2/iam</code> imports before they hit main. - <strong>Knowledge sticks</strong>: the new hire builds a mental map of the AI’s quirks (for example, it always uses <code>context.Background()</code> instead of <code>context.WithTimeout</code>, which breaks our Lambda timeout policy). - <strong>Tooling reuse</strong>: the <code>make bootstrap</code> script already sets up the VS Code Remote Container with pinned extensions (<code>ms-vscode.go</code>, <code>GitHub.copilot</code>), so the environment is identical for everyone.</p>
-<p>Weakness? The slow start. New hires spent 15 % of their first sprint just reading, and two of them quit before they wrote their first line of code. That 15 % idle time translated to roughly $18 k of salary across the two drop-outs at a $140 k fully-loaded rate.</p>
-<h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
-<p>Guided generation flips the script: instead of passively observing, the newcomer actively directs the AI to produce safe scaffolding. The flow is:</p>
+<p>The choice between them is not about which is "better." It is about which failure mode a team can absorb: slow ramp-up (shadow-mode) or prompt drift and tool dependency (guided generation).</p>
+<h2 id="option-a-shadow-mode-onboarding">Option A: shadow-mode onboarding</h2>
+<p>Shadow-mode treats generated code the way a careful reviewer treats any unfamiliar contributor: observe first, act later.</p>
+<p>A typical playbook:</p>
 <ol>
-<li>The new hire runs <code>npx ai-scaffold@0.9.3 init --repo .</code> which inspects <code>package.json</code>, <code>tsconfig.json</code>, and existing PR templates. 2. It outputs a <code>prompt.md</code> file with placeholders like <code>{{functionName}}</code> and <code>{{errorHandlingStrategy}}</code>. 3. The engineer edits <code>prompt.md</code>, then runs <code>npx ai-scaffold@0.9.3 generate</code> which writes the actual TypeScript files and a ready-to-review PR. 4. The PR description auto-populates with the original prompt plus a diff summary generated by <code>aider 0.56.0</code>.</li>
+<li>Clone the repo and run the bootstrap target (for a Go service, something like <code>make bootstrap</code> that pins the toolchain, linter, and cloud CLI).</li>
+<li>Filter the merged PR queue for files carrying generation markers, such as a <code>// generated</code> header or a commit trailer naming the tool.</li>
+<li>For each such file, read the diff, run the test suite with race detection and caching disabled (<code>go test ./... -race -count=1</code>), and ask in the team channel why the model chose a given pattern.</li>
+<li>Once the new hire can predict what the model will produce for a given ticket, they open their first PR.</li>
 </ol>
-<p>The metric that matters here is <strong>time-to-first-review</strong>. In System B we compared two cohorts:
-- Cohort 1 (shadow-mode): median 7.2 days
-- Cohort 2 (guided generation): median 2.1 days</p>
-<p>The gap closed over time, but the first-week spike in productivity was dramatic. One junior engineer shipped a working feature in 4 hours using guided generation; the same person took 3 days in shadow-mode because the AI kept generating tests that mocked the wrong AWS service.</p>
-<p>Where it shines:
-- <strong>Rapid feedback loops</strong>: you iterate on the prompt before you write any real code, so the first PR is usually merge-ready. - <strong>Policy enforcement baked in</strong>: the <code>ai-scaffold</code> template already imports <code>zod</code> for schema validation and refuses to generate code that violates the repo’s 120-line function limit. - <strong>IDE continuity</strong>: the tool injects a <code>.vscode/settings.json</code> snippet that tells Copilot Chat to respect the same lint rules as the repo, reducing cognitive context switches.</p>
-<p>Weakness? <strong>Prompt drift</strong>. After three weeks, engineers started bypassing the scaffold and writing raw prompts in Copilot Chat, which produced inconsistent formatting. We had to add a weekly linter run (<code>eslint --rule 'prompt-consistency: error'</code>) that flagged any TypeScript file missing the <code>prompt.md</code> fingerprint comment. That added 15 minutes to every Friday deploy, but it kept the repo consistent.</p>
-<h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>We ran two benchmarks across both systems.</p>
-<p><strong>Benchmark 1 – local build time</strong>
-- System A (Go 1.22): shadow-mode build took 42 s on a 2026 M2 MacBook Pro; guided build (using <code>gopls</code> with <code>ai-suggest</code> plugin) added 8 s for the AI prompt context, so total 50 s. - System B (TypeScript 5.6): shadow-mode build took 11 s; guided build took 14 s due to the <code>ai-scaffold</code> preprocessing step.</p>
-<p>The delta is small, but in a CI loop where builds run on every PR, that extra 8 s in System A added up to 32 minutes per week across 10 active PRs — roughly 27 hours of idle CPU time per month.</p>
-<p><strong>Benchmark 2 – CI queue depth</strong>
-- System A: shadow-mode onboarding produced PRs that failed 28 % of the time due to missing lint rules. Guided generation cut that to 8 %. - System B: shadow-mode had 21 % flaky test failures; guided generation reduced it to 5 %.</p>
-<p>Flaky failures translate directly to queue depth. In System A we measured the GitHub Actions queue length at 3 PM every weekday for four weeks:</p>
+<h3 id="where-shadow-mode-shines">Where shadow-mode shines</h3>
+<ul>
+<li><strong>Auditability.</strong> Every change, generated or not, passes through the same review queue. A reviewer can grep for a banned import before it reaches the default branch.</li>
+<li><strong>Durable knowledge.</strong> The new hire builds a mental model of the model's habits. A common one: the assistant reaches for <code>context.Background()</code> where the service requires <code>context.WithTimeout</code>, which silently breaks a request deadline.</li>
+<li><strong>Environment parity.</strong> A pinned bootstrap script and a devcontainer mean every engineer has the same compiler, linter, and extensions.</li>
+</ul>
+<h3 id="where-shadow-mode-fails">Where shadow-mode fails</h3>
+<ul>
+<li><strong>Slow first contribution.</strong> Weeks can pass before the new hire writes code that ships.</li>
+<li><strong>Attrition risk.</strong> Engineers who joined to build things may read this as being benched.</li>
+<li><strong>Unmeasured cost.</strong> The idle time is real but rarely appears on any dashboard, so it is easy to under- or over-estimate.</li>
+</ul>
+<h2 id="option-b-guided-generation">Option B: guided generation</h2>
+<p>Guided generation inverts the order: the new hire acts first, and the tooling constrains what the model can produce.</p>
+<p>A typical flow:</p>
+<ol>
+<li>A scaffolding CLI inspects <code>package.json</code>, <code>tsconfig.json</code>, and the existing PR templates.</li>
+<li>It emits a prompt file with placeholders for the function name, error-handling strategy, and logging conventions.</li>
+<li>The engineer fills in the placeholders and runs the generator, which writes the source files and a reviewable PR.</li>
+<li>The PR description is populated from the prompt plus a generated diff summary.</li>
+</ol>
+<h3 id="where-guided-generation-shines">Where guided generation shines</h3>
+<ul>
+<li><strong>Fast feedback.</strong> The prompt is iterated before code exists, so the first PR is closer to mergeable.</li>
+<li><strong>Policy enforcement at generation time.</strong> A template can require a schema-validation library, refuse to emit functions over a length limit, and reject imports on a deny list — before a human ever reviews the diff.</li>
+<li><strong>Editor continuity.</strong> A shared settings file can point the in-editor assistant at the same lint configuration the repo uses, reducing context switching.</li>
+</ul>
+<h3 id="where-guided-generation-fails">Where guided generation fails</h3>
+<ul>
+<li><strong>Prompt drift.</strong> After a few weeks, engineers bypass the scaffold and type raw prompts into a chat panel, producing inconsistent formatting and structure.</li>
+<li><strong>Second source of truth.</strong> The scaffold's configuration file slowly diverges from the README and from the actual conventions in the code.</li>
+<li><strong>Release-cadence inheritance.</strong> A third-party generator updates on its own schedule. A template change can break a naming convention across the repo overnight, and the team has to pin the version and wait.</li>
+</ul>
+<h2 id="how-to-measure-the-trade-off-in-your-own-repo">How to measure the trade-off in your own repo</h2>
+<p>None of the numbers below are portable between organizations. What is portable is the instrumentation. Measure these four things before choosing, and re-measure after.</p>
+<h3 id="1-time-to-first-merged-non-trivial-pr">1. Time to first merged non-trivial PR</h3>
+<p><strong>What to instrument:</strong> the merge timestamp of each new engineer's first PR that touches more than a trivial change (say, more than 20 changed lines and at least one test file).</p>
+<p><strong>How to compute it:</strong> from your git host's API, take the PR creation date minus the engineer's start date, filtered to the first qualifying PR. Report the median and the maximum, not the mean — the tail is where the interesting failures live.</p>
+<p><strong>Why the maximum matters:</strong> a long tail usually means one specific class of generated mistake (a wrong mock, a stale SDK call) trapped an engineer for days. That is a fixable tooling problem, and the tail tells you where to look.</p>
+<h3 id="2-ci-failure-rate-on-ai-touched-prs">2. CI failure rate on AI-touched PRs</h3>
+<p><strong>What to instrument:</strong> the fraction of PRs containing at least one generated file that fail CI at least once before merging. Tag PRs at creation time using a commit trailer or a file marker so the classification is automatic.</p>
+<p><strong>How to compute it:</strong> failed-first-run PRs divided by total AI-touched PRs, per week. Break it down by failure category (lint, test, build, policy) rather than reporting a single number.</p>
+<h3 id="3-queue-depth-at-a-fixed-time-of-day">3. Queue depth at a fixed time of day</h3>
+<p><strong>What to instrument:</strong> the number of queued or running pipeline jobs at a fixed hour, sampled daily.</p>
+<p><strong>How to compute it:</strong> query your CI provider's API on a schedule and store the result. A rising trend with a flat PR volume indicates that individual failures are getting more expensive to diagnose, not that the team is shipping more.</p>
+<h3 id="4-setup-friction">4. Setup friction</h3>
+<p><strong>What to instrument:</strong> the wall-clock time from a fresh machine to a green local test run, measured by a script rather than self-reported.</p>
+<p><strong>How to compute it:</strong> a container that clones the repo, runs the documented bootstrap, and runs the test suite, timed end to end. Run it weekly in CI. If this number grows, every new hire pays the increase.</p>
+<h3 id="a-worked-example-of-the-arithmetic">A worked example of the arithmetic</h3>
+<p>Suppose a team hires four engineers a year, and the fully loaded cost of an engineer is $150,000 per year. That is roughly $72 per working hour (150,000 ÷ 2,080 hours).</p>
+<p>If shadow-mode onboarding adds 40 hours of pre-contribution reading per hire, the cost is 4 × 40 × $72 = $11,520 per year. If guided generation cuts that to 12 hours per hire, the cost is 4 × 12 × $72 = $3,456, a difference of $8,064.</p>
+<p>These figures are illustrative. Substitute your own loaded hourly rate and your own measured ramp-up hours. The point of the arithmetic is not the total; it is that the idle-time cost is usually larger than the tooling subscription, which means the decision should hinge on measured ramp-up hours, not on license price.</p>
+<h2 id="a-head-to-head-comparison">A head-to-head comparison</h2>
 <table>
 <thead>
 <tr>
-<th>Week</th>
-<th>Shadow-mode queue</th>
-<th>Guided queue</th>
+<th>Dimension</th>
+<th>Shadow-mode</th>
+<th>Guided generation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td>12</td>
-<td>4</td>
+<td>Time to first PR</td>
+<td>Longer</td>
+<td>Shorter</td>
 </tr>
 <tr>
-<td>2</td>
-<td>15</td>
-<td>3</td>
+<td>Review burden</td>
+<td>Same queue, more reading per PR</td>
+<td>Fewer, more uniform PRs</td>
 </tr>
 <tr>
-<td>3</td>
-<td>18</td>
-<td>5</td>
+<td>Policy enforcement</td>
+<td>At review time</td>
+<td>At generation time</td>
 </tr>
 <tr>
-<td>4</td>
-<td>20</td>
-<td>4</td>
+<td>Toolchain dependency</td>
+<td>Repo bootstrap only</td>
+<td>Generator CLI plus editor extension</td>
+</tr>
+<tr>
+<td>Main failure mode</td>
+<td>Slow ramp, attrition</td>
+<td>Prompt drift, config divergence</td>
+</tr>
+<tr>
+<td>Best fit</td>
+<td>Regulated code, heterogeneous editors</td>
+<td>Mid-size repos, uniform editor stack</td>
 </tr>
 </tbody>
 </table>
-<p>Guided generation cut the average queue depth by 75 %, which meant engineers spent 40 % less time waiting for green checks.</p>
-<p><strong>Benchmark 3 – onboarding ramp-up</strong>
-We timed how long it took a new hire to merge their first non-trivial PR:
-- Shadow-mode: median 11.3 days (min 7, max 18)
-- Guided generation: median 3.4 days (min 1, max 6)</p>
-<p>The tail end of the shadow-mode distribution is brutal: two new hires took 18 days because they kept debugging why the AI used <code>time.Sleep(1*time.Second)</code> in a Lambda handler. Guided generation eliminated that class of surprises by constraining the prompt space.</p>
-<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
-<p><strong>Developer joy score</strong>
-We ran a weekly survey (1–5 scale) after each deploy:
-- Shadow-mode median: 2.8 / 5
-- Guided generation median: 4.1 / 5</p>
-<p>The biggest complaint in shadow-mode was the lack of agency. Engineers felt like they were auditing ghost code rather than building features. Guided generation turned that around by making the AI a junior pair programmer that you can bark orders at.</p>
-<p><strong>Context retention</strong></p>
-<ul>
-<li>Shadow-mode: 62 %</li>
-<li>Guided generation: 78 %</li>
-</ul>
-<p>Guided generation wins because the prompt forces the engineer to articulate the repo’s conventions (e.g., error handling, logging format) before the AI writes a single line.</p>
-<p><strong>Tool friction</strong>
-Both approaches required installing extra tools, but the friction profile differed:
-- Shadow-mode needed only GitHub and the repo’s <code>make bootstrap</code>. - Guided generation needed Node 20 LTS, <code>npx ai-scaffold@0.9.3</code>, and a Copilot Chat subscription for teams.</p>
-<p>The Node toolchain added 3–4 minutes of setup time, but we offset that by baking the scaffold into the repo’s CI so every new clone runs <code>npm ci &amp;&amp; npx ai-scaffold@0.9.3 doctor</code> automatically. That made the friction one-time rather than per-developer.</p>
-<p><strong>Error messages</strong>
-The most common CI errors we saw:</p>
-<table>
-<thead>
-<tr>
-<th>Error message</th>
-<th>Shadow-mode count (4 weeks)</th>
-<th>Guided count (4 weeks)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>aws-sdk-go-v2/iam</code> import violation</td>
-<td>12</td>
-<td>1</td>
-</tr>
-<tr>
-<td>Flaky test <code>TestHandleOrder</code></td>
-<td>23</td>
-<td>4</td>
-</tr>
-<tr>
-<td>Function length &gt; 120 lines</td>
-<td>8</td>
-<td>2</td>
-</tr>
-<tr>
-<td>Missing error wrapping</td>
-<td>19</td>
-<td>3</td>
-</tr>
-</tbody>
-</table>
-<p>Guided generation cut the top three error classes by at least 75 % because the scaffold enforces the repo’s policy constraints before the code is written.</p>
-<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
-<p><strong>Direct tooling cost</strong>
-- Shadow-mode: $0 (only existing GitHub and VS Code)
-- Guided generation: $3,840 for 48 Copilot Chat seats at $80 / seat / year plus $1,200 for <code>ai-scaffold@0.9.3</code> enterprise tier.</p>
-<p>That $5,040 is a rounding error compared to the real cost driver: <strong>idle engineer time</strong>.</p>
-<p><strong>Indirect cost — idle time</strong></p>
-<table>
-<thead>
-<tr>
-<th>Onboarding style</th>
-<th>Median ramp-up days</th>
-<th>Idle hours</th>
-<th>Cost</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Shadow-mode</td>
-<td>11.3</td>
-<td>90</td>
-<td>$5,850</td>
-</tr>
-<tr>
-<td>Guided</td>
-<td>3.4</td>
-<td>27</td>
-<td>$1,755</td>
-</tr>
-</tbody>
-</table>
-<p>The delta is $4,095 per engineer. With four new hires per quarter, that’s $16,380 saved annually — more than enough to cover the tooling.</p>
-<p><strong>Infrastructure cost</strong>
-Both systems run on AWS:
-- System A: 4 Lambda functions (arm64) averaging 128 MB RAM, 512 ms timeout, 100 req/s → ~$112 / month
-- System B: 3 Fargate tasks (0.25 vCPU, 512 MB) with Redis 7.2 (cache.t3.micro) → ~$89 / month</p>
-<p>Neither approach added measurable infra cost because the AI tools run in the IDE or CLI, not in the cloud.</p>
-<p><strong>Opportunity cost</strong>
-The biggest hidden cost in shadow-mode is <strong>lost velocity on the team’s critical path</strong>. When a senior engineer spends 30 minutes explaining why the AI used a deprecated AWS method instead of the new <code>iam.GetRole</code> API, that’s 30 minutes the team doesn’t ship the next feature. Guided generation offloads that explanation to the scaffold, freeing seniors to review architecture instead of lint rules.</p>
-<h2 id="the-decision-framework-i-use">The decision framework I use</h2>
-<p>I use a simple 3-question checklist when a repo crosses the 10 kLOC mark with &gt;20 % AI-generated code:</p>
+<h2 id="failure-mode-analysis">Failure-mode analysis</h2>
+<h3 id="failure-mode-1-the-models-stale-api">Failure mode 1: the model's stale API</h3>
+<p>A generated file imports a client library method the team replaced months ago. In shadow-mode, a reviewer catches it. In guided generation, a deny-list rule catches it before the file is written. In both cases the fix is the same: encode the current API surface in a lint rule or a generator constraint, so the correction does not depend on a human remembering.</p>
+<h3 id="failure-mode-2-the-wrong-mock">Failure mode 2: the wrong mock</h3>
+<p>Generated tests mock a service that the code does not actually call, so the test passes while the integration is broken. This is the single most expensive onboarding trap, because the new hire's local run is green. The countermeasure is a small number of real integration tests that run in CI against a containerized dependency, so a wrong mock fails fast.</p>
+<h3 id="failure-mode-3-prompt-drift">Failure mode 3: prompt drift</h3>
+<p>After the novelty wears off, engineers stop using the scaffold and type raw prompts. The output becomes inconsistent. The countermeasure is a fingerprint comment in each generated file that records the prompt template version, plus a lint rule that flags files without it. This is a tax on every change, so weigh it against the consistency it buys.</p>
+<h3 id="failure-mode-4-the-scaffold-as-second-source-of-truth">Failure mode 4: the scaffold as second source of truth</h3>
+<p>The generator's config file describes conventions that no longer match the code. The countermeasure is to generate the documentation from the config, or to fail CI when the two disagree. Never maintain both by hand.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Answer these before committing to a path.</p>
 <ol>
-<li><strong>Can we afford idle time?</strong></li>
-<li>
-<p>If the team is &gt;4 engineers and revenue is &gt;$1 M/month, guided generation usually pays for itself in &lt;8 weeks. - If the team is 2 engineers and revenue is &lt;$500 k/month, shadow-mode keeps complexity low.</p>
-</li>
-<li>
-<p><strong>How brittle is the AI output?</strong></p>
-</li>
-<li>
-<p>If the generated code fails CI &gt;30 % of the time, guided generation’s policy enforcement matters. - If failures are rare (&lt;5 %), shadow-mode’s auditability is enough.</p>
-</li>
-<li>
-<p><strong>What’s our IDE stack?</strong></p>
-</li>
-<li>If everyone already uses VS Code + Copilot Chat, guided generation adds one extension. - If half the team uses Neovim, guided generation’s Node dependency becomes a friction tax.</li>
+<li><strong>What is the measured median and maximum time to first merged PR today?</strong> If you do not know, measure it for one cohort before changing anything.</li>
+<li><strong>What fraction of CI failures on AI-touched PRs are policy violations versus logic errors?</strong> Policy violations are cheap to automate away; logic errors are not.</li>
+<li><strong>Does the team share one editor stack?</strong> Guided generation's tooling assumes it does. A heterogeneous team pays a friction tax on every generator update.</li>
+<li><strong>Can the repo enforce its conventions mechanically?</strong> If the answer is no, neither approach will help, because the conventions live only in reviewers' heads.</li>
+<li><strong>Who owns the generator configuration?</strong> If nobody does, it will drift.</li>
+<li><strong>What is the blast radius of a bad generator release?</strong> If the answer is "the whole repo," pin the version and review upgrades deliberately.</li>
 </ol>
-<p>I’ve ignored the framework twice and regretted it:
-- Once at a Series B startup where we chose shadow-mode for a 15 kLOC Python repo; the AI kept generating SQLAlchemy models with <code>nullable=True</code> on primary keys. It took six weeks to clean up the tech debt. - Once at a consulting shop where we chose guided generation for a 5 kLOC repo; the <code>ai-scaffold</code> YAML became a second source of truth that diverged from the README. We spent two weeks reconciling them.</p>
-<h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
-<p><strong>Recommendation</strong>: Use <strong>guided generation</strong> when:
-- The repo is &gt;10 kLOC and &gt;20 % AI-generated
-- The team uses VS Code + Copilot Chat or Cursor
-- Revenue impact justifies a $5 k tooling budget per quarter</p>
-<p>Use <strong>shadow-mode</strong> when:
-- The repo is &lt;10 kLOC or &lt;20 % AI-generated
-- The team uses a mix of IDEs (VS Code, Neovim, Emacs)
-- The business is pre-Series A with tight budgets</p>
-<p>I still reach for shadow-mode in two edge cases:
-1. <strong>Security-critical repos</strong>: banks, healthcare, or defense contractors where every line of generated code must be diff-reviewed by a human before merge. 2. <strong>Legacy monoliths</strong>: repos with 200 kLOC COBOL that someone “translated” to Go with an LLM; the AI output is so unstable that guided generation becomes a crutch, not a scaffold.</p>
-<p>Guided generation isn’t a silver bullet. In System B we had to freeze <code>ai-scaffold@0.9.3</code> for two weeks after an update introduced a prompt template that broke our Zod schema naming convention. That’s the tax of relying on a third-party tool: you inherit its release cadence.</p>
-<h2 id="final-verdict">Final verdict</h2>
-<p>Guided generation wins on speed, correctness, and developer morale when your repo is mid-sized and your toolchain is modern. Shadow-mode is safer for greenfield or highly regulated code, but it exacts a steep time cost that most startups can’t afford in 2026.</p>
-<p>Choose guided generation if you can answer yes to all three:
-1. Is your repo &gt;10 kLOC with &gt;20 % AI-generated code? 2. Do ≥80 % of engineers use VS Code or Cursor? 3. Can you justify a $5 k/quarter tooling budget?</p>
-<p>If any answer is no, default to shadow-mode and revisit in six months.</p>
-<p>After you decide, spend the next 30 minutes doing this:
-Open your largest AI-generated file, run <code>git blame --show-email</code> on it, and email the top 5 contributors asking one question: <em>“What prompt did you feed the AI to generate this file?”</em> You’ll learn more about your repo’s hidden conventions in 15 minutes than a week of reading docs.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>how do i know if my repo is ready for guided generation</strong></p>
-<p>Check three simple metrics: repo size &gt;10 kLOC, AI-generated files &gt;20 % of total, and CI failure rate on AI PRs &lt;30 %. If all three are true, guided generation usually pays off in &lt;8 weeks. If any metric is borderline, start with shadow-mode for one cohort of new hires and compare ramp-up times after 30 days.</p>
-<p><strong>what’s the biggest mistake teams make with shadow-mode</strong></p>
-<p>They let new hires write code too soon. Shadow-mode only works if the newcomer spends the first 1–2 weeks <em>only</em> reviewing AI-generated PRs and running <code>make test</code> locally. If they open their own PR within the first week, they’ll repeat the same lint or import mistakes the AI made, and the cycle never breaks.</p>
-<p>At 2026 prices, <code>ai-scaffold@0.9.3</code> enterprise is $2,400/year for up to 100 seats. Copilot Chat for teams is $80/seat/year, so 50 seats × $80 = $4,000. Total $6,400/year. Factor in the $4 k annual savings from faster onboarding per engineer, and the tooling pays for itself in ~8 months for a team that hires 4 new engineers per year.</p>
-<p><strong>what if my team uses neovim or emacs</strong></p>
-<p>Guided generation still works, but you’ll need to adapt the scaffold output to your editor. The biggest friction is the Node toolchain (<code>npx ai-scaffold@0.9.3</code>). If your team refuses Node, skip guided generation and stick with shadow-mode. The auditability of shadow-mode outweighs the speed loss when your toolchain is heterogeneous.</p>
-<h2 id="related-reading">Related reading</h2>
+<h2 id="practical-recommendation">Practical recommendation</h2>
+<p>Guided generation tends to pay off when the repository is large, most engineers share an editor stack, and the team can afford to own a generator configuration. Shadow-mode tends to be the safer default when the code is security-critical, the editor stack is mixed, or the team has no capacity to maintain scaffolding.</p>
+<p>Two situations where shadow-mode remains the better choice even in a modern toolchain:</p>
 <ul>
-<li><a href="https://kubaik.github.io/ai-codebases-two-onboarding-paths-that-actually-work/">AI codebases: two onboarding paths that actually work</a></li>
-<li><a href="https://kubaik.github.io/claude-code-after-a-year-daily-wins/">Claude Code after a year: daily wins</a></li>
-<li><a href="https://kubaik.github.io/ai-code-40-how-to-keep-it-from-rotting-your-repo/">AI code 40% — how to keep it from rotting your repo</a></li>
+<li><strong>Regulated code.</strong> Where every generated line must be diff-reviewed by a human before merge, the review queue is the control, and a generator that bypasses it adds risk rather than removing it.</li>
+<li><strong>Unstable generated output.</strong> In a codebase translated wholesale from another language, the model's output may be inconsistent enough that a scaffold becomes a crutch. Reading first is the only way to build a reliable mental model.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>Neither approach is a silver bullet. Guided generation inherits the release cadence of its tooling, and shadow-mode inherits the patience of its hires.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>How do I know whether my repo is ready for guided generation?</strong></p>
+<p>You do not need a threshold; you need three measurements. Time to first merged PR, CI failure rate on AI-touched PRs broken down by category, and setup time from a fresh clone to a green test run. If policy violations dominate the failure categories, guided generation will help. If logic errors dominate, the problem is test design, not onboarding.</p>
+<p><strong>What is the most common mistake with shadow-mode?</strong></p>
+<p>Letting the new hire write code too early. The value of shadow-mode comes from building a predictive model of the assistant's behavior. If the new hire opens a PR in the first week, they reproduce the same mistakes the model already made, and the team learns nothing.</p>
+<p><strong>Does guided generation work with editors other than VS Code?</strong></p>
+<p>It can, but the friction is in the generator's runtime and configuration, not the editor. If the team cannot standardize on a runtime for the scaffold, the maintenance cost usually outweighs the speed gain, and shadow-mode is the better default.</p>
+<p><strong>Should the two approaches be combined?</strong></p>
+<p>Yes, and this is often the practical answer. Use guided generation for the first small, well-scoped ticket so the new hire ships something in week one, then switch to shadow-mode reading for the next two weeks while they build context. The first PR provides early feedback; the reading period prevents the drift that comes from relying on the generator alone.</p>
+<h2 id="one-action-for-the-next-30-minutes">One action for the next 30 minutes</h2>
+<p>Pick the largest generated file in your repository. Run <code>git log --format='%ae' -- &lt;path&gt; | sort | uniq -c | sort -rn</code> on it to see who touched it most, then open one of those commits and read the diff alongside the current file. If you cannot explain why the code looks the way it does, that gap is exactly what a new hire will hit on day one — write it down as the first entry in an onboarding note.</p>
                 
                 
             </div>

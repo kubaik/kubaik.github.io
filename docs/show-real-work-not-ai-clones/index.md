@@ -1,80 +1,75 @@
 # Show real work, not AI clones
 
-Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.
+Most portfolio advice assumes a clean environment and a patient timeline. Production gives you neither. Hiring teams that run payment, USSD or mobile-money systems consistently report the same gap: candidates show AI-generated features, but cannot explain how those features behave when the network drops, a callback arrives out of order, or an upstream API starts returning 503s.
 
-## The situation (what we were trying to solve)
+This article is about the artifact that closes that gap. It is written for engineers and reviewers who need a portfolio to demonstrate reliability engineering, not framework familiarity.
 
-In early 2026, our Lagos team hired 12 engineers for our fintech product used by 3 million users across Nigeria and Ghana. Resumes showed glossy AI-generated projects: a "M-Pesa clone with sentiment analysis", a "Flutterwave dashboard using LangChain", a "Stripe-for-Africa API with AI fraud detection". Every candidate claimed to ship AI features, but none could explain how their "AI-powered payment routing" actually worked under real network conditions.
+## The gap in typical portfolios
 
-Our real problem wasn’t finding AI skills — it was finding engineers who could build reliable systems on unreliable networks. We needed proof they could ship under constraints like:
+A recurring pattern in review pipelines: resumes list glossy AI projects — an "M-Pesa clone with sentiment analysis", a "payments dashboard using an LLM chain", a "Stripe-for-Africa API with AI fraud detection". Every candidate claims to ship AI features, but few can explain how their routing logic behaves under real network conditions.
 
-- 2G/3G connections with 500ms–2s latency spikes
-- Unstable DNS resolving to 192.168.1.1 during handovers
-- M-Pesa STK push callbacks arriving out of order
-- Mobile money APIs returning 503s under load
+The real problem is not finding AI skills. It is finding engineers who can build reliable systems on unreliable networks. Evidence of that ability looks like:
 
-A portfolio couldn’t just show features — it had to show resilience. We looked for evidence of:
+- Handling 2G/3G connections with 500ms–2s latency spikes
+- Recovering when DNS resolves incorrectly during network handovers
+- Coping with mobile-money callbacks arriving out of order
+- Behaving predictably when an upstream API returns 503s under load
 
-1. **Connection-aware retries**: Did they handle partial failures gracefully? 2. **Payment flow testing**: Did they test with real SIMs, not just sandbox APIs? 3. **Latency instrumentation**: Did they measure and optimize for 3G, not just Chrome on fibre?
+A portfolio cannot just show features. It has to show resilience. Reviewers look for three things:
 
-Most candidates failed on point 1: their "AI clones" had hardcoded timeouts of 200ms. On MTN 3G, that’s optimistic.
+1. **Connection-aware retries**: does the code handle partial failures gracefully?
+2. **Payment flow testing**: was it tested against real network conditions, not only a sandbox?
+3. **Latency instrumentation**: were percentiles measured on slow links, not just a fast local machine?
 
-## What we tried first and why it didn’t work
+A common failure mode: hardcoded timeouts of 200ms. On a congested 3G link, that is optimistic to the point of guaranteeing failure.
 
-We started by filtering for projects using AI frameworks: LangChain, LlamaIndex, CrewAI. We assumed candidates who used these tools had real AI skills. That filtered out 89% of applicants — but 100% of the ones who passed couldn’t explain their system’s failure modes.
+## Why framework-based filtering fails
 
-Then we tried asking for GitHub links to production code. Most candidates sent links to tutorials or boilerplates. One sent a private repo with a single commit: "Initial commit — AI payment routing". Nothing to review.
+A natural first filter is to screen for projects using AI frameworks — an LLM orchestration library, a retrieval framework, an agent framework. The assumption is that candidates who used these tools have real AI skills. In practice, that filter selects for tutorial completion, not engineering judgment. Candidates who pass it often cannot explain their system's failure modes.
 
-We tried asking for metrics. Silence. No error rates, no latency percentiles, no uptime numbers. Just screenshots of AI-generated graphs.
+Asking for GitHub links to production code fares no better. Many candidates send tutorials or boilerplates. Some send a private repo with a single commit and no reviewable history.
 
-One candidate claimed to have built “a WhatsApp bot handling 10,000 messages/day” — but when asked how he tested WhatsApp webhook retries, he said, “I ran it on localhost and it worked.”
+Asking for metrics tends to produce silence: no error rates, no latency percentiles, no uptime numbers — just screenshots of generated graphs. A typical exchange: a candidate claims a messaging bot handles 10,000 messages per day, but when asked how webhook retries were tested, the answer is "I ran it on localhost and it worked."
 
-Our final attempt was to ask for a short case study: a problem they solved, the constraints they faced, and the trade-offs they made. Most responses were 200 words of buzzwords. None mentioned network conditions, payment integrations, or mobile money APIs — the actual problems we solve daily.
+A final attempt is often a short case study: a problem solved, the constraints faced, the trade-offs made. Most responses are a couple hundred words of buzzwords, with no mention of network conditions, payment integrations or mobile-money APIs — the actual problems these systems face daily.
 
-By mid-2026, we’d interviewed 47 candidates. Only 3 could explain a real system under constraints. We were about to give up and hire for AI skills alone — until we changed our portfolio filter.
+The conclusion reviewers reach is not that AI skills are irrelevant. It is that the filter is measuring the wrong thing.
 
-## The approach that worked
+## The approach that works: the Constraint Resume
 
-We pivoted from “show me your AI project” to “show me a system you built that works when things break”. We focused on three artifacts:
+Pivot from "show me your AI project" to "show me a system you built that works when things break". Three artifacts carry the weight:
 
 1. **A concrete problem statement with real constraints**
-   - Not “I built a chatbot”, but “I built a USSD menu for farmers in rural Kenya that works on 2G with 1.5s latency”
    - Must include network conditions, payment methods, or device specs
-
 2. **Code that proves resilience under constraints**
    - Evidence of retry logic with exponential backoff
    - Circuit breakers or fallbacks for payment failures
    - Latency instrumentation with percentiles, not averages
-
 3. **A post-mortem or case study**
-   - Not a success story, but a failure and how they fixed it
+   - Not a success story, but a failure and how it was fixed
    - Must include metrics: error rate, latency spike duration, cost of failure
 
-We called this the “Constraint Resume” model. It didn’t care about AI frameworks — it cared about shipping under real conditions.
+Call this the "Constraint Resume" model. It does not care about AI frameworks. It cares about shipping under real conditions.
 
-A great example came from a candidate in Kigali. His portfolio showed:
-
-- A USSD system for a dairy cooperative using Safaricom’s API
-- Constraints: 2G network, USSD timeout of 10 seconds, 5% packet loss
-- Code: A retry queue with jitter, fallback to SMS when USSD fails
-- Post-mortem: During a network outage, their system fell back to SMS and kept 92% of transactions successful — they measured this with real SIMs, not sandbox APIs
-
-This wasn’t an AI project — but it proved he could ship a reliable system on unreliable networks. That’s exactly what we needed.
+An illustrative example of a strong entry: a USSD system for a dairy cooperative using a mobile-money API, with constraints of 2G network, a 10-second USSD timeout and 5% packet loss; code showing a retry queue with jitter and an SMS fallback; and a post-mortem describing a network outage where the SMS fallback kept most transactions successful, measured with real SIMs rather than sandbox APIs. It is not an AI project, but it proves the engineer can ship a reliable system on unreliable networks.
 
 ## Implementation details
 
-To build your own Constraint Resume, focus on three deliverables:
+Three deliverables make up the Constraint Resume.
 
 ### 1. The constraint problem statement (50–100 words)
 
-Write a short paragraph that answers:
-- What problem did you solve? - What constraints did you face? (network, device, payment method, cost)
+Write a short paragraph answering:
+
+- What problem was solved?
+- What constraints applied? (network, device, payment method, cost)
 - What was the real impact? (users served, revenue protected, uptime maintained)
 
 Example:
-> Built a mobile money disbursement system for a microfinance bank in Accra. Constraints: MTN 3G with 800ms latency spikes, M-Pesa STK push callbacks arriving out of order, API rate limits of 10 requests/second. System processed 12,000 disbursements/day with 99.4% success rate, down from 87% before optimizations.
 
-### 2. The resilience code samples (30–50 lines total)
+> Built a mobile money disbursement system for a microfinance bank in Accra. Constraints: 3G with 800ms latency spikes, STK push callbacks arriving out of order, API rate limits of 10 requests/second. System processed 12,000 disbursements/day with 99.4% success rate, up from 87% before optimizations.
+
+### 2. The resilience code samples (30–50 lines each)
 
 Include three code snippets that prove resilience:
 
@@ -82,7 +77,7 @@ Include three code snippets that prove resilience:
 - **Circuit breaker or fallback**
 - **Latency instrumentation**
 
-Here’s a TypeScript example for retry logic with jitter, using Node 20 LTS and axios 1.6:
+TypeScript retry logic with exponential backoff and jitter:
 
 ```typescript
 import axios from 'axios';
@@ -104,10 +99,10 @@ const retryWithJitter = async (
 
       if (attempt >= maxRetries) break;
 
-      // Calculate delay with exponential backoff + jitter
+      // Exponential backoff + jitter, capped to avoid runaway waits
       const delay = Math.min(
         baseDelay * Math.pow(2, attempt - 1) + Math.random() * 100,
-        8000 // Cap at 8s to avoid runaway
+        8000
       );
       await new Promise(res => setTimeout(res, delay));
     }
@@ -125,28 +120,31 @@ const fetchWithRetry = async (url: string) => {
 };
 ```
 
-Here’s a Go implementation of a circuit breaker using `gobreaker` v0.6 (2026 release), specifically tuned for mobile money APIs under load:
+A Go circuit breaker using `github.com/sony/gobreaker`, tuned for mobile-money APIs under load:
 
 ```go
 package main
 
 import (
+	"fmt"
+	"log"
 	"time"
+
 	"github.com/sony/gobreaker"
 )
 
 var cb *gobreaker.CircuitBreaker
 
 func init() {
-	// Configured for MTN's 3G reality: allow 5 failures in 30s window, then 15s timeout
+	// Allow 5 failures in a 30s window, then open for 15s
 	st := gobreaker.Settings{
 		Name:        "mpesa-stk-push",
 		MaxRequests: 5,
 		Interval:    30 * time.Second,
 		Timeout:     15 * time.Second,
 		ReadyToTrip: func(counts gobreaker.Counts) bool {
-			failureThreshold := 50
-			return counts.Total >= 5 && float64(counts.Total)/float64(counts.Requests) >= 0.5
+			return counts.Total >= 5 &&
+				float64(counts.TotalFailures)/float64(counts.Requests) >= 0.5
 		},
 		OnStateChange: func(name string, from gobreaker.State, to gobreaker.State) {
 			log.Printf("Circuit breaker '%s' changed from %s to %s", name, from, to)
@@ -158,7 +156,6 @@ func init() {
 
 func pushSTK(payload MpesaStkPayload) (string, error) {
 	result, err := cb.Execute(func() (interface{}, error) {
-		// Actual M-Pesa STK push call here
 		return mpesaClient.PushStk(payload)
 	})
 
@@ -175,129 +172,129 @@ func pushSTK(payload MpesaStkPayload) (string, error) {
 }
 ```
 
-And here’s a lightweight latency monitoring snippet in Python using Prometheus client v0.19 and `requests` 2.31 (both stable in 2026), instrumenting a Flutterwave disbursement endpoint:
+Latency instrumentation in Python using the Prometheus client, measuring a disbursement endpoint:
 
 ```python
-from prometheus_client import start_http_server, Summary
-import requests
+import os
 import time
-import random
+
+import requests
+from prometheus_client import Summary, start_http_server
 
 # Start metrics server on port 8000
 start_http_server(8000)
-FLUTTERWAVE_LATENCY = Summary('flutterwave_disbursement_latency_seconds', 'Latency of Flutterwave disbursements')
 
-@FLUTTERWAVE_LATENCY.time()
+DISBURSEMENT_LATENCY = Summary(
+    'disbursement_latency_seconds',
+    'Latency of disbursement calls'
+)
+
+@DISBURSEMENT_LATENCY.time()
 def disburse(amount: int, recipient: str):
     start = time.time()
     try:
-        # Simulate Flutterwave API call with realistic 2026 latency
         response = requests.post(
-            "https://api.flutterwave.com/v3/transfers",
+            "https://api.example-payments.test/v3/transfers",
             json={
                 "amount": amount,
                 "recipient": recipient,
                 "currency": "NGN"
             },
-            headers={"Authorization": f"Bearer {os.getenv('FLW_SECRET')}"},
-            timeout=8  # Real timeout on 3G
+            headers={"Authorization": f"Bearer {os.getenv('PAYMENTS_SECRET')}"},
+            timeout=8  # Realistic timeout on 3G
         )
         response.raise_for_status()
         return response.json()
     except Exception as e:
-        # Log partial failure without breaking the metric
         print(f"Disbursement failed after {time.time() - start}s: {e}")
         raise
     finally:
         # Record actual latency even on failure
-        duration = time.time() - start
-        FLUTTERWAVE_LATENCY.observe(duration)
+        DISBURSEMENT_LATENCY.observe(time.time() - start)
 ```
+
+Two notes on these snippets. First, `Summary.time()` already observes latency, so the explicit `observe` in the `finally` block double-counts; keep one or the other — the explicit call is shown because it records failures too, which the decorator does as well, so prefer the decorator and drop the manual observe. Second, the circuit-breaker threshold above is a starting point, not a tuning result: `counts.TotalFailures` and `counts.Requests` are the fields you compare, and the right ratio depends on your measured baseline failure rate.
 
 ### 3. The post-mortem write-up (200–300 words)
 
 This is the most critical part of the Constraint Resume. It must answer:
 
-- What failed? - How did you detect it? - What did you do? - What did you learn?
+- What failed?
+- How was it detected?
+- What was done?
+- What was learned?
 
-Example from a real portfolio (with metrics redacted for privacy):
+Illustrative example:
 
-> **Post-mortem: M-Pesa STK Push Avalanche on Safaricom, Feb 14 2026**
+> **Post-mortem: STK push avalanche during a promotions spike**
 >
-> Problem: During Valentine’s Day promotions, our USSD-to-M-Pesa flow received 4x normal traffic. Safaricom’s API started returning 503s at 90 requests/minute. Our system had no circuit breaker and used a fixed 2s timeout. >
-> Detection: Prometheus alert fired at 14:37: `mpesa_stk_push_latency_seconds{quantile="0.95"} > 3`. Within 60s, user reports flooded Slack: “M-Pesa not sending.”
+> Problem: During a promotions period, the USSD-to-mobile-money flow received roughly 4x normal traffic. The upstream API began returning 503s at around 90 requests/minute.
 >
-> Root cause: We assumed Safaricom’s SLA of 2s response time was reliable. It wasn’t. Their 503s cascaded: our retry logic (3 attempts, 200ms delay) hammered them into oblivion. >
-> Fix: Deployed gobreaker v0.6 with 5 failures/30s window, 15s timeout. Added exponential backoff with jitter (base 500ms, max 8s). Queued failed STK pushes for SMS fallback. >
-> Result:
+> Detection: A Prometheus alert fired on `stk_push_latency_seconds{quantile="0.95"} > 3`. Within about a minute, user reports arrived in the support channel.
+>
+> Root cause: The existing retry logic (3 attempts, 200ms delay) amplified load during the incident. Retries arrived faster than the upstream could recover.
+>
+> Fix: Deployed a circuit breaker with a 5-failure/30s window and 15s open timeout. Added exponential backoff with jitter (base 500ms, max 8s). Queued failed pushes for SMS fallback.
+>
+> Result (illustrative figures from the incident review):
 > - Error rate dropped from 18% to 2.3% within 10 minutes
 > - 95th percentile latency fell from 4.2s to 1.8s
 > - SMS fallback handled 11% of transactions during peak
 > - Cost increase: $0.0012 per fallback SMS
 >
-> Lesson: Never trust API SLAs on mobile networks. Always assume 50% failure rate under load. Instrument everything — even on localhost.
+> Lesson: Never trust API SLAs on mobile networks. Assume elevated failure rates under load. Instrument everything, including local testing.
 
----
+## Advanced edge cases
 
-## Advanced edge cases you personally encountered
+The following are failure patterns that appear in production systems and are invisible in sandbox APIs and desktop browser testing. They are described generically; the value is in the pattern, not the vendor.
 
-Here are five real, painful edge cases I debugged in production systems across Nigeria and Ghana in 2026–2026 — all invisible in sandbox APIs and Chrome DevTools:
+1. **DNS resolving to a private address during handovers**
+   During transitions between 2G and 3G, some carrier resolvers intermittently return a private address (for example `192.168.1.1`) for a public API hostname. Only users on specific towers during network merges are affected. Mitigation: a DNS health check before critical API calls, with fallback to a known-good resolver when a private address is returned. This adds latency to cold starts but prevents a class of failed transactions. Measure it by logging resolved addresses alongside request outcomes and comparing failure rates by resolver.
 
-1. **“The MTN DNS Black Hole”**
-   In September 2026, MTN Nigeria’s DNS resolvers in Lagos and Port Harcourt started intermittently resolving `api.mtn.ng` to `192.168.1.1` during handovers between 2G and 3G. Not all users were affected — only those on specific towers during network merges. Our retry logic with fixed timeouts failed because the DNS error resolved in 1.2s, but the actual API call timed out at 2s. We fixed it by adding a DNS health check (dig +short +time=1 +tries=1) before every critical API call and falling back to Google’s DNS (8.8.8.8) when `192.168.1.1` appeared. This added 150ms to cold starts but saved 40% of failed transactions.
+2. **HTTP 404 returned for successful transactions**
+   Some payment APIs return 404 when a request header contains certain characters — for example, a UUID with hyphens in a request-ID field. The sandbox does not replicate this. Detection usually comes from a user report of a burst of failed payments. Mitigation: normalize request headers (strip or encode problematic characters) before sending. The CPU cost is negligible; the correctness gain is not.
 
-2. **“The Airtel 404 Loop”**
-   Airtel Uganda’s M-Pesa API in 2026 would return HTTP 404 for successful transactions if the `X-Request-ID` header contained certain characters (e.g., UUIDs with hyphens). The sandbox API didn’t replicate this. We only caught it when a user reported 500 failed payments in one hour. The fix? URL-encode headers and strip hyphens from `X-Request-ID` before sending to Airtel. Cost: 0.0001% increase in CPU per request.
+3. **Rate limits that change by time of day**
+   A disbursement endpoint may allow a higher request rate on weekdays and a lower one on weekends. A bulk-payout cron job that assumes the weekday limit will queue thousands of failed requests on Saturday. Mitigation: a token-bucket rate limiter sized to the lower limit, plus a fallback queue for critical payouts. Measure by plotting 429 responses per hour against request rate.
 
-3. **“The Flutterwave Weekend Surge”**
-   Flutterwave’s disbursement endpoint has a soft rate limit of 10 requests/second during weekdays but drops to 2 requests/second on weekends. Our cron job for bulk payouts didn’t know this. We discovered it when 15,000 payouts queued on Saturday failed with 429 errors. We added a rate limiter with token bucket algorithm (capacity 2, refill 1/second) and a fallback queue to send payouts via SMS for critical users. Latency increased by 300ms but success rate went from 78% to 99.7%.
+4. **Race conditions around SIM state**
+   A SIM-swap API may enforce a lockout window after a swap. If the system checks swap status, then attempts a USSD push, and the user swaps SIMs in between, the push can fail silently. Mitigation: bind the user session to the SIM identifier during the swap check and fail fast if it changes. The added latency is small compared with the eliminated failure class.
 
-4. **“The Glo SIM Swap Race Condition”**
-   In Ghana, Glo’s SIM swap API has a 5-second lockout window after a swap. Our system would check SIM swap status, then attempt a USSD push — but if the user swapped SIMs between checks, the USSD would fail silently. We fixed it by locking the user session to the SIM ICCID during the swap check and failing fast if ICCID changed. Added 80ms to login flows but eliminated 6% of failed payments.
+5. **OS background restrictions delaying callbacks**
+   On modern Android versions, Doze mode can delay background work for minutes, so a payment callback may arrive long after the user expects it. A retry schedule that starts at 200ms is therefore too aggressive and wastes attempts. Mitigation: schedule the first retry with a delay appropriate to the platform, and require network connectivity before running. Measure callback latency distributions before and after.
 
-5. **“The Android 14 Doze Mode Silent Killer”**
-   On Android 14 devices, Doze mode would kill our background service during M-Pesa STK push callbacks. The OS delayed the callback for up to 15 minutes, causing our system to retry with exponential backoff — but the first retry happened at 200ms, which was too early. We fixed it by using `WorkManager` with a 30-second initial delay and setting `setRequiredNetworkType(NetworkType.CONNECTED)`. This added 5MB to APK size but reduced callback timeouts by 92%.
+Each of these is invisible in local testing and sandbox APIs. Real-world resilience comes from shipping under these constraints and documenting how the chaos was handled.
 
-Each of these was invisible in local testing and sandbox APIs. Real-world resilience comes from shipping under these constraints — and documenting how you handled the chaos.
+## Integration with real tools
 
----
+A minimal, production-shaped integration combines three concerns: a payment API client with retry and circuit breaking, a rate-limited disbursement path, and observability that distinguishes success from failure. The exact provider and library versions vary; the structure below is what matters.
 
-## Integration with real tools (versions as of 2026)
-
-Let’s integrate three tools that matter in African fintech stacks: **M-Pesa Daraja API v3.4.0**, **Flutterwave Rave v3.5.2**, and **Prometheus v2.48.0** with Grafana 10.3.0. I’ll show a minimal, production-ready integration with resilience baked in.
-
-### 1. M-Pesa STK Push with retry, circuit breaker, and fallback
-
-Using Node 20 LTS, `axios` 1.6, `gobreaker` 0.6, and `@promster/metrics` 6.0:
+### 1. STK push with retry, circuit breaker, and fallback
 
 ```typescript
 import axios from 'axios';
-import { CircuitBreaker } from 'gobreaker';
-import { collectDefaultMetrics, Registry } from '@promster/metrics';
+import CircuitBreaker from 'opossum';
 import { createLogger } from 'pino';
-
-// Initialize Prometheus metrics
-const register = new Registry();
-collectDefaultMetrics({ register });
 
 const logger = createLogger({ level: 'info' });
 
-// M-Pesa Daraja API v3.4.0 config
 const MPESA_CONFIG = {
   consumerKey: process.env.MPESA_CONSUMER_KEY!,
   consumerSecret: process.env.MPESA_CONSUMER_SECRET!,
-  shortCode: '123456', // Your business shortcode
+  shortCode: '123456',
   passKey: process.env.MPESA_PASSKEY!,
-  stkTimeout: 5000, // 5s timeout for STK push
+  stkTimeout: 5000,
 };
 
-// Circuit breaker for M-Pesa STK push
+// Circuit breaker for STK push
 const mpesaBreaker = new CircuitBreaker(
   async (payload: MpesaStkPayload) => {
     const timestamp = new Date().toISOString().replace(/[-:.]/g, '');
-    const password = Buffer.from(`${MPESA_CONFIG.shortCode}${MPESA_CONFIG.passKey}${timestamp}`).toString('base64');
+    const password = Buffer.from(
+      `${MPESA_CONFIG.shortCode}${MPESA_CONFIG.passKey}${timestamp}`
+    ).toString('base64');
 
-    const accessToken = await getMpesaAccessToken(); // Implement token cache
+    const accessToken = await getMpesaAccessToken();
 
     const res = await axios.post(
       'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',
@@ -324,70 +321,57 @@ const mpesaBreaker = new CircuitBreaker(
     );
 
     if (res.status !== 200 || res.data.ResponseCode !== '0') {
-      throw new Error(`M-Pesa API error: ${res.data.ResponseDescription || 'Unknown'}`);
+      throw new Error(
+        `M-Pesa API error: ${res.data.ResponseDescription || 'Unknown'}`
+      );
     }
 
     return res.data;
   },
   {
-    timeout: 10000, // 10s circuit breaker timeout
+    timeout: 10000,
     errorThresholdPercentage: 50,
-    resetTimeout: 30000, // 30s reset window
-    onCircuitOpen: () => logger.warn('M-Pesa circuit breaker OPEN'),
-    onCircuitClose: () => logger.info('M-Pesa circuit breaker CLOSED'),
+    resetTimeout: 30000,
   }
 );
 
-// Retry with jitter wrapper (same as earlier snippet)
+mpesaBreaker.on('open', () => logger.warn('M-Pesa circuit breaker OPEN'));
+mpesaBreaker.on('close', () => logger.info('M-Pesa circuit breaker CLOSED'));
+
 const pushStkWithRetry = async (payload: MpesaStkPayload): Promise<string> => {
   try {
-    const start = Date.now();
     const result = await mpesaBreaker.fire(payload);
-    const duration = Date.now() - start;
-
-    // Record latency and success
-    register.getSingleMetric('mpesa_stk_push_duration_seconds')?.inc(duration / 1000);
-    register.getSingleMetric('mpesa_stk_push_total')?.inc();
-
     return result.CheckoutRequestID;
   } catch (err) {
     logger.error({ err, payload }, 'M-Pesa STK push failed');
-    register.getSingleMetric('mpesa_stk_push_failures_total')?.inc();
     throw err;
   }
 };
 
-// Fallback: SMS via Twilio (or local aggregator)
 const fallbackToSms = (phone: string, message: string): void => {
-  // Implement Twilio or local SMS API with retry
   logger.info({ phone, message }, 'Falling back to SMS');
 };
 ```
 
-### 2. Flutterwave Rave Disbursement with rate limiting and queue fallback
-
-Using Python 3.11, `requests` 2.31, and `tenacity` 8.2:
+### 2. Disbursement with rate limiting and queue fallback
 
 ```python
-import requests
+import os
 import time
-import logging
-from tenacity import retry, stop_after_attempt, wait_exponential_jitter, retry_if_exception_type
-from flask import Flask
-from prometheus_client import Counter, Gauge, Histogram
 
-app = Flask(__name__)
+import requests
+from tenacity import (
+    retry,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential_jitter,
+)
 
-# Metrics
-FLW_DISBURSE_LATENCY = Histogram('flw_disbursement_latency_seconds', 'Latency of Flutterwave disbursements')
-FLW_DISBURSE_ATTEMPTS = Counter('flw_disbursement_attempts_total', 'Total disbursement attempts')
-FLW_DISBURSE_FAILURES = Counter('flw_disbursement_failures_total', 'Failed disbursement attempts')
-
-# Rate limiter: 10 requests/second, bucket refill 1/100ms
 RATE_LIMIT = 10
 REFILL_MS = 100
 bucket = RATE_LIMIT
 last_refill = time.time() * 1000
+
 
 def refill_bucket():
     global bucket, last_refill
@@ -398,12 +382,15 @@ def refill_bucket():
         bucket = min(RATE_LIMIT, bucket + refill_amount)
         last_refill = now
 
+
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_exponential_jitter(multiplier=0.5, max=8),
-    retry=retry_if_exception_type((requests.exceptions.RequestException, requests.exceptions.Timeout)),
+    retry=retry_if_exception_type(
+        (requests.exceptions.RequestException, requests.exceptions.Timeout)
+    ),
 )
-def disburse_flw(amount: int, recipient_account: str, recipient_bank: str):
+def disburse(amount: int, recipient_account: str, recipient_bank: str):
     refill_bucket()
     if bucket <= 0:
         time.sleep(REFILL_MS / 1000)
@@ -413,39 +400,32 @@ def disburse_flw(amount: int, recipient_account: str, recipient_bank: str):
 
     bucket -= 1
 
-    start = time.time()
-    try:
-        headers = {
-            "Authorization": f"Bearer {os.getenv('FLW_SECRET')}",
-            "Content-Type": "application/json"
-        }
-        payload = {
-            "amount": amount,
-            "account_bank": recipient_bank,
-            "account_number": recipient_account,
-            "currency": "NGN",
-            "narration": "Salary disbursement",
-            "reference": f"pay_{int(time.time())}"
-        }
+    headers = {
+        "Authorization": f"Bearer {os.getenv('PAYMENTS_SECRET')}",
+        "Content-Type": "application/json",
+    }
+    payload = {
+        "amount": amount,
+        "account_bank": recipient_bank,
+        "account_number": recipient_account,
+        "currency": "NGN",
+        "narration": "Salary disbursement",
+        "reference": f"pay_{int(time.time())}",
+    }
 
-        resp = requests.post(
-            "https://api.flutterwave.com/v3/transfers",
-            json=payload,
-            headers=headers,
-            timeout=8  # Realistic 3G timeout
-        )
-        resp.raise_for_status()
-        FLW_DISBURSE_LATENCY.observe(time.time() - start)
-        FLW_DISBURSE_ATTEMPTS.inc()
-        return resp.json()
-    except Exception as e:
-        FLW_DISBURSE_FAILURES.inc()
-        raise
+    resp = requests.post(
+        "https://api.example-payments.test/v3/transfers",
+        json=payload,
+        headers=headers,
+        timeout=8,
+    )
+    resp.raise_for_status()
+    return resp.json()
 ```
 
-### 3. Real-time monitoring with Prometheus + Grafana (2026 stack)
+### 3. Real-time monitoring
 
-Prometheus config (`prometheus.yml`):
+Prometheus scrape configuration:
 
 ```yaml
 global:
@@ -458,13 +438,9 @@ scrape_configs:
       - targets: ['mpesa-service:8000']
     metrics_path: '/metrics'
 
-  - job_name: 'flw-disburser'
+  - job_name: 'disburser'
     static_configs:
-      - targets: ['flw-service:8001']
-
-  - job_name: 'ussd-gateway'
-    static_configs:
-      - targets: ['ussd-gateway:9090']
+      - targets: ['disburser:8001']
 
 alerting:
   alertmanagers:
@@ -475,19 +451,19 @@ rule_files:
   - 'alert-rules.yml'
 ```
 
-Sample alert rule (`alert-rules.yml`):
+Sample alert rules:
 
 ```yaml
 groups:
 - name: mpesa-alerts
   rules:
   - alert: MpesaHighLatency
-    expr: histogram_quantile(0.95, mpesa_stk_push_duration_seconds_bucket) > 3
+    expr: histogram_quantile(0.95, stk_push_duration_seconds_bucket) > 3
     for: 5m
     labels:
       severity: warning
     annotations:
-      summary: "M-Pesa STK push latency >3s for 5m"
+      summary: "STK push latency above 3s for 5m"
       description: "Current 95th percentile latency: {{ $value }}s"
 
   - alert: MpesaCircuitBreakerOpen
@@ -497,122 +473,143 @@ groups:
       severity: critical
     annotations:
       summary: "M-Pesa circuit breaker is OPEN"
-      description: "System is falling back to SMS"
 
-- name: flw-alerts
+- name: disbursement-alerts
   rules:
-  - alert: FlwRateLimitExceeded
-    expr: increase(flw_disbursement_failures_total[1m]) > 5
+  - alert: RateLimitExceeded
+    expr: increase(disbursement_failures_total[1m]) > 5
     for: 2m
     labels:
       severity: warning
     annotations:
-      summary: "Flutterwave rate limit exceeded"
+      summary: "Disbursement failures spiking"
 ```
 
-Grafana dashboard (JSON snippet for 2026):
+Grafana dashboard panels, expressed as queries rather than exported JSON:
 
-```json
-{
-  "dashboard": {
-    "title": "African Fintech - Real Network Resilience",
-    "panels": [
-      {
-        "title": "M-Pesa STK Push Latency (95th %ile)",
-        "type": "graph",
-        "targets": [{
-          "expr": "histogram_quantile(0.95, mpesa_stk_push_duration_seconds_bucket)",
-          "legendFormat": "Latency"
-        }]
-      },
-      {
-        "title": "Flutterwave Disbursement Success Rate",
-        "type": "singlestat",
-        "targets": [{
-          "expr": "1 - (rate(flw_disbursement_failures_total[5m]) / rate(flw_disbursement_attempts_total[5m]))",
-          "format": "percent"
-        }]
-      },
-      {
-        "title": "Circuit Breaker State",
-        "type": "stat",
-        "targets": [{
-          "expr": "mpesa_circuit_breaker_open",
-          "format": "short"
-        }]
-      }
-    ],
-    "templating": {
-      "list": [
-        {
-          "name": "network",
-          "query": "label_values(mpesa_stk_push_duration_seconds, network)",
-          "refresh": 1
-        }
-      ]
-    }
-  }
-}
-```
+- **STK push latency (95th percentile)**: `histogram_quantile(0.95, sum(rate(stk_push_duration_seconds_bucket[5m])) by (le))`
+- **Disbursement success rate**: `1 - (sum(rate(disbursement_failures_total[5m])) / sum(rate(disbursement_attempts_total[5m])))`
+- **Circuit breaker state**: `mpesa_circuit_breaker_open`
 
-This stack runs in production for a Nigerian microfinance bank (2026). It handles 20,000 M-Pesa transactions/day and 5,000 Flutterwave payouts/week — all on 3G networks with intermittent DNS and API throttling.
+This structure is what a reviewer should be able to read in a portfolio: the metrics that matter, the alerts that fire, and the fallbacks that engage.
 
----
+## Before/after comparison: two portfolios
 
-## Before/after comparison: A real portfolio project
+Compare two versions of the same project: an "M-Pesa Disbursement System".
 
-Let’s compare two versions of the same project: a “M-Pesa Disbursement System” submitted by two candidates in early 2026.
+### Candidate A: "AI-Powered Payment Router"
 
-### Candidate A: “AI-Powered Payment Router”
-
-**Portfolio claim:** Built a system that “uses AI to route payments for maximum speed and fraud prevention.”
+**Portfolio claim:** Built a system that "uses AI to route payments for maximum speed and fraud prevention."
 
 **What they showed:**
-- GitHub repo: `ai-payment-router` (3 commits, last updated 2025)
-- README: “Uses LangChain + Llama3 to predict fastest route”
-- Demo: Localhost video showing 0.2s response time on Chrome
-- Metrics: Screenshot of AI-generated graph: “99.9% success rate”
+
+- GitHub repo with 3 commits, last updated a year earlier
+- README: "Uses an LLM to predict the fastest route"
+- Demo: localhost video showing 0.2s response time
+- Metrics: screenshot of a generated graph claiming "99.9% success rate"
 
 **Code snippet (only file):**
+
 ```python
 # main.py — 24 lines
 from langchain import LLMMathChain
-llm = Llama3(...)  # Unspecified model
+
+llm = Llama3  # unspecified model
 def route_payment(amount, recipient):
     return llm.predict(f"Choose fastest route for {amount} to {recipient}")
 ```
 
-**Latency under load:**
+**Behavior under load:**
+
 - Localhost: 200ms
-- On AWS EC2 (fibre): 180ms
-- On MTN 3G (real user): Failed 100% of the time (LLM API timeout at 5s)
-- Cost: $0.012 per prediction
+- On a cloud VM over fibre: 180ms
+- On 3G with a real device: failed consistently, because the LLM API timed out at 5s
+- Cost: $0.012 per prediction (illustrative)
 
 **Lines of code:** 24
-**Dependencies:** LangChain, Llama3 (unclear version)
+**Dependencies:** an LLM orchestration library, an unspecified model
 **Test coverage:** 0%
 **Post-mortem:** None
 
----
+### Candidate B: "Reliable M-Pesa Disbursement for Rural Cooperatives"
 
-### Candidate B: “Reliable M-Pesa Disbursement for Rural Cooperatives”
+**Portfolio claim:** "Built a system that disburses 12,000 M-Pesa payments/day to dairy farmers in rural Kenya."
 
-**Portfolio claim:** “Built a system that disburses 12,000 M-Pesa payments/day to dairy farmers in rural Kenya,
+**What they showed:**
 
----
+- GitHub repo with 140 commits over 8 months
+- README with a constraint statement: 2G/3G, 10s USSD timeout, 5% packet loss, API rate limit of 10 req/s
+- Code: retry with jitter, circuit breaker, SMS fallback, latency histograms
+- Post-mortem: a network outage where SMS fallback kept transactions flowing, with error rate and latency figures
 
-### About this article
+**Behavior under load:**
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+- Localhost: 150ms
+- On a cloud VM over fibre: 140ms
+- On 3G with a real device: 1.8s p95, with retries and fallback engaging as designed
+- Cost: $0.0008 per transaction (illustrative)
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+**Lines of code:** 1,400
+**Dependencies:** a payments SDK, a circuit-breaker library, a metrics client
+**Test coverage:** 62%
+**Post-mortem:** Yes, with metrics
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+### What the comparison shows
 
-**Last reviewed:** June 29, 2026
+| Dimension | Candidate A | Candidate B |
+|---|---|---|
+| Problem statement | "AI-powered routing" | Constraints listed explicitly |
+| Retry logic | None | Exponential backoff with jitter |
+| Fallback | None | SMS queue |
+| Latency measurement | Average, localhost | Percentiles, real device |
+| Post-mortem | None | Incident write-up with metrics |
+| Behavior on 3G | Fails | Degrades gracefully |
+
+The difference is not AI versus non-AI. It is whether the portfolio demonstrates behavior under constraints.
+
+## How to measure it yourself
+
+None of the numbers above should be taken on faith. Here is how to produce your own.
+
+- **Latency percentiles**: instrument every outbound call with a histogram. Record p50, p95, p99. Compare against a baseline captured on a fast connection. The gap is your network penalty.
+- **Retry effectiveness**: count attempts per logical operation. A retry policy that works shows a falling failure rate as attempts increase; one that does not shows a flat or rising rate because retries are amplifying load.
+- **Circuit breaker behavior**: log state transitions with timestamps. Measure how long the breaker stays open and what fraction of requests hit the fallback.
+- **Fallback coverage**: count how many operations are served by the fallback path during an incident. If it is zero, the fallback is untested.
+- **Cost of failure**: multiply failed transactions by the value at risk. This turns reliability work into a number a business can act on.
+
+A simple way to start: add a histogram around your most critical outbound call, run a load test against a staging environment with an artificial delay injected, and compare p95 latency and error rate before and after adding retries and a breaker.
+
+## Decision checklist for reviewers
+
+When reviewing a portfolio for reliability evidence, ask:
+
+- Does the problem statement name specific constraints (network, device, payment method, cost)?
+- Is there retry logic, and is it bounded with backoff and jitter?
+- Is there a circuit breaker or fallback, and is it exercised in the write-up?
+- Are latency numbers percentiles rather than averages?
+- Is there a post-mortem describing a real failure and the fix?
+- Do the metrics distinguish success from failure, or only count requests?
+- Can the candidate explain why each threshold was chosen?
+
+If most answers are yes, the candidate can likely ship under constraints. If most are no, the portfolio is showing features, not engineering.
+
+## FAQ
+
+**Does the project have to be a payment system?**
+No. The pattern applies to any system with unreliable dependencies: messaging, logistics, IoT, or any client-server flow over poor networks. Payment systems are common because the constraints are sharp and the cost of failure is visible.
+
+**How much code should be included?**
+Enough to prove the pattern: a retry helper, a breaker or fallback, and an instrumentation snippet. Thirty to fifty lines each is usually sufficient. The post-mortem carries as much weight as the code.
+
+**What if the project is proprietary?**
+Describe the architecture and the failure modes without exposing code. Redact identifiers and amounts. A well-written post-mortem with redacted metrics is more convincing than a public repo with no incident history.
+
+**Can AI features be part of the portfolio?**
+Yes, but they should be presented as one component among several, with the same rigor applied to their failure modes. An LLM call is an unreliable dependency like any other; it needs timeouts, retries and fallbacks.
+
+**How do I get real network conditions for testing?**
+Use a throttling proxy or a device on a real mobile network. Inject latency and packet loss in staging. The point is to observe behavior when the network is slow or flaky, not to reproduce a specific carrier.
+
+## Do this in the next 30 minutes
+
+Pick one project you have already built. Add a single histogram around its most critical outbound call, run it once against a slow or throttled connection, and write down the p95 latency and the error rate. That one measurement is the seed of a Constraint Resume: it turns a feature list into evidence of behavior under constraints.

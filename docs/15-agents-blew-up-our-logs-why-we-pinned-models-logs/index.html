@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>15 agents blew up our logs: why we pinned models + logs - Kubai Kevin</title>
-        <meta name="description" content="Cut log debugging 78% with structured logs + model pinning — exact schema IDs, pinned Docker tags, and the rollback mistake most teams skip.">
+        <title>Structured Logs and Pinned Versions for Multi-Agent Systems - Kubai Kevin</title>
+        <meta name="description" content="How to make multi-agent logs machine-parseable with schema IDs, pinned image tags, and validation, so agent upgrades stop silently breaking dashboards.">
         <meta name="keywords" content="StructuredLogging, LogSchema, DockerImagePinning, AgentVersioning, LokiLogPipeline, SchemaRegistry, LogFormatContract, ObservabilityCost, Docker, Containers">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-04T10:14:14.067039">
-        <meta property="article:modified_time" content="2026-07-04T10:14:14.067048">
+        <meta property="article:modified_time" content="2026-10-03T11:11:13.236215+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="15 agents blew up our logs: why we pinned models + logs">
-        <meta property="og:description" content="Cut log debugging 78% with structured logs + model pinning — exact schema IDs, pinned Docker tags, and the rollback mistake most teams skip.">
+        <meta property="og:title" content="Structured Logs and Pinned Versions for Multi-Agent Systems">
+        <meta property="og:description" content="How to make multi-agent logs machine-parseable with schema IDs, pinned image tags, and validation, so agent upgrades stop silently breaking dashboards.">
         <meta property="og:url" content="https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/15-agents-blew-up-our-logs-why-we-pinned-models-logs.png">
-        <meta property="og:image:alt" content="15 agents blew up our logs: why we pinned models + logs">
+        <meta property="og:image:alt" content="Structured Logs and Pinned Versions for Multi-Agent Systems">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="15 agents blew up our logs: why we pinned models + logs">
-        <meta name="twitter:description" content="Cut log debugging 78% with structured logs + model pinning — exact schema IDs, pinned Docker tags, and the rollback mistake most teams skip.">
+        <meta name="twitter:title" content="Structured Logs and Pinned Versions for Multi-Agent Systems">
+        <meta name="twitter:description" content="How to make multi-agent logs machine-parseable with schema IDs, pinned image tags, and validation, so agent upgrades stop silently breaking dashboards.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/15-agents-blew-up-our-logs-why-we-pinned-models-logs.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,12 +60,12 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/#article",
-      "headline": "15 agents blew up our logs: why we pinned models + logs",
-      "description": "Cut log debugging 78% with structured logs + model pinning — exact schema IDs, pinned Docker tags, and the rollback mistake most teams skip.",
+      "headline": "Structured Logs and Pinned Versions for Multi-Agent Systems",
+      "description": "How to make multi-agent logs machine-parseable with schema IDs, pinned image tags, and validation, so agent upgrades stop silently breaking dashboards.",
       "datePublished": "2026-07-04T10:14:14+00:00",
-      "dateModified": "2026-07-04T10:14:14+00:00",
-      "wordCount": 2108,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-10-03T11:11:13+00:00",
+      "wordCount": 2044,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "15 agents blew up our logs: why we pinned models + logs",
+          "name": "Structured Logs and Pinned Versions for Multi-Agent Systems",
           "item": "https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>15 agents blew up our logs: why we pinned models + logs</span>
+            <span>Structured Logs and Pinned Versions for Multi-Agent Systems</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">15 agents blew up our logs: why we pinned models + logs</h1>
+                <h1 itemprop="headline">Structured Logs and Pinned Versions for Multi-Agent Systems</h1>
                 
-                <p class="post-lead">Cut log debugging 78% with structured logs + model pinning — exact schema IDs, pinned Docker tags, and the rollback mistake most teams skip.</p>
+                <p class="post-lead">How to make multi-agent logs machine-parseable with schema IDs, pinned image tags, and validation, so agent upgrades stop silently breaking dashboards.</p>
                 
                 
                 <div class="tags">
@@ -259,211 +259,199 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2108 words
+                        10 min read
+                        &nbsp;·&nbsp; 2044 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-04
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>Once you run more than a dozen agents in production, the logs stop making sense unless you enforce two rules: every log line must be structured so machines can parse it, and every model or library version must be pinned so rollbacks are safe. Without structure, a 1 GB JSON log file is just noise; without pinning, a rollback can break your API because the new agent binary expects a field the old one never sent. We learned this the hard way when our 17th agent started sending malformed timestamps, which broke our Loki dashboards at 3 a.m. and cost us 4.2 hours of sleep. The fix was simple in theory—switch to JSON-formatted logs with schema IDs and pin agent dependencies to exact versions—but the migration took three sprints because we assumed the agents would keep their contracts stable. They did not.</p>
+                <p>The simple case works: one agent, one laptop, logs piped to a file. The failure mode is specific and predictable. Once a system runs more than a handful of agents in production, each with its own lifecycle, binary upgrades, and third-party SDKs, raw text logs stop being a debugging aid and become a liability. This article explains why, and walks through the two rules that keep log pipelines usable at scale: structured output with an explicit schema identifier, and pinned dependency versions.</p>
+<h2 id="the-one-paragraph-version">The one-paragraph version</h2>
+<p>Two rules prevent most log-pipeline failures in multi-agent systems. First, every log line must be structured so machines can parse it deterministically. Second, every model, SDK, and agent binary version must be pinned so a rollback is a known-good operation rather than a guess. Without structure, a large JSON log file is just noise. Without pinning, a rollback can break the API contract because a newer agent binary expects a field the older one never emitted. The documented behavior of most log routers is to fail open on unknown fields, which means the failure is silent until a dashboard query returns nothing.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most engineers think logging is just about turning on <code>DEBUG</code> mode or redirecting stdout to a file. That works for one or two agents running on a dev laptop, but once you scale to 15 agents in production—each with its own lifecycle, binary upgrades, and third-party SDKs—raw text logs become a liability. The logs themselves were still there, but the fields we relied on (<code>timestamp</code>, <code>level</code>, <code>request_id</code>) were now nested under <code>metadata</code> and missing a <code>level</code> field entirely. The confusion isn’t technical—it’s psychological. We assume logs are free-form text for humans, but at scale they become a contract between machines. That contract must be explicit, versioned, and enforced.</p>
-<p>Another layer of confusion comes from the word “structured.” People picture something like Avro schemas or Protocol Buffers, but the minimum viable structure in 2026 is JSON with a fixed schema ID in each line. We started with plain JSON logs and assumed the schema would stay stable; it did not. After six weeks of flaky Loki queries, we added schema IDs (like <code>log_schema_v1</code>) and pinned every agent to a specific Docker image tag so we knew which schema version to expect. Simple in hindsight, but hard to sell to product managers who wanted “just logs” instead of “log contracts.”</p>
-<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of your logs as a database table. Each row is a log line, and each column is a field like <code>timestamp</code>, <code>level</code>, <code>trace_id</code>, or <code>user_id</code>. If you let every agent insert rows with arbitrary columns, your table schema changes constantly, and every query breaks. The fix is twofold:</p>
+<p>Most engineers think logging is about turning on <code>DEBUG</code> mode or redirecting stdout to a file. That works for one or two agents on a dev laptop. It stops working when fifteen agents each emit logs in a slightly different shape.</p>
+<p>A common failure mode: an SDK upgrade nests previously top-level fields under <code>metadata</code>, or drops a <code>level</code> field entirely. The logs are still produced. The queries that relied on <code>timestamp</code>, <code>level</code>, and <code>request_id</code> at the top level now return empty or partial results. Nothing throws an error. The pipeline keeps ingesting, and the dashboards quietly go blank.</p>
+<p>The confusion is partly psychological. Teams treat logs as free-form text for humans. At scale, logs are a contract between machines: the agent that emits them and the pipeline that parses them. That contract has to be explicit, versioned, and enforced, or it drifts every time a dependency changes.</p>
+<p>The word "structured" adds a second layer of confusion. People picture Avro schemas or Protocol Buffers. The minimum viable structure is JSON with a fixed schema identifier in each line. Plain JSON alone is not enough, because the schema of that JSON can change without warning. Adding a <code>schema_id</code> field turns an implicit contract into an explicit one.</p>
+<h2 id="the-mental-model-logs-as-a-database-table">The mental model: logs as a database table</h2>
+<p>Think of the log pipeline as a database table. Each row is a log line. Each column is a field: <code>timestamp</code>, <code>level</code>, <code>trace_id</code>, <code>user_id</code>. If every agent inserts rows with arbitrary columns, the table schema changes constantly and every query breaks.</p>
+<p>The fix has two parts:</p>
 <ol>
-<li>Declare a schema for the table (log format).</li>
-<li>Pin the schema version to each agent so the table never changes unexpectedly.</li>
+<li>Declare a schema for the table (the log format).</li>
+<li>Pin the schema version to each agent so the table shape cannot change unexpectedly.</li>
 </ol>
-<p>In practice, that means:
-- Every agent must emit JSON with a <code>schema_id</code> field (e.g., <code>log_schema_v2</code>).
-- The schema version is tied to the agent’s Docker image tag (e.g., <code>agent:v1.2.3</code>).
-- Your log pipeline validates the schema before ingestion; if the schema is unknown, the log is dropped or routed to a quarantine bucket.</p>
-<p>This is not theoretical. I’ve watched teams burn 12 engineer-days debugging a Loki outage because an agent’s minor version bump changed a field name from <code>error_message</code> to <code>error_msg</code>. With schema IDs and pinned versions, that outage becomes a two-line diff in your log router config.</p>
-<h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>We’ll migrate a hypothetical agent from raw text logs to structured logs with schema pinning. The agent is written in Python 3.11 and runs inside a Docker container. Before the change, its logs looked like this:</p>
+<p>In practice:</p>
+<ul>
+<li>Every agent emits JSON with a <code>schema_id</code> field, for example <code>log_schema_v2</code>.</li>
+<li>The schema version is tied to the agent's image tag, for example <code>agent:1.2.3</code>.</li>
+<li>The log pipeline validates the schema before ingestion. Unknown schemas are dropped or routed to a quarantine bucket rather than silently mixed into the main index.</li>
+</ul>
+<p>This is not a theoretical concern. A minor version bump that renames <code>error_message</code> to <code>error_msg</code> is enough to break every dashboard that queries the old field. With schema IDs and pinned versions, that breakage becomes a two-line change in the log router config instead of a debugging session.</p>
+<h2 id="a-worked-example-migrating-one-agent">A worked example: migrating one agent</h2>
+<p>The example below migrates a hypothetical agent from raw text logs to structured logs with schema pinning. The agent runs in a Docker container and is written for a modern Python 3.x runtime.</p>
+<p>Before the change, the logging code looks like this:</p>
 <pre><code class="language-python">import logging
 import time
 
 logging.basicConfig(level=logging.INFO)
 
 def process_request(request_id, user_id):
-logging.info(f&quot;Started {request_id} for user {user_id}&quot;)
-time.sleep(0.1)
-logging.info(f&quot;Finished {request_id} for user {user_id}&quot;)
+    logging.info(f&quot;Started {request_id} for user {user_id}&quot;)
+    time.sleep(0.1)
+    logging.info(f&quot;Finished {request_id} for user {user_id}&quot;)
 </code></pre>
-<p>After the first agent upgrade, the log format changed because the new SDK expected a <code>trace_id</code> field. Our Loki queries broke because they relied on <code>request_id</code>. The fix required three steps:</p>
-<ol>
-<li>Pin the agent version in <code>Dockerfile</code>: <code>FROM agent:1.2.3</code> (exact tag).</li>
-<li>Switch to structured logging with a schema ID:</li>
-</ol>
-<pre><code class="language-python">import logging
-import json
+<p>After an agent upgrade, the log format changes because the new SDK expects a <code>trace_id</code> field. Queries that relied on <code>request_id</code> break. The fix has three steps.</p>
+<p>Step 1: Pin the agent version in the <code>Dockerfile</code> to an exact tag.</p>
+<pre><code class="language-dockerfile">FROM agent:1.2.3
+</code></pre>
+<p>Step 2: Switch to structured logging with a schema ID.</p>
+<pre><code class="language-python">import json
 import time
 
-# Structured logger with schema ID
 class StructuredLogger:
-def __init__(self):
-self.schema_id = &quot;log_schema_v2&quot;
+    def __init__(self):
+        self.schema_id = &quot;log_schema_v2&quot;
 
-def log(self, level, message, **fields):
-log_line = {
-&quot;schema_id&quot;: self.schema_id,
-&quot;timestamp&quot;: int(time.time() * 1000),
-&quot;level&quot;: level,
-&quot;message&quot;: message,
-**fields
-}
-print(json.dumps(log_line))
+    def log(self, level, message, **fields):
+        log_line = {
+            &quot;schema_id&quot;: self.schema_id,
+            &quot;timestamp&quot;: int(time.time() * 1000),
+            &quot;level&quot;: level,
+            &quot;message&quot;: message,
+            **fields,
+        }
+        print(json.dumps(log_line))
 
 logger = StructuredLogger()
 
 def process_request(request_id, user_id):
-logger.log(&quot;INFO&quot;, &quot;Started request&quot;, request_id=request_id, user_id=user_id, trace_id=&quot;abc123&quot;)
-time.sleep(0.1)
-logger.log(&quot;INFO&quot;, &quot;Finished request&quot;, request_id=request_id, user_id=user_id)
+    logger.log(
+        &quot;INFO&quot;,
+        &quot;Started request&quot;,
+        request_id=request_id,
+        user_id=user_id,
+        trace_id=&quot;abc123&quot;,
+    )
+    time.sleep(0.1)
+    logger.log(
+        &quot;INFO&quot;,
+        &quot;Finished request&quot;,
+        request_id=request_id,
+        user_id=user_id,
+    )
 </code></pre>
-<ol>
-<li>Update the log router (Loki in our case) to reject unknown schemas:</li>
-</ol>
-<pre><code class="language-yaml"># loki-ingress.yaml
+<p>Step 3: Update the log router to reject unknown schemas. The example below is a generic pipeline-stage configuration; the exact syntax depends on the router, but the shape is the same everywhere: parse JSON, read <code>schema_id</code>, and drop or quarantine anything that does not match the expected value.</p>
+<pre><code class="language-yaml"># log-router-ingress.yaml
 scrape_configs:
-- job_name: agent
-pipeline_stages:
-- json:
-expressions:
-schema_id: schema_id
-- match:
-selector: '{schema_id!=&quot;log_schema_v2&quot;}'
-action: drop
+  - job_name: agent
+    pipeline_stages:
+      - json:
+          expressions:
+            schema_id: schema_id
+      - match:
+          selector: '{schema_id!=&quot;log_schema_v2&quot;}'
+          action: drop
 </code></pre>
-<p>The cost of this change was 42 lines of code and one all-hands rollback when we forgot to pin the Docker tag in CI. The benefit was a 78% reduction in log-related incidents within two weeks.</p>
-<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>If you’ve ever worked with REST APIs, you’ve already used structured contracts. The API response is a JSON object with fixed fields (<code>status</code>, <code>data</code>, <code>error</code>). If a service changes its response schema without versioning, clients break. Logging is the same contract, but the client is your log pipeline (Loki, Datadog, OpenSearch) instead of a frontend app.</p>
-<p>Pinned versions are just semantic versioning applied to logs. If agent v1.2.3 emits <code>log_schema_v2</code>, and v1.2.4 emits <code>log_schema_v3</code>, your pipeline must handle both gracefully—either by routing to different indices or by backfilling the missing fields. This is identical to how API gateways handle versioned endpoints.</p>
-<p>Another parallel is database migrations. If you add a column to a table, you don’t immediately break all queries; you backfill the column and update consumers gradually. Structured logging with schema IDs is the same pattern: the schema is your “table,” and every agent is a “consumer.” The migration is rolling out a new schema version alongside the old one, then flipping traffic once the new version is proven.</p>
+<p>Two details are easy to get wrong. First, pin the tag in CI as well as in the <code>Dockerfile</code>, or a build step can silently substitute <code>latest</code>. Second, the drop action above discards unknown schemas. During a migration you usually want to route them to a quarantine index instead, so you can inspect what changed rather than lose the evidence.</p>
+<h2 id="how-to-measure-whether-this-helps">How to measure whether this helps</h2>
+<p>No credible article can tell you the incident-reduction percentage for your system; that depends on your agents, your pipeline, and your release cadence. What you can measure is straightforward.</p>
+<p>Instrument two counters in the log router:</p>
+<ul>
+<li><code>logs_ingested_total</code>, labeled by <code>schema_id</code>.</li>
+<li><code>logs_rejected_total</code>, labeled by the reason (unknown schema, parse failure, missing required field).</li>
+</ul>
+<p>Then track two pipeline-level metrics:</p>
+<ul>
+<li>Query error rate on your dashboards, measured as the fraction of dashboard panel queries that return an error or an empty result set over a rolling window.</li>
+<li>Time-to-rollback, measured from the moment a bad agent release is detected to the moment the previous pinned version is serving traffic again.</li>
+</ul>
+<p>Compare a four-week window before and after the change. If <code>logs_rejected_total</code> is non-zero, the schema validation is doing its job. If query error rate drops while agent release frequency stays constant, the structure is paying off. If time-to-rollback drops, the pinning is paying off.</p>
 <h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<p>Myth 1: “Structured logs are only for large teams.”
-Reality: Even small teams with 3–5 agents benefit from structured logs, but the real pain starts at 15 agents. At that scale, the cognitive load of parsing text logs across different SDK versions outweighs the cost of adding structure. We delayed the change until week 6 of our 17-agent rollout, and that delay cost us 11 engineer-hours debugging a single field name mismatch.</p>
-<p>Myth 2: “Pinning versions is overkill for logs.”
-Reality: Pinning prevents silent failures. Without pinned versions, an agent upgrade can change log fields without warning. We saw this when a new SDK version added a <code>trace_id</code> field and removed <code>user_id</code> from the top level. Our dashboards broke because they queried <code>user_id</code>; the logs were still produced, but the contract was violated. Pinning the Docker tag forces you to declare the schema version explicitly in your pipeline.</p>
-<p>Myth 3: “We can standardize logs later.”
-Reality: Logs compound. Every new agent inherits the old chaos if you don’t enforce structure from day one. That script took 18 engineer-days to write, test, and run. The cost of enforcing structure upfront is 2–3 days of engineering time.</p>
-<p>Myth 4: “Schema IDs are unnecessary if we use OpenTelemetry.”
-Reality: OpenTelemetry gives you the structure, but it doesn’t version the schema. If you emit OTel logs without a schema ID, you still risk field name changes breaking your dashboards. We use OTel for tracing, but we added schema IDs for logs because OTel’s default resource attributes changed between versions. The combination of OTel + schema IDs is the only setup that survived three major SDK upgrades.</p>
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>Once you’ve nailed structured logs with schema IDs and pinned versions, the next layer is schema evolution. Not all changes are breaking. You can add optional fields without incrementing the schema version, but removing or renaming fields requires a new version. Here’s how we handle it:</p>
+<p><strong>"Structured logs are only for large teams."</strong> The pain scales with the number of independently deployed agents, not headcount. A small team running three agents with a shared release train can defer this. A small team running fifteen agents with independent release cycles cannot. The deciding factor is whether any two agents can change their log shape without a coordinated release.</p>
+<p><strong>"Pinning versions is overkill for logs."</strong> Pinning is what makes rollback a known-good operation. Without a pinned tag, an upgrade can change log fields without warning, and the previous behavior is not reproducible. Pinning the image tag forces the schema version to be declared explicitly in the pipeline, which is the whole point.</p>
+<p><strong>"We can standardize logs later."</strong> Every new agent inherits the current convention, so the cost of retrofitting grows with the number of agents. Enforcing structure on the first new agent is a small change. Enforcing it across fifteen existing agents is a migration. The cost of doing it upfront is measured in days; the cost of doing it later is measured in weeks.</p>
+<p><strong>"Schema IDs are unnecessary if we use a tracing framework."</strong> A tracing framework gives you structure, but it does not version the schema of your logs. If you emit logs through such a framework without a schema ID, field-name changes in a framework upgrade still break dashboards. Schema IDs act as a contract between the agent and the pipeline, independent of the framework's internal versioning. The two are complementary, not substitutes.</p>
+<h2 id="schema-evolution-the-advanced-layer">Schema evolution: the advanced layer</h2>
+<p>Once structured logs with schema IDs and pinned versions are in place, the next problem is schema evolution. Not all changes are breaking. Adding an optional field is usually safe. Removing or renaming a field that consumers depend on is not.</p>
+<p>A workable policy:</p>
 <ol>
-<li>Schema registry: Store each schema in a registry (we use AWS Glue Schema Registry) with a unique ID.</li>
-<li>Backward compatibility rules: Allow adding optional fields and removing deprecated ones, but never rename a required field.</li>
-<li>Dual-write during migrations: Route logs to both old and new indices for a week, then drop the old index once the new one is proven.</li>
+<li><strong>Schema registry.</strong> Store each schema version in a registry with a unique identifier. The registry is the source of truth for what a given <code>schema_id</code> means.</li>
+<li><strong>Backward-compatibility rules.</strong> Allow adding optional fields. Allow removing fields that have been marked deprecated for at least one release cycle. Never rename a required field in place.</li>
+<li><strong>Dual-write during migrations.</strong> Route logs to both the old and new indices for a defined window. Drop the old index once the new one is proven under real query load.</li>
 </ol>
-<p>We built a small CLI tool (<code>schemactl</code>) that generates the schema from a Python dataclass:</p>
-<pre><code class="language-python">from dataclasses import dataclass
-from schemactl import SchemaRegistry
+<p>A minimal schema definition in Python might look like this:</p>
+<pre><code class="language-python">from dataclasses import dataclass, field
 
 @dataclass
 class LogV3:
-schema_id: str = &quot;log_schema_v3&quot;
-timestamp: int
-level: str
-message: str
-trace_id: str
-user_id: str
-# Optional: new field added in v3
-duration_ms: int | None = None
-
-registry = SchemaRegistry(&quot;arn:aws:glue:eu-west-1:123456789012:schema/log_v3&quot;)
-registry.register(LogV3)
+    schema_id: str = &quot;log_schema_v3&quot;
+    timestamp: int = 0
+    level: str = &quot;INFO&quot;
+    message: str = &quot;&quot;
+    trace_id: str = &quot;&quot;
+    user_id: str = &quot;&quot;
+    duration_ms: int | None = None  # optional field added in v3
 </code></pre>
-<p>The tool also validates that new schemas are backward-compatible before they ship. Without this, we would have shipped a breaking change and broken our dashboards again.</p>
-<p>Performance tip: Schema validation adds 0.3 ms per log line in our benchmarks (Python 3.11, 8 vCPU), which is negligible compared to the 12 ms latency of shipping logs to Loki. The real cost is the engineering time saved debugging format mismatches.</p>
+<p>Validation tooling should refuse to register a schema that is not backward-compatible with the previous version. That check is what prevents a breaking change from reaching production.</p>
+<p>On the performance side: schema validation cost is proportional to the number of fields checked and the JSON parsing overhead of your runtime. For a typical log line with fewer than twenty fields, the added latency is small compared to the network round trip to the log backend. Measure it rather than assuming: emit a fixed log line in a loop, time the loop with and without validation enabled, and compare. If the validation cost is a meaningful fraction of your ingestion latency, move validation to a sidecar or batch it.</p>
 <h2 id="quick-reference">Quick reference</h2>
 <table>
 <thead>
 <tr>
-<th>Concept</th>
+<th>Concern</th>
 <th>Minimum viable</th>
 <th>Recommended</th>
-<th>Tooling</th>
 <th>Cost to adopt</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Log structure</td>
-<td>JSON with <code>schema_id</code> field</td>
-<td>JSON + schema registry</td>
-<td>Python 3.11, OTel, Loki</td>
-<td>2–3 days</td>
+<td>JSON with a <code>schema_id</code> field</td>
+<td>JSON plus a schema registry</td>
+<td>Days</td>
 </tr>
 <tr>
 <td>Version pinning</td>
-<td>Docker image tags (<code>agent:v1.2.3</code>)</td>
-<td>SemVer + changelog</td>
-<td>Docker, Helm, CI tags</td>
-<td>1 day</td>
+<td>Exact image tags</td>
+<td>Exact tags plus a changelog per schema version</td>
+<td>Hours to days</td>
 </tr>
 <tr>
 <td>Schema evolution</td>
 <td>Optional fields allowed, no renames</td>
-<td>Dual-write, registry</td>
-<td>AWS Glue Schema Registry</td>
-<td>1 week</td>
+<td>Registry plus dual-write during migrations</td>
+<td>About a week</td>
 </tr>
 <tr>
 <td>Validation</td>
 <td>Drop unknown schemas</td>
-<td>Route to quarantine, alert</td>
-<td>Loki pipeline stages</td>
-<td>0.3 ms/log line</td>
+<td>Route to quarantine and alert</td>
+<td>Negligible per line; measure</td>
 </tr>
 <tr>
 <td>Rollback safety</td>
-<td>Pin versions, two indices</td>
+<td>Pinned versions, two indices</td>
 <td>Canary deployments</td>
-<td>Argo Rollouts, Kubernetes</td>
-<td>5 minutes</td>
+<td>Minutes</td>
 </tr>
 </tbody>
 </table>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<ul>
-<li><a href="https://opentelemetry.io/docs/specs/otel/logs/">OpenTelemetry Logging</a> (official spec, 2026 update)</li>
-<li><a href="https://aws.amazon.com/glue/pricing/">AWS Glue Schema Registry pricing (2026)</a> — $0.10 per 1M schema writes</li>
-<li><a href="https://grafana.com/docs/loki/latest/clients/pipeline-stages/">Loki pipeline stages documentation</a> — how to drop or route malformed logs</li>
-<li><a href="https://cloud.google.com/architecture/best-practices-for-building-containers#use_versioned_tags">Docker image tag pinning best practices</a> — why <code>latest</code> is an anti-pattern</li>
-</ul>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p>why do my logs stop working after an agent upgrade</p>
-<p>Once an agent binary changes, it may emit logs in a different format even if the code looks similar. For example, an SDK update might nest fields under <code>context</code> or change <code>userId</code> to <code>user_id</code>. If your log pipeline expects the old JSON keys, queries break silently. Pin the agent version and add a <code>schema_id</code> to declare the expected format.</p>
-<p>how to enforce structured logging without rewriting every agent</p>
-<p>Start with a thin wrapper around your logger that forces JSON output and injects a <code>schema_id</code>. In Python, subclass <code>logging.Logger</code> and override the <code>emit</code> method. In Node.js, use <code>pino</code> with a transport that adds the schema ID. For legacy agents, add a sidecar container that reformats logs before shipping them to Loki.</p>
-<p>what happens if i use OpenTelemetry but skip schema IDs</p>
-<p>OpenTelemetry gives you structured logs, but it doesn’t version the schema. If a new SDK version changes a resource attribute or scope name, your dashboards can break. Schema IDs act as a contract between the agent and the pipeline, independent of OTel’s internal versioning. We learned this the hard way when OTel 1.30 changed <code>resource.attributes.service.name</code> to <code>resource.attributes.service.name.v1</code>.</p>
-<p>is it worth the effort for a small team</p>
-<p>Yes, if you plan to scale beyond 10 agents. The cost is 2–3 days of engineering time and ~0.3 ms per log line. The benefit is avoiding multi-hour outages when an agent upgrade silently changes log fields.</p>
-<h2 id="closing-step">Closing step</h2>
-<p>Open your most recent agent’s <code>Dockerfile</code> and replace any use of <code>latest</code> tags with an exact version number. Then, add a single <code>schema_id</code> field to the first JSON log line emitted by that agent. Commit the change, rebuild the image, and deploy it to a staging environment. You’ll know it works when your log pipeline stops complaining about unknown fields.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/why-scaling-agents-kills-plain-logs/">Why scaling agents kills plain logs</a></li>
-<li><a href="https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
-<li><a href="https://kubaik.github.io/context-windows-agents-that-run-for-days/">Context windows: agents that run for days</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>Why do logs stop working after an agent upgrade?</strong>
+An agent binary change can alter the log format even when the application code looks unchanged. An SDK update might nest fields under <code>context</code> or change <code>userId</code> to <code>user_id</code>. If the pipeline expects the old keys, queries break silently. Pin the agent version and add a <code>schema_id</code> to declare the expected format.</p>
+<p><strong>How do you enforce structured logging without rewriting every agent?</strong>
+Start with a thin wrapper around the logger that forces JSON output and injects a <code>schema_id</code>. In Python, wrap or subclass the logger and control the emitted record. In Node.js, use a structured logger with a transport that adds the schema ID. For legacy agents that cannot be changed, a sidecar container can reformat logs before they reach the backend.</p>
+<p><strong>What happens if you use a tracing framework but skip schema IDs?</strong>
+The framework gives you structured logs, but it does not version the schema. If a framework upgrade changes a resource attribute or scope name, dashboards can break. Schema IDs are a contract between the agent and the pipeline, independent of the framework's internal versioning.</p>
+<p><strong>Is it worth the effort for a small team?</strong>
+It depends on release coupling, not headcount. If agents are released independently and more than a handful are in production, the effort is small compared to the cost of a silent dashboard outage. If all agents ship together and there are only two or three, deferring is reasonable.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Open the <code>Dockerfile</code> for your most recently deployed agent. Replace any <code>latest</code> tag with an exact version number, and add a single <code>schema_id</code> field to the first JSON log line that agent emits. Commit the change, rebuild the image, and deploy it to a staging environment. You will know it worked when your log pipeline reports the new <code>schema_id</code> in its ingestion metrics and stops reporting unknown fields for that agent.</p>
                 
                 
             </div>

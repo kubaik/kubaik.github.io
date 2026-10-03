@@ -1,236 +1,257 @@
 # Price AI-proof skills in 2026
 
-The tutorials all showed the happy path. This post shows what comes after.
+Tutorials on AI-assisted engineering tend to show the happy path: a prompt, a working function, a merged pull request. What they rarely cover is the compensation conversation that follows, when a title changes, a productivity claim is made on someone else's behalf, or a budget line is reallocated. This article is about preparing for that conversation with evidence rather than assertion.
 
-## Why I wrote this (the problem I kept hitting)
+## Why AI-era compensation conversations are harder
 
-The tool cut median latency from 850 ms to 120 ms, but when I asked for a bump to match the SWE-2 level, the lead argued that "the AI did most of the work." What they didn’t count was the 37 hours I spent cleaning 14 k rows of messy markdown, writing 87 integration tests, and fighting prompt drift until the F1 score stayed above 0.88. I opened my job description and realized 60 % of the bullets now sounded like generic LLM callouts instead of the domain expertise we actually needed.
+Three structural problems show up repeatedly when engineers with AI-adjacent titles negotiate pay.
 
-Three things made this negotiation harder than any other I’d done:
+**Title drift outpaces band updates.** Job descriptions now routinely include titles such as "AI Engineer", "ML Platform Engineer", or "Prompt Architect". Internal compensation bands, however, are usually revised on an annual or semi-annual cycle, and often map new titles onto existing engineering ladders without adjustment. The result is that a title change can be compensation-neutral or even compensation-negative. Before accepting any retitle, ask which existing band the new title maps to and whether that mapping has been ratified by whoever owns the compensation framework.
 
-1. **AI-specific language traps**. Titles like “AI Engineer” and “Prompt Architect” are now on every JD, but most companies haven’t updated their compensation bands. In Stack Overflow’s 2026 Developer Survey (n=21,400), 34 % of engineers whose titles included “AI” reported being paid less than peers with equivalent SWE titles.
+**Productivity claims are measured on the wrong axis.** A demo where a model generates a working script in seconds is genuinely impressive, but it measures generation speed on a matched prompt, not the cost of the whole task. The parts that dominate real delivery time — reproducing a race condition under load, deciding which of two plausible designs is correct, reviewing a change against a compliance regime — are usually not visible in that demo. When an organisation ties raises to a proxy metric such as "lines of code removed" or "PRs opened", the proxy can move in the opposite direction from the value delivered. A defensible counter is to measure the same task both ways and show the divergence.
 
-2. **The productivity illusion**. Engineering leaders see a 6× speed-up in a single script and assume the whole role can be automated. In my case, the speed-up only held when the user query matched the exact prompt template I’d tuned. Any drift, and the human still had to step in. Still, the banding model they used for salary increases was tied to “lines of code removed,” not “problems solved that the model couldn’t.”
+**Budget cycles lag headcount reallocation.** When a company shifts headcount budget toward AI tooling, the new roles often launch at frozen or provisional bands until the next planning cycle. Engineers who move into those roles early can be locked into a band below the market rate for the work they are actually doing. The remedy is not to refuse the role but to document the scope and revisit the band at the first scheduled cycle, with evidence.
 
-3. **Budget reallocations**. In 2026, companies moved ~18 % of headcount budget from “mid-level engineers” to “AI tooling engineers,” but the average salary for the latter was frozen until budget cycles reset. That left my cohort squeezed between a rock and a hard place: either accept a nominal raise or re-title into a role that paid more but required skills we didn’t yet have.
+None of these problems is solved by arguing about productivity in the abstract. They are solved by producing artefacts that a manager, a compensation partner, and a finance reviewer can each independently check.
 
-I started collecting data. I downloaded every public compensation report I could find—Levels.fyi, Blind salary threads, anonymized offer sheets on GitHub. The median delta for engineers who could point to non-automatable work was +18 % over their peers with similar years of experience but no such proof. That delta became the anchor I used in every conversation.
+## What you will build
 
-This guide shows how you can do the same: gather evidence, reframe your narrative, and push for compensation that reflects the parts of your job the AI can’t touch—yet.
+The output of this process is a **compensation evidence pack**: a small, version-controlled repository containing three things.
 
-## Prerequisites and what you'll build
+1. A title-normalised salary benchmark in CSV form, derived from sources you can cite.
+2. A short narrative document that maps your non-automatable work to business outcomes.
+3. A negotiation script you can paste into a one-to-one document or a message thread.
 
-You don’t need a full data-science team to run this playbook. You only need:
+The tooling is deliberately lightweight. If the raw data is already available, the mechanical work takes under two hours. The thinking — deciding what counts as non-automatable — takes longer and is the part that actually matters.
 
-- A GitHub, GitLab, or Bitbucket repo with at least 20 meaningful commits in the last 12 months. - Access to your company’s internal OKRs, metrics dashboards, or at least the quarterly business review slides. - Python 3.12 or Node 20 LTS to run the simple scrapers and normalisers.
+## Prerequisites
 
-What you will produce is a **compensation evidence pack**—three artefacts you can attach to any promotion or compensation review:
+- A Git repository (GitHub, GitLab, or Bitbucket) with a meaningful commit history over the last twelve months, or access to a team repository if your own is thin.
+- Access to whatever your organisation uses to record outcomes: OKRs, a metrics dashboard, incident records, quarterly review slides, or a finance summary.
+- Python 3.12 or Node 20 LTS to run the normalisation scripts.
 
-1. A title-normalised salary benchmark (CSV). 2. A two-page narrative slide that maps your non-automatable work to business impact. 3. A negotiation script you can paste into Slack or a 1:1 doc.
+Before writing any scraper, check the target site's `robots.txt`, terms of service, and rate limits. Public compensation aggregators frequently block automated access, and a scraper that gets your account suspended is worse than no scraper. Prefer an official API where one exists, and cache aggressively when it does.
 
-We’ll build lightweight tooling so the whole process takes under 90 minutes if you already have the raw data. If you start from scratch, budget two hours.
+## Step 1 — Set up the environment
 
-Gotcha: I first tried to scrape Levels.fyi with BeautifulSoup 4.12 and immediately hit Cloudflare. Switched to the official API (free tier, 1000 req/day) and wrapped it in a 5-line cache layer. Lesson: always check robots.txt and rate limits before you write a scraper.
-
-## Step 1 — set up the environment
-
-Open a terminal and install the core stack:
+Create a virtual environment and install the core stack:
 
 ```bash
 python -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
-pip install pandas 2.2 requests-cache 1.2 mkdocs-material 9.5
+pip install pandas requests-cache python-dotenv
 ```
 
-Create a new directory and a requirements.txt:
+Pin versions in a `requirements.txt` so the pack is reproducible:
 
 ```text
-pandas==2.2
-requests-cache==1.2
-python-dotenv==1.0
-mkdocs-material==9.5
+pandas==2.2.2
+requests-cache==1.2.1
+python-dotenv==1.0.1
 ```
 
-Set up a .env file with your API keys:
+Store credentials in a `.env` file that is never committed:
 
 ```env
-LEVELS_FYI_API_KEY=your_token_here
+COMP_API_KEY=your_token_here
 GITHUB_TOKEN=ghp_your_token
 ```
 
-Now build the scraper. Save as scrape_levels.py:
+Add `.env` to `.gitignore` before the first commit. An evidence pack that leaks a token is a liability, not an asset.
+
+## Step 2 — Normalise titles before comparing salaries
+
+The single most common error in compensation research is comparing raw titles. "AI Engineer" at one company is a product-facing role; at another it is a research role; at a third it is a rebranded backend position. Normalise first, then compare.
+
+The script below reads a JSON payload from a compensation source and maps titles onto your own internal bands. The exact endpoint and response shape depend on the provider you use, so treat the URL and the `levels` key as placeholders to adapt.
 
 ```python
-import requests_cache
-import pandas as pd
 import os
-from datetime import datetime
+import pandas as pd
+import requests
+import requests_cache
+from datetime import datetime, timezone
 
-requests_cache.install_cache('levels_cache', expire_after=3600)
-API_KEY = os.getenv('LEVELS_FYI_API_KEY')
+requests_cache.install_cache('comp_cache', expire_after=3600)
+
+API_KEY = os.environ['COMP_API_KEY']
 HEADERS = {'Authorization': f'Bearer {API_KEY}'}
 
-url = 'https://api.levels.fyi/v1/companies/levels/levels.json'
-response = requests.get(url, headers=HEADERS)
+# Adapt this URL and the response key to your actual provider.
+url = 'https://api.example-comp-source.com/v1/levels.json'
+response = requests.get(url, headers=HEADERS, timeout=30)
 response.raise_for_status()
 
-df = pd.DataFrame(response.json()['levels'])
+records = response.json()['levels']
+df = pd.DataFrame(records)
 
-df['year'] = datetime.utcnow().year
-df['title_clean'] = df['title'].str.replace(r'\(.*\)', '', regex=True).str.strip()
+df['title_clean'] = (
+    df['title']
+    .str.replace(r'\(.*\)', '', regex=True)
+    .str.strip()
+)
 
-# Normalise titles to our internal bands
 mapping = {
     'Software Engineer': 'SWE',
+    'Senior Software Engineer': 'SWE',
     'AI Engineer': 'SWE',
     'ML Engineer': 'DS',
     'Data Scientist': 'DS',
-    'Prompt Engineer': 'SWE'
+    'Prompt Engineer': 'SWE',
 }
-df['band'] = df['title_clean'].map(mapping).fillna('Other')
 
-df.to_csv('benchmarks_2026.csv', index=False)
-print(f"Saved {len(df)} records to benchmarks_2026.csv")
+df['band'] = df['title_clean'].map(mapping).fillna('Other')
+df['snapshot_utc'] = datetime.now(timezone.utc).isoformat()
+
+df.to_csv('benchmarks.csv', index=False)
+print(f"Saved {len(df)} records to benchmarks.csv")
 ```
 
-Run it:
+Two details matter here. First, the `mapping` dictionary is a judgement call, and it should be documented in the repository so a reviewer can challenge it. Second, recording `snapshot_utc` on every row means the benchmark is dated. Compensation data decays; an undated CSV is not evidence.
+
+### How to measure the title premium properly
+
+Do not rely on a single aggregate figure. To establish whether a title premium exists in your market, instrument the comparison directly:
+
+- Pull a sample of postings or reported salaries for the AI-adjacent title and for the equivalent generalist title.
+- Restrict to the same seniority level, the same location, and the same company size band.
+- Compute the median for each group and the difference between them.
+- Report the sample size alongside the difference. A gap computed from a handful of rows is noise.
+
+The command is trivial once the CSV exists:
 
 ```bash
-python scrape_levels.py
+python -c "
+import pandas as pd
+df = pd.read_csv('benchmarks.csv')
+for band, g in df.groupby('band'):
+    print(band, len(g), g['total'].median())
+"
 ```
 
-You should see something like:
+If the AI-adjacent title shows a lower median than the generalist title at the same level, that is a finding worth bringing to the conversation — provided the sample is large enough to defend.
 
-```
-Saved 3402 records to benchmarks_2026.csv
-```
+## Step 3 — Measure your own work honestly
 
-Next, pull your own repo stats. Save as github_stats.py:
+Pull your contribution history from the repository host. The GitHub API exposes weekly contribution statistics per repository:
 
 ```python
-import requests
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+import requests
 
-GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-USERNAME = 'your_github_username'
+GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
+OWNER = 'your_org_or_username'
 REPO = 'your_repo_name'
 
-url = f'https://api.github.com/repos/{USERNAME}/{REPO}/stats/contributors'
-headers = {'Authorization': f'token {GITHUB_TOKEN}'}
-response = requests.get(url, headers=headers)
+url = f'https://api.github.com/repos/{OWNER}/{REPO}/stats/contributors'
+headers = {'Authorization': f'Bearer {GITHUB_TOKEN}',
+           'Accept': 'application/vnd.github+json'}
+
+response = requests.get(url, headers=headers, timeout=30)
 response.raise_for_status()
 
-stats = response.json()[0]['weeks']
+cutoff = (datetime.now(timezone.utc) - timedelta(days=365)).timestamp()
+weeks = response.json()[0]['weeks']
+recent = [w for w in weeks if w['w'] >= cutoff]
+total_commits = sum(w['c'] for w in recent)
 
-last_year = [w for w in stats if w['w'] >= (datetime.utcnow() - timedelta(days=365)).timestamp()]
-total_commits = sum(w['c'] for w in last_year)
-
-print(f"Total commits in last 12 months: {total_commits}")
+print(f"Commits in the last 12 months: {total_commits}")
 ```
 
-Run it:
+Commit count is a weak signal on its own — it is exactly the kind of proxy metric that misleads. Use it as an index into the work, not as the argument. The argument comes from the artefacts: the incident that was resolved, the migration that was completed, the review that caught a problem.
 
-```bash
-python github_stats.py
-```
+### Separating AI-assisted from human-only work
 
-I ran this against a private repo and got 239 commits. That became the raw material for the narrative slide.
+For each significant piece of work in the period, record four fields:
 
-## Step 2 — core implementation
+| Field | What to record | Why it matters |
+|---|---|---|
+| Task | A one-line description of the outcome, not the activity | Reviewers can verify outcomes; activity descriptions invite debate |
+| AI contribution | What the model produced, and under what conditions | Establishes the boundary of the automation |
+| Human contribution | The decisions, debugging, or review that the model did not perform | This is the compensable part |
+| Verifiable impact | A metric from a system of record, with a link | Removes the conversation from opinion |
 
-With the benchmark data in hand, you now have to reframe your role away from “the AI did it” and toward “the AI didn’t do the hard part.”
+The "AI contribution" column is where most evidence packs go wrong. If a model generated a function that worked on the first attempt, say so. Overstating human contribution is the fastest way to lose credibility with a manager who has seen the same demo. The claim being made is narrower and stronger: *the model handled the generation, and the human handled the parts where the model was unreliable.*
 
-Open a Google Doc or a MkDocs site (we’ll use MkDocs for version control). Create index.md:
+A typical failure mode looks like this. A team adopts a code assistant, measures a large speed-up on a scripted task, and extrapolates to the whole role. The extrapolation breaks down because the scripted task had a fixed specification and a known-correct answer, while the role consists largely of tasks where the specification is contested and correctness is only established after deployment. Documenting that distinction, with examples, is the substance of the evidence pack.
+
+## Step 4 — Write the narrative document
+
+The narrative is the part a human reads. Keep it to two pages. Structure it as:
 
 ```markdown
-# Non-automatable Evidence Pack
-Engineer: Kubai Kevin
-Period: Q4 2025 – Q3 2026
+# Non-Automatable Work — Evidence Pack
 
-## Role Context
-- Primary OKR: Reduce on-call pages by 40 % while shipping 8 new micro-services.
-- AI tools adopted: internal vector search (Redis 7.2), Copilot Enterprise (2026.1.1), and a bespoke LLM wrapper for internal docs.
+Period: <start> to <end>
+Level: <your level>
+Band under review: <band>
 
-## Evidence of Non-automatable Work
+## Scope
+- Primary objective this period: <one sentence, with the metric>
+- Systems owned: <list>
+- AI tooling in use: <list, with what it was used for>
 
-| Dimension               | AI contribution | Human contribution | Impact            |
-|-------------------------|-----------------|--------------------|-------------------|
-| Latency improvement     | 72 %            | 28 %               | 40 % page reduction |
-| Incident root-cause     | 0 %             | 100 %              | 18 % MTTR drop       |
-| Security review         | 0 %             | 100 %              | 0 critical vulns in prod |
-| Prompt drift tuning     | 50 %            | 50 %               | F1 > 0.88 sustained|
+## Evidence
 
-## Business Metrics
-- Saved 112 hours of on-call time (internal ticketing system).
-- Reduced infra cost by $14 k via ARM64 Lambda migration (Graviton3, Node 20 LTS).
+| Task | AI contribution | Human contribution | Impact (source) |
+|------|-----------------|--------------------|-----------------|
+| <task> | <what the model did> | <what it could not do> | <metric, system of record> |
 
 ## Narrative
-We adopted AI tools aggressively, but the real leverage came from the parts the model couldn’t touch: debugging a race condition in the Redis 7.2 Lua script that surfaced only under 5000 QPS, rewriting the Terraform modules to support IPv6 dual-stack, and reviewing the SOC2 audit trail for the new micro-services. Those artefacts are not reproducible by today’s LLMs.
+<Three short paragraphs: what was hard, what the model could not do,
+and what changed in the business as a result.>
 ```
 
-Why this works:
+The table does the work that prose cannot. A manager reading "AI contributed to X; the human resolved Y" is being handed a distinction they can act on. A manager reading "I worked hard on AI projects" is being handed a claim they must evaluate from scratch.
 
-- **Tangible ratios** cut through the noise. If you can say “AI did X %, human did Y %,” you immediately shift the conversation from “you wrote code” to “you solved a problem the code couldn’t.”
-- **Specific dollar savings** beat generic “I worked hard” claims. In my case, the $14 k infra saving was documented in the quarterly finance deck, so the CFO couldn’t argue.
+Two rules for the impact column. First, every figure must come from a system of record — a ticketing system, a finance summary, an incident tracker — and the source should be named. Second, if a figure is an estimate, label it as an estimate and show the arithmetic. For example: "reduced manual review by an estimated 30 hours per quarter (400 prompts reviewed, 4.5 minutes saved per prompt, arithmetic shown)". A reviewer who can redo the sum will trust the number; a reviewer handed a bare figure will discount it.
 
-I first tried to build a slide deck in PowerPoint. It took 4 hours and looked like every other slide: “AI helped us ship faster.” When I switched to the table format above, my manager said, “This actually answers my question.”
+## Step 5 — Handle the awkward cases
 
-## Step 3 — handle edge cases and errors
+**Your organisation does not use OKRs.** Substitute whatever the organisation does use: delivered story points, closed issues, incident counts, or customer-facing release notes. The format matters less than the traceability.
 
-Edge case 1: Your company doesn’t use OKRs. Fallback: grab the last six quarters of Jira velocity metrics and label them “delivered story points.” In a pinch, use GitHub issues closed.
+**Your personal repository is thin.** Use the team repository and attribute only the work you can demonstrate. Merged pull requests with your authorship are verifiable; a commit count on a shared branch is not.
 
-Edge case 2: Your repo is tiny (<20 commits). Fallback: pull the merged PRs from your team’s main repo and subtract the AI-generated PRs (look for “Co-authored-by: Copilot” in the commit trail).
+**The model genuinely did most of the work.** This is not a failure of the evidence pack; it is information. If the role has largely been automated, the honest move is to negotiate a scope change or a retitle — but only after checking what the new title pays. A retitle into a lower band is a pay cut with better marketing.
 
-Edge case 3: The AI did 90 % of the work. If that’s true, negotiate for a role that reflects the new reality—maybe “AI Tooling Engineer” or “Prompt Reliability Engineer.” But before you accept the title change, benchmark the new band. In 2026, the median for “Prompt Reliability Engineer” is 12 % below SWE-3. You may end up worse off.
+**Budget is frozen.** Ask about the mechanisms that sit outside the salary cycle: spot bonuses tied to specific artefacts, equity refresh, additional leave, or a training budget. Whatever is agreed, get it in writing with a date attached. A verbal commitment to "revisit next cycle" is not a commitment.
 
-Edge case 4: Your manager says “budget is frozen.”
-Redirect to equity refresh or spot bonus. In 2026, 42 % of tech companies still allow spot bonuses tied to specific artefacts, according to a 2026 Radford survey. Attach your evidence pack and ask for a $7 k spot bonus instead of a 5 % raise.
+**The manager says the job description will be automated next year.** Shift the conversation to the parts of the role that are currently ambiguous or require domain judgement: data quality, security review, regulatory compliance, incident response. Those areas are where automation is least reliable, and they are where evidence of human contribution is easiest to produce.
 
-I once hit edge case 4. My manager’s budget was locked, but the VP of Engineering had a discretionary pool. I attached the evidence pack, highlighted the $14 k infra saving, and asked for a $7 k spot bonus. It cleared in 48 hours.
+## Step 6 — Make the pack reproducible
 
-## Step 4 — add observability and tests
-
-The evidence pack must be reproducible and auditable. Add a simple test harness so anyone can rerun the benchmarks:
-
-Create tests/test_benchmarks.py:
+An evidence pack that cannot be re-run is a PDF with extra steps. Add tests that assert the shape and the invariants of your data:
 
 ```python
 import pandas as pd
 import pytest
 
 def test_benchmark_file_exists():
-    df = pd.read_csv('benchmarks_2026.csv')
-    assert len(df) > 3000, "Expected at least 3000 benchmark rows"
+    df = pd.read_csv('benchmarks.csv')
+    assert len(df) > 0, "Benchmark file is empty"
     assert 'band' in df.columns, "Missing band column"
+    assert 'snapshot_utc' in df.columns, "Missing snapshot timestamp"
 
-def test_salary_gap():
-    df = pd.read_csv('benchmarks_2026.csv')
-    swe = df[df['band'] == 'SWE']['total'].median()
-    ai_engineer = df[df['title_clean'].str.contains('AI Engineer', na=False)]['total'].median()
-    assert swe > ai_engineer * 1.15, "SWE band should pay more than AI Engineer band"
+def test_bands_are_populated():
+    df = pd.read_csv('benchmarks.csv')
+    unknown = (df['band'] == 'Other').mean()
+    assert unknown < 0.5, f"Too many unmapped titles: {unknown:.0%}"
 ```
 
-Run the tests:
+The second test is the useful one. If more than half of your rows fall into `Other`, your title mapping is too narrow and the benchmark is not measuring what you think it is. Adjust the mapping before drawing conclusions.
+
+Run the suite:
 
 ```bash
-pytest tests/test_benchmarks.py -v
+pytest tests/ -v
 ```
 
-You should see:
-
-```
-============================= test session starts ==============================
-test_benchmark_file_exists PASSED                                          [ 50%]
-test_salary_gap PASSED                                                    [100%]
-========================= 2 passed in 0.03s =============================
-```
-
-Add a GitHub Actions workflow (.github/workflows/bench.yml):
+Add a CI workflow so the pack is validated on every push:
 
 ```yaml
 name: Benchmarks CI
-on: [push]
+on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -240,57 +261,36 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
-      - run: pytest tests/test_benchmarks.py
+      - run: pytest tests/ -v
 ```
 
-This makes the evidence pack live under version control, so when promotion season arrives, you can hand reviewers a repo URL instead of a PDF.
+Now the pack has a URL, a history, and a green check. When review season arrives, the artefact speaks for itself.
 
-## Real results from running this
+## Decision checklist before the conversation
 
-I rolled out this playbook across my team of six engineers. Within one quarter, three engineers secured 12–18 % raises, two moved to SWE-3 bands, and one re-titled to “Prompt Reliability Engineer” with a 9 % raise. The outliers were all engineers who could point to non-automatable artefacts:
+- [ ] Every salary figure has a source and a date.
+- [ ] Titles are normalised, and the mapping is documented and defensible.
+- [ ] Sample sizes are reported alongside every median.
+- [ ] Every impact figure traces to a system of record, or is labelled as an estimate with the arithmetic shown.
+- [ ] The AI contribution is stated honestly, including the cases where the model did most of the work.
+- [ ] The pack is in version control and the tests pass.
+- [ ] The ask is specific: a band, a number, or a mechanism, with a date.
+- [ ] A fallback is prepared for each of the frozen-budget, retitle, and deferred-decision cases.
 
-- The infra engineer who rewrote the Redis 7.2 Lua scripts for high-throughput Lua-side scripting saved $14 k in infra and cut on-call pages by 40 %. - The API engineer who tuned the prompt drift until the F1 score stayed above 0.88 across 400 prompts saved 37 hours of manual review. - The security engineer who reviewed the SOC2 audit trail found a misconfigured IAM role that would have cost $280 k in potential breach fines.
+## FAQ
 
-The median raise was +15 % versus +4 % for peers who didn’t build an evidence pack.
+**Should the benchmark use public data or internal data?**
+Both, kept separate. Public data establishes the market rate. Internal data establishes where your organisation sits relative to that market. Conflating them makes the argument unfalsifiable.
 
-He said, “If the engineer can show the model didn’t do it, it’s real.”
+**What if the organisation refuses to share bands?**
+Build an inferred model from public postings and internal titles, and label it as inferred. Present it as a question — "does this mapping match the internal framework?" — rather than as an assertion. A manager who cannot share the bands can often confirm or deny a mapping.
 
-The biggest surprise was that the evidence pack itself became a recruiting tool. Two engineers on other teams used the artefacts to negotiate up to 20 % when they moved internally. The repo now has 18 stars and a few forks from engineers at other companies.
+**Is equity a substitute for a raise?**
+It depends on liquidity and vesting. For a private company with no near-term liquidity event, an equity refresh has no verifiable value at the time of negotiation. A spot bonus tied to a documented artefact is comparable across companies; an equity grant is not.
 
-## Common questions and variations
+**How long should the pack be?**
+Two pages of narrative plus the CSV. If it is longer, the reviewer will not read it. The repository can hold more detail; the document that gets read should not.
 
-**Can I use this if I’m remote in a low-cost country?**
-Yes, but anchor to your local market first. Pull data from local job boards (e.g., Otta in the UK, Cutshort in India, Jobberman in Ghana). In 2026, remote salaries are still benchmarked to the hiring manager’s location 62 % of the time, according to a 2026 Remote Work Report. Include a “local adjustment” column in your CSV and highlight the delta. I used this trick when my team moved to a fully remote model; the evidence pack convinced the manager to keep my band despite the new location.
+## The next 30 minutes
 
-**What if my manager says “AI can do your job description next year”?**
-Reframe the conversation to the parts of the JD that are still ambiguous or require domain expertise. In 2026, the hardest problems are usually around data quality, security, and compliance. If you can point to artefacts in those areas, you’re still safe. I once had a manager push back: “Next year the model will write Terraform.” I replied, “Terraform only describes the infra; the blast radius of a misconfiguration is still 100 % on the human who approved the plan.” That shut the conversation down.
-
-**Should I ask for equity or bonus instead of a raise?**
-Equity is illiquid in most private companies in 2026. Ask for a spot bonus tied to a specific artefact. In 2026, 42 % of tech companies still allow spot bonuses, and the median size is $7 k. If you must take equity, negotiate for a refresh in the next funding round, not a one-time grant. I took a $7 k spot bonus instead of the 5 % raise and used it to pay for a SOC2 training course that became a line item in the next quarter’s budget.
-
-**What if the company refuses to share salary bands?**
-Build your own banding model using public data plus internal role titles. Use the Levels.fyi scrape as a prior, then fit your internal bands by mapping titles to years of experience and reporting level. In 2026, 68 % of engineers at Series B–D companies still maintain internal bands, even if they don’t publish them. I reverse-engineered my company’s bands by scraping LinkedIn profiles of recent hires and mapping to my internal leveling guide.
-
-## Where to go from here
-
-Build the evidence pack today. Run scrape_levels.py, fill in your repo stats, and draft the table in index.md. Commit everything to a new repo called compensation-evidence-2026. Push to GitHub and open a draft PR. Schedule a 15-minute 1:1 with your manager within the next 30 days and attach the PR URL in the invite. That single action—pushing a live, auditable artefact—shifts the conversation from “you deserve more” to “here is the proof.”
-
-Do this before your next compensation cycle, and you’ll negotiate from data, not hope.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 29, 2026
+Create the repository, commit the title-normalisation script, and run it against whatever compensation data you can legitimately access. The output does not need to be complete — it needs to exist, with a dated snapshot and a documented mapping. That single artefact converts the next compensation conversation from a discussion about how you feel about your work into a discussion about what the data shows.

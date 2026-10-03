@@ -1,316 +1,173 @@
-# Cloud agents burned $18k: 8 tools that didn't work
+# Why Cloud Cost Tools Miss Agent-Driven GPU Spend
 
-I ran into this traditional cloud problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+## The mismatch between cost tools and autonomous agents
 
-## Why this list exists (what I was actually trying to solve)
+Cloud cost tooling was designed around a specific assumption: a human decides to provision a resource, a human decides when to tear it down, and the interval between those decisions is long enough for monthly billing data to be a useful signal. Agents violate all three parts of that assumption.
 
-I was trying to fix a bill that jumped from $3,200 to $21,400 in one billing cycle. Not a spike, not a one-off — a steady climb that peaked around 240 hours of agent activity per day. The agents were doing what we asked: scaling up inference pods when load increased, spinning up vector stores for new knowledge graphs, and auto-provisioning GPUs for fine-tuning jobs. But every cost-reduction trick we’d used before — reserved instances, spot instance orchestration, auto-scaling with warm pools — suddenly made things worse. The problem wasn’t the agents’ workload; it was the cost tools’ blind spots. They measured CPU, memory, and network, but they never saw the $8.40 per hour on-demand A100 GPU that an agent spun up for a 15-second warmup. They approved the reservation discount for 70% of our fleet, but didn’t tie that discount to the actual agent decisions, so we ended up with 120 hours of idle reserved instances because the agent didn’t know we’d prepaid for them.
+An agent may make thousands of provisioning decisions per hour. Each decision has a cost implication — a GPU warmup, a vector store spin-up, a fine-tuning job — and the decision lifetime may be measured in seconds. A cost tool that reads billing data once a day, attributes spend to a resource ID, and surfaces it in a dashboard the next morning is not wrong; it is answering a different question than the one the operator needs answered.
 
-We weren’t alone. A 2026 Cloudflare survey of 412 teams running AI agents found 68% had at least one agent-driven cost anomaly larger than $5k in the previous quarter, and 22% had run agents that triggered sustained over-provisioning for more than 48 hours. The root cause wasn’t bad agents; it was tools built for humans making human decisions. Agents make thousands of tiny decisions per second, each with cost implications, and traditional cost tools treat those decisions as noise. I spent three weeks trying to shoehorn Datadog Cost Analytics into catching agent-driven over-provisioning, only to realize it had no way to attribute a GPU spin-up to an agent’s internal cost model. The final straw came when we saw an agent repeatedly request 8x more VRAM than the model needed because the pricing data feed was cached and 24 hours stale.
+The failure mode is consistent across platforms. A GPU instance is launched for a short warmup, the agent's session ends before the teardown step runs, and the instance stays up. The billing system records it correctly. The cost dashboard shows GPU spend rising. Nothing in the pipeline can tell the difference between "the agent is running a legitimate long job" and "the agent forgot to clean up," because the tool has no model of agent intent — only of resource state.
 
-Traditional cost tools assume you know what you want to spend. Agents assume you know what you want to accomplish. The mismatch created an $18k hole in less than 30 days.
+This article covers why standard tools fall short, how to evaluate whether a given tool can detect agent-driven anomalies, and what a workable architecture looks like if the answer is no.
 
+## Why traditional cost tools fail on agent workloads
 
-## How I evaluated each option
+### The attribution gap
 
-I started with three simple criteria: visibility, control, and noise. Visibility meant real-time cost attribution at the agent decision level, not just at the resource level. Control meant the ability to set hard or soft limits that agents could not override without explicit approval. Noise meant the tool had to distinguish between a legitimate spike and a runaway agent without drowning me in alerts.
+Standard cost tools attribute spend to resources: an instance ID, a pod, a namespace, a billing account. That attribution is accurate and useful for human workloads, where the resource maps cleanly to a project or team. It breaks down when the resource is ephemeral and the meaningful unit is the agent decision that created it.
 
-I ran a two-week pilot on our staging cluster. Every tool that claimed to handle “AI workloads” got a 48-hour test: I launched an agent that would start a 4x A100 inference cluster, run a synthetic load for 10 minutes, then shut it down. I measured three metrics: time to detect the spike, false positive rate, and the time from detection to remediation. The winners had to detect the spike within 60 seconds, keep false positives below 10%, and offer a remediation path that actually stopped the agent without killing the workload.
+A pod that requested 4x the VRAM the model needed is a cost anomaly at the resource level. At the agent level, it may be a deliberate test of a larger model variant, or it may be a misconfigured cache lookup returning the wrong model size. The cost tool cannot distinguish these. Only the agent runtime knows which one happened.
 
-I also calculated the cost of inaction. If a tool took five minutes to alert me, that was five minutes of $18 per hour GPU burn. If it took 30 minutes, it was $9. If it took an hour, it was $18. That gave me a hard ceiling: any tool that couldn’t alert and remediate within two minutes wasn’t worth the integration effort.
+### Pricing lag
 
+Many cost tools cache cloud pricing data. Caching is reasonable — pricing APIs are slow and rate-limited — but it means the tool's cost model can diverge from real-time spot or on-demand pricing during the exact window when an agent is making decisions. An agent optimizing for cost using a live pricing feed and a cost tool using a 24-hour-old cache will disagree about what a resource costs. The tool will under-report the spike.
 
-## Why traditional cloud cost tools failed us once agents started making autonomous decisions — the full ranked list
+### Alert fatigue from legitimate spikes
 
-### 9. AWS Cost Explorer with Savings Plans
+Agents produce legitimate spikes constantly. A batch inference job, a model fine-tune, a re-indexing operation — all of these look like anomalies to a threshold-based alerting system. Teams that tune thresholds low enough to catch runaway agents end up drowning in alerts for real work. Teams that tune them high enough to reduce noise miss the runaway. This is not a tuning problem; it is a signal problem. The tool lacks the context to separate the two cases.
 
-What it does: It’s the default dashboard for AWS spend, showing month-to-date cost, Savings Plans utilization, and reservation coverage.
+### No remediation path
 
-Strength: It’s free, it’s integrated, and it gives you a single pane of glass for all AWS services. If your agents only use EC2, RDS, and Lambda, it can show you the reservation coverage for each SKU.
+Even when a tool detects the spike, most cost tools can only alert. They cannot act. Stopping a runaway agent requires either an API call into the agent runtime or a Kubernetes API call to scale down the offending workload. A cost dashboard that pages an on-call engineer at 3 a.m. is not a solution for a problem that compounds at dollars per minute.
 
-Weakness: It has no agent-level visibility. It can tell you that a Savings Plan was underutilized, but it can’t tell you that the underutilization came from an agent that spun up a GPU cluster for 20 minutes and then forgot to tear it down. During our pilot, it took us three days to notice that a Savings Plan had 30% idle hours, and by then the damage was done.
+## Evaluating a tool: what to actually measure
 
-Best for: Teams that run mostly human-triggered workloads and only use AWS-native services. If your agents are confined to Lambda, Step Functions, and EC2, this might be enough. For anything else, it’s like using a flashlight in a fog.
+The criteria that matter for agent workloads are different from the criteria that matter for human workloads. Visibility into resource state is not enough; the tool needs to see the agent decision layer. Control matters more than reporting. And the noise floor has to be low enough that a real alert is actionable.
 
+A practical evaluation has three measurable outputs:
 
-### 8. Kubecost 2.5
+**Detection latency.** How long between the agent making a costly decision and the tool surfacing it? Instrument this by running a synthetic agent that provisions a known-expensive resource (a GPU instance, a large memory node) for a fixed duration, then tearing it down. Record the timestamp of the provisioning API call and the timestamp the tool first reports the cost. The difference is the detection latency. Anything above roughly two minutes is too slow for GPU workloads where on-demand pricing can be several dollars per hour.
 
-What it does: It’s an open-source cost monitoring tool that runs in-cluster and attributes resource usage to Kubernetes pods, deployments, and namespaces.
+**False positive rate.** How many alerts does the tool fire for legitimate agent activity over a fixed observation window? Run your normal agent workload for a week with the tool's alerting enabled and count alerts that required no action. If more than a small fraction of alerts are noise, the tool will be ignored in practice.
 
-Strength: It’s accurate at the pod level and integrates with Prometheus. If your agents run as Kubernetes jobs or deployments, Kubecost can show you the exact pod that triggered a GPU request. During our test, it flagged a pod that requested 4x more VRAM than the model needed within 30 seconds of the agent’s decision.
+**Remediation capability.** Can the tool stop the offending workload, or only notify? Check whether it exposes an API or webhook that can trigger a scale-down, a session kill, or a policy action. A tool with detection but no remediation still requires a human in the loop, which caps its usefulness at human response time.
 
-Weakness: It doesn’t understand agent intent. It can tell you that a pod is over-provisioned, but it can’t tell you that the over-provisioning was intentional because the agent was testing a new model variant. It also assumes you control the cluster autoscaler, which breaks when agents themselves trigger the autoscaler.
+### How to run the synthetic agent test
 
-Best for: Kubernetes-native teams that run agents as Kubernetes workloads and want pod-level cost visibility. If your agents are outside the cluster or use serverless services, Kubecost is blind.
+The test is straightforward to set up and does not require a production incident:
 
+1. Write a script that calls your cloud provider's API to launch a GPU instance (or a similarly priced resource) with a distinctive tag.
+2. Sleep for a fixed interval — 10 minutes is enough to exceed most detection windows.
+3. Terminate the instance.
+4. Record the wall-clock time of the launch call.
+5. Check your cost tool's UI or API at one-minute intervals and record when the spend first appears.
 
-### 7. CloudZero 2026.03
+The gap between step 4 and step 5 is your detection latency for that tool on that resource type. Repeat for each resource class your agents use, because detection latency often varies by service.
 
-What it does: It’s a SaaS cost intelligence platform that ingests cloud billing data and maps it to business metrics like customer, feature, or team.
+For false positives, the same setup works in reverse: run it alongside real agent traffic for a week and count how many alerts the tool fires that do not correspond to the synthetic test.
 
-Strength: It can attribute costs to business outcomes, which is useful if your agents are tied to customer-facing features. During our pilot, it showed us that the agent-driven cost spike correlated with a new “contextual chat” feature that had 1,200 active users.
+## What a workable architecture looks like
 
-Weakness: It’s expensive for small teams. The minimum seat count is 5 users at $1,500 per month, and the onboarding process took three days to map our agents to the correct business metrics. It also doesn’t integrate with agent runtime metrics, so it can’t alert on agent decisions in real time.
+No single tool covers the full loop. The workable pattern separates three concerns: detection, attribution, and remediation.
 
-Best for: Mid-market and enterprise teams that need cost-to-outcome mapping and have the budget for a dedicated platform.
+### Detection at the runtime layer
 
+The agent runtime is the only place that knows why a resource was provisioned. Instrument it. Emit a structured event every time the agent makes a provisioning decision, including the decision ID, the resource requested, the estimated cost, and the expected lifetime. This event stream is the ground truth that cost tools lack.
 
-### 6. GCP Cost Manager with Recommender API
+The event can be as simple as a JSON line written to a log or a message published to a queue:
 
-What it does: It’s Google Cloud’s native cost optimization suite, including the Recommender API for rightsizing and idle resource detection.
+```python
+import json, time, uuid
 
-Strength: It’s tightly integrated with GCP services and can recommend rightsizing for GPUs, TPUs, and VMs. During our pilot, it flagged an idle A100 GPU that had been running for 12 hours after an agent finished its workload.
-
-Weakness: It’s GCP-only. If your agents run on AWS or multi-cloud, it’s useless. It also doesn’t understand agent autonomy; it treats every GPU spin-up as a human decision, so it can’t distinguish between a legitimate workload and an agent that forgot to shut down.
-
-Best for: GCP-only teams that run mostly human-triggered workloads and want automated rightsizing recommendations.
-
-
-### 5. Infracost 0.10.27
-
-What it does: It’s an open-source tool that estimates cloud costs from Terraform plans and applies those estimates to CI/CD pipelines.
-
-Strength: It catches cost regressions before they hit production. During our pilot, it flagged a Terraform change that would have increased GPU hours by 300% because the agent’s new model variant needed more VRAM.
-
-Weakness: It’s a planning tool, not a runtime tool. It can’t stop a runaway agent; it can only warn you before you apply the change. If your agents make decisions at runtime, Infracost is blind.
-
-Best for: Teams that use Terraform for infrastructure and want to catch cost regressions before they deploy. If your agents make decisions after deployment, Infracost won’t help.
-
-
-### 4. Azure Cost Management + FinOps Toolkit 2026
-
-What it does: It’s Microsoft’s native cost management suite, including the FinOps Toolkit for cost allocation and anomaly detection.
-
-Strength: It integrates with Azure Monitor and can alert on anomalies at the resource level. During our pilot, it flagged a VM that suddenly started using 100% CPU, which turned out to be an agent that had entered a retry loop.
-
-Weakness: It’s Azure-only and assumes human-driven workloads. It can’t attribute a cost spike to an agent’s internal cost model, so it treats every anomaly as a potential human error. It also lacks granular GPU cost tracking, which is critical for AI workloads.
-
-Best for: Azure-only teams that want native FinOps tooling and don’t run multi-cloud agents.
-
-
-### 3. CloudHealth by VMware 2026.04
-
-What it does: It’s a multi-cloud cost governance platform that aggregates AWS, Azure, and GCP spend and applies FinOps policies.
-
-Strength: It supports multi-cloud and has a robust policy engine. During our pilot, we set a policy to alert if any agent spun up more than 8 GPUs at once, and it caught an agent that had misconfigured its model cache.
-
-Weakness: The policy engine is complex and requires a steep learning curve. The onboarding process took two weeks, and the UI is cluttered. It also charges by the number of accounts, not by usage, so small teams pay the same as large ones.
-
-Best for: Enterprise teams with multi-cloud Kubernetes workloads and dedicated FinOps teams.
-
-
-### 2. OpenCost 1.35
-
-What it does: It’s an open-source cost monitoring tool specifically designed for Kubernetes, with support for GPU and custom resource metrics.
-
-Strength: It can attribute GPU and VRAM usage to individual pods, which is critical for agent workloads. During our pilot, it caught a pod that requested 16x more VRAM than the model needed, which would have cost us $1,200 per day if left unchecked.
-
-Weakness: It’s Kubernetes-only. If your agents run on EC2, Lambda, or serverless services, OpenCost is blind. It also doesn’t integrate with agent runtime policies, so it can’t stop a runaway agent; it can only alert.
-
-Best for: Kubernetes-native teams that run agents as pods and want granular GPU cost visibility.
-
-
-| Tool | Agent-Level Visibility | Runtime Remediation | Multi-Cloud | GPU Cost Tracking | Cost |
-|---|---|---|---|---|---|
-| AWS Cost Explorer | No | No | AWS only | Limited | $0 |
-| Kubecost 2.5 | Yes (pod) | No | Any cloud (via Prometheus) | Yes | Free (self-hosted) |
-| CloudZero 2026.03 | Yes (business metric) | No | Multi-cloud | Yes | $1,500/mo (min 5 seats) |
-| GCP Cost Manager | No | No | GCP only | Yes | $0 |
-| Infracost 0.10.27 | No | No | Any cloud (via Terraform) | No | Free (self-hosted) |
-| Azure Cost Management | No | No | Azure only | Limited | $0 |
-| CloudHealth 2026.04 | Yes (policy) | Yes (via API) | Multi-cloud | Yes | $0.15 per account per month |
-| OpenCost 1.35 | Yes (pod) | No | Any cloud (via Prometheus) | Yes | Free (self-hosted) |
-
-
-## The top pick and why it won
-
-CloudHealth by VMware 2026.04 won because it was the only tool that combined multi-cloud support, real-time policy enforcement, and agent-level visibility without requiring us to rewrite our agents. During our pilot, it caught an agent that had spun up six A100 GPUs for a 30-second warmup and then failed to tear down the cluster. The policy we set was simple: “Alert if any agent requests more than 4 GPUs at once,” and CloudHealth triggered within 45 seconds. It also gave us a remediation path: we could either kill the agent’s session or scale it down, and the tool handled the Kubernetes API call for us.
-
-The other tools either lacked multi-cloud support, couldn’t attribute costs to agents, or couldn’t remediate at runtime. OpenCost 1.35 was great for pod-level GPU tracking but couldn’t stop the agent. CloudZero 2026.03 was excellent for business metric mapping but couldn’t alert in real time. AWS Cost Explorer and GCP Cost Manager were blind to agent decisions. CloudHealth was the only one that gave us both visibility and control.
-
-The trade-off is complexity and cost. CloudHealth’s policy engine is powerful but verbose, and the pricing model ($0.15 per account per month) adds up if you have dozens of accounts. But for teams running multi-cloud agents, it’s the only tool that actually works.
-
-Here’s a snippet of the policy we used to catch the GPU spike:
-
-```yaml
-apiVersion: v1
-kind: Policy
-metadata:
-  name: gpu-spike-detection
-spec:
-  trigger:
-    metric: agent_gpu_requests
-    threshold: 4
-    window: 60s
-  actions:
-    - type: alert
-      channels: [slack, pagerduty]
-    - type: scale_down
-      replicas: 0
-      timeout: 300s
+def emit_provision_event(resource_type, resource_id, estimated_hourly_cost, expected_lifetime_s):
+    event = {
+        "event": "provision",
+        "decision_id": str(uuid.uuid4()),
+        "resource_type": resource_type,
+        "resource_id": resource_id,
+        "estimated_hourly_cost": estimated_hourly_cost,
+        "expected_lifetime_s": expected_lifetime_s,
+        "ts": time.time(),
+    }
+    # write to your log pipeline or publish to a queue
+    print(json.dumps(event))
 ```
 
-That policy alone saved us $18k in one month.
+### Attribution by joining events to billing
 
+The cost tool's resource-level attribution is still useful — it is just incomplete. Join the runtime event stream to the billing data on resource ID. The join gives you the agent decision that created each cost line, which is the missing context.
 
-## Honorable mentions worth knowing about
+This join can be done in a data warehouse, a stream processor, or even a scheduled job that reads both sources and writes a combined table. The important property is that every cost line has an associated decision ID when one exists, and is flagged as "no agent decision found" when it does not. That flag is itself a useful signal: it catches resources that were provisioned outside the agent's control, including the runaway case where the agent's session ended before it could emit a teardown event.
 
-### Scalr 2.18
+### Remediation via policy
 
-What it does: It’s a cloud cost governance platform that combines Terraform, cost policies, and multi-cloud support.
+Remediation belongs in a policy engine that can act on both the runtime event stream and the billing join. A policy that fires when a resource has been running longer than its expected lifetime plus a margin, and has no matching teardown event, can trigger a scale-down or a session kill.
 
-Strength: It integrates cost policies directly into Terraform workflows, so you can catch cost regressions before they hit production. During our pilot, it flagged a Terraform change that would have increased GPU hours by 400% because the agent’s new model variant needed more VRAM.
+A Kubernetes admission controller can enforce hard resource limits at provisioning time, which prevents the worst over-provisioning cases. It cannot catch the case where the resource was provisioned within limits but never torn down. For that, you need the lifetime check.
 
-Weakness: It’s a planning tool, not a runtime tool. It can’t stop a runaway agent; it can only warn you before you apply the change. If your agents make decisions at runtime, Scalr is blind.
+Here is a minimal policy expressed as a check against the joined table:
 
-Best for: Teams that use Terraform for infrastructure and want to catch cost regressions before they deploy.
+```sql
+-- Find agent-provisioned resources that have outlived their expected lifetime
+-- and have no matching teardown event.
+SELECT
+    p.resource_id,
+    p.decision_id,
+    p.resource_type,
+    p.estimated_hourly_cost,
+    p.ts AS provisioned_at,
+    p.expected_lifetime_s,
+    (NOW() - to_timestamp(p.ts)) AS actual_lifetime
+FROM provision_events p
+LEFT JOIN teardown_events t
+    ON t.decision_id = p.decision_id
+WHERE t.decision_id IS NULL
+  AND (NOW() - to_timestamp(p.ts)) > (p.expected_lifetime_s + 300) * INTERVAL '1 second'
+  AND p.estimated_hourly_cost > 1.00;
+```
 
+The `+ 300` is a five-minute grace margin; adjust it to your workload's teardown latency. The cost threshold filters out cheap resources that are not worth paging on.
 
-### Kubecost Cloud 2.12
+## A worked example: catching a forgotten GPU instance
 
-What it does: It’s a SaaS version of Kubecost that adds cloud cost governance and policy enforcement.
+Suppose an agent provisions an on-demand A100-class instance at an illustrative rate of $8.40 per hour for a warmup expected to last 15 seconds. The agent's session ends before teardown runs.
 
-Strength: It combines pod-level GPU tracking with cloud cost governance, and it can alert on anomalies at the pod level. During our pilot, it caught a pod that requested 8x more VRAM than the model needed.
+**Without instrumentation:** The instance runs for 12 hours. At $8.40/hour, that is $100.80 in spend. The next-day billing report shows GPU spend elevated, but attributes it to the instance ID with no context. An engineer investigating has to correlate timestamps manually.
 
-Weakness: It’s Kubernetes-only. If your agents run on EC2, Lambda, or serverless services, Kubecost Cloud is blind. It also charges by the number of nodes, so small teams pay the same as large ones.
+**With runtime events:** The provision event is emitted at T+0 with `expected_lifetime_s = 15`. No teardown event arrives. The policy query runs every minute. At T+315 seconds (15 seconds expected + 300 seconds grace), the query returns the resource. The policy engine triggers a scale-down or termination API call.
 
-Best for: Kubernetes-native teams that want pod-level GPU tracking and cloud cost governance.
+The difference between the two scenarios is roughly 11 hours and 45 minutes of GPU time, or about $98.70 at the illustrative rate. Multiply by the number of agents and the frequency of teardown failures, and the arithmetic explains why agent-driven spend can climb faster than human-driven spend on the same infrastructure.
 
+The numbers here are illustrative. Substitute your own instance type, your own on-demand rate, and your own observed teardown failure rate to estimate the exposure.
 
-### Cloudflare Cost Center 2026.01
+## Decision checklist
 
-What it does: It’s a multi-cloud cost monitoring tool that integrates with Cloudflare’s network-level metrics.
+Before adopting any cost tool for agent workloads, verify:
 
-Strength: It’s fast and lightweight, and it can attribute costs to Cloudflare Workers and Pages. During our pilot, it caught a Worker that had spun up a GPU cluster for a 10-second warmup.
+- **Does it ingest runtime events, or only billing data?** If only billing, it cannot attribute cost to agent decisions.
+- **What is its detection latency for your fastest-moving resource class?** Measure it with the synthetic agent test above.
+- **Does it expose an API or webhook for remediation?** If not, it can only notify, and your response time becomes the ceiling.
+- **What is its false positive rate on your real agent traffic?** Run it in observation mode for a week before trusting it.
+- **Does it handle multi-cloud, or is it single-provider?** If your agents span providers, a single-provider tool will have blind spots.
+- **What is the cost model?** Per-account, per-seat, and per-node pricing all scale differently; match the model to your growth pattern.
+- **Can it express lifetime-based policies, or only threshold-based ones?** Lifetime checks catch forgotten resources; thresholds catch over-provisioning. You need both.
 
-Weakness: It’s Cloudflare-only. If your agents run outside Cloudflare’s network, it’s useless. It also lacks GPU cost tracking, which is critical for AI workloads.
+## FAQ
 
-Best for: Teams that run agents on Cloudflare Workers and want lightweight cost monitoring.
+**Can a Kubernetes admission controller replace a cost tool?**
 
+No. Admission controllers enforce limits at provisioning time, which prevents over-provisioning. They cannot detect a resource that was provisioned within limits but never torn down. That case requires a lifetime check against a runtime event stream, which is a different mechanism.
 
-### Harness CCM 2.3
+**Is there a free tool that handles agent-driven costs?**
 
-What it does: It’s a cloud cost management platform that combines FinOps policies, anomaly detection, and multi-cloud support.
+Open-source Kubernetes cost tools can give pod-level resource attribution, including GPU usage, which is a useful input. They do not ingest agent runtime events or provide remediation. A workable free stack combines one of these with a custom event emitter and a policy query like the one above.
 
-Strength: It has a robust policy engine and can alert on anomalies at the resource level. During our pilot, it caught a VM that suddenly started using 100% CPU, which turned out to be an agent that had entered a retry loop.
+**How do I know if my current tool can detect agent-driven spikes?**
 
-Weakness: It’s expensive for small teams. The minimum seat count is 10 users at $2,000 per month, and the onboarding process took two weeks. It also lacks granular GPU cost tracking, which is critical for AI workloads.
+Run the synthetic agent test: provision a tagged GPU resource, hold it for 10 minutes, terminate it, and measure how long the tool takes to surface the spend. If the tool takes longer than your acceptable response window, it cannot detect spikes fast enough to matter.
 
-Best for: Enterprise teams with multi-cloud Kubernetes workloads and dedicated FinOps teams.
+**Why do cost tools under-report agent spend?**
 
+Two common reasons: pricing data cached for hours or days, which diverges from real-time rates during fast-moving workloads; and attribution to resource IDs rather than agent decisions, which means the cost is recorded but the cause is not visible.
 
+**What is the minimum viable instrumentation?**
 
-## The ones I tried and dropped (and why)
+A structured event emitted at every provisioning decision, containing a decision ID, the resource ID, the estimated cost, and the expected lifetime; a join between that event stream and billing data on resource ID; and a policy query that flags resources exceeding their expected lifetime without a matching teardown event.
 
-### Datadog Cost Analytics 2.4
+**Do I need a separate tool for each cloud provider?**
 
-I tried it because we already used Datadog for observability, so it seemed natural to add cost to the mix. The integration was seamless, but the product was useless for agent-driven costs. It could show me that a pod was using more GPU hours, but it couldn’t tell me that the pod was an agent making an autonomous decision. It also lacked GPU cost tracking until 2026.11, which came too late for our pilot. I wasted two weeks trying to shoehorn it into our workflow before realizing it wasn’t built for agent autonomy.
+Not necessarily, but the tool must ingest billing data from every provider your agents use. Single-provider tools will have blind spots for agents that span providers. Check the ingestion coverage before committing.
 
+## Action step
 
-### New Relic Infrastructure 4.1
-
-New Relic’s cost tooling is built for human-driven workloads, not agents. It can show you that a VM is over-provisioned, but it can’t distinguish between a human decision and an agent decision. During our pilot, it flagged a GPU cluster as over-provisioned, but the cluster was actually an agent running a model fine-tuning job. The tool assumed every resource was human-triggered, so it couldn’t attribute costs to agent decisions. I spent a week trying to configure custom dashboards, only to realize the product wasn’t designed for agent autonomy.
-
-
-### Dynatrace Cloud Automation 3.2
-
-Dynatrace’s strength is deep observability, but its cost tooling is an afterthought. It can show you that a pod is using more GPU hours, but it can’t tell you that the pod is an agent making an autonomous decision. It also lacks GPU cost tracking, which is critical for AI workloads. During our pilot, it missed a GPU spike because it was looking at CPU and memory metrics instead of GPU metrics. I dropped it after three days of debugging.
-
-
-### Sumo Logic Cloud Spend 2.8
-
-Sumo Logic’s cloud spend tool is built for log aggregation, not cost governance. It can show you that a resource is over-provisioned, but it can’t attribute that over-provisioning to an agent’s decision. During our pilot, it took us four days to notice that an agent had spun up a GPU cluster for 48 hours because the tool didn’t integrate with our agent runtime metrics. I dropped it after realizing it was just a log aggregation tool masquerading as a cost tool.
-
-
-
-## How to choose based on your situation
-
-### You run agents on Kubernetes and want pod-level GPU tracking
-
-Choose OpenCost 1.35 or Kubecost Cloud 2.12. OpenCost is free and self-hosted, while Kubecost Cloud adds cloud governance for a fee. Both give you pod-level GPU cost tracking, but neither can stop a runaway agent — they can only alert. If you need runtime remediation, pair them with a policy engine like CloudHealth or a custom Kubernetes admission controller.
-
-
-### You run multi-cloud agents and need policy enforcement
-
-Choose CloudHealth by VMware 2026.04. It’s the only tool that combines multi-cloud support, real-time policy enforcement, and agent-level visibility. The trade-off is complexity and cost, but if you’re running agents across AWS, Azure, and GCP, it’s the only tool that works. Set policies to alert on GPU spikes, CPU throttling, and idle resources, and integrate it with your Slack and PagerDuty channels for immediate alerts.
-
-
-### You use Terraform for infrastructure and want to catch cost regressions
-
-Choose Infracost 0.10.27 or Scalr 2.18. Both integrate cost policies into your Terraform workflows, so you can catch cost regressions before they hit production. Infracost is free and open-source, while Scalr adds governance features for a fee. Neither tool can stop a runaway agent at runtime, but they’re great for preventing cost regressions in your infrastructure code.
-
-
-### You run agents on serverless and want lightweight cost monitoring
-
-Choose Cloudflare Cost Center 2026.01 if your agents run on Cloudflare Workers. It’s lightweight and fast, but it’s Cloudflare-only and lacks GPU cost tracking. If your agents run on AWS Lambda or Azure Functions, you’ll need a different tool — none of the serverless-focused cost tools handle agent autonomy well.
-
-
-### You have a dedicated FinOps team and want enterprise-grade governance
-
-Choose Harness CCM 2.3 or CloudHealth 2026.04. Both offer enterprise-grade policy engines and multi-cloud support, but Harness is more expensive and requires more seats. If you have the budget and the team, Harness is a good choice; otherwise, CloudHealth is more cost-effective.
-
-
-### You’re bootstrapping on a $200/month DigitalOcean droplet
-
-None of these tools will work for you. Traditional cost tools are designed for cloud-scale spend, and agent autonomy is a cloud-scale problem. If you’re running agents on a $200/month droplet, you’re better off setting hard limits in your agent code and using DigitalOcean’s built-in monitoring. Save the cost tools for when you scale to $1k/month and beyond.
-
-
-## Frequently asked questions
-
-**Why didn’t my existing cost tool catch the agent-driven GPU spike?**
-
-Most cost tools assume human-driven workloads. They measure CPU, memory, and network, but they don’t attribute costs to agent decisions or model them as autonomous entities. A 2026 survey of 287 teams found that 74% of agent-driven cost spikes went undetected by traditional cost tools because the tools lacked agent-level visibility. The tools also rely on stale pricing data; if your agent’s cost model is based on real-time pricing but your cost tool caches prices for 24 hours, it will miss the spike.
-
-
-**Can I use a Kubernetes admission controller to stop runaway agents instead of a cost tool?**
-
-Yes, but it’s not a replacement for a cost tool. Admission controllers can enforce resource limits and prevent over-provisioning, but they can’t attribute costs to business outcomes or alert on anomalies across multiple clusters. During our pilot, we tried using a Kyverno policy to limit GPU requests, but it only caught 30% of the spikes because the agents were using dynamic resource names. We still needed a cost tool to catch the rest.
-
-
-**How much does CloudHealth 2026.04 actually cost for a small team?**
-
-CloudHealth charges $0.15 per account per month, with a minimum of $250 per month. For a team with 10 AWS accounts, that’s $15 per month. For a team with 50 accounts, that’s $75 per month. The platform also charges for seat licenses, which start at $50 per user per month. So for a small team of 3 users and 10 accounts, expect to pay around $200 per month. For a large team with 50 accounts and 10 users, expect to pay around $750 per month.
-
-
-**What’s the easiest way to test if my cost tool can catch agent-driven spikes?**
-
-Set up a synthetic agent that spins up a GPU cluster for 10 minutes, then shuts it down. Use a tool like Locust or a simple Python script to simulate the agent’s behavior. Measure how long it takes the cost tool to detect the spike, how many false positives it triggers, and whether it can remediate the issue (e.g., scale down the cluster). If the tool takes more than two minutes to detect the spike or triggers more than 10% false positives, it’s not ready for agent-driven workloads.
-
-
-**Is there a free tool that can handle agent-driven costs?**
-
-OpenCost 1.35 and Kubecost 2.5 are the closest, but they’re Kubernetes-only and can’t stop runaway agents. If you’re running agents on Kubernetes and want pod-level GPU tracking, they’re the best free options. If you need multi-cloud support or runtime remediation, CloudHealth 2026.04 is the only tool that works, but it’s not free.
-
-
-
-## Final recommendation
-
-If you’re running agents across AWS, Azure, or GCP and want a tool that can detect and remediate agent-driven cost spikes in real time, choose CloudHealth by VMware 2026.04. It’s the only tool that combines multi-cloud support, real-time policy enforcement, and agent-level visibility without requiring you to rewrite your agents. Set hard limits on GPU requests, idle resources, and CPU throttling, and integrate it with your Slack and PagerDuty channels for immediate alerts.
-
-If you’re running agents on Kubernetes and want pod-level GPU tracking but don’t need multi-cloud support, choose OpenCost 1.35. It’s free and self-hosted, but you’ll need to pair it with a policy engine or custom admission controller to stop runaway agents.
-
-If you’re bootstrapping on a $200/month DigitalOcean droplet, skip the cost tools entirely. Set hard limits in your agent code and use DigitalOcean’s built-in monitoring until you scale to $1k/month and beyond.
-
-**Action step for today:** Open your cloud billing dashboard and filter for the last 7 days of GPU spend. Look for any resources that ran for more than 1 hour with less than 10% utilization. If you find any, disable the agent that owns that resource immediately and audit its cost model.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 10, 2026
+Open your cloud billing dashboard and filter for GPU spend over the last 7 days. For each GPU resource, compare its actual runtime against the expected runtime of the workload that created it. Any resource that ran significantly longer than expected, with utilization below 10%, is a candidate for the forgotten-teardown failure mode. Identify the agent that owns it, check whether its teardown step runs on all code paths including error paths, and add a lifetime-based policy check like the query above before the next billing cycle.

@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>3 AI coders ranked: Cursor, Windsurf, Claude Code in - Kubai Kevin</title>
-        <meta name="description" content="Cut edit latency 40% with Windsurf 2026.3.1 — real latency, cost, and PII audit numbers for Cursor, Windsurf, and Claude Code in daily use.">
+        <meta name="description" content="Compare AI coding assistants on latency, context retention, audit trails and cost — with commands to measure each yourself instead of trusting vendor demos.">
         <meta name="keywords" content="EditLatencyBenchmark, Ai, Artificialintelligence, Claudecode, Cursorai">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T11:36:40.871447">
-        <meta property="article:modified_time" content="2026-09-19T08:27:13.338086+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:12:15.489379+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="3 AI coders ranked: Cursor, Windsurf, Claude Code in">
-        <meta property="og:description" content="Cut edit latency 40% with Windsurf 2026.3.1 — real latency, cost, and PII audit numbers for Cursor, Windsurf, and Claude Code in daily use.">
+        <meta property="og:description" content="Compare AI coding assistants on latency, context retention, audit trails and cost — with commands to measure each yourself instead of trusting vendor demos.">
         <meta property="og:url" content="https://kubaik.github.io/3-ai-coders-ranked-cursor-windsurf-claude-code-in/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="3 AI coders ranked: Cursor, Windsurf, Claude Code in">
-        <meta name="twitter:description" content="Cut edit latency 40% with Windsurf 2026.3.1 — real latency, cost, and PII audit numbers for Cursor, Windsurf, and Claude Code in daily use.">
+        <meta name="twitter:description" content="Compare AI coding assistants on latency, context retention, audit trails and cost — with commands to measure each yourself instead of trusting vendor demos.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/3-ai-coders-ranked-cursor-windsurf-claude-code-in.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/3-ai-coders-ranked-cursor-windsurf-claude-code-in/#article",
       "headline": "3 AI coders ranked: Cursor, Windsurf, Claude Code in",
-      "description": "Cut edit latency 40% with Windsurf 2026.3.1 — real latency, cost, and PII audit numbers for Cursor, Windsurf, and Claude Code in daily use.",
+      "description": "Compare AI coding assistants on latency, context retention, audit trails and cost — with commands to measure each yourself instead of trusting vendor demos.",
       "datePublished": "2026-06-12T11:36:40+00:00",
-      "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 3049,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-10-03T11:12:15+00:00",
+      "wordCount": 3128,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">3 AI coders ranked: Cursor, Windsurf, Claude Code in</h1>
                 
-                <p class="post-lead">Cut edit latency 40% with Windsurf 2026.3.1 — real latency, cost, and PII audit numbers for Cursor, Windsurf, and Claude Code in daily use.</p>
+                <p class="post-lead">Compare AI coding assistants on latency, context retention, audit trails and cost — with commands to measure each yourself instead of trusting vendor demos.</p>
                 
                 
                 <div class="tags">
@@ -256,310 +256,217 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3049 words
+                        16 min read
+                        &nbsp;·&nbsp; 3128 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
-<h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>The promise was clear: less context switching, fewer tabs, and fewer bugs.</p>
-<p>Windsurf because the demo showed a 700ms faster edit cycle. Claude Code because Anthropic’s 2025 context window promised to remember every file in a monorepo. None of them worked out of the box for our stack: Python 3.11, Node 20 LTS, Postgres 15 with row-level security, and Redis 7.2 for caching. Each tool promised 90% fewer reviews, but delivered 30% more merges and two rollbacks a week.</p>
-<p>I was debugging a simple AWS Lambda timeout last month when Windsurf suggested a change that swapped our primary Postgres connection string with a read-only replica. The error message was buried in a 120-line diff. That’s when I decided to treat these tools like they were third-party services: measure, audit, and compare with real numbers.</p>
-<h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>Each tool got its own branch to avoid bias. I measured four metrics:</p>
+                <p>AI coding assistants are usually selected on the strength of a demo: a fast edit cycle, a large context window, a polished diff view. Those demos are real, but they are measured on someone else's repository, with someone else's latency budget, and under someone else's data-handling policy. When the same tool is pointed at a production monorepo with row-level security, a caching layer, and a compliance regime, the interesting failures tend to be about context selection and prompt construction rather than raw model quality.</p>
+<p>This article describes a framework for choosing among three widely used categories of assistant — an AI-native fork of an editor, a plugin-based assistant, and a terminal-first agent — by measuring four properties that actually predict whether a tool survives contact with a real codebase: edit latency, context retention, audit trail coverage, and cost. It also covers the failure modes that show up only after weeks of daily use, and the guardrails that make a tool safe enough to keep.</p>
+<h2 id="why-a-ranking-is-the-wrong-unit-of-analysis">Why a ranking is the wrong unit of analysis</h2>
+<p>A ranked list implies a total order, and a total order only exists if every team weights the same properties the same way. They do not. A frontend team working in a single application with a handful of contributors has almost nothing in common with a platform team maintaining a multi-repo service mesh under a data-residency policy.</p>
+<p>The properties that vary most between teams:</p>
 <ul>
-<li><strong>Latency per edit</strong>: average time between keystroke and first AI suggestion, measured with <code>hyperfine --warmup 3</code> and Node’s <code>performance.now()</code> in the renderer process. - <strong>Context retention</strong>: how often it remembered imports or types across files, counted as a percentage of edits that didn’t require manual context resupply. - <strong>Audit trail</strong>: how many edits included a commit message or inline comment with the AI suggestion source. I used <code>git log --grep="cursor:</code> to filter. - <strong>Cost</strong>: monthly spend on API tokens and local GPU usage, logged via <code>nvidia-smi --query-gpu=power.draw --format=csv</code> and Anthropic’s usage dashboard.</li>
+<li><strong>Latency tolerance.</strong> Inline completion is judged against typing speed. Anything above roughly 300 ms of perceived delay breaks the flow of writing code and causes developers to stop waiting for suggestions. Chat-style and agent-style interactions tolerate seconds, because the developer has already stopped to think.</li>
+<li><strong>Context shape.</strong> A single-repo application can often be understood from the open file plus its imports. A monorepo with generated clients, shared schema packages, and multiple languages cannot. Tools differ enormously in how they decide what to send.</li>
+<li><strong>Data classification.</strong> If the codebase contains personal data, credentials, connection strings, or anything covered by a residency requirement, then every prompt is a potential disclosure. The relevant question is not "does the tool send code to a model" — almost all of them do — but "what exactly does it send, and can you constrain it."</li>
+<li><strong>Auditability.</strong> Regulated or safety-critical teams increasingly need to answer, after the fact, which lines were machine-suggested. That is a tooling property, not a model property.</li>
 </ul>
-<p>Here are the raw numbers after 150 hours of editing:</p>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Avg latency (ms)</th>
-<th>Context retention (%)</th>
-<th>Audit trails (%)</th>
-<th>Monthly cost (USD)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Cursor</td>
-<td>340</td>
-<td>72</td>
-<td>45</td>
-<td>89</td>
-</tr>
-<tr>
-<td>Windsurf</td>
-<td>210</td>
-<td>88</td>
-<td>67</td>
-<td>156</td>
-</tr>
-<tr>
-<td>Claude Code</td>
-<td>420</td>
-<td>94</td>
-<td>81</td>
-<td>212</td>
-</tr>
-</tbody>
-</table>
-<p>I also tracked two failures that aren’t in the table: Cursor crashed twice on large diffs, Windsurf leaked our PII-compliant Redis connection string in the AI prompt cache, and Claude Code once filled the context window with 1,800 lines of unrelated logs.</p>
-<h2 id="cursor-vs-windsurf-vs-claude-code-in-2026-a-real-daily-use-comparison-the-full-ranked-list">Cursor vs Windsurf vs Claude Code in 2026: a real daily-use comparison — the full ranked list</h2>
-<h3 id="1-windsurf-v202631">1. Windsurf (v2026.3.1)</h3>
-<p>The strength is its local-first architecture: it runs a TypeScript-based language server that indexes symbols in under 3 minutes for our monorepo. The weakness is the prompt expansion. Windsurf aggressively includes more context than needed, which triggered our PII policy last month when it included a user email in the prompt sent to the API. The logs showed the email in the <code>diff-context</code> field of the Anthropic API call.</p>
-<p>Best for: Teams that prioritize speed and work on TypeScript-heavy codebases with less than 1,000 active files.</p>
-<h3 id="2-cursor-v0420">2. Cursor (v0.42.0)</h3>
-<p>Cursor is the most polished editor of the three. It handles large diffs without crashing and includes a built-in diff viewer that highlights AI changes. The strength is the inline chat: you can ask for a refactor and Cursor applies the changes in a single commit. The weakness is the latency spike when you open the first file in a new repository. That’s unacceptable for a daily driver.</p>
-<p>Best for: Frontend teams that use React and need a tight integration with Storybook and Jest.</p>
-<h3 id="3-claude-code-v0123">3. Claude Code (v0.12.3)</h3>
-<p>Claude Code is the most accurate for large monorepos. The strength is the long context window: it can ingest the entire codebase without losing track of symbols. The weakness is the cost. At $212 a month for 350k tokens, it’s the most expensive option. I also hit a hard limit last week when it tried to include 1,800 lines of test logs in the context, which triggered our audit tool.</p>
-<p>Best for: Backend engineers maintaining large Python or Go monorepos with strict audit requirements.</p>
-<h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
-<p>Windsurf won because it balanced speed and safety. The 210ms latency beat Cursor’s 340ms and Claude Code’s 420ms.</p>
-<p>We set up Windsurf with a custom prompt template that strips out user emails and Redis connection strings before sending to the API. The change cut our PII risk score from 8 to 2 on our internal audit scale. We also configured the language server to index only public symbols, which reduced the index time from 3 minutes to 45 seconds.</p>
-<p>The only trade-off is the monthly cost: $156 per seat. But that’s still cheaper than the $212 for Claude Code and the $89 for Cursor when you factor in the PII cleanup overhead.</p>
-<h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
-<h3 id="continue-v321">Continue (v3.2.1)</h3>
-<p>Continue is an open-source alternative that runs on your machine. The strength is the local model support: you can run Codestral or Llama 3.2 locally and avoid API costs entirely. The weakness is the setup time: I spent two days configuring the model weights and memory limits. It’s not ready for teams that need to onboard new hires in under an hour.</p>
-<p>Best for: Solo developers or small teams with a CUDA GPU and time to tweak prompts.</p>
-<h3 id="github-copilot-v11520">GitHub Copilot (v1.152.0)</h3>
-<p>GitHub Copilot is the safest option if you’re already using GitHub. It integrates with the GitHub API and uses your repo’s permissions, which means it won’t leak PII outside your organisation. The weakness is the latency: 520ms on average, which is 2.5x slower than Windsurf. The cost is also hidden: it’s bundled with GitHub Enterprise, so you pay for seats, not tokens.</p>
-<p>Best for: Teams that want zero third-party risk and already pay for GitHub Enterprise.</p>
-<h3 id="amazon-q-developer-v202620">Amazon Q Developer (v2026.2.0)</h3>
-<p>Amazon Q is the only tool that respects AWS IAM roles out of the box. The strength is the AWS-specific optimizations: it can auto-complete CDK stacks and suggest IAM policies. The weakness is the poor support for non-AWS stacks. I tried to use it on a GCP project and it suggested AWS services for every missing import.</p>
-<p>Best for: Teams that live inside AWS and need tight integration with CDK and Lambda.</p>
-<h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
-<h3 id="amazon-codewhisperer-v2140">Amazon CodeWhisperer (v2.14.0)</h3>
-<p>CodeWhisperer was the first tool I tried because it’s AWS-native. The latency was 680ms on average, which made editing feel sluggish. The bigger issue was the prompt leakage: it included the AWS account ID in every API call, which violated our data residency policy. Dropped after two days.</p>
-<h3 id="cursor-with-mistral-v0420-mistral-8x22b">Cursor with Mistral (v0.42.0 + Mistral 8x22B)</h3>
-<p>I tried swapping Cursor’s default model for Mistral 8x22B to reduce costs. The latency dropped to 290ms, but the accuracy suffered: it suggested 40% more incorrect imports than the default model. The audit trail also dropped to 30% because Mistral’s responses were shorter and less likely to include commit messages.</p>
-<h3 id="windsurf-with-local-model-v202631-llama-32-3b">Windsurf with local model (v2026.3.1 + Llama 3.2 3B)</h3>
-<p>Windsurf supports local models, but the latency spiked to 810ms when using Llama 3.2 3B. The accuracy was also poor: it hallucinated 12% more symbols than the API version. The local model is only useful if you’re offline or have strict data residency requirements that block API calls.</p>
-<h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
-<p>Pick Windsurf if you want the best balance of speed and safety. It’s the only tool that combines local-first indexing with a fast edit loop. The custom prompt template and PII stripping are worth the $156/month.</p>
-<p>Pick Cursor if you work on frontend code and need tight integration with Storybook and Jest. The inline chat and diff viewer are the best in class, but the cold-start latency is a deal-breaker for large repos.</p>
-<p>Pick Claude Code if you maintain a large Python or Go monorepo and need strict audit trails. The 94% context retention is unmatched, but the $212/month cost and the risk of context bloat make it a niche choice.</p>
-<p>Avoid CodeWhisperer and Mistral-swapped Cursor if you have AWS or PII constraints. The prompt leakage and latency spikes are not worth the cost savings.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why does Windsurf leak PII in API calls?</strong></p>
-<p>Windsurf’s default prompt template includes up to 1,000 lines of diff context and file paths. If a file path or diff line contains a user email or Redis connection string, Windsurf includes it in the API call. The fix is to add a custom prompt template that strips out PII using a regex like <code>s/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/&lt;REDACTED&gt;/gi</code>.</p>
-<p><strong>Can Cursor handle large monorepos without crashing?</strong></p>
-<p>Yes, but not without latency. Cursor’s language server indexes symbols in 3 minutes for a 12,800-file repo, but the cold-start latency is 1.8s on the first file open. If you work on a monorepo with more than 5,000 files, set <code>"cursor.useExperimentalFastMode": true</code> in settings.json to reduce the index size.</p>
-<p><strong>How much tokens does Claude Code use per month?</strong></p>
-<p>Claude Code averages 350k tokens per developer per month for a 12,800-file repo. That’s roughly $212 at 2026 pricing ($0.00006 per token for the 200k+ tier). If you reduce the context window to 8k lines, the token count drops to 180k, cutting the cost to $108.</p>
-<p><strong>Is Windsurf safe for SOC2 or GDPR teams?</strong></p>
-<p>Windsurf is safe if you configure the prompt template and disable the AI analytics. The local-first architecture means prompts never leave your machine unless you enable the API. I audited the network calls with Wireshark and confirmed no PII was transmitted after adding the PII strip regex.</p>
-<p><strong>Why is Cursor’s audit trail only 45%?</strong></p>
-<p>Cursor’s audit trail is low because it only logs commits that include the AI suggestion hash. If you manually tweak a suggestion or use the inline chat to apply changes, Cursor doesn’t always include the AI suggestion hash in the commit message. The fix is to enable <code>cursor.enableCommitMessagePrefix</code> and train the team to use it consistently.</p>
-<h2 id="final-recommendation">Final recommendation</h2>
-<p>Start with Windsurf v2026.3.1 and set up a custom prompt template that strips PII and limits the context to public symbols. Measure the latency and audit trail for one week. If the latency is above 300ms or the audit trail drops below 60%, switch to Cursor v0.42.0 with the inline chat enabled. If you’re on a large Python monorepo and need strict audit trails, bite the bullet and use Claude Code v0.12.3, but budget for the token costs and add a pre-commit hook to validate the context window size.</p>
-<p>Run <code>hyperfine --warmup 3 "code ."</code> on your largest repo today to measure the cold-start latency. If it’s above 1.5s, Windsurf is your best bet.</p>
-<hr />
-<h3 id="advanced-edge-cases-i-personally-encountered">Advanced edge cases I personally encountered</h3>
-<p>One edge case that cost us dearly was <strong>partial schema leakage in multi-repo setups</strong>. Windsurf’s language server, while indexing our main monorepo (12,800 files), also dragged in schema definitions from a secondary repo used for data contracts. The issue surfaced when Windsurf suggested a change that included a <code>User</code> model from the secondary repo—a model containing PII fields like <code>email</code> and <code>phone_number</code>. The suggestion was syntactically valid but semantically dangerous because it exposed PII in a non-compliant context. The fix required adding a <code>.windsurfignore</code> file to exclude the secondary repo from indexing, which isn’t documented anywhere in their 2026.3.1 release notes.</p>
-<p>Another painful edge case was <strong>timezone-aware diff context in distributed teams</strong>. Our team spans Europe and North America, and Windsurf’s default behavior was to include timestamps in diff context using the local time of the machine running the editor. This caused confusion when reviewing AI-suggested changes across time zones. For example, a change suggested at 14:00 CET appeared as 08:00 EST in the diff, making it hard to correlate with actual work hours. The workaround was to enforce UTC timestamps in the prompt template using <code>moment.utc().format()</code>, which required modifying Windsurf’s internal prompt generator—a process that involved forking their open-source language server and rebuilding it.</p>
-<p>A third edge case, specific to <strong>Claude Code</strong>, was <strong>symbol collision in Python type stubs</strong>. Claude Code’s long context window is great until it hits a situation where two different libraries define the same type name (e.g., <code>User</code> from <code>auth</code> and <code>User</code> from <code>legacy</code>). When this happened, Claude Code would arbitrarily pick one symbol to resolve, leading to silent compilation errors. The only reliable fix was to manually disambiguate in the prompt by adding <code>from auth.types import User as AuthUser</code> and <code>from legacy.models import User as LegacyUser</code> at the top of the file. This added 6–8 lines of boilerplate per file, which negated some of the productivity gains.</p>
-<hr />
-<h3 id="integration-with-real-tools-gitguardian-datadog-and-snyk">Integration with real tools: GitGuardian, Datadog, and Snyk</h3>
-<p>Here are three integrations I set up with real 2026 tooling, complete with working code snippets.</p>
-<h4 id="1-gitguardian-windsurf-real-time-pii-detection-in-ai-suggestions">1. <strong>GitGuardian + Windsurf: Real-time PII detection in AI suggestions</strong></h4>
-<p>GitGuardian’s 2026.4.1 CLI (<code>ggshield</code>) can scan AI-generated diffs before they’re committed. I added a pre-commit hook that runs Windsurf’s AI suggestions through GitGuardian:</p>
-<pre><code class="language-bash">#!/bin/bash
-# .git/hooks/pre-commit
-echo &quot;Running GitGuardian scan on AI suggestions...&quot;
-ggshield secret scan diff --json | jq -e '.has_secrets == false' || {
-  echo &quot;Error: PII or secrets detected in AI suggestion.&quot;
-  exit 1
-}
+<p>Because these weights differ, the useful output of an evaluation is not a winner. It is a table of measured values for your repository, plus a decision rule you write for yourself before you start measuring.</p>
+<h2 id="how-to-evaluate-an-assistant-on-your-own-repository">How to evaluate an assistant on your own repository</h2>
+<p>Give each candidate its own branch and its own week, and measure the same four things each time. The point is not precision; it is comparability. A rough number measured consistently across three tools beats a precise number measured once.</p>
+<h3 id="latency-per-edit">Latency per edit</h3>
+<p>Latency is the wall-clock time between the end of a keystroke and the first rendered suggestion. Instrument it in two places, because they measure different things:</p>
+<ol>
+<li><strong>Editor-side perceived latency.</strong> Wrap the completion request in a timer in the editor's extension host or renderer process, or use the browser/Electron performance API if the editor exposes one. Log the delta between request dispatch and first paint of the ghost text. This is the number a developer actually feels.</li>
+<li><strong>Process-level startup and index time.</strong> For any tool that builds a symbol index, the cold-start cost dominates the first minutes of a session. Measure it with a shell timer:</li>
+</ol>
+<pre><code class="language-bash"># Cold-start: time to first usable index on your largest repository
+hyperfine --warmup 3 --runs 10 'code /path/to/large-repo'
 </code></pre>
-<p>I configured Windsurf’s AI to post-process suggestions by stripping PII using a Python script (<code>clean_ai_diff.py</code>):</p>
-<pre><code class="language-python"># clean_ai_diff.py
+<p><code>hyperfine</code> reports mean and standard deviation across runs, which matters because cold-start latency is noisy. Run it on a warm filesystem cache and again after dropping caches if your platform allows it; the difference tells you how much of the cost is disk I/O versus indexing.</p>
+<p>Report latency as a median and a 95th percentile, not a mean. The tail is what makes an editor feel unpredictable.</p>
+<h3 id="context-retention">Context retention</h3>
+<p>Context retention is the proportion of edits that the tool completes correctly without the developer manually re-supplying information it should already have — an import path, a type definition, a function signature from another module.</p>
+<p>There is no clean automated metric for this. The workable approach is a manual log kept over a fixed number of edits:</p>
+<ul>
+<li>Keep a counter of total accepted suggestions.</li>
+<li>Keep a second counter of suggestions that were wrong specifically because the tool lacked context (wrong import, wrong overload, invented symbol).</li>
+<li>The ratio of the second to the first is your context-failure rate.</li>
+</ul>
+<p>A tool with a large advertised context window can still score badly here, because a large window does not mean the tool selects the right content to put in it. Selection quality and window size are different properties, and the first matters more.</p>
+<h3 id="audit-trail-coverage">Audit trail coverage</h3>
+<p>Audit trail coverage is the fraction of committed machine-suggested lines that are traceable to a tool and, ideally, to a session. Most tools attach a trailer or a hash to the commit message when a suggestion is accepted through the tool's own commit path; almost none do so when the developer edits the suggestion by hand before committing.</p>
+<p>Measure it by sampling commits, not by trusting the tool's dashboard:</p>
+<pre><code class="language-bash"># Count commits in the last 30 days that carry an AI-attribution trailer
+git log --since='30 days ago' --pretty=%H --grep='Co-authored-by' | wc -l
+
+# Total commits in the same window, for the denominator
+git log --since='30 days ago' --oneline | wc -l
+</code></pre>
+<p>Then sample twenty of the commits that carry no trailer and read the diffs. In practice a meaningful share of them will contain machine-suggested code that lost its attribution during manual editing. That gap is the honest coverage number, and it is usually well below whatever the tool reports.</p>
+<h3 id="cost">Cost</h3>
+<p>Cost has three components and they are easy to conflate:</p>
+<ul>
+<li><strong>Seat cost.</strong> A flat per-developer subscription. Predictable, independent of usage.</li>
+<li><strong>Token cost.</strong> Metered model usage. Unpredictable, and strongly correlated with how much context the tool decides to send — which is exactly the property you cannot easily control.</li>
+<li><strong>Local compute cost.</strong> Electricity and hardware amortisation for locally hosted models. Small per hour, non-trivial per year, and it does not disappear when usage drops.</li>
+</ul>
+<p>For token cost, read the tool's own usage export rather than estimating. If the tool does not expose per-request token counts, that absence is itself a finding: you cannot budget for a cost you cannot observe. A worked estimate is worth doing once so you understand the sensitivity:</p>
+<blockquote>
+<p>Suppose a tool sends an average of 40,000 input tokens per accepted suggestion, and a developer accepts 60 suggestions per working day over 20 working days. That is 48 million input tokens per developer per month. Multiply by your provider's published input price per token to get the monthly figure. Now repeat the arithmetic with 15,000 input tokens per suggestion — the same developer, the same acceptance rate. The result is roughly a third of the cost. The variable that moved was context selection, not model choice.</p>
+</blockquote>
+<p>That is why cost is best treated as a consequence of the other three measurements rather than an independent axis.</p>
+<h2 id="failure-modes-that-only-appear-after-weeks-of-use">Failure modes that only appear after weeks of use</h2>
+<p>These are the problems that do not show up in a one-day trial, and they are the reason a tool that looks excellent in a demo can be retired a month later.</p>
+<h3 id="over-broad-context-selection-and-inadvertent-disclosure">Over-broad context selection and inadvertent disclosure</h3>
+<p>The most common serious failure is not a malicious one. It is a tool deciding, reasonably by its own heuristics, that the most relevant context for the current edit includes a neighbouring file, a configuration file, a fixture, or a log. If any of those contain a personal identifier, a connection string, a token, or customer data, that content is now in a prompt sent to a third-party model.</p>
+<p>The signature of this failure is a diff that is syntactically correct and semantically wrong: the assistant proposes a change that references a symbol from a repository or package it should not have been reading. A related signature is a suggestion that swaps one resource for another — for example, substituting a read-only replica connection string for a primary one — because both appeared in the retrieved context and the model had no way to know which was authoritative.</p>
+<p>Mitigations, in order of strength:</p>
+<ol>
+<li><strong>Constrain retrieval at the source.</strong> Exclude repositories, directories, and generated files from indexing. Most tools support an ignore file or an index-scope setting; check whether it is honoured by the retrieval path and not only by the editor's file watcher.</li>
+<li><strong>Post-process the prompt.</strong> If the tool exposes a hook that runs before the request is sent, apply a redaction pass. A minimal email redaction in a preprocessing script looks like this:</li>
+</ol>
+<pre><code class="language-python"># redact.py — strip common identifiers from a prompt before it leaves the machine
 import re
 import sys
 
-def clean_diff(diff: str) -&gt; str:
-    # Redact emails, phone numbers, and connection strings
-    cleaned = re.sub(
-        r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}',
-        '&lt;REDACTED_EMAIL&gt;',
-        diff
-    )
-    cleaned = re.sub(
-        r'redis:\/\/[^:]+:[^@]+@[^:]+:[0-9]+',
-        'redis://&lt;REDACTED_HOST&gt;:&lt;REDACTED_PORT&gt;',
-        cleaned
-    )
-    return cleaned
+EMAIL = re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')
+REDIS_URL = re.compile(r'redis://[^:]+:[^@]+@[^:]+:\d+')
 
-if __name__ == &quot;__main__&quot;:
-    diff = sys.stdin.read()
-    print(clean_diff(diff), end='')
-</code></pre>
-<p>Then, in Windsurf’s settings (JSON):</p>
-<pre><code class="language-json">{
-  &quot;ai.promptPostProcessor&quot;: &quot;python3 /path/to/clean_ai_diff.py&quot;,
-  &quot;ai.scanWithGitGuardian&quot;: true
-}
-</code></pre>
-<p>This reduced our PII risk score from 8 to 1 on the GitGuardian dashboard.</p>
-<hr />
-<h4 id="2-datadog-apm-cursor-measuring-ai-latency-in-production">2. <strong>Datadog APM + Cursor: Measuring AI latency in production</strong></h4>
-<p>Cursor 0.42.0 integrates with Datadog APM via OpenTelemetry. I added a custom span to track AI suggestion latency:</p>
-<pre><code class="language-javascript">// .cursor/settings.json
-{
-  &quot;ai.tracing&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;service&quot;: &quot;cursor-ai&quot;,
-    &quot;exporter&quot;: {
-      &quot;type&quot;: &quot;otlp&quot;,
-      &quot;endpoint&quot;: &quot;https://trace.agent.datadoghq.com/api/v2/spans&quot;,
-      &quot;headers&quot;: {
-        &quot;DD-API-KEY&quot;: &quot;${DD_API_KEY}&quot;
-      }
-    }
-  }
-}
-</code></pre>
-<p>Then, in our CI pipeline, I added a Datadog RUM monitor to alert on latency spikes:</p>
-<pre><code class="language-yaml"># datadog-monitor.yaml
-id: cursor_ai_latency
-name: &quot;Cursor AI Suggestion Latency &gt; 500ms&quot;
-type: query alert
-query: &quot;avg(last_5m):trace.&lt;cursor-ai&gt;.duration{env:production} &gt; 500&quot;
-message: &quot;Cursor AI latency spike detected in production.&quot;
-tags:
-  - team:platform
-  - tool:cursor
-</code></pre>
-<p>This alert triggered twice in the last month, both times due to large diffs being expanded in API prompts.</p>
-<hr />
-<h4 id="3-snyk-code-claude-code-dependency-aware-ai-suggestions">3. <strong>Snyk Code + Claude Code: Dependency-aware AI suggestions</strong></h4>
-<p>Claude Code v0.12.3 can integrate with Snyk Code 2026.1.0 to avoid suggesting vulnerable code. I set up a pre-AI filter using Snyk’s CLI:</p>
-<pre><code class="language-bash"># .claude/settings.json
-{
-  &quot;ai.preFilters&quot;: [
-    {
-      &quot;type&quot;: &quot;snyk&quot;,
-      &quot;command&quot;: &quot;snyk code test --severity-threshold=high --json&quot;,
-      &quot;rules&quot;: {
-        &quot;block&quot;: [&quot;SQL_INJECTION&quot;, &quot;COMMAND_INJECTION&quot;]
-      }
-    }
-  ]
-}
-</code></pre>
-<p>Here’s a full example of a Python file where Claude Code suggested a fix, but Snyk blocked it:</p>
-<pre><code class="language-python"># Before
-import os
-import subprocess
+def redact(text: str) -&gt; str:
+    text = EMAIL.sub('&lt;REDACTED_EMAIL&gt;', text)
+    text = REDIS_URL.sub('redis://&lt;REDACTED_HOST&gt;:&lt;REDACTED_PORT&gt;', text)
+    return text
 
-def deploy():
-    branch = os.getenv(&quot;BRANCH&quot;)
-    subprocess.run(f&quot;kubectl apply -f k8s/{branch}.yaml&quot;, shell=True)  # Vulnerable
+if __name__ == '__main__':
+    sys.stdout.write(redact(sys.stdin.read()))
 </code></pre>
-<p>Claude suggested:</p>
-<pre><code class="language-python">subprocess.run([&quot;kubectl&quot;, &quot;apply&quot;, &quot;-f&quot;, f&quot;k8s/{branch}.yaml&quot;], check=True)
+<ol>
+<li><strong>Scan the diff before it is committed.</strong> A pre-commit hook that runs a secret scanner over staged changes catches the case where redaction missed something or the tool bypassed the hook entirely:</li>
+</ol>
+<pre><code class="language-bash">#!/bin/bash
+# .git/hooks/pre-commit — fail the commit if staged changes contain secrets
+if ! ggshield secret scan pre-commit; then
+  echo &quot;Secret scanner rejected staged changes.&quot;
+  exit 1
+fi
 </code></pre>
-<p>But Snyk blocked it because it included a variable in the shell command. The fix was to use a list of arguments instead.</p>
-<hr />
-<h3 id="beforeafter-comparison-with-actual-numbers">Before/after comparison with actual numbers</h3>
-<p>I ran a controlled experiment over two weeks (10 business days) to measure the impact of switching from VS Code + GitHub Copilot to Windsurf v2026.3.1. Here are the raw numbers:</p>
+<ol>
+<li><strong>Verify empirically.</strong> Do not assume redaction works because the configuration says it does. Capture outbound traffic from the editor process for one session and inspect the request bodies. This is the only way to confirm what is actually transmitted, and it is worth repeating after every tool upgrade, because prompt construction is not a stable interface.</li>
+</ol>
+<h3 id="context-bloat-and-silent-truncation">Context bloat and silent truncation</h3>
+<p>The opposite failure: a tool that includes so much context that the request approaches or exceeds the model's limit. The visible symptom is a slow, expensive session. The invisible symptom is truncation — the tool silently drops the middle of the context, and the model then reasons over an incomplete picture. A classic result is an assistant that fills its window with thousands of lines of test output or build logs and loses the actual source it was supposed to be editing.</p>
+<p>Watch for these signals:</p>
+<ul>
+<li>Response latency creeping up over a session without any change in task complexity.</li>
+<li>Suggestions that reference symbols from early in the conversation but not from the file currently open.</li>
+<li>Cost per accepted suggestion rising over the course of a day.</li>
+</ul>
+<p>The fix is to cap the context the tool may attach, and to exclude log directories, build output, and test fixtures from retrieval. Where the tool does not offer a cap, treat that as a capability gap.</p>
+<h3 id="symbol-collision-across-packages">Symbol collision across packages</h3>
+<p>In polyglot or multi-package repositories, two modules frequently export the same name — a <code>User</code> type from an authentication package and a <code>User</code> model from a legacy data layer, for example. A retrieval-based assistant may resolve the name to whichever definition it retrieved, producing code that compiles against the wrong type or fails at runtime.</p>
+<p>The reliable fix is disambiguation at the source, not in the prompt:</p>
+<pre><code class="language-python">from auth.types import User as AuthUser
+from legacy.models import User as LegacyUser
+</code></pre>
+<p>This is a few lines of boilerplate per affected file, and it is worth it, because prompt-level disambiguation is fragile: it depends on the tool retrieving the instruction along with the code.</p>
+<h3 id="timezone-and-locale-dependent-context">Timezone- and locale-dependent context</h3>
+<p>Tools that attach timestamps, log excerpts, or generated identifiers to the context can produce diffs whose contents depend on the machine's local settings. On a distributed team this makes review confusing and, worse, makes a suggestion non-reproducible: the same edit request on two machines yields different context. The mitigation is to normalise anything that enters the context — timestamps in UTC, identifiers stripped, locale-independent formatting — at the point where the context is assembled.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Work through this before committing to a tool. It is ordered so that cheap disqualifiers come first.</p>
+<ol>
+<li><strong>Data classification.</strong> Does the tool's retrieval path touch repositories containing personal data or secrets? If yes, can retrieval be scoped and can the prompt be post-processed? If neither, stop here.</li>
+<li><strong>Outbound verification.</strong> Can you capture and inspect outbound requests? If the tool obscures its traffic in a way you cannot audit, you cannot make a compliance claim about it.</li>
+<li><strong>Latency on your repository.</strong> Measure median and p95 edit latency on your largest repo, not a sample project. Compare against your team's tolerance, which for inline completion is usually in the low hundreds of milliseconds.</li>
+<li><strong>Context failure rate.</strong> Log context-caused errors over at least 200 accepted suggestions. A tool that is fast but wrong about imports is slower in practice than a slower, more accurate one.</li>
+<li><strong>Audit coverage.</strong> Sample commits and compute the real attribution rate. Decide whether the number you measured satisfies your review requirements.</li>
+<li><strong>Cost observability.</strong> Can you export per-request token counts? If not, you cannot forecast spend, and you should assume the cost is unbounded until proven otherwise.</li>
+<li><strong>Exit cost.</strong> How much of your configuration — ignore files, prompt templates, hooks — is portable to another tool? Prefer configurations that live in your repository and are tool-agnostic.</li>
+</ol>
+<h2 id="a-worked-comparison-of-the-three-categories">A worked comparison of the three categories</h2>
+<p>The table below compares the three shapes of tool, not three specific products. The values are illustrative — they are the kind of numbers a team typically measures on a mid-sized monorepo, and they are included to show how the axes interact, not as findings about any vendor.</p>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Before (VS Code + Copilot)</th>
-<th>After (Windsurf)</th>
-<th>Delta</th>
+<th>Property</th>
+<th>Editor-native assistant</th>
+<th>Plugin-based assistant</th>
+<th>Terminal-first agent</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Avg edit latency</td>
-<td>520ms</td>
-<td>210ms</td>
-<td>-60%</td>
+<td>Interaction model</td>
+<td>Inline completion + inline chat</td>
+<td>Inline completion inside an existing editor</td>
+<td>Conversational, operates on the working tree</td>
 </tr>
 <tr>
-<td>Context retention</td>
-<td>65%</td>
-<td>88%</td>
-<td>+23%</td>
+<td>Typical latency tolerance</td>
+<td>Tight; sub-300 ms expected</td>
+<td>Tight; sub-300 ms expected</td>
+<td>Loose; seconds acceptable</td>
 </tr>
 <tr>
-<td>Audit trail coverage</td>
-<td>38%</td>
-<td>67%</td>
-<td>+29%</td>
+<td>Context selection</td>
+<td>Editor index plus open buffers</td>
+<td>Host editor's index plus repo search</td>
+<td>Explicit file/command scope you specify</td>
 </tr>
 <tr>
-<td>Lines of code per review</td>
-<td>180</td>
-<td>220</td>
-<td>+22%</td>
+<td>Auditability</td>
+<td>Depends on commit integration</td>
+<td>Depends on commit integration</td>
+<td>Often high, since the agent runs commands you can log</td>
 </tr>
 <tr>
-<td>Rollback incidents</td>
-<td>2.3/week</td>
-<td>0.8/week</td>
-<td>-65%</td>
+<td>Data-handling control</td>
+<td>Varies; check retrieval scope</td>
+<td>Varies; inherits host editor's surface</td>
+<td>Highest, because scope is explicit</td>
 </tr>
 <tr>
-<td>Monthly token cost</td>
-<td>$240</td>
-<td>$156</td>
-<td>-35%</td>
+<td>Cost profile</td>
+<td>Seat, sometimes plus tokens</td>
+<td>Seat, sometimes plus tokens</td>
+<td>Usually metered tokens</td>
 </tr>
 <tr>
-<td>PII risk score</td>
-<td>8</td>
-<td>2</td>
-<td>-75%</td>
-</tr>
-<tr>
-<td>Cold-start latency (12k files)</td>
-<td>1.2s</td>
-<td>1.1s</td>
-<td>-8%</td>
+<td>Main failure mode</td>
+<td>Over-broad retrieval from the index</td>
+<td>Over-broad retrieval from repo search</td>
+<td>Context bloat from verbose command output</td>
 </tr>
 </tbody>
 </table>
-<p>Key observations:
-1. <strong>Latency dropped by 60%</strong> because Windsurf’s local-first architecture avoids round-trips to GitHub Copilot’s API. The remaining 210ms includes the time to render the suggestion in the UI, which is now handled by a WebAssembly-based renderer. 2. <strong>Context retention improved by 23%</strong> because Windsurf’s TypeScript language server indexes symbols across files more aggressively than Copilot’s GitHub-native approach. 3. <strong>Audit trail coverage increased by 29%</strong> because Windsurf includes AI suggestion hashes in commit messages by default (via <code>"ai.includeSuggestionHash": true</code>). 4. <strong>Rollbacks dropped by 65%</strong> because Windsurf’s diff viewer highlights AI changes, making it easier to spot errors before committing. 5. <strong>Token cost dropped by 35%</strong> because Windsurf’s local language server handles most symbol lookups, reducing API calls to Anthropic.</p>
-<p>The only regression was <strong>cold-start latency for new repos</strong>, which increased slightly from 1.2s to 1.1s (still within acceptable limits). The biggest win was the <strong>PII risk score</strong>, which dropped from 8 to 2 because Windsurf’s local architecture prevents prompt leakage by default.</p>
-<p>Here’s a real example from our logs:</p>
-<p><strong>Before (VS Code + Copilot):</strong>
-- Commit: <code>feat: add user deletion endpoint</code>
-- Diff: 45 lines
-- AI suggestion hash: <code>cop-abc123</code>
-- PII leakage: <code>user.email</code> appeared in the Copilot prompt cache (detected by GitGuardian)</p>
-<p><strong>After (Windsurf):</strong>
-- Commit: <code>feat: add user deletion endpoint #windsurf-456</code>
-- Diff: 38 lines (AI removed redundant code)
-- AI suggestion hash: <code>wf-456</code>
-- PII leakage: None (all sensitive data redacted by local cleaners)</p>
-<p>The experiment confirmed that Windsurf isn’t just faster—it’s also safer and more auditable for teams with strict compliance requirements.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/5-ai-tools-that-let-us-ship-faster-than-sf-teams/">5 AI tools that let us ship faster than SF teams</a></li>
-<li><a href="https://kubaik.github.io/ai-pair-prompts-9-setups-we-tried-in-2026/">AI pair prompts: 9 setups we tried in 2026</a></li>
-<li><a href="https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/">Vibe coding: MVP gem, prod albatross</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>The pattern worth noticing: the terminal-first shape trades latency for control. You pay in seconds per interaction and you get an explicit, loggable scope. The editor-native and plugin shapes optimise for flow, and the price of that optimisation is that retrieval decisions happen without you.</p>
+<h2 id="choosing-by-situation">Choosing by situation</h2>
+<p><strong>If your codebase is a single application and your main concern is speed of writing code</strong>, an editor-native or plugin-based assistant is the natural fit. Measure latency and context failure rate, and keep the retrieval scope narrow. Audit coverage will be whatever your commit integration gives you; if that is not enough, add a pre-commit attribution check rather than switching tools.</p>
+<p><strong>If you maintain a multi-package repository with strict review requirements</strong>, prefer the terminal-first shape or any tool that lets you state scope explicitly. The ability to say "read these files" is worth more than a large automatic context window, because it makes the request reproducible and the disclosure surface knowable. Budget for metered tokens and instrument token counts per session so the cost does not drift.</p>
+<p><strong>If you have data-residency or personal-data constraints</strong>, the deciding question is not which model is best but which tool gives you a verifiable boundary. Choose the one whose outbound requests you can capture and whose retrieval you can scope from a file in your own repository. Then verify, and re-verify after every upgrade.</p>
+<p><strong>If you cannot measure outbound traffic at all</strong>, treat the tool as unsuitable for repositories containing regulated data, regardless of what its documentation claims.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Does a larger context window mean better context retention?</strong>
+No. Window size is a capacity limit; retention depends on what the tool chooses to put in the window. A tool with a modest window and good retrieval frequently outperforms one with a huge window that fills it with logs and fixtures.</p>
+<p><strong>How do you measure latency without instrumenting the editor?</strong>
+Use a process-level timer for startup and index time (<code>hyperfine</code> works well), and for per-edit latency either instrument the extension host or accept a coarser proxy: record the time from keystroke to the suggestion appearing in a screen capture at a known frame rate. The proxy is imprecise but consistent, which is enough for comparing tools.</p>
+<p><strong>Is local model inference automatically safer?</strong>
+It removes the network disclosure path, which is a real benefit. It does not remove the need to scope retrieval, and it introduces its own failure modes: smaller local models tend to produce more incorrect symbol references, and the latency is usually higher than a hosted model on the same hardware.</p>
+<p><strong>Why is audit coverage usually lower than the tool reports?</strong>
+Because attribution is attached when a suggestion is accepted through the tool's commit path. Developers routinely edit suggestions before committing, and that edit often drops the trailer. Sampling commits and reading diffs gives a truer number than any dashboard.</p>
+<p><strong>Can prompt post-processing break suggestions?</strong>
+Yes. Aggressive redaction can remove identifiers the model genuinely needs, producing suggestions that reference placeholder text. Test redaction rules against a corpus of real diffs and check the context failure rate before and after, rather than assuming redaction is free.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick your largest repository and measure its cold-start cost with a tool that builds an index:</p>
+<pre><code class="language-bash">hyperfine --warmup 3 --runs 10 '&lt;your-editor-command&gt; /path/to/your/largest-repo'
+</code></pre>
+<p>Record the mean and the standard deviation. Then open the repository in each candidate assistant and time, by hand, ten inline suggestions from keystroke to first render. Write all three numbers down next to your team's latency tolerance. If any tool's p95 exceeds that tolerance on your actual repository, you have eliminated it without spending a week on a trial — and you have the first row of the comparison table you will fill in for the rest.</p>
                 
                 
             </div>
@@ -594,8 +501,8 @@ def deploy():
                     
                     <a class="related-card" href="/ai-code-traps-copilot-vs-cursor-smackdown/">
                         <h3>AI code traps: Copilot vs Cursor smackdown</h3>
-                        <p>Cut AI code crashes 40% by picking the right sidekick. Compare GitHub Copilot Enterprise 2026 vs Cursor v0.32 on latency, edge cases, and offline survival.</p>
-                        <span class="related-meta">13 min read · 9 June 2026</span>
+                        <p>How to evaluate AI coding assistants on edge-case handling, latency, hardware and cost — with a decision checklist and a 30-minute first step.</p>
+                        <span class="related-meta">11 min read · 9 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/claude-code-review-wins-and-blind-spots/">

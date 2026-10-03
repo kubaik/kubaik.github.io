@@ -1,152 +1,234 @@
 # One payment stack for Kenya, Nigeria, Ghana
 
-I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+## Why three integrations look cheaper than they are
 
-## The conventional wisdom (and why it's incomplete)
+The default plan for Kenya, Nigeria and Ghana is three integrations: M-Pesa for Kenya, a card/bank provider such as Flutterwave or Paystack for Nigeria, and MTN Mobile Money or Vodafone Cash for Ghana. Each gets its own repository, webhook handler, reconciliation job, alerting rules and support runbook. On a whiteboard this looks like clean separation of concerns. In production it usually means the same business problem — take money, confirm money, refund money — is solved three times with three sets of bugs.
 
-Most guides will tell you to build three separate integrations: one for M-Pesa in Kenya, one for Flutterwave or Paystack in Nigeria, and one for MTN Mobile Money or Vodafone Cash in Ghana. That’s what we did at my last startup. We spun up three separate repos, three separate webhooks, three separate reconciliation jobs, and three separate support docs. It scaled to about 500 transactions per day before we noticed that every new feature required 3x the work. The honest answer is that three integrations look fine on paper but collapse under the weight of real user behavior.
+The failure mode is rarely the happy path. It is the overlapping path. A user starts an M-Pesa STK push, the prompt times out, and they immediately retry with a card. If the two flows live in separate stacks with separate idempotency keys, both can succeed and the customer is charged twice. The refund is fast, but the support ticket, the chargeback risk and the trust damage are not. A typical failure mode is not "provider is down"; it is "two providers both said yes."
 
-Our stack treated the two payment methods as separate integrations, so we double-charged them. The user refunded instantly and posted on Twitter. It cost us $2,000 in chargebacks and two days of on-call. The conventional wisdom assumes each country has one dominant provider and ignores the fact that users switch providers mid-session because of network failures or balance checks.
+The conventional advice also assumes each country has one dominant provider and that users stay with it for the whole session. Real behaviour is messier: users switch rails because of network failures, insufficient float, or a balance check that fails mid-flow. An architecture that treats each rail as a separate product cannot see that a single user is doing one thing — trying to pay.
 
-The standard advice also assumes that the underlying APIs are stable. In 2026, all three countries still have daily API outages from at least one provider. When M-Pesa’s sandbox went down for 47 minutes on a Thursday, our Kenya-specific integration retried every 30 seconds for 20 minutes before we noticed. Meanwhile, our Nigeria and Ghana integrations were humming along fine. Three separate stacks meant three separate alerting systems and three separate on-call rotations — a coordination nightmare.
+Finally, provider APIs are not stable. Outages, deprecations and contract changes happen on the provider's schedule. Three stacks mean three places to absorb a breaking change, three alerting pipelines to tune, and three on-call surfaces. The cost is not the code you write; it is the coordination you inherit.
 
-## What actually happens when you follow the standard advice
+## What actually breaks under the three-stack model
 
-The first thing you’ll notice is that your error budget evaporates. At peak load, we saw
+**Duplicate charges across rails.** Without a shared idempotency key and a single attempt record, retries and user-driven fallbacks can produce two successful captures. The fix is architectural, not a patch: one `PaymentAttempt` row per user intent, with provider attempts as children.
 
-- 3.2% failed payments in Kenya (mostly M-Pesa timeouts)
-- 2.1% in Nigeria (mostly bank API throttling)
-- 1.8% in Ghana (mostly mobile money USSD timeouts)
+**Divergent retry policies.** Each stack tends to get tuned independently, often from folklore rather than measurement. One stack retries three times, another five, another none. The result is inconsistent latency and inconsistent failure rates that are hard to compare because the denominators differ.
 
-That’s a combined 7.1% failure rate when you could have had 1.2% with a unified retry strategy. Our dashboards showed three different SLOs, so we tuned each stack separately. The Kenya stack retried 3 times with exponential backoff; the Nigeria stack retried 5 times because we’d read a blog post that said Nigerians have faster networks (they don’t). The result? We burned 40% more compute on retries than we needed to.
+**Reconciliation tax.** Every provider names the same concepts differently. A phone number may arrive as `MSISDN`, `customer.phone` or `subscriberId`. A reference may be `tx_ref`, `flwRef` or a provider transaction ID. When a weekend batch has to be matched across three schemas, the work is field mapping, duplicate detection and agreeing on what "success" means. That is engineering time spent on translation, not on product.
 
-Another surprise was the reconciliation tax. Each integration writes to its own ledger table with slightly different schemas. When we tried to reconcile a weekend batch of 12,000 transactions across all three countries, we spent 14 engineer-hours mapping fields and fixing duplicates. The ledgers didn’t even agree on what a "success" looked like. M-Pesa calls it `MSISDN`, Flutterwave calls it `customer.phone`, and MTN Mobile Money calls it `subscriberId`. Three schemas, three joins, three chances for bugs.
+**Compliance drift.** Data-residency, encryption-at-rest and audit-log requirements differ by jurisdiction and are enforced differently by each regulator. Three pipelines mean three chances for a misconfiguration. A single misconfigured storage rule can put sensitive data somewhere it should not be for hours before anyone notices, and the remediation cost is measured in regulatory exposure, not just engineering hours.
 
-Compliance also becomes a hydra. Nigeria’s CBN requires you to store customer data in-country within 24 hours; Kenya’s CBK wants the same data encrypted at rest; Ghana’s BoG wants audit logs in a specific JSON format. Three separate stacks meant three separate compliance pipelines. One misconfigured Terraform variable in the Ghana stack caused us to store plaintext PANs in S3 for 6 hours before we caught it. That’s a $120,000 fine in 2026 if you’re lucky.
+**Blast radius and observability.** With three stacks, one provider's incident affects only its own stack — that part is genuinely good. But it also means three dashboards, three SLOs and three alert thresholds. Correlated failures (for example, a shared upstream network issue) are invisible because nothing joins the data.
 
-## A different mental model
+## A different mental model: one domain, many adapters
 
-Instead of three stacks, build one abstraction layer that speaks a single domain language: `PaymentAttempt`, `PaymentConfirmation`, `RefundRequest`. Let the abstraction handle the country-specific quirks under the hood. Think of it like a Postgres Foreign Data Wrapper that normalizes the chaos into one schema. The abstraction should expose a clean interface:
+Instead of three stacks, define one domain language and let adapters translate. The core objects are small:
+
+- `PaymentAttempt` — one row per user intent to pay. Owns the idempotency key, amount, currency, customer and chosen provider.
+- `PaymentConfirmation` — the provider's authoritative result, normalized.
+- `RefundRequest` — a request against a confirmation, with its own idempotency key.
+
+The abstraction exposes a narrow interface. Everything provider-specific lives behind it.
 
 ```python
+from dataclasses import dataclass
+from typing import Optional
+
+@dataclass
+class PaymentResult:
+    status: str                 # "succeeded" | "failed" | "pending"
+    reference: str              # canonical reference for this attempt
+    provider: str               # "mpesa_ke", "flutterwave_ng", ...
+    provider_fee_minor: int     # fee in minor units of `currency`
+    currency: str
+    raw_response: dict          # full provider payload, unmodified
+
 class PaymentGateway:
     async def attempt(
         self,
-        amount: int,
+        amount_minor: int,
         currency: str,
         customer_id: str,
-        provider_hint: str = None,
+        idempotency_key: str,
+        provider_hint: Optional[str] = None,
     ) -> PaymentResult:
-        """Return a PaymentResult with normalized fields."""
+        """Attempt a payment. Must be idempotent on idempotency_key."""
+        ...
 ```
 
-That interface hides whether the payment was M-Pesa, Flutterwave, or MTN. Your business logic only deals with `PaymentResult.status`, `PaymentResult.reference`, and `PaymentResult.provider_fee`. The abstraction layer translates those into the provider-specific request and response schemas. When a new provider launches in Kenya next quarter, you add one new adapter instead of rewriting three integrations.
+Two details matter more than they look. First, `idempotency_key` is a required argument, not an afterthought — it is what prevents the duplicate-charge failure mode. Second, `raw_response` is carried through unmodified so provider-specific fields remain available for refunds and debugging. The abstraction normalizes; it does not erase.
 
-The key insight is to treat each provider as a fallback, not a primary. Your abstraction should try the user’s preferred provider first, then fall back to others in a deterministic order based on latency, cost, and success rate. We built a provider score table that updates every 5 minutes from real latency and error-rate metrics:
+Each provider becomes an adapter implementing the same contract:
 
-| Provider      | Country   | Avg Latency (ms) | Error Rate (%) | Cost per 1000 TX |
-|---------------|-----------|------------------|----------------|------------------|
-| M-Pesa        | KE        | 420              | 1.2            | $0.032           |
-| Flutterwave   | NG        | 850              | 2.3            | $0.045           |
-| Paystack      | NG        | 680              | 1.5            | $0.038           |
-| MTN MM        | GH        | 510              | 1.9            | $0.029           |
-| Vodafone Cash | GH        | 720              | 2.8            | $0.031           |
+```python
+class ProviderAdapter:
+    name: str
+    country: str
+    currency: str
 
-The score table is the single source of truth for fallbacks. When a user in Nairobi tries to pay, your abstraction first tries M-Pesa; if it fails with a timeout, it automatically retries with Paystack because the score table shows Paystack’s latency is still acceptable. No manual toggles, no separate configs.
-
-## Evidence and examples from real systems
-
-We shipped this abstraction at a B2B fintech in 2026 and cut our payment failure rate by 60% within two weeks. The trick wasn’t the abstraction itself; it was the observability we bolted onto it. We instrumented every adapter with OpenTelemetry traces and added a synthetic monitor that runs a $0.01 test payment every minute against each provider in each country. The synthetic monitor feeds the score table automatically. If M-Pesa’s error rate jumps above 3%, it demotes M-Pesa in the score table for the next 30 minutes. No human intervention.
-
-The cost savings were real. Before the abstraction, we ran three separate Kubernetes clusters with 12 pods each. After, we consolidated to one cluster with 24 pods and saved $18,000/month on compute and $7,000/month on observability licenses (Datadog, New Relic, etc.). The consolidation also reduced our blast radius: when a provider’s sandbox failed, only one cluster’s retry logic was affected, not three.
-
-Another unexpected win was feature velocity. We added Apple Pay support in Nigeria in 4 days because the abstraction already understood currency, customer IDs, and refunds. Without the abstraction, we would have had to wire Apple Pay into the Nigeria-specific stack, which would have taken two weeks of QA and compliance reviews. The abstraction let us treat Apple Pay as just another provider adapter.
-
-## The cases where the conventional wisdom IS right
-
-There are still times when three separate stacks make sense. If you’re a gig-economy app that only processes 50 transactions per day in Ghana, maintaining a full abstraction layer is overkill. The engineering time to build and maintain the abstraction will dwarf the savings. I’ve seen teams spend 80 engineer-hours on an abstraction that saved $200 in infra costs — not a good ROI.
-
-Regulatory isolation can also force separate stacks. If Ghana’s BoG requires you to use a specific in-country payment switch that doesn’t expose a standard API, you may need a dedicated Ghana stack. In that case, keep the abstraction as a thin wrapper around that one provider so you’re not rewriting the rest of your system.
-
-Legacy integrations are another exception. If you inherited a system that already has three separate stacks and zero tests, ripping it out for an abstraction will introduce more risk than value. In that situation, build the abstraction incrementally: start with one country, prove the pattern, then expand. We did this at a health-tech startup in 2026. We rewrote the Kenya stack first, then the Nigeria stack, then Ghana. Each rewrite took two weeks and reduced our failure rate by 15–20%.
-
-## How to decide which approach fits your situation
-
-Use the 80/20 rule. If 80% of your transactions come from one country, start with a unified abstraction layer for that country and fall back to the others. If your traffic is evenly split across all three countries, the abstraction layer will pay for itself in less than three months.
-
-Calculate the abstraction ROI with real numbers. Use your last 30 days of payment data:
-
-1. Compute your current infra cost per 1,000 transactions for each country. 2. Estimate the engineering time to build the abstraction (2–4 weeks for a small team). 3. Multiply the engineering time by your fully-loaded cost (e.g., $120/hour). 4. Compare the abstraction’s one-time cost to the monthly infra savings.
-
-We did this calculation at our B2B fintech and found the abstraction would pay for itself in 45 days. The engineering time was 200 hours at $120/hour ($24,000), and the infra savings were $18,000/month. Anything that pays for itself in under 6 months is worth doing.
-
-Another decision factor is your team’s familiarity with each country’s ecosystem. If your lead engineer is Nigerian and knows Flutterwave inside out, but your Ghanaian teammate has never touched MTN Mobile Money, the abstraction layer lets the Nigerian lead own the Nigeria adapter while the abstraction handles the cross-country logic. That reduces knowledge silos and on-call fatigue.
-
-## Objections I've heard and my responses
-
-**“It’s too complex to normalize all the schemas.”**
-It’s not. We mapped 12 fields across 5 providers in two days. The trick is to pick a canonical schema and map everything to it. We used Stripe’s schema as a base because it’s well-documented and widely adopted. M-Pesa’s `MSISDN` maps to `customer.phone`, Flutterwave’s `tx_ref` maps to `reference`, and so on. The mapping layer is 300 lines of code in Python using Pydantic models. That’s it.
-
-**“We’ll lose provider-specific features.”**
-Not if you design the abstraction to expose them. Our `PaymentResult` includes a `raw_response` field that carries the provider’s full JSON response. If Flutterwave returns a `flwRef` that you need for a refund, it’s in `raw_response`. The abstraction doesn’t hide provider details; it normalizes them.
-
-**“The retry logic will get messy.”**
-It doesn’t have to. Use a circuit breaker pattern. Each adapter implements a `can_handle` method that returns `True` or `False` based on the error type. If M-Pesa returns a timeout, `can_handle` returns `False` for 30 seconds, then `True` again. The abstraction uses the score table to pick the next provider automatically. We open-sourced our circuit breaker in 2026; it’s 120 lines of Go and handles 10,000 requests per second on a t3.medium.
-
-**“We’ll hit rate limits if we retry across providers.”**
-You won’t if you use exponential backoff with jitter and a per-provider concurrency limit. Our abstraction limits each provider to 10 concurrent requests and backs off exponentially (1s, 2s, 4s, 8s) with ±20% jitter. At peak load of 500 requests/second, we still stay under the limits of all providers. The synthetic monitor continuously measures the limits and adjusts the concurrency dynamically.
-
-## What I'd do differently if starting over
-
-I’d start with the synthetic monitor first, not the abstraction. Before writing a single line of adapter code, I’d deploy a $0.01 synthetic payment every minute to each provider in each country. The monitor would feed a real-time dashboard that shows latency, error rate, and cost per transaction. That dashboard would have been my spec for the abstraction layer. Instead, we built the abstraction first and then bolted on monitoring, which meant we missed early signals of provider degradation.
-
-I’d also use a message queue for retries instead of in-process retries. We initially retried in-process with asyncio, but when a provider’s sandbox failed, we flooded the event loop and blocked other requests. Moving to a Redis-backed retry queue (Redis 7.2 with Streams) cut our retry latency from 800ms to 120ms and eliminated event-loop starvation. The queue also made it trivial to add dead-letter handling for payments that fail after all retries, which we didn’t have in the first version.
-
-Finally, I’d bake compliance into the abstraction from day one. We added a `compliance_handler` to each adapter that validates data against the country’s rules before sending the request. For Ghana, it checks that `customer.phone` is a Ghanaian number; for Nigeria, it ensures the customer’s KYC level matches the transaction size. That handler runs in the same transaction as the payment attempt, so we never store invalid data. In one incident, the handler caught a Nigerian customer trying to send $10,000 with a Tier-1 KYC, which is illegal under CBN rules. The payment was blocked before it hit the provider, saving us a compliance fine.
-
-## Summary
-
-The conventional wisdom of three separate integrations is a trap. It scales poorly, increases blast radius, and hides real user behavior. The alternative is a single abstraction layer that normalizes provider quirks, uses real-time metrics to drive fallbacks, and exposes a clean domain model to your business logic. The abstraction pays for itself in less than three months if you have meaningful traffic in more than one country.
-
-The abstraction isn’t free, but neither is the status quo. I’ve seen teams burn 600 engineer-hours on three separate stacks without realizing they were solving the same problem three times. The honest answer is that you don’t need three integrations; you need one abstraction that speaks all three languages.
-
-
-## Frequently Asked Questions
-
-**Why not just use Stripe for all three countries?**
-Stripe supports Kenya and Nigeria but not Ghana in 2026. Even if Stripe adds Ghana next quarter, you’ll still need a fallback for edge cases like USSD failures or compliance requirements that Stripe can’t meet. Stripe is a great abstraction layer for the providers it supports, but it’s not a replacement for a custom abstraction when you need multi-country fallbacks.
-
-**How do you handle currency conversion between providers?**
-Our abstraction converts currencies at the boundary. When a Kenyan user tries to pay in GHS, the abstraction converts GHS to KES using a real-time forex API (we use Fixer.io’s 2026 tier) and stores the original currency in `PaymentAttempt.original_currency`. That way, reconciliation shows both the local currency and the converted amount. We’ve seen conversion errors as low as 0.04% with 5-minute forex updates.
-
-**What if a provider changes their API contract?**
-The abstraction forces provider changes into one place: the adapter. When Flutterwave changed their webhook signature in 2026, we updated the Flutterwave adapter in 30 minutes and rolled it out without touching the rest of the system. The abstraction’s tests caught the change immediately because the synthetic monitor failed. Without the abstraction, we would have had to update three separate webhook handlers.
-
-**How do you debug a payment that failed in the abstraction layer?**
-Every adapter writes a structured log with a `trace_id` that ties the payment attempt to the confirmation. The synthetic monitor also writes traces, so you can follow the entire lifecycle in Jaeger or Zipkin. We added a `/debug/payment/{id}` endpoint that returns the raw adapter logs, the score table entry at the time of the attempt, and the circuit breaker state. That single endpoint cut our mean time to resolution from 45 minutes to 7 minutes.
-
-
-Set the `PYTHONPATH` to your abstraction package, then run:
-```bash
-python -m payment_gateway.synthetic_monitor --count 10 --countries KE NG GH
+    async def charge(self, attempt) -> PaymentResult: ...
+    async def refund(self, confirmation, amount_minor: int, idempotency_key: str) -> PaymentResult: ...
+    def can_handle(self, error: Exception) -> bool: ...
+    def validate_compliance(self, attempt) -> None: ...
 ```
 
-That command will simulate 10 payments across all three countries and print the latency and error rate for each provider. If any provider’s error rate exceeds 3%, the command exits with a non-zero code so you can alert on it. Do this right now; it will take 3 minutes and tell you immediately whether your abstraction layer is viable.
+Adding a new rail is one new adapter, not a new stack.
 
----
+## Fallback as a first-class concern
 
-### About this article
+Treat providers as fallbacks, not as fixed primaries. The user's preferred rail is tried first; on a retryable failure, the abstraction selects the next rail from a score table ordered by measured latency, error rate and cost. The score table should be derived from your own telemetry, not from published marketing numbers.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+A useful shape for the table:
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+| Field | Meaning | Source |
+|---|---|---|
+| provider | adapter name | config |
+| country | ISO country code | config |
+| p95_latency_ms | 95th percentile charge latency | your metrics |
+| error_rate | failures / attempts over window | your metrics |
+| fee_bps | effective fee in basis points | provider contract |
+| concurrency_limit | max in-flight requests | provider contract |
+| circuit_state | closed / open / half-open | circuit breaker |
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+The exact numbers will differ per merchant, per corridor and per time of day, so do not copy a table — generate one. A window of 5–15 minutes is usually short enough to react to an incident and long enough to avoid flapping. Demote a provider when its error rate crosses a threshold you have chosen, and re-admit it gradually via a half-open state.
 
-**Last reviewed:** June 20, 2026
+Two rules keep fallback safe:
+
+1. **Fallback only on retryable errors.** A timeout or a 5xx is retryable. A declined card or insufficient balance is not; retrying those just generates noise and can look like fraud.
+2. **Never fall back across currencies silently.** If the user intended to pay in KES, do not quietly charge a card in NGN. Convert explicitly at the boundary and record both the original and settled amounts on the attempt.
+
+## Measuring instead of guessing
+
+Any claim about failure rates, latency or savings has to come from your own instrumentation. The measurement plan is simple enough to run in an afternoon.
+
+**Instrument the attempt lifecycle.** Emit a structured event for every state transition: `attempt_created`, `charge_sent`, `charge_response`, `confirmation_received`, `refund_requested`, `refund_settled`. Include `attempt_id`, `provider`, `country`, `currency`, `latency_ms`, `error_class` and `idempotency_key`.
+
+**Compute the rates you actually care about.**
+
+- Attempt failure rate = failed attempts / total attempts, per provider and per country.
+- Duplicate rate = attempts with more than one successful confirmation / total attempts. This should be zero; if it is not, your idempotency is broken.
+- Fallback rate = attempts that succeeded on a non-preferred provider / total attempts.
+- Reconciliation break rate = transactions that fail automated matching / total transactions.
+
+**Watch the tail, not the mean.** A provider with a 400 ms median and a 9 s p99 will hurt you at peak. Track p50, p95 and p99 separately.
+
+**Run a synthetic probe.** A scheduled job that creates a small real or sandbox payment against each provider on a fixed cadence gives you an independent signal that does not depend on customer traffic. Compare the synthetic result against your production metrics; divergence usually means the probe is hitting a different path than real users.
+
+**Alert on error budget, not on individual errors.** Define an SLO per provider (for example, 99% of charges resolve within 30 seconds) and page only when the burn rate over a window exceeds your threshold.
+
+## Reconciliation and the canonical schema
+
+Pick one canonical schema and map every provider into it. The choice matters less than the discipline of having exactly one. A minimal canonical transaction record:
+
+```python
+from dataclasses import dataclass
+from datetime import datetime
+
+@dataclass
+class CanonicalTransaction:
+    attempt_id: str
+    provider: str
+    provider_reference: str
+    amount_minor: int
+    currency: str
+    status: str                 # "succeeded" | "failed" | "pending" | "refunded"
+    customer_phone_e164: str
+    created_at: datetime
+    settled_at: datetime | None
+    idempotency_key: str
+    raw_response: dict
+```
+
+Map provider fields into this shape in the adapter, not in the reconciliation job. Then reconciliation is a single join on `attempt_id` and `provider_reference`, and the break rate becomes a number you can trend.
+
+For each provider, document the mapping explicitly in code and in a test fixture. When a provider renames a field, the fixture fails and you know immediately which adapter broke. That is the whole point of the pattern: provider changes land in one file.
+
+## Compliance as an adapter responsibility
+
+Regulatory requirements differ by country and change over time. Rather than building a separate pipeline per country, put a `validate_compliance` step in each adapter that runs in the same transaction as the charge.
+
+Typical checks include:
+
+- Data residency: ensure personally identifiable information is written to storage in the permitted region.
+- Encryption: ensure sensitive fields are encrypted at rest with the required key management.
+- Audit logging: emit an immutable audit record in the format the regulator expects.
+- Transaction limits: reject attempts that exceed the customer's verification tier.
+
+Because the check runs before the request leaves your system, an invalid attempt never reaches the provider and never gets persisted in a non-compliant form. When a rule changes, you change one adapter and its tests.
+
+Keep the rules in configuration where possible, and version them. A compliance rule that lives only in a developer's memory is a future incident.
+
+## A worked sizing example (illustrative)
+
+The following numbers are illustrative, chosen to show the arithmetic rather than to predict any particular team's outcome. Substitute your own.
+
+Assume a team spends 40 engineer-hours per month maintaining each of three stacks: dependency upgrades, provider contract changes, reconciliation fixes and on-call follow-ups. That is 120 engineer-hours per month. At a fully loaded cost of $100 per hour, the maintenance cost is:
+
+```
+120 hours/month × $100/hour = $12,000/month
+```
+
+Assume a unified abstraction costs 300 engineer-hours to build and 20 engineer-hours per month to maintain:
+
+```
+Build:       300 hours × $100/hour = $30,000 one-time
+Maintenance:  20 hours/month × $100/hour = $2,000/month
+```
+
+The monthly saving is $12,000 − $2,000 = $10,000. Payback period:
+
+```
+$30,000 / $10,000 per month = 3 months
+```
+
+The result is sensitive to the maintenance estimate, which is the number teams most often get wrong. Measure it before committing: count the hours your team actually spent on provider-related work over the last two months, then use that figure. If the real number is 15 engineer-hours per stack per month, the saving is only $2,500 per month and payback stretches to a year. The abstraction is worth building when the measured maintenance burden is high and traffic spans more than one country.
+
+## When separate stacks are the right call
+
+The abstraction is not universally correct. Three cases justify keeping stacks apart:
+
+**Very low volume in a country.** If a corridor processes a handful of transactions per day, the maintenance cost of an adapter, its tests and its monitoring can exceed the value. Use the provider's hosted checkout page and skip the integration until volume justifies it.
+
+**A mandated in-country switch with no standard API.** Some jurisdictions require routing through a specific domestic switch. If that switch exposes a proprietary interface, isolate it in its own adapter and keep the rest of the system on the common contract. Do not contort the abstraction to fit one provider.
+
+**A legacy system with no tests.** Rewriting three untested stacks into an abstraction is a large, risky change. Migrate incrementally: build the abstraction alongside the existing code, route one country through it, verify for a full billing cycle, then move the next. Each migration step should be independently reversible.
+
+## Decision checklist
+
+Use this before writing adapter code.
+
+- Does more than one country contribute meaningful transaction volume? If not, defer.
+- Have you measured the current maintenance cost per stack over at least two months?
+- Do you have a canonical schema with a written mapping for every provider you support today?
+- Is `idempotency_key` required on every charge and refund call?
+- Can you classify every provider error as retryable or terminal, with tests?
+- Is there a single place where a provider contract change must be absorbed?
+- Do you have per-provider p50/p95/p99 latency and error-rate metrics?
+- Is there a synthetic probe independent of customer traffic?
+- Are compliance checks executed before the request leaves your system?
+- Can you roll a single country back to its previous path without a deploy?
+
+If several answers are "no", fix those before building the abstraction. The abstraction amplifies whatever discipline you already have; it does not create it.
+
+## FAQ
+
+**Should we just use one global provider instead?**
+If a single provider covers every corridor you need, at acceptable cost and with the features you require, that is simpler than building an abstraction. Verify coverage per country rather than assuming it, and keep a fallback path for the corridors where coverage is partial or the provider has a history of outages.
+
+**How do we handle currency conversion?**
+Convert explicitly at the boundary and store both the original and settled amounts on the attempt. Use a rate source you can audit, record the rate and timestamp used, and reconcile against it. Never let a fallback silently change the currency the customer agreed to pay in.
+
+**What happens when a provider changes its API contract?**
+The change should be absorbed by one adapter and caught by its test fixtures. If a contract change requires edits in more than one place, the abstraction boundary is in the wrong position.
+
+**How do we debug a failed payment?**
+Give every attempt a `trace_id` that spans the adapter call, the provider response and the confirmation. Expose an internal endpoint that returns the attempt record, the adapter logs, the score-table entry at the time of the attempt and the circuit-breaker state. That single view is usually enough to distinguish a provider failure from a bug in your own fallback logic.
+
+**Won't retrying across providers hit rate limits?**
+It can, so bound it. Apply exponential backoff with jitter per provider, enforce a per-provider concurrency limit, and stop retrying when the circuit is open. Track rate-limit responses as a distinct error class so you can tune the limit from data rather than guesswork.
+
+## Do this in the next 30 minutes
+
+Pick one provider you already integrate with and add three structured log fields to its charge path: `attempt_id`, `idempotency_key` and `latency_ms`. Then query the last 24 hours and compute the failure rate and the p95 latency for that provider alone. That single number tells you whether your current stack is healthy, and it is the first column of the score table you will need if you ever build the abstraction.

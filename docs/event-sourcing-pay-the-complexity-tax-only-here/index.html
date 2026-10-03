@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Event sourcing: pay the complexity tax only here - Kubai Kevin</title>
-        <meta name="description" content="Cut audit time from hours to minutes with event sourcing in 2026 — when it pays off and when to avoid it.">
+        <meta name="description" content="When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.">
         <meta name="keywords" content="EventSourcing, EventSourcing2026, EventSourcingCost, EventSourcingSchema, EventSourcingExamples">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T09:48:26.237900">
-        <meta property="article:modified_time" content="2026-09-18T16:50:51.736008+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:03:48.900635+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Event sourcing: pay the complexity tax only here">
-        <meta property="og:description" content="Cut audit time from hours to minutes with event sourcing in 2026 — when it pays off and when to avoid it.">
+        <meta property="og:description" content="When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.">
         <meta property="og:url" content="https://kubaik.github.io/event-sourcing-pay-the-complexity-tax-only-here/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Event sourcing: pay the complexity tax only here">
-        <meta name="twitter:description" content="Cut audit time from hours to minutes with event sourcing in 2026 — when it pays off and when to avoid it.">
+        <meta name="twitter:description" content="When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/event-sourcing-pay-the-complexity-tax-only-here.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/event-sourcing-pay-the-complexity-tax-only-here/#article",
       "headline": "Event sourcing: pay the complexity tax only here",
-      "description": "Cut audit time from hours to minutes with event sourcing in 2026 — when it pays off and when to avoid it.",
+      "description": "When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.",
       "datePublished": "2026-06-09T09:48:26+00:00",
-      "dateModified": "2026-09-18T16:50:51+00:00",
-      "wordCount": 2857,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-10-03T11:03:48+00:00",
+      "wordCount": 1954,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Event sourcing: pay the complexity tax only here</h1>
                 
-                <p class="post-lead">Cut audit time from hours to minutes with event sourcing in 2026 — when it pays off and when to avoid it.</p>
+                <p class="post-lead">When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.</p>
                 
                 
                 <div class="tags">
@@ -252,69 +252,40 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2857 words
+                        10 min read
+                        &nbsp;·&nbsp; 1954 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
-<p>Have you ever stared at a tangled database schema that screams ‘audit me’ but screams even louder ‘I’ll break under any change’? That’s the moment event sourcing stops sounding academic and starts sounding like your next refactor. on 2025-02-17?” with a schema that only stored the latest score. After three sleepless days of archived backups and binlogs, we rebuilt the audit trail with event sourcing—and learned the hard way that the complexity tax is only worth paying in a handful of scenarios.</p>
-<p>Below you’ll see exactly which scenarios justify the cost, which ones don’t, and a concrete playbook you can copy into your 2026 codebase today.</p>
-<hr />
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>Event sourcing is a pattern where every state change is captured as an immutable event stored in an append-only log instead of updating rows in a mutable table. It shines when you need to (1) rebuild any past state, (2) run flexible projections without touching production, and (3) survive schema changes without migration pain. In 2026, teams at Stripe, Adyen, and Klarna use it for payment retry logic, regulatory audits, and product telemetry, cutting rollback time from hours to minutes while keeping audit trails cryptographically verifiable. Use it when your domain has <strong>high audit or replay value</strong>, your write volume is &lt;10 k events/sec per aggregate, and your projections can tolerate eventual consistency for a few hundred milliseconds. Avoid it if you merely want to track who made a change (use temporal tables instead) or if your team lacks the discipline to version events with schemas (Avro 1.11 is your friend).</p>
-<hr />
+                <p>Event sourcing is an append-only log of immutable domain events from which all current state is derived. It solves a narrow set of problems well and adds real operational cost. This article covers where the pattern pays off, where a temporal table is sufficient, and how to measure the tradeoff in your own system before committing.</p>
+<h2 id="the-one-paragraph-version">The one-paragraph version</h2>
+<p>Event sourcing records every state change as an immutable event in an append-only log instead of updating rows in place. It is a good fit when you need to reconstruct any past state, run new read models without touching production writes, or evolve schemas without rewriting history. The documented costs are schema evolution discipline, snapshot storage, projection lag, and a mental model shift from CRUD to append-only. Use it when your domain has high replay or audit value and your read side can tolerate eventual consistency. Avoid it if you only need to know who changed what, or if your team has no process for versioning event contracts.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<ol>
-<li>
-<p><strong>Terminology overload</strong>: People conflate event sourcing with CQRS, Kafka, serverless event buses, and even change data capture. They’re related but not the same. I once reviewed a codebase that proudly called itself “event-sourced” because it published domain events to RabbitMQ—until we discovered the projections were still reading from a mutable Postgres table. That’s like calling a write-through cache “write-behind” because you used the word ‘behind’.</p>
-</li>
-<li>
-<p><strong>Cost myopia</strong>: Developers underestimate the hidden costs—event schema evolution, snapshot storage, and the mental model shift from CRUD to append-only. In 2026, AWS charges $0.015/GB/month for a DynamoDB table with on-demand capacity, but the same throughput in an event store with point-in-time recovery and global tables runs $0.06/GB/month. That 4× price jump hits hard when you haven’t budgeted for it.</p>
-</li>
-<li>
-<p><strong>The myth of “simple audit”</strong>: Many teams think they need event sourcing because compliance demands an audit trail. In practice, most audits are satisfied by temporal tables (Postgres 15+) or change streams (MongoDB 6.0+) that give you a point-in-time view without rewriting the whole application. Event sourcing is overkill unless you also need to replay history to debug a race condition or to rebuild a projection in a new format.</p>
-</li>
-</ol>
-<hr />
-<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of your system as a replayable tape, not a mutable whiteboard.</p>
+<p><strong>Terminology overload.</strong> Event sourcing, CQRS, message brokers, and change data capture are related but distinct. A system that publishes domain events to a broker while its read models still query a mutable table is not event-sourced; it is a CRUD system with notifications. CQRS splits reads from writes; event sourcing makes the write side an append-only log. You can have either without the other.</p>
+<p><strong>Cost myopia.</strong> The visible cost is storage; the real cost is schema evolution, snapshot management, and projection operations. Storage prices change and vary by provider, so estimate from your own bill rather than from a table in an article.</p>
+<p><strong>The myth of simple audit.</strong> Many compliance requirements are satisfied by temporal tables (system-versioned tables in PostgreSQL 15+, for example) or by change streams. Event sourcing is overkill unless you also need deterministic replay, for example to reconstruct state at an arbitrary timestamp or to rebuild a projection in a new shape.</p>
+<h2 id="the-mental-model">The mental model</h2>
+<p>Think of your system as a replayable tape rather than a mutable whiteboard.</p>
 <ul>
-<li><strong>Mutable whiteboard (CRUD)</strong>: You erase yesterday’s numbers and write today’s. If someone asks “what did the balance look like at 14:07 yesterday?” you have to reconstruct from backups or logs that weren’t designed for this query.</li>
-<li><strong>Replayable tape (event sourcing)</strong>: Every keystroke is recorded on the tape. To see the balance at 14:07, you rewind the tape to that frame and play forward. The tape never changes; you just replay it differently.</li>
+<li><strong>Mutable whiteboard (CRUD):</strong> you overwrite yesterday's values with today's. Answering "what did the balance look like at 14:07 yesterday?" requires backups or logs that were not designed for that query.</li>
+<li><strong>Replayable tape (event sourcing):</strong> every change is appended. To see the balance at 14:07, replay the tape up to that point. The tape never changes; you replay it differently.</li>
 </ul>
-<p>This mental flip changes how you design:
-- <strong>Commands</strong> (intent to change) become events only after validation. - <strong>State</strong> is a derived view computed from events. - <strong>Schema evolution</strong> is additive: you append new event types; old ones stay immutable.</p>
-<p>In 2026, we use Avro 1.11 schemas to enforce backward compatibility when we add new event fields. The schema registry (Confluent Schema Registry 7.5) rejects breaking changes at publish time, saving us from silent corruption that would break replay.</p>
-<hr />
-<h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Let’s build a minimal event-sourced ledger for a wallet that tracks deposits and withdrawals. We’ll use Python 3.11, FastAPI 0.109, and a local SQLite event store (we’ll upgrade to PostgreSQL later).</p>
-<h3 id="step-1-define-the-event-contract-avro-111">Step 1: Define the event contract (Avro 1.11)</h3>
-<pre><code class="language-json">{
-  &quot;type&quot;: &quot;record&quot;,
-  &quot;name&quot;: &quot;WalletEvent&quot;,
-  &quot;namespace&quot;: &quot;ledger.v1&quot;,
-  &quot;fields&quot;: [
-    {&quot;name&quot;: &quot;wallet_id&quot;, &quot;type&quot;: &quot;string&quot;},
-    {&quot;name&quot;: &quot;event_id&quot;, &quot;type&quot;: &quot;string&quot;},
-    {&quot;name&quot;: &quot;event_type&quot;, &quot;type&quot;: {&quot;type&quot;: &quot;enum&quot;, &quot;symbols&quot;: [&quot;Deposited&quot;, &quot;Withdrawn&quot;]}},
-    {&quot;name&quot;: &quot;amount&quot;, &quot;type&quot;: &quot;double&quot;},
-    {&quot;name&quot;: &quot;timestamp&quot;, &quot;type&quot;: {&quot;type&quot;: &quot;long&quot;, &quot;logicalType&quot;: &quot;timestamp-millis&quot;}},
-    {&quot;name&quot;: &quot;version&quot;, &quot;type&quot;: &quot;int&quot;}
-  ]
-}
-</code></pre>
-<h3 id="step-2-event-store-in-sqlite-schema-only-no-orm">Step 2: Event store in SQLite (schema-only, no ORM)</h3>
-<pre><code class="language-python">import sqlite3, uuid, time
-from dataclasses import dataclass
-from fastavro import parse_schema, writer, reader
-
-SCHEMA = parse_schema({
+<p>This changes design decisions:</p>
+<ul>
+<li><strong>Commands</strong> express intent and are validated before producing events.</li>
+<li><strong>State</strong> is a derived view computed from events.</li>
+<li><strong>Schema evolution</strong> is additive: new event types are appended; old events stay immutable.</li>
+</ul>
+<p>Versioning discipline is what makes replay deterministic. A schema registry that enforces backward compatibility at publish time prevents silent corruption that only surfaces during a replay months later.</p>
+<h2 id="a-worked-example-a-minimal-event-sourced-wallet">A worked example: a minimal event-sourced wallet</h2>
+<p>The example below uses Python, FastAPI, and SQLite as a local event store. It is small enough to run in a few minutes and shows the core mechanics: append, replay, project.</p>
+<h3 id="step-1-the-event-contract">Step 1: The event contract</h3>
+<pre><code class="language-python">SCHEMA = {
     &quot;type&quot;: &quot;record&quot;,
     &quot;name&quot;: &quot;WalletEvent&quot;,
     &quot;fields&quot;: [
@@ -325,7 +296,10 @@ SCHEMA = parse_schema({
         {&quot;name&quot;: &quot;timestamp&quot;, &quot;type&quot;: {&quot;type&quot;: &quot;long&quot;, &quot;logicalType&quot;: &quot;timestamp-millis&quot;}},
         {&quot;name&quot;: &quot;version&quot;, &quot;type&quot;: &quot;int&quot;}
     ]
-})
+}
+</code></pre>
+<h3 id="step-2-event-store-schema">Step 2: Event store schema</h3>
+<pre><code class="language-python">import sqlite3, uuid, time
 
 conn = sqlite3.connect(&quot;:memory:&quot;, check_same_thread=False)
 conn.execute(&quot;&quot;&quot;
@@ -336,56 +310,43 @@ conn.execute(&quot;&quot;&quot;
         event_type TEXT NOT NULL,
         amount REAL NOT NULL,
         timestamp INTEGER NOT NULL,
-        version INTEGER NOT NULL,
-        payload BLOB NOT NULL
+        version INTEGER NOT NULL
     )
 &quot;&quot;&quot;)
+conn.execute(&quot;CREATE INDEX IF NOT EXISTS idx_events_wallet ON events (wallet_id, seq)&quot;)
+</code></pre>
+<h3 id="step-3-append-and-replay">Step 3: Append and replay</h3>
+<pre><code class="language-python">def current_version(wallet_id: str) -&gt; int:
+    row = conn.execute(
+        &quot;SELECT MAX(version) FROM events WHERE wallet_id = ?&quot;, (wallet_id,)
+    ).fetchone()
+    return row[0] or 0
 
-def append_event(wallet_id: str, event_type: str, amount: float):
+def append_event(wallet_id: str, event_type: str, amount: float) -&gt; str:
     event_id = str(uuid.uuid4())
     version = current_version(wallet_id) + 1
-    event = {
-        &quot;wallet_id&quot;: wallet_id,
-        &quot;event_id&quot;: event_id,
-        &quot;event_type&quot;: event_type,
-        &quot;amount&quot;: amount,
-        &quot;timestamp&quot;: int(time.time() * 1000),
-        &quot;version&quot;: version
-    }
-    payload = writer([], SCHEMA, [event])
     conn.execute(
-        &quot;INSERT INTO events (wallet_id, event_id, event_type, amount, timestamp, version, payload) VALUES (?, ?, ?, ?, ?, ?, ?)&quot;,
-        (wallet_id, event_id, event_type, amount, event[&quot;timestamp&quot;], version, bytes(payload))
+        &quot;INSERT INTO events (wallet_id, event_id, event_type, amount, timestamp, version) &quot;
+        &quot;VALUES (?, ?, ?, ?, ?, ?)&quot;,
+        (wallet_id, event_id, event_type, amount, int(time.time() * 1000), version)
     )
     return event_id
 
-def current_version(wallet_id: str) -&gt; int:
-    row = conn.execute(&quot;SELECT MAX(version) FROM events WHERE wallet_id = ?&quot;, (wallet_id,)).fetchone()
-    return row[0] or 0
-</code></pre>
-<h3 id="step-3-projection-materialized-view">Step 3: Projection (materialized view)</h3>
-<pre><code class="language-python">@dataclass
-class Wallet:
-    id: str
-    balance: float
-
-def get_wallet(wallet_id: str) -&gt; Wallet:
+def get_balance(wallet_id: str) -&gt; float:
     rows = conn.execute(
-        &quot;SELECT payload FROM events WHERE wallet_id = ? ORDER BY seq ASC&quot;,
+        &quot;SELECT event_type, amount FROM events WHERE wallet_id = ? ORDER BY seq ASC&quot;,
         (wallet_id,)
     ).fetchall()
     balance = 0.0
-    for row in rows:
-        events = list(reader(row[0], SCHEMA))
-        for event in events:
-            if event[&quot;event_type&quot;] == &quot;Deposited&quot;:
-                balance += event[&quot;amount&quot;]
-            elif event[&quot;event_type&quot;] == &quot;Withdrawn&quot;:
-                balance -= event[&quot;amount&quot;]
-    return Wallet(wallet_id, balance)
+    for event_type, amount in rows:
+        if event_type == &quot;Deposited&quot;:
+            balance += amount
+        elif event_type == &quot;Withdrawn&quot;:
+            balance -= amount
+    return balance
 </code></pre>
-<h3 id="step-4-fastapi-endpoints">Step 4: FastAPI endpoints</h3>
-<pre><code class="language-python">from fastapi import FastAPI, HTTPException
+<h3 id="step-4-http-endpoints">Step 4: HTTP endpoints</h3>
+<pre><code class="language-python">from fastapi import FastAPI
 
 app = FastAPI()
 
@@ -396,297 +357,107 @@ def deposit(wallet_id: str, amount: float):
 
 @app.get(&quot;/wallets/{wallet_id}&quot;)
 def get(wallet_id: str):
-    wallet = get_wallet(wallet_id)
-    return {&quot;wallet_id&quot;: wallet.id, &quot;balance&quot;: wallet.balance}
+    return {&quot;wallet_id&quot;: wallet_id, &quot;balance&quot;: get_balance(wallet_id)}
 </code></pre>
 <h3 id="step-5-run-it">Step 5: Run it</h3>
-<pre><code class="language-bash">pip install fastapi uvicorn fastavro==1.11.0
+<pre><code class="language-bash">pip install fastapi uvicorn
 uvicorn main:app --reload
-curl -X POST http://localhost:8000/wallets/w1/deposit?amount=100
+curl -X POST &quot;http://localhost:8000/wallets/w1/deposit?amount=100&quot;
 curl http://localhost:8000/wallets/w1
 # =&gt; {&quot;wallet_id&quot;:&quot;w1&quot;,&quot;balance&quot;:100.0}
 </code></pre>
-<p><strong>Surprise I hit</strong>: The first time we ran this, the <code>reader</code> call threw <code>SchemaParseException</code> because we forgot to freeze the schema object before writing events. Fixing it took 20 minutes of stack overflowing until I recalled that <code>parse_schema</code> returns a mutable object that must be serialized once and reused.</p>
-<hr />
-<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<table>
-<thead>
-<tr>
-<th>Concept</th>
-<th>CRUD Equivalent</th>
-<th>Event Sourcing Equivalent</th>
-<th>2026 Tooling</th>
-<th>Latency Delta</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Create</td>
-<td><code>INSERT INTO users</code></td>
-<td><code>append_event(user_id, 'Registered', ...)</code></td>
-<td>DynamoDB Streams, PostgreSQL logical decoding</td>
-<td>+5–10 ms per event</td>
-</tr>
-<tr>
-<td>Read latest</td>
-<td><code>SELECT * FROM users WHERE id = ?</code></td>
-<td>Rebuild projection from events</td>
-<td>FastAPI projection endpoint, Redis 7.2 cache</td>
-<td>+100–300 ms first read, then cached</td>
-</tr>
-<tr>
-<td>Update</td>
-<td><code>UPDATE users SET email = ? WHERE id = ?</code></td>
-<td>Append new correction event</td>
-<td>Kafka Streams 3.6, ksqlDB</td>
-<td>+2–5 ms to append, projection rebuild async</td>
-</tr>
-<tr>
-<td>Delete</td>
-<td><code>DELETE FROM users WHERE id = ?</code></td>
-<td>Append tombstone event</td>
-<td>EventStoreDB 22.10</td>
-<td>+3 ms</td>
-</tr>
-<tr>
-<td>Audit trail</td>
-<td>Logs in <code>/var/log</code> or binlogs</td>
-<td>Immutable event stream with causal order</td>
-<td>AWS QLDB, Chronicle</td>
-<td>0 ms (built-in)</td>
-</tr>
-</tbody>
-</table>
-<p>Key insight: event sourcing is <strong>not</strong> about replacing your database; it’s about making your audit trail and replay capabilities first-class citizens, while keeping the mutable state you care about derived and cached.</p>
-<hr />
-<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<h3 id="a-failure-mode-worth-knowing">A failure mode worth knowing</h3>
+<p>The code above is correct for a single process, but it has a race condition. Two concurrent deposits for the same wallet can both read the same <code>current_version</code> and write duplicate version numbers. The fix is a unique constraint on <code>(wallet_id, version)</code> plus a retry on conflict, or a transactional read-modify-write with a row lock. This is the kind of issue that shows up under load and not in a demo. In production, this is typically handled by optimistic concurrency control: the append operation checks the expected version and fails if it has changed since the last read.</p>
+<h2 id="the-tradeoff-in-concrete-terms">The tradeoff, in concrete terms</h2>
+<p>The decision is not "event sourcing or nothing." The realistic choices are:</p>
 <ol>
-<li>
-<p><strong>“Events are just logs”</strong>
-   Wrong. They are <strong>immutable facts</strong> with a strict order. If you treat them as logs, you lose the ability to rebuild state deterministically. I saw a team migrate from MongoDB change streams to Kafka and still call it event sourcing—until they replayed a projection and found non-deterministic ordering because Kafka partitions weren’t keyed by aggregate id. Fix: always partition events by aggregate id (e.g., <code>wallet_id</code>).</p>
-</li>
-<li>
-<p><strong>“We can skip snapshots”</strong>
-   Snapshots reduce replay time from O(n) to O(1) at the cost of storage. In 2026, a snapshot every 100 events in a high-volume ledger (10 k events/sec) costs about 5 GB/month on S3 Intelligent Tiering. Without snapshots, replaying a week’s worth of events can take 25 minutes and 100% CPU for a single projection. That’s unacceptable for a 24/7 service.</p>
-</li>
-<li>
-<p><strong>“Event sourcing = CQRS”</strong>
-   They overlap but are orthogonal. CQRS splits reads and writes into different models; event sourcing makes every state change an event. You can have CQRS without event sourcing (e.g., read replicas) and event sourcing without CQRS (e.g., single read model). In practice, event-sourced systems often adopt CQRS because the read side becomes a projection pipeline.</p>
-</li>
-<li>
-<p><strong>“Schema evolution is free”</strong>
-   In 2026, teams using Protobuf 24.4 or Avro 1.11 still hit breaking changes when they rename a field or change a type. The registry rejects publishes that break backward compatibility by default, but forward compatibility requires discipline. I once had to backfill a new <code>currency</code> field across 50 million events because we assumed forward compatibility was automatic. It wasn’t.</p>
-</li>
+<li><strong>CRUD with an audit log.</strong> Cheapest to build, hardest to replay.</li>
+<li><strong>CRUD with temporal tables.</strong> Adds point-in-time queries without changing the write model.</li>
+<li><strong>Event sourcing.</strong> Adds deterministic replay and flexible projections, at the cost of schema discipline and projection operations.</li>
 </ol>
-<hr />
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>Now let’s talk about production-grade durability, global scaling, and cost controls for 2026.</p>
-<h3 id="durability-patterns">Durability patterns</h3>
+<p>A useful way to frame the tradeoff is in terms of the questions you need to answer:</p>
 <table>
 <thead>
 <tr>
-<th>Problem</th>
-<th>2026 Pattern</th>
-<th>Tool</th>
-<th>Notes</th>
+<th>Question</th>
+<th>CRUD + audit log</th>
+<th>Temporal tables</th>
+<th>Event sourcing</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Event loss on crash</td>
-<td>Write-ahead log (WAL) + fsync</td>
-<td>PostgreSQL 16 with <code>wal_level=logical</code>, <code>synchronous_commit=on</code></td>
-<td>Adds 1–2 ms latency, worth it for money-ledgers</td>
+<td>What is the current state?</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes (via projection)</td>
 </tr>
 <tr>
-<td>Cross-region replication</td>
-<td>Multi-region event store with last-writer-wins</td>
-<td>AWS DynamoDB Global Tables 2026, EventStoreDB 23.10 cluster</td>
-<td>Conflict resolution is manual; test with chaos engineering</td>
+<td>What was the state at time T?</td>
+<td>Painful</td>
+<td>Yes</td>
+<td>Yes</td>
 </tr>
 <tr>
-<td>Fast replay</td>
-<td>Snapshots + incremental checkpointing</td>
-<td>PebbleDB snapshot format, RocksDB 8.7 compaction</td>
-<td>Snapshots every 100 events, checkpoints every 10 k</td>
+<td>Rebuild a read model in a new shape?</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Deterministic replay of domain intent?</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Schema changes without rewriting history?</td>
+<td>N/A</td>
+<td>Limited</td>
+<td>Yes, with versioned events</td>
+</tr>
+<tr>
+<td>Operational complexity</td>
+<td>Low</td>
+<td>Low</td>
+<td>High</td>
 </tr>
 </tbody>
 </table>
-<h3 id="scaling-projections">Scaling projections</h3>
-<p>In 2026, Klarna’s payment retry engine runs 400 projection workers on Kubernetes 1.28, each consuming from a dedicated Kafka topic sharded by <code>aggregate_id</code>. The workers rebuild materialized views in Redis 7.2 and publish backpressure metrics to Prometheus. Average projection lag is 250 ms at 8 k events/sec, with p99 at 1.2 s. Without sharding, lag would hit 6 s.</p>
-<p>Code snippet (simplified):</p>
-<pre><code class="language-python">from confluent_kafka import Consumer, KafkaException
-import redis.asyncio as redis
-
-consumer = Consumer({
-    'bootstrap.servers': 'kafka:9092',
-    'group.id': 'projection-wallet-0',
-    'auto.offset.reset': 'earliest',
-    'enable.auto.commit': False
-})
-consumer.subscribe(['wallet_events'])
-
-r = redis.Redis(host='redis', port=6379, decode_responses=True)
-
-async def process():
-    while True:
-        msg = consumer.poll(0.1)
-        if msg is None or msg.error():
-            break
-        event = parse_event(msg.value())
-        await update_projection(event.wallet_id, event)
-        consumer.commit(msg)
-</code></pre>
-<h3 id="cost-guardrails">Cost guardrails</h3>
-<table>
-<thead>
-<tr>
-<th>Item</th>
-<th>2026 Cost</th>
-<th>Control</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Event storage (DynamoDB)</td>
-<td>$0.06/GB/month</td>
-<td>TTL events older than 7 years</td>
-</tr>
-<tr>
-<td>Projection cache (Redis)</td>
-<td>$0.015/GB/month</td>
-<td>Eviction policy <code>allkeys-lru</code>, maxmemory 30% of RAM</td>
-</tr>
-<tr>
-<td>Snapshots (S3)</td>
-<td>$0.023/GB/month</td>
-<td>Lifecycle rule: move to Glacier after 90 days</td>
-</tr>
-<tr>
-<td>Kafka retention</td>
-<td>$0.10/GB/month</td>
-<td>Compact topics, retention 3 days unless special audit</td>
-</tr>
-</tbody>
-</table>
-<p>Total bill for 1 TB/month of event data: ~$60 for storage, ~$15 for compute, ~$30 for networking—about $105/month. Without snapshots and compaction, the bill would triple.</p>
-<hr />
-<h2 id="quick-reference">Quick reference</h2>
-<table>
-<thead>
-<tr>
-<th>When to use event sourcing</th>
-<th>When to avoid it</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Audit or compliance trail required (PSD2, SOX, GDPR Art. 30)</td>
-<td>You only need a simple audit log (use temporal tables)</td>
-</tr>
-<tr>
-<td>Debugging race conditions by replaying history</td>
-<td>Your domain is read-heavy and write-light (&lt;100 writes/sec)</td>
-</tr>
-<tr>
-<td>Flexible projections without schema migrations</td>
-<td>Your team lacks schema discipline (use Avro, Protobuf)</td>
-</tr>
-<tr>
-<td>Long-lived aggregates (wallets, policies)</td>
-<td>Aggregates that expire in &lt;30 days</td>
-</tr>
-<tr>
-<td>Regulatory replay requirements (e.g., central bank audits)</td>
-<td>Your stack doesn’t support append-only (MongoDB capped collections break replay determinism)</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Version</th>
-<th>Purpose</th>
-<th>Cost note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>EventStoreDB</td>
-<td>23.10</td>
-<td>Append-only event store with projections</td>
-<td>Open-source, $0; Enterprise $5k/cluster/year</td>
-</tr>
-<tr>
-<td>Apache Kafka</td>
-<td>3.6</td>
-<td>Distributed append log</td>
-<td>$0; Confluent Cloud ~$0.10/GB ingest</td>
-</tr>
-<tr>
-<td>PostgreSQL</td>
-<td>16</td>
-<td>Logical decoding + CTE projections</td>
-<td>$0 self-hosted; RDS ~$0.12/hr</td>
-</tr>
-<tr>
-<td>AWS DynamoDB</td>
-<td>2026</td>
-<td>Serverless event store with TTL</td>
-<td>$0.06/GB/month</td>
-</tr>
-<tr>
-<td>Redis</td>
-<td>7.2</td>
-<td>Projection cache with LRU eviction</td>
-<td>$0.015/GB/month</td>
-</tr>
-<tr>
-<td>Avro</td>
-<td>1.11</td>
-<td>Schema evolution with registry</td>
-<td>$0</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
+<h2 id="how-to-measure-whether-it-pays-off-in-your-system">How to measure whether it pays off in your system</h2>
+<p>Before committing, instrument three things and compare them against your requirements.</p>
+<p><strong>1. Replay time.</strong> Write a script that replays all events for a representative aggregate and measures wall-clock time. For an aggregate with N events, replay time is roughly <code>N × per-event-processing-time</code>. If per-event processing is 50 microseconds, 1 million events take about 50 seconds. If your p99 requirement for rebuilding a projection is 30 seconds, you need snapshots or parallelism. Measure it; do not estimate.</p>
+<p><strong>2. Projection lag.</strong> If you run projections asynchronously, instrument the difference between the event's append timestamp and the time the projection is updated. Track p50 and p99. A projection lag of a few hundred milliseconds is often acceptable; a lag of minutes usually is not.</p>
+<p><strong>3. Storage growth.</strong> Measure bytes per event for your actual payloads, then multiply by your expected event rate. For example, at 1,000 events per second and 500 bytes per event, that is 500 KB/s, or about 43 GB per day. Apply your provider's storage rate to get a monthly figure. Add snapshot storage on top of that.</p>
+<p>Run these three measurements on a staging environment with a realistic event volume. If replay time and projection lag fit your requirements without snapshots and without exotic infrastructure, event sourcing may be a reasonable fit. If not, the complexity tax is probably not worth paying yet.</p>
+<h2 id="common-misconceptions">Common misconceptions</h2>
+<p><strong>"Events are just logs."</strong> Events are immutable facts with a defined order per aggregate. If events are not keyed by aggregate identifier, replay can produce non-deterministic results. Partitioning by aggregate id is not optional.</p>
+<p><strong>"We can skip snapshots."</strong> Snapshots trade storage for replay time. Whether you need them depends on your replay time budget, which you should measure. A common pattern is to snapshot every N events, where N is chosen so that replay from the last snapshot fits within your latency budget.</p>
+<p><strong>"Event sourcing equals CQRS."</strong> They are orthogonal. CQRS splits read and write models; event sourcing makes the write side append-only. You can have CQRS with a mutable write model (read replicas, for example) and event sourcing with a single read model.</p>
+<p><strong>"Schema evolution is free."</strong> Renaming a field or changing a type is a breaking change in most serialization formats unless handled carefully. The safe pattern is to add new fields with defaults, deprecate old ones over a migration window, and rebuild projections from the full event history to verify correctness.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before adopting event sourcing, answer these questions honestly:</p>
 <ul>
-<li>Martin Fowler, “Event Sourcing” (2005) – still the clearest conceptual overview despite its age.</li>
-<li>Greg Young, “Versioning in an Event Sourced System” (2016) – the definitive guide to schema evolution.</li>
-<li>AWS Architecture Blog, “Building an auditable ledger with Amazon QLDB” (2026 Q4) – a serverless alternative with cryptographic verification.</li>
-<li>“Designing Event-Driven Systems” by Ben Stopford (O’Reilly 2026) – patterns for scaling projections and handling backpressure.</li>
-<li>Confluent blog, “Kafka Streams vs. ksqlDB for event-sourced projections” (2026 update) – a practical comparison with benchmarks.</li>
+<li>Does a regulator, auditor, or business process require deterministic replay of domain intent, not just a record of changes?</li>
+<li>Can you name a read model that you would rebuild from events if the schema changed? If not, you may not need event sourcing.</li>
+<li>Does your team have a process for versioning event contracts and reviewing breaking changes?</li>
+<li>Have you measured replay time for your largest aggregate?</li>
+<li>Have you measured projection lag under realistic load?</li>
+<li>Do you have a plan for snapshots, and do you know the storage cost?</li>
+<li>Is eventual consistency acceptable for every consumer of the read models?</li>
 </ul>
-<hr />
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why do I need event sourcing if PostgreSQL logical decoding already gives me a change stream?</strong>
-PostgreSQL logical decoding gives you a stream of row-level changes, but those changes are still mutable and lack causal ordering guarantees across tables. Event sourcing records domain intent (e.g., “user withdrew $50”) as immutable facts, making replay deterministic even if you change the underlying schema. In 2026, teams using logical decoding for audit still rebuild projections by parsing raw WAL, which breaks when the table schema changes. Event sourcing keeps the schema versioned and immutable.</p>
-<p><strong>What’s the minimum write volume that justifies event sourcing?</strong>
-Below 100 writes/sec per aggregate, the complexity overhead (snapshots, schema registry, projection lag) usually outweighs the benefits. At 1 k writes/sec, the replay latency becomes noticeable (seconds) and the audit value starts to justify the cost. If you’re under 10 k writes/sec, consider a hybrid: CRUD for hot paths and event sourcing only for the aggregates that regulators or auditors care about.</p>
-<p><strong>How do I handle event schema breaking changes in 2026?</strong>
-Use Avro 1.11 with Confluent Schema Registry 7.5 in <code>BACKWARD_TRANSITIVE</code> mode. When you need to rename a field, add a new field with a default value and deprecate the old one over a 30-day migration window. Publish a migration event that rebuilds the projection with the new schema. Test the migration in staging with a full replay of the last 7 days of events—it should complete in &lt;5 minutes for 1 M events on a 4-core VM.</p>
-<p><strong>Can I use event sourcing with serverless functions (AWS Lambda, Cloud Run)?</strong>
-Yes, but you must batch events to reduce cold starts. In 2026, Lambda with Python 3.11 cold starts average 300–600 ms; appending a single event adds another 50 ms. Batch 100 events per invocation to keep p95 latency under 1 s. Use DynamoDB Streams as the trigger, but enable enhanced fan-out to reduce polling latency from 1 s to 100 ms. Watch out for partial failures—Lambda retries the entire batch, so make your event handler idempotent.</p>
-<hr />
-<h2 id="one-final-gut-check-before-you-commit">One final gut check before you commit</h2>
-<p>If your team hasn’t shipped a v1 yet, <strong>skip event sourcing</strong>. Start with a simple CRUD model and temporal tables (Postgres 15+). Only when you hit a real audit requirement or a replay bug that takes hours to debug should you migrate.</p>
-<p>I once watched a team rebuild a payments engine using event sourcing from day one. They spent six months on the audit trail and projections, only to discover their business logic changed weekly—requiring constant schema migrations. The audit team finally said, “Just give us the logs.” They switched to temporal tables and saved 200 engineering days.</p>
-<p>So here’s your 30-minute action: open your current codebase, find the aggregate that regulators or auditors care about most, and check how long it takes to answer “what did this thing look like at 2026-04-05 03:41 UTC?” If the answer involves backups, binlogs, or heroic scripting, event sourcing might be worth the complexity tax. If the answer is a single SQL query, stick with CRUD and temporal tables.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
-<li><a href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
-<li><a href="https://kubaik.github.io/audit-logs-compliance-vs-performance/">Audit logs: compliance vs performance</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>If you answer "no" to any of the first three, event sourcing is likely premature. If you answer "no" to any of the last four, you are not ready to operate it.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why not just use change data capture from the database?</strong>
+Change data capture gives you a stream of row-level changes. Those changes are tied to the current table schema and do not carry domain intent. Replaying them after a schema change is fragile. Event sourcing records domain events with versioned contracts, so replay remains deterministic across schema changes.</p>
+<p><strong>What is the minimum write volume that justifies event sourcing?</strong>
+There is no universal threshold. The relevant question is whether you need replay or flexible projections, not how many writes you have. A low-volume system with a strict regulatory replay requirement may justify event sourcing; a high-volume system with no replay requirement may not.</p>
+<p><strong>How do I handle breaking schema changes?</strong>
+Add new fields with defaults rather than renaming or retyping existing fields. Deprecate old fields over a migration window. Rebuild projections from the full event history in staging to verify that the new schema produces the same results. Use a schema registry that rejects breaking changes at publish time if your serialization format supports one.</p>
+<p><strong>Can I use event sourcing with serverless functions?</strong>
+Yes, but batch events to reduce per-invocation overhead, and make handlers idempotent because retries may redeliver events. Watch for partial batch failures and ensure your append operation is safe to retry.</p>
+<h2 id="your-next-30-minutes">Your next 30 minutes</h2>
+<p>Pick the aggregate in your system that auditors or support engineers ask about most often. Time how long it takes to answer: "What did this aggregate look like at a specific past timestamp?" If the answer requires restoring a backup, parsing binlogs, or writing a one-off script, record that time and the steps involved. Then compare it against the replay-time measurement described above. That comparison, not a general preference for or against event sourcing, is what should drive the decision.</p>
                 
                 
             </div>

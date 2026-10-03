@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>M-Pesa Daraja 2.0: your 2026 migration checklist - Kubai Kevin</title>
-        <meta name="description" content="Migrate M-Pesa Daraja to 2.0 in 2026 and cut failed payments 82% — new headers, idempotency keys, and callback changes you must ship before March 31">
+        <meta name="description" content="A practical checklist for migrating an M-Pesa Daraja integration across a breaking API change: auth, idempotency, callbacks, error handling and rollout.">
         <meta name="keywords" content="SafaricomApi2026, Apis">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-02T16:41:45.048601">
-        <meta property="article:modified_time" content="2026-09-19T09:34:02.688082+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:11:51.279792+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="M-Pesa Daraja 2.0: your 2026 migration checklist">
-        <meta property="og:description" content="Migrate M-Pesa Daraja to 2.0 in 2026 and cut failed payments 82% — new headers, idempotency keys, and callback changes you must ship before March 31">
+        <meta property="og:description" content="A practical checklist for migrating an M-Pesa Daraja integration across a breaking API change: auth, idempotency, callbacks, error handling and rollout.">
         <meta property="og:url" content="https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="M-Pesa Daraja 2.0: your 2026 migration checklist">
-        <meta name="twitter:description" content="Migrate M-Pesa Daraja to 2.0 in 2026 and cut failed payments 82% — new headers, idempotency keys, and callback changes you must ship before March 31">
+        <meta name="twitter:description" content="A practical checklist for migrating an M-Pesa Daraja integration across a breaking API change: auth, idempotency, callbacks, error handling and rollout.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/m-pesa-daraja-20-your-2026-migration-checklist.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/#article",
       "headline": "M-Pesa Daraja 2.0: your 2026 migration checklist",
-      "description": "Migrate M-Pesa Daraja to 2.0 in 2026 and cut failed payments 82% — new headers, idempotency keys, and callback changes you must ship before March 31",
+      "description": "A practical checklist for migrating an M-Pesa Daraja integration across a breaking API change: auth, idempotency, callbacks, error handling and rollout.",
       "datePublished": "2026-07-02T16:41:45+00:00",
-      "dateModified": "2026-09-19T09:34:02+00:00",
-      "wordCount": 2241,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-10-03T11:11:51+00:00",
+      "wordCount": 2754,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">M-Pesa Daraja 2.0: your 2026 migration checklist</h1>
                 
-                <p class="post-lead">Migrate M-Pesa Daraja to 2.0 in 2026 and cut failed payments 82% — new headers, idempotency keys, and callback changes you must ship before March 31</p>
+                <p class="post-lead">A practical checklist for migrating an M-Pesa Daraja integration across a breaking API change: auth, idempotency, callbacks, error handling and rollout.</p>
                 
                 
                 <div class="tags">
@@ -241,53 +241,61 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2241 words
+                        14 min read
+                        &nbsp;·&nbsp; 2754 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>Our sandbox tests passed because we mocked the new <code>X-Daraja-Version: 2.0</code> header, but the live endpoint rejected the call with <code>412 Precondition Failed</code> when we pushed to production. The official docs said the header was optional, but the gateway silently upgraded us on March 1, 2026 and started enforcing it. This post is the checklist I wish I had kept on my desk that weekend.</p>
-<p>Daraja 2.0 isn’t just a version bump; it’s a breaking change that rewrites authentication, adds idempotency keys, and tightens TLS requirements. The old <code>stkpush</code> endpoint is gone, replaced by a new <code>v2/mpesa/stkpush</code> path that expects a <code>Timestamp</code> field instead of <code>TimeStamp</code>. If your code still uses the 2026 SDK, you will break in production after March 31, 2026, when Safaricom retires the legacy endpoints permanently. I’ve seen teams wait until the last week and scramble through weekend war rooms; don’t be one of them.</p>
-<p>This guide assumes you already integrate M-Pesa via Daraja, know what a Lipa Na M-Pesa Online API call looks like, and have a sandbox account. If you’re starting from scratch, open the <a href="https://developer.safaricom.co.ke/">Safaricom Developer Portal</a> first and create an account. Grab your Consumer Key and Consumer Secret before continuing.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You’ll need:</p>
+                <p>API version migrations are rarely a version bump. They change authentication, request schemas, callback shapes and error semantics all at once, and the failure modes only appear under production traffic. This article is a migration checklist for an M-Pesa Daraja-style integration, written so that it applies whether the breaking change you are facing is a documented major version, a silent gateway upgrade, or a deprecation deadline you have been ignoring.</p>
+<p>It assumes you already integrate with the Daraja APIs, know what a Lipa Na M-Pesa Online (STK push) request looks like, and have a sandbox account on the Safaricom Developer Portal. If you are starting from scratch, register there first and obtain a Consumer Key and Consumer Secret before continuing.</p>
+<h2 id="why-version-migrations-break-in-production">Why version migrations break in production</h2>
+<p>The recurring failure mode is not that the new endpoint is hard to call. It is that the old one keeps working in sandbox long after it stops working in production, or vice versa. A few patterns show up repeatedly:</p>
 <ul>
-<li>A Unix shell (Linux or macOS 14+; Windows WSL2 works too)</li>
+<li><strong>Mocked headers.</strong> Sandbox test suites often mock request headers, so a newly required header is never exercised. The call passes locally and returns a precondition error against the live gateway.</li>
+<li><strong>Silent schema changes.</strong> A field is renamed, re-cased, or moved one level deeper in the JSON response. Naive parsers that index directly into the payload raise <code>KeyError</code> or return <code>None</code> at exactly the wrong moment.</li>
+<li><strong>Deadline clustering.</strong> Deprecation dates push many teams into the same final week. Support queues lengthen, and incident response capacity drops precisely when it is needed most.</li>
+<li><strong>Callback drift.</strong> The request succeeds, the money moves, and the callback handler silently drops the notification because the payload shape changed.</li>
+</ul>
+<p>The checklist below is ordered so that each step makes the next one testable. Nothing here depends on a specific SDK version; it depends on reading the current portal documentation and verifying behaviour against the sandbox.</p>
+<h2 id="prerequisites-and-what-you-will-build">Prerequisites and what you will build</h2>
+<p>You will need:</p>
+<ul>
+<li>A Unix shell (Linux or macOS; Windows via WSL2 is fine)</li>
 <li>Python 3.11 or Node 20 LTS</li>
 <li>Redis 7.2 for caching access tokens (optional but recommended)</li>
-<li>A sandbox app registered on the Safaricom portal with <code>Daraja 2.0</code> enabled</li>
-<li>ngrok or a public HTTPS tunnel to expose your webhook (localhost won’t cut it after March 2026)</li>
+<li>A sandbox app registered on the Safaricom portal</li>
+<li>A public HTTPS tunnel such as ngrok to expose your webhook — localhost callbacks will not be delivered</li>
 </ul>
-<p>What you’ll build in this tutorial is a minimal but production-ready integration that:
-- Authenticates with the new <code>/oauth/v1/generate</code> endpoint
-- Issues a Lipa Na M-Pesa Online request to <code>/v2/mpesa/stkpush</code>
-- Validates the new <code>C2B</code> callback format that now includes <code>CheckoutRequestID</code> instead of <code>CheckoutRequestID</code> (yes, the field name changed)
-- Uses idempotency keys to prevent duplicate charges</p>
-<p>By the end you will have a working flow that handles a successful STK push, a timeout, and a user cancellation, all with proper logging and metrics.</p>
-<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<p>Create a new directory and install the pinned packages:</p>
-<pre><code class="language-bash">git init mpesa-daraja-2-0
-cd mpesa-daraja-2-0
+<p>The result is a minimal but production-shaped integration that:</p>
+<ul>
+<li>Authenticates against the OAuth token endpoint and caches the token</li>
+<li>Issues an STK push request</li>
+<li>Parses the callback payload defensively</li>
+<li>Sends an idempotency key with every payment attempt</li>
+<li>Handles success, timeout and user cancellation with structured logging</li>
+</ul>
+<h2 id="step-1-pin-your-environment">Step 1 — pin your environment</h2>
+<p>Create a directory and install pinned packages:</p>
+<pre><code class="language-bash">git init mpesa-migration
+cd mpesa-migration
 python -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
-pip install requests==2.31.0 redis==7.2.0 python-dotenv==1.0.0
+pip install requests==2.31.0 redis==7.2.0 python-dotenv==1.0.0 tenacity==8.2.3
 </code></pre>
-<p>If you prefer Node, run:</p>
+<p>The Node equivalent:</p>
 <pre><code class="language-bash">npm init -y
-npm install axios@1.6.2 redis@7.2.0 dotenv@16.3.1
+npm install axios@1.6.2 redis@7.2.0 dotenv@16.3.1 p-retry@6.1.0
 touch .env
 </code></pre>
-<p>Create a <code>.env</code> file with the 2026 credentials:</p>
-<pre><code>MPESA_CONSUMER_KEY=your_2026_consumer_key
-MPESA_CONSUMER_SECRET=your_2026_consumer_secret
-MPESA_PASSKEY=your_2026_passkey  # from the Safaricom portal
+<p>Create a <code>.env</code> file. Values come from your portal app; the shortcode below is the standard sandbox test shortcode used in Safaricom's public examples:</p>
+<pre><code>MPESA_CONSUMER_KEY=your_consumer_key
+MPESA_CONSUMER_SECRET=your_consumer_secret
+MPESA_PASSKEY=your_passkey
 MPESA_BUSINESS_SHORT_CODE=174379
 MPESA_CALLBACK_URL=https://your-public-url.com/mpesa/callback
 REDIS_URL=redis://localhost:6379/0
@@ -295,50 +303,62 @@ REDIS_URL=redis://localhost:6379/0
 <p>Start Redis locally if you want token caching:</p>
 <pre><code class="language-bash">docker run --name redis-mpesa -p 6379:6379 -d redis:7.2-alpine
 </code></pre>
-<p>Gotcha I missed the first time: the new <code>/oauth/v1/generate</code> endpoint expects the <code>grant_type=client_credentials</code> body, but the old sandbox returned <code>application/json</code> with a top-level <code>access_token</code>. The production gateway now returns <code>application/json</code> with <code>access_token</code> under a <code>body</code> key. One extra nesting level that breaks naive JSON parsers.</p>
+<p>Before writing any code, do one thing manually: call the OAuth endpoint with <code>curl</code> and print the raw response body. Do not assume the token is at the top level. Response envelopes change between environments, and one extra nesting level is enough to break a parser that indexes directly.</p>
+<pre><code class="language-bash">curl -s -X POST &quot;https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials&quot; \
+  -u &quot;$MPESA_CONSUMER_KEY:$MPESA_CONSUMER_SECRET&quot; | python -m json.tool
+</code></pre>
+<p>Whatever structure that command prints is the structure your client must handle. Treat the code below as a template and adjust the accessor to match what you actually observe.</p>
 <h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<p>Below is a minimal Python 3.11 client that authenticates and issues an STK push. Save it as <code>mpesa.py</code>.</p>
+<p>Save this as <code>mpesa.py</code>. Note that the token accessor is written defensively: it accepts either a top-level <code>access_token</code> or one nested under <code>body</code>, because both shapes have appeared in Daraja responses across environments.</p>
 <pre><code class="language-python">import os
-import time
 import uuid
 import hashlib
+import logging
 import requests
 import redis
-from datetime import datetime
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 
 load_dotenv()
+log = logging.getLogger(&quot;mpesa&quot;)
 
-class Daraja2Client:
+class DarajaClient:
     OAUTH_URL = &quot;https://sandbox.safaricom.co.ke/oauth/v1/generate&quot;
-    STK_URL = &quot;https://safestk.safaricom.co.ke/mpesa/stkpush/v1/processrequest&quot;
+    STK_URL = &quot;https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest&quot;
 
     def __init__(self):
-        self.consumer_key = os.getenv(&quot;MPESA_CONSUMER_KEY&quot;)
-        self.consumer_secret = os.getenv(&quot;MPESA_CONSUMER_SECRET&quot;)
-        self.passkey = os.getenv(&quot;MPESA_PASSKEY&quot;)
-        self.shortcode = os.getenv(&quot;MPESA_BUSINESS_SHORT_CODE&quot;)
-        self.callback = os.getenv(&quot;MPESA_CALLBACK_URL&quot;)
+        self.consumer_key = os.environ[&quot;MPESA_CONSUMER_KEY&quot;]
+        self.consumer_secret = os.environ[&quot;MPESA_CONSUMER_SECRET&quot;]
+        self.passkey = os.environ[&quot;MPESA_PASSKEY&quot;]
+        self.shortcode = os.environ[&quot;MPESA_BUSINESS_SHORT_CODE&quot;]
+        self.callback = os.environ[&quot;MPESA_CALLBACK_URL&quot;]
         self.redis = redis.from_url(os.getenv(&quot;REDIS_URL&quot;, &quot;redis://localhost:6379/0&quot;))
 
     def get_token(self):
-        cache_key = &quot;daraja2_token&quot;
+        cache_key = &quot;daraja_token&quot;
         cached = self.redis.get(cache_key)
         if cached:
             return cached.decode()
 
-        auth = (self.consumer_key, self.consumer_secret)
-        resp = requests.post(self.OAUTH_URL, auth=auth, data={&quot;grant_type&quot;: &quot;client_credentials&quot;})
+        resp = requests.post(
+            self.OAUTH_URL,
+            params={&quot;grant_type&quot;: &quot;client_credentials&quot;},
+            auth=(self.consumer_key, self.consumer_secret),
+            timeout=10,
+        )
         resp.raise_for_status()
-        token = resp.json()[&quot;body&quot;][&quot;access_token&quot;]  # &lt;- the nesting change
-        self.redis.setex(cache_key, 3500, token)  # 10 min expiry with buffer
+        payload = resp.json()
+        # Accept either envelope shape; log which one you got so you notice drift.
+        token = payload.get(&quot;access_token&quot;) or payload.get(&quot;body&quot;, {}).get(&quot;access_token&quot;)
+        if not token:
+            raise RuntimeError(f&quot;no access_token in response keys={list(payload)}&quot;)
+        self.redis.setex(cache_key, 3500, token)  # token lifetime minus a buffer
         return token
 
-    def lipa_stk(self, phone: str, amount: int, reference: str):
+    def lipa_stk(self, phone: str, amount: int, reference: str, idempotency_key: str):
         token = self.get_token()
-        timestamp = datetime.utcnow().strftime(&quot;%Y%m%d%H%M%S&quot;)
+        timestamp = datetime.now(timezone.utc).strftime(&quot;%Y%m%d%H%M%S&quot;)
         password = self._generate_password(timestamp)
-        idempotency_key = str(uuid.uuid4())
 
         payload = {
             &quot;BusinessShortCode&quot;: self.shortcode,
@@ -351,13 +371,13 @@ class Daraja2Client:
             &quot;PhoneNumber&quot;: phone,
             &quot;CallBackURL&quot;: self.callback,
             &quot;AccountReference&quot;: reference,
-            &quot;TransactionDesc&quot;: &quot;Payment for goods&quot;
+            &quot;TransactionDesc&quot;: &quot;Payment for goods&quot;,
         }
 
         headers = {
             &quot;Authorization&quot;: f&quot;Bearer {token}&quot;,
             &quot;Content-Type&quot;: &quot;application/json&quot;,
-            &quot;X-Daraja-Version&quot;: &quot;2.0&quot;  # &lt;- new header
+            &quot;X-Idempotency-Key&quot;: idempotency_key,
         }
 
         resp = requests.post(self.STK_URL, json=payload, headers=headers, timeout=10)
@@ -365,20 +385,16 @@ class Daraja2Client:
         return resp.json()
 
     def _generate_password(self, timestamp):
-        # BusinessShortCode + PassKey + Timestamp
         raw = f&quot;{self.shortcode}{self.passkey}{timestamp}&quot;
         return hashlib.sha256(raw.encode()).hexdigest()
-
-if __name__ == &quot;__main__&quot;:
-    client = Daraja2Client()
-    result = client.lipa_stk(&quot;+254712345678&quot;, 100, &quot;INV-12345&quot;)
-    print(result)
 </code></pre>
-<p>Key changes to note:</p>
+<p>Three details are worth calling out because they are the ones that change between versions:</p>
 <ul>
-<li><code>Timestamp</code> is now a string in <code>YYYYMMDDHHMMSS</code> format, not the old <code>TimeStamp</code> (case change). - <code>X-Daraja-Version: 2.0</code> must be present; otherwise the gateway returns 412. - The password is now SHA-256 instead of plain Base64. - The callback payload structure changed: the request ID is now <code>CheckoutRequestID</code>, not <code>CheckoutRequestID</code>.</li>
+<li><strong>Timestamp format.</strong> The STK push password is derived from <code>BusinessShortCode + PassKey + Timestamp</code>, where the timestamp is a 14-digit <code>YYYYMMDDHHMMSS</code> string. If your timestamp helper produces a different width or includes separators, the derived password will not match and the request will be rejected. Assert the length before sending.</li>
+<li><strong>Password derivation.</strong> Older integrations used Base64 of the concatenated string. Newer ones use a SHA-256 hex digest. These are not interchangeable — check the current documentation for your account and verify against the sandbox before switching.</li>
+<li><strong>Idempotency key.</strong> Send a fresh UUID per logical payment attempt, not per HTTP attempt. Retries of the same logical payment must reuse the same key; distinct payments must not.</li>
 </ul>
-<p>Node equivalent (save as <code>mpesa.js</code>):</p>
+<p>The Node equivalent, saved as <code>mpesa.js</code>:</p>
 <pre><code class="language-javascript">import axios from &quot;axios&quot;;
 import crypto from &quot;crypto&quot;;
 import dotenv from &quot;dotenv&quot;;
@@ -389,12 +405,12 @@ dotenv.config();
 const client = createClient({ url: process.env.REDIS_URL });
 await client.connect();
 
-class Daraja2Client {
+class DarajaClient {
   OAUTH_URL = &quot;https://sandbox.safaricom.co.ke/oauth/v1/generate&quot;;
-  STK_URL = &quot;https://safestk.safaricom.co.ke/mpesa/stkpush/v1/processrequest&quot;;
+  STK_URL = &quot;https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest&quot;;
 
   async getToken() {
-    const key = &quot;daraja2_token&quot;;
+    const key = &quot;daraja_token&quot;;
     const cached = await client.get(key);
     if (cached) return cached;
 
@@ -404,19 +420,27 @@ class Daraja2Client {
 
     const res = await axios.post(
       this.OAUTH_URL,
-      &quot;grant_type=client_credentials&quot;,
-      { headers: { Authorization: `Basic ${auth}` } }
+      null,
+      {
+        params: { grant_type: &quot;client_credentials&quot; },
+        headers: { Authorization: `Basic ${auth}` },
+        timeout: 10_000,
+      }
     );
-    const token = res.data.body.access_token; // &lt;- nesting change
+    const payload = res.data;
+    const token = payload.access_token ?? payload.body?.access_token;
+    if (!token) throw new Error(`no access_token in keys=${Object.keys(payload)}`);
     await client.setEx(key, 3500, token);
     return token;
   }
 
-  async lipaStk(phone, amount, reference) {
+  async lipaStk(phone, amount, reference, idempotencyKey) {
     const token = await this.getToken();
-    const timestamp = new Date().toISOString().replace(/[-:.]/g, &quot;&quot;).slice(0, 14);
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[-:TZ.]/g, &quot;&quot;)
+      .slice(0, 14);
     const password = this.generatePassword(timestamp);
-    const idempotencyKey = crypto.randomUUID();
 
     const payload = {
       BusinessShortCode: process.env.MPESA_BUSINESS_SHORT_CODE,
@@ -435,7 +459,7 @@ class Daraja2Client {
     const headers = {
       Authorization: `Bearer ${token}`,
       &quot;Content-Type&quot;: &quot;application/json&quot;,
-      &quot;X-Daraja-Version&quot;: &quot;2.0&quot;,
+      &quot;X-Idempotency-Key&quot;: idempotencyKey,
     };
 
     const res = await axios.post(this.STK_URL, payload, { headers, timeout: 10_000 });
@@ -448,207 +472,199 @@ class Daraja2Client {
   }
 }
 
-const daraja = new Daraja2Client();
-daraja.lipaStk(&quot;+254712345678&quot;, 100, &quot;INV-12345&quot;).then(console.log).catch(console.error);
+const daraja = new DarajaClient();
+daraja
+  .lipaStk(&quot;+254712345678&quot;, 100, &quot;INV-12345&quot;, crypto.randomUUID())
+  .then(console.log)
+  .catch(console.error);
 </code></pre>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>Daraja 2.0 returns stricter HTTP status codes and new error bodies. Below is a table of the most common production surprises I encountered in March 2026.</p>
+<h2 id="step-3-handle-errors-and-retries">Step 3 — handle errors and retries</h2>
+<p>The most useful thing you can do here is not memorise a table of error codes. It is to log the full response body on any non-2xx status, including the status code and any correlation identifier the gateway returns. Error taxonomies change between versions; the habit of capturing the raw body does not.</p>
+<p>That said, a few classes of failure are stable enough to plan for:</p>
 <table>
 <thead>
 <tr>
-<th>HTTP Status</th>
-<th>Error Code</th>
-<th>Message</th>
-<th>Action</th>
+<th>Class</th>
+<th>Typical cause</th>
+<th>Correct response</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>400</td>
-<td><code>400.001.01</code></td>
-<td><code>Invalid timestamp format</code></td>
-<td>Ensure <code>Timestamp</code> is exactly 14 digits, no spaces or colons</td>
+<td>400 validation</td>
+<td>Malformed timestamp, wrong password derivation, bad payload shape</td>
+<td>Do not retry. Fix the request. Log the full body.</td>
 </tr>
 <tr>
-<td>401</td>
-<td><code>401.001.01</code></td>
-<td><code>Invalid consumer credentials</code></td>
-<td>Rotate your Consumer Key/Secret in the portal and wait 5 minutes</td>
+<td>401 / 403</td>
+<td>Expired or wrong credentials, wrong environment</td>
+<td>Refresh the token; if it persists, check the portal app. Do not retry in a tight loop.</td>
 </tr>
 <tr>
-<td>412</td>
-<td><code>412.001.01</code></td>
-<td><code>Missing X-Daraja-Version header</code></td>
-<td>Add <code>X-Daraja-Version: 2.0</code> to every request</td>
+<td>409 / duplicate</td>
+<td>Same idempotency key submitted twice</td>
+<td>Treat as success if the original succeeded. Query the transaction status before assuming failure.</td>
 </tr>
 <tr>
 <td>429</td>
-<td><code>429.001.00</code></td>
-<td><code>Rate limit exceeded</code></td>
-<td>Implement exponential backoff; the new gateway enforces 100 req/min per key</td>
+<td>Rate limiting</td>
+<td>Retry with exponential backoff and jitter. Cap the total attempts.</td>
 </tr>
 <tr>
-<td>400</td>
-<td><code>400.001.02</code></td>
-<td><code>Invalid idempotency key format</code></td>
-<td>Use UUID v4; alphanumeric only, 36 chars long</td>
+<td>5xx / timeout</td>
+<td>Gateway or network failure</td>
+<td>Retry with the same idempotency key so the payment is not duplicated.</td>
 </tr>
 </tbody>
 </table>
-<p>Add the following retry wrapper in Python:</p>
-<pre><code class="language-python">from tenacity import retry, stop_after_attempt, wait_exponential
+<p>The critical rule: <strong>retry with the same idempotency key, never a new one.</strong> Generating a fresh UUID inside the retry wrapper is the single most common way to double-charge a customer.</p>
+<pre><code class="language-python">from tenacity import retry, stop_after_attempt, wait_exponential_jitter, retry_if_exception_type
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=1, max=5))
-def lipa_stk_retry(self, phone: str, amount: int, reference: str):
-    return self.lipa_stk(phone, amount, reference)
+class TransientError(Exception):
+    pass
+
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential_jitter(initial=1, max=5),
+    retry=retry_if_exception_type(TransientError),
+)
+def lipa_stk_retry(self, phone, amount, reference, idempotency_key):
+    try:
+        return self.lipa_stk(phone, amount, reference, idempotency_key)
+    except requests.HTTPError as exc:
+        status = exc.response.status_code if exc.response is not None else None
+        if status is not None and 500 &lt;= status &lt; 600:
+            raise TransientError(str(exc)) from exc
+        raise  # 4xx: do not retry
 </code></pre>
-<p>In Node, use <code>p-retry</code>:</p>
+<p>The Node equivalent with <code>p-retry</code>:</p>
 <pre><code class="language-javascript">import retry from &quot;p-retry&quot;;
 
-async function lipaStkRetry(phone, amount, reference) {
-  return retry(() =&gt; daraja.lipaStk(phone, amount, reference), {
-    retries: 3,
-    minTimeout: 1000,
-    maxTimeout: 5000,
-  });
+async function lipaStkRetry(phone, amount, reference, idempotencyKey) {
+  return retry(
+    async () =&gt; {
+      try {
+        return await daraja.lipaStk(phone, amount, reference, idempotencyKey);
+      } catch (err) {
+        const status = err.response?.status;
+        if (status &gt;= 500) throw err; // retryable
+        throw new retry.AbortError(err.message); // 4xx: stop
+      }
+    },
+    { retries: 3, minTimeout: 1000, maxTimeout: 5000 }
+  );
 }
 </code></pre>
-<p>One gotcha: idempotency keys must be unique per request; reusing the same key for retries will cause the gateway to return the previous response instead of processing the payment again. I once reused the key in a stress test and the gateway locked our shortcode for 15 minutes while Safaricom support investigated fraud patterns.</p>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<p>Add OpenTelemetry traces to the Python client:</p>
-<pre><code class="language-bash">pip install opentelemetry-api==1.24.0 opentelemetry-sdk==1.24.0 opentelemetry-exporter-otlp==1.24.0
-</code></pre>
-<p>Then patch the client to emit traces:</p>
-<pre><code class="language-python">from opentelemetry import trace
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+<h2 id="step-4-parse-the-callback-defensively">Step 4 — parse the callback defensively</h2>
+<p>Callback payload shapes are the most common source of silent data loss during a migration. The request succeeds, the customer is charged, and your handler throws on a missing key and returns a 500 — which may cause the gateway to retry, or may simply leave your system out of sync.</p>
+<p>Write the handler so that an unexpected shape produces an alert rather than an exception. Log the raw body first, then parse.</p>
+<pre><code class="language-javascript">import express from &quot;express&quot;;
 
-trace.set_tracer_provider(TracerProvider())
-exporter = OTLPSpanExporter(endpoint=&quot;http://localhost:4317&quot;, insecure=True)
-trace.get_tracer_provider().add_span_processor(BatchSpanProcessor(exporter))
+const app = express();
 
-class Daraja2Client:
-    def get_token(self):
-        tracer = trace.get_tracer(__name__)
-        with tracer.start_as_current_span(&quot;get_token&quot;) as span:
-            span.set_attribute(&quot;component&quot;, &quot;mpesa&quot;)
-            # ... rest of the method
-</code></pre>
-<p>For tests, use pytest 7.4 and mock the new endpoints:</p>
-<pre><code class="language-python">import pytest
-from unittest.mock import patch, MagicMock
+app.post(&quot;/mpesa/callback&quot;, express.json(), (req, res) =&gt; {
+  const raw = JSON.stringify(req.body);
+  console.log(&quot;mpesa.callback.raw&quot;, raw);
 
-@pytest.mark.asyncio
-async def test_lipa_stk_success():
-    client = Daraja2Client()
-    mock_resp = MagicMock()
-    mock_resp.status_code = 200
-    mock_resp.json.return_value = {&quot;ResponseCode&quot;: &quot;0&quot;, &quot;CheckoutRequestID&quot;: &quot;ws_CO_123456&quot;}
-
-    with patch(&quot;requests.post&quot;, return_value=mock_resp):
-        result = client.lipa_stk(&quot;+254712345678&quot;, 100, &quot;INV-12345&quot;)
-        assert result[&quot;ResponseCode&quot;] == &quot;0&quot;
-
-@pytest.mark.asyncio
-async def test_token_nesting():
-    client = Daraja2Client()
-    mock_resp = MagicMock()
-    mock_resp.json.return_value = {&quot;body&quot;: {&quot;access_token&quot;: &quot;token123&quot;}}
-    with patch(&quot;requests.post&quot;, return_value=mock_resp):
-        token = client.get_token()
-        assert token == &quot;token123&quot;
-</code></pre>
-<p>In CI, run the tests against the 2026 sandbox URLs:</p>
-<pre><code class="language-yaml"># .github/workflows/mpesa-tests.yml
-- name: Run M-Pesa tests
-  run: |
-    export MPESA_CONSUMER_KEY=${{ secrets.MPESA_CONSUMER_KEY }}
-    export MPESA_CONSUMER_SECRET=${{ secrets.MPESA_CONSUMER_SECRET }}
-    pytest tests/mpesa_test.py -v
-</code></pre>
-<p>Observability tip: emit a custom metric for idempotency key reuse. I added a Prometheus counter that increments when the same idempotency key appears within a 5-minute window. This caught a race condition in our checkout flow where two tabs triggered the same payment before the user clicked confirm twice.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>After migrating our checkout microservice in Nairobi, we saw the following 2026 numbers:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Daraja 1.x (legacy)</th>
-<th>Daraja 2.0 (new)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>95th percentile STK latency</td>
-<td>1,240 ms</td>
-<td>680 ms</td>
-</tr>
-<tr>
-<td>Failed STK push rate</td>
-<td>14%</td>
-<td>1.8%</td>
-</tr>
-<tr>
-<td>Mean time to detect outage</td>
-<td>12 min</td>
-<td>4 min</td>
-</tr>
-<tr>
-<td>Monthly SMS cost for OTP</td>
-<td>$1,840</td>
-<td>$520 (idempotency reduced retries)</td>
-</tr>
-</tbody>
-</table>
-<p>The latency drop came from caching the access token in Redis 7.2; the old SDK fetched a new token on every request, adding ~450 ms overhead. The failed rate dropped after we enforced idempotency keys and added retry logic with jitter. The observability layer cut our detection time from 12 minutes to 4 minutes because we now alert on 412 responses immediately.</p>
-<p>Cost savings surprised me the most: the new callback format removed redundant fields, trimming ~30 bytes per callback. With 120,000 callbacks/month, that saved $1,320 per month in SMS notifications alone. Factor in the reduced retry SMS and the total went from $1,840 to $520, a 72% cut.</p>
-<p>One unexpected win: the new error codes are machine-readable. Our payment failure page now shows the exact error (e.g. <code>400.001.01</code>) instead of a generic "payment failed" message. Conversion on failed payments climbed 8% in April 2026 after implementing error-specific messaging.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<p><strong>Why did Safaricom rename <code>TimeStamp</code> to <code>Timestamp</code>?</strong>
-The new gateway enforces ISO-8601 compliance in the request schema validator. The old field name was a legacy artifact from 2016. The portal documentation still shows <code>TimeStamp</code>, but the production gateway expects <code>Timestamp</code>. I opened a support ticket and the engineer confirmed it’s intentional to align with ISO standards.</p>
-<p><strong>How do I handle the new callback format for C2B?</strong>
-The callback now nests the result under <code>Body.stkCallback</code> instead of top-level. Parse it like this in Express:</p>
-<pre><code class="language-javascript">app.post(&quot;/mpesa/callback&quot;, express.raw({ type: &quot;application/json&quot; }), (req, res) =&gt; {
-  const payload = JSON.parse(req.body.toString());
-  const result = payload.Body.stkCallback; // &lt;- new nesting
-  if (result.ResultCode === 0) {
-    // success
-  } else {
-    // failed
+  const callback = req.body?.Body?.stkCallback ?? req.body?.stkCallback;
+  if (!callback) {
+    console.error(&quot;mpesa.callback.unrecognised_shape&quot;, raw);
+    // Acknowledge anyway: a 5xx here causes gateway retries, not a fix.
+    return res.status(200).send(&quot;Accepted&quot;);
   }
+
+  const { ResultCode, ResultDesc, CheckoutRequestID, CallbackMetadata } = callback;
+
+  if (ResultCode === 0) {
+    const items = CallbackMetadata?.Item ?? [];
+    const receipt = items.find((i) =&gt; i.Name === &quot;MpesaReceiptNumber&quot;)?.Value;
+    console.log(&quot;mpesa.callback.success&quot;, { CheckoutRequestID, receipt });
+  } else {
+    // ResultCode 1032 is a user cancellation; 1037 is a timeout.
+    console.log(&quot;mpesa.callback.failure&quot;, { CheckoutRequestID, ResultCode, ResultDesc });
+  }
+
   res.status(200).send(&quot;Accepted&quot;);
 });
 </code></pre>
-<p><strong>What TLS version should I enforce?</strong>
-The new gateway requires TLS 1.2 or higher. If you’re on Ubuntu 22.04, Python 3.11 defaults to TLS 1.2+; no code change needed. If you’re on an older OS, pin <code>urllib3&gt;=2.0.0</code> and set <code>certifi</code> as the CA bundle. In Node 20 LTS, TLS 1.3 is the default; you’re already compliant.</p>
-<p><strong>Can I still use the old sandbox URLs?</strong>
-No. The sandbox URLs changed on February 1, 2026. The old <code>https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest</code> now returns 410 Gone. Update your sandbox URLs to:</p>
+<p>Two operational rules matter more than the parsing itself:</p>
+<ol>
+<li><strong>Always return 200 once you have accepted the body.</strong> If your business logic needs to fail, fail asynchronously and alert. A non-200 response invites retries you probably do not want.</li>
+<li><strong>Persist the raw payload before parsing.</strong> When a shape changes, the stored payload is the only way to reconstruct what happened.</li>
+</ol>
+<h2 id="step-5-observability-and-tests">Step 5 — observability and tests</h2>
+<p>Instrument four things. Each maps to a failure mode above:</p>
 <ul>
-<li>OAuth: <code>https://sandbox.safaricom.co.ke/oauth/v1/generate</code></li>
-<li>STK: <code>https://safestk.safaricom.co.ke/mpesa/stkpush/v1/processrequest</code></li>
-<li>Query: <code>https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query</code></li>
+<li><strong>Token fetch count.</strong> A counter incremented on every cache miss. If this climbs during steady traffic, your cache TTL is wrong or Redis is unreachable.</li>
+<li><strong>Non-2xx responses by status class.</strong> Split 4xx from 5xx. A spike in 4xx means a schema or credential problem; a spike in 5xx means upstream trouble.</li>
+<li><strong>Idempotency key reuse within a window.</strong> Increment a counter when the same key is seen twice inside, say, five minutes. This catches double-submission races in your own checkout flow.</li>
+<li><strong>Callback parse failures.</strong> Increment when the defensive branch above fires. This is your earliest signal that a payload shape changed.</li>
 </ul>
-<p><strong>What about M-Pesa GlobalPay?</strong>
-GlobalPay endpoints (<code>https://globalpay.safaricom.co.ke</code>) are still on Daraja 1.x as of March 2026. They will migrate in Q3 2026, but the API remains unchanged for now. Keep them separate until an official migration guide ships.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>If you’re on a team that still uses the 2026 SDK, clone the repository above, run <code>pip install -r requirements.txt</code>, and execute <code>python mpesa.py</code>. Confirm the first STK push returns a <code>ResponseCode</code> of <code>0</code> and the callback arrives at your webhook with the new nesting.</p>
-<p>Next, update your deployment pipeline to validate the <code>X-Daraja-Version: 2.0</code> header in staging. Add a canary rule in your API gateway to route 5% of traffic to the new endpoints and monitor 412 rates. Once the error rate stays below 0.5% for 48 hours, roll out to 100%.</p>
-<p>Finally, measure your current callback processing time. If it exceeds 500 ms, add Redis caching to the access token fetch.</p>
-<p><strong>Action for the next 30 minutes:</strong> Open your integration’s environment file and add the <code>X-Daraja-Version: 2.0</code> header to every outbound M-Pesa request. Run a test STK push from staging and verify the response code is <code>0</code> before continuing with the rest of the migration.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/ai-payments-break-in-m-pesa-first/">AI payments break in M-Pesa first</a></li>
-<li><a href="https://kubaik.github.io/ai-wrote-the-docs-humans-wrote-the-gaps/">AI wrote the docs — humans wrote the gaps</a></li>
-<li><a href="https://kubaik.github.io/claude-code-after-a-year-daily-wins/">Claude Code after a year: daily wins</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<p>A minimal OpenTelemetry span around the token fetch:</p>
+<pre><code class="language-python">from opentelemetry import trace
+
+tracer = trace.get_tracer(__name__)
+
+def get_token(self):
+    with tracer.start_as_current_span(&quot;mpesa.get_token&quot;) as span:
+        span.set_attribute(&quot;component&quot;, &quot;mpesa&quot;)
+        # ... existing implementation
+</code></pre>
+<p>For tests, mock the HTTP layer and assert on the <em>shape</em> you expect, so that a change in the real response fails a test rather than a production deploy:</p>
+<pre><code class="language-python">from unittest.mock import patch, MagicMock
+from mpesa import DarajaClient
+
+def test_token_top_level():
+    client = DarajaClient()
+    resp = MagicMock()
+    resp.json.return_value = {&quot;access_token&quot;: &quot;abc&quot;}
+    with patch(&quot;requests.post&quot;, return_value=resp):
+        assert client.get_token() == &quot;abc&quot;
+
+def test_token_nested():
+    client = DarajaClient()
+    resp = MagicMock()
+    resp.json.return_value = {&quot;body&quot;: {&quot;access_token&quot;: &quot;abc&quot;}}
+    with patch(&quot;requests.post&quot;, return_value=resp):
+        assert client.get_token() == &quot;abc&quot;
+
+def test_timestamp_is_fourteen_digits():
+    client = DarajaClient()
+    ts = &quot;20260101120000&quot;
+    assert len(ts) == 14
+    assert client._generate_password(ts) == client._generate_password(ts)
+</code></pre>
+<h2 id="measuring-the-migration-instead-of-guessing">Measuring the migration instead of guessing</h2>
+<p>Any claim about latency improvement, failure-rate reduction or cost saving should come from your own instrumentation, not from a blog post. Here is how to produce the numbers honestly.</p>
+<p><strong>Latency.</strong> Wrap every outbound HTTP call in a timer and export a histogram. Compare the p50 and p95 of the STK push call before and after the migration, over the same traffic mix. If you add token caching at the same time, measure the token fetch separately so you can attribute the change.</p>
+<p><strong>Failure rate.</strong> Count STK push attempts and non-zero <code>ResponseCode</code> values. Report the ratio over a fixed window, and segment by error class. A drop from one rate to another is only meaningful if the traffic mix and the upstream gateway are the same.</p>
+<p><strong>Callback processing time.</strong> Time the handler from request receipt to acknowledgement. If your handler does synchronous database work before responding, that is the number to reduce, and it is usually reducible without touching the payment API at all.</p>
+<p><strong>Cost.</strong> Only compute this from your own billing data. Count callbacks, count retries, and multiply by your actual per-message rate. Do not accept a percentage figure from an article — including this one.</p>
+<h2 id="a-rollout-checklist">A rollout checklist</h2>
+<p>Run the migration in this order. Each step is a gate.</p>
+<ol>
+<li><strong>Confirm the current contract.</strong> Call the OAuth and STK endpoints from <code>curl</code> against the sandbox and save the raw responses.</li>
+<li><strong>Diff against your client.</strong> For every field your code reads, confirm the path still exists. Any field you read with a direct index is a risk.</li>
+<li><strong>Add the defensive accessors.</strong> Token and callback parsing should tolerate both old and new shapes during the transition.</li>
+<li><strong>Add idempotency keys.</strong> Before any retry logic exists, make sure a stable key is generated once per logical payment.</li>
+<li><strong>Add retry logic with the same key.</strong> Verify with a test that a simulated 500 does not produce two payments.</li>
+<li><strong>Instrument the four metrics.</strong> Deploy them before the migration so you have a baseline.</li>
+<li><strong>Canary.</strong> Route a small percentage of traffic to the new path and watch the 4xx rate. Roll forward only when it is stable.</li>
+<li><strong>Retire the old path.</strong> Remove the dual-shape accessors once the old endpoint is decommissioned, so the code does not accumulate dead branches.</li>
+</ol>
+<h2 id="faq">FAQ</h2>
+<p><strong>Should I cache the access token?</strong>
+Yes, if you make more than a handful of calls per minute. The token has a finite lifetime; cache it for slightly less than that and refresh on expiry. Handle a 401 by invalidating the cache and retrying once.</p>
+<p><strong>What if the sandbox and production return different response shapes?</strong>
+This happens. The defensive accessor pattern in Step 2 exists for exactly this reason. Log which shape you received at least once per environment so the difference is visible rather than mysterious.</p>
+<p><strong>Do I need a public HTTPS URL for callbacks?</strong>
+Yes. The gateway must be able to reach your callback endpoint over the public internet. A tunnel such as ngrok works for development; production needs a real hostname with a valid certificate.</p>
+<p><strong>How do I test a user cancellation?</strong>
+The sandbox supports simulating failure result codes. Assert that your handler distinguishes a cancellation from a timeout and that neither is treated as success.</p>
+<p><strong>Can I keep the old endpoints running in parallel?</strong>
+During a canary period, yes. Keep the two code paths separate and route by configuration rather than by branching inside a single function, so retiring one is a deletion rather than a refactor.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Open your integration's HTTP client code and find every place it reads a field from an M-Pesa response by direct index — <code>response["access_token"]</code>, <code>payload["Body"]["stkCallback"]</code>, and so on. For each one, replace it with a defensive accessor that logs the full response body when the expected path is missing, and add a test that asserts the accessor handles both the old and new shapes. That single change converts your next schema surprise from a production incident into a log line.</p>
                 
                 
             </div>

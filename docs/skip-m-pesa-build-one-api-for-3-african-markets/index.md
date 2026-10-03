@@ -1,132 +1,108 @@
 # Skip M-Pesa: build one API for 3 African markets
 
-I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+Serving Kenya, Nigeria and Ghana usually starts as three integrations: M-Pesa in Kenya, a card-and-transfer processor in Nigeria, and MTN Mobile Money in Ghana. That means three API contracts, three sandbox lifecycles, three support channels, and three upgrade calendars. The setup works until the maintenance load catches up with the team.
 
-## The conventional wisdom (and why it's incomplete)
+A common failure mode is not the first integration but the fourth change to it. A provider adds a field, changes a response shape, or tightens validation, and suddenly a code path that has been stable for months breaks in production. Multiply that by three providers and the integration layer becomes the most expensive part of the product to own.
 
-Most people will tell you to integrate with each local provider: M-Pesa in Kenya, Flutterwave in Nigeria, and MTN Mobile Money in Ghana. That’s three APIs, three UAT cycles, three support matrices, and three upgrade timelines. The honest answer is that that approach works—until it doesn’t. The team spent six weeks wiring up Flutterwave’s webhooks, only to discover that their idempotency keys reset every 24 hours. One week later our first refund timed out because the refund endpoint wasn’t idempotent. We rebuilt the integration, but the real cost wasn’t the engineering hours; it was the support overhead every time Flutterwave released a breaking change in their changelog. Multiply that by three countries and you’re signing up for a maintenance tax that never goes away.
+This article walks through a mental model that reduces that load: treat a payments orchestrator as the single API your application talks to, and keep provider-specific behaviour behind thin, versioned adapters. It also covers when the conventional advice — integrate directly with each provider — is genuinely correct, and how to decide.
 
-The conventional wisdom tells you to abstract the providers behind a single interface: ProviderA charges, ProviderB reverses, ProviderC refunds. That abstraction is seductive because it feels DRY, but it backfires when every provider starts adding custom fields that your abstraction didn’t anticipate. I’ve seen teams burn three sprints refactoring the abstraction after discovering that MTN Mobile Money’s reversal response includes a `reason_code` field that isn’t in the spec. The abstraction becomes a leaky abstraction faster than you can say “PCI-DSS.”
+## The conventional wisdom, and where it runs out
 
-There’s also the compliance tail: each country has its own regulator, its own sandbox, and its own set of KYC rules. If you treat them as three separate problems, you’ll end up with three separate compliance binders on a shelf somewhere in Lagos. The conventional wisdom assumes that the integration layer is the only complexity, but it ignores the fact that the business logic layer now has to branch on country codes for tax, currency formatting, and error messages. That branching compounds: every new product feature now has three code paths. Six months later the repo looks like a Jackson Pollock painting of conditional statements.
+The standard advice is to integrate with each local provider directly. That is three APIs, three UAT cycles, three support matrices, three upgrade timelines. The approach is not wrong; it is incomplete. It assumes the integration layer is the only complexity, when in practice the business logic layer also starts branching on country codes for tax, currency formatting, error messages and refund rules. Every new product feature then has three code paths.
 
-## What actually happens when you follow the standard advice
+The second piece of conventional wisdom is to abstract the providers behind a single interface: `ProviderA.charge()`, `ProviderB.reverse()`, `ProviderC.refund()`. This feels DRY and looks clean on a diagram. It backfires when each provider adds custom fields the abstraction did not anticipate. A typical example: a reversal response includes a `reason_code` field that is not in the published spec, so the generic interface either drops it or has to grow a provider-specific escape hatch. The abstraction becomes leaky, and teams end up refactoring it after the fact.
 
-Flutterwave’s settlement files arrive as CSV dumps at 02:00 local time, M-Pesa sends JSON via SFTP at 03:30, and MTN’s files are XML over HTTPS with a 30-minute delay tolerance. Your reconciliation job has to merge three time zones, three encodings, and three rate schemas while still closing the books by 09:00. If any file is late or malformed, your CFO sends Slack messages at 07:00 asking why the cash position is off by 200k KES.
+There is also a compliance tail. Each country has its own regulator, sandbox and KYC rules. Treating them as three separate problems produces three separate compliance binders. Treating them as one problem produces a single binder with per-country sections, which is usually easier to audit.
 
-The idempotency guarantees also collapse under load. Flutterwave’s docs say idempotency keys are valid for 24 hours, but their sandbox starts rejecting keys after 12 hours if the request volume crosses 1000 TPS. We only found out when our retry loop started failing during a Black Friday campaign. The failure looked like a race condition in our code, but the root cause was a provider-side rate limit on idempotency keys. That insight came from reading the changelog buried in a GitHub issue, not the official docs.
+## What actually goes wrong with three direct integrations
 
-Then there’s the customer support nightmare. When a user says, “I paid via MTN but your system shows pending,” the agent has to check three dashboards. If the agent picks the wrong dashboard, the customer gets told the money is already refunded when it’s still in transit. We measured a 12% escalation rate for cross-border refunds because the UI didn’t surface the provider’s native status field. The abstraction we built hid the information the agent needed most.
+The problems are rarely in the happy path. They show up in the edges.
 
-Finally, the cost compounds. Three sandbox accounts, three production keys, three sets of webhook URLs, three PCI certificates. The AWS bill for the sandbox environments alone jumped from $180/month to $840/month once we added the second provider. That doesn’t include the engineering time to instrument each provider’s metrics or the on-call rotation that now has three separate health checks.
+**Settlement files arrive in different formats and at different times.** A common pattern is one provider delivering CSV dumps overnight, another sending JSON over SFTP, and a third exposing XML over HTTPS with a delay tolerance. The reconciliation job has to merge three time zones, three encodings and three rate schemas while still closing the books by the morning. If any file is late or malformed, the finance team is chasing a cash position that does not tie out.
 
-## A different mental model
+**Idempotency guarantees differ and are often under-documented.** A provider may publish that idempotency keys are valid for 24 hours, then in practice expire them sooner under load. This is the kind of detail that surfaces during a traffic spike, when a retry loop starts failing and the failure looks like a race condition in your own code. The root cause is a provider-side limit that was documented in a changelog or an issue tracker, not in the main API reference.
 
-Instead of integrating with each provider, integrate with a single payments orchestrator that already supports all three markets. In 2026 the dominant orchestrators are Flutterwave Collect (which covers Kenya, Nigeria, and Ghana), DPO Pay (used by 40% of Ghanaian merchants), and Paystack’s multi-market product. The trick is to treat the orchestrator as the canonical source of truth for status, refunds, and webhooks, and to keep the provider-specific quirks behind adapter layers that are versioned and tested separately. That mental shift turns “three integrations” into “one integration plus three adapters.”
+**Support becomes a dashboard problem.** When a customer says "I paid but your system shows pending", an agent has to check three dashboards. If the agent picks the wrong one, the customer gets told the money is already refunded when it is still in transit. A well-designed abstraction can hide the information the agent needs most. A poorly designed one hides it by default.
 
-The orchestrator approach works because it centralises the reconciliation problem. A single webhook endpoint receives status updates from all three providers, and the orchestrator’s reconciliation engine merges the files into one ledger. You still have to handle idempotency, but you’re now doing it against a single API contract rather than three. The adapter layer becomes responsible for translating the orchestrator’s generic status codes into provider-specific ones, so your business logic never branches by country.
+**Costs compound in ways that are easy to miss.** Three sandbox accounts, three production key sets, three webhook URL registrations, three sets of compliance artefacts. Add the engineering time to instrument each provider's metrics and the on-call rotation that now has three separate health checks.
 
-For example, DPO Pay’s sandbox returns 200 OK for every request, while the live endpoint enforces stricter validations. The orchestrator hides that difference behind a feature flag, but the flag isn’t documented—you discover it when your first production refund fails because the sandbox didn’t validate a field that the live endpoint expects. Always test idempotency and validation in the sandbox before you go live.
+## A different mental model: one orchestrator, three adapters
 
-Another insight: the orchestrator’s webhook schema is versioned, but the provider-specific schemas aren’t. If you rely on the orchestrator’s webhook and ignore the provider’s native webhook, you reduce your blast radius when a provider releases a breaking change. We saw this when Flutterwave changed their reversal response format in April 2026; our adapter caught the change before the orchestrator’s reconciliation engine did, and we patched the adapter in under two hours without touching the core payment flow.
+Instead of integrating with each provider directly, integrate with a single payments orchestrator that already supports the markets you need. Treat the orchestrator as the canonical source of truth for status, refunds and webhooks. Keep provider-specific quirks behind adapter layers that are versioned and tested separately. That shift turns "three integrations" into "one integration plus three adapters".
 
-## Evidence and examples from real systems
+The orchestrator approach works because it centralises the reconciliation problem. A single webhook endpoint receives status updates from all providers, and the orchestrator's reconciliation engine merges settlement files into one ledger. Idempotency still has to be handled, but against a single API contract rather than three. The adapter layer translates the orchestrator's generic status codes into provider-specific ones, so your business logic does not branch by country.
 
-At my last company we migrated from three direct integrations to a single Flutterwave Collect account with three adapter modules. The migration took six days of engineering time and cut our sandbox bill from $840/month to $210/month because we consolidated the sandbox environments. More importantly, the on-call pages for payment failures dropped by 68% in the first month. The remaining pages were almost always adapter-related, not orchestrator-related.
+A useful discipline: decide which layer owns which fact.
 
-We benchmarked reconciliation latency with three setups: direct provider, orchestrator without adapters, and orchestrator with adapters. The results are in the table below. The orchestrator with adapters was the only setup that stayed under 5 seconds for 99% of reconciliation cycles.
+- The orchestrator owns payment status, refund state, and the canonical ledger.
+- The adapter owns provider-specific field mapping, validation quirks, and any provider-imposed cooldowns.
+- Your application owns business rules: pricing, tax, entitlements, and what the customer sees.
 
-| Setup                        | P50 latency | P95 latency | P99 latency |
-|------------------------------|-------------|-------------|-------------|
-| Direct provider (all three)  | 1200 ms     | 3200 ms     | 8400 ms     |
-| Orchestrator, no adapters    | 450 ms      | 1100 ms     | 2800 ms     |
-| Orchestrator + adapters      | 210 ms      | 450 ms      | 1100 ms     |
+If a fact is owned by two layers, you will eventually have two versions of it and no way to tell which is right.
 
-The cost savings weren’t just in sandbox environments. We reduced our PCI DSS scope by consolidating to one processor tokenisation flow. The PCI auditor cited a 40% reduction in cardholder data environment surface area after the migration. That translated to $12k less in compliance consulting fees for the year.
+## Worked example: a refund across three providers
 
-I learned the hard way that adapter tests must run against both sandbox and live endpoints. Early in the migration we wrote adapter tests only for the orchestrator sandbox. When we went live with MTN Mobile Money, the adapter failed because the sandbox didn’t enforce a mandatory `customer_msisdn` field that the live endpoint required. The fix took two days because we had to re-run PCI scans. Now our adapter tests run against a live-like sandbox (Flutterwave’s “sandbox-prod” tier) and a live endpoint in a non-production AWS account.
+Consider a refund flow. The user asks for a refund of 5,000 KES on a payment made yesterday.
 
-Another surprise: the orchestrator’s refund flow doesn’t always mirror the provider’s refund flow. Flutterwave Collect lets you refund up to the original amount, but DPO Pay enforces a 24-hour cooldown on refunds. The orchestrator exposes a single refund endpoint, but the adapter has to implement the cooldown logic. If you forget to implement the cooldown, your refunds will fail silently in DPO Pay’s sandbox, and you won’t know until a customer calls support.
+1. Your application calls the orchestrator's refund endpoint with the orchestrator's payment ID and the amount.
+2. The orchestrator routes the refund to the correct provider based on the original payment.
+3. The provider processes the refund and returns a status. The orchestrator normalises that status and emits a webhook.
+4. Your adapter receives the webhook, maps the orchestrator status to whatever your internal model expects, and writes it to your ledger.
 
-## The cases where the conventional wisdom IS right
+Now add a provider-specific rule. Suppose one provider enforces a cooldown on refunds — say, refunds cannot be issued until 24 hours after settlement. The orchestrator exposes a single refund endpoint and does not know about that cooldown. If the adapter does not implement the cooldown check, the refund request will be rejected by the provider, and depending on how the rejection is surfaced, the failure may look like a generic error rather than a rule violation.
 
-If your product is a point-of-sale terminal that must work offline, you have no choice but to integrate directly with M-Pesa’s USSD or MTN’s STK. Offline systems can’t rely on an orchestrator’s webhook reliability. Likewise, if you’re building a lending product that needs real-time credit scoring tied to the provider’s risk engine, you’ll bypass the orchestrator and integrate directly with Flutterwave’s risk API. The conventional wisdom wins when latency or offline capability outweighs the maintenance tax.
+The correct handling is to put the cooldown in the adapter, not in the application. The adapter knows the provider, so it can reject the request early with a clear error, and the application can present a sensible message to the user. Putting the cooldown in the application means every caller has to remember it, and eventually one will not.
 
-Compliance can also force direct integration. The Central Bank of Nigeria’s PSP guidelines require that settlement reports be generated from the bank’s own ledger, not an orchestrator’s ledger. If your auditor insists on seeing raw MIS reports from the PSP, you’ll need direct access to the provider’s SFTP or API endpoints. No orchestrator can substitute for that level of compliance.
+The same pattern applies to field validation. If a provider requires a field that only exists in live (for example, a customer phone number in a specific format), the adapter should enforce it. The application should not know about provider-specific field names.
 
-Finally, if your volume is low—say, fewer than 100 transactions per day—then the overhead of building and maintaining adapters outweighs the benefits. The orchestrator’s pricing model (typically 1% + $0.20 per transaction) can become more expensive than direct integrations at low volumes. At 200 transactions/day the orchestrator costs $180/month, while three direct integrations might cost $90/month in sandbox fees and support time.
+## Where the conventional wisdom is right
 
-## How to decide which approach fits your situation
+Direct integration is the correct choice in several cases, and it is worth being explicit about them.
 
-Start with a decision matrix that weighs volume, latency requirements, compliance needs, and team bandwidth. Here’s the matrix we used:
+**Offline or low-connectivity environments.** A point-of-sale terminal that must work without reliable internet cannot depend on an orchestrator's webhook delivery. It needs to talk to the provider's USSD or STK flow directly.
 
-| Criterion                | Direct integration | Orchestrator + adapters | Score weight |
-|--------------------------|--------------------|-------------------------|--------------|
-| Daily transaction volume | High               | Medium                  | 30%          |
-| Latency SLA (<2s)        | Required           | Not required            | 25%          |
-| Offline capability       | Required           | Not possible            | 20%          |
-| Compliance audit trail   | Raw provider data  | Orchestrator ledger     | 15%          |
-| Team size (engineers)    | 3+                 | 2+                      | 10%          |
+**Latency-critical paths.** Some flows, such as pre-authorisation or risk checks, have tight latency budgets. If a provider's risk API is synchronous and fast, routing it through an orchestrator adds a hop that may not be worth it. The orchestrator should handle the final charge; the pre-authorisation step can go direct.
 
-Each criterion is scored 1–5, then multiplied by the weight. If your total score is above 3.5, you should integrate directly. If it’s below 2.5, the orchestrator is the better choice. We scored our project a 3.8 for direct integration, but after the refactoring pain we realized we should have started with the orchestrator and added direct integrations only for offline use cases. The matrix is wrong if you haven’t accounted for the hidden cost of three reconciliation pipelines.
+**Regulatory requirements for raw provider data.** Some regulators require settlement reports to be generated from the provider's own ledger, not an intermediary's. If an auditor insists on seeing raw MIS reports from the provider, you need direct access to the provider's SFTP or API endpoints. No orchestrator can substitute for that.
 
-Another rule of thumb: if you’re shipping a new product in month one, start with the orchestrator. The maintenance tax of three integrations will kill velocity before you hit volume. If you’re extending an existing product that already has three integrations, keep them until the orchestrator can cover 90% of your use cases. We tried to migrate a legacy system in one sprint and ended up with a hybrid that was worse than either approach. A phased migration is always safer.
+**Low volume.** At very low transaction volumes, the overhead of building and maintaining adapters may outweigh the benefits. The orchestrator's pricing model — often a percentage plus a fixed fee per transaction — can be more expensive than direct integrations when volume is small. The break-even point depends on your team size and the fixed costs of running three integrations; it is worth calculating explicitly rather than assuming.
 
-Instrument early. Before you write a single line of code, add a Prometheus metric called `payments_reconciliation_errors_total` with a label `provider`. If any provider’s error rate spikes above 1%, abort the integration and re-evaluate. We didn’t do this and spent three sprints debugging intermittent CSV parse errors in MTN’s files. The error turned out to be a timezone mismatch that only appeared during daylight saving transitions in Ghana.
+## How to decide: a checklist
 
-Finally, budget for adapter churn. Each provider will release a breaking change every 6–9 months. Reserve 10% of your engineering capacity for adapter maintenance. The orchestrator’s changelog is usually a month behind the provider’s, so you’ll discover the breaking change in production before the orchestrator’s docs update.
+Rather than a scored matrix with invented weights, use a checklist. Answer each question honestly.
 
-## Objections I've heard and my responses
+1. **Do you need to support offline payments or USSD/STK flows?** If yes, you need at least one direct integration for that flow.
+2. **Does any flow have a hard latency SLA under roughly one second end-to-end?** If yes, route that flow directly and keep the rest on the orchestrator.
+3. **Does your regulator require raw settlement data from the provider?** If yes, keep a direct integration for compliance reporting.
+4. **Is your team smaller than three engineers dedicated to payments?** If yes, start with the orchestrator. Three direct integrations will consume more capacity than you have.
+5. **Are you launching a new product in the next quarter?** If yes, start with the orchestrator. You can add direct integrations later for specific flows.
+6. **Are you extending an existing product that already has three direct integrations?** Migrate incrementally. Move one flow at a time and keep the direct integrations until the orchestrator covers the majority of use cases.
+7. **Do you have a clear owner for adapter maintenance?** If not, either assign one or accept that adapters will rot.
 
-**“The orchestrator is a single point of failure.”**
-That’s true if the orchestrator itself is the only integration. But the resilience comes from the fact that the orchestrator is designed to fail over between providers when one is down. Flutterwave Collect, for example, will automatically route to DPO Pay in Nigeria if Flutterwave’s API is degraded. With direct integrations you have no such fallback. We learned this the hard way during a Flutterwave outage in March 2026: our system stayed up because the orchestrator routed to DPO Pay, whereas teams using direct integrations had to implement manual failover logic.
+If you answer yes to questions 1, 2 or 3, plan for a hybrid: orchestrator for most traffic, direct integrations for the specific flows that require them. If you answer yes to 4 or 5, start with the orchestrator and revisit later.
 
-**“We need real-time risk scoring; the orchestrator adds latency.”**
-Risk scoring APIs are usually synchronous and low latency (<300 ms). The orchestrator doesn’t slow those calls down; it only slows the reconciliation loop. If your product depends on real-time risk scoring, integrate directly with the provider’s risk endpoint and route those calls around the orchestrator. The orchestrator should only handle the final charge, not the pre-authorisation step.
+## Instrumentation: what to measure and how
 
-**“The orchestrator takes 1% + $0.20; direct integrations are cheaper.”**
-That’s true at high volumes. At 10,000 transactions/day the orchestrator costs $4,600/month, while three direct integrations might cost $1,200/month in sandbox and support overhead. But the orchestrator also reduces engineering time: we measured a 40% reduction in payment-related incidents after the migration, which saved roughly $8k/month in on-call and support costs. Break even is around 6,000 transactions/day for our team size.
+Before writing the first adapter, decide what you will measure. The goal is to be able to answer three questions quickly: is reconciliation healthy, are adapters failing, and are idempotency keys being reused incorrectly.
 
-**“We’re a fintech; regulators will ask for raw PSP data.”**
-If your regulator requires raw settlement files from the PSP, then the orchestrator won’t satisfy the audit. In that case you need to keep a direct integration for compliance purposes and route only non-sensitive traffic through the orchestrator. We did this for a Nigerian lending product: the orchestrator handled customer-initiated payments, while the compliance team pulled raw MIS reports from Flutterwave’s SFTP every 24 hours.
+A reasonable starting set of metrics:
 
-## What I'd do differently if starting over
+- `payments_reconciliation_errors_total{provider}` — a counter of reconciliation errors by provider.
+- `payments_adapter_idempotency_failures_total{provider}` — a counter of idempotency key failures by adapter.
+- `payments_reconciliation_latency_seconds{provider}` — a histogram of reconciliation latency by provider.
 
-I would not build a generic abstraction layer for the three providers. Instead, I would treat each adapter as a separately versioned microservice with its own health checks and metrics. The abstraction layer should be a thin shim that delegates to the orchestrator, not a thick layer that tries to unify three different APIs. That means no `PaymentProvider` interface with three implementations; instead, three endpoints (`/mpesa`, `/flutterwave`, `/mtn`) that all call the same orchestrator underneath.
+To measure reconciliation latency, record the time from when the settlement file is received to when the ledger is updated and the balance is verified. Compare P50, P95 and P99 across providers. If one provider's P99 is an order of magnitude worse than the others, that is a signal to investigate before it becomes an incident.
 
-I would also instrument the adapter layer from day one. Every adapter should expose three Prometheus metrics: `adapter_request_duration_seconds`, `adapter_errors_total`, and `adapter_idempotency_failures`. We only added these after the first outage, and it took us three days to correlate the MTN adapter failures with a sandbox timeout. With proper metrics we would have caught the issue in staging.
+To measure idempotency failures, count every time a request is rejected because the key was already used or has expired. A rising count in one adapter usually means the key generation logic is wrong for that provider.
 
-Another change: I would run the adapter tests in a live-like sandbox before every release. Flutterwave’s sandbox returns 200 OK for invalid card numbers, but the sandbox-prod tier enforces validation. We only discovered this when a customer’s card was declined in production. Now our CI pipeline spins up a live sandbox and runs the adapter tests against it before merging.
+To measure reconciliation errors, count every time the ledger does not balance after processing a settlement file. Alert on any non-zero value; reconciliation errors are the kind of thing that should be investigated immediately, not trended.
 
-Finally, I would centralise the reconciliation test suite. Every adapter must pass a reconciliation test that replays a month of real transaction files and asserts that the ledger balances to zero. We built this only after a reconciliation bug caused a 50k KES discrepancy. The test now runs nightly and has caught three regressions in the past six months.
+Prometheus is a common choice for these metrics, but the exact tooling does not matter. What matters is that the metrics exist before the first incident, not after.
 
-## Summary
+## A concrete next step
 
-The one-line takeaway is this: if you’re building a payment system that spans Kenya, Nigeria, and Ghana, start with a single payments orchestrator and three thin adapters. Treat the orchestrator as the canonical source of truth for status, refunds, and webhooks, and keep the provider-specific quirks behind versioned adapter layers. The maintenance tax of three separate integrations is not sustainable at scale, and the orchestrator gives you a single reconciliation pipeline and a single PCI scope.
+Open your payments metrics file — for example `metrics/payments.go` — and add three Prometheus collectors:
 
-Instrument everything before you write the first adapter. Add Prometheus metrics for reconciliation latency, adapter errors, and idempotency failures. Run adapter tests against a live-like sandbox tier before every release. Reserve 10% of your engineering capacity for adapter churn, because every provider will break something every six months.
-
-If your product is offline, real-time, or subject to strict compliance audits, you may still need direct integrations—but only for those specific use cases. Keep the rest of the flow in the orchestrator. The hybrid approach is the only one that scales without turning your codebase into a Jackson Pollock painting of conditional statements.
-
-
-## Frequently Asked Questions
-
-**how do i handle mtn mobile money sandbox vs live differences**
-MTN’s sandbox returns success for every request, while the live endpoint enforces strict validation on fields like `customer_msisdn`. The difference caused silent failures in our adapter until we tested against MTN’s “sandbox-prod” tier, which mimics live behavior. Always run adapter tests against a tier that matches production parity, not the basic sandbox.
-
-**what’s the fastest way to reconcile three providers in one ledger**
-Use the orchestrator’s reconciliation engine as the source of truth, then pull the provider’s settlement files once per day and merge them into a single ledger. The orchestrator’s webhook gives you real-time status, while the settlement files give you the final amounts. Keep the reconciliation job idempotent: if a file is duplicated, the ledger should still balance to zero.
-
-**how to avoid idempotency key exhaustion in high volume**
-Flutterwave’s idempotency keys reset after 24 hours at low volume, but at high volume the reset happens after 12 hours. Use a composite key that includes the provider name and a timestamp truncated to 12 hours. That way retries within the same provider window stay idempotent, and retries across windows are naturally rejected by the provider’s anti-duplication logic.
-
-**why does flutterwave’s sandbox return 200 ok for invalid card numbers**
-Flutterwave’s sandbox is deliberately permissive to help developers test happy paths. The sandbox-prod tier, however, enforces card validation rules identical to production. We only discovered this when a customer’s card was declined in production, even though the sandbox had accepted the same card number. Always test with sandbox-prod before going live.
-
-
-## Next step
-
-Open `metrics/payments.go` in your repo and add three new Prometheus counters right now:
 ```go
 var (
     reconciliationErrors = promauto.NewCounterVec(prometheus.CounterOpts{
@@ -144,22 +120,51 @@ var (
     }, []string{"provider"})
 )
 ```
-Commit the file and push it to main. You’ll have real data on reconciliation errors within 24 hours.
 
----
+Commit the file and push it. You will have real data on reconciliation errors within 24 hours of the first settlement file being processed. That data is the foundation for every decision that follows.
 
-### About this article
+## Failure modes to plan for
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+A few failure modes recur often enough to be worth naming.
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+**Silent sandbox/live divergence.** Sandboxes are often more permissive than live endpoints. A field that is optional in sandbox may be mandatory in live. The fix is to test against a live-like sandbox tier if one exists, and to run a small set of smoke tests against production before enabling a new provider for all traffic.
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+**Idempotency key exhaustion.** If your keys are generated with a time component, make sure the time window matches the provider's actual key lifetime, not the documented one. A conservative approach is to use a composite key that includes the provider name and a timestamp truncated to a window shorter than the documented lifetime. That way, retries within the window are idempotent, and retries across windows are rejected by the provider's own anti-duplication logic.
 
-**Last reviewed:** June 14, 2026
+**Reconciliation drift.** If your ledger and the provider's settlement file disagree, the cause is usually one of: a missing transaction, a duplicate transaction, a currency conversion applied in one place but not the other, or a timing difference across time zones. Build a reconciliation test that replays a month of settlement files and asserts the ledger balances to zero. Run it nightly.
+
+**Adapter rot.** Providers change their APIs. If your adapters are not versioned and tested, the change will surface in production. Reserve engineering capacity for adapter maintenance — a common rule of thumb is around 10% of the team's time, but the right number depends on how many providers you integrate with and how often they change.
+
+## Summary
+
+If you are building a payment system that spans Kenya, Nigeria and Ghana, start with a single payments orchestrator and thin adapters. Treat the orchestrator as the canonical source of truth for status, refunds and webhooks. Keep provider-specific quirks behind versioned adapter layers. This reduces the maintenance tax of three separate integrations and gives you a single reconciliation pipeline.
+
+Instrument before you build. Add Prometheus metrics for reconciliation latency, adapter errors and idempotency failures. Run adapter tests against a live-like sandbox tier before every release. Reserve capacity for adapter churn.
+
+If your product is offline, latency-critical, or subject to strict compliance audits, you may still need direct integrations — but only for those specific flows. Keep the rest of the traffic on the orchestrator. The hybrid approach is usually the one that scales without turning the codebase into a collection of country-specific branches.
+
+## FAQ
+
+**How do I handle sandbox versus live differences for a mobile money provider?**
+
+Sandboxes are often permissive by design, returning success for requests that would fail in production. Test against a live-like sandbox tier if the provider offers one, and run a small smoke test against production before enabling a new provider for all traffic. Treat any field that is required in production but optional in sandbox as a bug in your test coverage, not a quirk to work around.
+
+**What is the fastest way to reconcile three providers into one ledger?**
+
+Use the orchestrator's reconciliation engine as the source of truth, then pull each provider's settlement files once per day and merge them into a single ledger. The webhook gives you real-time status; the settlement files give you final amounts. Make the reconciliation job idempotent so that a duplicated file still results in a balanced ledger.
+
+**How do I avoid idempotency key exhaustion at high volume?**
+
+Use a composite key that includes the provider name and a timestamp truncated to a window shorter than the provider's documented key lifetime. If the provider documents a 24-hour lifetime but expires keys sooner under load, a shorter window gives you a safety margin. Retries within the window are idempotent; retries across windows are rejected by the provider's anti-duplication logic.
+
+**Why does a sandbox accept card numbers that production rejects?**
+
+Sandboxes are often configured to accept happy-path inputs so developers can test flows without real card data. Production enforces validation rules that the sandbox does not. Use a sandbox tier that mirrors production validation if one is available, and never assume that a successful sandbox test implies a successful production test.
+
+**Do I still need direct integrations if I use an orchestrator?**
+
+Only for specific flows. Offline payments, latency-critical pre-authorisation, and regulatory requirements for raw provider data are the three common reasons to keep a direct integration. Everything else can go through the orchestrator.
+
+## Take action in the next 30 minutes
+
+Open your payments metrics file and add the three Prometheus collectors shown above. Commit and push. If you do not yet have a payments metrics file, create one and wire it into your application's metrics endpoint. You will have real data on reconciliation errors and idempotency failures within 24 hours — and that data is what turns the decision between direct integrations and an orchestrator from an argument into an engineering question.

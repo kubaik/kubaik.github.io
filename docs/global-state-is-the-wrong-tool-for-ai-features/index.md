@@ -1,30 +1,38 @@
 # Global state is the wrong tool for AI features
 
-The gap between the demo and the incident report is where this actually lives. Here's what actually worked, and why.
+AI features fail in a characteristic way: the demo is a request-response form, and the product is a stream of concurrent, cancellable operations. The state model that carries the demo rarely survives contact with the product. This article explains where a single global store breaks down for AI features, what to model locally instead, and how to measure whether your own app has crossed the line.
 
-# The conventional wisdom (and why it's incomplete)
+## The conventional wisdom, and where it stops being true
 
-Most teams reach for global state management when they add AI features. Redux, pinia, Zustand, RxJS, or even a home-grown reactive store are the default choices because the docs promise a single source of truth and predictable updates. That promise sounds perfect when your AI pipeline is just a few prompts behind a REST endpoint. But scale up to a real product with streaming inference, tool use, and user-facing undo/redo, and the cracks appear fast.
+When teams add AI features, they commonly reach for the same global store that already holds auth and preferences: a single source of truth with predictable updates. That choice is reasonable when the AI pipeline is a few prompts behind a REST endpoint. It becomes fragile when the feature grows streaming inference, tool calling, and user-facing undo/redo.
 
-We built the feature on top of Redux Toolkit 2.2.5 with RTK Query for API calls and a custom slice for the AI state. The docs made it look simple: one slice to rule them all, selectors to derive everything else, and optimistic updates for snappy UI. In staging with simulated load it worked fine. Production told a different story.
+A typical failure mode looks like this. The conversation is modeled as one ever-growing array in the global store. Every prompt appends to it. Every render pass serializes or derives from the whole array. Memory grows monotonically for the life of the session, and a single selector recomputes the entire history on each keystroke.
 
-The first symptom was memory bloat. Our Node 20 LTS server kept OOMing under 1,200 concurrent users. Chrome DevTools showed the Redux store alone was holding 280 MB of JavaScript objects at the median session. That wasn’t RTK Query’s fault—it was the way we modeled the AI conversation as a single, ever-growing list of messages. Every new user prompt appended to the same global array, and every re-render caused a fresh serialization pass.
+The second failure mode is concurrency. Tool calls are tracked with a single global status field — `idle`, `fetching`, `streaming`, `error`. Because React state updates are asynchronous and batched, two overlapping tool calls can each write that field. The UI can render a state that never logically existed, such as a spinner disappearing between two in-flight calls, or an analytics event firing twice for one logical operation.
 
-The second symptom was race conditions. When the AI agent started calling external tools, we used a global `agentStatus` enum (`idle`, `fetching`, `streaming`, `error`). Because React re-renders are async, two tool calls could flip the enum from `streaming` to `idle` before the UI finished rendering the intermediate state. Users saw a flicker where the spinner disappeared for 30 ms then reappeared. That flicker was the least of our problems: the actual state transition also triggered analytics events that counted each tool call twice. The honest answer is that global state is great for user preferences and auth tokens, but terrible when you need to track concurrent, cancellable operations with fine-grained undo.
+The third is undo. If the undo stack holds full conversation snapshots or replays the whole history to compute the previous state, undo cost grows with session length. A user who has made two hundred tool calls pays for all two hundred to reverse the last one.
 
-# What actually happens when you follow the standard advice
+None of this means global state is bad. It means it is a poor fit for state that mutates many times per interaction, is owned by one subtree, and needs fine-grained reversal.
 
-Let’s run the numbers. In our load test we pushed 5,000 concurrent users through a scenario that triggered three AI tool calls per conversation. With a global Redux store (Redux Toolkit 2.2.5) the p99 memory per session peaked at 410 MB and the p99 end-to-end latency for the first tool response was 840 ms. When we switched to a per-component local store (built with Zustand 4.5.0) the same test ran at 180 MB p99 memory and 420 ms p99 latency. That’s a 56 % memory reduction and a 50 % latency drop just by moving the AI state closer to where it’s consumed.
+## What global state is genuinely good at
 
-The conventional advice counters that memoization and selectors would have fixed the renders. It’s true: `createSelector` can prune rerenders, but only if your selectors are stable across the entire conversation tree. In practice, every AI feature introduces new derived state—confidence scores, citation counts, tool step logs—and those selectors start depending on overlapping keys. The result is a tangled web of memoized functions that break on every deploy because the keys shift slightly. I’ve seen this fail when a teammate renamed a field in the AI response schema and the entire chat UI re-rendered because the selector cache invalidated.
+Three categories justify a global store, and they share a property: low write frequency relative to read frequency.
 
-Another hidden cost is hydration mismatches. SSR frameworks like Next.js 14 serialize global Redux state to JSON on the server, then deserialize it on the client. When the AI message list grows beyond a few KB, the serialized JSON inflates, and the deserialization on low-end Android devices can take 2–3 seconds. We measured a 15 % increase in time-to-interactive (TTI) on 3G connections when the AI state exceeded 5 KB JSON.
+**Session-scoped identity and preferences.** Auth tokens, locale, theme, and feature flags change rarely, are read everywhere, and have a natural single owner. A global store with one write per session is fine.
 
-# A different mental model
+**Read-only derived views.** An analytics dashboard aggregating AI usage across many sessions reads a small, predictable dataset. Memoized selectors over a global store work well here because the inputs change on a schedule you control.
 
-Instead of a single global tree, treat AI features as **local, ephemeral state machines** that communicate through explicit events. Each component owns its slice of the AI interaction: the chat input owns the prompt draft, the tool panel owns the tool selection and parameters, the streaming output owns the partial response, and the undo stack owns the operation history. These pieces only share immutable snapshots via events, not a mutable global store.
+**Cross-cutting concerns with low churn.** Logging configuration, telemetry sinks, and experiment assignments are consumed by many components but change on deploy boundaries, not per keystroke.
 
-This is not new—it’s the actor model with a JavaScript twist. Each component acts like an actor: it receives events, updates its local state, emits new events, and never mutates external state. The trick is to keep the events small and versioned. We started with a simple TypeScript enum for events:
+The boundary is write frequency and ownership. If a piece of state changes more than a handful of times per user interaction, or if only one component subtree reads it, a global store adds coordination cost without buying anything.
+
+## A different mental model: local, ephemeral state machines
+
+Treat each AI interaction surface as a small state machine that owns its own state and communicates through explicit, typed events. The chat input owns the prompt draft. The tool panel owns tool selection and parameters. The streaming output owns the partial response buffer. The undo stack owns the operation log.
+
+These machines share immutable snapshots via events rather than a mutable global tree. This is the actor model with JavaScript ergonomics: receive an event, update local state, emit a new event, never mutate external state.
+
+Start with a typed event registry so the contract is explicit and greppable:
 
 ```typescript
 // src/events/ai-events.ts
@@ -37,135 +45,179 @@ export const AIEvent = {
   Undo: 'undo',
   Redo: 'redo',
 } as const;
+
+export type AIEventName = (typeof AIEvent)[keyof typeof AIEvent];
+
+export interface AIEventPayload {
+  traceId: string;
+  conversationId: string;
+  timestamp: number;
+  data: unknown;
+}
 ```
 
-Then each component registers a reducer that handles only the events it cares about. The chat input component doesn’t know about tool calls—it only listens to `PromptDraftUpdated`. The undo stack listens to every `ToolCallStarted` and `ToolCallFinished` to build its operation log. The beauty is that components can be added or removed without touching the global event bus, and the undo stack can be disabled for mobile clients without breaking the chat.
+Each component subscribes to only the events it cares about. The chat input listens to `PromptDraftUpdated`. The undo stack listens to `ToolCallStarted` and `ToolCallFinished` to build its operation log. The tool panel listens to `ToolSelected`. Components can be added or removed without editing a central reducer, and the undo stack can be disabled on a client without touching chat logic.
 
-We built a tiny event bus called `microbus` (72 lines of code) that uses a Map<eventType, Set<handler>> under the hood. It’s fast enough for 20,000 events/sec on a $200/month DigitalOcean droplet. The bus guarantees at-least-once delivery but deduplicates events within a 50 ms window to avoid double-counting. That’s the level of simplicity we needed—no reducers, no middleware, just a typed event registry.
+A minimal event bus is genuinely small. The core is a map from event name to a set of handlers:
 
-# Evidence and examples from real systems
+```typescript
+// src/events/bus.ts
+type Handler = (payload: AIEventPayload) => void;
 
-In our production system we migrated three AI features—co-pilot chat, SQL assistant, and report generator—to the local-state-machine model. Here are the key metrics from the first 30 days after the cutover:
+export class EventBus {
+  private handlers = new Map<string, Set<Handler>>();
+  private seen = new Map<string, number>();
+  private dedupeWindowMs = 50;
 
-| Metric | Old (Redux TK) | New (Microbus + Zustand) | Change |
-|---|---|---|---|
-| P99 memory per session | 410 MB | 170 MB | -59 % |
-| P99 end-to-end latency | 840 ms | 390 ms | -54 % |
-| TTI on 3G (AI state 5 KB) | 2.8 s | 1.4 s | -50 % |
-| Memory leaks per 10k users | 12 | 1 | -92 % |
-| Deployments causing selector invalidation | 8 | 0 | -100 % |
+  on(event: string, handler: Handler): () => void {
+    if (!this.handlers.has(event)) this.handlers.set(event, new Set());
+    this.handlers.get(event)!.add(handler);
+    return () => this.handlers.get(event)?.delete(handler);
+  }
 
-The memory leak drop was the biggest surprise. With Redux we saw a 2 % daily increase in heap size until OOM. With the local model the heap plateaued after 4 hours of steady load. The difference came from the fact that each component’s Zustand store is garbage-collected when the component unmounts. In the old model the Redux store lived for the entire session, keeping every message in memory.
+  emit(event: string, payload: AIEventPayload): void {
+    // At-least-once delivery with a time-windowed dedupe key.
+    const key = `${payload.traceId}:${event}`;
+    const last = this.seen.get(key);
+    if (last !== undefined && payload.timestamp - last < this.dedupeWindowMs) return;
+    this.seen.set(key, payload.timestamp);
 
-Another real case: the SQL assistant. It lets users type a question and streams the generated SQL back. Under the old model, every keystroke triggered a global Redux action that recalculated a selector returning the entire conversation plus the new SQL draft. That selector had a 300 ms render cost on low-end devices. After the switch, only the SQL draft component listens to the `PromptDraftUpdated` event and re-renders its own textarea. The rest of the UI ignores the event. We cut the p95 render time from 300 ms to 40 ms on a $150 Android phone.
-
-The undo/redo stack deserves its own story. In the Redux model the undo slice held every AI operation in a single array. The array grew linearly with each tool call. When the user hit undo, Redux had to replay the entire history to compute the previous state. In the new model, each tool call registers a micro-operation in its own component store. The undo stack only stores references to those operations. Undo is now O(1) instead of O(n), and the stack never exceeds 100 items by policy. We even added a feature where users can undo a single tool step without affecting the chat history—something impossible with the global array approach.
-
-# The cases where the conventional wisdom IS right
-
-Global state still wins in three scenarios:
-
-1. **User preferences and auth tokens.** A global store with a single write per session is fine for dark mode, locale, and JWT. The mutation surface is tiny and the persistence layer (localStorage, cookies, or a secure cookie) is already global.
-
-2. **Read-only derived views.** If you’re building a dashboard that shows aggregated AI metrics across many users, a global store with memoized selectors is perfect. The data volume is small (hundreds of KB) and the read pattern is predictable.
-
-3. **Cross-cutting concerns with low churn.** Logging, analytics events, and feature flags fit in a global slice because they change rarely and are consumed by many components. Just keep the slice immutable after initial load.
-
-The boundary is clear: if the state changes more than once per user interaction or if the component tree is deep, move the state local.
-
-# How to decide which approach fits your situation
-
-Use this decision table for 2026 systems. The table assumes Node 20 LTS on the backend and React 18 on the frontend, but the principle generalizes.
-
-| Factor | Prefer global state | Prefer local state | Notes |
-|---|---|---|---|
-| State churn per session | < 5 writes | ≥ 5 writes | Count tool calls, keystrokes, re-renders |
-| State size at peak | < 50 KB JSON | ≥ 50 KB JSON | Measure after 100 messages |
-| Components sharing state | All components | Only adjacent components | Chat UI vs. analytics dashboard |
-| Undo/redo needed | Full conversation replay | Single operation steps | Undo granularity |
-| SSR support | Required | Optional | Next.js 14 vs. plain React |
-| Team size | < 5 engineers | ≥ 5 engineers | Communication overhead |
-
-If you check three or more boxes in the right column, adopt the local-state-machine model. If you’re still unsure, measure: wrap your global store in a `performance.memory` observer and log the peak heap size over 1,000 user sessions. The moment you hit 300 MB p99, you’ve already lost the battle.
-
-# Objections I've heard and my responses
-
-**Objection: “Event-driven architectures are harder to debug.”**
-
-True, but only if you treat events as fire-and-forget. We added structured logging: every event carries a trace ID, a timestamp, and the sender component. With a simple CLI (`npx microbus-trace --trace-id abc123`) we replay the exact sequence of events that led to a bug. The logs show the state before and after each reducer, which is more information than a Redux DevTools timeline.
-
-**Objection: “Zustand stores don’t work with React Server Components.”**
-
-They do in Next.js 14 if you use the `use` hook pattern. We store the AI state in a React cache and hydrate it on the client only when the component mounts. The cache key is the conversation ID, so server and client agree on the initial state without serializing the entire chat history. The p99 hydration time is 35 ms on a 3G connection.
-
-**Objection: “What about time-travel debugging?”**
-
-We built a lightweight Redux DevTools adapter that records every event and the resulting local state. It’s not as pretty as Redux, but it’s good enough: you can step backward through events, inspect the Zustand store of any component, and even export the event log for CI failures. The adapter is 140 lines of code and works with React 18 strict mode.
-
-**Objection: “Teams already know Redux.”**
-
-That’s a process objection, not a technical one. We ran a two-week spike where we taught five engineers the event model. The median time to fix a bug dropped from 4 hours to 45 minutes because the state surface was smaller. The new model is easier to reason about once you internalize the actor boundary.
-
-# What I'd do differently if starting over
-
-1. **Start with the undo stack first.** Design the operation log before you write a single prompt. The log’s shape dictates how events flow and what metadata each event needs. We initially treated undo as an afterthought and ended up with a brittle history slice.
-
-2. **Use ESLint to enforce event contracts.** We added a custom rule that checks every event type against a JSON schema. It caught 14 mismatches in the first month—mostly typos in event names.
-
-3. **Measure memory at 1,000 concurrent users, not 10.** Our staging load was too low. When we finally hit 1,000 concurrent users, the Redux store OOM’d in 20 minutes. A small staging cluster ($200/month) would have caught it.
-
-4. **Ship a feature flag for the new model.** We toggled 10 % of users to the new architecture for one week. The flag let us compare error rates and memory growth side-by-side without a risky big-bang release.
-
-5. **Ban mutable global state in new features.** After this project, we added a lint rule: `no-global-mutable-state`. It flags any global variable that changes after module load. That single rule stopped three new teams from repeating our mistake.
-
-# Summary
-
-Global state is the wrong tool for AI features that generate bursts of concurrent, cancellable operations. The conventional wisdom—one store to rule them all—sounds elegant until your memory graph balloons and your undo stack crawls. Treat AI state as ephemeral, local, and event-driven. Keep the events small, versioned, and immutable. Measure memory growth early and often; the moment your p99 heap exceeds 300 MB, you’ve already lost the battle.
-
-The single store model works for preferences and read-only dashboards, but not for anything that mutates more than five times per session or exceeds 50 KB JSON. If your AI feature has either property, switch to local state machines communicating via events.
-
-
-## Frequently Asked Questions
-
-**Why does my AI chat UI re-render the entire conversation on every keystroke?**
-
-Your global store is recalculating selectors that return the whole chat history. Either memoize the selectors with `createSelector` or move the prompt draft into a local Zustand store that only re-renders the input box. We saw a 50 % latency drop by doing this in our SQL assistant.
-
-**How do I handle undo/redo without a global history array?**
-
-Store micro-operations in the component that owns the operation. The undo stack keeps references to those operations. That way undo is O(1) instead of O(n). We built this for our report generator and cut undo time from 220 ms to 12 ms on low-end devices.
-
-**Is event-driven architecture slower than Redux?**
-
-No—measured end-to-end latency dropped 54 % when we moved from Redux Toolkit 2.2.5 to a microbus + Zustand setup. The key is reducing the render surface; events help you do that.
-
-**What’s the smallest event bus I can use?**
-
-`microbus` is 72 lines of TypeScript and handles 20,000 events/sec on a $200 DigitalOcean droplet. It’s the one we built for this project. If you need persistence or durability, pair it with a lightweight event store like SQLite.
-
-If you take nothing else from this post, run this command today and check the p99 heap size of your AI state after 1,000 user sessions:
-
-```bash
-yarn add memory-stats && node -e "require('memory-stats')().observe()" &
-curl -s https://your-api.com/ai/load-test?sessions=1000 | jq '.p99HeapMB'
+    for (const handler of this.handlers.get(event) ?? []) {
+      try {
+        handler(payload);
+      } catch (err) {
+        // One failing subscriber must not stop the others.
+        console.error(`handler failed for ${event}`, err);
+      }
+    }
+  }
+}
 ```
 
-If the number is ≥ 300 MB, move the AI state local before your next deploy.
+Two details matter more than the implementation. First, the dedupe window is a heuristic, not a guarantee: it suppresses duplicate emissions that arrive within `dedupeWindowMs` for the same trace and event name. Choose the window from the observed retry interval of your transport, and log suppressed events so you can audit them. Second, subscriber isolation via `try/catch` prevents one broken handler from silently dropping events for every other subscriber.
 
----
+## A worked example: undo that stays O(1)
 
-### About this article
+Consider a user who has asked twelve questions and triggered thirty tool calls. Under a snapshot model, the undo stack holds thirty entries, each potentially containing the full conversation. Reversing the last tool call means finding the previous snapshot, which in a naive implementation means scanning or replaying.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
+Under the local model, each tool call registers an operation record in the store that owns it:
 
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
+```typescript
+interface Operation {
+  id: string;
+  kind: 'tool-call' | 'prompt';
+  conversationId: string;
+  inverse: () => void;   // how to undo this single step
+  timestamp: number;
+}
 
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
+class UndoStack {
+  private stack: Operation[] = [];
+  private maxDepth = 100;
 
-**Last generated:** July 28, 2026
+  push(op: Operation): void {
+    this.stack.push(op);
+    if (this.stack.length > this.maxDepth) this.stack.shift();
+  }
+
+  undo(): boolean {
+    const op = this.stack.pop();
+    if (!op) return false;
+    op.inverse();
+    return true;
+  }
+}
+```
+
+Undo is now a pop and a single inverse call. Cost is independent of how many operations came before. The bounded depth keeps memory flat. And because each operation carries its own inverse, a user can undo a single tool step without unwinding the conversation — a feature that is awkward to express when the only unit of history is a whole-conversation snapshot.
+
+The trade-off is that each operation must supply a correct inverse. For a tool call that mutated server state, the inverse is a compensating request, not a local mutation, and compensating requests can fail. Decide up front which operations are locally reversible and which require a server round trip, and surface that distinction in the UI rather than pretending all undo is free.
+
+## How to measure whether you have this problem
+
+Do not trust intuition about memory. Instrument it. The following is a measurement plan, not a result.
+
+**Instrument the state container.** Sample the size of your AI state on a timer and record the 50th, 95th, and 99th percentiles per session. In the browser, `performance.memory.usedJSHeapSize` is available in Chromium-based browsers and is approximate; treat it as a trend line, not an exact figure. In Node, `process.memoryUsage().heapUsed` gives the same kind of signal.
+
+```typescript
+// Browser-side sampler: log heap and AI-state size every 10s.
+const AI_STATE_KEY = 'ai.conversation';
+
+function sample() {
+  const mem = (performance as any).memory;
+  const aiState = JSON.stringify(
+    // replace with your actual selector
+    (window as any).__AI_STATE__?.[AI_STATE_KEY] ?? null
+  );
+  console.log(JSON.stringify({
+    t: Date.now(),
+    heapMB: mem ? +(mem.usedJSHeapSize / 1048576).toFixed(1) : null,
+    aiStateKB: +(aiState.length / 1024).toFixed(1),
+  }));
+}
+
+setInterval(sample, 10_000);
+```
+
+**Compare two branches under the same load.** Run the same scripted user journey against the global-store build and the local-state build, with the same number of sessions and the same think time. Compare the p99 of `heapMB` and `aiStateKB` at the end of each session, not the mean. A mean hides the long tail, and the long tail is where out-of-memory kills happen.
+
+**Count renders per interaction.** Wrap the component that renders the conversation in a render counter and log it per keystroke. If one keystroke produces a render of the full conversation, the selector is too coarse. The fix is either a narrower selector or local ownership of the draft.
+
+**Count duplicate side effects.** Tag every analytics or telemetry event emitted from an AI state transition with the operation ID. Then query for operation IDs with more than one event. A nonzero count is direct evidence of the concurrency bug described earlier, independent of any render timing.
+
+**Measure hydration separately.** If you server-render, measure the time from HTML parse to interactive for a session with a large AI state. Serializing and deserializing a large conversation is a distinct cost from rendering it, and it lands on the slowest devices.
+
+Set your own thresholds from these measurements. A p99 heap figure that is alarming in one application may be routine in another; what matters is whether the curve is flat or rising over the session.
+
+## Failure modes to watch for in the local model
+
+Local state machines are not free. Four failure modes recur.
+
+**Event sprawl.** Without a registry and a naming convention, event names proliferate and nobody knows which component emits what. Keep every event name in one module, and add a lint rule or schema check that rejects unregistered names at build time.
+
+**Lost causality.** Fire-and-forget events are hard to debug. Every payload should carry a trace ID, a timestamp, and the emitting component. With those three fields you can reconstruct the exact sequence that produced a bug from logs alone.
+
+**Unbounded local stores.** Moving state local does not automatically bound it. A streaming output buffer that appends every chunk will still grow. Cap buffers by policy — keep the last N chunks, or the last N kilobytes — and drop the rest.
+
+**Cross-machine consistency.** Once state is distributed across components, any invariant that spans two of them needs an explicit reconciliation step. If the tool panel and the undo stack must agree on which tool is active, make that a single event with a single owner rather than two components inferring it independently.
+
+## Decision checklist
+
+Work through these questions before choosing a state model for a new AI feature.
+
+- How many times does this state change per user interaction? More than a handful points to local ownership.
+- How large is the state at peak, after a long session? Measure it, do not estimate.
+- How many components read it? If the answer is one subtree, a global store buys nothing.
+- Does undo need to be per-operation or per-conversation? Per-operation favors local operation records.
+- Does the state need to survive a full page reload? If not, session-scoped local state is simpler.
+- Is the state server-authoritative? If yes, treat the client copy as a cache with an explicit invalidation strategy, regardless of where it lives.
+- Does the team already have strong conventions for the global store? Convention is a real cost, but it does not change the memory or concurrency behavior of the model.
+
+If several answers point toward local ownership, adopt it early. Retrofitting is possible but requires reworking the undo model and the render boundaries at the same time.
+
+## FAQ
+
+**Why does an AI chat UI re-render the whole conversation on every keystroke?**
+
+Usually because a selector returns the entire conversation and the draft input writes into the same store. Narrow the selector, or move the draft into a store owned by the input component so only that component re-renders.
+
+**How do I implement undo without a global history array?**
+
+Store one operation record per reversible step, owned by the component that performed it, and keep an undo stack of references. Undo becomes a pop plus one inverse call, with cost independent of history length. Bound the stack depth.
+
+**Is an event-driven approach slower than a global store?**
+
+Dispatch overhead is typically small compared to render cost. The gain comes from shrinking the render surface: fewer components subscribe, so fewer re-render. Measure renders per interaction rather than assuming either model is faster.
+
+**What is the smallest event bus that works?**
+
+A map from event name to a set of handlers is enough, roughly the forty lines shown above. Add trace IDs, a dedupe window, and subscriber isolation. If you need durability or replay, pair it with a persistent log rather than growing the bus.
+
+**How do I migrate an existing feature without a risky rewrite?**
+
+Run both models behind a flag for the same user journey and compare p99 heap, renders per interaction, and duplicate side-effect counts. Migrate one surface at a time, starting with the one that re-renders most.
+
+## Do this next
+
+Pick your most-used AI surface and add the sampler above to it. Let one real session run to completion, then read the last `aiStateKB` value and the delta in `heapMB` between the first and last sample. If the delta is large and the AI state is owned by a component subtree, move that one piece of state local before your next deploy.
+===END===

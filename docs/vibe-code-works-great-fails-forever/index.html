@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Vibe code: works great, fails forever - Kubai Kevin</title>
-        <meta name="description" content="Cut production outages 70% by avoiding these 7 vibe-coding shortcuts — connection pools, logging, and cache mistakes most teams repeat in 2026.">
+        <meta name="description" content="Ten failure modes that make vibe-coded MVPs unmaintainable, with code fixes, measurement recipes, and a hardening checklist for each.">
         <meta name="keywords" content="VibeCoding, ProductionFailures, Fastapi, Structlog24.4.0, Redis7.2Latency, Tech, Technology, Postgresql, Redis, Buildinpublic">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-20T22:54:21.869130">
-        <meta property="article:modified_time" content="2026-09-19T12:03:05.113770+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:04:44.458071+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Vibe code: works great, fails forever">
-        <meta property="og:description" content="Cut production outages 70% by avoiding these 7 vibe-coding shortcuts — connection pools, logging, and cache mistakes most teams repeat in 2026.">
+        <meta property="og:description" content="Ten failure modes that make vibe-coded MVPs unmaintainable, with code fixes, measurement recipes, and a hardening checklist for each.">
         <meta property="og:url" content="https://kubaik.github.io/vibe-code-works-great-fails-forever/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Vibe code: works great, fails forever">
-        <meta name="twitter:description" content="Cut production outages 70% by avoiding these 7 vibe-coding shortcuts — connection pools, logging, and cache mistakes most teams repeat in 2026.">
+        <meta name="twitter:description" content="Ten failure modes that make vibe-coded MVPs unmaintainable, with code fixes, measurement recipes, and a hardening checklist for each.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/vibe-code-works-great-fails-forever.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,10 +61,10 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/vibe-code-works-great-fails-forever/#article",
       "headline": "Vibe code: works great, fails forever",
-      "description": "Cut production outages 70% by avoiding these 7 vibe-coding shortcuts — connection pools, logging, and cache mistakes most teams repeat in 2026.",
+      "description": "Ten failure modes that make vibe-coded MVPs unmaintainable, with code fixes, measurement recipes, and a hardening checklist for each.",
       "datePublished": "2026-06-20T22:54:21+00:00",
-      "dateModified": "2026-09-19T12:03:05+00:00",
-      "wordCount": 2503,
+      "dateModified": "2026-10-03T11:04:44+00:00",
+      "wordCount": 2523,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Vibe code: works great, fails forever</h1>
                 
-                <p class="post-lead">Cut production outages 70% by avoiding these 7 vibe-coding shortcuts — connection pools, logging, and cache mistakes most teams repeat in 2026.</p>
+                <p class="post-lead">Ten failure modes that make vibe-coded MVPs unmaintainable, with code fixes, measurement recipes, and a hardening checklist for each.</p>
                 
                 
                 <div class="tags">
@@ -261,275 +261,236 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2503 words
+                        &nbsp;·&nbsp; 2523 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
-<h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>In 2026 I joined a seed-stage startup as the first backend hire. The CTO told me to ‘just bang out the auth service’ so they could demo to investors. I wrote 300 lines of Python with FastAPI in one night using cursor rules, got it deployed on Fly.io, and the demo went great. Worse, the CFO couldn’t get a clean financial report because the service emitted 12 different log formats depending on which endpoint you hit.</p>
-<p>The mistakes weren’t clever: I used <code>uvicorn</code> without <code>--workers</code>, I left <code>SQLALCHEMY_POOL_RECYCLE=3600</code> at the default 30 seconds, and I stored session tokens in plain Redis strings instead of using Hash fields. None of those choices broke the demo, but every one of them broke the thing we had to actually run.</p>
-<p>This list ranks the reasons why vibe-coded MVPs fail when you have to maintain them, based on what I’ve seen in three startups and a handful of consulting gigs. Each item includes the concrete pain I watched teams pay for.</p>
-<h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>I measured every failure mode against four hard numbers I’ve collected over the past two years:</p>
-<ul>
-<li><strong>Latency p99</strong> measured with Locust running against a staging copy of the real traffic shape (median 1200 QPS, 10 ms median, 80 ms p95). - <strong>Cost per 10k requests</strong> on AWS t4g.small (arm64) and Fly.io shared-cpu-1x instances. - <strong>Lines of code</strong> that had to change when a requirement flipped from ‘just works’ to ‘audit-ready’. - <strong>Time-to-first-production-fix</strong> — how long it took a newly hired engineer to make a change without breaking something else.</li>
-</ul>
-<p>Every option in this list produced at least one of the above data points; most produced all four. I also kept a running log of the exact error messages teams hit so we wouldn’t have to search Slack history three months later.</p>
-<h2 id="why-vibe-coding-works-for-mvps-and-fails-for-anything-you-need-to-maintain-the-full-ranked-list">Why vibe coding works for MVPs and fails for anything you need to maintain — the full ranked list</h2>
-<h3 id="1-zero-observability-scaffolding">1. Zero observability scaffolding</h3>
-<p>What it does
-You write code in a single file, run it locally, and if anything goes wrong you tail the console. In production that console disappears, replaced by systemd logs or CloudWatch streams that silently drop 15 % of your structured logs because the buffer filled up.</p>
-<p>Strength
-You move at the speed of thought without wrestling with log shippers or dashboards.</p>
-<p>Weakness
-In production you spend three days replaying production traffic through a local replica because the only signal you have is `{"level":"error","msg":"oops</p>
-<h3 id="2-undocumented-environment-assumptions">2. Undocumented environment assumptions</h3>
-<p>What it does
-You assume the demo machine has Redis on localhost:6379 and that the staging database already contains the user table with three rows.</p>
-<p>Strength
-You don’t waste time writing Terraform or Dockerfiles early on.</p>
-<p>Weakness
-When the staging env spins up a fresh RDS instance every night and the connection string rotates, your Python script silently falls back to SQLite, corrupting every write.</p>
-<h3 id="3-no-dependency-version-pins">3. No dependency version pins</h3>
-<p>What it does
-You <code>pip install fastapi==0.109.1</code> because it’s what got the demo running at 2 a.m.</p>
-<p>Strength
-You avoid spending an hour pinning transitive deps you’ll never touch.</p>
-<p>Weakness
-Six months later FastAPI 0.111.0 drops <code>Request.state</code>, breaking your auth middleware. Your CI matrix still runs 0.109.1, so the breakage only surfaces in prod where someone manually upgraded via <code>pip install --upgrade</code>.</p>
-<h3 id="4-in-memory-state-for-distributed-systems">4. In-memory state for distributed systems</h3>
-<p>What it does
-You cache user sessions in a global Python dict to avoid hitting Redis during the demo.</p>
-<p>Strength
-You don’t need to configure a Redis cluster before the investor pitch.</p>
-<p>Weakness
-When you scale to two Fly.io instances, half the requests fail with 401 because the second instance doesn’t have the session the first one cached. The fix requires moving to Redis Hash fields and adding a 120-second TTL—140 lines of code and a 3 a.m. deploy.</p>
-<h3 id="5-manual-secrets-management">5. Manual secrets management</h3>
-<p>What it does
-You hard-code the JWT secret in <code>main.py</code> because <code>dotenv</code> felt like overkill for the demo.</p>
-<p>Strength
-You close your laptop in under 60 seconds.</p>
-<p>Weakness
-When the secret leaks in a GitHub Actions log, you spend the next sprint rotating every token issued in the last six months. The rotation script itself is 87 lines of Bash that accidentally revoked the CEO’s laptop token at 3 a.m., bricking their ability to approve wire transfers for 45 minutes.</p>
-<h3 id="6-no-structured-error-handling">6. No structured error handling</h3>
-<p>What it does
-You raise a generic <code>Exception("Something went wrong")</code> everywhere and let the console color it red.</p>
-<p>Strength
-You don’t spend 40 minutes writing custom error types before the demo.</p>
-<p>Weakness
-When the CFO asks for a breakdown of 502s vs 429s vs 500s, you realize you only have one error bucket. Rewriting every handler to return <code>{"error": {"code": "AUTH_TIMEOUT", "message": "Session expired"}}</code> takes 240 lines across 11 files and introduces a new bug where the same error code leaks the user’s email in the message.</p>
-<h3 id="7-optimistic-concurrency-assumptions">7. Optimistic concurrency assumptions</h3>
-<p>What it does
-You assume the database will always have enough write capacity for the demo traffic.</p>
-<p>Strength
-You avoid provisioning an RDS instance bigger than <code>db.t4g.micro</code>.</p>
-<p>Weakness
-When the investor demo triggers a 20× traffic spike, you hit 95 % CPU on the database and every <code>INSERT</code> starts timing out. The fix requires provisioning a <code>db.t4g.large</code>, rewriting every <code>INSERT … RETURNING</code> to use <code>ON CONFLICT</code>, and adding a 5-second retry loop—192 lines, one weekend of downtime, and a $200/month bill increase.</p>
-<h3 id="8-no-api-contract-tests">8. No API contract tests</h3>
-<p>What it does
-You rely on Postman collections that you manually ran once.</p>
-<p>Strength
-You don’t need to spin up a staging env before the demo.</p>
-<p>Weakness
-When the frontend team ships a new version that sends snake_case instead of camelCase, your endpoints silently accept the payload and return 200 OK while storing the wrong fields. The bug isn’t caught until the next customer complaint, and the contract test suite you bolt on later is 234 lines of <code>pytest</code> with 11 mocked responses that still miss the edge case where the <code>user_id</code> is a UUIDv7 instead of an integer.</p>
-<h3 id="9-single-file-architecture">9. Single-file architecture</h3>
-<p>What it does
-You put the entire service in <code>main.py</code>: routes, models, middleware, and a 30-line cron job.</p>
-<p>Strength
-You can email the file to the CTO at 2 a.m. and it just works.</p>
-<p>Weakness
-When you need to add a new endpoint for tax reporting, you realize the file is 1,800 lines long and the cron job is now fighting with the new endpoint over the same Redis key space. Refactoring into three modules costs 340 lines of code churn and introduces a race condition that wasn’t there before because the original file was single-threaded.</p>
-<h3 id="10-no-request-id-propagation">10. No request-id propagation</h3>
-<p>What it does
-You don’t emit a <code>request_id</code> header anywhere.</p>
-<p>Strength
-You avoid adding another field to every log line.</p>
-<p>Weakness
-When the payment provider rejects 12 % of requests due to duplicate IDs, you have no way to group the failures. You spend two days grepping logs with partial credit-card numbers before realizing the issue is in the idempotency key logic buried in <code>main.py</code> line 1,412.</p>
-<hr />
-<h3 id="advanced-edge-cases-you-personally-encountered">Advanced edge cases you personally encountered</h3>
-<ol>
-<li>
-<p><strong>Fly.io shared-cpu-1x + uvicorn –workers=1 memory leak under 100 ms p99 latency spikes</strong>
-   In 2026 Fly.io’s shared-cpu instances expose a cgroup memory limit of 384 MB. My demo service, which started at 220 MB RSS, would creep to 390 MB after three hours of 1200 QPS traffic. The culprit was a single <code>asyncio.gather</code> that spawned 18 background tasks for every request, each leaking 2 MB of <code>aiohttp</code> connection objects. The fix required adding <code>aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=5))</code> and a 60-second <code>asyncio.sleep(0)</code> in the background task to force GC. Without the sleep, Python’s GC wouldn’t run often enough to reclaim memory before the next spike. I measured the leak with <code>flyctl metrics</code> and a custom Prometheus scrape target because Fly.io’s native dashboard only updates every 60 seconds.</p>
-</li>
-<li>
-<p><strong>Redis Hash vs String race condition in multi-instance Fly.io deployment</strong>
-   I stored session tokens as plain Redis strings (<code>SET session:&lt;token&gt; &lt;user_id&gt;</code>) because it was one line. After scaling to three Fly.io instances, 12 % of requests started returning 401 even though the token was valid. The issue was a race between <code>SET</code> and <code>GET</code> when two instances tried to write the same session simultaneously, causing one instance to overwrite the other’s TTL. The fix was migrating to Redis Hash fields with <code>HSET sessions:&lt;token&gt; user_id &lt;user_id&gt; expires_at &lt;epoch&gt;</code> and using <code>EVAL</code> for atomic TTL updates. The migration added 140 lines of code and required a 3 a.m. deploy because the Redis cluster was running on Fly.io’s shared 256 MB plan, which only supports Lua scripts up to 1 MB.</p>
-</li>
-<li>
-<p><strong>JWT exp claim desync under daylight saving time transitions</strong>
-   I set the JWT <code>exp</code> claim to 24 hours (<code>exp = iat + 86400</code>). In 2026, daylight saving time changes in the US caused the token to expire one hour early in regions that spring forward. The issue surfaced when the Europe-based support team couldn’t log in for 45 minutes because their local time was one hour ahead of UTC. The fix required using <code>exp = iat + timedelta(days=1)</code> and adding a 5-minute grace period on the server side. The change required updating every JWT generation endpoint and adding a test case that mocks <code>datetime.now(tz=timezone.utc)</code> with <code>pytz</code> to simulate the transition. The test alone added 89 lines of code because I had to mock the entire <code>datetime</code> module to avoid flaky tests during the transition.</p>
-</li>
-</ol>
-<hr />
-<h3 id="integration-with-real-tools-versions-as-of-2026">Integration with real tools (versions as of 2026)</h3>
-<h4 id="tool-1-grafana-cloud-logs-loki-v300">Tool 1: Grafana Cloud Logs + Loki (v3.0.0)</h4>
-<p>The agent sends logs via OTLP with the following config (fly.toml):</p>
-<pre><code class="language-toml">[metrics]
-  prometheus_endpoint = &quot;/metrics&quot;
+                <h2 id="why-vibe-coded-mvps-fail-after-the-demo">Why vibe-coded MVPs fail after the demo</h2>
+<p>Vibe coding is a real and rational strategy for a demo: one file, one process, hard-coded config, no tests. It optimizes for the only metric that matters before funding — time to something a stakeholder can click. The failure mode is not the speed; it is that the shortcuts are invisible. They do not announce themselves as debt. They sit quietly until the service is asked to do something the demo never did: run two instances, survive a dependency upgrade, produce an audit trail, or let a new engineer change one endpoint without touching the rest.</p>
+<p>The ten items below are ranked by how expensive they are to reverse, not by how bad they look in review. Each one includes the concrete production symptom, the fix, and — where a number is useful — how to measure it yourself rather than trusting a borrowed figure.</p>
+<h2 id="1-zero-observability-scaffolding">1. Zero observability scaffolding</h2>
+<p><strong>Symptom.</strong> Locally, failures print to a console. In production that console is replaced by a log drain, and when the incident happens the only signal available is an unstructured error line with no request context. Reconstructing what happened requires replaying traffic against a local replica.</p>
+<p><strong>Fix.</strong> Emit structured JSON logs from day one and attach a correlation ID to every line. That is roughly twenty lines of middleware, not a platform project.</p>
+<pre><code class="language-python">import json, logging, uuid
+from starlette.middleware.base import BaseHTTPMiddleware
 
-[logs]
-  [[logs.local.file]]
-    path = &quot;/var/log/app/*.jsonl&quot;
-    scrape_config = '''
-scrape_configs:
-- job_name: app-logs
-  pipeline_stages:
-    - json:
-        expressions:
-          level: level
-          msg: message
-          trace_id: trace_id
-    - labels:
-        level:
-        trace_id:
-  static_configs:
-    - targets: [localhost]
-      labels:
-        job: auth-service
-        app: auth
-'''
-</code></pre>
-<p>The key was forcing every log line to include <code>trace_id</code> from the incoming request header. The agent automatically batches logs into 100 KB chunks, solving the 15 % buffer drop issue.</p>
-<h4 id="tool-2-datadog-apm-python-sdk-v2550">Tool 2: Datadog APM + Python SDK (v2.55.0)</h4>
-<p>For latency p99 tracking, I added the Datadog SDK with the following snippet in <code>main.py</code>:</p>
-<pre><code class="language-python">from ddtrace import patch_all, tracer
-from ddtrace.propagation.http import HTTPPropagator
+logger = logging.getLogger(&quot;app&quot;)
 
-patch_all()  # Patches FastAPI, aiohttp, redis, etc.
-
-@app.on_event(&quot;startup&quot;)
-async def startup():
-    tracer.configure(
-        service=&quot;auth-service&quot;,
-        env=&quot;production&quot;,
-        version=&quot;0.2.1&quot;,
-        hostname=&quot;auth-service-6d8c7b5f9d-abc123.internal&quot;,
-    )
-
-@app.middleware(&quot;http&quot;)
-async def inject_trace_id(request: Request, call_next):
-    context = HTTPPropagator.extract(request.headers)
-    with tracer.trace(&quot;auth.request&quot;, context=context) as span:
+class RequestContextMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        request_id = request.headers.get(&quot;x-request-id&quot;, str(uuid.uuid4()))
         response = await call_next(request)
-        span.set_tag(&quot;http.status_code&quot;, response.status_code)
+        response.headers[&quot;x-request-id&quot;] = request_id
+        logger.info(json.dumps({
+            &quot;request_id&quot;: request_id,
+            &quot;method&quot;: request.method,
+            &quot;path&quot;: request.url.path,
+            &quot;status&quot;: response.status_code,
+        }))
         return response
 </code></pre>
-<p>The SDK automatically captures p99 latency, error rates, and dependency traces. Before this, I was manually parsing <code>uvicorn</code> logs with <code>grep</code> and <code>awk</code> to estimate p99, which was off by 30 ms. With Datadog, the p99 matched the Locust staging numbers within 2 ms. The cost was $15/month for 1 million traces, which was cheaper than the $4,200/month Fly.io bill saved by fixing the connection pool.</p>
-<h4 id="tool-3-renovate-github-actions-v381200">Tool 3: Renovate + GitHub Actions (v38.120.0)</h4>
-<p>To automate dependency pinning, I set up Renovate with the following <code>renovate.json</code>:</p>
-<pre><code class="language-json">{
-  &quot;$schema&quot;: &quot;https://docs.renovatebot.com/renovate-schema.json&quot;,
-  &quot;extends&quot;: [&quot;config:recommended&quot;],
-  &quot;platformAutomerge&quot;: true,
-  &quot;enabledManagers&quot;: [&quot;pip&quot;, &quot;github-actions&quot;],
-  &quot;packageRules&quot;: [
-    {
-      &quot;matchPackagePatterns&quot;: [&quot;*&quot;],
-      &quot;matchUpdateTypes&quot;: [&quot;minor&quot;, &quot;patch&quot;],
-      &quot;automerge&quot;: true
-    },
-    {
-      &quot;matchPackagePatterns&quot;: [&quot;fastapi&quot;, &quot;uvicorn&quot;, &quot;sqlalchemy&quot;],
-      &quot;matchUpdateTypes&quot;: [&quot;major&quot;],
-      &quot;automerge&quot;: false
-    }
-  ],
-  &quot;prConcurrentLimit&quot;: 2,
-  &quot;timezone&quot;: &quot;UTC&quot;
-}
+<p><strong>How to measure whether it is working.</strong> Pick one week, count the incidents where you could identify the failing request from logs alone without reproducing it. The target is all of them. If the answer is "we had to replay traffic," the logging is not done — regardless of how many dashboards exist.</p>
+<h2 id="2-undocumented-environment-assumptions">2. Undocumented environment assumptions</h2>
+<p><strong>Symptom.</strong> The code assumes Redis is on <code>localhost:6379</code> and that the database already has the expected schema and seed rows. When staging is rebuilt from scratch, or a connection string rotates, the app does not crash loudly — it falls back to something else and writes to the wrong place.</p>
+<p><strong>Fix.</strong> Fail fast on missing configuration. A twelve-factor app reads config from the environment and refuses to start without it.</p>
+<pre><code class="language-python">import os
+
+def require_env(name: str) -&gt; str:
+    value = os.environ.get(name)
+    if not value:
+        raise RuntimeError(f&quot;missing required environment variable: {name}&quot;)
+    return value
+
+DATABASE_URL = require_env(&quot;DATABASE_URL&quot;)
+REDIS_URL = require_env(&quot;REDIS_URL&quot;)
+JWT_SECRET = require_env(&quot;JWT_SECRET&quot;)
 </code></pre>
-<p>Renovate created a PR every Tuesday at 02:00 UTC, pinning every dependency to the latest minor/patch version. The PR included a changelog link and a mini-test suite that ran against the staging env. Before Renovate, I was manually pinning dependencies during 2 a.m. debugging sessions, which introduced human error. After, the only major version upgrade I had to handle manually was FastAPI 0.109.1 → 0.111.0, which broke the auth middleware. The upgrade took 45 minutes and introduced a regression that wasn’t caught by the unit tests, but it was still faster than the three days I spent debugging the connection pool issue.</p>
-<hr />
-<h3 id="before-vs-after-concrete-numbers-auth-service-case-study">Before vs After: concrete numbers (auth service case study)</h3>
+<p><strong>Failure-mode analysis.</strong> The dangerous version of this bug is the silent fallback, not the crash. A crash on startup is a five-minute fix. A silent fallback to SQLite corrupts data for however long it takes someone to notice, and the corrupted rows are usually not recoverable from the primary store.</p>
+<p><strong>Checklist.</strong>
+- Every external dependency has an explicit, validated connection string.
+- Startup fails loudly if any is missing.
+- The same code path runs in local, staging, and production — only the values differ.</p>
+<h2 id="3-no-dependency-version-pins">3. No dependency version pins</h2>
+<p><strong>Symptom.</strong> The environment resolves to whatever is newest at install time. A minor release changes behavior, the breakage appears only in production, and the local environment still works because it was built months ago.</p>
+<p><strong>Fix.</strong> Pin direct dependencies and commit a lock file. Then automate the upgrade so pins do not become a fossil record.</p>
+<pre><code class="language-toml"># pyproject.toml
+[project]
+dependencies = [
+    &quot;fastapi==0.115.6&quot;,
+    &quot;uvicorn[standard]==0.34.0&quot;,
+    &quot;sqlalchemy==2.0.36&quot;,
+]
+</code></pre>
+<p>Generate the lock file with the tool of your choice (<code>pip-compile</code>, <code>uv lock</code>, <code>poetry lock</code>) and commit it. A lock file without an automated upgrade PR is a slow-motion outage; see item 9 for the automation.</p>
+<p><strong>How to measure.</strong> Instrument one thing: the time between a dependency releasing a security patch and that patch being deployed. If you cannot answer that question with a number, you do not have a dependency process.</p>
+<h2 id="4-in-memory-state-in-a-multi-instance-deployment">4. In-memory state in a multi-instance deployment</h2>
+<p><strong>Symptom.</strong> Sessions or rate-limit counters live in a process-local dict. It works perfectly with one instance. The moment a second instance exists, a fraction of requests fail with 401 or bypass the limit, and the fraction scales with instance count.</p>
+<p><strong>Fix.</strong> Move shared state to a store both instances can see, and make the writes atomic.</p>
+<pre><code class="language-python">import redis.asyncio as redis
+
+r = redis.from_url(REDIS_URL, decode_responses=True)
+
+async def save_session(token: str, user_id: str, ttl_seconds: int = 86400) -&gt; None:
+    key = f&quot;session:{token}&quot;
+    async with r.pipeline(transaction=True) as pipe:
+        pipe.hset(key, mapping={&quot;user_id&quot;: user_id})
+        pipe.expire(key, ttl_seconds)
+        await pipe.execute()
+</code></pre>
+<p><strong>Failure-mode analysis.</strong> The subtle version of this bug is not the 401 — it is the rate limiter. A per-process counter silently allows N times the intended request rate, where N is the instance count. That is an abuse vector, not a UX bug, and it will not show up in your error rate.</p>
+<h2 id="5-manual-secrets-management">5. Manual secrets management</h2>
+<p><strong>Symptom.</strong> A secret is committed, pasted into a CI variable, or hard-coded "temporarily." When it leaks, the response is a scramble: find every place it was used, rotate, redeploy, and hope nothing was missed.</p>
+<p><strong>Fix.</strong> Secrets come from a secret manager at runtime, never from the repository. The rotation procedure should be a documented, tested runbook — not a script someone writes during the incident.</p>
+<p><strong>Checklist.</strong>
+- No secret appears in git history, including in deleted files and CI configs.
+- Rotation is a single command or a single pipeline run.
+- Rotation does not require a human to remember which services consume the secret.
+- A leaked secret can be rotated without a deploy.</p>
+<p><strong>How to measure.</strong> Time a rotation end-to-end in a staging environment. If it takes longer than the incident it is meant to resolve, the process is the vulnerability.</p>
+<h2 id="6-no-structured-error-handling">6. No structured error handling</h2>
+<p><strong>Symptom.</strong> Every failure returns a generic 500 with a string. When someone asks for a breakdown of timeouts versus validation errors versus upstream failures, there is exactly one bucket.</p>
+<p><strong>Fix.</strong> Define error codes and return them consistently.</p>
+<pre><code class="language-python">from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+
+app = FastAPI()
+
+class AppError(Exception):
+    def __init__(self, code: str, message: str, status: int = 400):
+        self.code = code
+        self.message = message
+        self.status = status
+
+@app.exception_handler(AppError)
+async def handle_app_error(request: Request, exc: AppError):
+    return JSONResponse(
+        status_code=exc.status,
+        content={&quot;error&quot;: {&quot;code&quot;: exc.code, &quot;message&quot;: exc.message}},
+    )
+
+@app.get(&quot;/session&quot;)
+async def get_session():
+    raise AppError(&quot;AUTH_TIMEOUT&quot;, &quot;Session expired&quot;, status=401)
+</code></pre>
+<p><strong>Failure-mode analysis.</strong> Error messages are a data-exfiltration surface. A handler that interpolates user input into the message will eventually leak an email address, a token fragment, or a row ID into a log aggregator with broader access than the database. Keep the machine-readable code separate from the human-readable message, and never put user data in either.</p>
+<h2 id="7-optimistic-concurrency-assumptions">7. Optimistic concurrency assumptions</h2>
+<p><strong>Symptom.</strong> The write path assumes the database always has capacity and that concurrent writes do not conflict. Under a traffic spike, writes time out; under concurrent writes to the same row, one silently overwrites the other.</p>
+<p><strong>Fix.</strong> Make writes idempotent and handle conflict explicitly.</p>
+<pre><code class="language-python">from sqlalchemy.dialects.postgresql import insert
+
+async def upsert_user(session, user_id: str, email: str):
+    stmt = insert(User).values(user_id=user_id, email=email)
+    stmt = stmt.on_conflict_do_update(
+        index_elements=[User.user_id],
+        set_={&quot;email&quot;: stmt.excluded.email},
+    )
+    await session.execute(stmt)
+    await session.commit()
+</code></pre>
+<p><strong>How to measure.</strong> Run a load test against a staging copy with a realistic write mix and watch database CPU and write latency, not just request latency. The database saturates before the API does, so API-level metrics will look healthy right up until they do not.</p>
+<h2 id="8-no-api-contract-tests">8. No API contract tests</h2>
+<p><strong>Symptom.</strong> The frontend and backend agree on a payload shape in a document that drifts. A field is renamed from <code>userId</code> to <code>user_id</code>, the backend accepts both or neither, and the failure surfaces as a customer complaint rather than a test failure.</p>
+<p><strong>Fix.</strong> Test the contract, not the implementation. Assert on the response shape your consumers depend on.</p>
+<pre><code class="language-python">from fastapi.testclient import TestClient
+
+client = TestClient(app)
+
+def test_session_response_shape():
+    resp = client.post(&quot;/session&quot;, json={&quot;email&quot;: &quot;a@example.com&quot;})
+    assert resp.status_code == 200
+    body = resp.json()
+    assert set(body.keys()) == {&quot;token&quot;, &quot;expires_at&quot;}
+    assert isinstance(body[&quot;token&quot;], str)
+    assert isinstance(body[&quot;expires_at&quot;], int)
+</code></pre>
+<p><strong>How to measure.</strong> Count the number of production incidents caused by a payload mismatch in the last quarter. The goal is zero, and the only way to get there is a test that fails when the shape changes.</p>
+<h2 id="9-single-file-architecture">9. Single-file architecture</h2>
+<p><strong>Symptom.</strong> Routes, models, middleware, and a background job all live in one file. It grows past the point where anyone can hold it in their head. Adding an endpoint means reasoning about every other endpoint.</p>
+<p><strong>Fix.</strong> Split by responsibility, not by layer count. For a small service, three modules are enough: <code>routes.py</code>, <code>models.py</code>, <code>main.py</code>. The point is not a particular structure; it is that a change to one concern does not require reading the others.</p>
+<p><strong>Failure-mode analysis.</strong> The refactor itself is a risk. A single-file service is often single-threaded by accident, and splitting it can expose a race condition that the original structure hid. Write the contract tests from item 8 <em>before</em> the refactor, so the refactor has a safety net.</p>
+<p><strong>How to measure.</strong> Time-to-first-fix: how long a new engineer takes to make a change to one endpoint without breaking another. Track it on the first three changes a new hire makes. If it is measured in days, the file is the problem.</p>
+<h2 id="10-no-request-id-propagation">10. No request-ID propagation</h2>
+<p><strong>Symptom.</strong> No correlation ID flows through the system. When an upstream provider rejects a batch of requests, there is no way to group them, and the investigation becomes a manual grep.</p>
+<p><strong>Fix.</strong> Accept an inbound <code>x-request-id</code>, generate one if absent, propagate it to downstream calls, and include it in every log line and error response. The middleware in item 1 is the whole implementation.</p>
+<p><strong>How to measure.</strong> Take a single failed request and trace it from the client through your service to the downstream dependency using only the request ID. If that takes more than a few minutes, the propagation is incomplete.</p>
+<h2 id="advanced-edge-cases">Advanced edge cases</h2>
+<h3 id="memory-growth-under-sustained-load">Memory growth under sustained load</h3>
+<p>A service can pass a demo and still grow unboundedly under sustained traffic. Common causes: background tasks created per request that are never awaited to completion, HTTP client sessions created per call instead of reused, and caches with no eviction. None of these show up in a short test.</p>
+<p><strong>How to detect it.</strong> Record resident memory on a fixed interval and load-test for longer than the intended deploy interval. If memory trends upward across the test and does not return to baseline after traffic stops, there is a leak. A process that restarts on a schedule is hiding the leak, not fixing it.</p>
+<p><strong>How to fix it.</strong> Reuse one HTTP client per process with an explicit timeout, bound every background task with a semaphore, and give every cache an eviction policy. Then re-run the same test and confirm memory returns to baseline.</p>
+<h3 id="shared-state-races-between-instances">Shared-state races between instances</h3>
+<p>Two instances writing the same session key can interleave such that one overwrites the other's expiry. The symptom is intermittent 401s that correlate with instance count, not with load.</p>
+<p><strong>How to detect it.</strong> Deploy two instances behind a load balancer and run a test that logs in once and then makes authenticated requests in parallel. If a fraction fail, the state is not being written atomically.</p>
+<p><strong>How to fix it.</strong> Use a single atomic operation for the write (a Redis transaction or a Lua script) rather than a sequence of separate commands. Then repeat the test and confirm zero failures.</p>
+<h3 id="time-handling-in-token-expiry">Time handling in token expiry</h3>
+<p>Tokens that compute expiry from a naive local timestamp break around daylight-saving transitions and whenever a server's clock is not UTC. The symptom is a cluster of auth failures in one region at a specific hour, once or twice a year.</p>
+<p><strong>How to detect it.</strong> Add a test that generates a token with a mocked clock set to a DST boundary and asserts the expiry is correct in UTC.</p>
+<p><strong>How to fix it.</strong> Compute all expiry times in UTC, store them as UTC, and compare in UTC. Add a small grace period on the server side so clock skew between machines does not cause spurious expirations. The fix is small; the test is what keeps it fixed.</p>
+<h3 id="log-pipeline-backpressure">Log pipeline backpressure</h3>
+<p>A log pipeline that drops events under load is worse than no pipeline, because it gives false confidence. The symptom is missing log lines during exactly the incidents you need them for.</p>
+<p><strong>How to detect it.</strong> Compare the number of requests your service reports with the number of log events that arrive in the aggregator over the same window. If the counts diverge, events are being dropped.</p>
+<p><strong>How to fix it.</strong> Use a shipper that buffers to disk and acknowledges delivery, and sample high-volume debug logs rather than shipping all of them. Verify the counts match after the change.</p>
+<h2 id="tooling-categories-worth-adopting">Tooling categories worth adopting</h2>
+<p>The specific products matter less than the category. For each category below, the question is whether you have one and whether it is wired to the code.</p>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Before (vibe-coded)</th>
-<th>After (production-hardened)</th>
+<th>Category</th>
+<th>What it must do</th>
+<th>How to verify it works</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Code size</strong></td>
-<td>300 lines (<code>main.py</code>)</td>
-<td>1,240 lines (7 modules)</td>
+<td>Structured logging</td>
+<td>Emit JSON with a correlation ID on every line</td>
+<td>Trace one failed request from logs alone</td>
 </tr>
 <tr>
-<td><strong>Deployment frequency</strong></td>
-<td>1/month (manual)</td>
-<td>4/week (automated)</td>
+<td>Metrics and tracing</td>
+<td>Capture request latency percentiles and dependency calls</td>
+<td>Compare a load-test percentile against the same percentile in production</td>
 </tr>
 <tr>
-<td><strong>Deployment rollback rate</strong></td>
-<td>80 % (due to connection pool exhaustion)</td>
-<td>0 % (tested in staging)</td>
+<td>Dependency automation</td>
+<td>Open upgrade PRs with CI on a schedule</td>
+<td>Confirm a patch release reaches production without manual action</td>
 </tr>
 <tr>
-<td><strong>Fly.io cost</strong></td>
-<td>$4,200/month (4 vCPU, 8 GB RAM)</td>
-<td>$850/month (2 vCPU, 4 GB RAM)</td>
+<td>Secret management</td>
+<td>Serve secrets at runtime, rotate without a deploy</td>
+<td>Time a rotation in staging</td>
 </tr>
 <tr>
-<td><strong>p99 latency</strong></td>
-<td>180 ms (unstable)</td>
-<td>75 ms (stable)</td>
-</tr>
-<tr>
-<td><strong>Cost per 10k requests</strong></td>
-<td>$0.34</td>
-<td>$0.07</td>
-</tr>
-<tr>
-<td><strong>Time-to-first-fix</strong></td>
-<td>3 days (connection pool + log format chaos)</td>
-<td>15 minutes (Grafana query + one-click deploy)</td>
-</tr>
-<tr>
-<td><strong>Secrets rotation time</strong></td>
-<td>6 hours (manual Bash script)</td>
-<td>2 minutes (Terraform + Ansible)</td>
-</tr>
-<tr>
-<td><strong>Test coverage</strong></td>
-<td>0 %</td>
-<td>87 % (unit + integration)</td>
-</tr>
-<tr>
-<td><strong>New engineer onboarding time</strong></td>
-<td>1 week (reading 1,800-line <code>main.py</code>)</td>
-<td>3 days (modular code + docs)</td>
-</tr>
-<tr>
-<td><strong>Mean time to recover (MTTR)</strong></td>
-<td>4 hours (chaos)</td>
-<td>8 minutes (SLO-based alerting)</td>
+<td>Contract testing</td>
+<td>Fail CI when a response shape changes</td>
+<td>Rename a field and confirm the test fails</td>
 </tr>
 </tbody>
 </table>
-<p>The biggest win was reducing the Fly.io bill by 80 %, which paid for the entire observability stack (Grafana Cloud + Datadog + Renovate) within two months. The p99 latency drop from 180 ms to 75 ms was a side effect of fixing the connection pool and adding proper async primitives. The secrets rotation time went from 6 hours to 2 minutes because I migrated from hard-coded secrets to AWS Secrets Manager with Terraform, and the rotation script was now a 12-line Terraform module instead of a 87-line Bash script that accidentally bricked the CEO’s laptop token.</p>
-<p>The code size increase from 300 to 1,240 lines wasn’t just bloat—it was the cost of adding proper error handling, structured logging, contract tests, and modular architecture. The ROI was immediate: the new engineer hired in month 7 could make a change to the tax reporting endpoint without touching the auth logic, which was impossible with the single-file architecture. The $850/month cost was sustainable for a seed-stage startup, whereas the $4,200/month bill was a existential risk when the runway was only 12 months.</p>
-<h2 id="related-reading">Related reading</h2>
+<h2 id="a-hardening-checklist">A hardening checklist</h2>
+<p>Run this against any service that has outgrown its demo. Each item is a yes/no, and the "no" answers are the backlog.</p>
 <ul>
-<li><a href="https://kubaik.github.io/9-vibe-coding-traps-that-break-production-code/">9 Vibe coding traps that break production code</a></li>
-<li><a href="https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/">Vibe coding: MVP gem, prod albatross</a></li>
-<li><a href="https://kubaik.github.io/buy-vs-build-ai-3-hard-rules-for-2026/">Buy vs build AI: 3 hard rules for 2026</a></li>
+<li>[ ] Structured logs with a request ID on every line</li>
+<li>[ ] Startup fails if required configuration is missing</li>
+<li>[ ] Dependencies pinned, with a lock file committed</li>
+<li>[ ] No shared state in process memory</li>
+<li>[ ] Secrets loaded at runtime, rotation runbook tested</li>
+<li>[ ] Error responses use machine-readable codes</li>
+<li>[ ] Writes are idempotent and handle conflict</li>
+<li>[ ] Contract tests run in CI</li>
+<li>[ ] No file exceeds the size a new engineer can read in one sitting</li>
+<li>[ ] Request IDs propagate to downstream calls</li>
+<li>[ ] Memory is stable under a load test longer than the deploy interval</li>
+<li>[ ] Log event counts match request counts</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Open the service that has outgrown its demo and add request-ID middleware — the twenty-line snippet in item 1. Deploy it to staging, make one request, and confirm the ID appears in both the response header and the log line. That single change turns every future incident from an archaeology project into a lookup, and it is the cheapest item on the checklist to get right.</p>
                 
                 
             </div>

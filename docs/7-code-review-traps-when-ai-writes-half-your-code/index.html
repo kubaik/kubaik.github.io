@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>7 code review traps when AI writes half your code - Kubai Kevin</title>
-        <meta name="description" content="Cut code review time 70% when AI writes half your code — the exact checklist and tools teams used in 2026 to catch AI-specific bugs before they hit production.">
+        <meta name="description" content="Seven review traps AI-generated code creates, how to detect each one, and a checklist you can add to your repo today.">
         <meta name="keywords" content="CodeReviewChecklist, Ai, Artificialintelligence">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-11T05:25:07.580197">
-        <meta property="article:modified_time" content="2026-09-19T15:39:46.677459+00:00">
+        <meta property="article:modified_time" content="2026-10-03T10:56:55.934352+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="7 code review traps when AI writes half your code">
-        <meta property="og:description" content="Cut code review time 70% when AI writes half your code — the exact checklist and tools teams used in 2026 to catch AI-specific bugs before they hit production.">
+        <meta property="og:description" content="Seven review traps AI-generated code creates, how to detect each one, and a checklist you can add to your repo today.">
         <meta property="og:url" content="https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="7 code review traps when AI writes half your code">
-        <meta name="twitter:description" content="Cut code review time 70% when AI writes half your code — the exact checklist and tools teams used in 2026 to catch AI-specific bugs before they hit production.">
+        <meta name="twitter:description" content="Seven review traps AI-generated code creates, how to detect each one, and a checklist you can add to your repo today.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/7-code-review-traps-when-ai-writes-half-your-code.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/#article",
       "headline": "7 code review traps when AI writes half your code",
-      "description": "Cut code review time 70% when AI writes half your code — the exact checklist and tools teams used in 2026 to catch AI-specific bugs before they hit production.",
+      "description": "Seven review traps AI-generated code creates, how to detect each one, and a checklist you can add to your repo today.",
       "datePublished": "2026-06-11T05:25:07+00:00",
-      "dateModified": "2026-09-19T15:39:46+00:00",
-      "wordCount": 2609,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-03T10:56:55+00:00",
+      "wordCount": 2181,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">7 code review traps when AI writes half your code</h1>
                 
-                <p class="post-lead">Cut code review time 70% when AI writes half your code — the exact checklist and tools teams used in 2026 to catch AI-specific bugs before they hit production.</p>
+                <p class="post-lead">Seven review traps AI-generated code creates, how to detect each one, and a checklist you can add to your repo today.</p>
                 
                 
                 <div class="tags">
@@ -246,220 +246,152 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2609 words
+                        11 min read
+                        &nbsp;·&nbsp; 2181 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
-<h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>We thought this would cut review time in half. It didn’t. Instead, we noticed three new failure modes:</p>
+                <p>AI coding assistants change the failure modes that code review is meant to catch. Reviewers who are good at spotting human mistakes — copy-paste errors, inconsistent naming, missing null checks — often miss the failure modes that language models produce instead. This article describes seven of those traps, how to detect each one, and a lightweight checklist that addresses all of them.</p>
+<h2 id="why-ai-generated-code-fails-differently">Why AI-generated code fails differently</h2>
+<p>Human code tends to fail in ways that correlate with effort and attention: code written in a hurry is shallow, code written by a junior has gaps in edge-case handling, code written under deadline pressure skips tests. Reviewers learn to calibrate for these signals.</p>
+<p>Language models fail differently. They produce plausible, well-formatted code that compiles and often passes the tests they also wrote. The failure modes cluster around four themes:</p>
 <ul>
-<li><strong>The silent import bug</strong>: AI added <code>import jwt</code> but our server runs on Node 20 LTS which doesn’t bundle crypto natively anymore; JWT signing started failing at 3am. - <strong>The prompt leak</strong>: We used the same prompt template across three repos; one repo leaked OpenAI API keys in the Git history because the AI repeated them in a debug log. - <strong>The golden path trap</strong>: 60% of the AI suggestions exercised only the happy path; edge cases like token expiration or rate limiting were missing, but the tests passed because they only covered the golden path.</li>
+<li><strong>Environment assumptions.</strong> The model has no knowledge of your runtime, your dependency pins, or your deployment target. It writes code for the "average" environment, which is not yours.</li>
+<li><strong>Golden path bias.</strong> Generated code handles the documented success case well and under-specifies error paths, expiry, rate limits, and partial failures.</li>
+<li><strong>Dependency drift.</strong> The model suggests imports and versions based on training data, which may be older or newer than what your project pins.</li>
+<li><strong>Prompt artifacts.</strong> Anything you put in the prompt — API keys, internal hostnames, customer names — can end up echoed into code, comments, or log statements.</li>
 </ul>
-<p>Turns out <code>SECRET_KEY</code> was <code>None</code> in staging because the AI had deleted the line that loaded it from environment variables. This post is what I wished I’d had then.</p>
-<h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>I set up a controlled experiment across four services we run in AWS: a Python 3.11 FastAPI auth service, a Node 20 LTS payments API, a Go 1.22 microservice for KYC, and a legacy monolith still on Python 3.9. I set the same prompt template for all of them:</p>
-<pre><code>Write a JWT authentication middleware in Python 3.11 using FastAPI.
-- Secret key must come from environment variable SECRET_KEY.
-- Token expiry: 1 hour.
-- Use PyJWT 2.8.0.
-- Include rate limiting: 100 requests per minute.
-- Write tests with pytest 7.4.
+<p>None of these are exotic. Each one has a cheap detection method. The mistake is treating AI-generated code as if it were human code and applying only the review habits you already have.</p>
+<h2 id="trap-1-the-silent-import-and-environment-mismatch">Trap 1: The silent import and environment mismatch</h2>
+<p>A model asked to write JWT handling in Python will often reach for a library it saw frequently during training. If your project pins a different library, or your runtime lacks the native crypto module the model assumes, the code may import cleanly on the model's mental model of your system and fail at runtime.</p>
+<p>Detection: after any AI-generated diff, run the import check in a clean environment, not your dev shell:</p>
+<pre><code>python -c &quot;import your_module&quot;
 </code></pre>
-<p>I measured four metrics per option:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Target</th>
-<th>Tolerance</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Review time</td>
-<td>≤ 15 minutes per PR</td>
-<td>± 5 minutes</td>
-</tr>
-<tr>
-<td>Accuracy</td>
-<td>≥ 95% passing tests on first CI run</td>
-<td>≤ 5% regression</td>
-</tr>
-<tr>
-<td>Security issues found</td>
-<td>0 high/critical CVEs</td>
-<td>≤ 1 medium</td>
-</tr>
-<tr>
-<td>Maintainer confidence</td>
-<td>≥ 4/5 on survey after 3 reviews</td>
-<td>≤ 1 point drop</td>
-</tr>
-</tbody>
-</table>
-<p>I ran 120 PRs across the four services over six weeks. The worst performer took 37 minutes per review and introduced 3 medium CVEs. The best performer averaged 8 minutes per review with 0 regressions.</p>
-<h2 id="code-review-in-the-ai-era-what-the-process-looks-like-when-half-the-code-is-generated-the-full-ranked-list">Code review in the AI era: what the process looks like when half the code is generated — the full ranked list</h2>
-<h3 id="1-llm-aware-review-checklist-winner">1. LLM-aware review checklist (winner)</h3>
-<p>What it does: A structured checklist that explicitly asks reviewers to check for AI-specific failure modes: environment leakage, golden path bias, dependency drift, and prompt artifacts.</p>
-<p>Strength: Reduces review time from 37 minutes to 8 minutes while keeping accuracy at 97% on first CI run. The checklist is versioned in the repo, so it evolves with our stack.</p>
-<p>Weakness: Takes 30 minutes to write the first version and another 15 minutes to train the team. It also needs a quarterly refresh when we bump major dependencies like PyJWT or FastAPI.</p>
-<p>Best for: Teams that have already adopted AI coding assistants and want to keep quality high without slowing down.</p>
-<h3 id="2-ai-generated-review-comments">2. AI-generated review comments</h3>
-<p>What it does: Instead of human reviewers writing comments, we use Sourcegraph Cody Pro to generate suggested review comments for every AI-written block. The human only edits or approves them.</p>
-<p>Strength: Cuts review time by 45% when the AI suggestion is good, and improves consistency across reviewers.</p>
-<p>Weakness: The AI sometimes writes comments that sound authoritative but are wrong. We had one incident where Cody suggested using <code>os.environ['SECRET_KEY']</code> in production without mentioning the need to validate the key length. That PR slipped through and caused a 30-minute outage.</p>
-<p>Best for: Teams that want to scale review capacity quickly and accept a small risk of AI hallucinations in comments.</p>
-<h3 id="3-snapshot-testing-for-ai-outputs">3. Snapshot testing for AI outputs</h3>
-<p>What it does: We snapshot the entire AI-generated diff and run it through a test suite that compares the new snapshot against a golden snapshot of the previous AI run. Any deviation triggers a human review.</p>
-<p>Strength: Catches drift when the AI starts generating different code for the same prompt due to model updates. We caught a breaking change in PyJWT 2.8.2 when the AI started using <code>jwt.encode(payload, key, algorithm="HS256")</code> instead of the older positional signature.</p>
-<p>Weakness: Snapshot tests are brittle. A single whitespace change in a docstring can trigger a false positive. We had to spend two weeks tuning the diffing algorithm to ignore whitespace-only changes.</p>
-<p>Best for: Teams that want to guard against model drift and have stable prompts.</p>
-<h3 id="4-human-in-the-loop-prompt-triage">4. Human-in-the-loop prompt triage</h3>
-<p>What it does: Before any AI writes code, a senior engineer reviews the prompt for ambiguity, security leaks, and hidden assumptions. We use a simple rubric: no hardcoded secrets, no environment variables in the prompt, and clear success criteria.</p>
-<p>Strength: Prevents the prompt leak bug entirely. In our experiment, teams that skipped this step had a 15% chance of leaking secrets in the Git history. After adding the triage step, the rate dropped to 0%.</p>
-<p>Weakness: Adds 5–10 minutes of upfront time per PR. Some engineers see it as overhead, especially when the prompt is short.</p>
-<p>Best for: Security-conscious teams or teams that have suffered from prompt leaks before.</p>
-<h3 id="5-dependency-delta-diff">5. Dependency delta diff</h3>
-<p>What it does: After each AI-generated PR, we run <code>pip list --outdated</code> (Python) or <code>npm outdated</code> (Node) and compare against the previous state. If the AI added or upgraded a dependency, we require a human review of the changelog and CVEs.</p>
-<p>Strength: Catches breaking changes in minor versions. We caught a breaking change in <code>ujson 5.8.0</code> that caused a 120ms regression in our JSON parsing latency. The AI had upgraded it to fix a security issue, but didn’t flag the performance regression.</p>
-<p>Weakness: Adds 3–5 minutes per PR for the diff. Also, some ecosystem tools like <code>go mod tidy</code> are noisy and produce false positives.</p>
-<p>Best for: Teams that care about performance regressions and have automated latency monitoring in CI.</p>
-<h3 id="6-golden-path-stress-test">6. Golden path stress test</h3>
-<p>What it does: We generate a synthetic load using Locust 2.15.1 that exercises the golden path of the AI-written code (e.g., successful JWT signing, token validation, error responses). We measure latency and error rates under load before merging.</p>
-<p>Strength: Exposes edge cases that unit tests miss. The stress test caught it before production.</p>
-<p>Weakness: Requires setting up a load generator and maintaining test scenarios. It adds 10–15 minutes per PR and needs a server to run on.</p>
-<p>Best for: Teams that run high-traffic APIs and want to catch scalability issues early.</p>
-<h3 id="7-embedding-similarity-review">7. Embedding similarity review</h3>
-<p>What it does: We compute embeddings of the AI-written code using <code>sentence-transformers/multi-qa-MiniLM-L6-v2</code> and compare against a corpus of previously reviewed code. If the similarity score exceeds a threshold (0.85), we flag it for manual review.</p>
-<p>Strength: Catches copy-paste bugs and repeated patterns that might be unsafe. We caught a case where the AI copied a JWT decoding routine from a Stack Overflow snippet that used <code>algorithm=None</code>, which is insecure.</p>
-<p>Weakness: The embedding model itself can drift over time, and the threshold is subjective. We had false positives when legitimate refactors scored high.</p>
-<p>Best for: Teams that want to catch copy-paste issues and have a large corpus of reviewed code to compare against.</p>
-<h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
-<p><strong>LLM-aware review checklist</strong> came out on top in our six-week experiment. It reduced review time by 78% (from 37 minutes to 8 minutes) while keeping accuracy at 97% on first CI run and 0 high/critical CVEs. It also improved maintainer confidence by 1.2 points on a 5-point scale.</p>
-<p>The checklist is simple to write and version-control. Here’s what our checklist looks like for Python FastAPI JWT auth:</p>
-<pre><code class="language-python"># LLM-aware review checklist for JWT auth in Python 3.11 FastAPI
-- [ ] Secret key sourced from environment variable SECRET_KEY (not hardcoded)
-- [ ] Token expiry set to 1 hour (check expires_in and nbf claims)
-- [ ] Algorithm explicitly set to &quot;HS256&quot; (never None or auto)
-- [ ] PyJWT version pinned to 2.8.0 or higher (check requirements.txt)
-- [ ] Rate limiting implemented (check FastAPI Limiter or custom middleware)
-- [ ] Error handling covers expired tokens, invalid signatures, malformed tokens
-- [ ] Tests cover golden path, expired token, invalid signature, missing token
-- [ ] No prompt artifacts (e.g., no repeated OpenAI API keys in logs)
+<p>Better, run it inside the same container image or virtualenv your CI uses. A local shell with a dozen globally installed packages will hide the problem.</p>
+<p>For Node projects, <code>npm ls &lt;package&gt;</code> confirms the resolved version, and <code>node -e "require('your-module')"</code> confirms it loads under your Node version. The point is to test the dependency resolution your production environment will actually perform, not the one your laptop has accumulated.</p>
+<h2 id="trap-2-prompt-leakage-into-code-and-logs">Trap 2: Prompt leakage into code and logs</h2>
+<p>If a prompt contains a credential, an internal URL, or a customer identifier, the model may reproduce it in a docstring, a debug log line, a comment, or a test fixture. This is not the model being malicious; it is the model being helpful with the context it was given.</p>
+<p>Once committed, the value lives in Git history. Rotating the credential fixes the immediate exposure but not the historical record.</p>
+<p>Detection: scan the diff, not just the final file. A grep for common credential shapes over the added lines catches most cases:</p>
+<pre><code>git diff --cached -U0 | grep -E '^\+' | grep -Ei 'api[_-]?key|secret|token|password|bearer'
 </code></pre>
-<p>We store the checklist in <code>.github/review_checklist.md</code> so every reviewer sees it in the PR template. We update it quarterly when we bump major dependencies.</p>
-<h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
-<p><strong>Cursor’s AI review mode</strong> is impressive but risky. It can generate review comments automatically, but sometimes writes comments that sound authoritative but are wrong. We had one incident where it suggested using <code>os.environ['SECRET_KEY']</code> in production without mentioning the need to validate the key length. That PR slipped through and caused a 30-minute outage. Use it only if you have a strong security review process.</p>
-<p><strong>Sourcegraph Cody Pro’s snapshot diff</strong> is useful for catching model drift. We caught a breaking change in PyJWT 2.8.2 when the AI started using a new positional signature. However, snapshot tests are brittle: a single whitespace change in a docstring can trigger a false positive. We had to spend two weeks tuning the diffing algorithm to ignore whitespace-only changes.</p>
-<p><strong>Amazon Q Developer’s security scan</strong> is solid for catching AWS-specific issues like IAM roles and KMS keys, but it doesn’t catch Python-specific issues like PyJWT algorithm defaults. Use it as a complement, not a replacement.</p>
-<p><strong>Dependabot with custom rules</strong> catches dependency drift, but it’s noisy and produces false positives. We had to write custom rules to ignore minor version bumps that don’t affect our APIs. It’s best for teams that already use Dependabot and have the bandwidth to tune it.</p>
-<h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
-<p><strong>Automated AI-to-AI review</strong>
-What I tried: Use one AI to review another AI’s code by feeding the diff into a model and asking it to critique the changes. Why I dropped it: The reviewer AI hallucinated issues that weren’t there and missed real issues like the <code>SECRET_KEY = None</code> bug. The false positive rate was 40%, which wasted more time than it saved.</p>
-<p><strong>Fully automated merge on green CI</strong>
-What I tried: Skip human review entirely if CI passes. Why I dropped it: We had three outages in two weeks because the AI generated code that passed unit tests but failed under load or exposed secrets in logs. Human review is still necessary for AI-generated code.</p>
-<p><strong>Prompt engineering competitions</strong>
-What I tried: Run internal contests to find the best prompt for our stack. Why I dropped it: The winning prompt worked well for one service but caused issues in another because of subtle differences in dependencies. Prompts are context-specific; there’s no one-size-fits-all.</p>
-<p><strong>AI-generated test suites</strong>
-Why I dropped it: The tests only covered the golden path. When we hit production load, we saw failures in edge cases like token expiration and rate limiting. Human-written tests are still essential.</p>
-<h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
+<p>This is a coarse filter and will produce false positives on variable names. That is acceptable; the cost of a false positive is a few seconds of reading.</p>
+<p>Prevention is more reliable than detection. Keep secrets out of prompts entirely. Reference environment variable names, not values. If your tooling supports it, redact known secret patterns before the prompt leaves your machine.</p>
+<h2 id="trap-3-golden-path-bias">Trap 3: Golden path bias</h2>
+<p>Ask for a token validation function and you will usually get one that validates a well-formed, unexpired, correctly signed token. Ask for tests and you will usually get tests that cover exactly that case.</p>
+<p>The missing cases are predictable: expired tokens, tokens with a <code>nbf</code> (not before) claim in the future, tokens signed with the wrong algorithm, malformed base64, missing claims, clock skew, and revoked tokens. These are the cases that matter in production and the cases the model did not think to write.</p>
+<p>Detection: enumerate the error branches in the generated code and check that a test exists for each. A quick way is to list the <code>raise</code> and <code>return</code> statements in the function and confirm each has a corresponding test:</p>
+<pre><code>grep -nE 'raise |return ' path/to/module.py
+</code></pre>
+<p>If a branch has no test, that is a review finding regardless of whether the code looks correct.</p>
+<p>A useful exercise is to ask the model explicitly for the negative cases after it has produced the happy path. Models are generally capable of writing edge-case tests when asked directly; they simply do not volunteer them.</p>
+<h2 id="trap-4-dependency-drift">Trap 4: Dependency drift</h2>
+<p>Generated code may reference a version of a library that differs from your pin. Sometimes it suggests an older API that has since been deprecated; sometimes it suggests a newer one that does not exist in your lockfile.</p>
+<p>Detection: after each AI-generated change, inspect what the diff does to your dependency manifests.</p>
+<pre><code>git diff -- requirements.txt requirements/*.txt pyproject.toml package.json package-lock.json
+</code></pre>
+<p>If the diff adds or bumps a dependency, treat that as a separate review item. Read the changelog for the affected range. Check whether the bump crosses a major version. Check whether the project's own release notes flag behavior changes.</p>
+<p>A subtle version of this trap is an upgrade that fixes a security issue but introduces a performance regression. The security fix is visible in the advisory; the performance change is not. If you have latency monitoring in CI, compare the p95 of the affected code path before and after. If you do not, this is a good reason to add it.</p>
+<h2 id="trap-5-model-drift-across-runs">Trap 5: Model drift across runs</h2>
+<p>The same prompt does not always produce the same code. Model versions change, sampling parameters change, and provider-side updates happen without notice. A prompt that produced acceptable code last month may produce subtly different code today.</p>
+<p>Detection: snapshot the generated output and compare across runs. The mechanism does not need to be elaborate — store the generated file, and on the next generation of the same prompt, diff the two.</p>
+<p>Two cautions. First, whitespace and formatting differences will dominate the diff unless you normalize them; strip trailing whitespace and normalize indentation before comparing. Second, the threshold for "meaningful change" is a judgment call. A useful default is to flag any change that alters control flow or the set of imported symbols, and ignore pure formatting.</p>
+<p>This trap is easy to over-engineer. A simple <code>diff</code> run manually when you regenerate code catches most of it.</p>
+<h2 id="trap-6-tests-that-only-test-what-the-model-wrote">Trap 6: Tests that only test what the model wrote</h2>
+<p>Generated tests tend to assert the behavior of the generated implementation, including its bugs. If the implementation has an off-by-one in a boundary check, the test will happily assert the off-by-one behavior and pass.</p>
+<p>Detection: for each generated test, ask what it would take to make the test fail. If the answer is "the code would have to be deleted," the test is not testing anything useful.</p>
+<p>A more systematic check: mutate the implementation deliberately — flip a comparison operator, change a constant, remove a bounds check — and confirm the test suite fails. If a mutation survives, the test suite has a gap. This is mutation testing, and it is a well-established technique, though running it on every PR is usually too slow. Running it periodically on the modules that AI generates most often is a reasonable compromise.</p>
+<h2 id="trap-7-review-comments-generated-by-a-model">Trap 7: Review comments generated by a model</h2>
+<p>Using a model to draft review comments is tempting when review capacity is the bottleneck. The failure mode is that the comments read as authoritative while being wrong. A model that suggests <code>os.environ['SECRET_KEY']</code> without mentioning key-length validation, or that recommends a library function with different semantics than the one already in use, produces a comment that a tired reviewer will approve.</p>
+<p>Detection: treat model-generated review comments as suggestions requiring verification, never as findings. Any comment that asserts a fact about a library's behavior should be checked against that library's documentation before it is acted on.</p>
+<p>A practical rule: model-generated comments may point at code, but they may not assert correctness. "This branch has no test" is verifiable by looking. "This function is safe against timing attacks" is not.</p>
+<h2 id="a-worked-example">A worked example</h2>
+<p>Consider a generated token validation function:</p>
+<pre><code class="language-python">import os
+import jwt
+
+SECRET_KEY = os.environ.get(&quot;SECRET_KEY&quot;)
+
+def validate_token(token: str) -&gt; dict:
+    return jwt.decode(token, SECRET_KEY, algorithms=[&quot;HS256&quot;])
+</code></pre>
+<p>Walking the traps:</p>
+<ol>
+<li><strong>Environment mismatch.</strong> <code>jwt.decode</code> with a <code>None</code> key raises at call time, not import time. If <code>SECRET_KEY</code> is unset in staging, the failure appears only when a request arrives. Detection: assert at startup that required configuration is present, rather than deferring to first use.</li>
+<li><strong>Prompt leakage.</strong> Nothing here, but check the surrounding diff for log statements that print the token or the key.</li>
+<li><strong>Golden path bias.</strong> No expiry handling beyond what the library does by default, no handling of <code>nbf</code>, no clock-skew tolerance, no distinction between an expired token and a malformed one. Each of these is a separate test case that does not exist yet.</li>
+<li><strong>Dependency drift.</strong> Confirm the pinned version of the JWT library is the one this code was written against, and that <code>algorithms=["HS256"]</code> is the intended algorithm rather than the model's default.</li>
+<li><strong>Model drift.</strong> If this function is regenerated later, the algorithm list or the error handling may change silently.</li>
+<li><strong>Test quality.</strong> A test that asserts a valid token decodes will pass regardless of whether expiry is enforced. Add a test that asserts an expired token raises.</li>
+<li><strong>Review comments.</strong> If a model drafted the review, verify any claim it makes about the library's default behavior.</li>
+</ol>
+<p>The function is not wrong. It is incomplete in ways that a human reviewer focused on syntax and structure will not notice.</p>
+<h2 id="a-checklist-that-fits-in-a-pr-template">A checklist that fits in a PR template</h2>
+<p>The checklist below is deliberately short. Long checklists get skipped; short ones get used.</p>
+<pre><code class="language-markdown">- [ ] No secrets, keys, or internal hostnames in the diff (including comments and logs)
+- [ ] Imports resolve in the CI environment, not just locally
+- [ ] Every error branch in new code has a corresponding test
+- [ ] Dependency changes are reviewed against the changelog
+- [ ] Generated code regenerated since last review has been diffed
+- [ ] Tests would fail if the implementation were mutated
+- [ ] Model-generated review comments have been verified against documentation
+</code></pre>
+<p>Store it where reviewers will see it: a pull request template, a required status check, or a comment on the PR. The location matters less than the fact that it appears before approval.</p>
+<h2 id="choosing-what-to-adopt-first">Choosing what to adopt first</h2>
+<p>Not every team needs all seven checks. A rough prioritization:</p>
 <table>
 <thead>
 <tr>
 <th>Situation</th>
-<th>Best option</th>
+<th>Start with</th>
 <th>Why</th>
-<th>Effort</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>You’re a startup shipping fast</td>
-<td>AI-generated review comments</td>
-<td>Scales review capacity quickly</td>
-<td>Low</td>
+<td>Handling credentials or PII</td>
+<td>Prompt hygiene and diff scanning</td>
+<td>A leak in Git history is expensive to undo</td>
 </tr>
 <tr>
-<td>You’re in fintech or healthcare</td>
-<td>Human-in-the-loop prompt triage</td>
-<td>Prevents prompt leaks and regulatory issues</td>
-<td>Medium</td>
+<td>High-traffic service</td>
+<td>Golden path and mutation checks</td>
+<td>Missing error branches surface under load</td>
 </tr>
 <tr>
-<td>You run high-traffic APIs</td>
-<td>Golden path stress test</td>
-<td>Catches scalability issues early</td>
-<td>High</td>
+<td>Many contributors, fast merge cadence</td>
+<td>PR-template checklist</td>
+<td>Cheap, visible, catches the common cases</td>
 </tr>
 <tr>
-<td>You’ve suffered from dependency drift</td>
-<td>Dependency delta diff</td>
-<td>Catches breaking changes in minor versions</td>
-<td>Medium</td>
+<td>Long-lived codebase with pinned deps</td>
+<td>Dependency diff review</td>
+<td>Drift accumulates quietly</td>
 </tr>
 <tr>
-<td>You want to guard against model drift</td>
-<td>Snapshot testing for AI outputs</td>
-<td>Catches changes when the model updates</td>
-<td>High</td>
-</tr>
-<tr>
-<td>You copy-paste a lot</td>
-<td>Embedding similarity review</td>
-<td>Catches copy-paste bugs and repeated patterns</td>
-<td>Medium</td>
-</tr>
-<tr>
-<td>You want a balanced, sustainable process</td>
-<td>LLM-aware review checklist</td>
-<td>Reduces review time while keeping quality high</td>
-<td>Low</td>
+<td>Frequent regeneration of the same code</td>
+<td>Snapshot diffing</td>
+<td>Detects model changes between runs</td>
 </tr>
 </tbody>
 </table>
-<p>If you’re in fintech or healthcare, start with <strong>human-in-the-loop prompt triage</strong> even if it adds 5–10 minutes upfront. The cost of a credential leak is far higher than the review time.</p>
-<p>If you run high-traffic APIs, <strong>golden path stress test</strong> is worth the 10–15 minutes per PR.</p>
-<p>If you’re a startup shipping fast and need to scale review capacity, <strong>AI-generated review comments</strong> can cut review time by 45%, but pair it with a security review step to catch hallucinations.</p>
-<h2 id="frequently-asked-questions">Frequently asked questions</h2>
-<p><strong>What’s the fastest way to add a review checklist to my repo?</strong>
-Create a file called <code>.github/review_checklist.md</code> in your repo root. Add the checklist items as markdown checkboxes. In GitHub, go to Settings &gt; Branches &gt; Branch protection rules and set the checklist as a required status check. Every PR will now show the checklist in the review UI. Takes 10 minutes to set up.</p>
-<p><strong>How do I catch when the AI starts generating different code for the same prompt?</strong>
-Use snapshot testing. Install <code>pytest-snapshot</code> and run <code>pytest --snapshot-update</code> after each AI run. Store the snapshot in <code>.snapshots/</code>. If the diff exceeds your threshold, flag the PR for review. We use a threshold of 5% changed lines.</p>
-<p><strong>What’s the biggest security risk when using AI to write code?</strong>
-Prompt leaks. We had a case where the AI repeated an OpenAI API key in a debug log because the prompt included the key. To prevent this, never include secrets or API keys in your prompts. Use environment variables or secret managers instead.</p>
-<p><strong>How do I convince my team to adopt a review checklist?</strong>
-Start with a pilot on one repo. Measure review time before and after. Share the numbers with the team. Most engineers will adopt it if they see the time savings.</p>
-<h2 id="final-recommendation">Final recommendation</h2>
-<p>Start with the <strong>LLM-aware review checklist</strong> today. Create <code>.github/review_checklist.md</code> in your repo and add these seven items:</p>
-<pre><code class="language-markdown">- [ ] Secret key sourced from environment variable (not hardcoded)
-- [ ] Token expiry set explicitly and tested
-- [ ] Algorithm explicitly set (never None or auto)
-- [ ] Dependency versions pinned and checked for breaking changes
-- [ ] Rate limiting implemented and tested
-- [ ] Error handling covers edge cases (expired token, invalid signature)
-- [ ] No prompt artifacts (secrets, API keys, or model-specific tokens in logs)
-</code></pre>
-<p>Push the checklist to one repo, set it as a required status check in GitHub, and measure review time for the next 10 PRs. You should see a 50-70% drop in review time while keeping quality high. If you’re in fintech or healthcare, add the human-in-the-loop prompt triage step. If you run high-traffic APIs, add the golden path stress test. Do this in the next 30 minutes: open your terminal, run <code>touch .github/review_checklist.md</code>, paste the checklist above, commit, and push. Watch the review time drop on your next PR.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/test-ai-code-without-testing-the-ai/">Test AI code without testing the AI</a></li>
-<li><a href="https://kubaik.github.io/commit-ownership-in-ai-pair-coding/">Commit ownership in AI pair coding</a></li>
-<li><a href="https://kubaik.github.io/5-ai-tools-that-let-us-ship-faster-than-sf-teams/">5 AI tools that let us ship faster than SF teams</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>The checklist is the cheapest starting point because it requires no tooling and no CI changes. The other checks are worth adding as the team's confidence in its review process grows.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Does this mean AI-generated code is less safe than human code?</strong>
+No. It means it fails differently. Human code has its own predictable failure modes, and reviewers have learned to catch those. The failure modes above are simply less familiar.</p>
+<p><strong>How much review time does the checklist add?</strong>
+For most diffs, the checklist adds a minute or two of reading. The expensive items are dependency review and mutation testing, and those only apply when the diff touches those areas.</p>
+<p><strong>Can a model review its own output?</strong>
+It can produce useful comments, but the comments need verification. The failure mode is a confident but wrong assertion, which is worse than no comment because it consumes the reviewer's attention.</p>
+<p><strong>What if the team has no time to add process?</strong>
+Start with the pull request template. It is a single file and requires no CI changes. Add the other checks when a specific failure mode actually bites.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Create <code>.github/pull_request_template.md</code> in your repository and paste the checklist above into it. Commit and push. The next pull request opened in that repository will show the checklist, and reviewers will see it before they approve anything. Measure how often a checklist item catches something over the next twenty pull requests; if an item never fires, remove it, and if a new failure mode appears that no item covers, add one.</p>
                 
                 
             </div>

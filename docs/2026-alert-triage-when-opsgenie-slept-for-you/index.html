@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>2026 alert triage: when Opsgenie slept for you - Kubai Kevin</title>
-        <meta name="description" content="They suppress alerts that have a 92% chance of resolving on their own, they collapse related incidents into one ticket, and they surface only the…">
+        <meta name="description" content="Build a scoring, deduplication and LLM-summary layer over PagerDuty or Opsgenie, plus how to measure whether it actually reduces wake-ups.">
         <meta name="keywords" content="Ai, Softwareengineering">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-20T09:25:40.987533">
-        <meta property="article:modified_time" content="2026-06-20T09:25:40.987542">
+        <meta property="article:modified_time" content="2026-10-03T11:31:57.534193+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="2026 alert triage: when Opsgenie slept for you">
-        <meta property="og:description" content="They suppress alerts that have a 92% chance of resolving on their own, they collapse related incidents into one ticket, and they surface only the…">
+        <meta property="og:description" content="Build a scoring, deduplication and LLM-summary layer over PagerDuty or Opsgenie, plus how to measure whether it actually reduces wake-ups.">
         <meta property="og:url" content="https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="2026 alert triage: when Opsgenie slept for you">
-        <meta name="twitter:description" content="They suppress alerts that have a 92% chance of resolving on their own, they collapse related incidents into one ticket, and they surface only the…">
+        <meta name="twitter:description" content="Build a scoring, deduplication and LLM-summary layer over PagerDuty or Opsgenie, plus how to measure whether it actually reduces wake-ups.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/2026-alert-triage-when-opsgenie-slept-for-you.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/#article",
       "headline": "2026 alert triage: when Opsgenie slept for you",
-      "description": "They suppress alerts that have a 92% chance of resolving on their own, they collapse related incidents into one ticket, and they surface only the…",
+      "description": "Build a scoring, deduplication and LLM-summary layer over PagerDuty or Opsgenie, plus how to measure whether it actually reduces wake-ups.",
       "datePublished": "2026-06-20T09:25:40+00:00",
-      "dateModified": "2026-06-20T09:25:40+00:00",
-      "wordCount": 3154,
-      "timeRequired": "PT16M",
+      "dateModified": "2026-10-03T11:31:57+00:00",
+      "wordCount": 3055,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">2026 alert triage: when Opsgenie slept for you</h1>
                 
-                <p class="post-lead">They suppress alerts that have a 92% chance of resolving on their own, they collapse related incidents into one ticket, and they surface only the…</p>
+                <p class="post-lead">Build a scoring, deduplication and LLM-summary layer over PagerDuty or Opsgenie, plus how to measure whether it actually reduces wake-ups.</p>
                 
                 
                 <div class="tags">
@@ -242,433 +242,319 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3154 words
+                        15 min read
+                        &nbsp;·&nbsp; 3055 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-20
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In early 2026 I inherited an on-call rotation that woke me up 4–6 times a night. Not because the systems were failing—they were fine. The issue was tooling designed for humans, not machines. PagerDuty and Opsgenie 2026 would fire alerts for latency spikes that never turned into outages, for disk usage that self-healed, for background jobs that would retry automatically. This post is what I wished I had found then.</p>
-<p>The core problem isn’t noise. It’s that engineers are still the triage layer for machines. In 2026, AI alert triage tools don’t just filter noise—they rewrite the contract between systems and humans. They suppress alerts that have a 92% chance of resolving on their own, they collapse related incidents into one ticket, and they surface only the anomalies that need a human within the next 30 minutes. The result isn’t fewer alerts. It’s fewer wake-ups for real problems.</p>
-<p>They weren’t—they were based on the vendor’s generic model trained on unrelated datasets. It took a week to realize my team’s incident patterns were unique: we had a daily batch job that ran 10 minutes late, but it never failed. The default rules flagged anything over 5 minutes late. We were alerting on a non-issue 14 times a day.</p>
-<p>The shift isn’t just about filtering. It’s about changing the economics of on-call. A single false positive costs $18 in lost productivity for a mid-level engineer in Lagos, $22 in Bangalore, $28 in São Paulo. Multiply that by 14 alerts a day, and you’re paying $392–$784 a week for noise. That’s before burnout and attrition. AI triage isn’t optional; it’s the only way to make on-call sustainable in 2026.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You’ll need an Opsgenie 2026 account with admin rights, a Prometheus 2.47.0 server scraping 5-minute metrics, and Python 3.11 with the opsgenie-sdk 2.5.0 package. You’ll also need an OpenAI API key (gpt-4o model, $0.005 per 1K tokens) or an equivalent embedding model. Total setup time: under 30 minutes.</p>
-<p>What we’ll build is a lightweight AI triage layer that:
-- Pulls alerts from Opsgenie 2026 every 30 seconds
-- Scores each alert using a 3-factor model (severity, correlation, historical resolution time)
-- Suppresses alerts with a score below 0.7
-- Creates a single incident ticket for related alerts within 5 minutes
-- Adds a human-readable summary generated by an LLM
-- Logs everything to Loki 3.0 for audit</p>
-<p>The model is intentionally simple. We’re not building a full SRE platform—we’re replacing the default Opsgenie rules with rules that understand your system’s actual behavior.</p>
-<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<p>Start by creating a Python 3.11 virtual environment and installing the required packages:</p>
+                <h2 id="the-real-problem-engineers-as-the-triage-layer">The real problem: engineers as the triage layer</h2>
+<p>Most alerting tutorials stop at the happy path: an alert fires, a page goes out, a human looks at it. Production on-call is not that. A typical rotation receives a mix of genuine incidents and alerts that resolve themselves: latency spikes that never become outages, disk usage that recovers after a log rotation, background jobs that retry successfully on the second attempt. The paging tool has no way to know the difference, so the engineer becomes the triage layer for machines.</p>
+<p>The documented behavior of most paging platforms is to route every alert that matches a rule. PagerDuty and Opsgenie both support deduplication and grouping, but deduplication keys are usually derived from a static alert name, and grouping windows are short. A daily batch job that runs ten minutes late every day will page every day unless someone writes a rule specifically excluding it. That rule is the manual version of what a triage layer should do automatically.</p>
+<p>An AI triage layer sits between the monitoring system and the paging platform. It scores each incoming alert, suppresses the ones that historically resolve on their own, collapses correlated alerts into a single ticket, and attaches a short natural-language summary. The goal is not "fewer alerts" as a vanity metric. The goal is fewer wake-ups for problems that need a human, with an auditable record of everything that was suppressed.</p>
+<h2 id="prerequisites-and-what-you-will-build">Prerequisites and what you will build</h2>
+<p>This design assumes:</p>
+<ul>
+<li>A paging platform with a read/write API. Opsgenie's Alert API and PagerDuty's Events API v2 both qualify. The examples below use an SDK-style client; substitute the equivalent calls for your platform.</li>
+<li>A metrics backend you can query for historical alert outcomes. Prometheus is the common choice; any queryable time-series store works.</li>
+<li>Python 3.11 or newer.</li>
+<li>An LLM endpoint for summaries. This can be a hosted API or a self-hosted model behind an OpenAI-compatible interface. Treat the endpoint and model name as configuration, not as a hard dependency.</li>
+</ul>
+<p>The layer you build will:</p>
+<ul>
+<li>Poll the paging platform for open alerts on a fixed interval.</li>
+<li>Score each alert using a small, explainable model.</li>
+<li>Suppress alerts below a threshold, with a note explaining why.</li>
+<li>Group related alerts and create one incident for the group.</li>
+<li>Generate a short summary for the incident.</li>
+<li>Emit metrics about its own behavior, so you can tell whether it is working.</li>
+</ul>
+<p>The scoring model is deliberately simple. A simple model you can reason about beats a complex one you cannot debug at 3 a.m.</p>
+<h2 id="step-1-environment-and-test-alert-source">Step 1 — environment and test alert source</h2>
+<p>Create a virtual environment and install the client libraries you need. Pin versions and check the current release notes for each; API surfaces change.</p>
 <pre><code class="language-bash">python -m venv venv
-source venv/bin/activate # or venv\Scripts\activate on Windows
-pip install opsgenie-sdk==2.5.0 prometheus-api-client==0.5.0 openai==1.12.0 python-dotenv==1.0.0 requests==2.31.0
+source venv/bin/activate  # venv\Scripts\activate on Windows
+pip install prometheus-api-client openai python-dotenv requests
 </code></pre>
-<p>Next, create a <code>.env</code> file with your credentials:</p>
+<p>Create a <code>.env</code> file. Never commit this file.</p>
 <pre><code class="language-ini"># .env
-OPSGENIE_API_KEY=your_opsgenie_key_here
-OPENAI_API_KEY=your_openai_key_here
+PAGER_API_KEY=your_paging_platform_key_here
+LLM_API_KEY=your_llm_key_here
 PROMETHEUS_URL=http://localhost:9090
 </code></pre>
-<p>You’ll need an Opsgenie 2026 API key with read/write access. Create one under Settings &gt; API Key Management. Make sure to restrict it to your team’s integration.</p>
-<p>For Prometheus, we’ll scrape the <code>up</code> metric to simulate real alerts. Install Prometheus 2.47.0 and add this job to <code>prometheus.yml</code>:</p>
+<p>Scope the paging API key to the smallest set of permissions that still lets the layer read alerts and write notes. A key with full account access is a liability if the process is compromised.</p>
+<p>To generate test alerts without touching production, run a node exporter and scrape its <code>up</code> metric with Prometheus:</p>
 <pre><code class="language-yaml">scrape_configs:
-- job_name: 'node'
-static_configs:
-- targets: ['localhost:9100']
+  - job_name: 'node'
+    static_configs:
+      - targets: ['localhost:9100']
 </code></pre>
-<p>Start Prometheus with:</p>
-<pre><code class="language-bash">./prometheus --config.file=prometheus.yml
-</code></pre>
-<p>Now, create a simple alert rule in <code>alert.rules.yml</code>:</p>
+<p>Add a rule that fires when the exporter disappears:</p>
 <pre><code class="language-yaml">groups:
-- name: example
-rules:
-- alert: InstanceDown
-expr: up{job=&quot;node&quot;} == 0
-for: 1m
-labels:
-severity: critical
-annotations:
-summary: &quot;Instance {{ $labels.instance }} down&quot;
+  - name: example
+    rules:
+      - alert: InstanceDown
+        expr: up{job=&quot;node&quot;} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: &quot;Instance {{ $labels.instance }} down&quot;
 </code></pre>
-<p>Reload Prometheus and trigger a test alert:</p>
+<p>Reload Prometheus and stop the exporter to trigger the alert:</p>
 <pre><code class="language-bash">curl -X POST http://localhost:9090/-/reload
-# Then stop node_exporter to simulate a down instance
 </code></pre>
-<p>You should see an alert appear in Opsgenie 2026 within 2 minutes. If not, check your integration in Opsgenie under Integrations &gt; Prometheus.</p>
-<p>Gotcha: Opsgenie 2026 caches alerts for 60 seconds by default. If you trigger multiple alerts in quick succession, they might collapse into one ticket. That’s intentional—we’ll handle deduplication later.</p>
-<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<p>Create a file named <code>ai_triage.py</code> and add the following imports:</p>
+<p>Confirm the alert reaches your paging platform. If it does not, check the integration configuration before writing any triage code. Debugging the triage layer while the alert pipeline is broken wastes time.</p>
+<p>One behavior worth knowing: many paging platforms cache or debounce incoming alerts for a short window. Triggering several alerts in quick succession may produce a single ticket. That is platform behavior, not a bug in your code, and it interacts with the deduplication you will add later.</p>
+<h2 id="step-2-the-scoring-function">Step 2 — the scoring function</h2>
+<p>The scoring model has three inputs, each normalized to the range 0 to 1:</p>
+<ol>
+<li><strong>Severity</strong>: how urgent the alert is by its own label. A common mapping is critical = 1.0, warning = 0.6, info = 0.3. These weights are a starting point, not a law of nature.</li>
+<li><strong>Correlation</strong>: how many related alerts fired recently. A single alert is more likely to be noise than one of twenty.</li>
+<li><strong>Historical resolution</strong>: how quickly similar alerts have resolved in the past. An alert type whose median resolution is two minutes is a weaker paging candidate than one whose median is two hours.</li>
+</ol>
 <pre><code class="language-python">import os
 import time
+import json
+import logging
+from typing import Dict, List, Optional
+
 import requests
-from opsgenie_sdk import AlertApi, Configuration
 from prometheus_api_client import PrometheusConnect
 from openai import OpenAI
 from dotenv import load_dotenv
-import json
-from typing import Dict, List, Optional
 
 load_dotenv()
-client = OpenAI(api_key=os.getenv(&quot;OPENAI_API_KEY&quot;))
-opsgenie_config = Configuration()
-opsgenie_config.api_key = os.getenv(&quot;OPSGENIE_API_KEY&quot;)
-alert_api = AlertApi(opsgenie_config)
+llm = OpenAI(api_key=os.getenv(&quot;LLM_API_KEY&quot;))
 prom = PrometheusConnect(url=os.getenv(&quot;PROMETHEUS_URL&quot;), disable_ssl=True)
-</code></pre>
-<p>The scoring model uses three factors:
-1. <strong>Severity</strong>: Critical = 1.0, Warning = 0.6, Info = 0.3
-2. <strong>Correlation</strong>: Number of related alerts in the last 15 minutes (log scale)
-3. <strong>Historical resolution time</strong>: Median time to resolve similar alerts in the past 30 days (in minutes)</p>
-<p>Here’s the scoring function:</p>
-<pre><code class="language-python">def score_alert(alert: Dict) -&gt; float:
-severity_map = {&quot;critical&quot;: 1.0, &quot;warning&quot;: 0.6, &quot;info&quot;: 0.3}
-severity = severity_map.get(alert.get(&quot;priority&quot;, &quot;info&quot;), 0.3)
 
-# Simulate correlation by counting recent related alerts
-related_count = count_recent_related_alerts(alert.get(&quot;message&quot;, &quot;&quot;))
-correlation = 1.0 / (1.0 + related_count) # Lower count = higher score
+SEVERITY_WEIGHTS = {&quot;critical&quot;: 1.0, &quot;warning&quot;: 0.6, &quot;info&quot;: 0.3}
+SUPPRESS_THRESHOLD = 0.7
+DEFAULT_RESOLUTION_MINUTES = 10.0
 
-# Simulate historical resolution time
-median_resolution = get_median_resolution(alert.get(&quot;message&quot;, &quot;&quot;))
-if median_resolution is None:
-median_resolution = 10 # Default 10 minutes if unknown
-resolution_score = 1.0 - min(median_resolution / 60, 1.0) # Cap at 1 hour
 
-final_score = (severity * 0.5) + (correlation * 0.25) + (resolution_score * 0.25)
-return round(final_score, 2)
+def score_alert(alert: Dict) -&gt; float:
+    severity = SEVERITY_WEIGHTS.get(alert.get(&quot;priority&quot;, &quot;info&quot;), 0.3)
+
+    related_count = count_recent_related_alerts(alert.get(&quot;message&quot;, &quot;&quot;))
+    correlation = 1.0 / (1.0 + related_count)
+
+    median_resolution = get_median_resolution(alert.get(&quot;message&quot;, &quot;&quot;))
+    if median_resolution is None:
+        median_resolution = DEFAULT_RESOLUTION_MINUTES
+    resolution_score = 1.0 - min(median_resolution / 60.0, 1.0)
+
+    final_score = (
+        severity * 0.5
+        + correlation * 0.25
+        + resolution_score * 0.25
+    )
+    return round(final_score, 2)
 </code></pre>
-<p>The <code>count_recent_related_alerts</code> function queries Opsgenie for alerts with similar messages in the last 15 minutes. Here’s how it works:</p>
-<pre><code class="language-python">def count_recent_related_alerts(message: str) -&gt; int:
-query = f&quot;message:\&quot;{message}\&quot; AND createdAt:&gt;now-15m&quot;
-try:
-response = alert_api.list_alerts(query=query, limit=100)
-return len(response.data)
-except Exception as e:
-print(f&quot;Failed to query recent alerts: {e}&quot;)
-return 0
+<p>Two properties make this model usable in practice. First, every term is bounded, so the final score is always between 0 and 1. Second, the weights sum to 1, so the score has a consistent interpretation: a critical alert with no correlated noise and a fast historical resolution still scores at least 0.5 from severity alone, which is below the 0.7 threshold. That is intentional. Severity alone should not be sufficient to page if the alert type reliably self-heals.</p>
+<p>The correlation term deserves scrutiny. <code>1.0 / (1.0 + related_count)</code> means a single alert scores 1.0 and a burst of nineteen related alerts scores 0.05. The intent is that a burst is one incident, not twenty, and should be handled by grouping rather than by suppression. But the term also means a genuinely novel alert, which has no related history, gets the maximum correlation score. That is the correct default: unknown alerts should page.</p>
+<h2 id="step-3-historical-resolution-time">Step 3 — historical resolution time</h2>
+<p>The scoring model depends on knowing how long similar alerts have historically taken to resolve. You need to record that data yourself. The paging platform's API will give you current and recent alerts, but not a long-term aggregate.</p>
+<p>The approach is to write a resolution timestamp into your metrics backend whenever an alert closes, then query it. For example, a small job can poll the paging platform for closed alerts, compute the time between creation and closure, and push a sample to a metric such as <code>alert_resolution_seconds</code> with the alert name as a label. Over a few weeks this gives you a per-alert-type distribution.</p>
+<p>Querying the median is then a matter of asking the metrics backend for a quantile:</p>
+<pre><code class="language-python">def get_median_resolution(alert_name: str) -&gt; Optional[float]:
+    end = time.time()
+    start = end - (30 * 24 * 3600)  # last 30 days
+    query = (
+        'quantile_over_time(0.5, '
+        'alert_resolution_seconds{alert_name=&quot;%s&quot;}[30d])' % alert_name
+    )
+    try:
+        result = prom.custom_query(query=query)
+        if result:
+            return float(result[0][&quot;value&quot;][1]) / 60.0
+    except Exception as exc:
+        logging.warning(&quot;resolution query failed: %s&quot;, exc)
+    return None
 </code></pre>
-<p>The <code>get_median_resolution</code> function queries Prometheus for the <code>alert_resolved_time_seconds</code> metric, grouped by alert name. In a real system, you’d store this in a time-series database like VictoriaMetrics 1.92.0.</p>
-<p>Now, the main loop that fetches alerts from Opsgenie every 30 seconds and suppresses low-scoring ones:</p>
+<p>If you do not yet have 30 days of history, the function returns <code>None</code> and the scoring model falls back to the default. That is the right behavior for a new deployment: unknown alert types are treated conservatively.</p>
+<p>Note the units. The metric stores seconds; the scoring function expects minutes. Mixing units is the most common source of silently wrong scores. Write a unit test that asserts the conversion.</p>
+<h2 id="step-4-grouping-suppression-and-incident-creation">Step 4 — grouping, suppression and incident creation</h2>
+<p>The main loop polls for open alerts, groups them, scores each group, and either creates an incident or suppresses with an explanatory note.</p>
+<pre><code class="language-python">def group_alerts(alerts: List[Dict]) -&gt; Dict[str, List[Dict]]:
+    grouped: Dict[str, List[Dict]] = {}
+    for alert in alerts:
+        key = f&quot;{alert.get('message', '')}:{alert.get('priority', '')}&quot;
+        grouped.setdefault(key, []).append(alert)
+    return grouped
+</code></pre>
+<p>Grouping by message and priority is a starting point. It fails when the same underlying problem produces alerts with different messages, for example one alert per affected host. A more robust key strips volatile fields such as hostnames and timestamps from the message before grouping. Whatever key you choose, log it. When grouping goes wrong, the key is the first thing you need to see.</p>
 <pre><code class="language-python">def triage_alerts():
-while True:
-try:
-# Fetch all open alerts
-response = alert_api.list_alerts(status=&quot;open&quot;, limit=100)
-alerts = response.data
+    while True:
+        try:
+            alerts = fetch_open_alerts()
+            grouped = group_alerts(alerts)
 
-# Group alerts by related message (deduplication)
-grouped = {}
-for alert in alerts:
-key = alert.message
-if key not in grouped:
-grouped[key] = []
-grouped[key].append(alert)
+            for key, alert_list in grouped.items():
+                score = score_alert(alert_list[0])
+                if score &gt;= SUPPRESS_THRESHOLD:
+                    logging.info(&quot;score %s — incident for %s&quot;, score, key)
+                    create_incident(alert_list)
+                else:
+                    logging.info(&quot;score %s — suppressing %s&quot;, score, key)
+                    suppress_alerts(alert_list)
+        except Exception as exc:
+            logging.error(&quot;triage loop error: %s&quot;, exc)
 
-# Process each group
-for message, alert_list in grouped.items():
-score = score_alert(alert_list[0])
-if score &gt;= 0.7:
-print(f&quot;High score {score} — creating incident for: {message}&quot;)
-create_incident(alert_list)
-else:
-print(f&quot;Low score {score} — suppressing: {message}&quot;)
-suppress_alerts(alert_list)
-
-except Exception as e:
-print(f&quot;Error in triage loop: {e}&quot;)
-
-time.sleep(30)
+        time.sleep(30)
 </code></pre>
-<p>The <code>create_incident</code> function collapses related alerts into one ticket and adds a human-readable summary generated by an LLM. Here’s how it works:</p>
+<p>The suppression path must leave a record. A suppression with no note is indistinguishable from a lost alert, and the first time someone asks "why did we not get paged for this?" you will need the answer.</p>
+<pre><code class="language-python">def suppress_alerts(alerts: List[Dict]):
+    for alert in alerts:
+        note = (
+            &quot;Suppressed by AI triage layer. Score below &quot;
+            f&quot;{SUPPRESS_THRESHOLD}. See triage logs for the factor breakdown.&quot;
+        )
+        try:
+            add_note(alert[&quot;id&quot;], note)
+        except Exception as exc:
+            logging.error(&quot;failed to annotate alert %s: %s&quot;, alert[&quot;id&quot;], exc)
+</code></pre>
+<p>Incident creation collapses the group into one ticket and attaches a summary:</p>
 <pre><code class="language-python">def create_incident(alerts: List[Dict]) -&gt; Optional[str]:
-# Pick the highest priority alert
-priority_order = {&quot;critical&quot;: 0, &quot;high&quot;: 1, &quot;medium&quot;: 2, &quot;low&quot;: 3}
-alerts.sort(key=lambda a: priority_order.get(a.priority, 3))
+    priority_order = {&quot;critical&quot;: 0, &quot;high&quot;: 1, &quot;medium&quot;: 2, &quot;low&quot;: 3}
+    alerts = sorted(alerts, key=lambda a: priority_order.get(a.get(&quot;priority&quot;), 3))
+    lead = alerts[0]
 
-# Create incident payload
-payload = {
-&quot;message&quot;: f&quot;AI-collapsed incident: {alerts[0].message}&quot;,
-&quot;description&quot;: generate_llm_summary(alerts),
-&quot;priority&quot;: alerts[0].priority,
-&quot;tags&quot;: [&quot;ai-triage&quot;, &quot;collapsed&quot;]
-}
+    payload = {
+        &quot;message&quot;: f&quot;Collapsed incident: {lead.get('message', 'unknown')}&quot;,
+        &quot;description&quot;: generate_llm_summary(alerts),
+        &quot;priority&quot;: lead.get(&quot;priority&quot;, &quot;medium&quot;),
+        &quot;tags&quot;: [&quot;ai-triage&quot;, &quot;collapsed&quot;],
+    }
 
-try:
-response = alert_api.create_alert(payload=payload)
-return response.data.id
-except Exception as e:
-print(f&quot;Failed to create incident: {e}&quot;)
-return None
+    try:
+        return create_alert(payload)[&quot;id&quot;]
+    except Exception as exc:
+        logging.error(&quot;failed to create incident: %s&quot;, exc)
+        return None
 </code></pre>
-<p>The LLM summary is generated using the OpenAI API with a prompt that includes the alert details and a few-shot example:</p>
-<pre><code class="language-python">def generate_llm_summary(alerts: List[Dict]) -&gt; str:
-prompt = &quot;&quot;&quot;
-You are an SRE summarizing a collapsed incident for a human on-call engineer.
+<h2 id="step-5-the-llm-summary-and-how-it-fails">Step 5 — the LLM summary, and how it fails</h2>
+<p>The summary is the part engineers notice first, and the part most likely to embarrass you. Generate it from structured alert data, not from raw log lines, and constrain the output.</p>
+<pre><code class="language-python">SUMMARY_PROMPT = &quot;&quot;&quot;You are an SRE writing a short incident summary for an on-call engineer.
 
-Incident context:
-- Alerts: {alerts}
-- Current time: {now}
+Alerts:
+{alerts}
 
-Write a concise summary that includes:
-- What is happening
-- Which systems are affected
-- Likely root cause
-- Recommended first steps
+Write at most 150 words covering:
+- what is happening
+- which systems are affected
+- a plausible root cause, clearly marked as a hypothesis
+- recommended first diagnostic step
 
-Keep it under 150 words.
+Do not invent system names, hostnames or error codes that are not present in the alerts.
 &quot;&quot;&quot;
 
-try:
-response = client.chat.completions.create(
-model=&quot;gpt-4o&quot;,
-messages=[
-{&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a concise SRE summary generator.&quot;},
-{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt.format(
-alerts=json.dumps([{&quot;message&quot;: a.message, &quot;priority&quot;: a.priority} for a in alerts]),
-now=time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)
-)}
-],
-max_tokens=200,
-temperature=0.3
-)
-return response.choices[0].message.content.strip()
-except Exception as e:
-print(f&quot;LLM call failed: {e}&quot;)
-return &quot;Automated summary unavailable — check logs for details.&quot;
-</code></pre>
-<p>Finally, the <code>suppress_alerts</code> function adds a note to each suppressed alert to explain why it was suppressed. This is critical for audit trails and debugging:</p>
-<pre><code class="language-python">def suppress_alerts(alerts: List[Dict]):
-note = {
-&quot;note&quot;: &quot;Suppressed by AI triage layer. Score &lt; 0.7. Check AI triage logs for details.&quot;
-}
-for alert in alerts:
-try:
-alert_api.add_note_to_alert(identifier=alert.id, note=note)
-except Exception as e:
-print(f&quot;Failed to add note to alert {alert.id}: {e}&quot;)
-</code></pre>
-<p>Run the triage script with:</p>
-<pre><code class="language-bash">python ai_triage.py
-</code></pre>
-<p>Gotcha: Opsgenie 2026 has a rate limit of 120 requests per minute for the Alert API. If you have more than 120 alerts, the script will hit the limit and start failing. In a real system, you’d implement backoff and retry logic.</p>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>The first edge case I hit was alert deduplication. Opsgenie 2026 sometimes sends the same alert multiple times with slightly different metadata. The naive approach of grouping by message failed because messages aren’t unique enough. </p>
-<p>Here’s the improved grouping logic:</p>
-<pre><code class="language-python">def group_alerts(alerts: List[Dict]) -&gt; Dict[str, List[Dict]]:
-grouped = {}
-for alert in alerts:
-key = f&quot;{alert.message}:{alert.priority}&quot; # More stable key
-if key not in grouped:
-grouped[key] = []
-grouped[key].append(alert)
-return grouped
-</code></pre>
-<p>The second edge case was LLM hallucinations. The first version of the summary sometimes invents system names or error codes. If the summary includes something unknown, it falls back to a generic message.</p>
-<p>Here’s the validation function:</p>
-<pre><code class="language-python">def validate_summary(summary: str, known_terms: List[str]) -&gt; str:
-for term in known_terms:
-if term.lower() in summary.lower():
-continue
-if any(term in summary for term in [&quot;unknown&quot;, &quot;error code&quot;, &quot;system name&quot;]):
-return &quot;Automated summary unavailable — check logs for details.&quot;
-return summary
-</code></pre>
-<p>The third edge case was metric lag. Prometheus 2.47.0 scrapes metrics every 15 seconds by default. If an alert fires at 00:00:00, the metric might not appear until 00:00:15. This caused the median resolution time to be off by up to 15 seconds. </p>
-<p>Here’s the updated <code>get_median_resolution</code> function:</p>
-<pre><code class="language-python">def get_median_resolution(alert_name: str) -&gt; Optional[float]:
-end = time.time()
-start = end - (30 * 24 * 3600) # Last 30 days
-query = f&quot;histogram_quantile(0.5, rate(alert_resolved_time_seconds_sum[{alert_name}][5m]))&quot;
-try:
-result = prom.custom_query(query=query, start_time=start, end_time=end)
-if result:
-return float(result[0][&quot;value&quot;][1])
-except Exception as e:
-print(f&quot;Failed to query resolution time: {e}&quot;)
-return None
-</code></pre>
-<p>Another issue was false positives from background jobs. We had a daily job that ran 10 minutes late but never failed. The default Opsgenie rules flagged anything over 5 minutes late. lower() for term in BLACKLISTED_MESSAGES)</p>
-<pre><code>
-Finally, I added a dead-man’s switch to the triage loop. If the script hasn’t logged anything in the last 5 minutes, it emails the on-call engineer. Here’s the dead-man’s switch implementation:
 
-```python
-last_log_time = time.time()
-
-def dead_mans_switch():
-global last_log_time
-if time.time() - last_log_time &gt; 300: # 5 minutes
-send_email(
-to=&quot;oncall@company.com&quot;,
-subject=&quot;AI Triage Dead Man's Switch Triggered&quot;,
-body=&quot;The AI triage script has not logged anything in 5 minutes.&quot;
-)
-last_log_time = time.time()
+def generate_llm_summary(alerts: List[Dict]) -&gt; str:
+    payload = json.dumps(
+        [{&quot;message&quot;: a.get(&quot;message&quot;), &quot;priority&quot;: a.get(&quot;priority&quot;)} for a in alerts]
+    )
+    try:
+        response = llm.chat.completions.create(
+            model=os.getenv(&quot;LLM_MODEL&quot;, &quot;gpt-4o-mini&quot;),
+            messages=[
+                {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You write terse, factual SRE summaries.&quot;},
+                {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: SUMMARY_PROMPT.format(alerts=payload)},
+            ],
+            max_tokens=250,
+            temperature=0.2,
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as exc:
+        logging.error(&quot;LLM call failed: %s&quot;, exc)
+        return &quot;Automated summary unavailable — see raw alerts.&quot;
 </code></pre>
-<p>Place the <code>dead_mans_switch()</code> call at the end of the main loop.</p>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<p>Start by adding logging to the triage script. Use Python’s built-in logging module to log scores, suppressions, and incidents to a file and stdout:</p>
-<pre><code class="language-python">import logging
-
-logging.basicConfig(
-level=logging.INFO,
-format=&quot;%(asctime)s — %(levelname)s — %(message)s&quot;,
-handlers=[
-logging.FileHandler(&quot;ai_triage.log&quot;),
-logging.StreamHandler()
-]
-)
-logger = logging.getLogger(__name__)
-</code></pre>
-<p>Replace <code>print</code> statements with <code>logger.info</code>, <code>logger.error</code>, etc. Log the score and reason for each alert:</p>
-<pre><code class="language-python">logger.info(f&quot;Alert {alert.id} scored {score} — reason: severity={severity}, correlation={correlation}, resolution={resolution_score}&quot;)
-</code></pre>
-<p>Next, add metrics. Use Prometheus client to expose a <code>/metrics</code> endpoint that tracks:
-- <code>ai_triage_alerts_processed_total</code> (counter)
-- <code>ai_triage_alerts_suppressed_total</code> (counter)
-- <code>ai_triage_incidents_created_total</code> (counter)
-- <code>ai_triage_llm_call_duration_seconds</code> (histogram)</p>
-<p>Here’s the metrics setup:</p>
+<p>The failure modes are predictable:</p>
+<ul>
+<li><strong>Hallucinated specifics.</strong> The model invents a hostname or error code that was not in the input. Mitigation: instruct the model not to, and validate the output against the set of terms present in the alerts. A summary containing a token that looks like a hostname but does not appear in the input should be discarded.</li>
+<li><strong>Confident root cause.</strong> The model states a hypothesis as fact. Mitigation: require the hypothesis to be labeled as such in the prompt, and keep the summary short enough that there is no room for a narrative.</li>
+<li><strong>Latency.</strong> A slow LLM call delays incident creation. Mitigation: set a client timeout and fall back to the raw alert text on timeout. An incident with no summary is better than an incident created two minutes late.</li>
+<li><strong>Cost.</strong> Every alert group triggers a call. Measure this directly: log token counts per call and multiply by your provider's published price. Do not estimate from alert volume alone, because summaries vary in length. Instrument the call and read the number.</li>
+</ul>
+<p>Never put secrets, credentials or customer identifiers into a prompt. If alert messages can contain them, redact before sending.</p>
+<h2 id="step-6-observability-for-the-triage-layer-itself">Step 6 — observability for the triage layer itself</h2>
+<p>The triage layer is production infrastructure. It needs the same monitoring as anything else, and a silent failure is worse than no layer at all, because alerts will be suppressed and nobody will know.</p>
+<p>Instrument at minimum:</p>
+<ul>
+<li><code>ai_triage_alerts_processed_total</code> — counter</li>
+<li><code>ai_triage_alerts_suppressed_total</code> — counter</li>
+<li><code>ai_triage_incidents_created_total</code> — counter</li>
+<li><code>ai_triage_llm_call_duration_seconds</code> — histogram</li>
+<li><code>ai_triage_llm_tokens_total</code> — counter, labeled by direction</li>
+</ul>
 <pre><code class="language-python">from prometheus_client import start_http_server, Counter, Histogram
 
-ALERTS_PROCESSED = Counter(&quot;ai_triage_alerts_processed_total&quot;, &quot;Total alerts processed&quot;)
-ALERTS_SUPPRESSED = Counter(&quot;ai_triage_alerts_suppressed_total&quot;, &quot;Total alerts suppressed&quot;)
-INCIDENTS_CREATED = Counter(&quot;ai_triage_incidents_created_total&quot;, &quot;Total incidents created&quot;)
-LLM_CALL_DURATION = Histogram(&quot;ai_triage_llm_call_duration_seconds&quot;, &quot;Duration of LLM calls&quot;, buckets=[0.1, 0.5, 1.0, 2.0, 5.0])
+ALERTS_PROCESSED = Counter(&quot;ai_triage_alerts_processed_total&quot;, &quot;Alerts processed&quot;)
+ALERTS_SUPPRESSED = Counter(&quot;ai_triage_alerts_suppressed_total&quot;, &quot;Alerts suppressed&quot;)
+INCIDENTS_CREATED = Counter(&quot;ai_triage_incidents_created_total&quot;, &quot;Incidents created&quot;)
+LLM_CALL_DURATION = Histogram(
+    &quot;ai_triage_llm_call_duration_seconds&quot;,
+    &quot;LLM call duration&quot;,
+    buckets=[0.1, 0.5, 1.0, 2.0, 5.0],
+)
 
 start_http_server(8000)
 </code></pre>
-<p>Update the main loop to increment counters:</p>
-<pre><code class="language-python">ALERTS_PROCESSED.inc()
-if score &gt;= 0.7:
-INCIDENTS_CREATED.inc()
-else:
-ALERTS_SUPPRESSED.inc()
+<p>Add a heartbeat. The simplest version writes the current timestamp to a file or a gauge on every loop iteration, and a separate alert fires if the value stops advancing:</p>
+<pre><code class="language-python">HEARTBEAT = Gauge(&quot;ai_triage_last_loop_timestamp&quot;, &quot;Unix time of last loop&quot;)
 </code></pre>
-<p>For testing, create a <code>test_triage.py</code> file with pytest 7.4.0:</p>
-<pre><code class="language-python">import pytest
-from ai_triage import score_alert, group_alerts
-
-@pytest.fixture
-def sample_alert():
-return {
-&quot;id&quot;: &quot;123&quot;,
-&quot;message&quot;: &quot;InstanceDown: node-1&quot;,
-&quot;priority&quot;: &quot;critical&quot;
-}
-
-def test_score_alert_critical(sample_alert):
-assert score_alert(sample_alert) &gt;= 0.7
-
-def test_group_alerts():
-alerts = [
-{&quot;id&quot;: &quot;1&quot;, &quot;message&quot;: &quot;InstanceDown: node-1&quot;, &quot;priority&quot;: &quot;critical&quot;},
-{&quot;id&quot;: &quot;2&quot;, &quot;message&quot;: &quot;InstanceDown: node-1&quot;, &quot;priority&quot;: &quot;critical&quot;},
-{&quot;id&quot;: &quot;3&quot;, &quot;message&quot;: &quot;InstanceDown: node-2&quot;, &quot;priority&quot;: &quot;warning&quot;}
-]
-grouped = group_alerts(alerts)
-assert len(grouped) == 2
-assert len(grouped[&quot;InstanceDown: node-1:critical&quot;]) == 2
-</code></pre>
-<p>Run the tests with:</p>
-<pre><code class="language-bash">pytest test_triage.py -v
-</code></pre>
-<p>Gotcha: pytest 7.4.0 doesn’t handle async code well. If you add async LLM calls, use pytest-asyncio 0.21.0 and mark your tests with <code>@pytest.mark.asyncio</code>.</p>
-<p>Finally, set up Grafana 10.2.0 to visualize the metrics. Create a dashboard with panels for:
-- Alerts processed vs. suppressed (last 7 days)
-- Incidents created by priority (last 30 days)
-- LLM call duration percentiles
-- Top suppressed alerts by message</p>
-<p>I made the mistake of not setting up alerts for the AI triage script itself. The script crashed silently for 2 hours during a network outage, and we didn’t notice until someone checked the logs. Add a heartbeat alert in Grafana that triggers if the script hasn’t logged in the last 10 minutes.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>We deployed this system in Q1 2026 for a team of 8 engineers covering 4 services. In the first 30 days, we reduced the number of wake-up alerts from 14 per day to 2.3 per day—a 84% reduction. The false positive rate dropped from 68% to 12%. The cost savings were $8,400 per month in engineer time, based on a blended rate of $22/hour for mid-level engineers in our regions.</p>
-<p>The LLM summaries saved 4.2 minutes per incident on average by providing actionable context upfront. Engineers no longer had to dig through dashboards to understand what was happening. The summaries were accurate 91% of the time, with errors usually due to hallucinated system names.</p>
-<p>The biggest surprise was the team’s response time improvement. Even though we suppressed more alerts, the time from incident creation to resolution dropped from 22 minutes to 14 minutes. The reason was that engineers weren’t distracted by noise, so they could focus on real problems.</p>
-<p>Here’s a comparison table of on-call metrics before and after AI triage:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before AI Triage</th>
-<th>After AI Triage</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Avg wake-ups per engineer/night</td>
-<td>4.2</td>
-<td>0.8</td>
-<td>-81%</td>
-</tr>
-<tr>
-<td>False positive rate</td>
-<td>68%</td>
-<td>12%</td>
-<td>-82%</td>
-</tr>
-<tr>
-<td>Avg resolution time</td>
-<td>22 min</td>
-<td>14 min</td>
-<td>-36%</td>
-</tr>
-<tr>
-<td>Alerts processed per day</td>
-<td>47</td>
-<td>11</td>
-<td>-77%</td>
-</tr>
-<tr>
-<td>Cost per false positive</td>
-<td>$22</td>
-<td>$4</td>
-<td>-82%</td>
-</tr>
-</tbody>
-</table>
-<p>We also tracked the economic impact of burnout. Engineers reported a 35% reduction in stress levels after two weeks, measured by a simple survey. Retention improved—no engineers left the rotation in the first 6 months, compared to 2 departures in the prior 6 months.</p>
-<p>The only metric that didn’t improve was the LLM cost. At $0.005 per 1K tokens, we spent $120/month on summaries for 24,000 alerts. That’s 1.4% of the total on-call cost savings. Not bad for a side effect.</p>
-<p>I was surprised that the team initially resisted the AI summaries. They expected raw data, not a human-readable paragraph. After a week, they realized the summaries were more useful than the raw alert data. The turning point was when an engineer saved 8 minutes by following the summary’s recommended first step instead of digging through logs.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<p><strong>How do I handle PagerDuty instead of Opsgenie?</strong></p>
-<p>Replace the Opsgenie SDK calls with the PagerDuty Events API v2. Use the same scoring logic, but change the grouping key to include the dedup_key. PagerDuty’s API is more restrictive—you’ll need to handle rate limits and retries explicitly. The LLM summary generation remains the same, but you’ll need to update the incident creation payload to match PagerDuty’s schema. Expect to spend an afternoon porting the code.</p>
-<p><strong>What if my team uses Slack for incident management?</strong></p>
-<p>Use the Slack Web API to post incident summaries to a dedicated channel. Replace the Opsgenie incident creation with a Slack message that includes the summary, a link to the relevant dashboards, and a button to acknowledge the incident. The scoring and suppression logic stays the same. The downside is that Slack doesn’t have a built-in escalation policy, so you’ll need to implement that manually or use a tool like FireHydrant.</p>
-<p><strong>How do I handle alert storms from dependencies like AWS or Stripe?</strong></p>
-<p>Add a whitelist for known dependency alert patterns. For example, if AWS sends an alert for <code>High CPU Credit Balance</code>, suppress it unless it’s part of a cluster-wide incident. Use the alert’s source field to identify dependency alerts. The whitelist should be reviewed weekly—dependency behavior changes frequently.</p>
-<p><strong>What’s the best way to tune the suppression threshold?</strong></p>
-<p>Start with 0.7 and adjust based on your team’s comfort level. Use the Grafana dashboard to track false negatives (incidents that should have been suppressed but weren’t) and false positives (alerts suppressed but shouldn’t have been). Aim for a false negative rate under 5%—it’s better to have a few extra wake-ups than to miss a real incident. Adjust the threshold by 0.05 increments every 2 weeks until you hit the target.</p>
-<p><strong>Can I run this locally or do I need Kubernetes?</strong></p>
-<p>You can run this locally for testing, but in production you’ll want a containerized setup. Package the script in a Docker image with a health check and deploy it to a small VM or Kubernetes pod. Use a sidecar container for the Prometheus client if you’re running in Kubernetes. Expect to spend a day setting up CI/CD and monitoring.</p>
-<p><strong>What about security concerns with sending alert data to an LLM?</strong></p>
-<p>Use a private LLM endpoint if your data is sensitive. Run the model locally using Ollama 0.1.5 or vLLM 0.3.2. The performance hit is minimal—local LLMs are 1.3x slower than OpenAI’s API but still under 1 second for summaries. If you must use a cloud provider, sanitize the alert data to remove PII and secrets before sending it to the LLM.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>Take the scoring function you built and replace the hardcoded values with real data. In the next 30 minutes, do this one thing: **export your top 100 historical incidents from Opsgenie 2026 and calculate the median resolution time for each alert type. Use that</p>
-<h2 id="related-reading">Related reading</h2>
+<p>Then alert on <code>time() - ai_triage_last_loop_timestamp &gt; 120</code>. This catches the failure mode where the process is alive but stuck, which a process-level check will miss.</p>
+<h2 id="how-to-measure-whether-it-works">How to measure whether it works</h2>
+<p>Do not adopt a suppression threshold on faith. Measure it.</p>
+<p>The two error types are asymmetric and you should treat them that way:</p>
 <ul>
-<li><a href="https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
-<li><a href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">AI alert triage: cut pages 80% in production</a></li>
-<li><a href="https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/">Kill noisy alerts: the triage system that restored sleep</a></li>
+<li><strong>False suppression</strong>: an alert was suppressed and the underlying problem became a real incident. This is the dangerous error.</li>
+<li><strong>False page</strong>: an alert was escalated and resolved without human action. This is the expensive error.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>To measure false suppressions, you need a record of what was suppressed and a way to link it to later incidents. The annotation you write in <code>suppress_alerts</code> is the join key. A weekly review can pull suppressed alerts and search for incidents that mention the same service in the following hours.</p>
+<p>To measure false pages, count incidents closed with no human action recorded. Most paging platforms expose this through their API.</p>
+<p>A practical procedure:</p>
+<ol>
+<li>Run the layer in shadow mode first. Score every alert and log the decision, but do not suppress or create anything. This gives you a clean baseline.</li>
+<li>After one to two weeks, compare the shadow decisions against what actually happened. Count false suppressions and false pages at several candidate thresholds.</li>
+<li>Pick the threshold that keeps false suppressions at or near zero, even if it costs you some false pages.</li>
+<li>Turn on suppression. Re-measure monthly.</li>
+</ol>
+<p>The threshold is not a constant. It should move as your system changes. A threshold tuned during a quiet quarter will be wrong during a launch.</p>
+<h2 id="failure-modes-to-design-against">Failure modes to design against</h2>
+<p><strong>Alert storms from a dependency.</strong> When a cloud provider has a regional issue, it may emit hundreds of alerts across many services. A correlation term that rewards bursts will score these low and suppress them — which is exactly wrong, because the storm is the incident. Add a rule that any alert tagged as originating from a known dependency bypasses suppression and is grouped into a single dependency incident.</p>
+<p><strong>The triage layer suppresses the alert that would have caught its own bug.</strong> If the layer crashes, no alerts are suppressed, but no alerts are escalated either. The heartbeat alert is the mitigation, and it must not route through the triage layer.</p>
+<p><strong>Rate limits.</strong> Paging APIs commonly cap requests per minute. A loop that lists alerts, queries for related alerts, and creates incidents can exceed the cap during a storm. Implement exponential backoff with jitter on every API call, and treat a 429 as a signal to slow the loop rather than to drop work.</p>
+<p><strong>Clock and metric lag.</strong> Metrics scraped on an interval will lag the alert that references them. A resolution-time query that looks back from the current instant may miss the most recent samples. Widen the query window by at least two scrape intervals.</p>
+<p><strong>Drift in alert messages.</strong> If a deployment changes an alert's message format, the historical resolution lookup returns <code>None</code> for every alert of that type, and the scoring model silently falls back to the default. Log when the fallback is used, and alert if the fallback rate rises.</p>
+<h2 id="decision-checklist-before-you-deploy">Decision checklist before you deploy</h2>
+<ul>
+<li>Is the suppression threshold chosen from measured data, not intuition?</li>
+<li>Does every suppression write an auditable note?</li>
+<li>Is the triage layer's own health monitored independently of itself?</li>
+<li>Are LLM prompts free of secrets and customer data?</li>
+<li>Is there a documented way to disable the layer in one step during an incident?</li>
+<li>Has someone reviewed the grouping key against real alert messages, including hostnames and timestamps?</li>
+<li>Are all API calls wrapped in retry with backoff?</li>
+<li>Is the LLM call time-bounded with a fallback?</li>
+</ul>
+<p>If any answer is no, the layer is not ready to suppress anything in production.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Can this work with PagerDuty instead of Opsgenie?</strong>
+Yes. The scoring and grouping logic is platform-independent. Replace the client calls: PagerDuty's Events API v2 uses a <code>dedup_key</code> for grouping, which maps naturally onto the grouping key described above. The main difference is API shape and rate-limit behavior, not the design.</p>
+<p><strong>What if the team uses Slack as the incident surface?</strong>
+The triage layer can post summaries to a channel instead of creating tickets. The trade-off is that Slack has no escalation policy, so you still need something to page a human. Use Slack for context and the paging platform for escalation.</p>
+<p><strong>Should the LLM run locally?</strong>
+If alert content is sensitive, yes. A self-hosted model behind an OpenAI-compatible endpoint requires no code change beyond the base URL. Expect higher latency and lower summary quality than a large hosted model; measure both before committing.</p>
+<p><strong>How do I tune the threshold?</strong>
+Start at 0.7, run in shadow mode, and lower it only when measured false suppressions are zero. Adjust in small increments and re-measure. Never tune during an incident.</p>
+<h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
+<p>Export your last 90 days of closed incidents from your paging platform's API and compute, per alert type, the median time from creation to resolution. Write the result to a CSV with two columns: alert type and median minutes. That single file is the historical-resolution input your scoring function needs, and building it now means you can run the layer in shadow mode tomorrow instead of waiting a month for data to accumulate.</p>
                 
                 
             </div>

@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Merge three payment APIs into one system - Kubai Kevin</title>
-        <meta name="description" content="Cut payment integrations from three APIs to one gateway in Kenya, Nigeria, and Ghana.">
+        <meta name="description" content="How to consolidate multiple payment provider integrations behind one gateway: routing, idempotency, webhook normalization, and observability.">
         <meta name="keywords" content="Apis, Flutter">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-10T02:38:19.531287">
-        <meta property="article:modified_time" content="2026-09-18T11:32:41.517135+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:20:58.994418+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Merge three payment APIs into one system">
-        <meta property="og:description" content="Cut payment integrations from three APIs to one gateway in Kenya, Nigeria, and Ghana.">
+        <meta property="og:description" content="How to consolidate multiple payment provider integrations behind one gateway: routing, idempotency, webhook normalization, and observability.">
         <meta property="og:url" content="https://kubaik.github.io/merge-three-payment-apis-into-one-system/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Merge three payment APIs into one system">
-        <meta name="twitter:description" content="Cut payment integrations from three APIs to one gateway in Kenya, Nigeria, and Ghana.">
+        <meta name="twitter:description" content="How to consolidate multiple payment provider integrations behind one gateway: routing, idempotency, webhook normalization, and observability.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/merge-three-payment-apis-into-one-system.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/merge-three-payment-apis-into-one-system/#article",
       "headline": "Merge three payment APIs into one system",
-      "description": "Cut payment integrations from three APIs to one gateway in Kenya, Nigeria, and Ghana.",
+      "description": "How to consolidate multiple payment provider integrations behind one gateway: routing, idempotency, webhook normalization, and observability.",
       "datePublished": "2026-06-10T02:38:19+00:00",
-      "dateModified": "2026-09-18T11:32:41+00:00",
-      "wordCount": 3397,
-      "timeRequired": "PT17M",
+      "dateModified": "2026-10-03T11:20:58+00:00",
+      "wordCount": 2909,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Merge three payment APIs into one system</h1>
                 
-                <p class="post-lead">Cut payment integrations from three APIs to one gateway in Kenya, Nigeria, and Ghana.</p>
+                <p class="post-lead">How to consolidate multiple payment provider integrations behind one gateway: routing, idempotency, webhook normalization, and observability.</p>
                 
                 
                 <div class="tags">
@@ -242,473 +242,312 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        17 min read
-                        &nbsp;·&nbsp; 3397 words
+                        15 min read
+                        &nbsp;·&nbsp; 2909 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
-<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>The standard playbook says: build one adapter per country. M-Pesa needs an SDK, Flutterwave handles Nigeria, and Paystack covers Ghana. You’ll wrap each in a clean interface like <code>PaymentProcessor.sendPayment()</code>, throw in some feature flags, and call it a day. That’s what most teams do because it’s the path of least resistance. I followed it too — until I saw the first bill.</p>
-<p>In 2026, my team at a Nairobi fintech launched three country-specific adapters. Each adapter averaged 800ms for a card payment and 1.2s for a mobile money push.</p>
-<p>The conventional view ignores three hidden costs:</p>
+                <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
+<p>The standard playbook says: build one adapter per country. A mobile money provider needs its SDK, one card processor handles Nigeria, another covers Ghana. Wrap each in a clean interface like <code>PaymentProcessor.sendPayment()</code>, add feature flags, and call it done. That is the path of least resistance, and it is what most teams do first.</p>
+<p>The conventional view tends to ignore three costs that only show up after launch:</p>
 <ol>
-<li><strong>Latency tax</strong>: Each hop between your service and the provider adds round-trip time. Three providers mean three hops, which can inflate your p99 from 400ms to 1.4s under load.</li>
-<li><strong>Maintenance sprawl</strong>: Flutterwave changed their webhook signature in v3.12. Our monorepo had 18 micro-services importing the Ghana adapter. Upgrading took 4 engineer-days and two rollbacks.</li>
-<li><strong>Regulatory drift</strong>: Nigeria’s CBN released new BVN rules in February 2026. Our Paystack adapter needed a 30-line patch, but the Flutterwave adapter blocked us because it shared the same shared library version.</li>
+<li><strong>Latency tax</strong>: Every hop between your service and a provider adds round-trip time. Multiple providers mean multiple connection pools, multiple timeout policies, and multiple retry strategies competing for the same runtime resources.</li>
+<li><strong>Maintenance sprawl</strong>: When a provider changes its webhook signature scheme, every service that imports the adapter must be updated and redeployed. The change is small; the coordination is not.</li>
+<li><strong>Regulatory drift</strong>: When a central bank changes KYC or BVN rules, the required validation lands in whichever adapter serves that country. If the adapters share a library, the change can block unrelated providers.</li>
 </ol>
-<p>The honest answer is that the adapter pattern solves the wrong problem. It gives you clean code, not a stable system.</p>
+<p>The adapter pattern solves a code-organization problem. It does not solve a systems problem. Those are different problems, and conflating them is the root of most payment integration pain.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
-<p>I’ve seen teams ship three adapters in two weeks using Node.js 20 LTS and Axios 1.6. After launch, the first surprise is latency variance. M-Pesa’s API is blazing fast during the day but slows to 2.1s at 8pm when everyone queues for airtime. Flutterwave’s sandbox occasionally returns 503s with the error <code>"Too many concurrent requests"</code>. Paystack’s webhook retry policy is non-negotiable: 3 retries with exponential backoff starting at 1s. Those three behaviors collide in production and your p95 jumps from 600ms at 1,000 TPS to 2.8s at 2,500 TPS.</p>
-<p>Then the bills arrive. Each adapter opens 20 TCP connections to the provider under load. At $0.085 per GB of egress, the cost delta between a single unified endpoint and three adapters is 3x. The finance team blamed the payment service, not the architecture.</p>
-<p>Finally, the alerts pile up. You’ll see ten distinct alert rules for the three providers:
-- Flutterwave: <code>HTTP 429 on /payments</code>
-- M-Pesa: <code>Timeout on /stkpush</code>
-- Paystack: <code>Webhook signature validation failed</code></p>
-<p>The ops team spends 15 engineer-hours per week on on-call rotations. That’s 60 hours a month — more than the time it took to build the adapters in the first place.</p>
-<p>Our p99 was 420ms with one provider. After adding Ghana and Nigeria, the p99 jumped to 1.7s. The bottleneck wasn’t CPU or memory — it was the three separate connection pools fighting for the same 512MB heap in the Node.js runtime.</p>
-<h2 id="a-different-mental-model">A different mental model</h2>
-<p>Forget adapters. Think of payment providers as <strong>fallible, high-latency subsystems</strong> that need circuit breakers, bulkheads, and caching, not just clean interfaces. Instead of one adapter per country, build one <strong>gateway</strong> that handles all three providers under a single domain model. The gateway becomes the single source of truth for payment state, retries, and observability.</p>
-<p>The gateway pattern gives you three concrete wins:</p>
-<ol>
-<li><strong>Connection pooling</strong>: One pool of 50 HTTP/2 connections shared across providers reduces memory usage by 40% and p99 latency by 180ms under 2,000 TPS. We measured this on a t3.medium instance running Node.js 20 LTS with <code>undici</code> as the HTTP client.</li>
-<li><strong>Priority routing</strong>: You can route low-value transactions to the cheapest provider and high-value to the most reliable. In one system, we sent $1–$10 transactions to Flutterwave (lowest cost) and $100+ to Paystack (highest uptime), cutting provider fees by 22%.</li>
-<li><strong>Unified observability</strong>: A single <code>/health</code> endpoint aggregates provider health. You stop guessing which provider is slow and start seeing it in a single Grafana dashboard.</li>
-</ol>
-<p>The honest mistake is to treat the gateway like a façade. It’s not. It’s a <strong>state machine</strong> that owns payment state, not just a router. When a webhook arrives from Flutterwave, the gateway updates the payment record and broadcasts the event. That reduces race conditions and eliminates duplicate webhook handling.</p>
-<p>That cut ledger write time from 180ms to 45ms, even though the external latency stayed the same.</p>
-<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
-<p>At a Nairobi neobank, we rebuilt the payment gateway in Rust 1.75 and Tokio 1.29. The old Node.js 18 adapters averaged 800ms per payment. The new gateway averaged 240ms at 5,000 TPS, a 3.3x improvement. The memory footprint dropped from 512MB to 128MB. The key was a single connection pool using <code>hyper</code> with <code>h2</code> and a custom load balancer that prioritized providers by SLA.</p>
-<p>In Lagos, a logistics startup used the gateway pattern to cut Flutterwave fees by 18% by implementing dynamic routing based on transaction risk. Low-risk transactions ($1–$10) went to Flutterwave’s sandbox, while high-risk ($50+) went to Paystack’s live endpoint. The routing logic lived in a single 30-line YAML file, not scattered across three repos.</p>
-<p>Ghana’s central bank tightened KYC rules in Q1 2026. Our gateway added a new validation step before sending to M-Pesa. The change took 45 minutes to deploy because the validation lived in the gateway, not in the adapter. Before, it would have required a 3-day rollout across three repos.</p>
-<p>Numbers from production:</p>
-<table>
-<thead>
-<tr>
-<th>Provider</th>
-<th>Old adapter p99</th>
-<th>New gateway p99</th>
-<th>Cost delta</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Flutterwave</td>
-<td>850ms</td>
-<td>260ms</td>
-<td>-18%</td>
-</tr>
-<tr>
-<td>M-Pesa</td>
-<td>1.2s</td>
-<td>310ms</td>
-<td>-22%</td>
-</tr>
-<tr>
-<td>Paystack</td>
-<td>920ms</td>
-<td>280ms</td>
-<td>-15%</td>
-</tr>
-</tbody>
-</table>
-<p>The single biggest surprise was <strong>idempotency keys</strong>. Flutterwave’s idempotency keys are 64-character UUIDs; M-Pesa uses 12-digit strings. The gateway normalizes them into a 36-character UUID, which simplified ledger reconciliation and cut duplicate payment errors by 92%.</p>
-<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
-<p>The adapter pattern still wins in two cases:</p>
-<ol>
-<li><strong>Greenfield, single-country startups</strong>: If you’re only launching in Kenya and expect to stay there for 12 months, the adapter pattern is fine. The complexity tax of a gateway outweighs the benefit.</li>
-<li><strong>Enterprise integrations with heavy ERP coupling</strong>: If your SAP system already has a Flutterwave connector, adding a gateway layer can break existing workflows. Stick to the adapter in that case.</li>
-</ol>
-<p>I’ve seen one exception: a Nairobi fintech that used the adapter pattern for M-Pesa and built a gateway for Flutterwave and Paystack. The reason was legacy: their ERP only spoke M-Pesa natively. The hybrid approach worked because the pain was localized to one provider.</p>
-<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
-<p>Use the <strong>PAYLOAD test</strong>:</p>
+<p>Teams commonly ship three adapters in two weeks using a mainstream Node.js LTS runtime and a general-purpose HTTP client. After launch, the first surprise is latency variance. Mobile money APIs are often fast during business hours and slower during evening peaks when consumer top-up traffic spikes. Sandbox endpoints can return 503s under concurrency with messages like <code>"Too many concurrent requests"</code>. Webhook retry policies are provider-specific and usually non-negotiable: for example, three retries with exponential backoff starting at one second.</p>
+<p>Those behaviors collide in production. A p95 that looks fine at 1,000 TPS can degrade sharply at 2,500 TPS, not because any single provider got slower, but because your own retry and connection behavior amplifies their variance.</p>
+<p>Then the bills arrive. Each adapter tends to open its own connection pool to its provider. Three adapters under load can mean three times the concurrent connections, three times the egress from duplicated payload logging, and three separate retry storms. Finance sees a payment-service cost increase and blames the payment service, not the architecture.</p>
+<p>Finally, the alerts pile up. Three providers typically produce at least three classes of alert:</p>
 <ul>
-<li><strong>P</strong>roviders: More than two providers? → Gateway.</li>
-<li><strong>A</strong>verage transaction value: Above $50 per transaction? → Gateway (you can’t afford provider-specific downtime).</li>
-<li><strong>Y</strong>early volume: Above 1M transactions/year? → Gateway (the ops tax of three providers exceeds the build cost).</li>
-<li><strong>L</strong>atency SLA: Below 800ms p99 required? → Gateway.</li>
-<li><strong>A</strong>udit trail: Need one ledger for all providers? → Gateway.</li>
-<li><strong>D</strong>ev team size: Less than three backend engineers? → Adapter (you can’t maintain a gateway).</li>
+<li>Rate limiting: HTTP 429 on a payments endpoint</li>
+<li>Timeouts: request timeouts on a push or STK endpoint</li>
+<li>Signature failures: webhook signature validation failed</li>
 </ul>
-<p>If you score 4 or more on the PAYLOAD test, build a gateway. Otherwise, stick to adapters.</p>
-<p>A quick heuristic: if you’re spending more than 15 engineer-days per quarter on provider-specific bugs, move to a gateway. That’s the break-even point in most teams I’ve seen.</p>
-<h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
-<p>Objection 1: "A gateway is a single point of failure."</p>
-<p>My response: A single connection pool is a single point of failure, but a gateway with circuit breakers and bulkheads is more resilient than three separate pools. In one incident, Flutterwave’s sandbox returned 503s. The gateway circuit-broke that endpoint in 200ms and rerouted to Paystack. The old adapter pattern would have retried Flutterwave three times, each retry adding 850ms of latency. The gateway pattern cut the outage from 3 minutes to 30 seconds.</p>
-<p>Objection 2: "The gateway adds latency because of indirection."</p>
-<p>My response: The gateway adds 2–5ms of internal routing latency. That’s negligible compared to the 500–2,000ms of external latency from providers. The real latency win comes from connection reuse and bulkheads, not from the routing overhead. 800ms from Flutterwave’s external API.</p>
-<p>Objection 3: "Upgrading providers becomes harder."</p>
-<p>My response: Upgrades become easier because the change lives in one place. When Flutterwave released v3.12 with new webhook signing, we updated the gateway in 30 minutes. Before, we had to update 18 repos. The gateway pattern centralizes the pain.</p>
-<p>Objection 4: "We’ll lose provider-specific features."</p>
-<p>My response: Keep provider-specific features behind feature flags in the gateway. If M-Pesa offers a special discount API, route those calls through a feature-flagged endpoint in the gateway. You don’t lose features; you centralize them.</p>
-<h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
-<p>I would have started with a <strong>minimal gateway</strong> from day one. The minimal gateway has three endpoints:</p>
+<p>Each of those needs its own runbook, its own dashboards, and its own on-call context. The operational load scales with provider count, not transaction count.</p>
+<p>A common failure mode: the p99 is acceptable with one provider, then jumps once a second and third provider are added. The bottleneck is often not CPU or memory but the separate connection pools competing for the same heap and event loop.</p>
+<h2 id="a-different-mental-model">A different mental model</h2>
+<p>Treat payment providers as <strong>fallible, high-latency subsystems</strong> that need circuit breakers, bulkheads, and caching, not just clean interfaces. Instead of one adapter per country, build one <strong>gateway</strong> that handles all providers under a single domain model. The gateway becomes the single source of truth for payment state, retries, and observability.</p>
+<p>The gateway pattern gives three concrete wins:</p>
+<ol>
+<li><strong>Connection pooling</strong>: One shared pool of HTTP connections across providers reduces memory pressure and prevents each provider's traffic from starving the others. The exact p99 improvement depends on your workload; measure it rather than assume it.</li>
+<li><strong>Priority routing</strong>: Low-value transactions can go to the cheapest provider; high-value transactions can go to the most reliable. This is a policy decision expressed in one place.</li>
+<li><strong>Unified observability</strong>: A single <code>/health</code> endpoint aggregates provider health. You stop guessing which provider is slow and start seeing it in one dashboard.</li>
+</ol>
+<p>The common mistake is to treat the gateway like a façade. It is not. It is a <strong>state machine</strong> that owns payment state, not just a router. When a webhook arrives, the gateway updates the payment record and broadcasts the event. That reduces race conditions and eliminates duplicate webhook handling.</p>
+<p>A useful side effect: ledger writes get faster because the gateway can batch and order them, even though external provider latency is unchanged.</p>
+<h2 id="the-core-design-one-gateway-three-responsibilities">The core design: one gateway, three responsibilities</h2>
+<p>A minimal gateway has three endpoints:</p>
 <ul>
 <li><code>POST /payments</code> (create)</li>
 <li><code>GET /payments/{id}</code> (read)</li>
 <li><code>POST /webhooks/provider/{name}</code> (ingest)</li>
 </ul>
-<p>It doesn’t need a full ledger or complex retry logic initially. It just needs a single connection pool and a circuit breaker. That’s 300 lines of Rust or 500 lines of Go. When the system hits 1,000 TPS or two providers, we add the heavy lifting.</p>
-<p>I would also have instrumented <strong>provider-specific metrics</strong> earlier. Each provider’s p99, error rate, and retry count should be visible in a single dashboard. Without that, you’re optimizing blind.</p>
-<p>Finally, I would have used <strong>idempotency keys from day one</strong>. The 64-character UUIDs from Flutterwave and 12-digit strings from M-Pesa collided in our ledger, causing 12% duplicate payments. A normalized key scheme would have saved us three weeks of debugging.</p>
-<h2 id="summary">Summary</h2>
-<p>The adapter pattern feels clean but scales poorly. The gateway pattern feels heavy but scales predictably. Most teams regret the adapter choice by month six. The gateway choice pays off by month three.</p>
-<p>If you’re building across Kenya, Nigeria, and Ghana, build a gateway, not three adapters. Start with a minimal gateway in Rust or Go, reuse a single connection pool, and centralize provider-specific logic behind feature flags. Measure p99 latency and provider error rates in a single dashboard. When the system hits 1,000 TPS or two providers, add the heavy lifting.</p>
-<p>Stop measuring adapters. Start measuring the gateway.</p>
-<p>If you’re already running three adapters, the fastest win is to <strong>instrument the connection pools</strong>. Check the pool size, timeout, and eviction policy for each provider. You can debug yours in thirty minutes by running:</p>
-<pre><code class="language-bash"># Node.js example
-curl http://localhost:4000/metrics | grep pool_size
+<p>It does not need a full ledger or complex retry logic initially. It needs a single connection pool, a circuit breaker per provider, and a normalized internal payment ID. That is a few hundred lines in Go or Rust.</p>
+<p>The gateway has three responsibilities that adapters usually scatter:</p>
+<ol>
+<li><strong>Normalize the request</strong>: map your domain model to each provider's payload format.</li>
+<li><strong>Normalize the response</strong>: map provider-specific statuses into one internal state machine (<code>pending</code>, <code>authorized</code>, <code>captured</code>, <code>failed</code>, <code>refunded</code>).</li>
+<li><strong>Normalize the identity</strong>: map provider-specific idempotency keys and webhook event IDs into one internal ID.</li>
+</ol>
+<p>If you get the third one wrong, the first two do not matter.</p>
+<h2 id="idempotency-the-part-that-bites-hardest">Idempotency: the part that bites hardest</h2>
+<p>Provider idempotency keys differ in format. Some are long UUID-style strings; others are short numeric strings. If your ledger's duplicate check uses the raw provider key, two different providers can produce keys that look distinct to your system but refer to the same logical payment attempt after a retry.</p>
+<p>A robust approach is a normalization table:</p>
+<pre><code class="language-sql">CREATE TABLE provider_key_normalization (
+    provider       TEXT NOT NULL,
+    raw_key        TEXT NOT NULL,
+    normalized_id  UUID NOT NULL,
+    created_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
+    PRIMARY KEY (provider, raw_key)
+);
+
+CREATE INDEX ON provider_key_normalization (normalized_id);
 </code></pre>
-<p>If the pool size is 20 for each provider and you’re hitting 1,000 TPS, you’re opening 60 connections per second. That’s the latency and cost tax. Reduce the pool size to 50 shared across providers and measure the p99 delta. That’s your first step today.</p>
-<hr />
-<h3 id="advanced-edge-cases-we-personally-encountered-and-how-we-fixed-them"><strong>Advanced edge cases we personally encountered (and how we fixed them)</strong></h3>
-<h4 id="1-the-silent-provider-downtime-dilemma"><strong>1. The "Silent Provider Downtime" Dilemma</strong></h4>
-<p>In November 2026, M-Pesa’s staging environment started returning 502s with no incident report. Our gateway, configured with a 1-second timeout, began retrying aggressively. The retry storm saturated our single connection pool (50 connections) and starved Flutterwave and Paystack traffic. The result? A 4.2x spike in p99 latency across all providers.</p>
-<p><strong>What we missed:</strong> M-Pesa’s health check endpoint (<code>/status</code>) was still returning <code>200 OK</code>, but their internal load balancer was dropping requests. Now, if the probe fails, the breaker trips in 250ms, and traffic reroutes to Paystack.</p>
-<p><strong>Instrumentation win:</strong> We added a <code>provider_health_probe_duration_seconds</code> histogram. When the probe exceeds 150ms, we alert the on-call engineer before users notice. This caught a similar issue with Flutterwave in March 2026—three hours before their public status page updated.</p>
-<hr />
-<h4 id="2-the-idempotency-key-collision-disaster"><strong>2. The "Idempotency Key Collision" Disaster</strong></h4>
-<p>Flutterwave’s idempotency keys are 64-character UUIDs; M-Pesa uses 12-digit strings like <code>123456789012</code>. In January 2026, a batch of duplicate payments hit our ledger because:
-- A Flutterwave webhook retried due to a 503.
-- Our ledger’s duplicate check used the raw provider key, not a normalized ID.
-- Two transactions with the same Flutterwave key (<code>req_abc...</code>) and M-Pesa key (<code>123456789012</code>) were treated as distinct.</p>
-<p><strong>The fix:</strong> We introduced a <code>provider_key_normalization</code> table in Postgres 16, mapping raw keys to a 36-character UUID. The gateway now:
-1. Receives a provider-specific key. 2. Looks it up in the normalization table. 3. If missing, generates a UUID and stores it. 4. Uses the UUID for all downstream operations.</p>
-<p><strong>Latency cost:</strong> The lookup adds 1–2ms, but it prevents 92% of duplicate payments.</p>
-<p><strong>Query to check for collisions:</strong></p>
+<p>The gateway then:</p>
+<ol>
+<li>Receives a provider-specific key.</li>
+<li>Looks it up in the normalization table.</li>
+<li>If missing, generates a UUID and stores it.</li>
+<li>Uses the UUID for all downstream operations.</li>
+</ol>
+<p>The lookup adds a small amount of latency (typically low single-digit milliseconds on an indexed table), but it prevents duplicate payments that would otherwise require manual reconciliation.</p>
+<p>A query to detect collisions in existing data:</p>
 <pre><code class="language-sql">SELECT
     provider,
-    COUNT(*) as duplicate_count,
-    COUNT(DISTINCT normalized_id) as unique_ids
+    COUNT(*) AS total_events,
+    COUNT(DISTINCT normalized_id) AS unique_payments
 FROM payment_events
 WHERE created_at &gt; NOW() - INTERVAL '30 days'
 GROUP BY provider
 HAVING COUNT(*) &gt; COUNT(DISTINCT normalized_id);
 </code></pre>
-<hr />
-<h4 id="3-the-webhook-signature-versioning-hell"><strong>3. The "Webhook Signature Versioning Hell"</strong></h4>
-<p>Flutterwave’s v3.12 API changed the webhook signature format from:</p>
-<pre><code>X-Flutterwave-Signature: sha256=abc123...
+<p>Any row returned here means at least one provider key is being reused across events that your system treated as separate payments.</p>
+<h2 id="webhook-signature-versioning">Webhook signature versioning</h2>
+<p>Providers change webhook signature formats. A common transition is from a single header value:</p>
+<pre><code>X-Provider-Signature: sha256=abc123...
 </code></pre>
-<p>to:</p>
-<pre><code>X-Flutterwave-Signature: t=1712345678,v1=abc123...,v2=def456...
+<p>to a timestamped, multi-version format:</p>
+<pre><code>X-Provider-Signature: t=1712345678,v1=abc123...,v2=def456...
 </code></pre>
-<p>Our adapter pattern had separate validation logic in each service. The issue took 4 days to trace because:
-- The failing service (<code>/webhook/flw</code>) didn’t log the signature format.
-- Our APM (Datadog 7.49) only tracked 5xx errors, not signature mismatches.</p>
-<p><strong>The fix:</strong> Centralized signature validation in the gateway with a <strong>versioned parser</strong>:</p>
-<pre><code class="language-go">func validateFlutterwaveSignature(signature string, payload []byte) error {
+<p>If each adapter has its own validation logic, the change must be applied everywhere. A gateway centralizes it with a versioned parser:</p>
+<pre><code class="language-go">func validateProviderSignature(signature string, payload []byte, secret []byte) error {
     parts := strings.Split(signature, &quot;,&quot;)
     if len(parts) == 1 {
-        // Handle v3.11 (legacy)
-        return legacyValidate(signature, payload)
+        // Legacy single-value format
+        return legacyValidate(signature, payload, secret)
     }
-    // Handle v3.12+
-    return multiVersionValidate(parts, payload)
+    // Timestamped, multi-version format
+    return multiVersionValidate(parts, payload, secret)
 }
 </code></pre>
-<p>We added a <code>webhook_signature_version</code> gauge to track which version each provider uses. If a provider upgrades without warning, we catch it in 5 minutes.</p>
-<p><strong>Alert rule:</strong></p>
-<pre><code>sum by(provider) (rate(webhook_signature_version[5m])) != bool 1
+<p>Add a gauge that records which signature version each provider is currently using:</p>
+<pre><code class="language-go">var webhookSignatureVersion = prometheus.NewGaugeVec(
+    prometheus.GaugeOpts{
+        Name: &quot;webhook_signature_version&quot;,
+        Help: &quot;Detected webhook signature version per provider&quot;,
+    },
+    []string{&quot;provider&quot;},
+)
 </code></pre>
-<hr />
-<h4 id="4-the-regional-latency-jitter-problem"><strong>4. The "Regional Latency Jitter" Problem</strong></h4>
-<p>In Ghana, MTN Mobile Money’s API has a 200ms baseline latency, but during peak hours (7–9 PM), it spikes to 1.8s due to regional load balancer issues in Accra. Our gateway was naively retrying failed requests, which made the problem worse. The retry policy (3 retries, exponential backoff) caused some transactions to exceed our 2s SLA.</p>
-<p><strong>The fix:</strong> Dynamic retry logic based on <strong>real-time regional latency</strong>:
-1. We added a <code>provider_regional_latency_ms</code> histogram, updated every 30s. 2. If latency &gt; 500ms, we reduce the retry count to 1 and increase the timeout to 3s. 3. If latency &gt; 1s, we switch to the next-best provider (Paystack) immediately.</p>
-<p><strong>Code snippet (Rust with <code>tokio</code> 1.29):</strong></p>
+<p>When a provider silently upgrades, the gauge changes and an alert fires before signature validation starts failing in production.</p>
+<h2 id="handling-provider-specific-latency-and-retries">Handling provider-specific latency and retries</h2>
+<p>Provider latency is not constant. Regional load balancers, evening peaks, and internal incidents all produce jitter. A naive fixed retry policy (for example, three retries with exponential backoff) can make an outage worse by adding load to a struggling provider.</p>
+<p>A more robust approach is to make retry policy a function of recent observed latency:</p>
+<ol>
+<li>Track a per-provider latency histogram, updated on a short interval.</li>
+<li>If recent latency exceeds a threshold, reduce retry count and increase timeout.</li>
+<li>If latency exceeds a higher threshold, fail over to the next-best provider immediately.</li>
+</ol>
+<p>A simplified implementation:</p>
 <pre><code class="language-rust">async fn route_payment(provider: &amp;str, tx: &amp;Transaction) -&gt; Result&lt;PaymentId, PaymentError&gt; {
-    let latency = PROVIDER_LATENCY.get(provider).unwrap().load();
-    let max_retries = if latency &gt; 1000 { 1 } else { 3 };
-    let timeout = if latency &gt; 500 { Duration::from_secs(3) } else { Duration::from_secs(1) };
+    let latency_ms = PROVIDER_LATENCY.get(provider).unwrap().load(Ordering::Relaxed);
+    let max_retries = if latency_ms &gt; 1000 { 1 } else { 3 };
+    let timeout = if latency_ms &gt; 500 {
+        Duration::from_secs(3)
+    } else {
+        Duration::from_secs(1)
+    };
 
     let mut retries = 0;
     loop {
-        match call_provider(provider, tx).await {
+        match call_provider(provider, tx, timeout).await {
             Ok(id) =&gt; return Ok(id),
             Err(e) if retries &gt;= max_retries =&gt; return Err(e),
             Err(_) =&gt; {
                 retries += 1;
-                tokio::time::sleep(Duration::from_millis(2u64.pow(retries as u32) * 100)).await;
+                let backoff = Duration::from_millis(100 * 2u64.pow(retries as u32));
+                tokio::time::sleep(backoff).await;
             }
         }
     }
 }
 </code></pre>
-<p><strong>Result:</strong> Ghanaian MTN payments now fail over to Paystack in 800ms (vs. 2.8s before) during peak hours.</p>
-<hr />
-<h3 id="integration-with-real-tools-2026-versions"><strong>Integration with Real Tools (2026 Versions)</strong></h3>
-<h4 id="1-grafana-cloud-104-prometheus-247"><strong>1. Grafana Cloud 10.4 + Prometheus 2.47</strong></h4>
-<p>We use Grafana Cloud for unified observability. Here’s the critical dashboard we built:</p>
-<p><strong>Panel 1: Provider p99 Latency (5m rolling window)</strong></p>
-<pre><code class="language-promql">histogram_quantile(0.99, sum by(le, provider) (rate(payment_duration_seconds_bucket[5m])))
+<p>The important design point is that retry policy is data-driven, not hard-coded. A provider that is healthy gets aggressive retries; a provider that is struggling gets fast failover.</p>
+<h2 id="circuit-breakers-and-bulkheads">Circuit breakers and bulkheads</h2>
+<p>A gateway without circuit breakers is just a router with extra steps. The circuit breaker pattern prevents a slow provider from consuming all available connections.</p>
+<p>A minimal state machine:</p>
+<ul>
+<li><strong>Closed</strong>: requests pass through. Count failures.</li>
+<li><strong>Open</strong>: requests fail fast without calling the provider. After a cooldown, move to half-open.</li>
+<li><strong>Half-open</strong>: allow a limited number of probe requests. If they succeed, close the circuit; if they fail, reopen.</li>
+</ul>
+<p>Bulkheads complement this by isolating resources per provider. Instead of one shared pool of 50 connections, allocate a maximum per provider so that one provider's retry storm cannot starve the others.</p>
+<pre><code class="language-yaml">providers:
+  provider_a:
+    max_connections: 20
+    timeout_ms: 1000
+    circuit_breaker:
+      failure_threshold: 5
+      cooldown_ms: 10000
+  provider_b:
+    max_connections: 15
+    timeout_ms: 1500
+    circuit_breaker:
+      failure_threshold: 3
+      cooldown_ms: 5000
+  provider_c:
+    max_connections: 15
+    timeout_ms: 1200
+    circuit_breaker:
+      failure_threshold: 5
+      cooldown_ms: 10000
 </code></pre>
-<p><strong>Panel 2: Connection Pool Saturation</strong></p>
-<pre><code class="language-promql">sum by(provider) (pg_stat_activity_count{datname=&quot;payments&quot;, state=&quot;active&quot;})
+<p>The sum of <code>max_connections</code> should be less than your runtime's connection budget. If it is not, the bulkheads are decorative.</p>
+<h2 id="observability-what-to-instrument">Observability: what to instrument</h2>
+<p>The gateway's value depends on being able to answer three questions quickly:</p>
+<ol>
+<li>Which provider is slow right now?</li>
+<li>Which provider is failing right now?</li>
+<li>Are we retrying more than usual?</li>
+</ol>
+<p>The minimum instrumentation:</p>
+<ul>
+<li>A histogram of request duration per provider, with labels for endpoint and outcome.</li>
+<li>A counter of requests by provider and status class.</li>
+<li>A counter of retries per provider.</li>
+<li>A gauge of circuit breaker state per provider (0 = closed, 1 = half-open, 2 = open).</li>
+<li>A gauge of webhook signature version per provider.</li>
+</ul>
+<p>A PromQL query for per-provider p99 latency:</p>
+<pre><code class="language-promql">histogram_quantile(
+  0.99,
+  sum by (le, provider) (rate(payment_duration_seconds_bucket[5m]))
+)
 </code></pre>
-<p><strong>Panel 3: Webhook Processing Lag</strong></p>
-<pre><code class="language-promql">max by(provider) (time() - payment_events{event_type=&quot;webhook_received&quot;} * on(payment_id) group_left() payment_events{event_type=&quot;ledger_updated&quot;})
+<p>A query for provider error rate:</p>
+<pre><code class="language-promql">sum by (provider) (rate(http_requests_total{status=~&quot;5..&quot;}[1m]))
+/
+sum by (provider) (rate(http_requests_total[1m]))
 </code></pre>
-<p><strong>Alert Rule (Flutterwave 5xx Threshold):</strong></p>
-<pre><code class="language-yaml">- alert: FlutterwaveHighErrorRate
-  expr: rate(http_requests_total{provider=&quot;flw&quot;, status=~&quot;5..&quot;}[1m]) / rate(http_requests_total{provider=&quot;flw&quot;}[1m]) &gt; 0.05
+<p>An alert rule that fires when a provider's 5xx rate exceeds a threshold:</p>
+<pre><code class="language-yaml">- alert: ProviderHighErrorRate
+  expr: |
+    sum by (provider) (rate(http_requests_total{status=~&quot;5..&quot;}[1m]))
+    /
+    sum by (provider) (rate(http_requests_total[1m])) &gt; 0.05
   for: 2m
   labels:
     severity: critical
   annotations:
-    summary: &quot;Flutterwave 5xx rate &gt; 5% for 2m&quot;
+    summary: &quot;Provider {{ $labels.provider }} 5xx rate above 5% for 2 minutes&quot;
 </code></pre>
-<hr />
-<h4 id="2-envoy-proxy-128-as-a-sidecar-gateway"><strong>2. Envoy Proxy 1.28 (as a Sidecar Gateway)</strong></h4>
-<p>We run Envoy as a sidecar in Kubernetes to handle TLS termination, circuit breaking, and load balancing. Here’s the critical config snippet:</p>
-<pre><code class="language-yaml">static_resources:
-  listeners:
-    - name: payment_listener
-      address:
-        socket_address: { address: 0.0.0.0, port_value: 10000 }
-      filter_chains:
-        - filters:
-            - name: envoy.filters.network.http_connection_manager
-              typed_config:
-                &quot;@type&quot;: type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
-                stat_prefix: payment_gateway
-                route_config:
-                  name: payment_routes
-                  virtual_hosts:
-                    - name: payment_services
-                      domains: [&quot;*&quot;]
-                      routes:
-                        - match: { prefix: &quot;/payments&quot; }
-                          route:
-                            cluster: flutterwave_service
-                            timeout: 2s
-                            retry_policy:
-                              retry_on: &quot;5xx,connect-failure&quot;
-                              num_retries: 2
-                http_filters:
-                  - name: envoy.filters.http.router
-  clusters:
-    - name: flutterwave_service
-      connect_timeout: 1s
-      type: STRICT_DNS
-      lb_policy: LEAST_REQUEST
-      load_assignment:
-        cluster_name: flutterwave_service
-        endpoints:
-          - lb_endpoints:
-              - endpoint:
-                  address:
-                    socket_address: { address: flutterwave.api, port_value: 443 }
-      circuit_breakers:
-        thresholds:
-          - priority: DEFAULT
-            max_connections: 50
-            max_requests: 1000
-      health_checks:
-        - timeout: 1s
-          interval: 5s
-          unhealthy_threshold: 3
-          healthy_threshold: 1
-          http_health_check:
-            path: &quot;/status&quot;
+<p>The goal is not to have the most dashboards. The goal is to have one dashboard that answers the three questions above without switching contexts.</p>
+<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
+<p>A decision checklist, in order of importance:</p>
+<ol>
+<li><strong>Provider count</strong>: One provider and no near-term plan to add another? An adapter is fine. Two or more providers with shared business logic? A gateway pays for itself.</li>
+<li><strong>Transaction value</strong>: High average transaction value makes provider downtime expensive. If a single provider outage can block revenue, centralize failover.</li>
+<li><strong>Audit requirements</strong>: If regulators or finance require one ledger for all providers, a gateway makes that ledger possible. Adapters make it a reporting problem.</li>
+<li><strong>Team size</strong>: A gateway is a system to operate. If there is no one to operate it, an adapter is the honest choice.</li>
+<li><strong>Operational load</strong>: Track how many engineer-hours per month go to provider-specific issues. If that number is growing faster than transaction volume, the adapter pattern is not scaling.</li>
+</ol>
+<p>A useful heuristic: if provider-specific bugs consume more than a few engineer-days per quarter, the coordination cost of adapters is probably exceeding the build cost of a gateway. Measure it rather than guess.</p>
+<h2 id="the-cases-where-the-adapter-pattern-is-right">The cases where the adapter pattern is right</h2>
+<p>The adapter pattern still wins in two situations:</p>
+<ol>
+<li><strong>Single-country, single-provider products</strong>: If you are launching in one market with one provider and expect to stay there for the foreseeable future, the complexity tax of a gateway outweighs the benefit.</li>
+<li><strong>Heavy ERP or legacy coupling</strong>: If an existing enterprise system already has a native connector for one provider, inserting a gateway layer can break workflows that are expensive to change. Keep the adapter for that provider.</li>
+</ol>
+<p>A hybrid is also legitimate: keep an adapter for a provider with deep legacy coupling, and build a gateway for the rest. The pain is localized, and the gateway handles the providers that actually need coordination.</p>
+<h2 id="objections-and-responses">Objections and responses</h2>
+<p><strong>Objection: "A gateway is a single point of failure."</strong></p>
+<p>A gateway is a single logical component, but it can be deployed as multiple replicas behind a load balancer. The relevant question is whether the gateway's failure modes are better understood than three independent adapters' failure modes. With circuit breakers and bulkheads, a gateway isolates provider failures rather than propagating them. Without them, a gateway is indeed a single point of failure — and so are the adapters.</p>
+<p><strong>Objection: "The gateway adds latency because of indirection."</strong></p>
+<p>Internal routing adds a small amount of latency, typically low single-digit milliseconds. External provider latency is usually hundreds of milliseconds to seconds. The net latency effect depends on whether connection reuse and bulkheads save more than the routing adds. Measure both.</p>
+<p><strong>Objection: "Upgrading providers becomes harder."</strong></p>
+<p>Upgrades become easier because the change lives in one place. A webhook signature change is one parser update, not a multi-service rollout. The trade-off is that a bug in the gateway affects all providers, which is why the gateway needs strong test coverage and staged rollouts.</p>
+<p><strong>Objection: "We'll lose provider-specific features."</strong></p>
+<p>Keep provider-specific features behind feature flags in the gateway. If one provider offers a special discount or payout API, expose it through a feature-flagged endpoint. You do not lose features; you centralize them.</p>
+<h2 id="instrumenting-connection-pools-a-30-minute-exercise">Instrumenting connection pools: a 30-minute exercise</h2>
+<p>If you are already running multiple adapters and want to know whether connection pooling is a problem, start by measuring it.</p>
+<p>For a Node.js service, expose pool metrics and query them:</p>
+<pre><code class="language-bash">curl -s http://localhost:4000/metrics | grep -E 'pool_(size|active|idle)'
 </code></pre>
-<p><strong>Why this works:</strong>
-- Envoy’s circuit breaker (<code>max_connections: 50</code>) prevents provider overload. - The <code>retry_policy</code> retries only on 5xx or connection failures (not 4xx). - Health checks fail fast if <code>/status</code> takes &gt;1s, reducing tail latency.</p>
-<hr />
-<h4 id="3-postgres-16-pgbouncer-122-connection-pooling"><strong>3. Postgres 16 + pgBouncer 1.22 (Connection Pooling)</strong></h4>
-<p>Our gateway uses Postgres 16 for ledger storage. With pgBouncer 1.22, we share a single connection pool across providers:</p>
-<p><strong>pgBouncer.ini:</strong></p>
-<pre><code class="language-ini">[databases]
-payments = host=postgres port=5432 dbname=payments
-
-[pgbouncer]
-pool_mode = transaction
-max_client_conn = 500
-default_pool_size = 50
-reserve_pool_size = 10
+<p>For a Go service using <code>database/sql</code>:</p>
+<pre><code class="language-go">db.Stats() // returns OpenConnections, InUse, Idle, WaitCount, WaitDuration
 </code></pre>
-<p><strong>Key optimizations:</strong>
-1. <strong>Transaction pooling</strong> (<code>pool_mode = transaction</code>): Reuses connections aggressively during high load. 2. <strong>Reserve pool</strong>: Handles spikes without opening new connections. 3. <strong>Idle timeout</strong>: <code>server_idle_timeout = 30</code> prevents stale connections.</p>
-<p><strong>Monitoring query (run every 5m):</strong></p>
-<pre><code class="language-sql">SELECT
-    usename,
-    datname,
-    count(*) as active_connections,
-    max(now() - query_start) as max_idle_time
-FROM pg_stat_activity
-WHERE state = 'idle'
-GROUP BY usename, datname;
-</code></pre>
-<p><strong>Result:</strong> Under 2,000 TPS, pgBouncer handles 98% of connections without opening new ones, reducing Postgres CPU usage by 35%.</p>
-<hr />
-<h3 id="beforeafter-comparison-real-numbers-from-production"><strong>Before/After Comparison (Real Numbers from Production)</strong></h3>
-<h4 id="system-specs"><strong>System Specs:</strong></h4>
+<p>For a Rust service using a connection pool library, expose the pool's size and wait time as gauges.</p>
+<p>What to look for:</p>
 <ul>
-<li><strong>Language</strong>: Node.js 20 LTS (before) → Rust 1.75 + Tokio 1.29 (after)</li>
-<li><strong>Runtime</strong>: t3.medium (4 vCPUs, 8GB RAM) → c6g.large (2 vCPUs, 4GB RAM)</li>
-<li><strong>Database</strong>: Aurora Postgres 15 (before) → Aurora Postgres 16 (after)</li>
-<li><strong>HTTP Client</strong>: Axios 1.6 (before) → <code>hyper</code> + <code>h2</code> (after)</li>
-<li><strong>Observability</strong>: Datadog 7.48 (before) → Grafana Cloud 10.4 + Prometheus 2.47 (after)</li>
+<li><code>WaitCount</code> or equivalent increasing over time means requests are waiting for connections.</li>
+<li><code>InUse</code> consistently at the pool maximum means the pool is saturated.</li>
+<li><code>Idle</code> near zero during traffic means there is no headroom for bursts.</li>
 </ul>
-<h4 id="metrics"><strong>Metrics:</strong></h4>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before (3 Adapters)</th>
-<th>After (1 Gateway)</th>
-<th>Delta</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>p95 Latency</strong></td>
-<td>1.7s (1,000 TPS)</td>
-<td>420ms (5,000 TPS)</td>
-<td><strong>-75%</strong></td>
-</tr>
-<tr>
-<td><strong>p99 Latency</strong></td>
-<td>2.8s (2,500 TPS)</td>
-<td>680ms (5,000 TPS)</td>
-<td><strong>-76%</strong></td>
-</tr>
-<tr>
-<td><strong>Memory Usage</strong></td>
-<td>512MB (Node.js)</td>
-<td>128MB (Rust)</td>
-<td><strong>-75%</strong></td>
-</tr>
-<tr>
-<td><strong>CPU Usage</strong></td>
-<td>78% (peak)</td>
-<td>42% (peak)</td>
-<td><strong>-46%</strong></td>
-</tr>
-<tr>
-<td><strong>Egress Cost</strong></td>
-<td>$11,800/month</td>
-<td>$4,100/month</td>
-<td><strong>-65%</strong></td>
-</tr>
-<tr>
-<td><strong>Provider Fees</strong></td>
-<td>$2,800/month (avg)</td>
-<td>$2,300/month (avg)</td>
-<td><strong>-18%</strong></td>
-</tr>
-<tr>
-<td><strong>Duplicate Payments</strong></td>
-<td>1.8%</td>
-<td>0.15%</td>
-<td><strong>-92%</strong></td>
-</tr>
-<tr>
-<td><strong>On-call Time</strong></td>
-<td>60 hours/month</td>
-<td>12 hours/month</td>
-<td><strong>-80%</strong></td>
-</tr>
-<tr>
-<td><strong>Lines of Code</strong></td>
-<td>1,800 (3 adapters)</td>
-<td>1,200 (1 gateway)</td>
-<td><strong>-33%</strong></td>
-</tr>
-<tr>
-<td><strong>Deployment Time</strong></td>
-<td>45 minutes (per provider)</td>
-<td>15 minutes (all providers)</td>
-<td><strong>-67%</strong></td>
-</tr>
-<tr>
-<td><strong>Incident MTTR</strong></td>
-<td>120 minutes</td>
-<td>25 minutes</td>
-<td><strong>-79%</strong></td>
-</tr>
-</tbody>
-</table>
-<h4 id="cost-breakdown"><strong>Cost Breakdown:</strong></h4>
-<ul>
-<li><strong>AWS EC2</strong>: $2,200 → $800 (c6g.large is 62% cheaper than t3.medium)</li>
-<li><strong>Aurora Postgres</strong>: $1,800 → $1,200 (Postgres 16 + pgBouncer reduced connections)</li>
-<li><strong>Data Transfer</strong>: $7,800 → $2,100 (shared connection pool cut egress by 73%)</li>
-<li><strong>Total Monthly Cost</strong>: $11,800 → $4,100</li>
-</ul>
-<h4 id="latency-deep-dive-flutterwave"><strong>Latency Deep Dive (Flutterwave):</strong></h4>
-<table>
-<thead>
-<tr>
-<th>Scenario</th>
-<th>Before</th>
-<th>After</th>
-<th>Delta</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Daytime (low load)</td>
-<td>450ms</td>
-<td>180ms</td>
-<td>-60%</td>
-</tr>
-<tr>
-<td>Peak (7–9 PM)</td>
-<td>1.2s</td>
-<td>310ms</td>
-<td>-74%</td>
-</tr>
-<tr>
-<td>Retry Storm (503s)</td>
-<td>2.8s</td>
-<td>480ms</td>
-<td>-83%</td>
-</tr>
-<tr>
-<td>Provider Downtime</td>
-<td>1.9s</td>
-<td>320ms</td>
-<td>-83%</td>
-</tr>
-</tbody>
-</table>
-<h4 id="what-changed-in-the-code"><strong>What Changed in the Code:</strong></h4>
-<p><strong>Before (Node.js + Axios):</strong></p>
-<pre><code class="language-javascript">// flutterwave.js
-export async function sendPayment(payload) {
-  const res = await axios.post(
-    'https://api.flutterwave.com/v3/payments',
-    payload,
-    {
-      headers: { 'Authorization': `Bearer ${FLW_SECRET}` },
-      timeout: 1000,
-    }
-  );
-  return res.data;
-}
+<p>If each provider has its own pool and each pool is saturated, the total connection count is likely higher than necessary. Consolidating pools behind a gateway, or at minimum sharing a pool with per-provider bulkhead limits, is the first structural change to try.</p>
+<h2 id="a-worked-example-routing-policy">A worked example: routing policy</h2>
+<p>Suppose you have three providers with different cost and reliability profiles. You want to route based on transaction value and observed health.</p>
+<p>Define a policy:</p>
+<pre><code>if provider_health &lt; 0.95:
+    exclude provider
+if transaction_value &lt; 10:
+    prefer cheapest provider
+elif transaction_value &lt; 100:
+    prefer provider with lowest recent p99
+else:
+    prefer provider with highest uptime
 </code></pre>
+<p>This is a decision function, not a hard-coded route. It can be expressed in a small config file:</p>
+<pre><code class="language-yaml">routing:
+  health_threshold: 0.95
+  tiers:
+    - max_value: 10
+      strategy: lowest_cost
+    - max_value: 100
+      strategy: lowest_p99
+    - max_value: null
+      strategy: highest_uptime
+  fallback: next_available
+</code></pre>
+<p>The gateway evaluates this on each request. The evaluation is cheap; the value is that the policy is visible and testable in one place.</p>
+<h2 id="testing-the-gateway">Testing the gateway</h2>
+<p>A gateway has more failure modes than an adapter, so testing matters more.</p>
 <ul>
-<li>3 separate files (<code>mpesa.js</code>, `</li>
+<li><strong>Unit tests</strong> for payload normalization and response mapping.</li>
+<li><strong>Contract tests</strong> for each provider's request and response schema, run against sandbox environments.</li>
+<li><strong>Chaos tests</strong> that inject latency and errors into one provider and verify that the gateway fails over correctly.</li>
+<li><strong>Replay tests</strong> that feed recorded webhooks (including old signature versions) through the gateway and verify idempotency.</li>
 </ul>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/one-payment-stack-for-kenya-nigeria-ghana/">One payment stack for Kenya, Nigeria, Ghana</a></li>
-<li><a href="https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/">Regulations forced better APIs: the 2026 fintech</a></li>
-<li><a href="https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/">Skip M-Pesa: build one API for 3 African markets</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>The replay test is the one most teams skip and most regret skipping. Webhook signature changes and duplicate deliveries are the two most common production surprises, and both are reproducible offline.</p>
+<h2 id="summary">Summary</h2>
+<p>The adapter pattern is a code-organization pattern. The gateway pattern is a systems pattern. They solve different problems, and the choice between them depends on provider count, transaction value, audit requirements, and team capacity.</p>
+<p>If you are building across multiple markets with multiple providers, a gateway with a single connection pool, circuit breakers, bulkheads, normalized idempotency keys, and unified observability is usually the more predictable system to operate. Start minimal: three endpoints, one pool, one breaker per provider. Add complexity when measurements justify it.</p>
+<p>The most valuable first step is not to rewrite anything. It is to measure the connection pools and provider error rates you already have.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one provider in your current integration and answer three questions with data:</p>
+<ol>
+<li>What is its p99 request duration over the last 24 hours?</li>
+<li>What is its 5xx rate over the last 24 hours?</li>
+<li>How many connections does your service hold to it at peak?</li>
+</ol>
+<p>If you do not have those numbers, add the instrumentation first. A single histogram and a single counter per provider is enough to start. Everything else in this article depends on being able to see those three numbers.</p>
                 
                 
             </div>
@@ -749,8 +588,8 @@ export async function sendPayment(payload) {
                     
                     <a class="related-card" href="/skip-m-pesa-build-one-api-for-3-african-markets/">
                         <h3>Skip M-Pesa: build one API for 3 African markets</h3>
-                        <p>Cut payment integration work 60% with one API for Kenya, Nigeria, Ghana — latency benchmarks, sandbox pitfalls, and the adapter strategy most teams miss</p>
-                        <span class="related-meta">15 min read · 14 June 2026</span>
+                        <p>How to serve three African mobile-money markets through one orchestrator plus thin provider adapters, with metrics and reconciliation that hold up.</p>
+                        <span class="related-meta">14 min read · 14 June 2026</span>
                     </a>
                     
                 </div>

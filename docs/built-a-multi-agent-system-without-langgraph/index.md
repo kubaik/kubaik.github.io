@@ -1,187 +1,223 @@
 # Built a multi-agent system without LangGraph
 
-After reviewing enough code that touches built reliable, the same failure pattern keeps showing up. Production gives you neither a clean environment nor a patient timeline. Here's what actually worked, and why.
+Multi-agent LLM pipelines fail in boring ways: an upstream API starts returning 504s, a worker dies mid-job, a retry storm hammers a flaky endpoint, or two consumers process the same message twice. Framework choice matters less than whether the design answers those four cases. This article builds a three-agent research pipeline on plain Python, Redis Streams, and a managed retry layer, and shows how to measure whether it is actually working.
 
-## Why I wrote this (the problem I kept hitting)
+## The problem with graph frameworks for small teams
 
-In late 2026 I shipped a multi-agent research system for a client who needed daily market reports. The system ran 8 LLM calls in parallel, fetched data from 3 external APIs, and wrote a 400-word summary every hour. It worked. For a week. Then one agent started returning 504s from an upstream API and the system froze—no retries, no graceful degradation, just a silent halt. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout—this post is what I wished I had found then.
+Graph orchestration libraries exist to solve real problems: cyclic state machines, human-in-the-loop interrupts, checkpointed resumption, visual debugging. If a workflow genuinely needs those, adopting one is reasonable.
 
-The original plan was to use LangGraph because the docs called it “the production-grade orchestrator for multi-agent workflows.” After two weeks of wiring agents, tools, and checkpointers, I hit three blockers:
+The friction appears when a team adopts a graph framework for a pipeline that is really a linear chain of three or four steps. Common failure modes reported by teams in that situation:
 
-1. Version 0.1.8’s checkpointing API changed twice in three months; our code broke on every upgrade.
-2. The TypeScript SDK added 16 MB to the Lambda bundle—our cold starts jumped from 240 ms to 680 ms.
-3. Debugging a deadlock required reading the internal message queue state, which isn’t exposed in the public API.
+- **Version churn in checkpointing APIs.** Pre-1.0 orchestration libraries change persistence formats between minor releases. Code that pins to an internal checkpoint schema breaks on upgrade.
+- **Opaque deadlocks.** When the scheduler stalls, the queue state is often not exposed through public APIs, so debugging means reading library internals.
+- **Impedance mismatch with existing infrastructure.** If retries, queues, and observability already exist in the platform (Step Functions, SQS, CloudWatch, an existing tracer), a second orchestration layer duplicates them.
 
-So I ripped it all out and rebuilt the orchestration layer from scratch using Python 3.11, Redis 7.2 queues, and AWS Step Functions for retries. The system now handles the same workload with 30 % lower p99 latency and zero surprise failures. This post is the playbook I wish existed that winter.
+None of that makes graph frameworks bad. It means the decision should be driven by whether the workflow is genuinely graph-shaped. A pipeline that is "research, then validate, then summarize, with retries" is a chain. A pipeline where any agent can hand off to any other agent, with approval gates and resumable checkpoints, is a graph.
 
-I’m not saying LangGraph is bad—just that it didn’t fit the constraints of a solo founder shipping fast and sleeping nights. If you’re in the same boat, the boring, proven path below might save you weeks.
+A useful decision checklist before adding a framework:
 
-## Prerequisites and what you'll build
+1. Does any step need to loop back to an earlier step based on output? If no, a chain suffices.
+2. Does a human need to inspect and approve mid-run?
+3. Must a partially completed run resume after a process restart, with state persisted per node?
+4. Do you need a visual trace of the graph structure, not just spans?
+5. Is the team already operating a queue and retry system it trusts?
 
-You’ll build a minimal multi-agent research pipeline that:
+Two or more "yes" answers point toward a graph framework. Otherwise, a queue plus a retry layer is usually less code and less surface area.
 
-- Spawns 3 agents: researcher, validator, summarizer.
-- Uses Redis 7.2 streams for task queues and results.
-- Retries failed steps with exponential backoff using AWS Step Functions.
-- Exposes a REST endpoint via FastAPI 0.111.
-- Runs on a single t3.medium instance (2 vCPU, 4 GB) in us-east-1.
+## Architecture overview
 
-Expected numbers:
-- End-to-end median latency: 850 ms.
-- Cost per 1 000 runs: $0.012 (Spot instance + Lambda retries).
-- Lines of production code (excluding tests): 380.
+The pipeline:
 
-You’ll need:
-- Python 3.11 with uv 0.3.4 for fast dependency resolution.
-- A Hugging Face account and a valid token for the base model (we use Mistral-7B-Instruct-v0.3).
-- An AWS account with IAM permissions for Lambda, Step Functions, and CloudWatch Logs.
-- Redis 7.2 running on a 256 MB cache.t3.micro instance (ElastiCache).
+- Three agents: **researcher**, **validator**, **summarizer**.
+- Redis Streams for task queues, consumer groups, and results.
+- A managed state machine (AWS Step Functions is one option; Temporal and Argo Workflows are alternatives in the same category) for retries and execution history.
+- FastAPI for the HTTP entry point.
+- Lambda or a container for the worker compute.
 
-I chose Redis over SQS because we needed fan-out to three workers and strict ordering guarantees for the validator step. SQS + Lambda would have added 40 ms of extra latency per hop and required 3 queues. With Redis streams we get fan-out and consumer groups in one hop.
+Why Redis Streams rather than a plain message queue: streams support consumer groups, which give fan-out to N workers with per-message acknowledgement, plus a pending-entries list that survives worker crashes. A standard queue can do this too, but streams keep ordering per stream and give you `XADD`/`XREADGROUP`/`XACK` in one primitive.
 
-## Step 1 — set up the environment
+Important caveat: **Redis Streams ordering is per stream, not global.** If ordering across agents matters, route everything through a single stream with one consumer group and make job handlers idempotent.
 
-1. Create a new uv project:
+## Step 1 — environment setup
+
+Create a project and pin dependencies:
 
 ```bash
 uv init multi_agent_research --python 3.11
 cd multi_agent_research
+uv add fastapi uvicorn redis httpx pydantic-settings
+uv add --dev pytest pytest-asyncio httpx black
 ```
 
-2. Install runtime deps:
-
-```bash
-uv add fastapi==0.111 uvloop==0.19 redis==5.0.1 sentry-sdk==2.7.1
-```
-
-3. Install dev deps:
-
-```bash
-uv add --dev pytest==8.3 pytest-asyncio==0.23 httpx==0.27 black==24
-```
-
-4. Create a `.env` file:
+Environment file:
 
 ```
 HF_TOKEN=<your token>
-REDIS_URL=redis://<host>:6379/0
-STEP_FUNCTION_ARN=arn:aws:states:us-east-1:123456789012:stateMachine:ResearchMachine
+REDIS_URL=redis://localhost:6379/0
 ```
 
-I wasted two hours the first time I forgot the trailing `/0` on the Redis URL. The connection silently worked but all keys went to db 15 instead of db 0—data vanished after restart.
+A note on the Redis URL: the trailing `/0` selects database 0. Omitting it defaults to database 0 in most clients, but some connection helpers have historically parsed the path differently, and code that assumes one DB while writing to another produces the confusing symptom of "keys disappear after restart." Always specify the database explicitly.
 
-5. Add a basic FastAPI app in `main.py`:
-
-```python
-from fastapi import FastAPI
-import os
-
-app = FastAPI()
-
-@app.get("/run")
-async def run_research():
-    return {"status": "ok"}
-```
-
-6. Spin up Redis locally for testing:
+Local Redis for testing:
 
 ```bash
-# if you have Docker
 docker run -d --name redis72 -p 6379:6379 redis:7.2-alpine
 ```
 
-7. Push the image to ECR once you’re ready to deploy:
-
-```bash
-# Build
-uv run docker build -t multi-agent-research:latest .
-
-# Tag
-aws ecr create-repository --repository-name multi-agent-research
-docker tag multi-agent-research:latest 123456789012.dkr.ecr.us-east-1.amazonaws.com/multi-agent-research:latest
-
-# Push
-aws ecr get-login-password | docker login --username AWS --password-stdin 123456789012.dkr.ecr.us-east-1.amazonaws.com
-docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/multi-agent-research:latest
-```
-
-The hard-to-reverse decision here is the Redis schema. Once you start writing results under fixed key patterns like `agent:researcher:job:{job_id}` it’s painful to migrate later. Pick a consistent key layout from day one.
-
-## Step 2 — core implementation
-
-We’ll build three agents as async Python coroutines and wire them via Redis streams.
-
-1. Define the agent interface:
+Minimal FastAPI app in `main.py`:
 
 ```python
-from typing import Dict, Any, Optional
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+```
+
+The hard-to-reverse decision at this stage is the **Redis key layout**. Once writers depend on `agent:researcher:job:{job_id}`, migrating is a coordinated rewrite. Pick a scheme and document it before the first deploy.
+
+## Step 2 — agent interface and queue
+
+Define a single agent class. Keeping one class parameterized by name keeps the retry and timeout logic in one place.
+
+```python
+import os
 import httpx
+from typing import Any
 
 class Agent:
     def __init__(self, name: str, model: str = "mistralai/Mistral-7B-Instruct-v0.3"):
         self.name = name
         self.model = model
+        self._client: httpx.AsyncClient | None = None
 
-    async def run(self, input_payload: Dict[str, Any]) -> Dict[str, Any]:
-        prompt = self._build_prompt(input_payload)
-        headers = {"Authorization": f"Bearer {os.getenv('HF_TOKEN')}"}
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            r = await client.post(
-                "https://api-inference.huggingface.co/models/" + self.model,
-                json={"inputs": prompt, "parameters": {"max_tokens": 512}},
-                headers=headers,
-            )
-            r.raise_for_status()
-            return {
-                "agent": self.name,
-                "output": r.json()[0]["generated_text"],
-            }
+    async def _ensure_client(self) -> httpx.AsyncClient:
+        if self._client is None:
+            self._client = httpx.AsyncClient(timeout=30.0)
+        return self._client
 
-    def _build_prompt(self, data: Dict[str, Any]) -> str:
+    async def aclose(self) -> None:
+        if self._client is not None:
+            await self._client.aclose()
+            self._client = None
+
+    def _build_prompt(self, data: dict[str, Any]) -> str:
         return f"You are a {self.name}. {data.get('prompt', '')}"
+
+    async def run(self, input_payload: dict[str, Any]) -> dict[str, Any]:
+        client = await self._ensure_client()
+        headers = {"Authorization": f"Bearer {os.getenv('HF_TOKEN')}"}
+        r = await client.post(
+            "https://api-inference.huggingface.co/models/" + self.model,
+            json={"inputs": self._build_prompt(input_payload), "parameters": {"max_tokens": 512}},
+            headers=headers,
+        )
+        r.raise_for_status()
+        return {"agent": self.name, "output": r.json()[0]["generated_text"]}
 ```
 
-2. Create the orchestrator that publishes tasks:
+Enqueue helper:
 
 ```python
-import redis.asyncio as redis
+import json
+import os
 from uuid import uuid4
+import redis.asyncio as redis
 
-async def enqueue_job(topic: str, payload: Dict[str, Any]) -> str:
+async def enqueue_job(topic: str, payload: dict[str, Any]) -> str:
     job_id = str(uuid4())
     payload["job_id"] = job_id
     rc = redis.from_url(os.getenv("REDIS_URL"))
-    await rc.xadd(topic, {"payload": str(payload)})
+    await rc.xadd(topic, {"payload": json.dumps(payload)})
+    await rc.aclose()
     return job_id
 ```
 
-3. Add the worker loop (run in a separate container):
+Worker loop using a consumer group. `XREADGROUP` with `>` delivers only new messages; `XACK` removes them from the pending list. Unacknowledged messages remain in the pending entries list and can be reclaimed with `XAUTOCLAIM` if a worker dies.
 
 ```python
 import asyncio
 import json
+import os
+import redis.asyncio as redis
 
-async def worker(name: str, stream: str, consumer: str):
+GROUP = "agents"
+
+async def ensure_group(rc, stream: str, group: str) -> None:
+    try:
+        await rc.xgroup_create(stream, group, id="0", mkstream=True)
+    except redis.ResponseError as e:
+        if "BUSYGROUP" not in str(e):
+            raise
+
+async def worker(name: str, stream: str, consumer: str) -> None:
     rc = redis.from_url(os.getenv("REDIS_URL"))
-    while True:
-        messages = await rc.xread({stream: "$"}, count=1, block=5000)
-        if not messages:
-            continue
-        stream_name, message_id, data = messages[0][1][0]
-        payload = json.loads(data[b"payload"].decode())
-        agent = Agent(name)
-        result = await agent.run(payload)
-        await rc.xadd(
-            f"results:{name}",
-            {"job_id": payload["job_id"], "result": str(result)},
-        )
-        await rc.xdel(stream, message_id)
+    await ensure_group(rc, stream, GROUP)
+    agent = Agent(name)
+    try:
+        while True:
+            messages = await rc.xreadgroup(
+                GROUP, consumer, {stream: ">"}, count=1, block=5000
+            )
+            if not messages:
+                continue
+            _, entries = messages[0]
+            message_id, data = entries[0]
+            payload = json.loads(data[b"payload"].decode())
+            try:
+                result = await agent.run(payload)
+            except Exception as e:
+                # Leave unacked so it can be reclaimed; do not delete.
+                print(f"agent={name} job={payload['job_id']} error={e}")
+                continue
+            await rc.xadd(
+                f"results:{name}",
+                {"job_id": payload["job_id"], "result": json.dumps(result)},
+            )
+            await rc.xack(stream, GROUP, message_id)
+    finally:
+        await agent.aclose()
+        await rc.aclose()
 
 if __name__ == "__main__":
-    asyncio.run(worker("researcher", "tasks:research", "worker1"))
+    asyncio.run(worker("researcher", "tasks:research", "worker-1"))
 ```
 
-4. Wire the workflow via Step Functions. Create `asl/definition.json`:
+Two deliberate choices in that loop:
+
+- On failure, the message is **not** acknowledged and **not** deleted. It stays pending for reclamation. Deleting on failure is the classic bug that turns a transient error into silent data loss.
+- The agent's HTTP client is created once and closed in a `finally` block. Creating an `AsyncClient` per call leaks file descriptors and memory under load.
+
+## Step 3 — retries and timeouts
+
+There are two layers where retries can live, and mixing them is a common source of confusion.
+
+**In-process retries** are cheap and appropriate for transient network errors. Bound them tightly, use exponential backoff with jitter, and cap the total time so the worker does not exceed its own execution timeout.
+
+```python
+import asyncio
+import random
+
+MAX_ATTEMPTS = 3
+BASE_DELAY = 0.5
+
+async def safe_run(agent: Agent, payload: dict) -> dict | None:
+    for attempt in range(MAX_ATTEMPTS):
+        try:
+            return await agent.run(payload)
+        except Exception as e:
+            if attempt == MAX_ATTEMPTS - 1:
+                return None
+            delay = BASE_DELAY * (2 ** attempt)
+            await asyncio.sleep(delay + random.uniform(0, delay * 0.1))
+    return None
+```
+
+The arithmetic is worth spelling out: with `BASE_DELAY = 0.5` and `MAX_ATTEMPTS = 3`, waits are roughly 0.5s then 1.0s, for a worst-case in-process budget of ~1.5s plus request time. That must fit inside the worker timeout with headroom. If the worker timeout is 15s and each request can take 10s, three attempts cannot fit — the retry layer has to move outward.
+
+**Out-of-process retries** belong to the state machine. A Step Functions task with a `Retry` block retries the whole invocation, which is correct when the failure is "the worker died" rather than "the HTTP call blipped." Example definition:
 
 ```json
 {
@@ -190,21 +226,21 @@ if __name__ == "__main__":
   "States": {
     "Research": {
       "Type": "Task",
-      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:multi-agent-research",
+      "Resource": "arn:aws:states:us-east-1:123456789012:function:multi-agent-research",
       "Next": "Validate"
     },
     "Validate": {
       "Type": "Task",
-      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:multi-agent-research",
-      "Next": "Summarize",
+      "Resource": "arn:aws:states:us-east-1:123456789012:function:multi-agent-research",
       "Retry": [
         {
-          "ErrorEquals": ["States.ALL"],
+          "ErrorEquals": ["States.TaskFailed"],
           "IntervalSeconds": 2,
           "MaxAttempts": 3,
           "BackoffRate": 2.0
         }
-      ]
+      ],
+      "Next": "Summarize"
     },
     "Summarize": {
       "Type": "Task",
@@ -215,64 +251,48 @@ if __name__ == "__main__":
 }
 ```
 
-I initially tried to do all retries inside Python using tenacity, but the Lambda timeout kept firing first. Moving retries to Step Functions added 3 lines of JSON and cut timeout errors by 90 %.
+Note the change from `States.ALL` to `States.TaskFailed`. Retrying on `States.ALL` also retries deterministic errors such as a malformed payload, which wastes the retry budget on failures that will never succeed. Enumerate the transient error classes explicitly.
 
-5. Deploy the Lambda via Terraform:
+The rule of thumb: **retry in-process for network jitter, retry out-of-process for worker death.** If both layers retry the same failure, you multiply attempt counts and can produce a retry storm against an already-degraded upstream.
 
-```hcl
-resource "aws_lambda_function" "worker" {
-  function_name = "multi-agent-research"
-  role          = aws_iam_role.lambda_exec.arn
-  image_uri     = "123456789012.dkr.ecr.us-east-1.amazonaws.com/multi-agent-research:latest"
-  package_type  = "Image"
-  memory_size   = 1024
-  timeout       = 15
-  ephemeral_storage {
-    size = 512
-  }
-  environment {
-    variables = {
-      REDIS_URL = var.redis_url
-    }
-  }
-}
-```
+## Step 4 — failure modes and how to handle them
 
-The Lambda memory bump from 512 MB to 1024 MB cut cold starts by 180 ms because the Python runtime now has enough headroom to initialize the uvloop event loop without hitting the GC pause ceiling.
+### Duplicate processing
 
-## Step 3 — handle edge cases and errors
-
-1. Message ordering in Redis streams
-
-Consumer groups in Redis 7.2 guarantee that each message is delivered once per consumer, but ordering is only per consumer. If you need global ordering across agents, use a single consumer group and idempotent job IDs. I learned this the hard way when two workers processed the same job twice—our downstream database deduplication key collided.
-
-2. Partial failures and poison pills
+Redis Streams deliver at-least-once. A worker that processes a message and crashes before `XACK` will have that message reclaimed and processed again. The fix is idempotency at the job level, not at the queue level: derive a deterministic result key from `job_id` and use `SET key value NX` (or an upsert) so a duplicate write is a no-op.
 
 ```python
-MAX_RETRIES = 3
-
-async def safe_run(agent_name: str, payload: Dict[str, Any]):
-    for attempt in range(MAX_RETRIES):
-        try:
-            return await Agent(agent_name).run(payload)
-        except Exception as e:
-            if attempt == MAX_RETRIES - 1:
-                await rc.xadd(
-                    "poison",
-                    {"job_id": payload["job_id"], "error": str(e)},
-                )
-                return None
-            await asyncio.sleep(2 ** attempt)
+async def store_result(rc, job_id: str, result: dict) -> None:
+    # NX makes duplicate writes harmless.
+    await rc.set(f"result:{job_id}", json.dumps(result), nx=True)
 ```
 
-3. Circuit breakers on upstream APIs
+### Poison messages
 
-Add a 10-second timeout around the Hugging Face call and a fallback to a cached summary if available:
+A message that fails deterministically will be reclaimed forever. Track an attempt counter in the message payload or in a Redis hash keyed by message ID, and after N attempts move it to a dead-letter stream and acknowledge the original.
 
 ```python
+MAX_DELIVERIES = 5
+
+async def handle_failure(rc, stream: str, group: str, msg_id: str, payload: dict, err: str) -> None:
+    key = f"attempts:{msg_id}"
+    attempts = await rc.incr(key)
+    await rc.expire(key, 86400)
+    if attempts >= MAX_DELIVERIES:
+        await rc.xadd("deadletter", {"job_id": payload["job_id"], "error": err})
+        await rc.xack(stream, group, msg_id)
+```
+
+### Upstream timeouts
+
+Wrap the model call in a short timeout and fall back to a cached result keyed by a hash of the prompt. This converts a hard failure into a degraded-but-successful response, which is usually preferable for a summarization pipeline.
+
+```python
+import hashlib
 from fastapi import HTTPException
 
-async def call_hf(prompt: str) -> str:
+async def call_model(prompt: str) -> str:
+    key = "cache:" + hashlib.sha256(prompt.encode()).hexdigest()
     try:
         async with httpx.AsyncClient(timeout=10.0) as client:
             r = await client.post(
@@ -281,184 +301,117 @@ async def call_hf(prompt: str) -> str:
                 headers={"Authorization": f"Bearer {os.getenv('HF_TOKEN')}"},
             )
             r.raise_for_status()
-            return r.json()[0]["generated_text"]
+            text = r.json()[0]["generated_text"]
+            await _cache_set(key, text)
+            return text
     except Exception:
-        # Fallback to cached summary
-        cached = await rc.get(f"cache:{hash(prompt)}")
-        if cached:
-            return cached.decode()
-        raise HTTPException(status_code=503, detail="Service unavailable")
+        cached = await _cache_get(key)
+        if cached is not None:
+            return cached
+        raise HTTPException(status_code=503, detail="model unavailable")
 ```
 
-4. Memory leaks in long-running workers
+### Retry storms
 
-I ran a 7-day load test and the worker RSS grew from 80 MB to 520 MB. The culprit was the httpx.AsyncClient not being closed between calls. Fix:
+Two mitigations: jitter (shown above) and a concurrency cap on the worker. On Lambda, `reserved_concurrency` caps simultaneous invocations so a backlog cannot overwhelm the upstream. On ECS or Kubernetes, cap replicas and use a queue-depth-based autoscaler rather than a CPU-based one — CPU stays low while the queue grows.
+
+## Step 5 — observability and tests
+
+Instrument three things before optimizing anything: per-agent latency, failure rate by error class, and queue depth. Without those, "the system is slow" is unfalsifiable.
+
+Structured logging with a correlation ID per job:
 
 ```python
-class Agent:
-    def __init__(self, name: str):
-        self.name = name
-        self._client = None
+import logging
+import json
 
-    async def _ensure_client(self):
-        if self._client is None:
-            self._client = httpx.AsyncClient(timeout=30.0)
+log = logging.getLogger("agent")
 
-    async def run(self, input_payload: Dict[str, Any]) -> Dict[str, Any]:
-        await self._ensure_client()
-        try:
-            ...
-        finally:
-            await self._client.aclose()
+def log_event(job_id: str, agent: str, event: str, **fields) -> None:
+    log.info(json.dumps({"job_id": job_id, "agent": agent, "event": event, **fields}))
 ```
 
-The hard-to-reverse decision here is the retry strategy. Once you bake exponential backoff into the worker code, migrating to Step Functions later is a rewrite. I recommend pushing retries to Step Functions from day one.
-
-## Step 4 — add observability and tests
-
-1. Add structured logging with Sentry and OTel
+An integration test using a real Redis container. The `asyncio.sleep` in the original version is a flaky-test generator; poll instead.
 
 ```python
-import sentry_sdk
-from opentelemetry import trace
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
-
-sentry_sdk.init(dsn=os.getenv("SENTRY_DSN"))
-trace.set_tracer_provider(TracerProvider())
-exporter = OTLPSpanExporter(endpoint="https://api.honeycomb.io/v1/traces")
-trace.get_tracer_provider().add_span_processor(BatchSpanProcessor(exporter))
-```
-
-2. Write an async integration test with pytest-asyncio and Testcontainers:
-
-```python
+import asyncio
 import pytest
 from testcontainers.redis import RedisContainer
 
 @pytest.fixture(scope="session")
-async def redis():
-    with RedisContainer("redis:7.2-alpine") as redis:
-        yield redis
+def redis_url():
+    with RedisContainer("redis:7.2-alpine") as r:
+        host = r.get_container_host_ip()
+        port = r.get_exposed_port(6379)
+        yield f"redis://{host}:{port}/0"
 
 @pytest.mark.asyncio
-async def test_research_agent(redis):
-    payload = {"prompt": "What drove tech stocks in March 2026?"}
-    job_id = await enqueue_job("tasks:research", payload)
-    await asyncio.sleep(0.5)  # let worker pick it up
-    results = await redis.xread({"results:researcher": job_id}, count=1)
-    assert len(results) == 1
+async def test_research_agent(redis_url, monkeypatch):
+    monkeypatch.setenv("REDIS_URL", redis_url)
+    job_id = await enqueue_job("tasks:research", {"prompt": "test"})
+    # Poll for the result rather than sleeping a fixed interval.
+    for _ in range(50):
+        result = await _read_result(redis_url, job_id)
+        if result is not None:
+            break
+        await asyncio.sleep(0.1)
+    assert result is not None
 ```
 
-3. Add a p99 latency histogram via Prometheus:
+### How to measure the numbers that matter
 
-```python
-from prometheus_client import Histogram, start_http_server
+Do not trust anyone's published latency or cost figures, including any in this article. Measure your own:
 
-LATENCY = Histogram("agent_latency_seconds", "Agent latency in seconds", buckets=[0.1, 0.5, 1.0, 2.0, 5.0])
+- **End-to-end latency.** Add a `time.perf_counter()` around the request handler and emit a histogram. Percentiles require a histogram, not an average — a mean of 850ms can hide a p99 of 8s.
+- **Per-agent latency.** Same instrumentation inside `Agent.run`, tagged by agent name.
+- **Failure rate by error class.** Count exceptions by type (timeout, HTTP 5xx, validation) rather than a single "errors" counter.
+- **Queue depth and pending count.** `XLEN` for stream length and `XPENDING` for unacknowledged messages. Rising pending count means workers are dying or too slow.
+- **Cost.** Multiply invocation count by per-invocation price for each service. Keep the arithmetic visible in a spreadsheet rather than a hardcoded number in a dashboard.
 
-@app.get("/metrics")
-async def metrics():
-    return start_http_server(8000)
-
-async def worker(name: str, stream: str, consumer: str):
-    while True:
-        with LATENCY.time():
-            ...
-```
-
-4. Set up CloudWatch alarms for poison queue growth:
-
-```hcl
-resource "aws_cloudwatch_metric_alarm" "poison_queue" {
-  alarm_name          = "multi-agent-poison-queue-alarm"
-  comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = "1"
-  metric_name         = "ApproximateNumberOfMessagesVisible"
-  namespace           = "AWS/ElastiCache"
-  period              = "60"
-  statistic           = "Sum"
-  threshold           = "5"
-  alarm_actions       = [aws_sns_topic.alerts.arn]
-  dimensions = {
-    CacheClusterId = aws_elasticache_cluster.redis.cluster_id
-  }
-}
-```
-
-The hard-to-reverse decision here is the observability stack. Honeycomb + Sentry + Prometheus is overkill for a solo founder, but once you have it running, tearing it out is painful. Start with Sentry only; add Prometheus later if you need percentiles.
-
-## Real results from running this
-
-After two weeks of production traffic:
-
-| Metric               | LangGraph attempt | This system  |
-|----------------------|-------------------|--------------|
-| Median latency       | 1 250 ms          | 850 ms       |
-| p99 latency          | 3 200 ms          | 1 800 ms     |
-| Cold-start latency   | 680 ms            | 240 ms       |
-| Monthly AWS bill     | $18               | $7           |
-| Failed runs          | 12 %              | 2 %          |
-| Lines of code        | 1 042             | 380          |
-
-The single biggest win was removing the TypeScript SDK’s 16 MB bundle. Our Lambda image size dropped from 72 MB to 32 MB, which cut cold starts by 65 %.
-
-I also discovered that the LangGraph checkpoint store was writing 4 KB of metadata to S3 on every step. At 10 000 runs/day that’s 40 MB/day—$1.20/month just for checkpoints. Redis streams cost $0.18/month for the same throughput.
-
-We still hit one surprise: AWS Step Functions occasionally throttles our 300 requests/minute burst. The fix was to use a reserved concurrency of 50 on the Lambda and to add a 1-second jitter to the enqueue_job calls. Without the jitter we saw 429 errors 12 % of the time.
-
-If I had to do it again, I would still choose this path for a solo founder, but I would start with a single Python async file instead of splitting into Lambda handlers. The cognitive overhead of wiring Lambda to Step Functions outweighed the benefits once the system stabilized.
-
-## Common questions and variations
-
-**How do I scale this beyond one EC2 instance?**
-
-Run multiple ECS Fargate tasks with the same consumer group. Redis streams will fan-out messages evenly. Scale the number of tasks based on the backlog metric `ApproximateNumberOfMessages`. One t3.medium can handle ~300 concurrent workers before Redis CPU becomes the bottleneck. Add a CloudWatch alarm on CPU > 70 % and auto-scale the task count.
-
-**Can I use SQS instead of Redis streams?**
-
-Yes, but expect +40 ms per hop and the need for three queues (tasks, results, poison). SQS FIFO adds 5 ms of extra latency and costs $0.50 per million requests. Redis streams give you fan-out and ordering in one hop. If you’re already using SQS for other workloads, reuse it—don’t add Redis just for this.
-
-**What if I need checkpoints for restarts?**
-
-Redis streams already act as a durable log. Every message is persisted until acknowledged. If the worker crashes, the pending messages reappear after the visibility timeout. For Step Functions, the execution history is stored automatically. If you need to resume a partially completed job, store the job_id in your own state table and replay the stream from that offset.
-
-**How do I handle model failures gracefully?**
-
-Wrap the Hugging Face call in a 10-second timeout and return a 503 to the caller. Cache the last successful response under a key derived from the prompt hash. Add a CircuitBreaker pattern from the pybreaker library to avoid hammering a flaky API. On 503 you can either surface the cached result or let the user retry.
-
-**Should I move to LangGraph now that it’s stable?**
-
-Maybe. If you need built-in checkpoints, human-in-the-loop approval steps, or a visual debugger, LangGraph 1.0+ is worth the overhead. Expect to spend 2–3 days wiring the SDK and another week debugging version skew. For a solo founder shipping fast, the custom Python stack is still the safer bet until LangGraph hits 2.0.
-
-## Where to go from here
-
-If you’re running a similar system today, start by measuring your end-to-end latency and failure rate. Open your terminal and run:
+A minimal load test that gives real numbers:
 
 ```bash
-curl -w "%{time_total}\n" -o /dev/null http://localhost:8000/run
+# Fire 100 requests and capture per-request total time.
+for i in $(seq 1 100); do
+  curl -s -o /dev/null -w "%{time_total}\n" http://localhost:8000/run
+done | sort -n | awk '{a[NR]=$1} END {print "p50="a[int(NR*0.5)], "p99="a[int(NR*0.99)]}'
 ```
 
-If the median is above 1 second or your error rate is above 5 %, the fastest win is to add Redis streams and Step Functions retries. Do that today—don’t wait for a “perfect” design.
+## Comparison: chain-with-queue vs. graph framework
 
-Next, create a single file `agents.py` with the three agent classes and a tiny FastAPI endpoint that enqueues a job. You’ll have a working prototype in under 30 minutes and a real system you can iterate on without rewriting half the architecture later.
+| Concern | Queue + state machine | Graph framework |
+|---|---|---|
+| Linear pipelines | Minimal code, uses existing infra | Adds a dependency and a scheduler |
+| Cyclic or conditional routing | Awkward; needs a router step | First-class |
+| Human-in-the-loop interrupts | Manual (store state, resume) | Built in |
+| Checkpointing / resume | State machine execution history | Framework-managed, version-sensitive |
+| Debugging a stall | Inspect queue + execution history | Depends on framework internals |
+| Operational familiarity | Reuses existing queues and alarms | New system to learn and monitor |
 
+Neither column is universally better. The table is a prompt to check which rows matter for your workflow.
 
----
+## FAQ
 
-### About this article
+**Can this scale past one instance?**
+Yes. Run multiple workers in the same consumer group; Redis distributes messages across consumers. Scale on pending-entries count or stream length, not CPU. Redis itself becomes the bottleneck eventually — monitor its CPU and connection count, and shard by stream name if needed.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
+**Should I use a standard message queue instead of Redis Streams?**
+If the platform already runs one and the team knows it, reuse it. Streams are convenient because consumer groups, pending lists, and fan-out come from one primitive, but a standard queue with visibility timeouts and a dead-letter queue provides equivalent semantics. Adding a second queueing system purely for this pipeline is usually a net negative.
 
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
+**How do I resume a partially completed job?**
+Persist the job's stage to a durable store keyed by `job_id` after each successful step, and make each step idempotent. On restart, read the stage and replay from there. The state machine's execution history also provides this for the workflow layer.
 
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
+**What about checkpoints for long-running agents?**
+If a single agent run can exceed the worker timeout, split it into multiple steps with explicit state persisted between them. That is the point at which a graph framework's checkpointing starts to earn its complexity.
 
-**Last generated:** July 27, 2026
+## Action for the next 30 minutes
+
+Add a latency histogram and a pending-entries gauge to your current pipeline, then run one load test:
+
+```bash
+for i in $(seq 1 50); do
+  curl -s -o /dev/null -w "%{time_total}\n" http://localhost:8000/run
+done | sort -n | awk '{a[NR]=$1} END {print "p50="a[int(NR*0.5)], "p99="a[int(NR*0.99)]}'
+```
+
+Then check `XPENDING` on your task stream. If p99 is more than roughly three times p50, or pending count is climbing, the retry and acknowledgement logic is where the next hour of work should go — not the framework choice.

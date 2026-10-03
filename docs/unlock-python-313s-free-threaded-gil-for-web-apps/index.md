@@ -1,184 +1,188 @@
 # Unlock Python 3.13's free-threaded GIL for web apps
 
-The tutorials all showed the happy path. This post shows what comes after.
+Free-threaded Python builds are the headline change in recent CPython releases: a build where the global interpreter lock can be disabled at runtime, allowing threads to execute Python bytecode in parallel. The tutorials tend to stop at a micro-benchmark. This article covers what happens when you point a real web service at it: which failures appear, which ones are silent, and how to measure whether the switch was worth it.
 
-## Why I wrote this (the problem I kept hitting)
+## What "free-threaded" does and does not change
 
-In 2026 we moved a high-traffic Vietnam e-commerce API from Python 3.11 to 3.13. The change? We enabled the free-threaded build to bypass the GIL for I/O-bound endpoints. What seemed like a one-line switch ended up being a 5-day yak shave because we missed one small detail: third-party packages that still assume a single global interpreter lock.
+The documented behaviour is narrower than the marketing suggests:
 
-The core promise of free-threaded Python is simple: remove the GIL for I/O-bound tasks so threads can truly run in parallel. In practice, the GIL removal is opt-in via `PYTHON_GIL=0` and only affects the CPython interpreter. Everything else — your C extensions, your `.so` files, your `.pyd` modules — must be rebuilt or they’ll either segfault or silently serialize again. The e-commerce API was seeing 4,200 req/s on 4 vCPU AWS EC2 m6g.xlarge instances running Python 3.11. After upgrading to Python 3.13 free-threaded, we saw 6,800 req/s on the same hardware, a 62% increase, but only after we fixed the connection pool bug that surfaced under load.
+- The GIL is removed only in a special build of the interpreter, configured with `--disable-gil` at compile time.
+- In that build, the GIL can be re-enabled at runtime with the environment variable `PYTHON_GIL=1`, or disabled with `PYTHON_GIL=0`. The default is determined by the build.
+- `sys._is_gil_enabled()` reports the current state of the running interpreter.
+- Only the interpreter itself is affected. Every C extension, every compiled `.so` or `.pyd` module, and every library that ships prebuilt binaries was compiled against a particular ABI. Extensions built for the GIL-enabled ABI either fail to import, crash, or silently re-enable the GIL for the whole process.
 
-The real surprise was how little documentation existed for production migrations. Most guides focus on micro-benchmarks with toy workloads. Real apps use PostgreSQL, Redis, and a mix of async and sync libraries. If you’re running anything beyond a Flask hello-world, you’ll hit edge cases the tutorials don’t mention. This post is the playbook I wish I’d had: how to switch safely, what to watch, and the concrete numbers we measured.
+That last point is the one that turns a one-line environment change into a multi-day migration. It is also the point that most quick-start guides omit, because their examples use only the standard library and pure-Python packages.
 
-## Prerequisites and what you'll build
+The realistic expectation is therefore:
 
-You need a Linux x86_64 or arm64 machine and root or sudo access to install custom Python builds. I tested on Ubuntu 24.04 LTS with kernel 6.5.0-15-generic. Python 3.13 free-threaded is still experimental as of June 2026, so you’ll compile from source or use the official nightly wheels. Avoid the `--with-pydebug` flag; it adds a 30% latency hit on I/O calls.
+- **Pure-Python I/O-bound workloads** can gain throughput, because threads that were previously serialized on the GIL can now overlap.
+- **CPU-bound Python workloads** gain little or nothing. Removing the GIL does not give you more cores; the interpreter still executes bytecode on whatever cores are available, and contention moves from the GIL to other shared resources.
+- **Anything with a compiled dependency** is gated on that dependency having a free-threaded build.
 
-What we’ll build is a minimal FastAPI 0.115 service with three endpoints:
-- `/sync` – a CPU-bound endpoint we’ll intentionally cripple to show where the GIL still matters
-- `/io` – a pure-I/O endpoint backed by Redis 7.2 and asyncpg 0.30
-- `/mixed` – a hybrid using both CPU and I/O to surface thread-safety issues
+## Prerequisites
 
-We’ll run the service under `gunicorn 21.2.0` with `uvicorn 0.30.6` workers and compare free-threaded vs GIL-on builds. We’ll also include a tiny Locust 2.24 load test to measure throughput and latency.
+You need:
 
-The whole thing is 187 lines of Python across three files. It’s enough to see the real gains — and the real pitfalls.
+- Linux x86_64 or arm64 with sudo access, to install a custom interpreter build.
+- A C toolchain and the usual Python build dependencies (`build-essential`, `libssl-dev`, `zlib1g-dev`, `libffi-dev`, `libsqlite3-dev`, `liblzma-dev`, and so on).
+- A local Redis and PostgreSQL if you want to reproduce the example endpoints below, or equivalents you already run.
 
-## Step 1 — set up the environment
+Two build flags are worth knowing about:
 
-Start with a clean Ubuntu 24.04 box. Install system dependencies:
+- `--disable-gil` produces the free-threaded interpreter.
+- `--with-pydebug` produces a debug build. Debug builds are substantially slower and are not representative of production performance; avoid them when measuring.
 
-```bash
-sudo apt update
-sudo apt install -y build-essential git pkg-config libssl-dev zlib1g-dev \
-  libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev \
-  xz-utils tk-dev libffi-dev liblzma-dev python3-openssl python3-venv
-```
-
-Next, compile Python 3.13 free-threaded. The `--disable-gil` flag is the magic switch:
+Build and install:
 
 ```bash
-PYTHON_VERSION=3.13.0a7  # nightly as of June 2026
+PYTHON_VERSION=3.13.0
 wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tar.xz
+tar -xf Python-${PYTHON_VERSION}.tar.xz
+cd Python-${PYTHON_VERSION}
 
 ./configure --disable-gil --enable-optimizations --prefix=/usr/local/python3.13ft
-make -j$(nproc)
+make -j"$(nproc)"
 sudo make altinstall
 ```
 
-Verify the GIL is off:
+Verify the state of the interpreter:
 
 ```bash
-/usr/local/python3.13ft/bin/python3.13ft -c "import sys; print(sys._is_gil_enabled())"
-# Should print: False
+/usr/local/python3.13ft/bin/python3.13 -c "import sys; print(sys._is_gil_enabled())"
 ```
 
-Now create a virtual environment and install the stack:
+If that prints `False`, the build is free-threaded and the GIL is currently disabled. If it prints `True` on a free-threaded build, something in the startup path re-enabled it — usually an imported extension.
+
+Create a virtual environment and install the stack:
 
 ```bash
-/usr/local/python3.13ft/bin/python3.13ft -m venv ft-env
+/usr/local/python3.13ft/bin/python3.13 -m venv ft-env
 source ft-env/bin/activate
-
 pip install --upgrade pip setuptools wheel
-pip install fastapi==0.115.0 gunicorn==21.2.0 uvicorn==0.30.6 redis==4.6.0 \
-  asyncpg==0.30.0 locust==2.24.0 psutil==5.9.8
+pip install fastapi gunicorn uvicorn redis asyncpg psutil
 ```
 
-Gotcha: if you run `pip install numpy`, you’ll pull a pre-built wheel that still assumes a GIL-enabled runtime. Under free-threaded Python, this can segfault on import. Pin exact versions to avoid surprises.
+Pin exact versions in your own project. The packages above are listed without pins deliberately: the versions that work change faster than this article will, and a stale pin is worse than no pin when the whole point is ABI compatibility.
 
-## Step 2 — core implementation
+## A minimal service to test against
 
-Create `app.py`:
+The service below has three endpoints that isolate the three cases you care about: pure CPU, pure I/O, and a mix.
 
 ```python
 import asyncio
 import time
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException
-import redis.asyncio as redis
+
 import asyncpg
 import psutil
+import redis.asyncio as redis
+from fastapi import FastAPI
 
 redis_pool = None
 pg_pool = None
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global redis_pool, pg_pool
-    redis_pool = await redis.Redis(host="127.0.0.1", port=6379, db=0)
+    redis_pool = redis.Redis(host="127.0.0.1", port=6379, db=0)
     pg_pool = await asyncpg.create_pool(
-        host="127.0.0.1", port=5432, user="postgres", password="", 
-        database="postgres", min_size=2, max_size=10
+        host="127.0.0.1",
+        port=5432,
+        user="postgres",
+        password="postgres",
+        database="postgres",
+        min_size=2,
+        max_size=10,
     )
     yield
-    await redis_pool.close()
+    await redis_pool.aclose()
     await pg_pool.close()
+
 
 app = FastAPI(lifespan=lifespan)
 
+
 @app.get("/sync")
 async def cpu_bound():
-    # Force CPU burn to show where the GIL still hurts
     start = time.perf_counter()
     _ = sum(i * i for i in range(1_000_000))
     elapsed = time.perf_counter() - start
-    return {"cpu_ms": int(elapsed * 1000), "gil": psutil.Process().num_threads()}
+    return {
+        "cpu_ms": int(elapsed * 1000),
+        "threads": psutil.Process().num_threads(),
+    }
+
 
 @app.get("/io")
 async def io_bound():
-    # Pure I/O: Redis ping + asyncpg query
     pong = await redis_pool.ping()
-    conn = await pg_pool.acquire()
-    try:
-        rows = await conn.fetch("SELECT 1 as one")
-        return {"redis_pong": pong, "pg_rows": len(rows)}
-    finally:
-        await pg_pool.release(conn)
+    async with pg_pool.acquire() as conn:
+        rows = await conn.fetch("SELECT 1 AS one")
+    return {"redis_pong": pong, "pg_rows": len(rows)}
+
 
 @app.get("/mixed")
 async def mixed():
-    # Mix CPU and I/O to surface thread-safety issues
-    loop = asyncio.get_running_loop()
     start = time.perf_counter()
-    
-    # CPU spike
     _ = sum(i * i for i in range(500_000))
-    
-    # I/O spike
     pong = await redis_pool.ping()
-    conn = await pg_pool.acquire()
-    try:
-        rows = await conn.fetch("SELECT 1 as one")
-        return {
-            "cpu_ms": int((time.perf_counter() - start) * 1000),
-            "redis_pong": pong,
-            "pg_rows": len(rows)
-        }
-    finally:
-        await pg_pool.release(conn)
+    async with pg_pool.acquire() as conn:
+        rows = await conn.fetch("SELECT 1 AS one")
+    return {
+        "cpu_ms": int((time.perf_counter() - start) * 1000),
+        "redis_pong": pong,
+        "pg_rows": len(rows),
+    }
 ```
 
-Create `gunicorn.conf.py`:
+A note on the `/sync` endpoint: it is declared `async def`, so the CPU loop runs on the event loop thread and blocks it. That is intentional here — it makes the CPU cost visible — but it is a bug in a real service. The correct form is a plain `def` endpoint, which FastAPI runs in a threadpool, or an explicit `await asyncio.to_thread(...)`. The behaviour of `asyncio.to_thread` is the interesting part in a free-threaded build: the work genuinely runs on another core instead of contending for the GIL.
+
+Gunicorn configuration:
 
 ```python
 workers = 4
 worker_class = "uvicorn.workers.UvicornWorker"
 bind = "0.0.0.0:8000"
 keepalive = 5
-worker_connections = 1000
 max_requests = 1000
 max_requests_jitter = 50
 ```
 
-Start Redis and PostgreSQL locally. I used Docker for isolation:
+Local dependencies:
 
 ```bash
-docker run -d --name redis7 -p 6379:6379 redis:7.2-alpine
-docker run -d --name pg16 -e POSTGRES_PASSWORD="" -p 5432:5432 postgres:16-alpine
+docker run -d --name redis7 -p 6379:6379 redis:7-alpine
+docker run -d --name pg16 -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:16-alpine
 ```
 
-Now run the service twice: once with the GIL on, once off. Use `PYTHON_GIL=0` to disable the GIL at runtime:
+Run the service in each mode:
 
 ```bash
-# GIL on (baseline)
-PYTHON_GIL=1 gunicorn -c gunicorn.conf.py app:app
-
-# GIL off (free-threaded)
-PYTHON_GIL=0 gunicorn -c gunicorn.conf.py app:app
+PYTHON_GIL=1 gunicorn -c gunicorn.conf.py app:app   # GIL re-enabled
+PYTHON_GIL=0 gunicorn -c gunicorn.conf.py app:app   # GIL disabled
 ```
 
-Measure latency and throughput with Locust. Save this as `locustfile.py`:
+`PYTHON_GIL` is a process-level switch. It is read once at interpreter startup. Every gunicorn worker inherits the same state, so you cannot mix GIL-on and GIL-off workers inside one process tree; use separate deployments if you want a canary.
+
+## How to measure it yourself
+
+Do not trust throughput numbers from someone else's hardware, including the ones you would have found in an earlier draft of this article. The right way to decide is to measure on your own workload. Here is what to instrument.
+
+**Load generator.** Locust, k6, or `wrk` all work. A minimal Locust file:
 
 ```python
 from locust import HttpUser, task, between
 
+
 class ApiUser(HttpUser):
     wait_time = between(0.1, 0.5)
 
-    @task
+    @task(3)
     def io(self):
         self.client.get("/io")
 
-    @task(3)
+    @task(1)
     def mixed(self):
         self.client.get("/mixed")
 
@@ -187,196 +191,114 @@ class ApiUser(HttpUser):
         self.client.get("/sync")
 ```
 
-Run a 2-minute ramp-up to 200 users:
+Run it headless against each mode in turn, with the same user count, spawn rate, and duration:
 
 ```bash
-locust -f locustfile.py --headless -u 200 -r 20 --run-time 2m --host http://localhost:8000 --html=report.html
+locust -f locustfile.py --headless -u 200 -r 20 --run-time 2m \
+  --host http://localhost:8000 --html=report-gil-on.html
 ```
 
-## Step 3 — handle edge cases and errors
+**What to record per run:**
 
-Under free-threaded Python, two classes of failures surface immediately:
+| Metric | Where it comes from | Why it matters |
+|---|---|---|
+| Requests per second per endpoint | Load generator summary | The headline throughput number |
+| Median and P99 latency | Load generator summary | Tail latency is what users feel |
+| CPU utilisation per core | `pidstat -u 1`, `mpstat -P ALL 1` | Tells you whether you are now CPU-bound |
+| Resident memory | `ps -o rss= -p <pid>`, or `docker stats` | Free-threading can increase memory; confirm it does not |
+| Thread count | `psutil.Process().num_threads()` | Confirms threads are actually being created |
+| GIL state at runtime | `sys._is_gil_enabled()` in a health endpoint | Catches silent re-enablement |
 
-1. **C extensions that assume a GIL**: If you import `numpy`, `pandas`, or `cryptography`, they may segfault on import or during calls. The error message is usually `SIGSEGV` or `Fatal Python error: _PyThreadState_Get: no current thread`. The fix is to rebuild the package from source or find a pre-built wheel that declares `python_requires >= ">=3.13"` and `Platform :: Linux :: x86_64` with `gil=off` metadata.
+**What to compare.** Run the GIL-on build first and treat it as the baseline. Then run the identical build with `PYTHON_GIL=0`. Same machine, same kernel, same load profile, same database state. Any difference you see is the effect of the GIL switch, assuming nothing else changed.
 
-2. **Shared state without locks**: Any global mutable state — a module-level cache, a class variable, or a singleton — becomes a race condition. In our `/mixed` endpoint, we initially used a global `dict` for request counters. Under load, the counters diverged and the response times spiked unpredictably. Here’s the fixed version:
+**What a result looks like.** If `/io` is dominated by network round-trips to Redis and PostgreSQL, the event loop is mostly waiting, and the GIL is not the bottleneck. In that case you will see little or no throughput change, and the correct conclusion is that free-threading buys you nothing here. If `/io` is dominated by Python-level work between I/O calls — serialisation, response construction, small computations — then removing the GIL lets those sections overlap across threads, and throughput can rise. The size of the rise depends entirely on the ratio of Python execution time to waiting time in your handler. That ratio is specific to your code; nobody else's benchmark can tell you what it is.
+
+**A worked estimate.** Suppose a handler spends 2 ms per request in Python and 8 ms waiting on I/O, and you run 4 threads. With the GIL, the Python portions serialise: 4 requests require 4 × 2 ms = 8 ms of interpreter time. Without the GIL, the Python portions overlap across 4 cores, so the same 4 requests require 2 ms of wall-clock interpreter time. The I/O portions overlap in both cases. Total wall-clock for 4 requests drops from roughly 8 ms + 8 ms = 16 ms to 2 ms + 8 ms = 10 ms, a 1.6× improvement. Change the split to 8 ms Python and 2 ms I/O and the same arithmetic gives 32 ms + 2 ms = 34 ms versus 8 ms + 2 ms = 10 ms, a 3.4× improvement. Change it to 1 ms Python and 9 ms I/O and you get 4 ms + 9 ms = 13 ms versus 1 ms + 9 ms = 10 ms, a 1.3× improvement. These figures are illustrative, not measured: the point is that the gain is a function of your Python-to-I/O ratio, which you can estimate from a profile before you run any load test.
+
+## Failure modes to expect
+
+### C extensions that were not built for free-threading
+
+This is the dominant failure. Symptoms range from an `ImportError` to a hard `SIGSEGV` to a `Fatal Python error: _PyThreadState_Get: no current thread` message. The worst case is silent: the extension re-enables the GIL for the process, and your free-threaded build behaves exactly like the normal one with no warning.
+
+Detection: add a health endpoint that returns `sys._is_gil_enabled()`, and check it after startup with all your production imports loaded. If it reports `True` on a free-threaded build, an extension re-enabled the GIL.
+
+Remedy: use a version of the package that ships a free-threaded wheel, or build it from source against the free-threaded interpreter. If neither is possible, isolate the package in a subprocess or a separate service.
+
+### Shared mutable state
+
+With the GIL, a surprising amount of code is accidentally correct because bytecode operations on built-in containers are effectively atomic at the interpreter level. Remove the GIL and those assumptions break. A module-level counter incremented from multiple threads is the canonical example:
 
 ```python
-from threading import Lock
+from threading import Lock, get_ident
 
 request_counters = {}
 counter_lock = Lock()
 
-@app.get("/mixed")
-async def mixed():
-    loop = asyncio.get_running_loop()
-    start = time.perf_counter()
-    
-    _ = sum(i * i for i in range(500_000))
-    pong = await redis_pool.ping()
-    conn = await pg_pool.acquire()
-    try:
-        rows = await conn.fetch("SELECT 1 as one")
-        with counter_lock:
-            request_counters[threading.get_ident()] = request_counters.get(threading.get_ident(), 0) + 1
-        return {
-            "cpu_ms": int((time.perf_counter() - start) * 1000),
-            "redis_pong": pong,
-            "pg_rows": len(rows)
-        }
-    finally:
-        await pg_pool.release(conn)
+
+def record_request():
+    ident = get_ident()
+    with counter_lock:
+        request_counters[ident] = request_counters.get(ident, 0) + 1
 ```
 
-3. **Connection pool exhaustion**: Our `asyncpg` pool size was too small under free-threaded load. With 4 workers and 10 pool connections, we hit `asyncpg.ConnectionPoolTooSmallError` at ~1,200 req/s. Bumping `max_size` to 30 and setting `timeout=30` resolved it. The error message is unmistakable:
+The lock is not optional. It is also not sufficient on its own: any invariant that spans more than one statement needs to be protected as a unit. Audit module-level caches, lazily initialised singletons, and anything that reads-then-writes a shared structure.
 
-```
-asyncpg.exceptions.ConnectionPoolTooSmallError: pool is empty and timeout
-```
+Note that asyncio code running on a single event loop is unaffected by this class of bug, because coroutines interleave only at `await` points. The bugs appear when you introduce real threads — a threadpool for `def` endpoints, `asyncio.to_thread`, or a background worker.
 
-4. **Third-party ASGI middleware**: Some middleware like `sentry-sdk` or `opentelemetry-instrumentation-fastapi` still assume a single GIL. They often monkey-patch thread-local storage. Disable them in free-threaded mode or pin versions that declare `gil-off` support.
+### Connection pool sizing
 
-## Step 4 — add observability and tests
+Pools that were sized for a GIL-serialised workload are frequently too small once requests actually run concurrently. The symptom is a timeout waiting to acquire a connection, not a crash, so it shows up as latency rather than errors until the timeout expires. Size the pool against the number of concurrent requests you expect, not the number of workers, and set an explicit acquire timeout so the failure is a clear error rather than a hang.
 
-Instrument the service with OpenTelemetry and Prometheus. Install the stack:
+### Middleware that monkey-patches thread state
 
-```bash
-pip install opentelemetry-sdk==1.25.0 opentelemetry-exporter-prometheus==0.46b0 \
-  prometheus-client==0.20.0
-```
+Instrumentation and error-reporting libraries sometimes patch thread-local storage or assume a single interpreter-wide lock. Symptoms include missing spans, duplicated spans, and occasional crashes inside the instrumentation rather than your code. Test with instrumentation enabled and disabled; if the free-threaded build only misbehaves with instrumentation on, that is your culprit.
 
-Create `otel.py`:
+### Silent serialisation
 
-```python
-from opentelemetry import trace
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.exporter.prometheus import PrometheusMetricExporter
-from opentelemetry.sdk.metrics import MeterProvider
-from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
+The most expensive failure is the one that produces no error. A single GIL-bound extension anywhere in the process can serialise everything, and the only evidence is that your free-threaded build performs identically to the normal one. Always include the GIL-state check in your deployment's smoke test.
 
-# Initialize tracing
-trace.set_tracer_provider(TracerProvider())
-tracer = trace.get_tracer(__name__)
+## Observability
 
-# Initialize metrics
-exporter = PrometheusMetricExporter()
-reader = PeriodicExportingMetricReader(exporter, export_interval_millis=1000)
-meter_provider = MeterProvider(metric_readers=[reader])
-```
+Whatever you use for tracing and metrics, the key additions for a free-threaded deployment are:
 
-Patch `app.py` to emit traces and metrics:
+- A gauge for `sys._is_gil_enabled()`, exported at startup and on every scrape.
+- A gauge for thread count and a histogram for connection-pool wait time.
+- Per-endpoint latency histograms, so you can see whether the gain is concentrated in I/O-heavy routes.
 
-```python
-from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-from opentelemetry.instrumentation.asyncpg import AsyncPGInstrumentor
-from opentelemetry.instrumentation.redis import RedisInstrumentor
+If you use OpenTelemetry, the FastAPI, asyncpg, and Redis instrumentors each need to be verified against a free-threaded interpreter before you rely on them; a broken instrumentor should not take down the service, so wrap initialisation in a try/except and log the failure.
 
-FastAPIInstrumentor.instrument_app(app)
-AsyncPGInstrumentor().instrument()
-RedisInstrumentor().instrument()
-```
+## A decision checklist
 
-Run the service and scrape `http://localhost:8000/metrics`. You should see counters like:
+Before switching a service to a free-threaded interpreter, answer these:
 
-```
-fastapi_requests_total{endpoint="/io",method="GET"} 4200
-fastapi_latency_seconds_sum{endpoint="/io",method="GET"} 1.2
-```
+1. **Is the workload I/O-bound with significant Python-level work between I/O calls?** If the handler is almost entirely waiting, the GIL was never the bottleneck and the switch will not help.
+2. **Does every compiled dependency in the process have a free-threaded build?** If not, can it be isolated?
+3. **Does the process create threads at all?** If everything runs on a single event loop, free-threading changes nothing.
+4. **Is there shared mutable state outside the event loop?** If yes, it needs locking before the switch, not after.
+5. **Are the connection pools sized for real concurrency?** If they were sized for a serialised workload, they are too small.
+6. **Can you verify the GIL state at runtime in production?** If not, you cannot tell a successful migration from a silent failure.
+7. **Do you have a rollback path?** `PYTHON_GIL=1` on the same build is the cheapest one, but only if the build itself is otherwise identical.
 
-Write a small pytest 7.4 suite to assert thread safety. Save as `test_app.py`:
+If any answer is "no" or "don't know", resolve that before deploying.
 
-```python
-import pytest
-from fastapi.testclient import TestClient
-from app import app
+## FAQ
 
-client = TestClient(app)
+**Does free-threading break asyncio?**
+No. asyncio schedules coroutines on a single thread and is unaffected. The change is that work dispatched to real threads — via `asyncio.to_thread` or a threadpool — now runs genuinely in parallel with the event loop instead of contending for the GIL.
 
-def test_io_endpoint():
-    r = client.get("/io")
-    assert r.status_code == 200
-    assert r.json()["pg_rows"] == 1
+**Can I mix GIL-on and GIL-off workers in one process?**
+No. `PYTHON_GIL` is read once at interpreter startup and applies to the whole process. Use separate processes or separate deployments.
 
-def test_concurrent_io():
-    from threading import Thread
-    results = []
-    def fetch():
-        r = client.get("/io")
-        results.append(r.json())
-    threads = [Thread(target=fetch) for _ in range(10)]
-    for t in threads:
-        t.start()
-    for t in threads:
-        t.join()
-    assert len(results) == 10
-    assert all(r["pg_rows"] == 1 for r in results)
+**How do I tell whether a package is free-thread-safe?**
+Check whether a free-threaded wheel exists for your platform and interpreter version. If there is no such wheel and the package contains compiled code, assume it is not safe and plan to build it yourself or isolate it. Pure-Python packages are generally fine, but they can still hold state that assumed GIL-protected atomicity.
 
-if __name__ == "__main__":
-    pytest.main(["-v", "--durations=10"])
-```
+**Will this help a CPU-bound service?**
+Not meaningfully. Removing the GIL does not add cores. It removes a serialisation point, which helps when threads are waiting on I/O and could otherwise be doing Python work. A CPU-bound service is already limited by core count.
 
-Run the tests under both GIL modes. Under free-threaded mode, the `test_concurrent_io` test will pass only if the connection pool and Redis client are thread-safe. If it fails with `ConnectionPoolTooSmallError`, bump the pool size and retry.
+**What about ARM?**
+There is no general rule. The gain depends on the same Python-to-I/O ratio as on x86_64, plus whatever differences the platform has in memory model and scheduling. Measure it; do not assume the x86_64 result transfers.
 
-## Real results from running this
+## Your next 30 minutes
 
-We ran the Locust load test on a single m6g.xlarge instance (4 vCPU, 16 GiB RAM) using the same Locust configuration. Here are the median and 99th percentile latencies and throughput for 200 concurrent users over 2 minutes:
-
-| Endpoint | Mode      | Req/s | Median latency (ms) | P99 latency (ms) | CPU util |
-|----------|-----------|-------|----------------------|------------------|----------|
-| /sync    | GIL on    |  4200 | 85                   | 210              | 94%      |
-| /sync    | GIL off   |  4400 | 82                   | 205              | 95%      |
-| /io      | GIL on    |  4300 | 78                   | 190              | 65%      |
-| /io      | GIL off   |  7000 | 48                   | 110              | 78%      |
-| /mixed   | GIL on    |  3100 | 110                  | 280              | 90%      |
-| /mixed   | GIL off   |  5200 | 65                   | 170              | 85%      |
-
-Key takeaways:
-- The free-threaded runtime delivers a 62% throughput boost on pure I/O endpoints (`/io`) and a 68% boost on mixed endpoints (`/mixed`). - CPU-bound endpoints (`/sync`) see negligible gains because the GIL is gone but the CPU is still serialized by the interpreter. - Latency tails (P99) drop by 42% on `/io` under free-threaded mode, which matters for user-facing APIs. - CPU utilization rises because more threads are truly running in parallel, but memory usage stays flat.
-
-Cost-wise, running on m6g.xlarge at $0.048/hour, we cut our compute spend by 38% by reducing the instance count from 3 to 2 for the same load. That’s a $112 monthly saving per environment.
-
-Digging into the flame graphs, we saw that the GIL was still serializing the CPU spike in the I/O handler, creating a bottleneck even though most of the work was network-bound.
-
-## Common questions and variations
-
-**Q: Does free-threaded Python break asyncio?**
-No. asyncio itself is not affected because it schedules coroutines on a single thread. The gains come from the fact that threads outside the event loop can now run in parallel. If you’re using `asyncio.to_thread`, that call will now truly run in parallel with the event loop, which can speed up CPU-bound work inside coroutines.
-
-**Q: What about Django?**
-Django 5.1 (released March 2026) adds experimental free-threaded support via `PYTHON_GIL=0`. You must rebuild all C extensions (`psycopg2`, `lxml`, etc.) and run with `--workers=N` where N > 1. We tested a Django blog API on m6g.xlarge: 3,100 req/s with GIL on vs 4,900 req/s with GIL off. The bottleneck shifted from the GIL to the database connection pool.
-
-**Q: How do I know if a package is GIL-safe?**
-Check the package’s metadata for `python-requires >= "3.13"` and `gil=off` in the wheel tags. If it’s missing, assume it’s not safe. For compiled packages, look for a `manylinux_2_31_x86_64` wheel that declares `CPython 3.13` and `gil=off`. If you must use a package without a free-threaded wheel, pin it to a version that’s pure Python or use a subprocess to isolate it.
-
-**Q: Does this affect performance on ARM?**
-On AWS Graviton3 (arm64), the gains are smaller: 18% on `/io` and 22% on `/mixed`. The GIL is implemented in CPython’s interpreter loop, which is less of a bottleneck on ARM’s simpler pipeline. Still, the latency tails drop by 15% on ARM, which matters for mobile backends.
-
-**Q: Can I mix GIL-on and GIL-off workers in the same process?**
-No. The `PYTHON_GIL` flag is a process-level switch. If you’re running a multi-process server like gunicorn, each worker will inherit the same GIL state. Use separate processes for GIL-on vs GIL-off if you need a canary deployment.
-
-## Where to go from here
-
-Clone the repo we used for this post: https://github.com/kubaikevin/ft-python-demo. It includes the Docker Compose stack, Locust scripts, and the exact gunicorn and app configs. Run the load test locally and then deploy the same image to your staging environment with `PYTHON_GIL=0`. Compare the Prometheus metrics for `/io` endpoint latency and throughput. If the P99 latency drops by at least 30%, you’re safe to roll to production with a 50/50 traffic split using AWS ALB weight-based routing.
-
-If you hit connection pool exhaustion, bump `max_size` by 50% and set `timeout` to 60 seconds. If you see segfaults on import, check the package’s wheel tags for `gil=off`. If you’re on ARM, expect smaller gains but still worth the switch.
-
-Do this now: open your production Dockerfile, change the Python base image to `python:3.13-rc-slim-bookworm` and set `ENV PYTHON_GIL=0`. Rebuild and redeploy one replica. Watch the latency percentiles in CloudWatch for 10 minutes. If the P99 for your top endpoint drops by at least 25%, roll the rest of the fleet with confidence.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 22, 2026
+Pick one endpoint in your service that is I/O-bound and does a non-trivial amount of Python work per request. Add a temporary route that returns `sys._is_gil_enabled()` and `psutil.Process().num_threads()`. Deploy that build with `PYTHON_GIL=0` to a single canary instance behind your load balancer, hit the route, and confirm the GIL is actually off with all your production imports loaded. If it reports `True`, you have found a GIL-bound extension before it cost you a migration. If it reports `False`, run your existing load test against the canary and the baseline for the same duration and compare P99 latency on that one endpoint. That single comparison tells you more than any published benchmark.

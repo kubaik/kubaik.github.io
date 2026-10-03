@@ -1,78 +1,76 @@
-# Kill noisy alerts: the triage system that restored sleep
+# Designing Alert Triage That Suppresses Noise Safely
 
-I've hit the same alert triage mistake in more than one production codebase over the years. The default configuration is fine right up until it isn't. This is what I put together after working through it properly.
+## Why alert noise is a design problem, not a discipline problem
 
-## The alert triage system that reduced false positives enough for engineers to actually sleep
+Most alerting stacks treat every metric breach as an incident. A threshold fires, a notification is sent, and a human decides whether it mattered. That works until the number of breaches grows faster than the number of humans, at which point the pager becomes a random sampler of your infrastructure.
 
-### The one-paragraph version (read this first)
+The confusion is rarely technical. Teams conflate coverage with safety: more rules feel safer until the volume of notifications buries the signals that matter. A metric breach is just data. It becomes an alert only when the breach crosses a defined risk threshold, and it becomes a page only when the risk is real and sustained.
 
-Most alerting systems drown teams in noise because they treat every anomaly as an incident, not a symptom. We replaced that with a four-layer triage system that cuts false positives 68% by labeling every alert as either a spike, a drift, a noise, or a failure before waking anyone. In 2026 it caught 182 real incidents while firing only 62 alerts—down from 192 false alarms the month before—and the on-call rotation went from 3-hour pages to 6-hour stretches without interruption. The system runs on Prometheus 2.51, uses SLO burn-rate math from Google’s CRE book, and stores labels in TimescaleDB 2.13. The key insight: if you can’t quantify the risk of an alert, you can’t suppress the noise.
+The design goal is not "fewer alerts." It is "every page is actionable, and every suppressed event is still recorded." Those two properties together are what let an on-call engineer trust the pager.
 
-### Why this concept confuses people
+## A four-class mental model
 
-Teams start with good intentions: “We’ll alert on anything that moves.” Within weeks they see 50–70 alerts per day, most of them harmless fluctuations or upstream noise. The confusion isn’t technical—it’s psychological. Humans over-index on the last bad thing that happened and under-index on the probability that it will happen again. Teams also conflate “coverage” with “safety”: more alerts feel safer until the cognitive load buries the real signals.
+Think of an emergency department triage nurse. The nurse does not page a surgeon for every elevated temperature. They check the trend, the patient's history, and the protocol. An alert pipeline can do the same by classifying each breach into one of four shapes before deciding what to do with it.
 
-By the time we traced the root cause, 23 pages had already fired and three engineers were awake at 3 a.m., none of whom owned the upstream service.
+1. **Spike** — a sudden jump well above baseline that returns to normal quickly. Common causes are upstream DNS, CDN, or cache stampede events. Response: record it, do not page.
+2. **Drift** — a gradual shift sustained over a longer window, still inside the SLO but directionally bad. Common causes are config changes and slow leaks. Response: record it, page only if the SLO is at risk.
+3. **Noise** — a breach with no measurable downstream impact. Response: record only.
+4. **Failure** — a sustained breach that will exhaust the error budget within the burn-rate window, or already has. Response: page immediately.
 
-The root mistake is treating every metric breach as a page. A metric breach is just data; only when the breach crosses a defined risk threshold should it become an alert.
+The classification is the whole trick. Once each breach carries a class label, routing, suppression, and reporting all become queries over that label rather than ad-hoc human judgment.
 
-### The mental model that makes it click
+## Worked example: classifying a cache CPU spike
 
-Think of alerts like a triage nurse in an ER. The nurse doesn’t page the surgeon for every elevated temperature; she checks the trend, the patient’s history, and the protocol. Our system does the same with four classes:
-
-1. **Spike** – sudden jump > 3× baseline, but returns within 5 minutes. Often upstream DNS, CDN, or cache stampede. 2. **Drift** – gradual shift over 30 minutes, still within SLO but directionally bad. Usually a config change or slow memory leak. 3. **Noise** – outlier that violates a rule but has no downstream impact. Classic example: 99th percentile latency on a non-critical endpoint. 4. **Failure** – sustained breach that will burn SLO in 5 minutes or already has. Wake the surgeon immediately.
-
-Each class maps to a response: suppress, log, page, or wake. The labels are stored in TimescaleDB so dashboards can color-code incidents without creating more pages.
-
-### A concrete worked example
-
-We’ll walk through one night in Jakarta where a regional cache cluster in Singapore spiked CPU 4.2× for 47 seconds. The raw metric looked scary:
+Consider a regional cache cluster that shows a CPU spike lasting under a minute. The raw metric looks alarming in isolation:
 
 ```
 redis_cpu_user_seconds_total{cache_cluster="sgp-cache-01",quantile="0.99"} 4.2 1678901234
 ```
 
-Step 1 – classify the shape
-- It spiked, it didn’t drift, it recovered quickly → **Spike**. - The downstream p99 latency on our API actually improved (cache hit rate went from 82% to 94%).
+Step 1 — classify the shape. The value jumped and recovered within the window. That is a spike, not a drift. The next question is whether it had downstream impact.
 
-Step 2 – check historical probability
-- We run a daily job that computes 30-day percentiles per cache cluster. - The 99th percentile for sgp-cache-01 is normally 1.1 CPU seconds; 4.2 is 3.8×. - Historical frequency: once every 11 days, usually during a Java garbage collection spike.
+Step 2 — establish a baseline. A daily job computes rolling percentiles per cluster over a 30-day window. Suppose the 99th percentile for this cluster is normally 1.1 CPU-seconds. The observed 4.2 is roughly 3.8× baseline. That ratio, plus the recovery time, is what the classifier keys on.
 
-Step 3 – apply burn-rate filters
-- SLO for API p99 is 150 ms; actual during incident was 138 ms (within SLO). - Burn-rate = (150 – 138) / 5 min = 2.4 ms/min → way below 10 ms/min critical threshold.
+Step 3 — check downstream impact. The API's p99 latency stayed inside its SLO target during the spike. If the SLO target is 150 ms and the observed value stayed below it, there is no burn to attribute to this event. The spike is real but has no user-visible consequence.
 
-Step 4 – label and suppress
-- Prometheus alert rule adds label `severity="spike"` and sets `repeat_interval="0"` (no page). - TimescaleDB inserts `(ts, service, severity, upstream_source, downstream_impact)` so Grafana can display it as a yellow dot instead of a red square.
+Step 4 — label and route. A recording rule attaches a `severity` label, and the routing layer sends `spike` to a log sink rather than a pager. The event is written to a time-series table with columns for timestamp, service, severity, upstream source, and downstream impact, so a dashboard can render it as a low-priority marker.
 
-Result: no page, no Slack ping, engineers slept. The next morning the on-call lead saw the spike in the “Spike” bucket, added a Grafana annotation “GC spike, infra team aware,” and closed it.
+The outcome is that the event is visible in the morning review, attributable, and closed without waking anyone. The important property is that nothing was discarded — the event exists, it is queryable, and a human can audit the suppression decision later.
 
-### How this connects to things you already know
+### How to measure whether this actually helps
 
-If you’ve ever used **AWS CloudWatch composite alarms**, you’ve already touched triage: composite alarms let you combine multiple metrics before deciding to page. The difference is granularity—composite alarms still treat every breach as a potential page; our system first labels the breach so you can decide whether to page.
+Do not trust a narrative about reduced pages. Instrument the pipeline and compare before and after over the same window length:
 
-If you’ve worked with **SLO burn-rate math** (from Google’s CRE book), you already understand that not every metric breach is an incident. Our system just automates the classification so humans don’t have to.
+- Count pages fired per rotation from your paging provider's API or export.
+- Count total alert evaluations and total breaches from the alerting engine's own metrics.
+- Count suppression decisions by class from the triage table.
+- Sample suppressed events weekly and label each one manually as "correctly suppressed" or "should have paged." This gives you a precision estimate that is grounded in review, not assertion.
 
-If you’ve tuned **Prometheus relabeling**, you know that labels drive routing. We extend that idea: labels drive suppression rules.
+A suppression system with no manual audit is a system that will eventually hide a real failure. The audit is not optional.
 
-### Common misconceptions, corrected
+## Where the four-class model connects to tools you already use
 
-1. “Suppressed alerts disappear.”
-   They don’t—they’re stored in TimescaleDB with a severity label. You can still query them to find patterns or to prove that an alert was correctly suppressed.
+If you have used composite alarms in a managed monitoring service, you have already touched triage: composite alarms combine multiple conditions before deciding to notify. The difference here is granularity. Composite alarms still treat a breach as a potential page; this model labels the breach first so routing can decide.
 
-2. “Triage requires AI.”
-   We use simple heuristics: spike = 3× baseline + recovery < 5 min; drift = 10 min sustained shift; noise = no downstream SLO impact. No ML involved.
+If you have worked with SLO burn-rate math — the approach described in the Google SRE Workbook's chapter on alerting on SLOs — you already know that not every breach is an incident. This model automates the classification step so humans do not have to make the same call repeatedly at 3 a.m.
 
-3. “If we page only failures, we’ll miss incidents.”
-   We still log spikes and drifts, so incidents are never lost. The difference is that only the sustained failures wake engineers.
+If you have tuned Prometheus relabeling, you know labels drive routing. Extend that idea: labels also drive suppression. A relabel stage that injects `severity` turns an existing alert rule into a triage-aware rule with no change to the underlying query.
 
-4. “We need a separate system for triage.”
-   We bolted the triage labels onto existing Prometheus + Grafana + TimescaleDB. The delta was adding one relabeling stage and one TimescaleDB table.
+## Common misconceptions, corrected
 
-### The advanced version (once the basics are solid)
+**"Suppressed alerts disappear."** They should not. A suppressed alert is written to durable storage with its class label and the reason for suppression. You can query it for patterns, and you can prove after the fact that a suppression decision was correct. If your suppression path drops data, fix that before adding more rules.
 
-Once the four layers are stable, you can add **probabilistic suppression** and **circuit breakers**.
+**"Triage requires machine learning."** Simple heuristics cover most cases: a spike is a multiple of baseline that recovers within a bounded window; a drift is a sustained shift over a longer window; noise is a breach with no downstream SLO impact. These are arithmetic, not inference. Start with arithmetic and only add complexity when you can show it improves the audit numbers.
 
-Probabilistic suppression uses historical frequency to compute a P(page) score. If the score is below 5%, the alert is logged but not paged. We compute it daily from TimescaleDB:
+**"If we only page failures, we will miss incidents."** Spikes and drifts are still logged. The distinction is about who gets woken, not about what gets recorded. An incident that starts as a spike will become a drift or a failure if it persists, and the classifier will re-evaluate it on the next evaluation interval.
+
+**"This needs a separate system."** The minimal version is one relabeling stage on existing alert rules plus one table for triage records. The routing layer can be your existing alert router with an added match on the severity label.
+
+## Advanced layer: probabilistic suppression and circuit breakers
+
+Once the four classes are stable, two additions reduce noise further without hiding failures.
+
+**Probabilistic suppression** uses historical frequency to compute a suppression score per service and class. If the score is below a threshold, the alert is logged but not paged. The score is recomputed on a schedule from the triage table:
 
 ```sql
 SELECT
@@ -86,16 +84,32 @@ GROUP BY service, severity
 HAVING COUNT(*) > 3;
 ```
 
-Circuit breakers prevent alert fatigue during sustained outages. When a service is already in a critical state, any new spike or drift is automatically suppressed until the breaker resets (30 minutes by default). The breaker state is stored in Redis 7.2 with a TTL:
+The arithmetic here is straightforward and worth stating explicitly: if a service produces 6 events of a given class in 30 days, the daily frequency is 6 / 30 = 0.2, and the naive suppression score is 1 - 0.2 = 0.8. The threshold you pick determines how aggressive the suppression is. Pick it from the audit data, not from intuition.
+
+**Circuit breakers** prevent alert storms during a sustained outage. When a service is already in a critical state, new spikes and drifts for that service are suppressed until the breaker expires. The breaker state lives in a key-value store with a TTL, set atomically:
 
 ```lua
--- Redis Lua script to set breaker
-local key = KEYS[1]  -- service:sgp-cache-01
+-- set a breaker for a service with a TTL, atomically
+local key = KEYS[1]
 local ttl = tonumber(ARGV[1]) or 1800
 redis.call('SET', key, '1', 'EX', ttl, 'NX')
 ```
 
-We also added **team ownership tags** so that when an alert fires, it only pages the owning team unless the breaker is active. The routing table is a simple JSON file deployed with our alert router:
+The critical detail is the exception. A breaker must never suppress a failure-class alert, because the whole point of the breaker is to reduce noise, not to hide the incident that caused the noise. Encode that exception in the breaker logic:
+
+```lua
+local key = KEYS[1]
+local ttl = tonumber(ARGV[1]) or 1800
+local severity = ARGV[2]
+
+if severity == 'failure' then
+  return 0
+end
+
+return redis.call('SET', key, '1', 'EX', ttl, 'NX')
+```
+
+**Ownership tags** complete the picture. When an alert fires, it should page the owning team, and the breaker should be scoped per service so a single upstream outage produces one suppression decision rather than one per dependent service.
 
 ```yaml
 routing:
@@ -105,271 +119,112 @@ routing:
     breaker_ttl: 1800
 ```
 
-With these two additions we cut pages another 12% without adding new logic—just better historical context and circuit state.
+## Failure modes to design against
 
-### Quick reference
+**The breaker race condition.** A breaker fires for a service, and minutes later a genuine failure occurs in a downstream dependency. If the breaker suppresses the failure alert, the outage is hidden. The mitigation is the severity exception shown above, plus a test that asserts a failure-class alert always routes to the pager regardless of breaker state.
 
-| Layer      | Trigger                          | Response           | Storage          | Tooling                                  |
-|------------|----------------------------------|--------------------|------------------|------------------------------------------|
-| Spike      | >3× baseline, recovers <5 min     | log, don’t page    | TimescaleDB      | Prometheus relabel + Grafana annotation  |
-| Drift      | 10 min sustained shift           | log, page if SLO at risk | TimescaleDB | Alertmanager group_by + burn-rate filter |
-| Noise      | Breach with no downstream impact | log only           | TimescaleDB      | Grafana filter by downstream_impact      |
-| Failure    | SLO burn-rate > 10 ms/min        | page, wake         | PagerDuty        | Composite alarm + breaker active         |
+**Cross-service duplication.** A single upstream fault can trigger alerts across many services. If each alert carries only its own service label, reports will count the same root cause many times. A synthetic root-cause label assigned during relabeling lets reports aggregate by cause rather than by symptom:
 
-### Further reading worth your time
+```yaml
+- source_labels: [__address__, loadbalancer]
+  separator: ':'
+  regex: (.+);(.+)
+  target_label: root_cause_id
+  replacement: 'lb_upstream_5xx'
+```
 
-- Google SRE Workbook, Chapter 5 – “Alerting on SLOs” explains burn-rate math
-- Prometheus 2.51 relabeling docs – the exact syntax we use to add severity labels
-- TimescaleDB 2.13 continuous aggregates – how we store 90 days of alert data without exploding disk
-- Redis 7.2 scripting – the Lua snippet we use for circuit breakers
-- Grafana alerting annotations – how we keep suppressed alerts visible but non-intrusive
+**Timezone drift in rolling windows.** A daily job that computes `ts >= NOW() - INTERVAL '30 days'` can silently skip an hour when daylight saving time changes. The fix is to make the window explicit in UTC:
 
-### Frequently Asked Questions
+```sql
+WHERE date_trunc('day', ts AT TIME ZONE 'UTC')
+      >= date_trunc('day', NOW() AT TIME ZONE 'UTC') - INTERVAL '30 days'
+```
 
-**What if a spike actually causes an outage downstream?**
+Pair that with a data-completeness check that flags any day with fewer than 23 hours of data, so a gap in the triage table cannot quietly change suppression behavior.
 
-Then it won’t be a spike—it will be a drift or failure because downstream metrics will breach SLO. Our system checks downstream impact before labeling. In the sgp-cache-01 example, downstream p99 stayed 138 ms, so it remained a spike.
+**Suppression that never expires.** A suppression rule added for a one-off event should have an expiry. Without one, the rule outlives the reason for it and becomes an invisible gap in coverage. Treat suppression rules as code: reviewed, versioned, and dated.
 
-**Do we need to rewrite all our alerts?**
+## Quick reference
 
-No. Start with one service, add the four severity labels via Prometheus relabeling, and deploy TimescaleDB storage. After two weeks you’ll have enough data to see which alerts actually fire and can gradually adjust the rest.
+| Class   | Trigger                                    | Response                | Recorded as              |
+|---------|--------------------------------------------|-------------------------|--------------------------|
+| Spike   | Multiple of baseline, recovers quickly     | log, do not page        | triage row, severity tag |
+| Drift   | Sustained shift over a longer window       | log, page if SLO at risk| triage row, severity tag |
+| Noise   | Breach with no downstream impact           | log only                | triage row, impact flag  |
+| Failure | Burn rate exceeds the critical threshold   | page immediately        | triage row, page event   |
 
-**How do we handle multi-service incidents?**
+## Integration sketch
 
-We route the alert to the owning team, but if the breaker is active, we suppress it for everyone. The breaker state is global per service, so a CDN outage that affects multiple backends gets one breaker, not one page per backend.
+The pieces fit together with a small amount of glue. A recording rule classifies breaches and attaches a severity label:
 
-**What’s the cost of storing all these alerts in TimescaleDB?**
+```yaml
+groups:
+  - name: triage
+    rules:
+      - record: alert:cache_cpu:severity
+        expr: |
+          (redis_cpu_user_seconds_total{quantile="0.99"}
+           / on(cache_cluster) group_left()
+           avg_over_time(redis_cpu_user_seconds_total{quantile="0.99"}[30d]))
+          > 3
+        labels:
+          severity: spike
+```
 
-For 182 incidents and 62 pages in a month, we store roughly 12 k rows at 1 KB each → 12 MB/month. Even at 10× growth we stay under 1.2 GB/year—cheaper than one false page waking an engineer for 3 hours.
+A table stores the triage record so dashboards can render it without generating pages:
 
-### One thing you can do in the next 30 minutes
+```sql
+SELECT
+  $__timeGroup(ts, '1m') AS time,
+  severity,
+  COUNT(*) AS count
+FROM alert_logs
+WHERE $__timeFilter(ts)
+  AND service = 'sgp-cache-01'
+GROUP BY 1, 2
+ORDER BY 1;
+```
 
-Open your largest Prometheus alert file (usually rules/*.yml) and add a relabeling stage that injects a `severity` label with one of `spike|drift|noise|failure` based on the metric’s shape. Then deploy to staging, run `promtool check rules rules/*.yml` to validate, and watch the new labels appear in Grafana. You’ll see immediately which alerts are candidates for suppression—and you’ll have the data to prove it to the rest of the team.
+And the routing layer consults the breaker before deciding to page:
 
----
+```python
+import redis
 
-### Advanced edge cases we personally encountered (and how we crushed them)
+r = redis.Redis(host='breaker-store', port=6379, decode_responses=True)
 
-1. **The “ghost drift” that only appeared in the EU region**
-   In November 2026, our Dublin-based PostgreSQL cluster started showing a 12-minute p95 latency drift every Tuesday at 09:05 UTC. The anomaly was subtle: p95 went from 42 ms to 68 ms—well within SLO, but a clear 34% jump. The usual burn-rate checks passed (2.8 ms/min), so the system initially labeled it a “drift” and logged it. After two weeks we noticed the pattern: every Tuesday, the London office ran a scheduled `VACUUM FULL` on a 300 GB table. The query planner temporarily lost statistics, causing suboptimal plans for 12 minutes. The real fix wasn’t in alerting—it was in PostgreSQL 15.3’s new `autovacuum_vacuum_scale_factor = 0.01` parameter. We added a TimescaleDB continuous aggregate to flag any drift lasting exactly 11–13 minutes with `service = 'postgres-dublin'` and `region = 'eu-west-1'` so we could suppress it globally while the infra team kept the autovacuum settings tuned.
+def should_suppress(service: str, severity: str) -> bool:
+    result = r.eval(
+        script=open('breaker.lua').read(),
+        numkeys=1,
+        keys=[f'service:{service}'],
+        args=[1800, severity],
+    )
+    return bool(result)
+```
 
-2. **The cascade that looked like noise**
-   Our Jakarta Redis cluster (redis-jkt-03) showed a 2.1× CPU spike during a regional failover drill in December 2025. The spike lasted 3 minutes, downstream latency stayed flat, so the system labeled it a “spike” and suppressed the page. The issue? The drill itself caused the spike—it was synthetic load from the failover script. The real problem was that the drill script didn’t account for the extra CPU overhead, causing a 15-second GC pause on one node. The fix wasn’t in alerting either—it was in the drill script’s `redis-cli --latency-history` checks. We added a pre-drill metric: `redis_failover_drill_cpu_multiplier` set to 1.3× the normal peak. If the multiplier exceeded 1.2×, the alert router automatically promoted the severity from “spike” to “drift” for that drill window, preventing future false suppressions.
+## How to evaluate the system honestly
 
-3. **The cross-service noise that broke Grafana annotations**
-   In February 2026, our alert router in Dublin started inserting duplicate annotations for the same underlying issue: a regional load balancer flap in Frankfurt kept triggering 7 separate alerts across auth, payments, and user services. Each alert had the same root cause (`loadbalancer_frankfurt_5xx > 0`), but the TimescaleDB `service` column had different values (`auth-service`, `payments-api`, `user-service`). Grafana’s annotation plugin collapsed them into one event, but the TimescaleDB continuous aggregate that powered our suppression reports was summing counts per service, not per root cause. We fixed it by adding a synthetic `root_cause_id` label during relabeling:
-   ```yaml
-   - source_labels: [__address__, loadbalancer]
-     separator: ':'
-     regex: (.+);(.+)
-     target_label: root_cause_id
-     replacement: 'lb_frankfurt_5xx'
-   ```
-   Now the suppression report aggregates by `root_cause_id`, not service, and we can finally see that Frankfurt flap caused 47 pages across 7 services in 10 minutes—even though only 15 were real incidents.
+Avoid the temptation to report a headline percentage. Instead, track four numbers over matched windows:
 
-4. **The breaker race condition during Black Friday**
-   During the 2026 Black Friday sale, our circuit breaker for the payments service (`payments-us-east-1`) fired at 02:11 UTC, suppressing all new spikes and drifts. At 02:14 UTC, a real downstream failure in the fraud detection service happened—its SLO burn-rate exceeded the threshold. Because the breaker was active, the alert router suppressed the fraud detection page and routed it to a Slack thread instead of PagerDuty. The fix was simple but critical: add a breaker exception for any alert labeled `severity=failure`. We updated the Redis Lua script to:
-   ```lua
-   if ARGV[2] == 'failure' then
-     return 0  -- don't set breaker if severity=failure
-   end
-   ```
-   The exception ensures that true failures always page, even during active breakers, while preventing noise from compounding.
+- Pages per on-call shift, from the paging provider.
+- Suppressed events per class, from the triage table.
+- Manual audit precision: of the suppressed events you sampled, what fraction were correctly suppressed.
+- Missed incidents: failures that were suppressed and later confirmed as real.
 
-5. **The timezone drift in the 30-day percentile job**
-   Our daily percentile job (running at 04:00 UTC) uses `ts >= NOW() - INTERVAL '30 days'` to compute historical frequencies. In March 2026, daylight saving time started in the EU on the 30th, causing the job to skip one hour of data (01:00–02:00 UTC). The job reported a 0% frequency for several services, which caused probabilistic suppression to suppress pages that should have fired. The fix was to switch the job to UTC timestamps explicitly:
-   ```sql
-   WHERE date_trunc('day', ts AT TIME ZONE 'UTC') >= date_trunc('day', NOW() AT TIME ZONE 'UTC') - INTERVAL '30 days'
-   ```
-   We also added a Grafana panel titled “Data completeness” that flags any day with fewer than 23 hours of data, alerting us to timezone issues before they affect suppression logic.
+The fourth number should be zero. If it is not, the classifier or the breaker exception is wrong, and no amount of reduction in page volume compensates for a hidden outage.
 
----
+## FAQ
 
-### Integration with real tools (code snippets included)
+**What if a spike does cause a downstream outage?** Then it stops being a spike. If downstream metrics breach the SLO, the event is reclassified as a drift or failure on the next evaluation, and the failure path pages. The classifier must re-evaluate, not decide once and forget.
 
-1. **TimescaleDB 2.13 + Prometheus 2.51 + Alertmanager 0.27**
-   We store suppression labels in TimescaleDB and let Alertmanager handle routing and deduplication. The integration uses the `timescaledb-prometheus-adapter` (v2.0.1) to expose alert logs as Prometheus metrics. Here’s the relabeling pipeline in Prometheus:
+**Do we need to rewrite all our alerts?** No. Start with one service, add a severity label via relabeling, and record triage events. After a few weeks you will have enough data to see which rules are candidates for suppression and which are load-bearing.
 
-   ```yaml
-   # prometheus.yml
-   remote_write:
-     - url: "http://timescaledb-adapter:9201/write"
-       queue_config:
-         capacity: 10000
-         max_shards: 50
+**How do we handle multi-service incidents?** Assign a root-cause label during relabeling and aggregate reports by that label rather than by service. Route the page to the owning team, and scope the breaker per service so one upstream fault does not produce one page per dependent.
 
-   alert_relabel_configs:
-     - source_labels: [__name__]
-       regex: 'redis_cache_cpu_spike'
-       action: replace
-       target_label: severity
-       replacement: 'spike'
-     - source_labels: [__name__]
-       regex: 'auth_service_p95_drift'
-       action: replace
-       target_label: severity
-       replacement: 'drift'
-     - source_labels: [severity]
-       regex: '(spike|drift)'
-       action: labeldrop
-       # Drop __name__ and other internal labels to reduce cardinality
-   ```
+**What does it cost to store triage records?** The storage cost is a function of event volume and row width. Estimate it as rows per month multiplied by average row size, then compare that to the cost of an unnecessary page in engineer time. Do the arithmetic with your own numbers rather than assuming a figure.
 
-The adapter runs as a sidecar in Kubernetes and exposes a `/suppressions` endpoint that Alertmanager queries to build its routing table. Example suppression rule:
+**How do we know a suppression rule is still correct?** Audit it. Sample suppressed events weekly, label them, and retire any rule whose precision drops. A suppression rule with no audit is a coverage gap waiting to be discovered during an incident.
 
-   ```yaml
-   # alertmanager.yml
-   receivers:
-     - name: 'team-infra-sgp'
-       webhook_configs:
-         - url: 'http://alert-router.default.svc.cluster.local/webhook'
-           send_resolved: true
+## One thing to do in the next 30 minutes
 
-   route:
-     group_by: ['service', 'severity']
-     group_wait: 30s
-     group_interval: 5m
-     repeat_interval: 24h
-     receiver: 'team-infra-sgp'
-     routes:
-       - match:
-           severity: 'failure'
-         receiver: 'team-infra-sgp'
-         continue: true
-       - match:
-           severity: 'spike'
-         receiver: 'null'  # Explicitly suppress spikes
-   ```
-
-2. **Grafana 10.2 + TimescaleDB plugin**
-   We use Grafana’s TimescaleDB plugin (v3.6.0) to visualize the alert triage history. The key panel is a time series with color-coded severity:
-
-   ```sql
-   SELECT
-     $__timeGroup(ts, '1m') AS time,
-     severity,
-     COUNT(*) AS count
-   FROM alert_logs
-   WHERE $__timeFilter(ts)
-     AND service = 'sgp-cache-01'
-   GROUP BY 1, 2
-   ORDER BY 1
-   ```
-
-We also built a suppression heatmap that shows `P(page)` scores per service and severity:
-
-   ```sql
-   SELECT
-     service,
-     severity,
-     daily_freq,
-     p_suppress,
-     CASE
-       WHEN p_suppress < 0.05 THEN 'High suppression'
-       WHEN p_suppress < 0.20 THEN 'Medium suppression'
-       ELSE 'Low suppression'
-     END AS suppression_tier
-   FROM (
-     SELECT
-       service,
-       severity,
-       COUNT(*) / 30.0 AS daily_freq,
-       1 - (COUNT(*) / 30.0) AS p_suppress
-     FROM alert_logs
-     WHERE ts >= NOW() - INTERVAL '30 days'
-     GROUP BY service, severity
-     HAVING COUNT(*) > 3
-   ) AS freq
-   ORDER BY p_suppress ASC;
-   ```
-
-3. **Redis 7.2 + Lua circuit breaker**
-   The breaker is implemented as a Redis 7.2 Lua script to ensure atomicity. The script sets a breaker key with a TTL and returns whether the breaker is active. Here’s the full script with error handling:
-
-   ```lua
-   -- breaker.lua
-   local key = KEYS[1]          -- service name, e.g., 'payments-us-east-1'
-   local ttl = tonumber(ARGV[1]) or 1800  -- 30 minutes
-   local severity = ARGV[2]     -- 'spike', 'drift', or 'failure'
-
-   -- If severity=failure, never set breaker
-   if severity == 'failure' then
-     return { active = false }
-   end
-
-   -- Try to set breaker atomically
-   local ok = redis.call('SET', key, '1', 'EX', ttl, 'NX')
-   if ok then
-     return { active = true, ttl = ttl }
-   else
-     local ttl_remaining = redis.call('TTL', key)
-     return { active = true, ttl = ttl_remaining }
-   end
-   ```
-
-The alert router calls this script before deciding to page:
-
-   ```python
-   # alert_router.py (Python 3.11, redis-py 4.5.5)
-   import redis
-
-   r = redis.Redis(host='redis-7-2.default.svc.cluster.local', port=6379, decode_responses=True)
-
-   def should_suppress(service: str, severity: str) -> bool:
-       breaker = r.eval(
-           lua_script='breaker.lua',
-           keys=[f'service:{service}'],
-           args=[1800, severity]
-       )
-       return breaker['active']
-   ```
-
----
-
-### Before/after comparison (2026 vs 2026)
-
-| Metric                          | Before (Nov 2026)               | After (Nov 2026)                | Delta / Notes                                                                 |
-|---------------------------------|----------------------------------|----------------------------------|-------------------------------------------------------------------------------|
-| Alerts fired (monthly)          | 192                              | 62                               | **–68%** reduction. Calculated by counting `alertmanager_alerts_fired_total`. |
-| False positives                 | 158 (82%)                       | 52 (84%)                         | False positive rate unchanged because we only suppressed noise, not failures. |
-| Pages per on-call engineer      | 3 per night                     | 6 per night                      | **+100%** stretch. Measured across 14 engineers in rotation. |
-| Latency to first page           | 2 min 47 sec (p95)               | 3 min 12 sec (p95)               | Slight increase due to added classification logic (Prometheus 2.51). |
-| CPU overhead (alert router)     | 0.4 vCPU                         | 1.2 vCPU                         | Added TimescaleDB adapter and breaker logic. |
-| RAM overhead                    | 180 MB                           | 512 MB                           | TimescaleDB continuous aggregates and Grafana panels. |
-| Lines of code added             | 0                                | 1,247                            | Excluding tests. Mostly Prometheus relabeling and TimescaleDB schema. |
-| Storage (TimescaleDB)           | N/A                              | 18 MB                            | 12 k rows × ~1.5 KB avg = 18 MB/month. |
-| Cost (cloud)                    | $1,240                           | $1,310                           | **+$70/month** (~5.6%) for added TimescaleDB and Redis. |
-| Time to investigate an alert    | 15–30 min (avg)                  | 8–12 min (avg)                   | Suppression labels and downstream impact checks cut triage time. |
-| Engineer sleep quality (survey) | 2.1 / 5                          | 4.3 / 5                          | Measured via quarterly on-call survey. |
-| Real incidents missed           | 3 (false negatives)              | 0                                | All three were downstream failures masked as “noise” in the old system. |
-| Breaker activations             | N/A                              | 47 (total in 2026)               | 32 suppressions, 15 exceptions (severity=failure). |
-| Suppression accuracy (precision)| N/A                              | 98.1%                            | Precision = true suppressions / total suppressions. |
-| Suppression recall             | N/A                              | 87.3%                            | Recall = true suppressions / total false positives. |
-
-The biggest surprise was the **time to investigate**: even though the alert router added 1.2 vCPU and 512 MB RAM, the average triage time dropped from 22 minutes to 10 minutes because the suppression labels and downstream impact checks gave engineers a head start. The cost increase of $70/month is offset by the $1,800 saved in false pages (each false page costs ~$30 in engineer time and cloud resources).
-
-The **lines of code** metric includes:
-- 342 lines of Prometheus relabeling rules (YAML)
-- 412 lines of TimescaleDB schema (continuous aggregates, hypertables)
-- 289 lines of Python alert router
-- 204 lines of Grafana dashboard queries and panels
-
-All code is open-source in our internal GitLab under `alert-triage-2026`. The system runs on Kubernetes (v1.28) with no external dependencies beyond Prometheus, TimescaleDB, Redis, and Grafana.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** July 11, 2026
+Open your largest Prometheus rule file, add a recording rule that computes the ratio of the current value to a 30-day average for one high-volume metric, and attach a `severity` label based on that ratio. Validate it with `promtool check rules rules/*.yml`, deploy to staging, and watch the new label appear in your alerting UI. You will immediately see which existing alerts would have been classified as spikes — and you will have the beginning of the data needed to justify suppressing them.

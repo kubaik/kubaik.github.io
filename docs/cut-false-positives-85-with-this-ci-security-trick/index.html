@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cut false positives 85% with this CI security trick - Kubai Kevin</title>
-        <meta name="description" content="Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month">
+        <title>Context-aware security gates that cut CI alert noise - Kubai Kevin</title>
+        <meta name="description" content="How to filter CI security findings by pull request diff so scanners surface only what the change actually affects, with policy-as-code examples.">
         <meta name="keywords" content="CiSecurityScanning, SonarqubeFalsePositives, Cybersecurity, Infosec">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T07:15:04.340904">
-        <meta property="article:modified_time" content="2026-09-23T03:57:45.089775+00:00">
+        <meta property="article:modified_time" content="2026-10-03T10:57:26.342273+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="Cut false positives 85% with this CI security trick">
-        <meta property="og:description" content="Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month">
+        <meta property="og:title" content="Context-aware security gates that cut CI alert noise">
+        <meta property="og:description" content="How to filter CI security findings by pull request diff so scanners surface only what the change actually affects, with policy-as-code examples.">
         <meta property="og:url" content="https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/cut-false-positives-85-with-this-ci-security-trick.png">
-        <meta property="og:image:alt" content="Cut false positives 85% with this CI security trick">
+        <meta property="og:image:alt" content="Context-aware security gates that cut CI alert noise">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Cut false positives 85% with this CI security trick">
-        <meta name="twitter:description" content="Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month">
+        <meta name="twitter:title" content="Context-aware security gates that cut CI alert noise">
+        <meta name="twitter:description" content="How to filter CI security findings by pull request diff so scanners surface only what the change actually affects, with policy-as-code examples.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/cut-false-positives-85-with-this-ci-security-trick.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,12 +60,12 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/#article",
-      "headline": "Cut false positives 85% with this CI security trick",
-      "description": "Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month",
+      "headline": "Context-aware security gates that cut CI alert noise",
+      "description": "How to filter CI security findings by pull request diff so scanners surface only what the change actually affects, with policy-as-code examples.",
       "datePublished": "2026-06-12T07:15:04+00:00",
-      "dateModified": "2026-09-23T03:57:45+00:00",
-      "wordCount": 2585,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-03T10:57:26+00:00",
+      "wordCount": 2180,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Cut false positives 85% with this CI security trick",
+          "name": "Context-aware security gates that cut CI alert noise",
           "item": "https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>Cut false positives 85% with this CI security trick</span>
+            <span>Context-aware security gates that cut CI alert noise</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">Cut false positives 85% with this CI security trick</h1>
+                <h1 itemprop="headline">Context-aware security gates that cut CI alert noise</h1>
                 
-                <p class="post-lead">Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month</p>
+                <p class="post-lead">How to filter CI security findings by pull request diff so scanners surface only what the change actually affects, with policy-as-code examples.</p>
                 
                 
                 <div class="tags">
@@ -250,255 +250,240 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2585 words
+                        11 min read
+                        &nbsp;·&nbsp; 2180 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-23
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
-<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
-<p>Security scanning in CI feels like a fire hose: you turn it on, and within minutes you’re drowning in 300 alerts per PR. In late 2026 we moved to trunk-based development with 15 repos and adopted an “every commit gets scanned” policy. By March 2026 our average PR had 87 SonarQube findings, 22 Snyk issues, 14 Trivy vulns, and 7 GitHub Dependabot PRs. Worse, 94% were false positives: dead dependencies, dev-only packages in test containers, and dev servers accidentally exposed in Dockerfiles.</p>
-<p>Our SLO for PR merge time is 45 minutes, but security gates were adding 22 minutes on average. Engineers started gaming the system—commenting out checks or disabling rules to hit the SLO, which defeated the purpose. We needed a way to keep scanning but stop the noise.</p>
-<p>The real problem wasn’t the tools; it was the signal-to-noise ratio. SonarQube 10.5, Snyk CLI 1.1400, Trivy 0.48, GitHub Advanced Security with CodeQL 2.17—each tool is excellent, but none understood our context. We had 4,200 open-source dependencies, mostly transitive, and our services run on Node.js 20 LTS and Python 3.11. The scan that took 3m 12s in CI cost us $1.42 per PR in GitHub Actions minutes, which added up to $8k/month across repos.</p>
-<p>We assumed every dev server port should be flagged, but our internal API gateway exposes health checks on <code>:8080/health</code> deliberately. The scanners didn’t know that.</p>
-<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
-<p>Our first attempt was to tune each scanner independently. In SonarQube we disabled 37 rules that kept firing on <code>console.log</code> and <code>debugger</code> statements. In Snyk we added exclusions for <code>devDependencies: true</code> in test containers. We also tried using GitHub’s <code>codeql.yml</code> to skip folders like <code>examples/</code> and <code>scripts/</code>.</p>
-<p>The problem was scale. We ended up with 118 lines of <code>sonar-project.properties</code> and 23 Snyk ignore files committed to each repo. Dependabot’s ignore rules lived in <code>.github/dependabot.yml</code>, which is fine until you have to update 15 repos when a transitive dependency finally gets a patch. That took me two weeks—two weeks I didn’t have.</p>
-<p>We also tried “scan less often.” We moved to nightly scans instead of per-PR, but that broke our security policy: we needed to block merges on known vulns, not discover them the next morning. The false positive rate stayed the same, and now we were blocking merges hours after code was written.</p>
-<p>The biggest surprise was that even with exclusions, the scanners still produced 60% false positives because the context changed per PR. A dev might add a new test container with a port that looks open, and suddenly Trivy flags it even though it’s only used locally. The tools didn’t know the PR context.</p>
-<p>Finally, we tried a single unified scan using a custom GitHub Action that ran SonarQube, Snyk, Trivy, and CodeQL in parallel. The action worked, but we hit the GitHub Actions 6-hour job limit and had to split the workflow. The total runtime ballooned to 14m 32s per PR, blowing past our SLO. Worse, the output was a 300-line JSON artifact that no one read.</p>
-<h2 id="the-approach-that-worked">The approach that worked</h2>
-<p>We pivoted from “scan everything and ignore noise” to “scan only what matters and prove it matters.” The core idea is to classify every alert into one of three buckets before it reaches the PR:</p>
+                <h2 id="why-ci-security-scanning-drowns-in-noise">Why CI security scanning drowns in noise</h2>
+<p>Enabling security scanning on a repository is usually a one-way door: the tool starts reporting, and the volume of findings per pull request tends to grow faster than the team's capacity to triage it. The common failure mode is not a bad scanner. It is that scanners evaluate the whole repository on every run, while a pull request only changes a handful of files. The result is a long list of findings that are technically true but irrelevant to the change under review.</p>
+<p>Typical symptoms:</p>
 <ul>
-<li>Noise: alerts we’ll never fix (dev-only code, test scaffolding, internal tooling). - Actionable: alerts we will fix within 30 days. - Policy: alerts we’ll block the merge on.</li>
+<li>A dependency scanner flags a vulnerable package in <code>devDependencies</code> on a PR that only edited a CSS file.</li>
+<li>A container scanner reports an exposed port that is an intentional health endpoint.</li>
+<li>A static analyzer reports a SQL-injection pattern in a file that was not touched, and in a framework that uses parameterized queries by default.</li>
+<li>A bot opens dependency-bump PRs that compete for review attention with feature work.</li>
 </ul>
-<p>To do this we built a <strong>policy-as-code</strong> layer on top of the scanners. Instead of configuring each tool separately, we write a single YAML file (<code>security-policy.yml</code>) that defines what to scan, when to scan, and what to do with each finding. The policy layer runs in CI and uses a small Python service we call <code>policy-gate</code> (Python 3.11, FastAPI 0.111) to filter and classify findings based on the PR diff and repo context.</p>
-<p>The magic is in the <strong>context-aware exclusion rules</strong>. Instead of global exclusions, we define exclusions that apply only when certain files or folders change. For example:</p>
+<p>When the gate blocks merges on all of this, teams respond predictably. They disable rules, comment out steps, or add broad ignore files. The gate then stops providing value, and the noise is replaced by a false sense of coverage.</p>
+<p>The fix is not to scan less. It is to filter findings by the intent of the change: what files did this PR touch, and is this finding relevant to those files? This article describes a policy-as-code layer that does exactly that, sitting between the scanners and the merge gate.</p>
+<h2 id="the-core-idea-filter-by-diff-not-by-confidence">The core idea: filter by diff, not by confidence</h2>
+<p>Most scanners already let you exclude paths and rules globally. Global exclusions do not scale, because the same finding can be legitimate in one context and noise in another. A port mapping in a local test container is noise; the same port mapping in a production Dockerfile is a real finding. A global exclusion cannot express that distinction.</p>
+<p>A context-aware policy expresses it as a condition on the PR diff:</p>
+<ul>
+<li>If the PR changed <code>Dockerfile</code>, evaluate container findings normally.</li>
+<li>If the PR did not change <code>Dockerfile</code>, suppress container findings about that file.</li>
+<li>If the PR changed <code>package.json</code> or a lockfile, evaluate dependency findings.</li>
+<li>If it did not, suppress dependency findings, since the dependency graph did not change.</li>
+</ul>
+<p>This is the whole trick. Findings are attached to files or dependency manifests; the PR diff tells you which of those changed; anything outside the changed set is, for the purposes of this PR, out of scope.</p>
+<p>Two properties make this work well:</p>
+<ol>
+<li><strong>It is conservative.</strong> You are not deleting rules. You are scoping them to the change. A finding that survives the filter is one a reviewer should look at.</li>
+<li><strong>It is auditable.</strong> Every suppression carries a reason string in a versioned file, so a reviewer can see why a finding was dropped and challenge it.</li>
+</ol>
+<h2 id="a-policy-file-format">A policy file format</h2>
+<p>The policy layer reads a single YAML file per repository. A minimal format looks like this:</p>
 <pre><code class="language-yaml"># security-policy.yml
 rules:
-  - id: trivy-open-port-8080
-    condition: changed(['Dockerfile'])
+  - id: trivy-exposed-port-8080
+    when: changed('Dockerfile', 'docker-compose.yml')
     action: ignore
-    reason: &quot;Port 8080 is health endpoint in prod and test&quot;
+    reason: &quot;8080 is the health endpoint; only relevant when container config changes&quot;
 
   - id: snyk-dev-dependency
-    condition: not(changed(['package.json', 'yarn.lock']))
+    when: not changed('package.json', 'package-lock.json', 'yarn.lock')
     action: ignore
-    reason: &quot;devDependencies only matter when package files change&quot;
+    reason: &quot;devDependency CVEs only matter when the dependency graph changes&quot;
 
-  - id: sonar-sql-injection
-    condition: changed(['src/**/*.py']) and has_import('django')
+  - id: sql-string-interpolation
+    when: changed('src/**/*.py') and uses_framework('django')
     action: require_review
-    reason: &quot;Django ORM uses named params, not SQL strings&quot;
+    reason: &quot;Django ORM uses bound parameters; review only when query code changes&quot;
 
 scanners:
-  - name: sonarqube
-    version: 10.5
-    endpoint: https://sonar.internal:9000
-  - name: snyk
-    version: 1.1400
-  - name: trivy
-    version: 0.48
+  - name: container-scanner
+    findings: trivy.json
+  - name: dependency-scanner
+    findings: snyk.json
+  - name: static-analyzer
+    findings: sonar.json
 </code></pre>
-<p>The policy file is committed to each repo and versioned alongside the code. When a PR touches <code>Dockerfile</code>, the rule <code>trivy-open-port-8080</code> activates and ignores the port alert only for that PR. When the same port alert appears in a PR that doesn’t touch Docker, the alert survives and must be addressed.</p>
-<p>This solved the “context drift” problem. We no longer had to maintain hundreds of global exclusions; instead, we maintain dozens of conditional rules that match the PR’s scope. The policy file itself is only 40–60 lines per repo, so updating it takes minutes, not weeks.</p>
-<h2 id="implementation-details">Implementation details</h2>
-<p>The <code>policy-gate</code> service is a small FastAPI app that runs in a GitHub Action. It takes three inputs:</p>
-<ol>
-<li>The PR diff (JSON from GitHub API). 2. The scanner results (JSON from each tool). 3. The <code>security-policy.yml</code> file from the repo.</li>
-</ol>
-<p>It outputs a single JSON artifact with filtered findings and an exit code:</p>
+<p>Three actions are enough for most teams:</p>
 <ul>
-<li><code>0</code>: no actionable findings</li>
-<li><code>1</code>: findings require review or blocking</li>
-<li><code>2</code>: fatal error (policy file invalid)</li>
+<li><code>ignore</code> — drop the finding entirely for this PR.</li>
+<li><code>require_review</code> — keep the finding, surface it in the PR comment, but do not block the merge.</li>
+<li><code>block</code> — fail the gate.</li>
 </ul>
-<p>Here’s the core filtering logic:</p>
+<p>The <code>when</code> expression is evaluated against a context object built from the PR diff. That context needs, at minimum:</p>
+<ul>
+<li>the set of changed file paths,</li>
+<li>the set of changed dependency manifests,</li>
+<li>a per-file language or framework hint (derived from extension and a small lookup table).</li>
+</ul>
+<h2 id="implementing-the-gate">Implementing the gate</h2>
+<p>The gate itself is a small program with one job: read the policy, read the scanner outputs, read the diff, and emit a filtered result plus an exit code. It does not need to be a service. A single script that runs as a CI step is easier to test and debug than a long-running process.</p>
 <pre><code class="language-python"># policy_gate/filter.py
-from pydantic import BaseModel
-from typing import List, Dict
-import yaml
+import fnmatch
+from dataclasses import dataclass
+from typing import Iterable
 
-class Rule(BaseModel):
+@dataclass
+class Finding:
+    scanner: str
+    rule_id: str
+    path: str | None
+    severity: str
+
+@dataclass
+class Rule:
     id: str
-    condition: str  # Python expression using PR diff context
-    action: str     # ignore, require_review, block
+    when: str
+    action: str
     reason: str
 
-class Policy(BaseModel):
-    rules: List[Rule]
+def changed(ctx, *patterns: str) -&gt; bool:
+    &quot;&quot;&quot;True if any changed path matches any glob pattern.&quot;&quot;&quot;
+    return any(
+        fnmatch.fnmatch(path, pattern)
+        for path in ctx.changed_paths
+        for pattern in patterns
+    )
 
-def filter_findings(policy: Policy, pr_diff: Dict, findings: List[Dict]) -&gt; Dict:
-    filtered = []
+def not_changed(ctx, *patterns: str) -&gt; bool:
+    return not changed(ctx, *patterns)
+
+def uses_framework(ctx, name: str) -&gt; bool:
+    return name in ctx.frameworks
+
+def evaluate(expr: str, ctx) -&gt; bool:
+    # Only expose the helpers above; never use bare eval on untrusted input.
+    allowed = {&quot;changed&quot;: changed, &quot;not_changed&quot;: not_changed,
+               &quot;uses_framework&quot;: uses_framework, &quot;ctx&quot;: ctx}
+    return bool(eval(expr, {&quot;__builtins__&quot;: {}}, allowed))
+
+def apply_policy(rules: Iterable[Rule], ctx, findings: Iterable[Finding]):
+    kept, suppressed, review = [], [], []
     for finding in findings:
-        rule = next((r for r in policy.rules if matches(r.condition, pr_diff)), None)
-        if rule and rule.action == &quot;ignore&quot;:
+        match = next((r for r in rules if r.id == finding.rule_id), None)
+        if match is None:
+            kept.append(finding)
             continue
-        filtered.append(finding)
-    return {&quot;findings&quot;: filtered, &quot;exit_code&quot;: 1 if filtered else 0}
+        if not evaluate(match.when, ctx):
+            kept.append(finding)
+        elif match.action == &quot;ignore&quot;:
+            suppressed.append((finding, match.reason))
+        elif match.action == &quot;require_review&quot;:
+            review.append((finding, match.reason))
+        else:
+            kept.append(finding)
+    return kept, suppressed, review
 </code></pre>
-<p>We run the service in a Docker container (<code>policy-gate:2025.05</code>) that weighs 42 MB and starts in 320 ms. The GitHub Action looks like this:</p>
+<p>Two things to note in this code, both of which matter in practice:</p>
+<ul>
+<li>The <code>eval</code> call runs only expressions from a file committed to the repository and reviewed like any other code. Even so, it is scoped to a whitelist of helper functions with <code>__builtins__</code> removed. If your policy file can ever come from an untrusted source, replace <code>eval</code> with an explicit parser.</li>
+<li>Rules are matched by <code>rule_id</code>. That means each scanner's output must be normalized into the <code>Finding</code> shape before filtering. Normalization is where most of the integration work lives, not in the filter itself.</li>
+</ul>
+<h2 id="wiring-it-into-ci">Wiring it into CI</h2>
+<p>The workflow below runs the scanners, normalizes their JSON, and then runs the gate. Note the <code>|| true</code> on scanner steps: a scanner that exits non-zero because it found something should not abort the job before the gate has a chance to filter.</p>
 <pre><code class="language-yaml"># .github/workflows/security-gate.yml
 name: security-gate
 
 on:
   pull_request:
-    paths:
-      - 'security-policy.yml'
-      - '.github/workflows/security-gate.yml'
 
 jobs:
   gate:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/our-org/policy-gate:2025.05
     steps:
       - uses: actions/checkout@v4
-      - name: Get PR diff
-        id: pr_diff
+        with:
+          fetch-depth: 0
+
+      - name: Compute changed files
         run: |
-          curl -H &quot;Authorization: token ${{ secrets.GITHUB_TOKEN }}&quot; \
-            &quot;https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}&quot; \
-            -o pr.json
+          git diff --name-only \
+            &quot;origin/${{ github.base_ref }}...HEAD&quot; &gt; changed.txt
+
       - name: Run scanners
         run: |
-          sonar-scanner -Dproject.settings=sonar-project.properties || true
-          snyk test --json &gt; snyk.json || true
           trivy fs --format json --output trivy.json . || true
-      - name: Policy gate
+          snyk test --json &gt; snyk.json || true
+          sonar-scanner -Dproject.settings=sonar-project.properties || true
+
+      - name: Normalize scanner output
+        run: python -m policy_gate.normalize trivy.json snyk.json sonar.json &gt; findings.json
+
+      - name: Apply policy
+        id: gate
         run: |
-          policy-gate \
+          python -m policy_gate.filter \
             --policy security-policy.yml \
-            --pr-diff pr.json \
-            --findings &quot;sonar.json,snyk.json,trivy.json&quot; \
+            --changed changed.txt \
+            --findings findings.json \
             --output filtered.json
-      - name: Fail on findings
-        if: steps.policy_gate.outputs.exit_code == '1'
+
+      - name: Fail on blocking findings
+        if: steps.gate.outputs.exit_code == '1'
         run: exit 1
 </code></pre>
-<p>We also cache scanner results per branch to avoid re-scanning unchanged files. The cache uses Redis 7.2 with a 1-hour TTL and saves 40% of scan time on average.</p>
-<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before (March 2026)</th>
-<th>After (June 2026)</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Findings per PR</td>
-<td>130</td>
-<td>19</td>
-<td>-85%</td>
-</tr>
-<tr>
-<td>False positive rate</td>
-<td>94%</td>
-<td>18%</td>
-<td>-81%</td>
-</tr>
-<tr>
-<td>PR merge time (security gates)</td>
-<td>22 min</td>
-<td>6 min</td>
-<td>-73%</td>
-</tr>
-<tr>
-<td>GitHub Actions minutes per PR</td>
-<td>3m 12s</td>
-<td>1m 10s</td>
-<td>-63%</td>
-</tr>
-<tr>
-<td>Monthly GitHub Actions cost</td>
-<td>$8,100</td>
-<td>$2,100</td>
-<td>-74%</td>
-</tr>
-<tr>
-<td>Time to update policy across 15 repos</td>
-<td>2 weeks</td>
-<td>2 hours</td>
-<td>-94%</td>
-</tr>
-</tbody>
-</table>
-<p>The 85% drop in findings per PR came from two places:</p>
-<ol>
-<li><strong>Conditional filtering</strong> removed 89 alerts per PR on average. 2. <strong>Unified policy file</strong> replaced 118 lines of tool-specific config with 50 lines of policy, which reduced global false positives by 21 alerts per PR.</li>
-</ol>
-<p>The 73% drop in PR merge time was a side effect of fewer findings and a faster pipeline.</p>
-<p>The cost drop from $8,100 to $2,100 per month was real: fewer minutes, fewer parallel jobs, and no need for nightly scans.</p>
-<p>The biggest surprise was that engineers stopped gaming the system. When the security gate became context-aware, the “disable the rule” workaround no longer worked because the rule only applied to the files that mattered. Engineers started fixing real issues instead of silencing alerts.</p>
-<h2 id="what-wed-do-differently">What we'd do differently</h2>
-<p>If we started over in 2026, we’d skip the custom <code>policy-gate</code> service and use an off-the-shelf policy engine. At the time, OPA (Open Policy Agent) 0.63 was too heavy for our GitHub Actions workflow, but by mid-2026 it had slimmed down to 34 MB and added a <code>opa eval --fail-defined</code> flag that does exactly what we built ourselves.</p>
-<p>We’d also split the policy file into two: a repo-specific file (<code>security-policy.yml</code>) and an org-wide baseline (<code>org-security.yml</code>). The baseline would enforce company-wide rules (e.g., “no CVSS &gt;= 7.0 in prod dependencies”) while the repo file handles context-specific rules. This would cut policy update time to minutes across all repos.</p>
-<p>Another mistake: we didn’t version the scanner outputs. We stored only the filtered results in GitHub artifacts, which made debugging hard when a finding reappeared. Now we archive raw scanner JSON for 30 days in S3, so we can replay the policy gate locally if needed.</p>
-<p>Finally, we’d integrate the policy gate with our internal ticket system (Linear) so that actionable findings automatically create tickets with the correct priority. Right now we rely on GitHub issues, which leads to tickets piling up unassigned.</p>
-<h2 id="the-broader-lesson">The broader lesson</h2>
-<p>Security scanning in CI isn’t about the tools—it’s about <strong>context</strong>. A scanner that flags a port as open doesn’t know whether that port is intentional or accidental. A dependency scanner doesn’t know whether a package is used in prod or dev. The only source of truth about context is the PR diff and the repo’s own conventions.</p>
-<p>The principle is: <strong>scan everything, but filter by intent</strong>. Instead of asking “does this alert match a rule?” ask “did this file change in the PR and is the alert relevant to that change?” If the answer is no, the alert is noise—regardless of the scanner’s confidence.</p>
-<p>This principle applies beyond security. Linters, static analyzers, even AI code reviews produce noise when they don’t understand the PR’s scope. A linter that flags a long function in <code>examples/</code> is helpful, but the same lint in a core API file might be critical. The fix is the same: filter by context.</p>
-<p>The mistake most teams make is treating scanners as point solutions. They configure SonarQube, then Snyk, then Dependabot, without realizing that all three tools are producing findings about the same code. A unified policy layer forces you to confront the overlap and decide what truly matters per PR.</p>
-<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
-<ol>
-<li>
-<p><strong>Audit your current noise.</strong> Run a one-week experiment: collect all scanner outputs in a single JSON artifact per PR. Count how many findings are duplicates, context-specific, or dev-only. You’ll likely see 60–80% noise.</p>
-</li>
-<li>
-<p><strong>Write a minimal policy file.</strong> Start with a single rule: “ignore all findings in <code>examples/</code>, <code>test/</code>, and <code>scripts/</code> unless the PR changes those folders.” Commit it to one repo and measure the drop in findings per PR.</p>
-</li>
-<li>
-<p><strong>Adopt a policy engine.</strong> If you’re on GitHub Actions, use OPA 0.65 or the new GitHub Advanced Security “custom rules” beta. If you’re on GitLab, use the new “security policies” YAML. Avoid building a custom service unless you have &gt;50 repos and &gt;100 engineers.</p>
-</li>
-<li>
-<p><strong>Enforce per-PR scanning.</strong> Nightly scans are a band-aid. Move to “scan on PR, filter by diff.” The latency cost is real but manageable: Trivy on a single PR diff takes 12s on average with Redis caching.</p>
-</li>
-<li>
-<p><strong>Measure the merge time impact.</strong> Track the time from PR open to merge, split by “security gates passed” vs “security gates failed.” Aim for &lt;10 minutes added by security gates. If it’s higher, your filtering is too loose or your scanners are too slow.</p>
-</li>
-</ol>
-<h2 id="resources-that-helped">Resources that helped</h2>
+<p>Two details that are easy to get wrong:</p>
 <ul>
-<li><a href="https://github.com/open-policy-agent/opa/releases/tag/v0.65.0">OPA 0.65 release notes</a> — slimmed down and added <code>--fail-defined</code></li>
-<li><a href="https://aquasecurity.github.io/trivy/latest/docs/configuration/filtering/">Trivy <code>--file</code> flag docs</a> — scan only changed files</li>
-<li><a href="https://docs.github.com/en/code-security/code-scanning/creating-custom-rules">GitHub Advanced Security custom rules</a> — policy-as-code in GitHub</li>
-<li><a href="https://docs.snyk.io/snyk-cli/test-for-vulnerabilities/scan-all-unmanaged-jar-files">Snyk <code>--file</code> target</a> — target specific files</li>
-<li><a href="https://docs.sonarsource.com/sonarqube/latest/user-guide/exclusions/">SonarQube 10.5 context-aware exclusions</a> — file-based exclusions</li>
-<li><a href="https://redis.io/docs/latest/develop/use/persistence/">Redis 7.2 with LFU caching</a> — cache scanner results</li>
+<li><strong>Diff base.</strong> <code>git diff --name-only origin/&lt;base&gt;...HEAD</code> uses the merge base, so it lists only files this branch changed. Using <code>HEAD~1</code> instead will miss files in multi-commit PRs and produce confusing suppressions.</li>
+<li><strong>Exit codes.</strong> Keep the gate's exit codes distinct: <code>0</code> for clean, <code>1</code> for blocking findings, <code>2</code> for a policy or input error. A <code>2</code> should fail the job loudly, because it means the gate did not run, and a gate that silently passes when it is broken is worse than no gate.</li>
 </ul>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How do I handle findings that are real but not actionable?</strong></p>
-<p>If a finding is genuine (e.g., a high-severity CVE in a dev-only package), mark it as <code>require_review</code> in the policy. This creates a ticket in your internal system (Linear, Jira) with the correct priority. The PR can still merge, but the issue is tracked and fixed in the next sprint. We used to block merges on every finding, which created a culture of disabling rules. Now we only block on <code>block</code> actions.</p>
-<p><strong>Can I use this approach with multiple programming languages?</strong></p>
-<p>Yes. The policy file is language-agnostic; it filters by file paths and PR diff, not by language. Our monorepo has Node.js, Python, Go, and Rust services, and the same <code>security-policy.yml</code> handles all of them. The scanners are language-specific (e.g., <code>npm-audit</code> for JS, <code>pip-audit</code> for Python), but the policy layer doesn’t care.</p>
-<p><strong>What about secrets scanning?</strong></p>
-<p>Secrets scanning (e.g., GitHub Secret Scanning, TruffleHog) produces fewer false positives because a leaked secret is almost always a real issue. We still run secrets scanning per-PR, but we don’t apply the same context-aware filtering. If a secret is found, the PR is blocked regardless of the file path. We do, however, exclude the <code>.github/</code> folder from secrets scanning because it contains tokens for GitHub Actions.</p>
-<p><strong>How do I migrate from global exclusions to policy-as-code?</strong></p>
-<p>Start by listing every exclusion you currently have (SonarQube, Snyk, Dependabot). For each one, ask: “Is this exclusion always valid, or only when specific files change?” If it’s always valid (e.g., “ignore all findings in <code>node_modules/</code>”), move it to a repo-level rule. If it’s conditional (e.g., “ignore port 8080 only in Dockerfiles”), add a condition in the policy file. Commit the new policy file and remove the old exclusions one by one.</p>
-<p><strong>What’s the biggest mistake teams make when adopting this?</strong></p>
-<p>They try to solve everything in one PR. They move from 130 findings to 20 in a single commit, which breaks the build for weeks while engineers fix every alert. Instead, aim for a 30% reduction in the first week, then iterate. We added rules over months, not days.</p>
-<h2 id="related-reading">Related reading</h2>
+<h2 id="failure-modes-to-design-against">Failure modes to design against</h2>
+<p><strong>Suppression drift.</strong> A rule written for one PR context can quietly suppress real findings later. Mitigation: require every rule to carry a <code>reason</code> string, and add a scheduled job that runs the gate against the default branch with an empty diff. Any rule that would suppress a finding on the default branch should be reviewed.</p>
+<p><strong>Over-broad globs.</strong> A pattern like <code>src/**</code> will match nearly everything and turn the gate into a rubber stamp. Keep patterns narrow and test them. A small unit test per rule, using a fixture diff and a fixture finding, catches most mistakes.</p>
+<p><strong>Scanner output schema changes.</strong> Normalization code that assumes a specific JSON shape breaks silently when a scanner updates. Pin scanner versions in CI, and add a schema check in the normalize step that fails loudly on unexpected keys.</p>
+<p><strong>The gate becomes the bottleneck.</strong> If filtering is correct but the scanners still take longer than the review cycle, the gate is not the problem. Measure the scanner runtime separately from the filter runtime before optimizing the wrong component.</p>
+<p><strong>Review fatigue from <code>require_review</code>.</strong> If everything is <code>require_review</code>, the PR comment becomes the new noise. Reserve it for findings that are real but not fixable in the current PR, and route them to a tracker.</p>
+<h2 id="how-to-measure-whether-it-is-working">How to measure whether it is working</h2>
+<p>There is no universal number to quote here, because the baseline depends on your stack. What matters is that you measure before and after on the same repositories. Instrument the following:</p>
 <ul>
-<li><a href="https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/">Stop false positives in CI scanning now</a></li>
-<li><a href="https://kubaik.github.io/ai-static-analysis-vs-legacy-sast-5x-faster-scans/">AI static analysis vs legacy SAST: 5x faster scans</a></li>
-<li><a href="https://kubaik.github.io/ai-scanners-overlook-real-vulns/">AI scanners overlook real vulns</a></li>
+<li><strong>Findings per PR, split by scanner and by action taken.</strong> Emit a small JSON artifact per run containing counts of kept, suppressed, and review findings. Aggregate over a week.</li>
+<li><strong>Gate runtime.</strong> Time the normalize and filter steps separately from the scanner steps. The filter should be well under a second for typical finding counts; if it is not, the bottleneck is elsewhere.</li>
+<li><strong>Merge time with and without the gate.</strong> Query your forge's API for PR open-to-merge duration, and segment by whether the security check ran. This tells you the real cost of the gate.</li>
+<li><strong>Suppression rate per rule.</strong> A rule that suppresses almost everything it matches is either very effective or too broad. Sample a few of its suppressions by hand each month.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>A simple sanity check you can run on day one: take the last twenty merged PRs, replay their diffs against the current scanner outputs, and count how many findings the policy would have suppressed. That gives you a rough estimate of the noise reduction without waiting for new PRs.</p>
+<h2 id="migrating-from-global-exclusions">Migrating from global exclusions</h2>
+<p>Most teams already have a pile of exclusions scattered across tool configs. The migration is mechanical:</p>
+<ol>
+<li>List every exclusion, with the reason it was added.</li>
+<li>For each one, ask whether it is unconditional or tied to a file change. Unconditional exclusions (vendored code, generated files) stay as scanner-level path excludes. Conditional ones become policy rules.</li>
+<li>Add the rule with a <code>when</code> condition and a <code>reason</code>.</li>
+<li>Delete the old exclusion.</li>
+<li>Run the gate in report-only mode for a week: log what it would suppress and what it would block, but do not fail the build. Compare against the old behavior before switching to enforcement.</li>
+</ol>
+<p>Do this in small batches. A migration that changes the gate's behavior in fifty places at once is impossible to debug when a real finding slips through.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Before adopting diff-scoped filtering, confirm:</p>
+<ul>
+<li>[ ] Scanner output can be normalized into a common finding shape with a stable rule identifier and a file path.</li>
+<li>[ ] The CI system can compute the merge-base diff for a PR.</li>
+<li>[ ] Policy files will be reviewed like code, with an owner.</li>
+<li>[ ] There is a place to send <code>require_review</code> findings (a tracker, not a PR comment that scrolls away).</li>
+<li>[ ] Someone will look at suppression rates monthly.</li>
+</ul>
+<p>If any of these is missing, fix that first. The filtering logic is the easy part.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Does this replace the scanners' own configuration?</strong>
+No. It complements it. Path-level excludes for vendored or generated code still belong in the scanner config. The policy layer handles the conditional cases that scanner configs cannot express.</p>
+<p><strong>What if a finding has no file path, such as a repository-level configuration issue?</strong>
+Treat findings without a path as always in scope. They are rare, and suppressing them by default is how real misconfigurations get missed.</p>
+<p><strong>Can the same policy file serve a monorepo with several languages?</strong>
+Yes, because the conditions are about paths and manifests, not languages. The scanners are language-specific; the policy is not.</p>
+<p><strong>Should secrets scanning go through the same filter?</strong>
+Generally no. A leaked credential is a real finding regardless of which file changed, and the cost of a false positive is much lower than the cost of a miss. Keep secrets scanning unconditional.</p>
+<p><strong>How long should the raw scanner output be retained?</strong>
+Long enough to replay the gate against a past PR when a finding reappears. Thirty days of raw JSON in object storage is a reasonable default for most teams.</p>
+<h2 id="next-step">Next step</h2>
+<p>Pick one repository, list its existing scanner exclusions, and rewrite the five most frequently triggered ones as conditional rules in a <code>security-policy.yml</code>. Run the gate in report-only mode on the next ten pull requests and count how many findings it would have suppressed. That count is your evidence for whether to roll it out further.</p>
                 
                 
             </div>

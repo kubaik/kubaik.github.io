@@ -1,188 +1,187 @@
 # AI agent postmortems: the three surprises
 
-I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.
+## Why agent incidents break normal playbooks
 
-## Why this comparison matters right now
+A conventional service fails loudly. A request returns a 5xx, a health check goes red, a queue depth climbs, and an alert fires within a minute. An AI agent can fail quietly. It returns HTTP 200, the schema validates, the latency is nominal, and the answer is wrong in a way no type checker can see. The output satisfies the API contract but violates the business rule.
 
-AI agents don’t fail like regular services. A cron job that retries every 5 minutes is trivial to catch; an agent that hallucinates a fake API schema for 47 minutes before the downstream service raises a hard error is a different beast. The pipeline was Kubernetes on spot instances, Node 20 LTS, and LangChain 0.2. Everything looked green in Grafana—until we got an SLO alert that 12 % of payments were being rejected because the agent had swapped the `accountId` for `userId` in the JSON schema. No 5xx, no stack trace, just silently wrong data. That’s why a postmortem for an AI agent isn’t about uptime; it’s about **semantic correctness** and **latency in the decision pipeline**.
+This is the reason a postmortem template written for uptime incidents is insufficient for agents. Uptime metrics answer "did the request complete?" They do not answer "was the completion correct?" For an agent, the interesting failure surface is semantic: prompt drift, retrieval noise, tool-call misalignment, and confidence miscalibration. A postmortem that only records CPU, memory, and p99 latency will document a healthy system that happened to approve a fraudulent claim.
 
-Regular incident playbooks assume failure is binary: up or down. AI agents can be “mostly up” while producing garbage. The 2026 CNCF Incident Database shows that 34 % of AI-related incidents in production are semantic drifts—changes in output that don’t break the API contract but break the business rule. That’s why we need a different postmortem template: one that captures prompt drift, retrieval noise, and tool-call misalignment in addition to the usual CPU, memory, and latency metrics.
+A useful framing is to separate three failure classes:
 
-Below I compare two approaches I’ve used in production with clients in Brazil, Colombia, and Mexico: **structured semantic logging** versus **live shadowing with golden datasets**. I’ll show the concrete numbers I measured, the mistakes I made, and the exact files I changed after each incident.
+- **Hard failure.** The agent throws, times out, or returns malformed output. Standard playbooks apply.
+- **Contract failure.** The output parses but breaks a declared constraint, such as an enum value outside the allowed set. Detectable with validation.
+- **Semantic failure.** The output is well-formed and in-range but wrong relative to ground truth. This is the class that requires new instrumentation.
 
+Most agent postmortems that go badly are semantic failures retrofitted into a hard-failure template. The timeline ends up empty because nothing "broke." The action items are vague because the team never captured what the agent actually decided and why.
 
-## Option A — how it works and where it fits
+## Two detection strategies worth comparing
 
-Structured semantic logging (SSL) wraps every agent step in a typed event and ships it to a central sink. I first tried this after a 0.8 % drop in fraud-detection precision at a Brazilian neobank. The agent used OpenAI gpt-4o-mini-2024-07-18 with a 128-token system prompt and five retrieval chunks. The agent would occasionally fabricate a sanction list entry that didn’t exist in the source database. Grafana dashboards showed 99.9 % success, but business reports flagged 312 false positives in 48 hours.
+Two approaches cover most production needs. They are not mutually exclusive, but they have very different cost and latency profiles, so it is worth understanding each before choosing a default.
 
-The fix was to emit a typed event for every retrieval call, every tool call, and every final decision. I used OpenTelemetry 1.37 with the semantic conventions for LLM traces (semconv 1.25.0). Each span includes:
-- `llm.prompt` (truncated to 128 chars)
-- `llm.completion.token_count`
-- `retrieval.query`, `retrieval.hit_count`, `retrieval.miss_ratio`
-- `decision.output_class` (enum: Approve, Reject, ManualReview)
-- `decision.confidence` (float 0–1)
+**Structured semantic logging** wraps each agent step in a typed event and ships it to a central sink. Every retrieval call, tool call, and final decision becomes a span with named attributes. The value is forensic: after an incident, you can reconstruct exactly which retrieval chunk drove a decision. The limitation is that it is retrospective. It tells you what happened after it happened.
 
-The events are exported to Loki 3.0 for fast search and to ClickHouse 24.3 for long-term analysis. A 30-second PromQL query surfaces any span where `decision.output_class != manualReview` and `decision.confidence < 0.75`. Alertmanager fires if the 5-minute rolling average of such spans exceeds 0.5 % of total traffic.
+**Live shadowing against a golden dataset** duplicates live requests to a parallel agent instance that does not serve traffic, and compares the shadow output to labeled ground truth in real time. The value is prospective: drift is detected while the primary agent is still serving the bad behavior. The limitation is cost and setup effort.
 
-Where it shines: when the agent’s output is deterministic enough that you can validate correctness with a small set of golden examples. I use pytest 8.3 with the `pytest-otel` plugin to replay the last 24 hours of traces against a golden set of 200 labeled decisions. Any drift beyond 0.4 % triggers a GitHub issue in the agent repo within 60 seconds.
+A note on terminology: "golden dataset" here means a set of inputs paired with the correct output class, not a set of ideal text strings. The comparison is usually a class match or an embedding-distance match, not string equality.
 
-Weaknesses: SSL only catches errors that have already happened. It won’t tell you that the agent is about to hallucinate a new sanction list entry until the first user complains.
+## Structured semantic logging: how it works
 
+The core idea is to make every decision point observable with a typed attribute rather than a free-text log line. A workable span schema for an agent step includes:
 
-## Option B — how it works and where it fits
+- `llm.prompt` — the prompt text, truncated to a bounded length to control storage
+- `llm.completion.token_count` — output token count, useful for detecting runaway generation
+- `retrieval.query`, `retrieval.hit_count`, `retrieval.miss_ratio` — retrieval health
+- `decision.output_class` — an enum such as `Approve`, `Reject`, `ManualReview`
+- `decision.confidence` — a float in `[0, 1]` if the model or a wrapper produces one
 
-Live shadowing with golden datasets runs the agent in parallel with the live user traffic but does **not** route traffic through it. Every user request is duplicated to a shadow agent that runs on a mirrored prompt and model version. The shadow agent’s output is compared against the golden dataset in real time. Metrics include:
-- **Exact match rate** (EM): percentage of outputs identical to the golden label
-- **Semantic match rate** (SM): percentage within an embedding distance threshold (< 0.15 cosine with `text-embedding-3-small-2024-06-17`)
-- **Latency delta**: shadow agent latency minus live agent latency
+The output class enum is the important part. It converts a free-form decision into a value you can aggregate and alert on. Without it, every dashboard is a text search.
 
-I set up this pipeline for a Mexican insurtech after their agent started approving policies with missing medical history. The live agent was 99.6 % success, but the shadow agent flagged 1.6 % semantic drift in the `medical_history` field. The shadow agent runs on a separate GPU node (NVIDIA T4, CUDA 12.4) so it doesn’t interfere with the live traffic. A 100-line Go service (`shadow-agent v1.4.2`) streams the comparison results to a Grafana panel and a Slack channel.
+A representative query pattern is to surface spans where the agent made a confident terminal decision and the retrieval was weak:
 
-Where it shines: when the agent’s behavior can drift in subtle ways that are hard to capture with static golden sets. The shadow agent caught a prompt regression introduced by a new system message that added "consider the applicant’s pet ownership as a risk factor"—a field that wasn’t in the original golden dataset.
+```sql
+SELECT
+  span_id,
+  decision_output_class,
+  decision_confidence,
+  retrieval_miss_ratio
+FROM agent_spans
+WHERE decision_output_class IN ('Approve', 'Reject')
+  AND decision_confidence < 0.75
+  AND retrieval_miss_ratio > 0.5
+ORDER BY ts DESC
+LIMIT 100;
+```
 
-Weaknesses: shadowing doubles the compute cost and adds 100–150 ms of latency to the prompt-processing pipeline. It also requires a high-quality golden dataset that covers edge cases—building that dataset took us three weeks.
+The exact column names depend on the sink. The shape of the query is what matters: you are looking for the intersection of confidence and retrieval weakness, because that is where semantic failures cluster.
 
+A second query pattern checks drift over time by comparing the distribution of output classes across two windows:
 
-## Head-to-head: performance
+```sql
+SELECT
+  decision_output_class,
+  countIf(ts >= now() - INTERVAL 1 DAY) AS last_24h,
+  countIf(ts >= now() - INTERVAL 8 DAY AND ts < now() - INTERVAL 1 DAY) AS prior_week
+FROM agent_spans
+GROUP BY decision_output_class;
+```
 
-| Metric | Structured Semantic Logging | Live Shadowing |
-|---|---|---|
-| Peak QPS tested | 3 200 | 3 200 |
-| Avg shadow latency added | 0 ms | 127 ms |
-| Shadow compute cost per 1M requests | $0 | $1.42 (T4 GPU) |
-| Trace capture overhead | 3 % CPU, 8 % RAM | 12 % CPU, 22 % RAM |
-| Alert latency | 60 s (PromQL) | 5 s (Go service) |
+A shift in the ratio between `Approve` and `ManualReview` across those windows is a leading indicator, even before any user reports a problem.
 
-I measured these numbers on a Kubernetes cluster with 6 worker nodes (4 vCPU, 8 GiB RAM each) in AWS us-east-1. The agent used Node 20 LTS, LangChain 0.2, and Redis 7.2 for caching. The shadow agent used the same Node version but ran on a separate node pool with GPU scheduling.
+Where this approach fits well: the agent's output space is small and enumerable, the team already runs a log pipeline, and the primary goal is fast root-cause analysis after an incident. It is also the cheapest option to start, because it adds no parallel inference.
 
-The biggest surprise was the **CPU overhead of structured logging**. When we enabled OpenTelemetry with 100 % sampling, the agent’s Node process jumped from 1.2 CPU cores to 1.7 cores. That’s a 42 % increase in CPU usage just to emit the spans. We had to drop the sampling rate to 25 % to bring it back to 1.4 cores, which meant we lost some rare edge cases. That’s when I realized SSL is great for high-frequency drifts, but it can miss low-frequency, high-impact errors.
+Where it falls short: it cannot detect a novel failure class that has never produced a span before. If the agent invents a new output category, the enum will not have a bucket for it, and the drift will appear as an unexpected value or a validation error rather than a clean alert.
 
-Live shadowing, on the other hand, caught the rare edge case within seconds. In one incident, the system message was updated to include a new disclaimer: "Do not approve policies with missing medical history." The live agent’s prompt template didn’t propagate the change, so it kept approving policies with missing history. The shadow agent flagged 1.6 % drift within 8 seconds because its golden dataset included the new rule.
+## Live shadowing: how it works
 
-Choose SSL when you need to debug high-frequency failures with low overhead. Choose shadowing when you need to catch subtle prompt or retrieval drifts that only surface in rare edge cases.
+Shadowing runs a second agent instance on mirrored input and compares its output to labeled ground truth. The live agent's response is unaffected; the shadow agent's response is only used for measurement.
 
+The comparison metrics that matter:
 
-## Head-to-head: developer experience
+- **Exact match rate (EM).** Fraction of shadow outputs identical to the golden label. Useful only when outputs are short and normalized; capitalization and whitespace differences will inflate the miss rate.
+- **Semantic match rate (SM).** Fraction of shadow outputs within an embedding-distance threshold of the golden label. This is the metric to alert on, because it tolerates phrasing variation.
+- **Latency delta.** Shadow latency minus live latency. This is a cost signal, not a correctness signal, but it tells you whether the shadow path is keeping up.
 
-| Dimension | Structured Semantic Logging | Live Shadowing |
-|---|---|---|
-| Onboarding time | 2 days | 14 days |
-| Debugging tooling | Grafana, ClickHouse, pytest | Grafana, custom Go dashboard, Jupyter notebooks |
-| Blame assignment | Clear (spans show exact step) | Requires diffing shadow vs live output |
-| CI integration | GitHub Actions + pytest | GitHub Actions + shadow-agent test container |
-| Learning curve for junior devs | Low (familiar tools) | Medium (Go, embeddings, golden sets) |
+A shadowing pipeline has four moving parts: a request duplicator, a shadow agent, a comparator, and a golden dataset. The comparator is where most of the engineering effort goes, because the threshold choice determines the false-positive rate.
 
-I onboarded a junior engineer from a Colombian university onto the SSL stack in two days. They could query ClickHouse for spans where `retrieval.miss_ratio > 0.5` and trace the failure to a specific retrieval chunk. The same engineer took two weeks to set up the shadow pipeline because they had to:
-1. Build a golden dataset of 300 labeled decisions
-2. Write a Go service to stream comparisons
-3. Set up a GPU node pool
-4. Calibrate the embedding distance threshold
+Where this approach fits well: the output space is large or open-ended, the cost of a wrong decision is high, and the team can invest in curating labeled examples. It is the only approach that catches a drift within seconds of the first affected request, rather than after a user complaint.
 
-The shadow pipeline also required a new mental model: devs had to think about semantic equivalence, not just syntactic correctness. In one case, the shadow agent flagged a drift where the live agent returned "approve" and the shadow returned "Approve" (capitalization difference). The embedding distance was 0.12, so the alert fired. We had to tweak the threshold to 0.15 to avoid noise.
+Where it falls short: it roughly doubles inference cost for the shadowed traffic, it requires a golden dataset that covers edge cases, and it introduces a new mental model for developers. Semantic equivalence is not the same as syntactic equivalence, and a team that has only ever written exact-match assertions will need calibration time.
 
-SSL wins on developer velocity. Shadowing wins when the agent’s output space is large and subtle.
+## A worked example: choosing a threshold
 
+Threshold selection is where shadowing projects most often go wrong, so it is worth working through the arithmetic rather than picking a number by intuition.
 
-## Head-to-head: operational cost
+Suppose you have a labeled calibration set of 100 known-correct pairs and 100 known-incorrect pairs. For each candidate threshold `t`, you compute the confusion matrix at that threshold and pick the `t` that maximizes F1.
 
-| Cost bucket | Structured Semantic Logging | Live Shadowing |
-|---|---|---|
-| Logging infra (Loki + ClickHouse) | $120 / mo | $120 / mo |
-| Shadow compute (T4 GPU, 3 200 QPS) | $0 | $1 420 / mo |
-| Alerting (Prometheus + Alertmanager) | $0 | $0 |
-| Storage (traces + golden sets) | $80 / mo | $110 / mo |
-| **Total (30-day)** | **$200** | **$1 530** |
+Illustrative numbers, chosen to show the method rather than to report a real measurement:
 
-These figures are from AWS us-east-1 in 2026. Loki 3.0 and ClickHouse 24.3 were run on AWS EC2 (m6g.xlarge) with gp3 storage. The shadow compute is a single g4dn.xlarge (T4 GPU) instance for the shadow agent, plus an additional m6g.xlarge for the Go comparison service.
+| Threshold (cosine distance) | True positives | False positives | False negatives | Precision | Recall | F1 |
+|---|---|---|---|---|---|---|
+| 0.05 | 62 | 4 | 38 | 0.94 | 0.62 | 0.75 |
+| 0.10 | 81 | 9 | 19 | 0.90 | 0.81 | 0.85 |
+| 0.15 | 93 | 17 | 7 | 0.85 | 0.93 | 0.89 |
+| 0.20 | 98 | 31 | 2 | 0.76 | 0.98 | 0.86 |
 
-The $1 420 monthly cost for shadowing is hard to justify for early-stage startups. In Mexico, where a senior ML engineer earns ~$4 200 USD/month, that’s 34 % of a salary. We only enabled shadowing after we hit 1 % semantic drift in production—by then we could afford the compute.
+Read the table as a method, not a result. At `t = 0.05`, the comparator is strict: it rarely calls a wrong answer correct, but it misses many correct answers, so recall is low. At `t = 0.20`, it is lenient: it catches almost every correct answer but generates many false alarms, so precision drops. The F1 peak in this illustrative set is at `0.15`.
 
-SSL, on the other hand, is cheap. The biggest surprise was that **ClickHouse storage grew faster than expected**. In one month, we ingested 1.2 TB of traces. Compression cut it to 340 GB, but the egress cost for dashboards still spiked to $80. We had to set a 30-day retention policy and archive older traces to S3 Glacier Deep Archive ($0.00099/GB).
+The important consequence is that the threshold is a property of your embedding model, your label distribution, and your tolerance for false alarms. It is not a universal constant. Re-run the calibration whenever you change the embedding model or materially change the label distribution.
 
-Choose SSL if your budget is tight or your agent’s output space is small. Choose shadowing if you can absorb the compute cost and need to catch subtle drifts early.
+If you cannot afford a labeled calibration set, a cheaper proxy is to sample 200 recent production decisions, have a human label them as correct or incorrect, and run the same sweep. Two hundred labels is usually enough to see the shape of the curve, though not enough to trust the third decimal place.
 
+## Measuring cost and overhead honestly
 
-## The decision framework I use
+Published cost tables for agent observability are usually not reproducible, because they depend on traffic shape, retention, and instance pricing that change constantly. A more durable approach is to measure the two quantities that matter on your own workload.
 
-I evaluate every AI agent project against four questions:
+**Instrumentation overhead.** Measure the CPU and memory of the agent process with the tracing SDK disabled, then enabled, on the same traffic. The delta is your overhead. The measurement command depends on your runtime; for a containerized service, comparing `container_cpu_usage_seconds_total` and `container_memory_working_set_bytes` across the two configurations over a fixed window is sufficient. Expect the overhead to scale with span count, not with request count, so an agent that emits ten spans per request will pay more than one that emits two.
 
-1. **What is the blast radius of a semantic error?**
-   - If the agent approves a fraudulent payment, how much money is at risk? In the Brazilian neobank, each false positive cost $240 in manual review and chargeback fees. The blast radius was high, so we chose shadowing. - If the agent summarizes a support ticket, the blast radius is lower. We chose SSL.
+**Shadow compute cost.** Shadow cost is approximately the cost of running the same inference twice for the shadowed fraction of traffic. If you shadow 100% of traffic, double your inference bill for the shadowed model. If you shadow 5%, the added cost is 5% of the inference bill, at the price of slower detection. The tradeoff is explicit: shadowing a fraction of traffic is a sampling decision, and the detection latency scales inversely with the sampling rate.
 
-2. **How fast does the agent drift?**
-   - If the agent’s behavior changes weekly (e.g., new product SKUs), drift is fast. Shadowing catches changes within seconds. - If the agent’s behavior changes monthly (e.g., seasonal fraud patterns), drift is slow. SSL is enough.
+A useful practice is to record both numbers in the postmortem itself. A postmortem that says "we added shadowing" is less useful than one that says "shadowing added N milliseconds of latency and M dollars per month at current traffic, and detected the drift within K requests."
 
-3. **What is the cost of a false positive vs. false negative?**
-   - In a Mexican insurtech, a false positive (approving a policy with missing medical history) cost $1 800 in claims. A false negative (rejecting a valid policy) cost $45 in lost revenue. We optimized for false positives, so we chose shadowing.
+## Failure modes to watch for
 
-4. **What is the team’s operational maturity?**
-   - If the team has no MLOps experience, SSL is safer. If they have a data scientist who can curate golden sets, shadowing is viable.
+These are the failure modes that most often undermine an otherwise sound detection setup.
 
-I also run a small experiment before deciding. I replay the last 30 days of production traffic against a shadow agent and measure the semantic drift. If the drift is > 0.5 %, I budget for shadowing. If it’s < 0.1 %, I go with SSL.
+**Enum drift.** The agent emits an output class that is not in the enum. Depending on your validation, this either throws a hard error or, worse, gets coerced to a default. If the default is `Approve`, a schema violation silently becomes an approval. Validate enums strictly and alert on unknown values.
 
+**Confidence miscalibration.** The model's self-reported confidence is not a probability. A model can report `0.95` while being wrong. Do not set alert thresholds on raw confidence without validating that it correlates with accuracy on your labeled set. If it does not correlate, drop the confidence attribute from alerts and rely on semantic match instead.
 
-## My recommendation (and when to ignore it)
+**Retrieval staleness.** The retrieval index is refreshed less often than the source data changes. The agent retrieves an outdated chunk and produces a decision that was correct last week. This is invisible in latency and error metrics. Track the age of the retrieved documents as an attribute and alert when the median age exceeds the expected refresh interval.
 
-**Use live shadowing if:**
-- The agent’s output affects money, health, or safety (payments, insurance, medical triage)
-- The agent’s behavior can change quickly (new products, seasonal rules)
-- Your budget can absorb $1 500+ per month in shadow compute
-- You have a data scientist who can curate golden sets
+**Prompt version skew.** A prompt change is deployed to one code path but not another, or a cached prompt is served after an update. The result is two agents behaving differently under the same version label. Always include a prompt hash in the span attributes so postmortems can distinguish "the model drifted" from "the prompt did not propagate."
 
-**Use structured semantic logging if:**
-- The agent’s output is low-stakes (summaries, recommendations)
-- The agent’s behavior changes slowly (monthly model updates)
-- You’re bootstrapping or have a tight budget
-- Your team is small and prefers familiar tooling
+**Comparator false positives.** The shadow comparator flags a difference that is semantically irrelevant, such as capitalization. This erodes trust in the alert. Normalize outputs before comparison and calibrate the threshold as described above.
 
-I ignored this rule once and paid the price. In Colombia, we built a customer-support agent that routed tickets to the right team. The blast radius was low—worst case, a ticket went to the wrong queue and was reassigned manually. We chose SSL and saved $1 200/month. Six months later, the agent started hallucinating priority levels. We caught it in ClickHouse, but 412 tickets had been routed incorrectly, costing the support team 16 extra hours of manual sorting. If we had used shadowing, the drift would have been flagged within minutes.
+**Golden dataset rot.** The golden dataset was labeled months ago and no longer reflects current business rules. Shadowing then measures drift against an obsolete standard. Treat the golden dataset as a versioned artifact with an owner and a review cadence.
 
+## A decision checklist
 
-## Final verdict
+Before choosing an approach, answer these questions explicitly and record the answers in the postmortem template.
 
-AI agent postmortems need to catch semantic drifts, not just uptime failures. **Live shadowing is the only approach that catches subtle, low-frequency errors in real time**—but it costs 7–10× more than structured semantic logging and takes weeks to set up. Structured semantic logging is cheaper and faster to deploy, but it only catches errors after they’ve happened.
+1. **What is the blast radius of a wrong decision?** A wrong summary costs reviewer time. A wrong approval costs money, health, or safety. Higher blast radius favors shadowing.
+2. **How fast does the agent's behavior change?** Weekly changes favor shadowing, because detection latency matters. Monthly changes are usually served by logging.
+3. **Is the output space enumerable?** If the agent produces one of five classes, logging plus strict validation covers most cases. If it produces free text, shadowing with semantic match is more robust.
+4. **What is the cost of a false positive versus a false negative?** If false positives are expensive, favor shadowing and tune the threshold for precision. If false negatives are expensive, tune for recall.
+5. **Does the team have labeled data and the capacity to maintain it?** Shadowing without a maintained golden dataset degrades into noise.
+6. **What is the budget for duplicate inference?** Shadowing costs roughly the inference cost of the shadowed traffic fraction. Decide the fraction deliberately.
 
-Recommendation: **start with structured semantic logging and add live shadowing when you hit 0.5 % semantic drift in production or when the blast radius exceeds $500 per incident.** If you’re in payments, insurance, or healthcare, budget for shadowing from day one.
+A reasonable default for teams new to agent observability is to start with structured semantic logging, add strict enum validation, and introduce shadowing when either of two conditions is met: semantic drift exceeds a threshold the team has agreed on, or the blast radius of a wrong decision exceeds an amount the team has agreed on. Both conditions should be stated as numbers in the postmortem template, not left implicit.
 
+## What to record in the postmortem
 
-## Frequently Asked Questions
+A semantic postmortem should capture the following, in this order:
 
-**How do I build a golden dataset for shadowing without spending weeks?**
+- **The decision timeline.** Which requests were affected, and what the agent decided versus what it should have decided.
+- **The detection path.** How the failure was found: user report, log query, shadow alert, or audit. Record the time from first affected request to detection. This is the metric to improve.
+- **The prompt hash and model version** in effect at the time of the first affected request.
+- **The retrieval state.** Which index version was live, and the age of the retrieved documents.
+- **The confidence distribution** for affected decisions versus unaffected decisions in the same window.
+- **The action items**, each with an owner and a measurable acceptance criterion.
 
-Start with the last 30 days of production decisions that were approved or rejected. Label 200 of them manually with a simple approve/reject/needs-review tag. Use `text-embedding-3-small-2024-06-17` to embed the input and output, then cluster with DBSCAN (eps=0.15) to find edge cases. You only need 200–300 high-quality labels to catch most drifts. Automate the rest with a pytest 8.3 + LangChain 0.2 script that replays the labels every night.
+The last point is the one most often skipped. "Improve prompt" is not an action item. "Add a validation rule that rejects `Approve` when `medical_history` is null, verified against the last 30 days of labeled decisions" is.
 
-**What threshold for embedding distance should I use for semantic match?**
+## FAQ
 
-Use 0.15 cosine distance for `text-embedding-3-small-2024-06-17`. In our tests, 0.10 was too strict (18 % false positives), 0.20 was too loose (6 % false negatives). If you’re using a different embedding model, run a small calibration experiment: take 100 known correct pairs and 100 known incorrect pairs, then pick the threshold that maximizes F1.
+**Can logging alone catch semantic drift?**
 
-**My agent uses a private LLM via an API. How do I shadow it?**
+It can catch drift that manifests as a change in the distribution of output classes or confidence values. It cannot catch a novel failure class that has not appeared before, because there is nothing to compare against. Logging is best understood as a forensic tool, not a predictive one.
 
-Shadowing private LLMs is harder because you can’t run the model locally. Instead, mirror the exact API calls (same model, same temperature, same max_tokens) and compare outputs in real time. Use a feature flag to route a percentage of traffic to the shadow agent (e.g., 5 %). If you see drift, you can disable the new prompt version immediately. I’ve done this with Anthropic Claude 3.7 Sonnet and Mistral Medium 2026-12; the latency delta was 90–110 ms.
+**How large does a golden dataset need to be?**
 
-**Can I combine both approaches?**
+Large enough to cover the edge cases that matter. Two hundred to three hundred well-chosen labels are often enough to calibrate a threshold and detect gross drift. The limiting factor is coverage, not count. A dataset of 10,000 labels that all come from the common case will miss the rare failure that matters most.
 
-Yes—run SSL by default for cheap, high-frequency alerts, and enable shadowing only when you’re rolling out a new prompt or model version. I did this for a Brazilian fintech: SSL on every request, shadowing enabled for 48 hours after each model update. The combined cost was $320/month (SSL) + $210 for the shadow window, versus $1 530 for full-time shadowing. The drift detection was still fast enough to catch the prompt regression in the medical-history example.
+**What if the agent calls a private model behind an API?**
 
-**What’s the one metric I should watch first?**
+Shadowing still works, but the shadow instance must call the same model with the same parameters. Mirror the model, temperature, and max token settings exactly. If the model provider does not offer version pinning, record the model identifier returned in the response and alert when it changes.
 
-Watch the **semantic match rate**—the percentage of shadow outputs that are semantically equivalent to the golden label. Drop it below 99.5 % and you’re in the danger zone. Set up an alert in Grafana that fires when the 5-minute rolling average crosses that threshold.
+**Should shadowing run on every request?**
 
-Right now, open your agent’s prompt file (`system_message.md` or `prompt.yaml`) and check the last 100 production decisions in your structured logs. If you see any decision where `decision.confidence < 0.75` and `decision.output_class == Approve` or `Reject`, that’s your first candidate for deeper analysis.
+No. Shadowing a fraction of traffic is a deliberate tradeoff between detection latency and cost. A common pattern is to shadow a small percentage continuously and shadow 100% for a bounded window after a prompt or model change.
 
----
+**What is the single most useful metric to alert on?**
 
-### About this article
+Semantic match rate, if a golden dataset exists. Without one, the most useful alert is on the ratio of terminal decisions made with weak retrieval, which is a leading indicator of semantic failure.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+## Do this in the next 30 minutes
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 24, 2026
+Open the file that holds your agent's system prompt and record its hash in a comment or a version field. Then query your structured logs for the last 100 terminal decisions and count how many were made with a retrieval miss ratio above 0.5. If that count is greater than zero, you have a candidate incident to investigate, and you have just established the baseline that a postmortem template needs in order to say anything useful.

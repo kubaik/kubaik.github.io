@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>LLMOps 2026: evaluation stack that replaced RAG dashboards - Kubai Kevin</title>
-        <meta name="description" content="Cut LLM evaluation drift 40% by replacing RAG dashboards with real user metrics — the updated golden dataset, prompt fixes, and Redis caching we actually use…">
+        <meta name="description" content="Why RAG dashboards miss real failures, and how to build an evaluation stack around task resolution, dataset rotation, prompt versioning, and drift checks.">
         <meta name="keywords" content="LlmopsEvaluation2026, Rag, PromptTemplateRot, LlmEvaluationStack, Llm, Generativeai, Vectorsearch">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-05T12:37:15.024662">
-        <meta property="article:modified_time" content="2026-09-19T08:27:14.219495+00:00">
+        <meta property="article:modified_time" content="2026-10-03T11:20:01.443137+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLMOps 2026: evaluation stack that replaced RAG dashboards">
-        <meta property="og:description" content="Cut LLM evaluation drift 40% by replacing RAG dashboards with real user metrics — the updated golden dataset, prompt fixes, and Redis caching we actually use…">
+        <meta property="og:description" content="Why RAG dashboards miss real failures, and how to build an evaluation stack around task resolution, dataset rotation, prompt versioning, and drift checks.">
         <meta property="og:url" content="https://kubaik.github.io/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="LLMOps 2026: evaluation stack that replaced RAG dashboards">
-        <meta name="twitter:description" content="Cut LLM evaluation drift 40% by replacing RAG dashboards with real user metrics — the updated golden dataset, prompt fixes, and Redis caching we actually use…">
+        <meta name="twitter:description" content="Why RAG dashboards miss real failures, and how to build an evaluation stack around task resolution, dataset rotation, prompt versioning, and drift checks.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/llmops-2026-evaluation-stack-that-replaced-rag-dashboards.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,10 +61,10 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/#article",
       "headline": "LLMOps 2026: evaluation stack that replaced RAG dashboards",
-      "description": "Cut LLM evaluation drift 40% by replacing RAG dashboards with real user metrics — the updated golden dataset, prompt fixes, and Redis caching we actually use…",
+      "description": "Why RAG dashboards miss real failures, and how to build an evaluation stack around task resolution, dataset rotation, prompt versioning, and drift checks.",
       "datePublished": "2026-07-05T12:37:15+00:00",
-      "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2355,
+      "dateModified": "2026-10-03T11:20:01+00:00",
+      "wordCount": 2477,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">LLMOps 2026: evaluation stack that replaced RAG dashboards</h1>
                 
-                <p class="post-lead">Cut LLM evaluation drift 40% by replacing RAG dashboards with real user metrics — the updated golden dataset, prompt fixes, and Redis caching we actually use…</p>
+                <p class="post-lead">Why RAG dashboards miss real failures, and how to build an evaluation stack around task resolution, dataset rotation, prompt versioning, and drift checks.</p>
                 
                 
                 <div class="tags">
@@ -260,124 +260,101 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2355 words
+                        &nbsp;·&nbsp; 2477 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>After reviewing a lot of code that touches llmops 2026, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
-<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>In 2026, teams building LLM applications stopped asking "Is our RAG working?" and started asking "Is our agent actually solving user problems?". The dashboard we inherited from 2026 was a RAG-specific heatmap: query length vs. answer relevance vs. citation count. That’s when we realised the old stack was optimising for proxies, not outcomes.</p>
-<p>The failure pattern was consistent — users would paste a 500-word research prompt, get a 90%-confident answer with three citations, and still say "This is wrong". The old dashboard gave us a green score; the users gave us a red one. That disconnect cost us 300 support tickets in one quarter.</p>
-<p>The confusing part wasn’t the error message — it was the lack of one. The system didn’t crash. It just gave wrong answers silently. By the time we noticed, we’d deployed 12 model updates that made things worse. The worst part? The RAG dashboard still showed 95% retrieval accuracy. We had optimised for the wrong metric.</p>
-<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
-<p>The root cause was a cascading failure in the evaluation pipeline. We were measuring retrieval quality with <code>trec_eval</code> against a static corpus, but production users asked questions that weren’t in our test set. The reranker was trained on academic papers, not support tickets. The citation generator assumed perfect chunking, but our chunker used a 2026 tokenizer that didn’t handle 2026 slang.</p>
-<p>The real breakdown happened in the latent space. Our embeddings were from <code>bge-large-en-v1.5</code> (2026), but the top-performing model in 2026 was <code>BAAI/bge-m3</code> (May 2026). The cosine similarity threshold of 0.75 that worked for academic text failed for user queries like "How do I cancel my subscription?" because the word "cancel" had drifted in meaning.</p>
-<p>The dashboard still showed the old model’s performance because we hadn’t updated the evaluation dataset. The support team’s Jira tickets told the real story: 1,200 escalations in Q2 2026, most citing wrong cancellation instructions.</p>
-<p>The final nail was the prompt template. We reused a 2026 few-shot template with three examples, but the LLM’s instruction-following had degraded. The template used <code>&lt;context&gt;</code> tags that the new model ignored because its system prompt had changed. The result? Answers that quoted the wrong cancellation policy because the retriever pulled from a 2026 FAQ instead of the updated policy page.</p>
-<h2 id="fix-1-the-most-common-cause-stale-evaluation-datasets">Fix 1 — the most common cause: stale evaluation datasets</h2>
-<p>The fastest win is always updating your evaluation dataset. We used <code>dspy.evaluate.evaluate</code> (v2.4.8) to run the new set against both old and new models.</p>
-<pre><code class="language-python">from dspy.evaluate import Evaluate
-from datasets import load_dataset
+                <h2 id="why-rag-dashboards-stop-being-useful">Why RAG dashboards stop being useful</h2>
+<p>A common pattern in LLM application teams: the retrieval dashboard looks healthy, but users report that answers are wrong. Retrieval precision, citation count, and answer relevance scores can all be green while the product fails the task the user actually wanted done.</p>
+<p>The reason is that retrieval metrics are proxies. They describe the retriever's behavior on a fixed corpus, not whether the end-to-end system solved a user problem. A system can retrieve the correct passage and still produce a wrong answer if the prompt template doesn't instruct the model to use that passage, if the model has changed its instruction-following behavior, or if the passage itself is stale.</p>
+<p>The typical failure mode is silent. Nothing crashes. Latency stays flat. Error rates stay flat. The only signal is in support tickets, thumbs-down feedback, or manual review of sampled outputs. By the time the signal is loud enough to notice, several model or prompt changes may have shipped on top of the regression, making the root cause harder to isolate.</p>
+<p>This article describes a practical evaluation stack that measures task resolution instead of retrieval proxies, and the guardrails that keep it honest over time.</p>
+<h2 id="what-task-resolution-actually-means">What "task resolution" actually means</h2>
+<p>Task resolution is a binary or graded judgment: did the system's output let the user complete the task they came to do? It is not the same as answer relevance, faithfulness, or citation accuracy, though those can be inputs to it.</p>
+<p>The distinction matters because the two can diverge sharply. An answer can be faithful to a retrieved passage and still be unhelpful if the passage is outdated. An answer can be relevant in tone and still instruct the user to take a step that no longer works.</p>
+<p>A useful definition for a support-style application:</p>
+<ul>
+<li><strong>Resolved</strong>: the user could complete their task using the answer alone, without escalation.</li>
+<li><strong>Partially resolved</strong>: the user got closer but needed a follow-up.</li>
+<li><strong>Unresolved</strong>: the answer was wrong, incomplete, or misleading.</li>
+</ul>
+<p>For engineering purposes, resolution is usually measured two ways:</p>
+<ol>
+<li><strong>Automated proxy</strong>: an LLM judge or a rules-based checker scores each output against a labeled expected outcome.</li>
+<li><strong>Human signal</strong>: thumbs up/down, escalation rate, or manual review of a sample.</li>
+</ol>
+<p>Neither is sufficient alone. The automated proxy scales but inherits the judge's biases. The human signal is ground truth but is expensive and slow. The stack below uses both, with the automated proxy as the fast gate and the human signal as the periodic calibration.</p>
+<h2 id="fix-1-replace-the-static-golden-set-with-a-rotating-one">Fix 1 — replace the static golden set with a rotating one</h2>
+<p>The most common cause of a dashboard that disagrees with users is a golden set that no longer resembles production traffic. A set built from documentation examples, academic questions, or early user queries will drift out of distribution as the product and its users change.</p>
+<p>The fix is a golden set that is refreshed on a schedule from real production queries, with resolution labels attached.</p>
+<h3 id="how-to-build-the-rotation">How to build the rotation</h3>
+<p>A workable monthly cycle:</p>
+<ol>
+<li>Sample recent production queries. A few hundred is enough to start; the exact number depends on how much variance you need to resolve.</li>
+<li>Deduplicate and cluster them by intent so the set isn't dominated by one query type.</li>
+<li>Label each with the expected resolved outcome. This can be done by a support engineer, a product owner, or an LLM judge with human spot-checks.</li>
+<li>Version the resulting dataset so you can compare runs across time.</li>
+</ol>
+<p>The labeling step is where most teams underinvest. A golden set with wrong labels is worse than no golden set, because it produces confident, misleading scores. Budget review time for the labels themselves, not just for running the evaluation.</p>
+<h3 id="running-the-evaluation">Running the evaluation</h3>
+<p>The evaluation itself is a loop over the golden set, comparing model output to the labeled outcome. A minimal Python example:</p>
+<pre><code class="language-python">from datasets import load_dataset
 
-# Load fresh data
-golden_set = load_dataset(&quot;llm-judge/golden-2026-q2&quot;, split=&quot;train&quot;)
-evaluator = Evaluate(
-    devset=golden_set,
-    metric=lambda example, pred: 1.0 if pred.answer == example.golden_answer else 0.0,
-    num_threads=8
-)
+def evaluate(model_fn, golden_set, judge):
+    results = []
+    for example in golden_set:
+        prediction = model_fn(example[&quot;query&quot;])
+        score = judge(example[&quot;query&quot;], prediction, example[&quot;expected_outcome&quot;])
+        results.append({
+            &quot;query&quot;: example[&quot;query&quot;],
+            &quot;prediction&quot;: prediction,
+            &quot;score&quot;: score,
+        })
+    resolved = sum(r[&quot;score&quot;] for r in results) / len(results)
+    return resolved, results
 
-# Run against current model
-evaluator(model=new_model, display_progress=True)
+golden_set = load_dataset(&quot;your-org/golden-set&quot;, split=&quot;train&quot;)
+resolution_rate, details = evaluate(model_fn, golden_set, judge)
+print(f&quot;Resolution rate: {resolution_rate:.2%}&quot;)
 </code></pre>
-<p>This exposed a 22% accuracy drop on real queries that the static corpus had hidden. The reranker’s precision@5 was 94% on the old set, but only 68% on the fresh set. The fix wasn’t tweaking the reranker — it was feeding it real queries.</p>
-<p>We also added a weekly job to pull the latest user queries from our CDN logs and rerun the evaluation. The job runs in a GitHub Action and costs $1.20 per run using AWS Fargate (0.25 vCPU, 512MB memory, 10 minutes). Before this, we ran evaluations monthly; now we run them daily.</p>
-<p>The dashboard update was simple: swap the evaluation dataset and rerun the notebook. The green score turned red, which was exactly what we wanted.</p>
-<h2 id="fix-2-the-less-obvious-cause-prompt-template-rot">Fix 2 — the less obvious cause: prompt template rot</h2>
-<p>Prompt templates rot faster than code. Our 2026 template used a three-shot format with hardcoded examples. The new model expected a chain-of-thought format. The result? The retriever would pull the right context, but the LLM would ignore it because the template didn’t ask for reasoning.</p>
-<p>The symptom was subtle: answers that quoted the correct policy but applied it to the wrong scenario. For example, answering "Cancel my subscription" with "You can cancel via email" when the policy had changed to require a form submission.</p>
-<p>The fix required rewriting the prompt to ask for structured reasoning:</p>
-<pre><code class="language-python">def get_prompt(query: str, context: list) -&gt; str:
-    return f&quot;&quot;&quot;
-    Given the user query: {query}
-    And the following context:
-    {'\
-'.join(context)}
+<p>The judge function is the part that needs the most care. For a first pass, a rules-based checker (does the output contain the required step, does it avoid the deprecated step) is more predictable than an LLM judge. If you use an LLM judge, calibrate it against a human-labeled subset before trusting its scores.</p>
+<h3 id="what-to-instrument">What to instrument</h3>
+<ul>
+<li>Resolution rate on the golden set, tracked per model version and per prompt version.</li>
+<li>Distribution of query intents in the golden set, so you can see when it drifts.</li>
+<li>The gap between automated resolution rate and human-reported resolution rate. A widening gap means the judge is drifting.</li>
+</ul>
+<h2 id="fix-2-version-prompts-like-code-and-test-them-in-ci">Fix 2 — version prompts like code, and test them in CI</h2>
+<p>Prompt templates rot for the same reasons any configuration rots: the model changes, the product changes, and the template's assumptions quietly stop holding. A template that worked with one model version may be ignored or misinterpreted by the next.</p>
+<p>The symptom is often subtle. The retriever returns the right context, but the model applies it to the wrong scenario, or quotes a policy that has since changed. This is easy to miss in spot checks because the output looks plausible.</p>
+<h3 id="structured-prompts-reduce-ambiguity">Structured prompts reduce ambiguity</h3>
+<p>A template that asks for explicit reasoning steps is easier to debug than one that asks for an answer directly. For example:</p>
+<pre><code class="language-python">def build_prompt(query: str, context: list[str]) -&gt; str:
+    joined = &quot;\n&quot;.join(context)
+    return f&quot;&quot;&quot;Given the user query: {query}
+And the following context:
+{joined}
 
-    Step 1: Identify the user's intent.
-    Step 2: Check if the context contains the answer.
-    Step 3: If yes, extract the exact steps.
-    Step 4: Format the answer as a numbered list.
+Step 1: Identify the user's intent.
+Step 2: Check whether the context contains the answer.
+Step 3: If yes, extract the exact steps.
+Step 4: Format the answer as a numbered list.
 
-    Intent: 
-    Answer: 
-    &quot;&quot;&quot;
+Intent:
+Answer:
+&quot;&quot;&quot;
 </code></pre>
-<p>We used <code>langsmith</code> (v0.1.15) to version-control the prompt and run A/B tests. The new template increased task resolution by 15% within 48 hours.</p>
-<p>We also added a prompt validation step to our CI pipeline. Every pull request runs a smoke test against 100 real queries. If the resolution rate drops below 80%, the PR is blocked. This caught a regression last week where a new engineer accidentally reverted the template — we caught it in 20 minutes instead of 20 hours.</p>
-<h2 id="fix-3-the-environment-specific-cause-embedding-model-drift">Fix 3 — the environment-specific cause: embedding model drift</h2>
-<p>The embedding model we used, <code>bge-large-en-v1.5</code>, was released in 2023. By 2026, it had drifted 12% on our production corpus. The symptom was high recall but low precision: the retriever would pull 20 chunks, and the reranker would pick the wrong one 35% of the time.</p>
-<p>But the accuracy jumped from 65% to 82%. The tradeoff was worth it.</p>
-<pre><code class="language-bash"># Benchmark before/after
-curl -X POST https://api.embedding-provider.com/v1/embed \\
-  -H &quot;Content-Type: application/json&quot; \\
-  -d '{&quot;model&quot;: &quot;bge-m3&quot;, &quot;text&quot;: [&quot;Cancel my subscription&quot;, &quot;Refund policy&quot;]}'
-</code></pre>
-<p>We also added a nightly embedding benchmark using <code>sentence-transformers</code> (v2.7.0) to track cosine similarity drift:</p>
-<pre><code class="language-python">from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
-
-model = SentenceTransformer(&quot;BAAI/bge-m3&quot;)
-old_embeddings = model.encode(old_queries)
-new_embeddings = model.encode(new_queries)
-similarity = np.mean(cosine_similarity(old_embeddings, new_embeddings))
-
-if similarity &lt; 0.85:
-    print(f&quot;Drift detected: {similarity:.2f}&quot;)
-    raise DriftError(&quot;Embedding model drift exceeds threshold&quot;)
-</code></pre>
-<p>This caught a 9% drift in March 2026, two weeks before users reported issues. The fix was to pin the embedding model version in our <code>requirements.txt</code> and add a monthly evaluation job.</p>
-<p>The cost impact was minimal: $0.002 per 1,000 queries.</p>
-<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
-<p>The first sign of improvement is the support tickets. We track resolution rate per model version using a simple dashboard:</p>
-<table>
-<thead>
-<tr>
-<th>Model Version</th>
-<th>Queries/Day</th>
-<th>Resolution Rate</th>
-<th>Escalations/Day</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>v1.2.3 (old)</td>
-<td>1,200</td>
-<td>65%</td>
-<td>42</td>
-</tr>
-<tr>
-<td>v1.3.0 (new)</td>
-<td>1,200</td>
-<td>82%</td>
-<td>25</td>
-</tr>
-<tr>
-<td>v1.4.1 (fixed)</td>
-<td>1,200</td>
-<td>88%</td>
-<td>18</td>
-</tr>
-</tbody>
-</table>
-<p>We also run a daily synthetic test using <code>llm-judge</code> (v0.3.0) to validate 100 common queries. The test runs in GitHub Actions and posts results to Slack. If the resolution rate drops below 85%, we auto-rollback the model.</p>
+<p>The value of the explicit steps is not that they guarantee better answers. It is that when the answer is wrong, you can see which step failed. If the intent is misidentified, the problem is upstream of the answer. If the intent is correct but the answer is wrong, the problem is in the extraction step.</p>
+<h3 id="smoke-tests-in-ci">Smoke tests in CI</h3>
+<p>Every prompt change should be tested against a fixed subset of the golden set before merge. A CI job that runs the changed prompt against a few hundred labeled queries and fails the build if resolution drops below a threshold catches most regressions before they reach production.</p>
 <pre><code class="language-yaml"># .github/workflows/evaluate.yml
+name: evaluate
+on: [pull_request]
 jobs:
   evaluate:
     runs-on: ubuntu-latest
@@ -386,94 +363,121 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: &quot;3.11&quot;
-      - run: pip install llm-judge==0.3.0
-      - run: python evaluate.py --model new_model --dataset golden-2026-q2
-      - run: python check_threshold.py
-        if: steps.evaluate.outputs.resolution_rate &lt; 0.85
-        run: exit 1
+      - run: pip install -r requirements.txt
+      - run: python evaluate.py --prompt-version ${{ github.sha }} --dataset golden-subset
+      - run: python check_threshold.py --min-resolution 0.80
 </code></pre>
-<p>We measure two key metrics: resolution rate (does the answer solve the user’s problem?) and citation precision (are the citations accurate?). A 5% drop in either triggers a review.</p>
-<p>The final check is the user feedback loop. We added a thumbs-up/down button to every answer, with a free-text field for corrections. This gave us 500 feedback entries per week, which we triage daily. The data showed that 60% of negative feedback was due to wrong answers, not poor UX — confirming our evaluation stack was now measuring the right thing.</p>
-<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
-<p>We built two guardrails:</p>
-<ol>
-<li>
-<p><strong>Golden dataset rotation</strong>: Every month, we pull the latest 500 user queries from production, tag them with resolution outcomes, and add them to the golden set. We use <code>datasets</code> (v2.18.0) to version-control the dataset and <code>dvc</code> (v3.40.0) to track changes.</p>
-</li>
-<li>
-<p><strong>Prompt template versioning</strong>: Every prompt change goes through a PR with a smoke test. We use <code>langsmith</code> to compare the new template against the old one on 100 real queries. If the resolution rate drops by more than 5%, the PR is blocked.</p>
-</li>
-</ol>
-<p>We also added a monthly review cycle where we:
-- Audit the golden dataset for drift (we check if the distribution of query types has changed)
-- Validate the embedding model’s performance on a held-out set
-- Review prompt templates for instruction-following degradation</p>
-<p>The review takes 2 hours and costs $15 in compute. It’s saved us from two major regressions in the last six months.</p>
-<p>We monitor resolution rate and escalations in real-time. If either metric drops below the threshold, the deployment is auto-rolled back.</p>
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<p>The threshold is a policy decision. Setting it too high blocks legitimate improvements that trade a small resolution drop for a large latency or cost win. Setting it too low lets regressions through. A reasonable starting point is to set it at the current production resolution rate minus a small margin, and tighten it once the pipeline is stable.</p>
+<h3 id="what-to-instrument_1">What to instrument</h3>
 <ul>
-<li>
-<p><strong>RAGAS score inflation</strong>: You’re measuring RAGAS metrics on a golden set that’s too easy. The symptom is a 95% score in staging but 70% in production. Fix: rebuild the golden set with hard queries.</p>
-</li>
-<li>
-<p><strong>Context window overflow</strong>: The new model’s context window is 128k tokens, but your prompts are 150k tokens. The symptom is answers that cut off mid-sentence. Fix: truncate prompts to 120k tokens and add a warning.</p>
-</li>
-<li>
-<p><strong>Tokeniser mismatch</strong>: Your chunker uses a 2026 tokenizer, but the new model uses a 2026 one. The symptom is answers that miss key phrases because the tokenizer splits them. Fix: update the tokenizer and rerun the chunking pipeline.</p>
-</li>
-<li>
-<p><strong>Citation hallucination</strong>: The model invents citations that don’t exist in the context. The symptom is answers with fake URLs. Fix: add a citation validation step that checks if the cited text exists in the retrieved chunks.</p>
-</li>
-<li>
-<p><strong>Latency regression</strong>: The new model is 200ms slower but 15% more accurate. The symptom is users complaining about slow responses. Fix: cache frequent queries in Redis 7.2 and use a smaller model for simple queries.</p>
-</li>
+<li>Resolution rate per prompt version, so you can attribute changes.</li>
+<li>The diff between the prompt used in the failing run and the last known good prompt.</li>
+<li>Time-to-detection: how long between a regression shipping and the CI job or dashboard catching it.</li>
 </ul>
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<p>If you’ve tried all fixes and the resolution rate is still below 75%:</p>
-<ol>
-<li>
-<p><strong>Check the prompt template</strong>: The most common cause is a mismatch between the model’s expected format and your template. Use <code>langsmith</code> to compare your template against the model’s recommended format.</p>
-</li>
-<li>
-<p><strong>Validate the golden dataset</strong>: Ensure the golden set represents real user queries. If it’s biased toward easy queries, the evaluation will be misleading. Rebuild it with support tickets.</p>
-</li>
-<li>
-<p><strong>Test the retriever in isolation</strong>: Run <code>ragas.evaluate</code> on the retriever alone, without the LLM. If retrieval is failing, the issue isn’t the model — it’s the chunker or embeddings.</p>
-</li>
-<li>
-<p><strong>Escalate to the model vendor</strong>: If the model’s performance has degraded across multiple teams, file a ticket with the vendor. Include your golden dataset and evaluation results. We did this with Mistral in March 2026 and got a hotfix within 48 hours.</p>
-</li>
-<li>
-<p><strong>Roll back to the last known good model</strong>: If all else fails, roll back to the previous model version. We use a feature flag system to do this in 5 minutes. The flag system is built with LaunchDarkly, and we keep the last three model versions cached.</p>
-</li>
-</ol>
-<p>We once spent a week debugging a resolution rate drop that turned out to be a CDN misconfiguration. The model was fine, but the CDN was caching old responses. Always check the infrastructure before blaming the model.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why did our RAG dashboard show 95% accuracy but users still complained?</strong></p>
-<p>The dashboard measured retrieval metrics like precision@5 and citation recall, not task resolution. We were optimising for academic-style queries, but our users asked real-world questions that weren’t in our test set. The model could retrieve the right context, but the prompt template didn’t ask it to use that context correctly. Updating the golden dataset and prompt template fixed it.</p>
-<p><strong>How often should we update our golden dataset?</strong></p>
-<p>We update it monthly with 500 new queries from production. The dataset is version-controlled with <code>dvc</code>, so we can track changes over time. If you see a 5% drop in resolution rate, rebuild the dataset immediately.</p>
-<p><strong>What’s the fastest way to catch prompt template rot?</strong></p>
-<p>Add a smoke test to your CI pipeline that runs 100 real queries against the new template. If the resolution rate drops by more than 5%, block the PR. We use <code>langsmith</code> to automate this and catch regressions in 20 minutes instead of 20 hours.</p>
-<p><strong>How much does it cost to run a monthly evaluation pipeline?</strong></p>
-<p>The pipeline costs $1.20 per run using AWS Fargate (0.25 vCPU, 512MB memory, 10 minutes). We run it weekly, so the monthly cost is ~$5. The compute is cheap because we use a small dataset and cache embeddings in Redis 7.2 to avoid recomputation.</p>
-<h2 id="the-real-cost-of-ignoring-this-stack">The real cost of ignoring this stack</h2>
-<p>The first symptom is always silent: wrong answers that don’t crash the system. The second symptom is support tickets. The third symptom is churn.</p>
-<p>The fix isn’t glamorous. It’s not a new model or a fancy agent framework. It’s updating your golden dataset, rewriting your prompt template, and adding a smoke test to CI. But it’s the difference between a system that looks good on paper and one that actually works for users.</p>
-<p>Now go check your golden dataset. Is it from last month or last year? If it’s older than 30 days, rebuild it today. Your users will thank you.</p>
-<h2 id="related-reading">Related reading</h2>
+<h2 id="fix-3-watch-for-embedding-and-retrieval-drift">Fix 3 — watch for embedding and retrieval drift</h2>
+<p>Embedding models are not static components. The model weights are fixed once you pin a version, but the relationship between the model and your corpus changes as the corpus changes. New vocabulary, new product names, and shifted user phrasing can all reduce retrieval quality without any code change.</p>
+<p>The symptom is usually high recall with low precision: the retriever returns many candidates, but the correct one is not ranked highly enough for the reranker or the model to use it.</p>
+<h3 id="measuring-drift">Measuring drift</h3>
+<p>A direct approach is to track the similarity between embeddings of a fixed reference set of queries over time. If the mean similarity to the reference falls below a threshold, investigate.</p>
+<pre><code class="language-python">from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+
+model = SentenceTransformer(&quot;BAAI/bge-m3&quot;)
+reference_embeddings = model.encode(reference_queries)
+current_embeddings = model.encode(current_queries)
+
+similarity = np.mean(cosine_similarity(reference_embeddings, current_embeddings))
+print(f&quot;Mean similarity to reference: {similarity:.3f}&quot;)
+</code></pre>
+<p>This measures how far the query distribution has moved, not how good retrieval is. Both matter. Pair it with a retrieval-quality check: for a labeled set of query-document pairs, measure whether the correct document appears in the top-k results.</p>
+<h3 id="what-to-instrument_2">What to instrument</h3>
 <ul>
-<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
-<li><a href="https://kubaik.github.io/why-ai-interviewers-failed-68-of-us-in-2026/">Why AI interviewers failed 68% of us in 2026</a></li>
-<li><a href="https://kubaik.github.io/llm-metrics-that-stop-wasting-time/">LLM metrics that stop wasting time</a></li>
+<li>Mean embedding similarity between a fixed reference query set and the current production query sample.</li>
+<li>Recall@k and precision@k on a labeled query-document set, tracked over time.</li>
+<li>The rate at which the reranker's top-1 choice disagrees with the labeled correct document.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="how-to-verify-the-stack-is-working">How to verify the stack is working</h2>
+<p>Verification is not a single check. It is the agreement between three signals:</p>
+<ol>
+<li><strong>Automated resolution rate</strong> on the rotating golden set.</li>
+<li><strong>Human resolution rate</strong> from thumbs-up/down or escalation rate.</li>
+<li><strong>Retrieval quality</strong> on the labeled query-document set.</li>
+</ol>
+<p>When all three move together, the stack is measuring something real. When they diverge, one of them is wrong, and the divergence itself is the signal to investigate.</p>
+<p>A simple comparison table for tracking model versions over time:</p>
+<table>
+<thead>
+<tr>
+<th>Model version</th>
+<th>Automated resolution</th>
+<th>Human resolution</th>
+<th>Escalation rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1.2.3</td>
+<td>65%</td>
+<td>63%</td>
+<td>3.5%</td>
+</tr>
+<tr>
+<td>v1.3.0</td>
+<td>82%</td>
+<td>79%</td>
+<td>2.1%</td>
+</tr>
+<tr>
+<td>v1.4.1</td>
+<td>88%</td>
+<td>86%</td>
+<td>1.5%</td>
+</tr>
+</tbody>
+</table>
+<p>The numbers above are illustrative. The point is the structure: you want automated and human numbers that track each other, and escalations that fall as resolution rises. If automated resolution rises while human resolution falls, the judge is probably rewarding the wrong thing.</p>
+<h2 id="guardrails-that-prevent-recurrence">Guardrails that prevent recurrence</h2>
+<p>Two guardrails do most of the work:</p>
+<p><strong>Golden set rotation.</strong> Refresh the labeled set on a schedule from production queries. Version it so you can compare runs. Review the labels, not just the scores.</p>
+<p><strong>Prompt versioning with CI gates.</strong> Every prompt change goes through a pull request, runs against a fixed subset, and is blocked if resolution drops below a threshold. The threshold should be explicit and reviewed periodically.</p>
+<p>A monthly review cycle adds a third layer:</p>
+<ul>
+<li>Audit the golden set for distribution drift. Has the mix of query intents changed?</li>
+<li>Validate the embedding model on a held-out set. Has retrieval quality changed?</li>
+<li>Review prompt templates for instruction-following degradation. Are the model's outputs still following the requested format?</li>
+</ul>
+<p>The review is cheap relative to the cost of a silent regression. The expensive part is the labeling, and that cost is bounded by how many queries you choose to label.</p>
+<h2 id="related-failure-modes">Related failure modes</h2>
+<ul>
+<li><strong>Judge inflation.</strong> An LLM judge that is too lenient will report high resolution on outputs that users reject. Calibrate the judge against human labels on a subset, and re-calibrate when the judge model changes.</li>
+<li><strong>Context window overflow.</strong> If the prompt exceeds the model's context window, the output may be truncated or the model may ignore the earliest content. Check the total token count of the assembled prompt, including retrieved context, and add a hard limit with a warning.</li>
+<li><strong>Tokenizer mismatch.</strong> If the chunker and the model use different tokenizers, chunk boundaries may split key phrases. Verify that the chunker's tokenizer matches the model's, or that the chunking is tokenizer-agnostic.</li>
+<li><strong>Citation hallucination.</strong> The model may cite sources that are not in the retrieved context. Add a validation step that checks each cited span against the retrieved chunks before returning the answer.</li>
+<li><strong>Latency regression.</strong> A more accurate model may be slower. Measure latency alongside resolution, and consider caching frequent queries or routing simple queries to a smaller model.</li>
+</ul>
+<h2 id="when-resolution-is-still-low">When resolution is still low</h2>
+<p>If the stack is in place and resolution is still below target, work through the layers in order:</p>
+<ol>
+<li><strong>Check the prompt template.</strong> Compare it against the model provider's documented format. A mismatch between the model's expected input structure and your template is a common cause of ignored context.</li>
+<li><strong>Validate the golden set.</strong> Confirm that the labels are correct and that the query distribution matches production. A biased set produces misleading scores.</li>
+<li><strong>Test retrieval in isolation.</strong> Run the retriever without the model. If the correct document is not in the top-k, the problem is in chunking or embeddings, not the model.</li>
+<li><strong>Check infrastructure.</strong> Caching layers, CDNs, and proxies can serve stale responses that look like model regressions. Verify that the response the user sees matches the response the model produced.</li>
+<li><strong>Roll back.</strong> If the regression correlates with a model or prompt change, roll back first and diagnose second. A feature flag that can revert a model version in minutes is worth the setup cost.</li>
+</ol>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why can a RAG dashboard show high accuracy while users complain?</strong></p>
+<p>Because retrieval metrics measure the retriever, not the end-to-end task. A system can retrieve the correct passage and still fail if the prompt doesn't use it, the passage is stale, or the model misapplies it. Track task resolution separately.</p>
+<p><strong>How often should the golden set be refreshed?</strong></p>
+<p>Monthly is a reasonable default for a product with changing user behavior. The right cadence depends on how fast your query distribution and product surface change. If resolution drops by more than a few points, refresh immediately rather than waiting for the schedule.</p>
+<p><strong>What's the fastest way to catch prompt template rot?</strong></p>
+<p>A CI job that runs the changed prompt against a fixed labeled subset and blocks the merge if resolution drops below a threshold. This catches most regressions before they reach production.</p>
+<p><strong>How much does a monthly evaluation pipeline cost?</strong></p>
+<p>It depends on the judge model, the dataset size, and the infrastructure. The dominant cost is usually the judge's inference, not the compute running the loop. Caching embeddings and judge outputs for unchanged inputs reduces it substantially. Measure your own pipeline rather than assuming a figure.</p>
+<h2 id="the-cost-of-ignoring-the-stack">The cost of ignoring the stack</h2>
+<p>The failure mode is silent. Nothing crashes, latency stays flat, and the dashboard stays green while users get wrong answers. The fix is unglamorous: a rotating golden set, versioned prompts with CI gates, and drift monitoring on the retrieval layer.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Open your evaluation dataset and check its creation date. If it predates your last significant product or model change, sample 50 recent production queries, label their expected outcomes, and run your current model against them. Compare the resolution rate to your dashboard's score. The size of the gap tells you how much the dashboard is hiding.</p>
                 
                 
             </div>

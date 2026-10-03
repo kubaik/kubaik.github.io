@@ -1,341 +1,144 @@
-# 5 AI tools that let us ship faster than SF teams
+# Choosing AI Coding Assistants for Cloud-Heavy Stacks
 
-I ran into this east african problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+Most public comparisons of AI coding assistants rank tools by autocomplete quality. That is the least interesting axis. The expensive failures in cloud-heavy systems are not typos — they are plausible-looking diffs that misconfigure IAM, break queue semantics, or introduce concurrency bugs that only appear under load. Tool selection should be driven by which failure modes a tool makes more or less likely in your stack.
 
-## Why this list exists (what I was actually trying to solve)
+## The real problem is consistency, not typing speed
 
-Back in 2024 we had a six-person squad in Nairobi building the core of a digital wallet API service for a tier-2 bank. Our on-call rotations were brutal: 3 a.m. alerts for Spanner quota throttling, Redis eviction storms every Sunday at midnight, and Jira tickets piling up because the San Francisco payments team had three senior engineers available while we were down to one.
+A team that ships fast and a team that ships reliably are doing different things. Fast teams often have the budget to absorb flaky tests, manual rollbacks, and latency spikes by throwing engineers at them. Smaller or more distributed teams cannot. The leverage an AI assistant provides is not raw keystroke savings; it is the ability to keep a consistent review bar when the person on call is also the person writing the fix.
 
-I thought AI could close the gap, but I had no idea how to measure "closing the gap." I tried Copilot in our Python 3.11 codebase and got autocomplete that produced working snippets 40 % of the time. That wasn’t good enough for production. I spent three days debugging a connection pool issue that turned out to be a single misconfigured `connect_timeout` — this post is what I wished I had found then.
+That reframing changes what you measure. A tool that suggests 40% more code but doubles your rollback rate is a net loss. A tool that suggests slightly less code but catches a misconfigured queue attribute before it reaches production is a net gain.
 
-The real problem wasn’t speed; it was **consistency at scale**. Higher-cost markets can afford to throw humans at flaky tests, manual rollbacks, and 500 ms latency spikes. We needed tools that made our 3 engineers look like 6, while never shipping a bug we couldn’t trace in under 10 minutes.
+## How to evaluate an assistant without fooling yourself
 
----
+Before comparing tools, define the metrics. Three are worth tracking:
 
-## How I evaluated each option
+- **First-pass pass rate**: the percentage of suggested edits that compile and pass your existing unit tests with no human modification. Measure it on your own repository, not on a public benchmark.
+- **Median review time**: minutes from PR open to approval, segmented by whether the diff was AI-assisted.
+- **Rollback rate**: the percentage of hotfixes deployed in the last 30 days that originated from an AI-generated diff.
 
-I built a tiny benchmark: clone a production microservice repo (28 k lines, Flask + SQLAlchemy + Redis 7.2), run integration tests on a t3.medium EC2 instance in us-east-1, and measure wall-clock time to merge a PR that fixed one real bug. I recorded three metrics:
+To measure first-pass pass rate, instrument your CI. Tag every PR with the assistant that produced it (a commit trailer or a PR label works), then run a query over the last N merged PRs:
 
-- **First-pass pass rate**: percentage of suggested edits that compiled and passed unit tests without human edits.
-- **Review time**: median minutes from PR open to approval.
-- **Rollback rate**: percentage of hotfixes deployed in the last 30 days that originated from an AI-generated diff.
+```
+# illustrative query shape, adapt to your CI's data model
+SELECT assistant,
+       COUNT(*) FILTER (WHERE ci_passed_first_try)::float / COUNT(*) AS first_pass_rate,
+       PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY review_minutes) AS median_review
+FROM pull_requests
+WHERE merged_at > now() - interval '90 days'
+GROUP BY assistant;
+```
 
-I tested against these tools (all on default settings unless noted):
+Run each candidate against the same repository for the same period. Do not compare a tool tested on greenfield code against one tested on a legacy service — the codebase dominates the result. If you want to control for task difficulty, restrict the comparison to PRs touching the same directories.
 
-- GitHub Copilot Chat (2026.2.1)
-- Cursor IDE (2026.1.0)
-- Amazon Q Developer (v1.10.0)
-- Codeium Enterprise (1.7.3)
-- GitLab Duo (16.11)
+A note on sample size: with fewer than roughly 30 AI-assisted PRs per tool, the median is noisy enough that a single bad week can flip the ranking. Treat early results as directional, not decisive.
 
-To avoid cherry-picking, I ran the benchmark five times per tool and discarded outliers beyond two standard deviations. The numbers below are medians of the remaining three runs.
+## The tools and what they are actually good at
 
----
+### Amazon Q Developer
 
-## How East African developers are using AI tools to compete with teams in higher-cost markets — the full ranked list
+Built on the same model family as the original CodeWhisperer, with an agent that runs against your AWS account context. Its distinguishing feature is native awareness of IAM policies, Lambda configuration, and queue attributes without requiring you to paste context files.
 
-### 1. Amazon Q Developer (v1.10.0)
+- **Strength**: strong on AWS-centric code because the model is grounded in AWS service semantics. It will often flag a visibility timeout that is shorter than a downstream function's expected duration.
+- **Weakness**: pricing is per-user with a suggestion cap on the free tier; heavy users exhaust it quickly.
+- **Best for**: teams whose production surface is mostly AWS-managed services.
 
-Built on the same model family as CodeWhisperer but with a local agent that runs in your AWS account. This is the only tool that natively understands IAM, Lambda, and SQS queue depths without extra context files.
+### GitHub Copilot Chat
 
-Strength: Cloud-specific context yields 78 % first-pass pass rate on AWS-centric codebases (median 12 minutes review time vs 28 minutes for Copilot).
+The chat surface inside VS Code and JetBrains lets you ask targeted questions about a selection. For example, asking why a Redis query is slow can produce a diff that replaces `KEYS` with a cursor-based `SCAN` loop.
 
-Weakness: Pricing starts at $20 per user per month after 500 suggestions; small teams burn through that fast.
+- **Strength**: integrates with GitHub Actions, so suggestions can be validated by the same CI that gates every other PR.
+- **Weakness**: the useful enterprise features sit behind a higher-priced plan, and the per-seat cost stacks if you also pay for an individual subscription.
+- **Best for**: teams already standardized on GitHub for review and CI.
 
-Best for: Teams already on AWS with cloud-heavy stacks (Lambda, Step Functions, DynamoDB).
+### Cursor
 
-### 2. GitHub Copilot Chat (2026.2.1)
+An editor built around an agent that can refactor across multiple files. It is most useful when the task is structural — extracting a module, converting a service, or reorganizing a large file.
 
-The 2026 upgrade added inline chat inside VS Code, so you can ask "why is this Redis query slow?" and get a diff that swaps `keys` for `SCAN` and drops latency from 420 ms to 18 ms.
+- **Strength**: handles large multi-file refactors better than inline-completion-first tools.
+- **Weakness**: the agent is memory-hungry. On a 16 GB machine with many repositories open, indexing and inference compete with your editor and browser.
+- **Best for**: greenfield work or planned migrations where the diff is large but the intent is clear.
 
-Strength: 65 % first-pass pass rate on pure Python; integrates with GitHub Actions so suggestions are pre-validated.
+### A managed LLM gateway with on-prem inference
 
-Weakness: Requires GitHub Enterprise ($21/user/month), which is steep when you also pay for Copilot Pro ($19/user/month).
+For regulated environments, the relevant category is not a specific vendor but a deployment model: an assistant whose inference runs inside your network, so source code never leaves your perimeter. These are typically priced as a platform plus hardware rather than purely per-seat.
 
-Best for: Open-source projects or shops already on GitHub Advanced Security.
+- **Strength**: satisfies data-residency requirements that rule out hosted inference entirely.
+- **Weakness**: you own the operational burden — model updates, GPU capacity, and latency under concurrent load.
+- **Best for**: teams with a hard compliance constraint and the infrastructure budget to meet it.
 
-### 3. Cursor IDE (2026.1.0)
+### GitLab Duo
 
-Cursor is VS Code with a built-in agent that can refactor entire modules. One Nairobi fintech used it to rewrite a legacy Java service into Go in two weeks; the team shrank from 8 to 4 engineers while keeping the same throughput.
+Integrated into the GitLab pipeline. It generates merge request descriptions, Terraform plan summaries, and changelog entries from commit history.
 
-Strength: 85 % first-pass pass rate on refactor tasks larger than 500 lines.
+- **Strength**: reduces the formatting overhead that consumes reviewer attention.
+- **Weakness**: requires the top GitLab tier, which is expensive per seat.
+- **Best for**: teams already committed to GitLab for CI/CD.
 
-Weakness: Cursor’s agent consumes 4 GB RAM per workspace; on a 16 GB MacBook Pro it slows down with 10+ repos open.
+| Tool category | Primary strength | Main cost driver | Best fit |
+|---|---|---|---|
+| AWS-native assistant | Cloud service semantics | Per-seat subscription | AWS-heavy stacks |
+| GitHub-integrated chat | CI-validated suggestions | Per-seat, stacked plans | GitHub-centric teams |
+| Multi-file agent editor | Large refactors | Hardware (RAM) | Greenfield and migrations |
+| On-prem LLM gateway | Data residency | Hardware + platform | Regulated industries |
+| Pipeline-integrated assistant | Review overhead | Top-tier platform plan | GitLab Ultimate users |
 
-Best for: Startups doing greenfield rewrites or migrating monoliths to microservices.
+## A worked example: choosing between two candidates
 
-### 4. Codeium Enterprise (1.7.3)
+Suppose a team of six runs a payments API on AWS with a GitHub-based review process. They are deciding between an AWS-native assistant and a GitHub-integrated chat tool. Here is how to reason through it without inventing numbers.
 
-Codeium’s enterprise tier adds on-prem inference, so your code never leaves the office. A Kenyan insurtech dropped their AI spend from $3.2 k/month to $1.4 k by running models locally on a single RTX 4090.
+**Step 1 — Define the failure that costs the most.** For a payments API, the most expensive class of bug is a silently dropped or duplicated message. That points the evaluation at queue and idempotency handling, not at raw code volume.
 
-Strength: 700 ms median latency per suggestion even with 50 concurrent devs.
+**Step 2 — Build a small, representative test set.** Take ten recent production incidents. For each, write the prompt a developer would have used at the time and record whether the candidate tool's suggestion would have prevented, caused, or been neutral to the incident. This is a manual exercise, but ten incidents is a few hours of work and far more informative than a generic benchmark.
 
-Weakness: You must maintain the infra; we had to tune CUDA drivers for 3 weeks before stability.
+**Step 3 — Weight by cost.** If three of the ten incidents were queue-related and each cost roughly a day of engineering time, a tool that catches queue misconfigurations is worth more than one that is faster at writing CRUD endpoints.
 
-Best for: Regulated industries where data residency is non-negotiable.
+**Step 4 — Decide on the margin.** If both tools score similarly on the incident set, fall back to integration cost: which one fits the CI you already run, and which one your team will actually keep using after the novelty fades?
 
-### 5. GitLab Duo (16.11)
+This procedure produces a defensible answer for one team. It will not generalise to another team with a different stack, which is the point — the ranking is a function of your failure modes, not the tool's marketing.
 
-GitLab Duo is baked into the GitLab Ultimate pipeline. It auto-generates MR descriptions, Terraform plans, and even changelog entries from commit messages.
+## Failure modes that recur across tools
 
-Strength: 35 % faster MR throughput because reviewers spend time on design, not formatting.
+These patterns show up regardless of vendor. They are worth building CI checks for.
 
-Weakness: GitLab Ultimate costs $99/user/month — nearly double GitHub Enterprise.
+**Async runtimes invoked incorrectly.** A model trained heavily on notebook-style code may suggest wrapping an async database call in a synchronous entry point. Under a multi-worker server, this deadlocks rather than erroring. Guard against it by running async tests in CI with the same worker configuration as production.
 
-Best for: Teams already using GitLab Ultimate for DevOps.
+**Cursor handling in paginated APIs.** A refactor that replaces a blocking `KEYS` call with `SCAN` is usually correct, but the cursor must be looped until it returns to zero. A suggestion that executes `SCAN` once and stops will silently return partial results. Test pagination logic with a dataset larger than one page.
 
-| Tool | First-pass pass rate | Review time (min) | Cost (USD) | Best for |
-|---|---|---|---|---|
-| Amazon Q Developer | 78 % | 12 | $20/user/month | AWS-heavy stacks |
-| GitHub Copilot Chat | 65 % | 28 | $40/user/month | GitHub-centric teams |
-| Cursor IDE | 85 % | 15 | $25/user/month | Greenfield rewrites |
-| Codeium Enterprise | 70 % | 22 | $1.4 k/month (local) | On-prem compliance |
-| GitLab Duo | 68 % | 17 | $99/user/month | GitLab Ultimate users |
+**Overly permissive IAM policies.** Generated policies sometimes use a wildcard principal where a specific service principal was intended. Static analysis may not flag this because the syntax is valid. Add a policy-simulation step to CI that asserts the role cannot be assumed by unintended principals.
 
----
+**Queue configuration drift.** Setting content-based deduplication on a FIFO queue whose message body contains a timestamp will cause messages to be treated as distinct when they should be deduplicated, or vice versa. Never accept a queue configuration change without reading the relevant service documentation alongside the diff.
 
-## The top pick and why it won
+**ORM version mismatches.** Suggestions written against an older ORM major version may use configuration keys that were renamed or removed. Pin your dependency versions and run full serialization tests on nested models, not just flat ones.
 
-Amazon Q Developer (v1.10.0) wins because it reduces our most expensive failure mode: cloud misconfigurations. In one incident, Q flagged that our SQS visibility timeout was set to 30 seconds while the downstream Lambda had a cold-start of 11 seconds. The fix dropped our DLQ rate from 3.4 % to 0.1 % overnight, saving roughly $840/month in reprocessing fees on AWS.
+## A decision checklist
 
-It’s also the only tool that surfaces CloudWatch anomalies directly in the IDE, so we catch throttling before it hits PagerDuty. That alone paid for the $20/user seat within two sprints.
+Before committing to a tool for a team:
 
----
-
-## Honorable mentions worth knowing about
-
-### Replit Ghostwriter Pro (2026.4)
-
-Replit’s agent runs in the cloud and auto-fixes Python lint errors in real time. One Kenyan payments startup used it to onboard junior devs in 4 days instead of 2 weeks. The catch: it only works inside Replit’s browser IDE, so you lose local tooling like breakpoints and custom linters.
-
-### Sourcegraph Cody (5.12)
-
-Cody indexes your entire codebase (2 TB repo) and answers questions like "where is the KYC flow?" in 200 ms. A Nairobi neobank cut their compliance audit time from 3 weeks to 5 days. Downside: 1.8 GB RAM per workspace; our 2026 M1 Macs struggled.
-
-### Warp AI (0.2026.06.18.0)
-
-A Rust-based terminal with an embedded agent that rewrites long `sed` pipelines into idiomatic Python. We saved 47 lines of shell scripts in one sprint, but the terminal UI still feels beta (crashes once a week on macOS Sonoma 14.5).
-
----
-
-## The ones I tried and dropped (and why)
-
-### Tabnine Pro 2026.4
-
-Tabnine had a 61 % first-pass pass rate, but every accepted diff introduced a new SQLAlchemy relationship leak. The leak only surfaced under 5000 concurrent users, so it passed staging but exploded in production. We rolled back three times in one month.
-
-### Amazon CodeWhisperer (legacy)
-
-The 2026 version produced IAM policies with `Principal: *` and `Effect: Allow` in the same statement — a clear PCI-DSS violation. AWS deprecated it in favor of Q Developer, so we migrated anyway.
-
-### DeepMind AlphaCode 2 (early access)
-
-AlphaCode 2 nailed Leetcode but failed on our actual codebase. It suggested using `asyncio.run()` inside a FastAPI route, which deadlocks under Gunicorn. The model never saw Gunicorn in its training data.
-
----
-
-## How to choose based on your situation
-
-| Your stack | Team size | Compliance | Tight budget | Pick this |
-|---|---|---|---|---|
-| Pure AWS (Lambda, Step Functions, DynamoDB) | 3–8 | SOC2 | No | Amazon Q Developer |
-| GitHub + Python/JS | 5–15 | None | Yes | GitHub Copilot Chat |
-| Legacy monolith rewrite | 2–6 | None | Yes | Cursor IDE |
-| Strict data residency (PCI-DSS, HIPAA) | 1–20 | PCI-DSS | No | Codeium Enterprise |
-| GitLab Ultimate pipeline | 8–25 | SOC2 | No | GitLab Duo |
-
-If you’re on AWS, start with Q Developer. If you’re on GitHub, try Copilot Chat. If you’re rewriting a monolith, Cursor is the fastest path to a working prototype.
-
----
+1. List your three most expensive production failure modes from the last six months.
+2. For each candidate tool, run the ten-incident test described above.
+3. Tag AI-assisted PRs in CI and collect first-pass pass rate, median review time, and rollback rate for at least 30 PRs per tool.
+4. Confirm the tool's data handling meets your compliance requirements — specifically, where inference runs and whether code is retained.
+5. Check that the tool integrates with the CI you already run, not a CI you would have to adopt.
+6. Estimate total cost including any stacked plans, hardware, and the engineering time to operate an on-prem deployment.
+7. Pick the tool that wins on your incident set. If two tie, pick the one with lower integration cost.
 
 ## Frequently asked questions
 
-**What’s the real cost after the free tier ends?**
-Most tools give 500 suggestions free, then charge $19–$99 per user per month. In Nairobi, that’s roughly 18–80 k KES per seat, which can double your dev-tools budget if you have 10 engineers. Codeium Enterprise is the exception: you pay for hardware ($8 k for an RTX 4090) but per-seat fees disappear. We measured a 60 % cost drop within three months by moving from cloud AI to local inference.
+**How long before the metrics are meaningful?**
+Roughly 30 AI-assisted PRs per tool. Below that, a single unusual week can dominate the median. Track the metrics continuously rather than as a one-off study, because model updates change behaviour.
 
-**Will AI tools replace senior engineers?**
-No, but they let mid-level engineers ship senior-quality code. In our team, a developer with 2 years of experience used Q Developer to land a PR that replaced a 300-line stored procedure with a 28-line Lambda function. The fix cut our AWS bill by $1.2 k/month and was deployed in under 30 minutes. AI lowers the floor without raising the ceiling; you still need architects to design the system.
+**Should AI assistants replace static analysis?**
+No. They catch different classes of issue. Static analysis is deterministic and catches known patterns; an assistant can flag semantic problems like an undersized timeout, but it can also miss them. Run both, and treat the assistant's output as a suggestion that still needs review.
 
-**How do I measure ROI on AI tools?**
-Track three numbers: (1) first-pass pass rate, (2) median PR review time, and (3) rollback rate. In our case, Q Developer pushed first-pass from 45 % to 78 %, review time from 28 minutes to 12 minutes, and rollback rate from 4.2 % to 0.8 %. Multiply those gains by your average engineer cost (in Nairobi, roughly 350 k KES/month fully loaded). If the delta exceeds the tool cost, it’s worth it.
+**What about security scanning?**
+Assistants are not a substitute for SAST or DAST. The useful pattern is to run your existing scanners on every AI-assisted diff and treat scanner findings as a hard gate. An assistant that produces clean diffs is still producing diffs that need the same scrutiny as human ones.
 
-**Can AI catch security flaws before production?**
-Yes, but not all flaws. We ran Bandit, Semgrep, and Q Developer on the same PR. Bandit caught 3 hardcoded secrets, Semgrep found 12 SQL injection patterns, and Q Developer flagged an overly permissive IAM role that Semgrep missed. The combined hit rate was 92 %; none slipped into prod. Treat AI as a force multiplier, not a replacement for SAST/DAST scanners.
+**Does this change how you hire or staff?**
+It changes the review bar more than the headcount. If an assistant lets a mid-level engineer produce diffs that previously required a senior reviewer, the senior reviewer's time shifts from writing to reviewing — which means review capacity, not writing capacity, becomes the constraint.
 
----
+**What if the tool's suggestions are consistently wrong for our stack?**
+That is a signal about your stack's representation in training data, not about the tool's general quality. In that case, invest in retrieval-augmented context: give the assistant your internal conventions, schemas, and service documentation. A tool with good context plumbing will outperform a nominally stronger model without it.
 
-## Final recommendation
+## One action for the next 30 minutes
 
-If you have one hour today, install Amazon Q Developer (v1.10.0).
-
-1. Open AWS Console → IAM → Create a dedicated user for Q with `AdministratorAccess` (you’ll tighten this later).
-2. Install the AWS Toolkit in VS Code and sign in.
-3. Open a Python service repo and ask Q: "Show me the most expensive SQL query in this codebase."
-
-Within 90 seconds you’ll either see a slow query or a missing index. Fix it, deploy the change, and measure your AWS bill for the next 24 hours. If you cut costs by even 5 %, the tool has paid for itself and you’re ready to scale.
-
-That single query is the fastest way to validate whether AI can give you the leverage to compete with teams in San Francisco or London — without moving your office.
-
----
-
-### Advanced edge cases you personally encountered — and how they broke the AI
-
-1. **FastAPI + SQLAlchemy async deadlocks**
-   Cursor 2026.1.0 once suggested wrapping an async `session.execute()` inside `asyncio.run()`, which deadlocked under Gunicorn with `--workers=4`. The model had never seen Gunicorn in training; it assumed a pure Jupyter notebook context. Took 45 minutes to spot because the deadlock only appeared under load. Lesson: always run AI suggestions through `pytest -k asyncio` in CI.
-
-2. **Redis SCAN cursor overflow**
-   GitHub Copilot Chat 2026.2.1 suggested replacing a `keys *` with `SCAN 0 MATCH` but forgot to handle the cursor overflow. Our production Redis 7.2 cluster started returning `cursor: 0` after 10k keys, causing an infinite loop in the payment reconciliation job. The bug only surfaced at 01:00 on a Sunday — classic. Lesson: test AI refactors with 10x the expected key volume.
-
-3. **IAM policy principal wildcard in DynamoDB Stream**
-   Amazon Q Developer v1.10.0 once generated a Lambda execution role with `"Principal": "*"` for a DynamoDB Stream trigger. IAM Analyzer didn’t catch it, but AWS Security Hub flagged it at 03:15. The model had seen examples of public S3 buckets but not IAM conditions for DynamoDB. Lesson: always run `aws iam simulate-principal-policy` in your CI pipeline.
-
-4. **Pydantic v2 model_config inheritance leak**
-   Codeium Enterprise 1.7.3 suggested a Pydantic v2 `Config` class that used `orm_mode = True` but didn’t set `from_attributes = True`. Under high load, our FastAPI 0.111.0 app started deserializing nested ORM objects incorrectly, returning 422 errors on valid payloads. The bug only appeared with nested models > 3 levels deep. Lesson: pin `pydantic>=2.7.0` and run full payload tests.
-
-5. **SQS FIFO deduplication window mismatch**
-   Cursor IDE 2026.1.0 refactored a payments queue and set `ContentBasedDeduplication: true`, ignoring that our message body had a timestamp field that changed every second. SQS silently dropped 60 % of messages because the deduplication window was 5 minutes. The bug only surfaced when the payments team reported missing transactions. Lesson: never let AI touch queue config without reviewing AWS docs in the same tab.
-
----
-
-### Integration with 2–3 real tools — code snippets and versions
-
-1. Amazon Q Developer (v1.10.0) + AWS Lambda (Python 3.12)
-   ```python
-   # Ask Q: "Optimize this Lambda handler for cold starts"
-   from aws_lambda_powertools import Logger, Tracer
-   from aws_lambda_powertools.event_handler import APIGatewayRestResolver
-   import boto3
-
-   # Q suggested:
-   logger = Logger(service="payments")
-   tracer = Tracer()
-
-   app = APIGatewayRestResolver()
-
-   @app.post("/charge")
-   @tracer.capture_lambda_handler
-   def charge():
-       body = app.current_event.json_body
-       client = boto3.client("dynamodb")  # Q added: reuse client across invocations
-       # ... rest of handler
-       return {"status": "ok"}
-
-   # Result: cold start dropped from 820 ms to 210 ms on a 1 vCPU Lambda.
-   # Cost: $0.06 per million invocations saved by lower duration.
-   ```
-
-2. GitHub Copilot Chat (2026.2.1) + Redis 7.2 + Flask
-   ```python
-   # Ask Copilot: "Rewrite this Redis query to use SCAN and avoid blocking"
-   from redis import Redis
-   from flask import Flask, request
-
-   # Original:
-   # keys = redis.keys("user:*")
-
-   # Copilot suggested:
-   def scan_users(cursor=0, pattern="user:*"):
-       redis = Redis.from_url(os.getenv("REDIS_URL"))
-       users = []
-       while True:
-           cursor, data = redis.scan(cursor, match=pattern, count=1000)
-           users.extend(data)
-           if cursor == 0:
-               break
-       return users
-
-   # Result: Redis CPU usage dropped from 45 % to 8 % during peak hours.
-   # Latency on `/users` endpoint improved from 420 ms to 18 ms.
-   ```
-
-3. Codeium Enterprise (1.7.3) + FastAPI 0.111.0 + SQLAlchemy 2.0
-   ```python
-   # Ask Codeium: "Refactor this 300-line stored procedure into a FastAPI endpoint"
-   from fastapi import FastAPI, HTTPException
-   from sqlalchemy import select, text
-   from sqlalchemy.ext.asyncio import AsyncSession
-   from sqlalchemy.orm import sessionmaker
-   from contextlib import asynccontextmanager
-
-   @asynccontextmanager
-   async def get_db():
-       async with AsyncSession(engine) as session:
-           yield session
-
-   app = FastAPI()
-
-   @app.post("/kyc/verify")
-   async def verify_kyc(id: str, session: AsyncSession = Depends(get_db)):
-       # Codeium refactored a legacy SP into:
-       stmt = select(User).where(User.id == id)
-       user = await session.execute(stmt)
-       if not user:
-           raise HTTPException(404)
-       # ... business logic in 28 lines vs 300
-       return {"verified": True}
-
-   # Result:
-   # Lines of code: 300 → 28
-   # Latency: 850 ms → 140 ms
-   # Cost: $1.2 k/month saved on Aurora read replicas.
-   ```
-
----
-
-### Before / after comparison with actual numbers
-
-| Metric | Before AI | After Amazon Q Developer | Delta |
-|---|---|---|---|
-| **First-pass pass rate** | 45 % (manual review only) | 78 % (Q + human) | +33 % |
-| **Median PR review time** | 28 minutes | 12 minutes | –16 minutes |
-| **Rollback rate (30 days)** | 4.2 % | 0.8 % | –3.4 % |
-| **Cloud bill (AWS)** | $2.1 k/month | $1.26 k/month | –$840/month |
-| **On-call incidents (pager)** | 12/month | 3/month | –9 incidents |
-| **Lines of code shipped per engineer per sprint** | 420 | 680 | +260 |
-| **Mean time to resolve (MTTR)** | 2.3 hours | 45 minutes | –108 minutes |
-| **Cost per engineer per month (tools)** | $35 (manual) | $67 (Q + GitHub Enterprise) | +$32 |
-| **ROI (3-month horizon)** | Baseline | +$2,520 saved / +$960 spent = **$1,560 net** | — |
-
-**Real incident replay (August 2026)**
-- **Bug**: SQS visibility timeout misconfigured at 30s, Lambda cold-start at 11s → DLQ rate 3.4 %.
-- **AI fix**: Q flagged it in 90 seconds; engineer deployed in 22 minutes.
-- **Before**: 3.4 % DLQ = 216 failed payments/day = $840/month reprocessing.
-- **After**: 0.1 % DLQ = 6 failed payments/day = $25/month reprocessing.
-- **Savings**: $815/month or $9,780/year — 48x the $20/user/month seat cost.
-
-**Lines of code change in one PR**
-- Original stored procedure: 300 lines (PL/pgSQL).
-- AI refactor: 28 lines (FastAPI + SQLAlchemy 2.0 async).
-- Diff: 272 lines deleted, 28 added = net -244.
-- Review comments: 12 → 1 (AI handled the rest).
-
-**Latency profile (synthetic load test)**
-| Endpoint | Before | After Q + Copilot | Improvement |
-|---|---|---|---|
-| `/charge` (Lambda) | 820 ms | 210 ms | 74 % faster |
-| `/users` (Redis) | 420 ms | 18 ms | 96 % faster |
-| `/kyc/verify` (RDS) | 850 ms | 140 ms | 83 % faster |
-
-These numbers aren’t cherry-picked — they’re the median of 12 production services over 90 days. The pattern holds: AI doesn’t just speed up typing; it compresses entire feedback loops that used to require senior engineers and 3 a.m. pages.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 23, 2026
+Open your CI provider's query interface and write the query that segments merged PRs by whether they were AI-assisted, then computes first-pass pass rate and median review time for each segment over the last 90 days. If you do not tag AI-assisted PRs yet, add a label or commit trailer to your PR template now — you cannot evaluate a tool you are not measuring.

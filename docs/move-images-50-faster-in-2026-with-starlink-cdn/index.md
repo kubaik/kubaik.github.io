@@ -1,182 +1,222 @@
-# Move images 50% faster in 2026 with Starlink CDN
+# Resize Images at the Edge: A CloudFront and Lambda Guide
 
-The tutorials all showed the happy path. This post shows what comes after.
+Tutorials usually show the happy path: an image goes in, a smaller image comes out. Production adds the parts that break — concurrent uploads, format negotiation, cold starts, and logs that grow faster than your traffic. This article builds a CloudFront + Lambda@Edge resizing pipeline and then works through the failure modes that show up once real clients hit it.
 
-## Why I wrote this (the problem I kept hitting)
+## What you will build
 
-In mid-2026, I joined a team shipping a photo-sharing app for East African photographers using mid-range Android devices on 4G or Starlink dishes. We thought our CDN would be enough, but in early 2026 Starlink beams lit up Nairobi and Kampala, and latency to our origin in London fell from 280 ms to 110 ms overnight. That sounds great, but our image CDN still choked when 100 photographers in a single ward uploaded 10 MB photos at once. The origin saw 502 timeouts, and Safari on iOS 17 refused to retry, leaving white thumbnails. We lost 4% of uploads during the first week of Starlink rollout. This post is what I wish I’d had then.
+A CloudFront distribution in front of a private S3 bucket. An origin-response Lambda@Edge function intercepts the S3 response, resizes the image to one of three breakpoints (300 px, 600 px, 1200 px), negotiates WebP versus JPEG from the `Accept` header, and returns the transformed bytes with a long-lived cache header.
 
-The real shift in 2026 isn’t raw latency—it’s the sudden spike in concurrent uploads from users who now have flat-rate gigabit Starlink dishes. Traditional CDNs were built for bursty 4G with 2–3 concurrent requests per user, not for 50 concurrent 5 MB uploads from a single household. If you’re still tuning your stack for 2026 latency profiles, your error budget is about to burn.
+Design goals:
 
-Early adopters in Nairobi told us they expected instant uploads now that Starlink is here. When they saw the spinner for more than two seconds, they closed the app. Two seconds is the new 200 ms.
+- Stream the object rather than buffering it fully in memory.
+- Cache aggressively, because a resize is expensive and the result is deterministic for a given input and width.
+- Fall back to the original bytes whenever anything goes wrong, so a resize bug degrades quality rather than availability.
+- Emit enough telemetry to tell a slow resize apart from a cold start apart from an origin timeout.
 
-## Prerequisites and what you'll build
+### Prerequisites
 
-You’ll need:
+- Node.js 20 LTS and npm.
+- An AWS account with permissions for CloudFront, Lambda@Edge, S3, IAM and CloudWatch.
+- An S3 bucket in a region you can reach, plus a domain you control if you want a custom distribution domain.
+- The AWS CLI configured with a default region and JSON output.
 
-- Node 20 LTS for the edge functions and CLI tools. - AWS account with CloudFront, Lambda@Edge, S3, and CloudWatch. - A simple image bucket named `photos-2026-eastafrica` in `af-south-1`. - A domain you control (I’ll use `cdn.example.ke`) with Route 53. - Starlink dish or a 4G hotspot for local testing.
+Lambda@Edge has a hard constraint worth internalising before you write any code: functions must be created in `us-east-1` and are replicated to edge locations, and there is no environment-variable support at the edge. Configuration must be baked into the bundle or fetched at runtime.
 
-What you’ll build is a CloudFront distribution backed by a Lambda@Edge origin-response function that:
-- Streams the original image from S3 without downloading it entirely to memory. - Resizes the image to three breakpoints (300 px, 600 px, 1200 px) on the fly. - Sets `Cache-Control: public, max-age=31536000, immutable` for transformed assets. - Serves WebP when the client supports it, otherwise falls back to JPEG. - Logs every resize attempt to CloudWatch under `/image/resize/{requestId}`.
+## Step 1 — environment and bucket
 
-The whole project is under 200 lines of JavaScript (including comments and tests) and costs about $12 per million resizes at 2026 rates.
+Install Node 20 LTS (the exact patch version does not matter; pin whatever your CI uses):
 
-## Step 1 — set up the environment
+```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+node -v
+```
 
-1. Install Node 20 LTS and npm 10.
-   ```bash
-   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-   sudo apt-get install -y nodejs
-   node -v  # should print v20.13.1
-   ```
+Bootstrap the project:
 
-2. Bootstrap the project.
-   ```bash
-   mkdir starlink-cdn && cd starlink-cdn
-   npm init -y
-   npm install --save-dev aws-cdk@2.132.0 typescript ts-node @types/node
-   npx cdk init app --language typescript
-   ```
+```bash
+mkdir edge-image-resize && cd edge-image-resize
+npm init -y
+npm install --save-dev aws-cdk typescript ts-node @types/node
+npx cdk init app --language typescript
+```
 
-3. Configure AWS CLI with the `af-south-1` region and set the default output to JSON.
-   ```bash
-   aws configure set region af-south-1
-   aws configure set output json
-   ```
+Create the bucket with versioning and public access blocked:
 
-4. Create the S3 bucket with versioning and block public access.
-   ```bash
-   aws s3api create-bucket --bucket photos-2026-eastafrica --region af-south-1
-   aws s3api put-bucket-versioning --bucket photos-2026-eastafrica --versioning-configuration Status=Enabled
-   aws s3api put-public-access-block --bucket photos-2026-eastafrica --public-access-block-configuration "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
-   ```
+```bash
+aws s3api create-bucket --bucket photos-example --region af-south-1 \
+  --create-bucket-configuration LocationConstraint=af-south-1
+aws s3api put-bucket-versioning --bucket photos-example \
+  --versioning-configuration Status=Enabled
+aws s3api put-public-access-block --bucket photos-example \
+  --public-access-block-configuration \
+  "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+```
 
-5. Add a bucket policy that allows CloudFront to read objects only via the origin access identity.
-   ```json
-   {
-     "Version": "2012-10-17",
-     "Statement": [
-       {
-         "Effect": "Allow",
-         "Principal": {"Service": "cloudfront.amazonaws.com"},
-         "Action": "s3:GetObject",
-         "Resource": "arn:aws:s3:::photos-2026-eastafrica/*",
-         "Condition": {
-           "StringEquals": {
-             "AWS:SourceArn": "arn:aws:cloudfront::YOUR_ACCOUNT_ID:distribution/YOUR_DISTRIBUTION_ID"
-           }
-         }
-       }
-     ]
-   }
-   ```
+Note the `--create-bucket-configuration` flag: outside `us-east-1`, `CreateBucket` requires an explicit `LocationConstraint` or it fails with `InvalidLocationConstraint`.
 
-## Advanced edge cases I personally encountered
+### Grant CloudFront read access
 
-1. **Memory exhaustion in Lambda@Edge during high concurrency**
-   In early June 2026, a Starlink user in Kisumu uploaded 50 RAW photos (each ~25 MB) simultaneously. The Lambda@Edge function (Node 20, 128 MB memory) tried to buffer the entire image in memory for WebP conversion. CloudWatch showed `Process exited before completing request` every 3 seconds. The fix was to switch to `sharp` with `limitInputPixels: false` and `sequentialRead: true`, which streams the image instead of buffering it. Memory usage dropped from 110 MB to 42 MB per invocation, and we could handle 15 concurrent uploads per Lambda instance instead of 3.
+Use an origin access control (OAC), the current mechanism; origin access identity (OAI) is the older one and does not support newer features such as SSE-KMS reads. The bucket policy grants `cloudfront.amazonaws.com` `s3:GetObject` only when the request originates from your specific distribution:
 
-2. **Sudden WebP support regression in Safari 17.4**
-   Apple shipped Safari 17.4 in March 2026 with a bug: it sent `Accept: image/webp` but crashed when receiving WebP payloads larger than 8 MB. Our fallback logic was correct in the Accept header check, but we didn’t validate the payload size. The first symptom was Safari users seeing broken thumbnails with no error in the console. We added a `Range` request fallback to JPEG for Safari 17.4 specifically, using the `User-Agent` string parsed by the Lambda@Edge function. Detection was done via `ua-parser-js@2.0.0`.
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {"Service": "cloudfront.amazonaws.com"},
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::photos-example/*",
+      "Condition": {
+        "StringEquals": {
+          "AWS:SourceArn": "arn:aws:cloudfront::YOUR_ACCOUNT_ID:distribution/YOUR_DISTRIBUTION_ID"
+        }
+      }
+    }
+  ]
+}
+```
 
-3. **Clock skew between CloudFront and S3 during origin fetches**
-   In April 2026, we noticed 15% of resizes failing with `InvalidArgument: RequestTimeTooSkewed` in `us-east-1` buckets accessed from `af-south-1`. The issue was subtle: CloudFront’s origin fetch timeout was set to 30 seconds, but S3’s clock tolerance is only 15 seconds. When Starlink users in Mombasa uploaded during peak solar activity (which affects GPS timing), the skew exceeded S3’s threshold. The fix was to set `originReadTimeout: 25000` (25 s) in the CloudFront origin configuration, giving a 10-second buffer. We also enabled S3’s `Bucket Versioning` explicitly to avoid `x-amz-meta-version-id` mismatches under clock skew.
+The `AWS:SourceArn` condition is what makes this safe. Without it, any CloudFront distribution in any account could read the bucket.
 
-4. **Cold-start latency spikes in Lambda@Edge during Nairobi business hours**
-   At 9 AM local time, Nairobi offices powered up and triggered 200 concurrent Lambda@Edge executions. The first invocation in each AZ took 2.8 seconds to initialize the `sharp` native module, causing Safari to retry and double-upload. Profiling showed `dlopen` overhead for `libvips` in the Lambda container. The solution was to pre-warm the Lambda@Edge function by scheduling a CloudWatch Event to invoke it every 5 minutes with a dummy request. This reduced cold-start latency from 2.8 s to 350 ms in 99% of cases.
+## Step 2 — the resize function
 
-5. **Memory-leak in CloudWatch Logs subscription filter**
-   We used a CloudWatch Logs subscription to stream resize logs to our analytics endpoint. After 7 days of continuous traffic (~12 million logs), the subscription filter’s Lambda function (separate from the resize function) started timing out at 10 seconds. Memory usage crept up from 64 MB to 280 MB due to unclosed HTTP sockets in `axios@1.6.2`. The fix was to set `httpAgent: new http.Agent({ keepAlive: true, maxSockets: 5 })` in the logger function and add `process.on('SIGTERM', () => process.exit(0))` to clean up sockets on shutdown.
+Two properties matter more than the resize itself: do not buffer the whole image, and never let a failure return a 5xx when the original bytes would do.
 
----
+```javascript
+const sharp = require('sharp');
 
-## Integration with real tools (2026 versions)
+const BREAKPOINTS = [300, 600, 1200];
+const MAX_WIDTH = 1200;
 
-1. **Terraform 1.6.7 for infrastructure-as-code**
-Terraform is now the de-facto standard for repeatable CloudFront + Lambda@Edge deployments in 2026. Below is a minimal `main.tf` snippet that creates the same stack without CDK. It pins the AWS provider to `5.40.0`.
+exports.handler = async (event) => {
+  const response = event.Records[0].cf.response;
+  const request = event.Records[0].cf.request;
+
+  // Only transform successful image responses.
+  if (response.status !== '200') return response;
+
+  const accept = (request.headers['accept'] || [{}])[0].value || '';
+  const wantsWebp = accept.includes('image/webp');
+  const format = wantsWebp ? 'webp' : 'jpeg';
+
+  const querystring = request.querystring || '';
+  const params = new URLSearchParams(querystring);
+  const requested = parseInt(params.get('w'), 10);
+  const width = BREAKPOINTS.includes(requested) ? requested : MAX_WIDTH;
+
+  try {
+    const body = Buffer.from(response.body, 'base64');
+    const pipeline = sharp(body, {
+      failOn: 'none',
+      sequentialRead: true,
+      limitInputPixels: false
+    }).resize({ width, withoutEnlargement: true });
+
+    const output = await (format === 'webp'
+      ? pipeline.webp({ quality: 72 })
+      : pipeline.jpeg({ quality: 78 })).toBuffer();
+
+    response.body = output.toString('base64');
+    response.bodyEncoding = 'base64';
+    response.headers['content-type'] = [
+      { key: 'Content-Type', value: `image/${format}` }
+    ];
+    response.headers['cache-control'] = [
+      { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+    ];
+    return response;
+  } catch (err) {
+    // Fall through to the original object rather than failing the request.
+    console.error(JSON.stringify({ msg: 'resize_failed', error: err.message }));
+    return response;
+  }
+};
+```
+
+Points worth calling out:
+
+- `withoutEnlargement: true` prevents upscaling a 200 px source to 1200 px, which wastes bandwidth and looks worse than the original.
+- `limitInputPixels: false` disables sharp's decompression-bomb guard. Only do this if uploads are authenticated and size-capped upstream — otherwise you have handed attackers a memory-exhaustion primitive.
+- The `catch` block returns the untransformed response. A resize failure should never be a user-visible error.
+- `Cache-Control: immutable` is only honest if the object at that URL never changes. With versioned buckets, key on a content hash or a version ID in the path, or you will serve stale bytes forever.
+
+### Why streaming matters
+
+`sharp` is backed by libvips, which can process images in a streaming fashion when you give it a file path or a stream. The Lambda@Edge response object, however, arrives as a base64 string in `event.Records[0].cf.response.body`, so you are already holding the encoded object in memory before sharp sees it. Lambda@Edge caps the response body it can generate, and the function's memory ceiling is small compared with a standard Lambda.
+
+The practical consequence: keep originals small, cap upload size, and treat edge resizing as a convenience tier. If you need to process 25 MB camera RAW files, do it in a standard Lambda triggered by S3 `ObjectCreated`, write the derivatives back to S3, and let the edge serve pre-computed variants. That architecture also removes cold-start cost from the request path entirely.
+
+## Step 3 — infrastructure
+
+The same stack expressed in Terraform, using an origin access control:
 
 ```hcl
 terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.40.0"
+      version = "~> 5.0"
     }
   }
 }
 
 provider "aws" {
-  region = "af-south-1"
+  region = "us-east-1" # Lambda@Edge functions must live here
 }
 
-resource "aws_cloudfront_origin_access_identity" "oai" {}
+resource "aws_cloudfront_origin_access_control" "oac" {
+  name                              = "photos-oac"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
 
 resource "aws_s3_bucket" "photos" {
-  bucket = "photos-2026-eastafrica"
-  versioning {
-    enabled = true
-  }
+  bucket = "photos-example"
 }
 
-resource "aws_s3_bucket_policy" "allow_cloudfront" {
+resource "aws_s3_bucket_versioning" "photos" {
   bucket = aws_s3_bucket.photos.id
-  policy = data.aws_iam_policy_document.s3_policy.json
-}
-
-data "aws_iam_policy_document" "s3_policy" {
-  statement {
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.photos.arn}/*"]
-    principals {
-      type        = "Service"
-      identifiers = ["cloudfront.amazonaws.com"]
-    }
-    condition {
-      test     = "StringEquals"
-      variable = "AWS:SourceArn"
-      values   = [aws_cloudfront_distribution.s3_distribution.arn]
-    }
+  versioning_configuration {
+    status = "Enabled"
   }
 }
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
+  enabled         = true
+  is_ipv6_enabled = true
+
   origin {
-    domain_name = aws_s3_bucket.photos.bucket_regional_domain_name
-    origin_id   = "S3-${aws_s3_bucket.photos.id}"
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.oai.cloudfront_access_identity_path
-    }
+    domain_name              = aws_s3_bucket.photos.bucket_regional_domain_name
+    origin_id                = "s3-photos"
+    origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
   }
 
-  enabled             = true
-  is_ipv6_enabled     = true
-  default_root_object = ""
-
   default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3-${aws_s3_bucket.photos.id}"
+    allowed_methods        = ["GET", "HEAD"]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = "s3-photos"
+    viewer_protocol_policy = "redirect-to-https"
+    min_ttl                = 0
+    default_ttl            = 31536000
+    max_ttl                = 31536000
+
     forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
+      query_string = true # the ?w= breakpoint must reach the origin request
+      cookies { forward = "none" }
     }
+
     lambda_function_association {
       event_type   = "origin-response"
       lambda_arn   = aws_lambda_function.resize.qualified_arn
       include_body = true
     }
-    viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 31536000
-    max_ttl                = 31536000
   }
 
   restrictions {
-    geo_restriction {
-      restriction_type = "none"
-    }
+    geo_restriction { restriction_type = "none" }
   }
 
   viewer_certificate {
@@ -185,32 +225,25 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 }
 
 resource "aws_lambda_function" "resize" {
-  function_name = "starlink-image-resize-2026"
+  provider      = aws
+  function_name = "edge-image-resize"
   handler       = "index.handler"
   runtime       = "nodejs20.x"
   role          = aws_iam_role.lambda_exec.arn
   filename      = "lambda.zip"
   memory_size   = 512
-  timeout       = 15
+  timeout       = 5
   publish       = true
-  environment {
-    variables = {
-      BUCKET_NAME = aws_s3_bucket.photos.id
-      LOG_GROUP   = "/aws/lambda/resize"
-    }
-  }
 }
 
 resource "aws_iam_role" "lambda_exec" {
-  name = "lambda-exec-role-2026"
+  name = "edge-image-resize-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
-      Principal = {
-        Service = "lambda.amazonaws.com"
-      }
+      Action    = "sts:AssumeRole"
+      Effect    = "Allow"
+      Principal = { Service = ["lambda.amazonaws.com", "edgelambda.amazonaws.com"] }
     }]
   })
 }
@@ -219,129 +252,138 @@ resource "aws_iam_role_policy_attachment" "lambda_basic" {
   role       = aws_iam_role.lambda_exec.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
+```
 
-resource "aws_iam_role_policy" "s3_read" {
-  name = "s3-read-policy-2026"
-  role = aws_iam_role.lambda_exec.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect   = "Allow"
-      Action   = ["s3:GetObject"]
-      Resource = "${aws_s3_bucket.photos.arn}/*"
-    }]
-  })
+Two details that cause most of the support tickets here:
+
+1. **`query_string = true` on the cache behavior.** If you forward the query string but do not include it in the cache key, every viewer gets whichever breakpoint was cached first. CloudFront's cache key is configured separately from forwarding; make sure `?w=600` and `?w=1200` are distinct cache entries.
+2. **The `edgelambda.amazonaws.com` service principal.** A Lambda@Edge execution role that only trusts `lambda.amazonaws.com` will deploy and then fail at the edge with an opaque permission error.
+
+## Failure modes and how to detect them
+
+### Cold starts
+
+Lambda@Edge functions run in a constrained environment and are not kept warm on demand. A cold start includes container initialisation plus loading the `sharp` native module and libvips, which is the expensive part. The symptom is a bimodal latency distribution: most requests fast, a minority several times slower, clustered after periods of low traffic.
+
+Measure it rather than guess. Emit the container's own start time and compare it with the request time:
+
+```javascript
+const CONTAINER_START = Date.now();
+
+// inside the handler
+const initMs = Date.now() - CONTAINER_START;
+console.log(JSON.stringify({ msg: 'invocation', initMs }));
+```
+
+If `initMs` is small, the container was warm. If it is large, you paid initialisation. Plot the distribution of `initMs` over time — that tells you the cold-start rate directly. Scheduled "warming" invocations are a common mitigation, but they only help if the scheduler hits the same edge locations your users do, which you cannot control. For latency-critical paths, pre-computed derivatives in S3 are a more reliable answer than warming.
+
+### Format negotiation
+
+Never trust the `Accept` header alone to predict whether a client can decode a format. Clients advertise capabilities they implement incorrectly, and proxies sometimes rewrite the header. The robust pattern is content negotiation with a correctness check you control:
+
+1. Parse `Accept` for `image/webp` or `image/avif`.
+2. If the client claims support, serve the modern format.
+3. Keep the `Vary: Accept` header on the response so caches do not serve WebP to a client that asked for JPEG.
+
+```javascript
+response.headers['vary'] = [{ key: 'Vary', value: 'Accept' }];
+```
+
+Omitting `Vary` is the single most common cause of "the image is broken for some users" reports: a shared cache stores the WebP variant and hands it to a client that never advertised support. The `Vary` header is what makes the cache key include the `Accept` header.
+
+### Origin timeouts
+
+CloudFront's origin response timeout and the origin's own behaviour are separate knobs. If the origin is slow — a large object read, a throttled bucket — CloudFront returns a 504 regardless of what your Lambda does, because the Lambda never sees a response. Distinguish this from a Lambda error by checking which side logged. A 504 with no corresponding Lambda invocation in CloudWatch is an origin problem; a 502 with a Lambda log line is your code.
+
+Keep the origin timeout below the Lambda timeout so that a slow origin surfaces as a 504 you can alert on, rather than a Lambda that gets killed mid-flight.
+
+### Log volume
+
+Edge functions log per request, and per-request logging at the edge is expensive in a way that surprises people. A single `console.log` per invocation, multiplied by request rate and replicated across edge locations, can dominate your CloudWatch bill. Log structured, sampled events rather than free text, and set a retention policy on the log group. If you need per-request detail, sample it: log 1 in 100 requests in full, and log only aggregate counters for the rest.
+
+## Observability: what to instrument
+
+Lambda@Edge cannot be scraped by Prometheus — there is no long-lived process to scrape, and the function runs at edge locations you do not control. The workable pattern is to emit metrics as structured log lines and let CloudWatch Logs metric filters turn them into metrics.
+
+Instrument these four things:
+
+- `resize_duration_ms` — the time inside sharp, labelled by breakpoint and output format.
+- `init_ms` — container initialisation time, to quantify cold starts.
+- `resize_error` — a counter of caught exceptions, labelled by error class.
+- `bytes_out` — the size of the transformed body, to verify that WebP is actually smaller.
+
+```javascript
+const start = Date.now();
+try {
+  const output = await pipeline.toBuffer();
+  console.log(JSON.stringify({
+    msg: 'resize_ok',
+    width,
+    format,
+    durationMs: Date.now() - start,
+    bytesOut: output.length
+  }));
+  // ...
+} catch (err) {
+  console.log(JSON.stringify({
+    msg: 'resize_error',
+    width,
+    format,
+    errorClass: err.constructor.name
+  }));
 }
 ```
 
-2. **Prometheus + Grafana 10.4.0 for observability**
-After the Kisumu incident, we instrumented the resize Lambda with Prometheus metrics exposed via `/metrics`. We used the `prom-client@15.0.0` library and scraped it with a Prometheus sidecar running in an ECS Fargate task in `af-south-1`. The critical metric was `resize_duration_seconds_bucket`, which allowed us to set an alert at P99 > 800 ms. Below is a snippet from `index.js`:
+Then create a metric filter on `{ $.msg = "resize_ok" }` extracting `$.durationMs`, and alarm on its p99. This is the difference between knowing that resizes are slow and knowing *which breakpoint* is slow — a distinction that matters because a 1200 px WebP encode is roughly an order of magnitude more expensive than a 300 px JPEG.
+
+## Decision checklist
+
+Before deploying edge resizing, confirm each of these:
+
+- **Are originals small enough to hold in memory at the edge?** If not, pre-compute derivatives in a standard Lambda.
+- **Is the cache key correct?** Query string included, `Vary: Accept` set, immutable URLs actually immutable.
+- **Does every failure path return the original?** A resize bug should never be a 5xx.
+- **Is the execution role trusted by `edgelambda.amazonaws.com`?** Otherwise the deploy succeeds and the edge fails.
+- **Are you logging sampled, structured events with a retention policy?** Otherwise logs become your largest line item.
+- **Do you have a p99 alarm on resize duration?** Without one, a regression is invisible until users complain.
+- **Have you capped upload size and authenticated uploads?** `limitInputPixels: false` is only safe behind those controls.
+
+## A worked sizing example
+
+Suppose your originals average 2 MB and you serve 1 million resized images per month, with a 95% cache hit rate at the edge.
+
+- Origin fetches: 1,000,000 × 0.05 = 50,000.
+- Lambda invocations: 50,000 (only cache misses invoke the origin-response function).
+- At an illustrative 400 ms per invocation, total compute time is 50,000 × 0.4 = 20,000 seconds.
+- Lambda@Edge is billed on request count and GB-seconds; at 512 MB, that is 20,000 × 0.5 = 10,000 GB-seconds.
+
+Substitute your own measured `resize_duration_ms` p50 and your real hit rate. The point of the exercise is that cache hit rate, not resize speed, dominates the bill — going from 95% to 99% hit rate cuts compute by 80%, which is almost always cheaper to achieve than optimising the encoder.
+
+## Next.js integration
+
+If the frontend is a Next.js app, point `next/image` at the distribution with a custom loader so that Next.js does not double-optimise:
 
 ```javascript
-const client = require('prom-client');
-const register = new client.Registry();
-client.collectDefaultMetrics({ register });
-
-const resizeDuration = new client.Histogram({
-  name: 'resize_duration_seconds',
-  help: 'Duration of image resize in seconds',
-  labelNames: ['breakpoint', 'format'],
-  buckets: [0.1, 0.5, 1, 2, 5]
-});
-
-exports.handler = async (event) => {
-  const start = Date.now();
-  // ... resize logic ...
-  const duration = (Date.now() - start) / 1000;
-  resizeDuration.observe({ breakpoint: '600px', format: 'webp' }, duration);
-  // ...
-};
-```
-
-We then built a Grafana dashboard with panels for:
-- P99 resize latency by breakpoint
-- Error rate per Starlink dish model (parsed from User-Agent)
-- Memory usage per Lambda@Edge invocation
-
-3. **Next.js 14.2.13 for the frontend**
-The photographers’ app is a Next.js 14 app hosted on Vercel with edge runtime enabled. We use the `next/image` component with the following config in `next.config.js`:
-
-```javascript
+// next.config.js
 module.exports = {
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: 'cdn.example.ke' }
+      { protocol: 'https', hostname: 'cdn.example.com' }
     ],
-    deviceSizes: [300, 600, 1200],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 512]
-  },
-  experimental: {
-    edgeRuntime: 'edge'
+    deviceSizes: [300, 600, 1200]
   }
 };
 ```
 
-The key integration point is the `loader` function we override:
-
 ```javascript
-// components/ImageLoader.js
+// components/imageLoader.js
 export default function imageLoader({ src, width, quality }) {
-  return `https://cdn.example.ke/${src}?w=${width}&q=${quality || 75}`;
+  return `https://cdn.example.com/${src}?w=${width}&q=${quality || 75}`;
 }
 ```
 
-We also added a fallback for Starlink users on metered plans:
+The loader must only emit widths that the edge function recognises. If `next/image` requests a width outside your `BREAKPOINTS` list, the function falls back to `MAX_WIDTH` and you silently serve a larger image than requested — which is correct but wasteful. Keep the two lists in sync, ideally by generating both from one constant.
 
-```javascript
-// lib/image.js
-export async function getOptimizedUrl(src, width) {
-  const res = await fetch(`https://cdn.example.ke/${src}?w=${width}&q=50`, {
-    headers: { 'Accept': 'image/webp,image/avif,image/jpeg' }
-  });
-  if (!res.ok) {
-    return `https://cdn.example.ke/${src}?w=${width}&q=50&format=jpeg`;
-  }
-  return `https://cdn.example.ke/${src}?w=${width}&q=50`;
-}
-```
+## What to do in the next 30 minutes
 
-This reduced data usage by 40% for Starlink users in Kenya Power’s 2026 tariff zone.
-
----
-
-## Before/after comparison (real numbers, 2026)
-
-| Metric                             | Pre-Starlink (Feb 2026) | Post-Starlink (June 2026) | Improvement |
-|------------------------------------|--------------------------|---------------------------|-------------|
-| London to Nairobi latency (avg)    | 280 ms                   | 110 ms                    | 61% ↓       |
-| Concurrent uploads per ward        | 12                       | 50                        | 317% ↑      |
-| Lambda@Edge memory usage (avg)     | 110 MB                   | 42 MB                     | 62% ↓       |
-| Lambda@Edge cold-start latency     | 2.8 s                    | 350 ms                    | 87% ↓       |
-| Safari WebP crash rate             | 15%                      | 0.2%                      | 99% ↓       |
-| CDN cost per million resizes       | $18                      | $12                       | 33% ↓       |
-| Lines of CDN logic                 | 312                      | 187                       | 40% ↓       |
-| Upload success rate (1st week)     | 96%                      | 99.8%                     | 3.8% ↑      |
-| Data per 1000 thumbnails (WebP)    | 1.4 MB                   | 0.8 MB                    | 43% ↓       |
-| CloudWatch Logs volume (daily)     | 8.2 GB                   | 11.5 GB                   | 40% ↑*      |
-| *Increase due to Prometheus metrics and debug logs for Safari 17.4 issues. |
-
-**Why the numbers matter**
-- **Latency drop**: 110 ms is now the “new normal” for Nairobi users. Apps that still target 280 ms are perceived as sluggish. - **Concurrency spike**: Starlink dishes in a single household can saturate a 1 Gbps link. Your CDN must handle 50 concurrent uploads per IP, not 3. - **Memory & cold starts**: The sharp streaming fix reduced memory by 62% and cold-start latency by 87%, directly impacting Safari’s 2-second spinner limit. - **Data savings**: The WebP fallback and Next.js loader saved photographers in metered Starlink zones 43% of their data budget, a critical cost saving in Kenya’s 2026 energy crisis. - **Observability debt**: The 40% log volume increase is the hidden cost of debugging Safari 17.4. Without Prometheus metrics, we would have missed the WebP crash pattern until it hit 15% of users.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 18, 2026
+Open your CloudFront distribution's cache statistics and compute the hit rate for your image paths over the last 24 hours. If it is below 90%, the highest-leverage fix is almost always the cache key — a missing `Vary: Accept`, a query string that is forwarded but not cached, or a short TTL on assets that never change. Fix that before you touch the resize function.

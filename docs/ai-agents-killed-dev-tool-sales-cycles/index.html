@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI agents killed dev tool sales cycles - Kubai Kevin</title>
-        <meta name="description" content="Sell dev tools in the AI era: 3.8% landing page conversion after rebuilding for 30-second agent integrations — GitHub Actions, Redis caching, and pricing…">
+        <meta name="description" content="How agent-driven evaluation changes integration design, onboarding, and pricing for developer tools, with concrete patterns and a 30-minute test.">
         <meta name="keywords" content="Github, FastapiRedisCaching, Ai, Softwareengineering, Redis">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-02T07:02:50.635057">
-        <meta property="article:modified_time" content="2026-09-27T04:25:01.961320+00:00">
+        <meta property="article:modified_time" content="2026-10-03T10:56:39.393392+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI agents killed dev tool sales cycles">
-        <meta property="og:description" content="Sell dev tools in the AI era: 3.8% landing page conversion after rebuilding for 30-second agent integrations — GitHub Actions, Redis caching, and pricing…">
+        <meta property="og:description" content="How agent-driven evaluation changes integration design, onboarding, and pricing for developer tools, with concrete patterns and a 30-minute test.">
         <meta property="og:url" content="https://kubaik.github.io/ai-agents-killed-dev-tool-sales-cycles/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI agents killed dev tool sales cycles">
-        <meta name="twitter:description" content="Sell dev tools in the AI era: 3.8% landing page conversion after rebuilding for 30-second agent integrations — GitHub Actions, Redis caching, and pricing…">
+        <meta name="twitter:description" content="How agent-driven evaluation changes integration design, onboarding, and pricing for developer tools, with concrete patterns and a 30-minute test.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-agents-killed-dev-tool-sales-cycles.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-agents-killed-dev-tool-sales-cycles/#article",
       "headline": "AI agents killed dev tool sales cycles",
-      "description": "Sell dev tools in the AI era: 3.8% landing page conversion after rebuilding for 30-second agent integrations — GitHub Actions, Redis caching, and pricing…",
+      "description": "How agent-driven evaluation changes integration design, onboarding, and pricing for developer tools, with concrete patterns and a 30-minute test.",
       "datePublished": "2026-07-02T07:02:50+00:00",
-      "dateModified": "2026-09-27T04:25:01+00:00",
-      "wordCount": 2433,
-      "timeRequired": "PT12M",
+      "dateModified": "2026-10-03T10:56:39+00:00",
+      "wordCount": 1852,
+      "timeRequired": "PT9M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI agents killed dev tool sales cycles</h1>
                 
-                <p class="post-lead">Sell dev tools in the AI era: 3.8% landing page conversion after rebuilding for 30-second agent integrations — GitHub Actions, Redis caching, and pricing…</p>
+                <p class="post-lead">How agent-driven evaluation changes integration design, onboarding, and pricing for developer tools, with concrete patterns and a 30-minute test.</p>
                 
                 
                 <div class="tags">
@@ -256,56 +256,64 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2433 words
+                        9 min read
+                        &nbsp;·&nbsp; 1852 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-27
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Most building developer guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
-<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
-<p>In 2026, we launched a static analysis tool for Python codebases called <strong>PyLint Pro</strong>. Our v1.0 shipped with 47 built-in rules, GitHub Action integration, and a VS Code extension that auto-fixed 80% of lint errors in one click.</p>
-<p>Our first 50 customers were all small teams in Nigeria and Kenya running Django apps on 4G connections. We were getting demo requests, but sign-ups never closed. The feedback loop was brutal: "Your tool is great, but we can’t justify $50/month for linting."</p>
-<p>But the real problem wasn’t our code. It was the sales cycle.</p>
-<p>The AI era changed everything about how teams buy developer tools. In 2026, teams evaluated tools like we did: read docs, run benchmarks, compare pricing. By 2026, most teams started with AI agents that generated code, ran tests, and even committed changes. The evaluation process skipped the human altogether. If an AI agent couldn’t integrate a tool in under 30 seconds, the tool didn’t exist.</p>
-<p>We had built a tool for humans, but the buyers were AI agents.</p>
-<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
-<p>Our first attempt was a free tier with generous limits: 5 repos, 1,000 lines per repo, and 100 fixes/month. We assumed this would let teams try before they bought. It didn’t.</p>
-<p>92% never hit the paid limits. 68% never used the VS Code extension. 43% canceled within 14 days — not because of bugs, but because they never saw value beyond the free tier.</p>
-<p>I dug into the logs and found a pattern: teams were using PyLint Pro as a linter, not a productivity tool. Teams in Lagos and Nairobi were running it once a week, manually fixing issues, then disabling the GitHub Action. Our "auto-fix" feature was ignored because it required a human to review changes.</p>
-<p>Conversion jumped to 2.1%, but churn was 67% in the first 30 days. Teams were using the tool for a sprint, then abandoning it. The problem wasn’t pricing — it was integration friction.</p>
-<p>Teams couldn’t integrate PyLint Pro into their CI/CD without manual setup. The GitHub Action required two secrets, a custom workflow file, and a manual approval step. For a team on 3G, that meant downloading a 12MB Python wheel, installing dependencies, and waiting 3 minutes for the action to run. Most teams gave up before the first build.</p>
-<h2 id="the-approach-that-worked">The approach that worked</h2>
-<p>We stopped selling to humans. We started selling to AI agents. Not in a sci-fi way — we optimized for the 30-second integration window that agents demand.</p>
-<p>First, we rebuilt the GitHub Action as a single-file, no-dependency workflow. The entire action was 47 lines of YAML:</p>
-<pre><code class="language-yaml">name: PyLint Pro
+                <p>Developer tool adoption is increasingly mediated by automation: CI pipelines, coding assistants, and scripted setup routines that evaluate a tool by trying to run it. A tool that cannot be installed and invoked programmatically within a short window often never reaches a human evaluator at all. The practical consequence is that integration design, documentation format, and pricing structure now carry as much weight as the core functionality.</p>
+<h2 id="why-the-evaluation-step-changed">Why the evaluation step changed</h2>
+<p>Traditional evaluation assumed a human would read documentation, run a benchmark, and compare pricing. In agent-mediated workflows, that sequence is compressed. An agent typically does something like this:</p>
+<ol>
+<li>Discover the install command or action reference.</li>
+<li>Attempt installation in a sandbox or CI runner.</li>
+<li>Invoke the tool on a sample input.</li>
+<li>Parse the output for structured results.</li>
+<li>Decide whether to keep or discard the dependency.</li>
+</ol>
+<p>Each step is a potential failure point. A required secret that must be created manually, a multi-step authentication flow, or an output format designed only for human reading will cause the agent to abandon the tool. The human never sees the failure.</p>
+<p>This is not a claim about a specific product or a measured conversion rate. It is a structural observation: when the first evaluator is a program, the cost of friction is paid before any human judgment is applied.</p>
+<h2 id="common-failure-modes-in-integration-design">Common failure modes in integration design</h2>
+<h3 id="failure-mode-multi-secret-setup">Failure mode: multi-secret setup</h3>
+<p>A workflow that requires three separate secrets, a custom environment variable file, and a manual approval step will fail agent evaluation. Each secret is a step the agent cannot complete without human intervention. The fix is to reduce required configuration to a single credential, or to support anonymous operation for evaluation.</p>
+<h3 id="failure-mode-human-readable-only-output">Failure mode: human-readable-only output</h3>
+<p>If the tool prints a formatted table to stdout and nothing else, an agent cannot reliably parse results. Structured output — JSON, JSONL, or a documented schema — allows programmatic consumption. Human-readable formatting can be layered on top, but the machine-readable form should exist first.</p>
+<h3 id="failure-mode-heavy-installation-footprint">Failure mode: heavy installation footprint</h3>
+<p>A tool that requires downloading a large runtime, compiling native dependencies, or installing a language toolchain will time out in many sandboxes. Prebuilt binaries, container images, or single-file scripts reduce this risk. The relevant measurement is not "how long does it take on a fast laptop" but "how long does it take in a cold CI runner."</p>
+<h3 id="failure-mode-interactive-prompts">Failure mode: interactive prompts</h3>
+<p>Any command that waits for stdin input will hang an agent. Flags for non-interactive mode, environment variables for defaults, and <code>--yes</code> style options are necessary for automated use.</p>
+<h2 id="patterns-that-reduce-integration-friction">Patterns that reduce integration friction</h2>
+<h3 id="single-file-ci-configuration">Single-file CI configuration</h3>
+<p>A GitHub Action or CI job that references a published action and one secret is the lowest-friction starting point. The action itself should handle dependency installation internally so the consuming workflow stays short.</p>
+<pre><code class="language-yaml">name: Lint
 on: [push]
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run PyLint Pro
-        uses: pylint-pro/action@2026.05.1
+      - name: Run linter
+        uses: example-org/lint-action@v1
         with:
-          api_key: ${{ secrets.PYLINT_PRO_API_KEY }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          api_key: ${{ secrets.LINT_API_KEY }}
 </code></pre>
-<p>No secrets required beyond an API key. The action ran in under 10 seconds on GitHub’s runners, with no Python installation or dependencies. Teams could enable it in two clicks from the GitHub UI.</p>
-<p>Second, we added a "one-click migrate" feature. Teams could import their existing pylint config, flake8 settings, or mypy configs into PyLint Pro with a single command:</p>
-<pre><code class="language-bash"># Run in repo root
-gh extension install pylint-pro/cli
-pylint-pro import-config --source .pylintrc
+<p>The <code>api_key</code> is the only required secret. Everything else is handled inside the action. This pattern is not specific to any vendor; it is a general shape that works for any tool that can be packaged as a container or Node action.</p>
+<h3 id="config-import-from-existing-tools">Config import from existing tools</h3>
+<p>Teams already have configuration for other linters, formatters, or test runners. A command that reads those files and produces the tool's native config removes a manual translation step.</p>
+<pre><code class="language-bash"># Convert an existing config to the tool's format
+lint-tool import-config --source .existingrc --output .lint-tool.yml
 </code></pre>
-<p>The CLI parsed 12 config formats, converted them to PyLint Pro rules, and generated a <code>.pylintrc.pro</code> file. No manual editing. No human review.</p>
-<p>Third, we added AI-native documentation. Every rule had an AI-generated explanation, code example, and auto-generated fix. The docs weren’t for humans to read — they were for AI agents to consume. We structured them as JSON schemas so agents could parse them directly:</p>
+<p>The value is not the conversion itself but the elimination of a human editing step. Agents can run this command; they cannot meaningfully edit a config file with comments and conditional logic.</p>
+<h3 id="machine-readable-rule-metadata">Machine-readable rule metadata</h3>
+<p>Documentation written for agents should be structured. A JSON schema per rule is more useful than a markdown page because an agent can parse it without natural language understanding.</p>
 <pre><code class="language-json">{
-  &quot;rule_id&quot;: &quot;PYL-P001&quot;,
-  &quot;description&quot;: &quot;Avoid using mutable default arguments in function definitions.&quot;,
+  &quot;rule_id&quot;: &quot;LINT001&quot;,
+  &quot;description&quot;: &quot;Mutable default arguments are shared across calls.&quot;,
   &quot;severity&quot;: &quot;high&quot;,
   &quot;fix&quot;: {
     &quot;type&quot;: &quot;replace&quot;,
@@ -314,21 +322,9 @@ pylint-pro import-config --source .pylintrc
   }
 }
 </code></pre>
-<p>AI agents could now read the rule, understand the fix, and apply it automatically. Humans still got the same information, but agents could act on it without parsing markdown.</p>
-<p>Finally, we changed the pricing model again. We moved from seat-based to <strong>usage-based</strong>, but with a twist: teams paid only for fixes that were actually applied.</p>
-<p>We launched this as <strong>PyLint Pro Cloud</strong> in March 2026. The landing page didn’t mention pricing. It showed a single button: "Enable in GitHub".</p>
-<h2 id="implementation-details">Implementation details</h2>
-<p>The biggest technical challenge wasn’t the linter — it was the integration pipeline. We had to support three scenarios:</p>
-<ol>
-<li><strong>Human-driven</strong>: A developer manually runs the CLI or VS Code extension. 2. <strong>Agent-driven</strong>: An AI agent integrates the tool into a PR workflow. 3. <strong>CI-driven</strong>: A team runs the tool in GitHub Actions or GitLab CI.</li>
-</ol>
-<p>We built a lightweight agent layer that wrapped the linter. The layer had three endpoints:</p>
-<ul>
-<li><code>/lint</code> for human CLI use</li>
-<li><code>/ai/lint</code> for agent integration</li>
-<li><code>/ci/lint</code> for CI/CD</li>
-</ul>
-<p>Each endpoint had different performance constraints. The <code>/ai/lint</code> endpoint had to return in under 200ms to avoid agent timeouts. We achieved this with aggressive caching:</p>
+<p>The same data can be rendered as HTML for humans. The point is that the structured form is the source of truth, not an afterthought.</p>
+<h3 id="cached-low-latency-endpoints">Cached, low-latency endpoints</h3>
+<p>Agents have timeouts. An endpoint that takes several seconds to respond may be abandoned even if it would eventually succeed. Caching results by repository and commit SHA is a standard approach.</p>
 <pre><code class="language-python">from fastapi import FastAPI
 from fastapi_cache import caches
 from fastapi_cache.backends.redis import RedisBackend
@@ -336,193 +332,103 @@ from fastapi_cache.decorator import cache
 
 app = FastAPI()
 
-# Redis 7.2 with connection pooling
 redis = RedisBackend(&quot;redis://redis-master:6379&quot;, pool_size=20, timeout=500)
-caches.set(CACHE_KEY, redis)
+caches.set(&quot;default&quot;, redis)
 
-@app.post(&quot;/ai/lint&quot;)
+@app.post(&quot;/lint&quot;)
 @cache(expire=300)
-async def ai_lint(payload: LintRequest):
-    # Skip if cached
-    if await redis.get(f&quot;ai:{payload.repo_id}:{payload.sha}&quot;):
-        return await redis.get(f&quot;ai:{payload.repo_id}:{payload.sha}&quot;)
-
-    # Run linter
+async def lint(payload: LintRequest):
+    cache_key = f&quot;lint:{payload.repo_id}:{payload.sha}&quot;
+    cached = await redis.get(cache_key)
+    if cached:
+        return cached
     result = await run_linter(payload)
-
-    # Cache for 5 minutes
-    await redis.set(f&quot;ai:{payload.repo_id}:{payload.sha}&quot;, result, expire=300)
+    await redis.set(cache_key, result, expire=300)
     return result
 </code></pre>
-<p>We used Redis 7.2 for caching because it supported RedisJSON, which let us store linter results as nested JSON without serialization overhead. The cache hit rate for <code>/ai/lint</code> was 87% after one week, reducing average response time from 180ms to 45ms.</p>
-<p>For the VS Code extension, we rebuilt it in TypeScript using the Language Server Protocol (LSP). The extension was 6,200 lines of code, but only 800 lines were specific to PyLint Pro. The rest was boilerplate for LSP support. We open-sourced the boilerplate as <code>vscode-lsp-starter</code> to reduce maintenance burden.</p>
-<p>The hardest part was handling intermittent connections. Teams in Nairobi and Kampala often lose 3G signal mid-lint. We added offline-first support:</p>
-<pre><code class="language-typescript">// VS Code extension - offline mode
-const offlineQueue = new PersistentQueue('offline-lint');
+<p>Note that the <code>@cache</code> decorator and the explicit <code>redis.get</code>/<code>redis.set</code> calls overlap; in a real implementation you would use one or the other, not both. The decorator handles the cache lookup and storage, so the manual calls are redundant. Choose the decorator for simplicity or the manual calls if you need custom cache keys or conditional caching.</p>
+<p>To measure the effect of caching, instrument the endpoint with a counter for cache hits and misses, and log response times. A simple approach is to emit a structured log line per request with <code>cache_hit</code>, <code>duration_ms</code>, and <code>endpoint</code>, then aggregate with your existing log tooling. Compare p50 and p95 latency before and after enabling the cache.</p>
+<h3 id="offline-tolerant-clients">Offline-tolerant clients</h3>
+<p>Editors and CLIs used in environments with unreliable connectivity should queue work locally and sync when a connection is available. This is a general pattern, not specific to any region.</p>
+<pre><code class="language-typescript">const offlineQueue = new PersistentQueue('offline-lint');
 
-vscode.workspace.onDidChangeTextDocument(async (event) =&gt; {
+workspace.onDidChangeTextDocument(async (event) =&gt; {
   if (!navigator.onLine) {
     await offlineQueue.add(event.document.uri.fsPath);
     return;
   }
-
   const result = await lintDocument(event.document);
   displayResults(result);
 });
 
-// Sync when connection returns
 window.addEventListener('online', async () =&gt; {
   while (offlineQueue.size &gt; 0) {
     const file = offlineQueue.pop();
-    await lintDocument(vscode.Uri.file(file));
+    await lintDocument(Uri.file(file));
   }
 });
 </code></pre>
-<p>The extension queued lint results when offline and synced when the connection returned.</p>
-<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
-<p>Before the AI-era pivot, our metrics were:
-- Landing page conversion: 0.7%
-- Demo-to-paid ratio: 12%
-- Average time to first commit: 5.2 days
-- Customer churn after 90 days: 78%</p>
-<p>After rebuilding for AI agents and optimizing for 30-second integrations:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before (Q4 2026)</th>
-<th>After (Q2 2026)</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Landing page conversion</td>
-<td>0.7%</td>
-<td>3.8%</td>
-<td>+443%</td>
-</tr>
-<tr>
-<td>Demo-to-paid ratio</td>
-<td>12%</td>
-<td>45%</td>
-<td>+275%</td>
-</tr>
-<tr>
-<td>Time to first commit</td>
-<td>5.2 days</td>
-<td>8 minutes</td>
-<td>-99.9%</td>
-</tr>
-<tr>
-<td>Customer churn (90 days)</td>
-<td>78%</td>
-<td>22%</td>
-<td>-72%</td>
-</tr>
-<tr>
-<td>API p95 latency</td>
-<td>180ms</td>
-<td>45ms</td>
-<td>-75%</td>
-</tr>
-<tr>
-<td>Monthly recurring revenue</td>
-<td>$1,200</td>
-<td>$18,400</td>
-<td>+1433%</td>
-</tr>
-</tbody>
-</table>
-<p>The biggest surprise was the churn drop. Teams weren’t leaving because the tool was bad — they were leaving because they couldn’t integrate it. Once integration took minutes instead of days, retention improved dramatically.</p>
-<p>We also saw unexpected usage patterns. Teams in Nairobi were using PyLint Pro Cloud as a <strong>pre-commit hook</strong> in their agents. An AI agent would generate code, run PyLint Pro, auto-fix issues, and commit — all without human intervention. This drove 63% of our usage in Q2 2026.</p>
-<p>Costs were manageable. The Redis cache cluster cost $180/month for 1M requests. The API layer ran on AWS Lambda with arm64, averaging 800ms per request at $0.0000166667 per 100ms. Monthly bill: $420 for 25M requests. The GitHub Action itself was free for public repos and cost $0.002 per private repo per month for usage-based billing.</p>
-<p>We also reduced support tickets. Before, 40% of tickets were about setup. After the one-click integration, setup tickets dropped to 3%. The remaining 3% were mostly about edge cases in config parsing — things no human would ever type correctly.</p>
-<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<p>The queue persists across editor restarts, which matters when a session ends before connectivity returns.</p>
+<h2 id="designing-for-agent-use-without-neglecting-humans">Designing for agent use without neglecting humans</h2>
+<p>The goal is not to replace human-facing design but to ensure the machine path exists. A useful ordering is:</p>
 <ol>
-<li>
-<p><strong>We over-engineered the human experience.</strong> We spent six weeks building a VS Code extension with a full UI, only to discover teams never opened it. Next time, we’d start with a CLI and add the UI only if usage data demands it.</p>
-</li>
-<li>
-<p><strong>We ignored the agent-to-human handoff.</strong> Teams loved the AI auto-fix, but sometimes the fixes were wrong. We didn’t have a good way for humans to review AI changes. Next time, we’d add a "human review" step in the workflow, even if it’s just a thumbs-up reaction in GitHub.</p>
-</li>
-<li>
-<p><strong>We priced too late.</strong> We spent months tweaking the product before pricing. Our usage-based model worked, but we could have launched it earlier with a simple "pay per fix" model and iterated.</p>
-</li>
-<li>
-<p><strong>We didn’t measure the right thing.</strong> We tracked "time to first commit" as our north star, but we should have also tracked "time to first auto-fix in production". The latter correlated strongly with retention.</p>
-</li>
-<li>
-<p><strong>We assumed GitHub Actions were the only game in town.</strong> Teams in East Africa also use GitLab and Bitbucket. We only added GitLab CI in Q2 2026. Next time, we’d support all three from day one.</p>
-</li>
+<li>CLI with non-interactive flags and structured output.</li>
+<li>CI integration that installs and runs in one step.</li>
+<li>Machine-readable documentation (JSON schemas, OpenAPI specs).</li>
+<li>Editor extension or UI for humans who want it.</li>
 </ol>
-<p>The biggest mistake was assuming humans were still the primary users. Even when a human clicked "Enable", an AI agent often drove the integration. We should have designed for the agent first, human second.</p>
-<h2 id="the-broader-lesson">The broader lesson</h2>
-<p>The AI era didn’t kill developer tools — it changed who the customer is. The customer isn’t the developer anymore. The customer is the AI agent that the developer trusts.</p>
-<p>This isn’t just about integrations. It’s about the entire sales cycle:</p>
+<p>Building the UI first and the CLI second inverts the dependency order. Teams that start with the CLI tend to have a smaller surface area to maintain and a clearer contract for automation.</p>
+<h2 id="pricing-models-that-align-with-automated-use">Pricing models that align with automated use</h2>
+<p>Seat-based pricing assumes a human logs in. When usage is driven by CI jobs and agents, seat counts do not reflect value. Two alternatives are common:</p>
 <ul>
-<li><strong>Evaluation</strong>: Agents skip docs and benchmarks. They run a 30-second integration test. If your tool fails this test, you don’t exist. - <strong>Onboarding</strong>: Agents automate setup. If your tool requires manual configuration, agents won’t use it. - <strong>Adoption</strong>: Agents drive usage. If your tool requires human interaction, agents will ignore it. - <strong>Retention</strong>: Agents drive churn too. If your tool doesn’t provide value to agents, humans won’t renew.</li>
+<li><strong>Usage-based</strong>: charge per invocation, per fix applied, or per repository scanned. This aligns cost with consumption but requires metering and may need caps to avoid surprise bills.</li>
+<li><strong>Outcome-based</strong>: charge per accepted change, per merged pull request, or per resolved issue. This aligns cost with value but requires a reliable signal of acceptance.</li>
 </ul>
-<p>The principle is simple: <strong>Optimize for the agent, and the human will follow.</strong></p>
-<p>This isn’t just true for AI code assistants. It’s true for any tool that teams use in their workflow. If an AI agent can’t integrate your tool in under 30 seconds, a human won’t either — not without friction.</p>
-<p>In 2026, the best developer tools are invisible. They work inside agents, not next to them.</p>
-<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
-<p>If you’re building a developer tool today, ask yourself these three questions:</p>
-<ol>
-<li>
-<p><strong>Can an AI agent integrate my tool in under 30 seconds?</strong> If not, simplify the integration. Use a single-file GitHub Action, a one-line CLI command, or a zero-config API key.</p>
-</li>
-<li>
-<p><strong>Does my tool provide value to an AI agent?</strong> If not, add an agent-native endpoint. Return JSON schemas, not markdown. Support programmatic fixes, not just human-readable outputs.</p>
-</li>
-<li>
-<p><strong>Does my pricing model reward agent usage?</strong> If not, switch to usage-based or outcome-based pricing. Charge for fixes applied, not seats purchased.</p>
-</li>
-</ol>
-<p>Start with the integration. If an AI agent can’t use your tool in under a minute, no human will either — not without friction.</p>
-<h2 id="resources-that-helped">Resources that helped</h2>
-<ol>
-<li>
-<p><strong>GitHub Actions documentation</strong> (2026.05): We rebuilt our action using the new composite action format, which reduced setup time from 3 minutes to 10 seconds. <a href="https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-composite-action">GitHub Docs - Composite Actions</a></p>
-</li>
-<li>
-<p><strong>FastAPI + Redis 7.2 caching guide</strong>: The caching strategy we used for the <code>/ai/lint</code> endpoint came from this tutorial. <a href="https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/#caching-with-redis">FastAPI Caching with Redis</a></p>
-</li>
-<li>
-<p><a href="https://code.visualstudio.com/api/language-extensions/language-server-extension-guide">VS Code LSP Docs</a></p>
-</li>
-<li>
-<p><a href="https://aws.amazon.com/lambda/pricing/">AWS Lambda Pricing</a></p>
-</li>
-<li>
-<p><strong>PyLint Pro open-source CLI</strong>: We open-sourced the CLI we use for one-click migration. It supports pylint, flake8, mypy, and bandit. <a href="https://github.com/pylint-pro/cli">GitHub - pylint-pro/cli</a></p>
-</li>
-</ol>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How do I know if my tool should be optimized for AI agents?</strong></p>
-<p>If your tool is used in a workflow (linting, testing, deployment, monitoring), it’s already being used by agents. Check your logs for programmatic integrations (GitHub Actions, CLI commands, API calls). If you see agent-like usage patterns, optimize for agents first.</p>
-<p><strong>What’s the minimum viable AI-era integration?</strong></p>
-<p>A single-file GitHub Action with no dependencies. Example: a YAML file that calls your API with an API key. If teams can enable it in two clicks, you’ve passed the 30-second test.</p>
-<p><strong>How do I price a tool that’s used by AI agents?</strong></p>
-<p>Start with usage-based pricing. Charge per fix, per test run, or per deployment — whatever aligns with the value your tool provides. Add a seat-based limit only if you need to cap costs for large teams.</p>
-<p><strong>What if my tool requires human interaction?</strong></p>
-<p>Don’t force humans to use it. Add an agent-native endpoint that automates the human steps. For example, if your tool requires approvals, build an agent that auto-approves changes that pass all tests.</p>
-<h2 id="next-step-run-the-30-second-test">Next step: Run the 30-second test</h2>
-<p>Open your tool’s landing page. Find the "Get Started" or "Install" button. Ask yourself: <strong>Can an AI agent click this button and have my tool working in under 30 seconds?</strong></p>
-<p>If not, simplify the integration. Delete a config file. Remove a dependency. Add a one-line CLI command. Then test again. Keep simplifying until the test passes.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>A hybrid is often practical: a free tier for evaluation with generous limits, then usage-based pricing above that. The free tier must be usable by an agent without a credit card or manual approval, or it will not serve its purpose.</p>
+<h2 id="measuring-whether-your-integration-passes-the-test">Measuring whether your integration passes the test</h2>
+<p>The "30-second test" is a heuristic. To make it concrete, measure the following in a cold environment:</p>
 <ul>
-<li><a href="https://kubaik.github.io/ai-sales-cycles-why-dev-tools-now-need-3-demos/">AI sales cycles: why dev tools now need 3 demos</a></li>
-<li><a href="https://kubaik.github.io/ai-sales-cycles-3x-faster-40-less-talk/">AI sales cycles: 3x faster, 40% less talk</a></li>
-<li><a href="https://kubaik.github.io/double-the-price-double-the-revenue/">Double the price, double the revenue</a></li>
+<li><strong>Time from <code>git clone</code> to first successful tool invocation.</strong> Instrument this by running the documented setup steps in a fresh container and timing each step.</li>
+<li><strong>Number of required secrets or manual steps.</strong> Count them; each one is a potential failure point for automation.</li>
+<li><strong>Output parseability.</strong> Attempt to parse the tool's output with a JSON parser. If it fails, the output is not machine-readable.</li>
+<li><strong>Non-interactive behavior.</strong> Run the tool with stdin closed and no TTY. If it hangs or prompts, it is not agent-compatible.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<p>These measurements can be collected with a shell script that runs in CI and reports the results. The script itself becomes a regression test for integration friction.</p>
+<h2 id="a-worked-example-reducing-setup-steps">A worked example: reducing setup steps</h2>
+<p>Consider a hypothetical tool that currently requires:</p>
+<ol>
+<li>Install a CLI via a package manager.</li>
+<li>Run <code>tool init</code> which prompts for a project name and API key.</li>
+<li>Edit a generated config file to set the rule set.</li>
+<li>Add a CI step that calls the CLI.</li>
+</ol>
+<p>An agent attempting this will fail at step 2 because of the interactive prompt. The fix is to add flags:</p>
+<pre><code class="language-bash">tool init --non-interactive --project &quot;$PROJECT&quot; --api-key &quot;$API_KEY&quot; --ruleset default
+</code></pre>
+<p>Now step 2 is automatable. Step 3 can be eliminated by making the default ruleset sufficient for evaluation. Step 4 can be replaced by a published CI action that wraps the CLI. The result is a two-step setup: install, then run with flags.</p>
+<p>The measurement to confirm the improvement: time the setup in a fresh container before and after the change. If the before time is dominated by waiting for human input, the after time will be dramatically lower even if the underlying work is identical.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Before shipping a developer tool, check the following:</p>
+<ul>
+<li>Can the tool be installed and invoked in a single CI step with one secret?</li>
+<li>Does it produce structured output by default or via a flag?</li>
+<li>Does it run without interactive prompts when stdin is closed?</li>
+<li>Is there a machine-readable schema for rules, config, or API?</li>
+<li>Does the free tier work without manual approval?</li>
+<li>Is there a documented way to measure setup time and output parseability?</li>
+</ul>
+<p>If any answer is no, that is the next thing to fix.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Does this mean human-facing documentation is unnecessary?</strong>
+No. Humans still read documentation, especially for troubleshooting and advanced configuration. The point is that the structured form should exist alongside the human-readable form, not instead of it.</p>
+<p><strong>How do I know if agents are actually using my tool?</strong>
+Look for programmatic usage patterns: CI job runs, API calls without a browser user agent, invocations with non-interactive flags. Structured logging with a <code>client_type</code> field makes this measurable.</p>
+<p><strong>What if my tool genuinely requires human judgment?</strong>
+Provide a default automated path for the common case and a human review step for exceptions. The automated path handles evaluation and routine use; the human path handles edge cases.</p>
+<p><strong>Is usage-based pricing always better?</strong>
+No. It is better when usage correlates with value and when metering is reliable. If usage is sporadic or hard to meter, a flat fee with generous limits may be simpler.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Run your tool's documented setup in a fresh container with stdin closed and no TTY, and time it. If it hangs, prompts, or takes more than a minute, identify the first blocking step and add a non-interactive flag or a default that removes it. That single change is the highest-leverage integration improvement you can make today.</p>
                 
                 
             </div>

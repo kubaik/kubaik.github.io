@@ -1,71 +1,85 @@
 # Claude Code after 365 days: what actually works
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+Launch posts tend to show the happy path: a prompt, a burst of generated files, a merged pull request. What they rarely show is the second pass — the human review, the missing environment variable, the retry that fires four times when you asked for three, the circuit breaker that reopens too early. This article walks through a repeatable template for agent-assisted development on a small but non-trivial service, and documents the failure modes that show up when you move past the demo.
 
-## Why I wrote this (the problem I kept hitting)
+The goal is not to argue for or against agents. It is to describe a workflow that produces code you can actually operate: pinned dependencies, tests that fail for the right reasons, observability wired in from the start, and a review step that catches what the agent cannot know about your environment.
 
-In late 2026 I rolled Claude Code into every repo we owned at work. At first the pitch felt perfect: “AI pair programmer that writes, tests, and documents in one pass.” We bought seats, created a team policy, and set up a billing alert. Six weeks in I noticed a pattern—every pull request that merged cleanly had been touched by a human anyway, and every PR that looked magical broke in staging because the tests the AI generated only ran locally. I spent three days debugging a staging failure that turned out to be a single flaky test the AI had written with `pytest-randomly` seeded to 42. That failure cost us €840 in on-call time and reminded me why we keep humans in the loop.
+## What agents are good at, and what they are not
 
-What I expected to see:
-- Fewer context switches while coding
-- Higher test coverage without extra effort
-- Accurate, up-to-date docs auto-generated from code
+A useful mental model is that an agent is a very fast boilerplate generator with no memory of your production incidents. It will produce a plausible GitHub client, a plausible retry wrapper, a plausible CI workflow. It will not know that your CI runner has no outbound network, that your token is injected by an OIDC provider, or that your team was paged twice last quarter by a specific upstream. Those are the things humans add.
 
-What I actually saw:
-- Faster first drafts, but always a second rewrite pass
-- Slightly higher test coverage (83% vs 79%), but flakier suites
-- Docs that were technically correct but omitted edge-case behavior
+The recurring pattern across teams that adopt this workflow:
 
-The gap between marketing and reality showed me that “agentic coding” isn’t magic; it’s a pipeline with real failure modes. This post is what I wish I had when we started—hard numbers, real tooling choices, and the edge cases you don’t read about in launch blogs.
+- **Faster first drafts.** The agent produces a working skeleton in minutes rather than an afternoon.
+- **A mandatory second pass.** Almost every generated file needs a human edit before it is safe to merge. The edit is usually small but non-optional.
+- **Test suites that grow faster than they mature.** Coverage numbers rise, but the new tests often assert the happy path and skip the failure modes you actually care about.
+- **Documentation that is technically correct but shallow.** Generated docs describe what the code does, not what it does when the upstream returns 429 at 3 a.m.
 
-## Prerequisites and what you'll build
+None of these are reasons to skip the tool. They are reasons to design the workflow around them.
 
-You’ll need:
-- A GitHub, GitLab, or Bitbucket repo with Node.js or Python code you’re comfortable rewriting
-- Node 20 LTS or Python 3.11 in your PATH
-- A Claude Code seat on the Pro plan (2026 pricing: €19/user/month billed monthly)
-- A terminal, an editor, and 45 minutes of uninterrupted time
+## Prerequisites and what you will build
 
-What you’ll build is small but non-trivial: a 150-line REST service that fetches GitHub issues, adds a custom label, and summarises them. The service must:
-- Validate inputs with Zod (Node) or Pydantic (Python)
-- Persist to SQLite in-memory for speed on every run
-- Generate OpenAPI docs automatically
-- Include unit and property-based tests
-- Run lint, type-check, and test in CI via GitHub Actions
+You will need:
 
-At the end you’ll have a repeatable template you can copy into any new repo and get the same agentic loop—write a prompt, run Claude Code, review, commit.
+- A GitHub, GitLab, or Bitbucket repository containing Node.js or Python code you are willing to restructure.
+- Node 20 LTS or Python 3.11 on your PATH.
+- Access to an agentic coding CLI or IDE extension. The specific product does not matter much; the workflow below assumes a CLI that reads a project instruction file and generates files into a target directory.
+- A terminal, an editor, and roughly 45 minutes of uninterrupted time.
 
-## Step 1 — set up the environment
+The example service is deliberately small: a REST endpoint that accepts an issue reference, validates it, and adds a label via the GitHub API. It must:
 
-First, create an empty repo and install the scaffolding. I’ll use Node 20 LTS because it’s the default on most CI runners in 2026.
+- Validate inputs with a schema library (Zod for Node, Pydantic for Python).
+- Persist nothing by default — keep the service stateless so tests are fast and deterministic.
+- Generate an OpenAPI document from the same schemas used for validation, so the two cannot drift.
+- Include unit tests and property-based tests.
+- Run lint, type-check, and tests in CI on every push.
+
+The point of the exercise is the template, not the service. Once the template exists, it can be copied into any repository and the agent loop behaves predictably.
+
+## Step 1 — Pin the environment before the agent touches it
+
+Install dependencies with exact versions and commit the lockfile. Agents frequently suggest upgrades to "latest," and a version bump that lands mid-task can invalidate the code they just wrote. Pinning removes that variable.
 
 ```bash
-mkdir claude-github-labeler && cd claude-github-labeler
+mkdir agent-labeler && cd agent-labeler
 git init
 npm init -y
 npm pkg set type="module"
 
-# Core dependencies
-typescript@5.5.4 zod@3.23.8 fastify@4.26.1 @fastify/type-provider-zod@2.0.0
-# Dev tooling
-eslint@9.6.0 @typescript-eslint/parser@7.13.1 prettier@3.3.2
-# Testing
-tap@18.7.1 sinon@17.0.0 @sinonjs/fake-timers@11.2.2
-# Agent runner
-@anthropic-ai/cli@0.9.15
+npm install --save-exact \
+  typescript@5.5.4 \
+  zod@3.23.8 \
+  fastify@4.26.1 \
+  @fastify/type-provider-zod@2.0.0 \
+  @octokit/rest@21.0.2 \
+  p-retry@6.2.0 \
+  opossum@8.4.0 \
+  zod-to-json-schema@3.23.5
+
+npm install --save-dev --save-exact \
+  tsx@4.19.1 \
+  eslint@9.6.0 \
+  @typescript-eslint/parser@7.13.1 \
+  prettier@3.3.2 \
+  tap@18.7.1 \
+  sinon@17.0.0 \
+  @sinonjs/fake-timers@11.2.2 \
+  fast-check@3.15.1
 ```
 
-Pin every major version so the AI doesn’t suggest upgrades that break in two weeks.
+Two notes on version choice. Pin the GitHub client to a major version you have actually tested against the API; the Octokit API surface changes between majors. Pin the retry and circuit-breaker libraries for the same reason — their option names have changed across releases, and an agent trained on an older example will happily use the old names.
 
-Add a minimal Fastify server that serves healthcheck and accepts a POST /issues endpoint:
+Add a minimal server so there is something for the agent to extend:
 
-```javascript
+```typescript
 // src/server.ts
 import Fastify from 'fastify';
 import { z } from 'zod';
-import { zodToJsonSchema } from 'zod-to-json-schema';
+import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 
 const server = Fastify({ logger: true });
+server.setValidatorCompiler(validatorCompiler);
+server.setSerializerCompiler(serializerCompiler);
 
 const IssueSchema = z.object({
   owner: z.string().min(1),
@@ -91,283 +105,220 @@ const start = async () => {
 start();
 ```
 
-Run it once to sanity-check:
+Sanity-check it before involving an agent:
 
 ```bash
 npx tsx src/server.ts
-curl -X POST http://localhost:3000/issues -H 'Content-Type: application/json' \
+curl -X POST http://localhost:3000/issues \
+  -H 'Content-Type: application/json' \
   -d '{"owner":"octocat","repo":"Hello-World","issue_number":42}'
 ```
 
-Expected output: `{ "ok": true, "owner": "octocat", ... }`
+If the endpoint returns `{"ok":true,...}`, the baseline is sound. If it does not, fix it now — debugging a broken baseline through an agent's output is significantly harder than debugging it directly.
 
-Gotcha: if the CLI tooling pulls in `@anthropic-ai/sdk@0.21.1` instead of the pinned `0.9.15`, pin it explicitly:
+## Step 2 — Give the agent a project instruction file
 
-```bash
-npm install --save-exact @anthropic-ai/sdk@0.9.15
-```
-
-I lost two hours here because the AI defaulted to the latest SDK and the Anthropic streaming format changed between 0.19 and 0.21, breaking our agent loop.
-
-## Step 2 — core implementation
-
-Now the agent will scaffold the rest. Create `claude.md` in the repo root so the AI picks up project style.
+Most agentic CLIs read a project-level instruction file. Keep it short and specific. Long instruction files get partially ignored, and vague instructions produce vague code.
 
 ```markdown
-# claude.md
+# Project instructions
 
-- Use TypeScript strict mode
-- Prefer functional style over classes
-- Files under `src/` only
-- Tests in `test/` with tap
-- Always add `// eslint-disable-next-line` comments when ignoring lint rules
-- Commit messages follow Conventional Commits v1.0.0
+- TypeScript strict mode is on. Do not disable it.
+- Prefer functions over classes. No inheritance.
+- Application code lives under `src/`. Tests live under `test/`.
+- Tests use `tap`. Mocking uses `sinon`. Do not introduce Jest.
+- Every network call must have a timeout.
+- Secrets are read from `process.env` and never written to disk.
+- Commit messages follow Conventional Commits.
+- Do not add dependencies without listing them in the prompt first.
 ```
 
-Open the repo in VS Code, then run the CLI:
+That last rule matters more than it looks. Without it, agents routinely import packages that are not installed, or that do not exist at all. Requiring the dependency list up front turns a silent hallucination into a visible line in the prompt.
 
-```bash
-npx @anthropic-ai/cli@0.9.15 init --target src
-```
+## Step 3 — First generation: expect it to be incomplete
 
-The agent shows a prompt template. Replace it with:
+A reasonable first prompt:
 
 ```
-You are a senior backend engineer on a team that values stability, observability, and correctness.
+Write the following, using only the dependencies already installed:
 
-Write the following:
-1. A GitHub client using @octokit/rest@3.1.0
-2. A service `src/services/label.ts` that adds a "claude-review" label to a given issue
-3. Unit tests in `test/label.test.ts` using tap and sinon
-4. OpenAPI schema auto-generated from Zod schemas
-5. A GitHub Actions workflow that runs lint, type-check, and test on every push
+1. `src/clients/github.ts` — a thin wrapper around @octokit/rest that
+   exposes addLabel(token, owner, repo, issueNumber).
+2. `src/services/label.ts` — validates inputs, reads GITHUB_TOKEN from
+   process.env, throws a descriptive error if missing, and calls the client.
+3. `test/label.test.ts` — tap tests covering: success, missing token,
+   invalid owner/repo characters, and a 429 response from the API.
+4. `.github/workflows/ci.yml` — runs lint, type-check, and test on push.
 
-Assume Node 20 LTS and TypeScript 5.5.4.
-
-Start with a failing test that expects the label to be added.
+Start with the failing tests, then the implementation.
 ```
 
-Hit Enter. In 90 seconds on my M2 MacBook Pro the agent produced:
-- `src/clients/github.ts` (112 lines)
-- `src/services/label.ts` (44 lines)
-- `test/label.test.ts` (89 lines, 95% coverage)
-- `.github/workflows/ci.yml`
-- OpenAPI docs via `fastify-swagger@8.14.0`
-
-The generated `label.ts` looked clean:
+The generated client is usually fine. The generated service typically looks like this:
 
 ```typescript
 // src/services/label.ts
-import { Octokit } from '@octokit/rest';
+import { addLabel as clientAddLabel } from '../clients/github.js';
 
 export async function addLabel(
-  token: string,
   owner: string,
   repo: string,
-  issue_number: number,
+  issueNumber: number,
 ) {
-  const octokit = new Octokit({ auth: token });
-  await octokit.rest.issues.addLabels({
-    owner,
-    repo,
-    issue_number,
-    labels: ['claude-review'],
-  });
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) {
+    throw new Error('GITHUB_TOKEN environment variable is required');
+  }
+  return clientAddLabel(token, owner, repo, issueNumber);
 }
 ```
 
-But I knew it would fail in CI because we don’t commit tokens. The agent also forgot to wire the GitHub token from environment variables. I had to teach it:
+That is close to correct, and the missing-token check is a good sign — it suggests the instruction file was read. What is usually missing:
 
-```
-Update the function to read GITHUB_TOKEN from process.env and throw a descriptive error if missing.
-```
+- No retry on transient failures.
+- No timeout on the underlying HTTP call.
+- Validation of `owner` and `repo` against GitHub's actual naming rules.
+- No handling for the case where the label already exists.
 
-Second iteration added:
+The review pass is where you add those. Budget for it.
 
-```typescript
-if (!token) {
-  throw new Error('GITHUB_TOKEN environment variable is required');
-}
-```
+## Step 4 — Add resilience, and verify the semantics
 
-Cost of the rewrite: 15 minutes of human review. The AI saved me ~45 minutes of boilerplate, so net time saved is 30 minutes per repo.
+Retries and circuit breakers are where agents most often produce code that looks right and behaves wrong. Two specific traps:
 
-## Step 3 — handle edge cases and errors
+**Off-by-one retries.** Most retry libraries treat `retries: 3` as three *additional* attempts after the first, for four total. Agents frequently write a test that asserts three total attempts, then "fix" the library call to match. Decide which semantics you want and state it explicitly.
 
-The agent wrote the happy path, but not the edge cases. I added these prompts:
+**Circuit breakers that reopen too soon.** A breaker with a short `resetTimeout` will let traffic through while the upstream is still degraded, generating a second wave of failures. If your upstream outages typically last longer than the default reset window, raise the timeout and add jitter.
 
-1. "Add retry with exponential backoff for rate limits and network errors using `p-retry@8.0.0`
-2. "Validate issue_number is positive integer in the service layer"
-3. "Add a circuit breaker using `opossum@8.0.0` so we don’t hammer GitHub on repeated failures"
-
-The agent generated a retry utility and a circuit-breaker wrapper in one pass. The retry logic:
+A retry wrapper with explicit semantics:
 
 ```typescript
+// src/lib/retry.ts
 import retry from 'p-retry';
 
-async function withRetry<T>(fn: () => Promise<T>, retries = 3) {
+export async function withRetry<T>(
+  fn: () => Promise<T>,
+  { retries = 3, minTimeout = 100, maxTimeout = 5_000 } = {},
+): Promise<T> {
   return retry(fn, {
     retries,
-    minTimeout: 100,
-    maxTimeout: 5_000,
-    onRetry: (err) => {
-      console.warn(`Retrying after ${err.message}`);
+    minTimeout,
+    maxTimeout,
+    factor: 2,
+    onFailedAttempt: (err) => {
+      console.warn(
+        `Attempt ${err.attemptNumber} failed: ${err.message}. ` +
+          `${err.retriesLeft} retries left.`,
+      );
     },
   });
 }
 ```
 
-I benchmarked this against the GitHub API on a 100ms latency simulated network (using `nock@13.5.3`):
-- No retry: 42% failure rate under 500ms latency spikes
-- With retry: 2% failure rate, median latency 280ms
-
-The circuit breaker added another layer of safety. The agent wrapped the GitHub call:
+And a circuit breaker around the client call:
 
 ```typescript
+// src/services/label.ts
 import CircuitBreaker from 'opossum';
+import { addLabel as clientAddLabel } from '../clients/github.js';
+import { withRetry } from '../lib/retry.js';
 
-const breaker = new CircuitBreaker(addLabelInternal, {
-  timeout: 3000,
-  errorThresholdPercentage: 50,
-  resetTimeout: 30000,
-});
+const breaker = new CircuitBreaker(
+  (token: string, owner: string, repo: string, n: number) =>
+    withRetry(() => clientAddLabel(token, owner, repo, n)),
+  {
+    timeout: 3_000,
+    errorThresholdPercentage: 50,
+    resetTimeout: 60_000,
+    volumeThreshold: 5,
+  },
+);
 
 export async function addLabel(
-  token: string,
   owner: string,
   repo: string,
-  issue_number: number,
+  issueNumber: number,
 ) {
-  const tokenSafe = token ?? process.env.GITHUB_TOKEN;
-  if (!tokenSafe) throw new Error('GITHUB_TOKEN required');
-  return breaker.fire(tokenSafe, owner, repo, issue_number);
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) throw new Error('GITHUB_TOKEN environment variable is required');
+  return breaker.fire(token, owner, repo, issueNumber);
 }
 ```
 
-Gotcha: the agent defaulted `resetTimeout` to 10 seconds. In our prod outage simulation (GitHub API degraded for 25 seconds) the breaker stayed open for only 10 seconds and hammered the API again, causing a 429. I bumped `resetTimeout` to 60 seconds and added jitter.
+To verify this behaves as intended, do not trust a prose description of the outcome. Instrument it and measure. A minimal harness:
 
-## Step 4 — add observability and tests
+1. Wrap the GitHub client in a stub that sleeps for a configurable duration and fails with a configurable probability.
+2. Run the service against the stub with the breaker disabled, then enabled.
+3. Record p50 and p95 latency and the failure rate for each configuration.
+4. Repeat with a stub that fails continuously for 30 seconds, and log every breaker state transition with a timestamp.
 
-The agent wrote unit tests, but they didn’t cover:
-- Token absence
-- Invalid owner/repo names
-- Network timeouts
-- Rate-limit responses
+That last step is the one that catches a too-short `resetTimeout`. If the breaker closes while the stub is still failing, you will see it in the transition log immediately. The numbers you get will depend entirely on your stub parameters, so record the parameters alongside the results — a latency figure without the simulated upstream behavior is not reproducible.
 
-I fed it a new prompt:
+## Step 5 — Tests that find real bugs
+
+Unit tests generated by an agent tend to assert the happy path and the two or three obvious errors. Property-based tests are where the agent earns its keep, because they force it to enumerate invariants rather than examples.
+
+A prompt that produces useful output:
 
 ```
-Write property-based tests using fast-check@3.15.1 that verify:
-- addLabel fails when token is missing or empty
-- addLabel fails when owner or repo contains invalid characters
-- addLabel retries exactly N times on network errors
-- addLabel uses circuit breaker on repeated failures
+Write property-based tests using fast-check that verify:
+
+- addLabel rejects any owner or repo that does not match GitHub's
+  naming rules (alphanumeric, hyphen, underscore; max 100 chars).
+- withRetry makes exactly (retries + 1) attempts on a persistently
+  failing function.
+- withRetry succeeds on the first attempt when the function succeeds.
+- The circuit breaker transitions to open after the configured
+  error threshold is exceeded.
 ```
 
-The agent produced 164 lines of tests that uncovered two bugs:
-1. The validation regex for owner/repo only checked length, not allowed characters (`[a-zA-Z0-9\-]+` vs `[a-zA-Z0-9\-_]+`)
-2. The retry count was off-by-one in the test helper (`retries = 3` meant 4 attempts)
+Two classes of bug commonly surface here. The first is a validation regex that is too permissive — often it checks length but not the character class, so `owner: "a/b"` passes. The second is a retry-count assertion that was written against the wrong convention, which the property test exposes as a mismatch between the stated invariant and the implementation.
 
-Fixing those took 7 minutes; without the property tests, the bugs would have surfaced in prod.
+Neither bug is exotic. Both are the kind of thing that reaches production when the test suite only covers examples the author thought of.
 
-For observability, the agent added a `/metrics` endpoint using `prom-client@15.1.3` and wired it to Fastify. The metrics include:
-- HTTP request duration (histogram, buckets: 10, 50, 100, 200, 500, 1000 ms)
-- GitHub API call duration
-- Circuit breaker state (open/closed/half-open)
-- Retry count histogram
+## Step 6 — Observability, because the agent will not add it
 
-I added a Grafana dashboard with these panels:
-- P95 latency for `/issues`
-- Error rate per hour
-- Circuit breaker trips per day
+Agents rarely add metrics unless asked, and when asked they tend to add the easy ones. The minimum useful set for a service like this:
 
-In the first week of prod, the dashboard caught a slow drift in GitHub API latency before alerts fired.
+- HTTP request duration as a histogram, with explicit buckets. The default Prometheus buckets are tuned for sub-second latencies and will not resolve a multi-second upstream stall.
+- Upstream call duration, labelled by outcome.
+- Circuit breaker state, exported as a gauge (0 = closed, 1 = half-open, 2 = open).
+- Retry attempts, as a counter labelled by attempt number.
 
-## Real results from running this
+The circuit breaker state gauge is the one that pays for itself. A breaker that has been open for ten minutes is a signal you want on a dashboard, not buried in logs.
 
-We rolled the template to 14 repos in Q1 2026. Here are the numbers:
+Wire the metrics endpoint to the same Fastify instance, and add a CI check that the endpoint returns a non-empty body. That check catches the common failure where the metrics library is imported but never registered.
 
-| Metric | Before agent loop | After agent loop | Delta |
-|---|---|---|---|
-| First PR open-to-merge time | 2.1 days | 1.3 days | -38% |
-| Test coverage | 79% | 86% | +7pp |
-| On-call pages per repo per month | 1.8 | 0.9 | -50% |
-| Human review minutes per PR | 22 | 14 | -36% |
+## A decision checklist before merging agent output
 
-The biggest surprise was the on-call drop. The agent forced us to add observability and retries early; fewer edge cases bubbled up to night shifts.
+Run through this before the pull request goes up:
 
-Cost breakdown (2026 euros):
-- Claude Code seats: €266 (14 seats × €19)
-- Extra compute for retries and circuit breakers: €48/month on AWS t4g.small
-- Human review time saved: ~13 engineer-hours/month, valued at €1,200 at blended cost
+- **Are all dependencies pinned, and does the lockfile match?** Run `npm ls` or `pip check`. Any missing or duplicated entry is a red flag.
+- **Does every network call have a timeout?** A missing timeout is the single most common cause of a hung request handler.
+- **Are retry semantics stated explicitly, and does the test match?** Check the total attempt count, not just that a retry happened.
+- **Is the circuit breaker reset window longer than a typical upstream outage?** If you do not know the typical outage length, measure it before choosing.
+- **Do tests cover the failure modes, not just the happy path?** Missing token, invalid input, upstream 429, upstream timeout.
+- **Are secrets read from the environment and never logged?** Grep the diff for the token variable name.
+- **Is there a metric or log line for every failure path?** If a failure is silent, it is invisible.
 
-Net ROI after three months: +€2,750 per repo.
+If any answer is no, the second pass is not finished.
 
-Latency comparison on a 500 ms GitHub latency simulation:
-- Without circuit breaker: 95th percentile 2.1s
-- With circuit breaker + retry: 95th percentile 520ms
+## FAQ
 
-The agent didn’t write the observability layer; it wrote the scaffolding that made adding observability trivial. That’s the pattern I see now: the agent is fastest at filling in boilerplate, but humans still need to design the guardrails.
+**Does this workflow depend on a specific agent product?**
+No. It depends on three properties: the agent reads a project instruction file, it writes into a target directory you control, and you can review the diff before merging. Any tool with those properties supports the same loop.
 
-## Common questions and variations
+**How do you stop the agent from inventing dependencies?**
+Require the dependency list in the prompt, pin exact versions, and run a dependency check in CI. A missing or duplicated package should fail the build.
 
-### What languages does this work for in 2026?
+**What about languages other than TypeScript?**
+The structure transfers. The specific libraries differ — for Python, a schema library, a retry helper, and a circuit-breaker package play the same roles — but the review checklist is identical. The main difference is that agent-generated Go tends to be more verbose and more likely to need manual restructuring, because the language has fewer idioms the model can lean on.
 
-I’ve replicated the same loop in Python 3.11 and Go 1.22. The agent templates are less mature for Go, but the core idea—pin versions, write tests first, then iterate—holds. For Python I used FastAPI 0.109, Pydantic 2.7, pytest 8.1, and `httpx` for GitHub client. The retry and circuit-breaker patterns are one-to-one.
+**Should the agent write the tests first?**
+Yes. Tests written first constrain the implementation to something the agent can verify, and they make the review pass faster because you can see what the agent believed the contract was.
 
-### How do you prevent the AI from writing low-quality tests?
+**How much human review time should be budgeted?**
+Enough to run the checklist above. For a service of this size, that is typically a short review pass per generated file, plus longer for anything touching retries, timeouts, or secrets. Treat the review as part of the task, not as overhead on top of it.
 
-Force it to write tests first. My prompt order is always:
-1. Write a failing test
-2. Write the minimal implementation that passes
-3. Refactor for edge cases
-4. Add observability
-5. Review with a human
+## What to do in the next 30 minutes
 
-The agent writes the first two steps in one pass, but humans still own the edge cases. I also maintain a prompt snippet called `test-quality.md` that enforces: 100% line coverage on new code, at least one property-based test, and a flakiness guardrail (max 5% retry flake rate over 100 runs).
-
-### What happens when the AI hallucinates an import that doesn’t exist?
-
-It happens 12% of the time in my logs. The fix is to pin versions and run `npm ls` or `pip check` immediately after generation. I added a CI job that fails the build if any dependency is missing or duplicated. That caught an hallucinated `@octokit/webhooks@11.0.0` that doesn’t exist; the agent had copied it from an old example.
-
-### How do you handle secrets and Claude Code’s token storage?
-
-We never commit tokens. The prompt template explicitly says “assume secrets are injected via environment variables.” In CI we use GitHub’s OIDC provider to mint a short-lived token scoped to the repo. Locally we rely on `direnv` + `.envrc` and the agent never writes the file to disk. I was surprised that the CLI tool itself never logs the token, but the Anthropic SDK does log the request headers in debug mode. I patched the SDK’s debug log to redact `Authorization` headers before emitting.
-
-## Where to go from here
-
-Open your terminal and run this exact command in any repo you own:
-
-```bash
-gh repo clone anthropics/claude-code-template && cd claude-code-template && npm install --save-exact @anthropic-ai/cli@0.9.15 typescript@5.5.4 zod@3.23.8 fastify@4.26.1
-```
-
-Then copy the `.claude.md` file from the template into your repo and run:
-
-```bash
-npx @anthropic-ai/cli@0.9.15 init --target src
-```
-
-Accept the first prompt, wait 90 seconds, review the generated files, and merge the PR. You’ll have a production-grade scaffold with observability, tests, and an agent loop you can iterate on tomorrow.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 12, 2026
+Pick one repository you own. Create a project instruction file at the root with the rules from Step 2, adjusted for your stack. Then, before running any agent, list every dependency the task will need with exact versions and install them. Commit that state. You now have a baseline that is pinned, reviewable, and reproducible — which is the precondition for everything else in this article.

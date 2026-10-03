@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI agents: circuit breakers are not optional - Kubai Kevin</title>
-        <meta name="description" content="Cut AI agent hallucinations 93% with circuit breakers — production metrics, code, and the 3 ms overhead we measured in FastAPI 0.109 with Redis 7.2.">
+        <meta name="description" content="AI agents fail by hanging and returning plausible garbage, not by crashing. Here is how to add a circuit breaker that catches semantic failures.">
         <meta name="keywords" content="CircuitBreaker, AiAgentReliability, LlmCircuitBreaker, Fastapi, RedisCircuitBreaker, Circuit, AiAgentLatency, Ai, Llm, Redis">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T20:22:23.667451">
-        <meta property="article:modified_time" content="2026-09-17T16:37:01.566724+00:00">
+        <meta property="article:modified_time" content="2026-10-03T10:59:32.701468+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI agents: circuit breakers are not optional">
-        <meta property="og:description" content="Cut AI agent hallucinations 93% with circuit breakers — production metrics, code, and the 3 ms overhead we measured in FastAPI 0.109 with Redis 7.2.">
+        <meta property="og:description" content="AI agents fail by hanging and returning plausible garbage, not by crashing. Here is how to add a circuit breaker that catches semantic failures.">
         <meta property="og:url" content="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI agents: circuit breakers are not optional">
-        <meta name="twitter:description" content="Cut AI agent hallucinations 93% with circuit breakers — production metrics, code, and the 3 ms overhead we measured in FastAPI 0.109 with Redis 7.2.">
+        <meta name="twitter:description" content="AI agents fail by hanging and returning plausible garbage, not by crashing. Here is how to add a circuit breaker that catches semantic failures.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-agents-circuit-breakers-are-not-optional.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/#article",
       "headline": "AI agents: circuit breakers are not optional",
-      "description": "Cut AI agent hallucinations 93% with circuit breakers — production metrics, code, and the 3 ms overhead we measured in FastAPI 0.109 with Redis 7.2.",
+      "description": "AI agents fail by hanging and returning plausible garbage, not by crashing. Here is how to add a circuit breaker that catches semantic failures.",
       "datePublished": "2026-07-03T20:22:23+00:00",
-      "dateModified": "2026-09-17T16:37:01+00:00",
-      "wordCount": 2901,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-10-03T10:59:32+00:00",
+      "wordCount": 2488,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI agents: circuit breakers are not optional</h1>
                 
-                <p class="post-lead">Cut AI agent hallucinations 93% with circuit breakers — production metrics, code, and the 3 ms overhead we measured in FastAPI 0.109 with Redis 7.2.</p>
+                <p class="post-lead">AI agents fail by hanging and returning plausible garbage, not by crashing. Here is how to add a circuit breaker that catches semantic failures.</p>
                 
                 
                 <div class="tags">
@@ -260,366 +260,270 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2901 words
+                        12 min read
+                        &nbsp;·&nbsp; 2488 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-17
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The official documentation for production incident is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
-<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Most teams treat AI agents like traditional microservices: spin up an endpoint, wire it to a message queue, and let it run. That mental model is wrong. AI agents fail differently than stateless services. They hang instead of crashing. They return 200 with garbage before they time out. They retry exponentially until your DynamoDB table is 80% hot partitions.</p>
-<p>I learned this the hard way during the August 2026 outage at Kopo Kopo. We deployed a new AI agent that routed loan applications to underwriters. The agent used LangChain 0.1.16 with a vector store on Amazon OpenSearch 2.11. The SLA was 500 ms. The first week, everything looked fine. Then, on a Tuesday, our OpenSearch cluster got noisy neighbors from another team’s nightly batch job. The agent started returning 200 OK with empty responses. Our load balancer counted 200 as success, so it kept sending traffic. We only noticed when underwriters called to complain that no tickets appeared in their queue for two hours.</p>
-<p>The root cause wasn’t the agent code. It was the absence of a circuit breaker. Every tutorial and blog post I’d read talked about retries and timeouts, but none mentioned what happens when the downstream service is intermittently broken. Circuit breakers exist to prevent this cascade, but most teams skip them for AI agents because they look like simple HTTP clients. They’re not. They’re stateful systems that accumulate memory, maintain conversation context, and occasionally hallucinate success when the real system is down.</p>
-<h2 id="how-the-production-incident-that-taught-us-our-ai-agents-needed-their-own-circuit-breakers-actually-works-under-the-hood">How The production incident that taught us our AI agents needed their own circuit breakers actually works under the hood</h2>
-<p>A circuit breaker is a state machine with three positions: closed (normal), open (fail fast), and half-open (test recovery). For AI agents, the breaker needs an extra state: hallucinate. That’s when the agent returns a plausible but incorrect response because it thinks the downstream service is working.</p>
-<p>Here’s the state machine I wish we had built from day one:</p>
+                <h2 id="why-ai-agents-need-a-different-failure-model">Why AI agents need a different failure model</h2>
+<p>Most teams wire an AI agent into production the same way they wire a stateless microservice: an HTTP endpoint, a queue, a timeout, a retry policy. That mental model breaks down because agents fail in ways that stateless services do not.</p>
+<p>A stateless service that cannot reach its database usually returns a 5xx. An agent that cannot reach its retrieval layer often returns a 200 with an empty or nonsensical body, because the LLM still generates text from whatever context it has. A load balancer counts that 200 as success and keeps routing traffic. Meanwhile the downstream dependency is degraded and nobody notices until a human downstream of the agent reports missing work.</p>
+<p>The documented behavior of most HTTP clients, retry libraries and load balancers is to treat transport success as application success. Circuit breakers exist precisely to break that assumption, but they are usually skipped for agents because an agent looks like a simple HTTP client. It is not. An agent is a stateful pipeline: it accumulates conversation context, calls tools, and can fabricate a successful-looking answer while the real system is down.</p>
+<h2 id="the-state-machine-and-the-extra-state-agents-need">The state machine, and the extra state agents need</h2>
+<p>A conventional circuit breaker is a three-state machine: closed (traffic flows), open (fail fast), half-open (probe recovery). For agents, a fourth concern is worth modelling separately: semantic failure, sometimes called hallucinated success. This is not a breaker state in the classic sense, but a validation gate that feeds the breaker's failure counter.</p>
 <table>
 <thead>
 <tr>
 <th>State</th>
-<th>Condition</th>
+<th>Trigger</th>
 <th>Action</th>
-<th>Latency impact</th>
+<th>Typical latency</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Closed</td>
-<td>Success ≥ 99%</td>
+<td>Failure rate below threshold</td>
 <td>Route traffic normally</td>
-<td>baseline + 5 ms per call</td>
-</tr>
-<tr>
-<td>Closed</td>
-<td>Failures ≥ 2% over 30 s</td>
-<td>Move to Open</td>
-<td>baseline</td>
+<td>baseline + validation cost</td>
 </tr>
 <tr>
 <td>Open</td>
-<td>Timeout &gt; 5 s</td>
-<td>Return cached response or error</td>
-<td>1 ms</td>
+<td>Failure rate at or above threshold within the window</td>
+<td>Return cached result or a fast error</td>
+<td>sub-millisecond to a few ms</td>
 </tr>
 <tr>
 <td>Half-open</td>
-<td>Breaker cool-off expired</td>
-<td>Send probe request</td>
-<td>baseline + 20 ms</td>
+<td>Cool-off elapsed</td>
+<td>Send a limited number of probe requests</td>
+<td>baseline + probe cost</td>
 </tr>
 <tr>
-<td>Half-open</td>
-<td>Probe fails</td>
-<td>Reopen breaker</td>
-<td>baseline</td>
-</tr>
-<tr>
-<td>Half-open</td>
-<td>Probe succeeds</td>
-<td>Move to Closed</td>
-<td>baseline</td>
-</tr>
-<tr>
-<td>Hallucinate</td>
-<td>Agent fabricates answer</td>
-<td>Detect pattern, halt</td>
-<td>0 ms (refuse to answer)</td>
+<td>Semantic failure</td>
+<td>Response fails validation</td>
+<td>Count as a failure, do not return to caller</td>
+<td>validation cost only</td>
 </tr>
 </tbody>
 </table>
-<p>The hallucinate state is the killer. Most teams detect failures via HTTP 5xx, but AI agents return 200 with bad data. You need semantic validation: check if the response length is suspiciously short, if the tone matches a known failure pattern, or if the answer contradicts the prompt. We built a simple regex checker that flagged any response under 50 characters as suspicious. It caught 78% of the hallucinations during the incident.</p>
-<p>Under the hood, the breaker uses a sliding window of 100 calls. Each call increments success or failure counters. When the failure rate exceeds 2% for 30 seconds, the breaker flips to open. The cool-off period is 60 seconds — long enough for OpenSearch to recover from noisy neighbors without hammering it.</p>
-<p>We used Redis 7.2 as the shared state store because it’s fast, supports atomic counters, and we already had it for rate limiting. The breaker library wrapped each agent call in a decorator that incremented counters and checked state. The decorator added 3 ms per call in closed state, but that’s acceptable for our 500 ms SLA.</p>
-<p>Teams building AI agents often overcomplicate failure detection with sentiment analysis or embeddings. Start with the basics: length, latency, and error codes. Only add complexity if those fail.</p>
-<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
-<p>Here’s the implementation we shipped in production. It’s written for Python 3.11 with FastAPI 0.109, LangChain 0.1.16, and Redis 7.2. The breaker is implemented as a decorator so it can wrap any agent function.</p>
-<p>First, install the dependencies:</p>
-<pre><code class="language-bash">docker run --rm -it python:3.11-slim pip install fastapi==0.109 langchain==0.1.16 redis==4.8.0 python-json-logger==2.0.7
-</code></pre>
-<p>Then define the breaker:</p>
-<pre><code class="language-python">from functools import wraps
-import time
+<p>The semantic failure row is the one that distinguishes an agent breaker from a service breaker. A 200 response with a 12-character body where a structured decision was expected is a failure, even though no exception was raised. The breaker cannot see that unless you validate before you count a success.</p>
+<h3 id="what-to-validate-first">What to validate first</h3>
+<p>Start with cheap, deterministic checks and only escalate to expensive ones if they prove insufficient:</p>
+<ul>
+<li><strong>Length and shape.</strong> A response shorter than a domain-defined minimum, or one that fails a schema check, is suspicious. This is the cheapest gate.</li>
+<li><strong>Required fields.</strong> If the agent is supposed to return a decision, an identifier, or a structured object, validate presence and type.</li>
+<li><strong>Cross-checks against inputs.</strong> A routing decision that references an underwriter ID not present in the input set is wrong regardless of how fluent it reads.</li>
+<li><strong>Latency.</strong> A response returned far faster than the dependency's normal floor usually means the dependency was not actually consulted.</li>
+</ul>
+<p>Embedding-based or LLM-judge validation is a later step. It is slower, costs money, and introduces its own failure modes. Teams commonly reach for it first and regret it.</p>
+<h2 id="a-worked-example-sizing-the-window-and-threshold">A worked example: sizing the window and threshold</h2>
+<p>Assume an agent that handles 20 requests per second. You want the breaker to react within roughly 15 seconds of a sustained failure, and you do not want a single bad request to trip it.</p>
+<p>Step 1: choose the observation window. At 20 rps, 15 seconds is 300 requests. A sliding window of 300 calls is a reasonable starting point.</p>
+<p>Step 2: choose the failure threshold. If you set the threshold at 2%, that is 6 failures within the window. Six failures is low enough to trip on a real outage and high enough that six unrelated one-off errors will not normally cluster inside 15 seconds. If your error budget is tighter, lower the percentage; if your traffic is bursty, raise the window size rather than the percentage so you keep statistical power.</p>
+<p>Step 3: choose the cool-off. The cool-off should be at least as long as the downstream dependency's documented recovery time, and shorter than your tolerance for degraded service. If the dependency is a managed vector store with a multi-minute failover, a 60-second cool-off will reopen the breaker repeatedly during the failover. Prefer a cool-off that exceeds the dependency's known recovery window.</p>
+<p>Step 4: choose the probe count. A single probe is fragile: one unlucky slow call reopens the breaker. Three sequential probes, each required to succeed, is a common compromise. This is the fix for the warm-up spike described below.</p>
+<p>These numbers are illustrative. The point is that each one should be derived from a stated traffic rate and a stated recovery time, not copied from a blog post.</p>
+<h2 id="a-minimal-implementation">A minimal implementation</h2>
+<p>The example below uses Python 3.11, FastAPI, and Redis. It is deliberately small. Note that it fixes a common bug in naive implementations: counters must be incremented on every call, including successes, and the failure-rate check must not divide by zero.</p>
+<pre><code class="language-python">import time
+from functools import wraps
+
 import redis.asyncio as redis
 from fastapi import HTTPException
 
+
 class CircuitBreaker:
-    def __init__(self, name: str, failure_threshold: int = 2, recovery_timeout: int = 60, window_size: int = 100):
+    def __init__(
+        self,
+        name: str,
+        failure_threshold_pct: float = 2.0,
+        window_size: int = 300,
+        recovery_timeout: int = 60,
+        min_response_chars: int = 50,
+        probes_required: int = 3,
+    ):
         self.name = name
-        self.failure_threshold = failure_threshold
-        self.recovery_timeout = recovery_timeout
+        self.failure_threshold_pct = failure_threshold_pct
         self.window_size = window_size
-        self.redis = redis.Redis(host=&quot;redis&quot;, port=6379, db=0)
+        self.recovery_timeout = recovery_timeout
+        self.min_response_chars = min_response_chars
+        self.probes_required = probes_required
+        self.redis = redis.Redis(host=&quot;redis&quot;, port=6379, db=0, decode_responses=True)
         self.prefix = f&quot;cb:{name}&quot;
 
-    async def _get_metrics(self):
-        key = f&quot;{self.prefix}:metrics&quot;
-        calls = await self.redis.get(f&quot;{key}:calls&quot;) or 0
-        failures = await self.redis.get(f&quot;{key}:failures&quot;) or 0
-        return int(calls), int(failures)
+    async def _incr(self, field: str, ttl: int) -&gt; int:
+        key = f&quot;{self.prefix}:{field}&quot;
+        pipe = self.redis.pipeline()
+        pipe.incr(key)
+        pipe.expire(key, ttl)
+        value, _ = await pipe.execute()
+        return int(value)
 
-    async def _set_state(self, state: str):
-        key = f&quot;{self.prefix}:state&quot;
-        await self.redis.setex(key, self.recovery_timeout, state)
+    async def _get_int(self, field: str) -&gt; int:
+        value = await self.redis.get(f&quot;{self.prefix}:{field}&quot;)
+        return int(value) if value is not None else 0
 
     async def _get_state(self) -&gt; str:
-        key = f&quot;{self.prefix}:state&quot;
-        return await self.redis.get(key) or &quot;closed&quot;
+        return await self.redis.get(f&quot;{self.prefix}:state&quot;) or &quot;closed&quot;
 
-    async def call(self, func):
+    async def _set_state(self, state: str) -&gt; None:
+        await self.redis.setex(f&quot;{self.prefix}:state&quot;, self.recovery_timeout, state)
+
+    async def _record_success(self) -&gt; None:
+        await self._incr(&quot;calls&quot;, self.recovery_timeout)
+        await self.redis.delete(f&quot;{self.prefix}:probes&quot;)
+
+    async def _record_failure(self) -&gt; None:
+        calls = await self._incr(&quot;calls&quot;, self.recovery_timeout)
+        failures = await self._incr(&quot;failures&quot;, self.recovery_timeout)
+        if calls &gt;= self.window_size:
+            rate = failures / calls * 100.0
+            if rate &gt;= self.failure_threshold_pct:
+                await self._set_state(&quot;open&quot;)
+
+    async def _probe_ok(self) -&gt; bool:
+        probes = await self._incr(&quot;probes&quot;, self.recovery_timeout)
+        return probes &gt;= self.probes_required
+
+    def __call__(self, func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             state = await self._get_state()
-            if state == &quot;open&quot;:
-                # Return cached response or error
-                cached = await self.redis.get(f&quot;{self.prefix}:cache&quot;)
-                if cached:
-                    return cached
-                raise HTTPException(status_code=503, detail=&quot;Circuit breaker open&quot;)
 
-            start = time.time()
+            if state == &quot;open&quot;:
+                cached = await self.redis.get(f&quot;{self.prefix}:cache&quot;)
+                if cached is not None:
+                    return cached
+                raise HTTPException(status_code=503, detail=&quot;circuit open&quot;)
+
             try:
                 result = await func(*args, **kwargs)
-                latency = time.time() - start
-                # Validate result length to detect hallucinations
-                if len(str(result)) &lt; 50:
-                    await self.redis.incr(f&quot;{self.prefix}:failures&quot;)
-                    raise ValueError(&quot;Response too short&quot;)
-                await self.redis.incr(f&quot;{self.prefix}:calls&quot;)
-                await self.redis.setex(f&quot;{self.prefix}:cache&quot;, 300, result)
-                return result
-            except Exception as e:
-                await self.redis.incr(f&quot;{self.prefix}:failures&quot;)
-                # Reset counters if window exceeded
-                calls, failures = await self._get_metrics()
-                if calls &gt;= self.window_size:
-                    await self.redis.delete(f&quot;{self.prefix}:calls&quot;, f&quot;{self.prefix}:failures&quot;)
-                # Check failure threshold
-                if failures / calls &gt; self.failure_threshold / 100:
-                    await self._set_state(&quot;open&quot;)
+            except Exception:
+                await self._record_failure()
                 raise
+
+            body = str(result)
+            if len(body) &lt; self.min_response_chars:
+                await self._record_failure()
+                raise HTTPException(status_code=502, detail=&quot;response failed validation&quot;)
+
+            if state == &quot;half-open&quot;:
+                if await self._probe_ok():
+                    await self._set_state(&quot;closed&quot;)
+                else:
+                    await self._set_state(&quot;half-open&quot;)
+            else:
+                await self._record_success()
+
+            await self.redis.setex(f&quot;{self.prefix}:cache&quot;, 300, body)
+            return result
+
         return wrapper
-
-# Usage
-breaker = CircuitBreaker(name=&quot;loan-router-agent&quot;)
-
-from langchain_core.runnables import RunnablePassthrough
-
-@breaker.call
-def route_loan_application(application):
-    # Your agent logic here
-    return {&quot;underwriter_id&quot;: &quot;u123&quot;, &quot;ticket_id&quot;: &quot;t456&quot;}
 </code></pre>
-<p>In FastAPI, wire it like this:</p>
+<p>A few things worth calling out. The counters share a TTL with the window, so old failures age out without a separate sliding-window data structure. The half-open state is entered by writing <code>half-open</code> with the same recovery timeout, so a half-open breaker that never finishes probing will eventually revert. The cache is written only after validation passes, so a cached value is always one that satisfied the gate.</p>
+<p>Wiring it into FastAPI:</p>
 <pre><code class="language-python">from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 app = FastAPI()
+breaker = CircuitBreaker(name=&quot;loan-router-agent&quot;)
+
+
+@breaker
+async def route_loan_application(application: dict) -&gt; dict:
+    # agent logic here
+    return {&quot;underwriter_id&quot;: &quot;u123&quot;, &quot;ticket_id&quot;: &quot;t456&quot;}
+
 
 @app.post(&quot;/route&quot;)
 async def route_application(request: Request):
     data = await request.json()
     try:
-        result = await route_loan_application(data)
-        return JSONResponse(content=result)
-    except HTTPException as he:
-        return JSONResponse(status_code=he.status_code, content={&quot;error&quot;: he.detail})
-    except Exception as e:
-        return JSONResponse(status_code=500, content={&quot;error&quot;: str(e)})
+        return JSONResponse(content=await route_loan_application(data))
+    except HTTPException as exc:
+        return JSONResponse(status_code=exc.status_code, content={&quot;error&quot;: exc.detail})
 </code></pre>
-<p>We deployed this behind an Application Load Balancer with a 5-second target group timeout. The breaker added 3 ms per call in closed state, which was within our 500 ms SLA.</p>
-<p>The real surprise was how often the breaker caught hallucinations before they reached users. During the next noisy neighbor incident, the breaker opened in 23 seconds and prevented 12,000 bad requests from reaching underwriters.</p>
-<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>We ran the breaker in production for three months on the loan routing agent. Here are the numbers:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Baseline (no breaker)</th>
-<th>With breaker (closed)</th>
-<th>With breaker (open)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>p50 latency</td>
-<td>120 ms</td>
-<td>125 ms (+5 ms)</td>
-<td>1 ms</td>
-</tr>
-<tr>
-<td>p95 latency</td>
-<td>450 ms</td>
-<td>470 ms (+20 ms)</td>
-<td>1 ms</td>
-</tr>
-<tr>
-<td>Error rate</td>
-<td>0.8%</td>
-<td>0.1%</td>
-<td>0%</td>
-</tr>
-<tr>
-<td>Hallucination rate</td>
-<td>0.3%</td>
-<td>0.02%</td>
-<td>0%</td>
-</tr>
-<tr>
-<td>Cost per 1M calls</td>
-<td>$8.20</td>
-<td>$8.50 (+4%)</td>
-<td>$0.10</td>
-</tr>
-</tbody>
-</table>
-<p>The cost increase was 4% because of the extra Redis calls. The hallucination rate dropped from 0.3% to 0.02% — that’s 150 fewer bad decisions per 100k applications. The breaker opened 14 times during the quarter, each time preventing a cascade that would have taken the agent offline for minutes.</p>
-<p>The biggest surprise was the p95 latency delta. Without the breaker, p95 was 450 ms. With the breaker in closed state, it was 470 ms — only 20 ms worse. Most teams optimize for closed state and ignore open state behavior. Don’t. The breaker’s fail-fast mode is where it earns its keep.</p>
-<p>We also measured the breaker’s memory usage. Each breaker instance used 4 KB of Redis memory for counters and state. With 50 agents, that’s 200 KB — negligible compared to our 50 GB OpenSearch cluster.</p>
-<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
+<p>If you use a framework that already ships a breaker, prefer it over hand-rolling. In the Python ecosystem, a small decorator-based breaker library is usually enough. In the JVM ecosystem, Resilience4j is the mature choice. In Node, Opossum is widely used. The category matters more than the specific package; check that the library supports async calls and exposes state as a metric before adopting it.</p>
+<h2 id="how-to-measure-whether-it-is-working">How to measure whether it is working</h2>
+<p>Do not trust any latency or error-rate numbers you did not measure yourself. Instrument these four things before and after adding the breaker:</p>
 <ol>
-<li>
-<p><strong>The warm-up spike</strong>: When the breaker moves from open to half-open, the first probe request can trigger a latency spike if the downstream service is still recovering. We saw p95 latency jump to 800 ms for the first call after reopening. The fix was to allow three probe calls before fully closing the breaker and to cache the first successful response for 30 seconds.</p>
-</li>
-<li>
-<p><strong>The cache stampede</strong>: If you cache successful responses, a sudden traffic spike can evict the cache and force many agents to retry simultaneously. We mitigated this by setting a 300-second TTL and using Redis’ INCR to prevent cache misses from overwhelming OpenSearch.</p>
-</li>
-<li>
-<p><strong>The state store outage</strong>: If Redis goes down, the breaker can’t track state. We added a local fallback to a file-backed counter that syncs to Redis every 10 seconds. The fallback state is always "closed", so traffic continues to flow but with no failure detection. This added 1 ms of latency per call but kept the system alive during Redis maintenance windows.</p>
-</li>
-<li>
-<p><strong>The agent state leak</strong>: AI agents maintain conversation context. If the breaker opens mid-conversation, the agent might lose state and return an error. We solved this by serializing the agent state to Redis before each call and restoring it after. This added 5 ms per call but prevented lost context.</p>
-</li>
-<li>
-<p><strong>The false positive hallucination</strong>: Sometimes the agent returns a short but valid response, like a single word answer. Our length check flagged these as failures. We added a minimum length threshold of 20 characters and a whitelist of short valid answers. This reduced false positives from 12% to 2%.</p>
-</li>
+<li><strong>Per-call latency histogram</strong>, labelled by breaker state. Compare p50 and p95 in closed state against the pre-breaker baseline. The delta is the validation and state-store cost.</li>
+<li><strong>Failure-rate counter</strong>, labelled by failure cause (transport error, validation failure, timeout). This is what tells you whether your length gate is doing real work or just flagging short valid answers.</li>
+<li><strong>State-transition counter</strong>, labelled by from-state and to-state. A breaker that flips more than a few times per hour is either mis-tuned or masking a dependency that is genuinely flapping.</li>
+<li><strong>Cache hit rate in open state.</strong> If the breaker opens and the cache is empty, every caller gets a 503. That may be correct, but you should know it before it happens.</li>
 </ol>
-<p>I didn’t expect the cache stampede to be this painful. During a Black Friday sale, our breaker opened, then closed, then opened again within 30 seconds. The stampede drove OpenSearch CPU to 95% for 90 seconds. The fix was to add jitter to the cache TTL — randomize it by ±30% so evictions don’t cluster.</p>
-<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Version</th>
-<th>Why it matters</th>
-<th>Cost</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Redis</td>
-<td>7.2</td>
-<td>Fast counter store, supports atomic ops, already in most stacks</td>
-<td>$0.015/GB/month (2026)</td>
-</tr>
-<tr>
-<td>Resilience4j</td>
-<td>2.1</td>
-<td>Java circuit breaker, but Python port exists</td>
-<td>Free (Apache 2)</td>
-</tr>
-<tr>
-<td>PyBreaker</td>
-<td>2.1</td>
-<td>Lightweight Python circuit breaker</td>
-<td>Free (MIT)</td>
-</tr>
-<tr>
-<td>LangChain</td>
-<td>0.1.16</td>
-<td>LLM orchestration, but needs wrapper</td>
-<td>Free (MIT)</td>
-</tr>
-<tr>
-<td>FastAPI</td>
-<td>0.109</td>
-<td>Async-first, easy to instrument</td>
-<td>Free (MIT)</td>
-</tr>
-<tr>
-<td>Prometheus</td>
-<td>2.47</td>
-<td>Monitor breaker state transitions</td>
-<td>Free (Apache 2)</td>
-</tr>
-<tr>
-<td>Grafana</td>
-<td>10.4</td>
-<td>Visualize breaker metrics</td>
-<td>Free (AGPL)</td>
-</tr>
-</tbody>
-</table>
-<p>For Python teams, PyBreaker is the simplest choice. It’s 300 lines of code, supports async, and has a decorator interface. We tried Resilience4j via its Python port but ran into memory leaks in long-running processes. Stick with PyBreaker unless you need advanced features like bulkhead isolation.</p>
-<p>For JavaScript teams using Node 20 LTS, the Opossum circuit breaker is the de facto standard. It’s battle-tested at Netflix and handles async/await natively. We evaluated it for a Python rewrite but found the Python ecosystem lacked mature async circuit breakers at the time.</p>
-<p>Monitoring is critical. We exposed breaker state as a Prometheus metric:</p>
-<pre><code class="language-python">from prometheus_client import Counter, Gauge
-
-CB_STATE = Gauge(&quot;ai_agent_circuitbreaker_state&quot;, &quot;Current breaker state&quot;, [&quot;agent_name&quot;])
-CB_LATENCY = Summary(&quot;ai_agent_circuitbreaker_latency_ms&quot;, &quot;Latency per breaker call&quot;, [&quot;agent_name&quot;])
-
-@breaker.call
-def route_loan_application(application):
-    with CB_LATENCY.labels(agent_name=&quot;loan-router&quot;).time():
-        # agent logic
-        return result
-</code></pre>
-<p>We also added an alert in Grafana: if breaker state is "open" for more than 5 minutes, page the on-call engineer. This caught two incidents where the breaker opened due to a code bug, not downstream failure.</p>
-<p>They focus on network failures but ignore the hallucination problem. Build your own validation layer — start with response length, then add domain-specific checks like "does this decision match the applicant’s credit score?"</p>
-<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
-<ol>
-<li>
-<p><strong>Stateless read endpoints</strong>: If your agent is just a wrapper around a vector store lookup with no side effects, a circuit breaker adds unnecessary latency. Use a simple timeout instead.</p>
-</li>
-<li>
-<p><strong>Agents with external memory</strong>: If the agent uses external tools like a browser or shell, the breaker can’t protect you. The agent might hang indefinitely. In this case, use a hard timeout and process isolation.</p>
-</li>
-<li>
-<p><strong>High-frequency, low-latency agents</strong>: If your agent responds in &lt;10 ms, the breaker overhead (3-5 ms) is significant. Consider in-process circuit breakers like Hystrix or bulkhead patterns instead of Redis-backed ones.</p>
-</li>
-<li>
-<p><strong>Agents that don’t maintain state</strong>: If the agent is stateless and idempotent, a retry with exponential backoff is sufficient. Circuit breakers shine when state is involved.</p>
-</li>
-</ol>
-<p>The Redis round trip added 2 ms per call, which violated our 5 ms SLA. We switched to an in-process breaker using Python’s built-in asyncio.Event and shaved off the overhead.</p>
-<p>Another edge case: agents that call external APIs with strict rate limits. The breaker might open due to rate limit errors, but the underlying service is healthy. In this case, add a whitelist for rate limit errors so they don’t count toward the failure threshold.</p>
-<h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>Circuit breakers for AI agents are not optional. They’re as fundamental as rate limiting and timeouts. The moment you deploy an agent that makes decisions for users, you’re building a stateful system, even if the code looks like a stateless function call.</p>
-<p>The biggest mistake teams make is treating AI agents like REST endpoints. They’re not. They’re state machines that can hallucinate success. Even one bad decision can cost thousands in regulatory fines and customer trust.</p>
-<p>The second-biggest mistake is ignoring the open state behavior. Most teams optimize for closed state latency and forget that the breaker’s real value is in the fail-fast mode. When downstream services fail, the breaker should return an error in 1 ms, not hang for 5 seconds waiting for a timeout.</p>
-<p>The third mistake is overcomplicating the failure detection. Start with simple metrics: response length, latency, and error codes. Only add LLM-specific heuristics if those fail.</p>
-<p>The cost is real but manageable. For 1M calls, the breaker adds $0.30 in Redis costs and 4% latency overhead. That’s cheaper than one outage that blocks 10k loan applications for an hour.</p>
-<p>I expected the breaker to be a minor optimization. It turned out to be a critical safety net. The day it prevented a cascade during a noisy neighbor incident, we promoted it from "nice to have" to "must have" for every AI agent we deploy.</p>
-<h2 id="what-to-do-next">What to do next</h2>
-<p>Open your AI agent codebase and check the first agent file. If it doesn’t have a circuit breaker, add one today. Start with PyBreaker 2.1 and Redis 7.2. Wrap the main agent function with the breaker decorator, add a 50-character minimum length check, and expose the state as a Prometheus metric. Then set an alert for when the breaker opens for more than 30 seconds. You’ll sleep better knowing your agents can’t hallucinate success when downstream services fail.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>What’s the simplest circuit breaker library for Python AI agents?</strong></p>
-<p>PyBreaker 2.1 is the lightest option. It’s 300 lines of code, async-compatible, and has a decorator interface. Install it with <code>pip install pybreaker==2.1</code> and wrap your agent function. Avoid libraries with complex dependencies unless you need bulkhead isolation.</p>
-<p><strong>How do I detect hallucinations in agent responses?</strong></p>
-<p>Start with response length. If the answer is under 50 characters, flag it as suspicious. Then add domain-specific checks, like verifying the answer matches the input data. Only move to LLM-specific heuristics like embeddings if length checks fail.</p>
-<p><strong>Can I use the same breaker for multiple agents?</strong></p>
-<p>No. Each agent should have its own breaker instance with separate counters. Shared breakers can mask failures for one agent while another is healthy, leading to incorrect state transitions.</p>
-<p><strong>What happens if Redis goes down?</strong></p>
-<p>Use a local fallback counter that syncs to Redis every 10 seconds. The fallback state should always be "closed" so traffic flows but failure detection is degraded. This prevents the breaker from blocking traffic during Redis maintenance.</p>
-<p><strong>How much latency does the breaker add in closed state?</strong></p>
-<p>In our production system with Redis 7.2, the breaker added 3 ms per call in closed state and 1 ms in open state. The open state latency is critical — it’s where the breaker earns its keep by returning errors in 1 ms instead of waiting for timeouts.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>To measure the cost of the state store specifically, run the agent function with the breaker decorator replaced by a no-op that performs the same Redis round trip. The difference between the two histograms is the breaker's overhead, separate from the agent's own cost.</p>
+<p>For load testing, drive the agent with a synthetic failure injection: make the downstream dependency return empty bodies for 30 seconds and confirm the breaker opens within your target window, then confirm it closes after the dependency recovers. This is the only way to know your thresholds are right.</p>
+<h2 id="failure-modes-to-plan-for">Failure modes to plan for</h2>
+<p><strong>Warm-up spike after reopening.</strong> When a breaker moves from open to half-open, the first probe can be slow if the dependency is still recovering. A single-probe design will reopen the breaker on that one slow call. Requiring several sequential probes and caching the first successful response for a short TTL smooths this out.</p>
+<p><strong>Cache stampede.</strong> If the breaker caches successful responses and the cache expires during a traffic spike, many callers may hit the dependency simultaneously. Randomising the cache TTL by a fraction of its nominal value spreads evictions out. A lock or single-flight mechanism around the cache fill also helps.</p>
+<p><strong>State-store outage.</strong> If Redis is unavailable, the breaker cannot track state. A local in-process fallback counter that periodically syncs to Redis keeps the system running with degraded detection. Decide explicitly whether the fallback state is closed (traffic flows, no detection) or open (traffic stops). For most agents, closed is the safer default, because the alternative is a total outage caused by a monitoring dependency.</p>
+<p><strong>Lost conversation state.</strong> If the breaker opens mid-conversation, the agent may lose context. Serialising the agent's state before the call and restoring it after is one option, but it adds latency and complexity. A simpler approach is to make the caller responsible for retrying with the same context once the breaker closes.</p>
+<p><strong>False-positive validation.</strong> A length gate will flag legitimately short answers. Keep a whitelist of short valid responses, or make the minimum length domain-specific rather than global.</p>
+<p><strong>Rate-limit errors counted as failures.</strong> If the downstream dependency rate-limits you, the breaker will open even though the dependency is healthy. Classify rate-limit responses separately and exclude them from the failure counter, or handle them with a separate backoff path.</p>
+<h2 id="when-a-circuit-breaker-is-the-wrong-tool">When a circuit breaker is the wrong tool</h2>
 <ul>
-<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
-<li><a href="https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/">Agent Systems: Circuit Breakers Are Not Enough</a></li>
-<li><a href="https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/">Supervisor vs swarm vs debate vs pipeline</a></li>
+<li><strong>Stateless read-only lookups.</strong> If the agent is a thin wrapper around a vector lookup with no side effects, a timeout and a retry budget are usually enough. A breaker adds state you do not need.</li>
+<li><strong>Agents that call arbitrary external tools.</strong> If the agent can invoke a browser or a shell, a breaker around the agent call does not protect you from a hang inside a tool. Use a hard timeout and process isolation instead.</li>
+<li><strong>Sub-10 ms agents.</strong> If the agent's own latency is below 10 ms, a Redis-backed breaker's round trip is a significant fraction of total latency. Consider an in-process breaker with a shared counter, accepting that state is per-replica.</li>
+<li><strong>Idempotent, stateless agents.</strong> Retry with exponential backoff and jitter is simpler and sufficient when there is no state to corrupt.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="monitoring-and-alerting">Monitoring and alerting</h2>
+<p>Expose breaker state as a gauge and transitions as a counter. Alert on two conditions: state has been open for longer than your tolerance, and transition rate exceeds a threshold you would expect from normal dependency flakiness. The first catches real outages; the second catches mis-tuning and flapping dependencies.</p>
+<pre><code class="language-python">from prometheus_client import Counter, Gauge, Histogram
+
+CB_STATE = Gauge(
+    &quot;ai_agent_circuitbreaker_state&quot;,
+    &quot;Current breaker state (0=closed, 1=half-open, 2=open)&quot;,
+    [&quot;agent_name&quot;],
+)
+CB_TRANSITIONS = Counter(
+    &quot;ai_agent_circuitbreaker_transitions_total&quot;,
+    &quot;Breaker state transitions&quot;,
+    [&quot;agent_name&quot;, &quot;from_state&quot;, &quot;to_state&quot;],
+)
+CB_VALIDATION_FAILURES = Counter(
+    &quot;ai_agent_circuitbreaker_validation_failures_total&quot;,
+    &quot;Responses rejected by semantic validation&quot;,
+    [&quot;agent_name&quot;],
+)
+CB_LATENCY = Histogram(
+    &quot;ai_agent_circuitbreaker_latency_seconds&quot;,
+    &quot;Latency per breaker call&quot;,
+    [&quot;agent_name&quot;, &quot;state&quot;],
+)
+</code></pre>
+<p>A validation-failure counter that stays near zero is a sign your gate is too loose or your agent is healthy. A counter that spikes during every downstream incident is a sign it is doing its job.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before adding a breaker to an agent, answer these:</p>
+<ol>
+<li>Does the agent have side effects or maintain state? If no, a retry budget may suffice.</li>
+<li>What is the downstream dependency's documented recovery time? Your cool-off must exceed it.</li>
+<li>What does a semantically wrong response look like, and can you detect it with a cheap deterministic check?</li>
+<li>What is your traffic rate, and what window size gives you enough calls to make a percentage threshold meaningful?</li>
+<li>What should happen when the state store is unavailable: fail open or fail closed?</li>
+<li>How will you measure the breaker's own overhead, separately from the agent's?</li>
+<li>Who gets paged when the breaker has been open for longer than your tolerance?</li>
+</ol>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Pick one agent in your codebase that calls an external dependency, and write down three things: its current p95 latency, the dependency's documented recovery time, and one deterministic check that a valid response must pass. If you cannot state all three, you do not yet have the information needed to tune a breaker, and gathering it is the actual first step.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Should each agent have its own breaker?</strong></p>
+<p>Yes. A shared breaker masks failures for one agent while another is healthy, and it makes state transitions impossible to attribute. One breaker per agent-dependency pair is the usual rule.</p>
+<p><strong>How do I distinguish a hallucination from a legitimate short answer?</strong></p>
+<p>You usually cannot, in general. That is why validation should be domain-specific: check required fields and cross-references against the input rather than relying on length alone.</p>
+<p><strong>What if the dependency is healthy but rate-limiting me?</strong></p>
+<p>Classify rate-limit responses separately and exclude them from the failure counter, or route them to a dedicated backoff path. Otherwise the breaker will open against a healthy service.</p>
+<p><strong>Do I still need timeouts if I have a breaker?</strong></p>
+<p>Yes. A breaker only reacts after failures are observed. Without a timeout, a hanging call never becomes a failure and the breaker never trips.
+</body>
+</invoke></p>
                 
                 
             </div>

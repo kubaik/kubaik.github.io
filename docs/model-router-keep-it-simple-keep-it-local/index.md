@@ -1,38 +1,61 @@
 # Model router: keep it simple, keep it local
 
-After reviewing enough code that touches run local, the same failure pattern keeps showing up. It's the kind of problem that's easy to reproduce and hard to explain. Here's the root cause, not just the symptom.
+Most tutorials describe model routing as a diagram: a gateway, a few arrows, some YAML annotations, and a claim that the problem is solved. The distance between that diagram and a working system is usually measured in weeks of debugging, not minutes. The recurring failure pattern is not that routing is hard — it is that the first design treats models as stateless functions, when in production they are stateful resources with cold starts, regional behavior, quotas, and costs that shift over time.
 
-## The gap between what the docs say and what production needs
+This article describes a routing design that stays deliberately small: a rule-based decision engine in front of local and cloud endpoints, with complexity pushed into the endpoints and the infrastructure around them. It also covers the failure modes that show up once such a router meets real traffic.
 
-Most tutorials tell you to route models through a single API gateway or service mesh like Istio. They show a diagram with arrows between services, a few YAML lines for annotations, and then declare victory. In reality, the gap between that diagram and a production system is measured in weeks of debugging, not minutes. I learned this the hard way when we tried to roll out a new embedding model for our search pipeline in Q1 2026. We started with a single API endpoint that accepted a `model_id` query parameter and forwarded requests to either a local PyTorch instance or a cloud endpoint on AWS SageMaker. Within two days, our p95 latency jumped from 80ms to 420ms because the initial implementation didn’t account for cold starts on SageMaker or connection pooling on the local side. The docs didn’t mention that SageMaker’s cold start can add 200–500ms depending on the instance size, and our local PyTorch server didn’t reuse CUDA contexts between requests, so every inference created a new process.
+## The gap between the diagram and production
 
-What surprised me wasn’t just the latency spike—it was how quickly the complexity exploded when we tried to handle retries, circuit breaking, and observability. The original design assumed the router was stateless and could forward requests without tracking which model was being used where. After three failed deploys, we realized we needed to track model versions, instance health, and regional quotas all in one place. By the time we added Prometheus metrics, a custom health check endpoint, and a regional failover strategy, the router had grown from a 50-line Python script to a 500-line service with its own database schema for model metadata. The worst part? None of the official docs warned us that SageMaker’s model latency varies wildly by region. A model that responds in 120ms in `us-east-1` can take 450ms in `eu-west-2` due to network egress and regional traffic shaping. We only discovered this after a customer in Germany complained about slow responses, and our on-call engineer traced it back to a routing decision that ignored regional latency differences.
+A typical first implementation accepts a `model_id` parameter and forwards the request either to a local inference server or to a managed cloud endpoint. That works in a demo. In production, several things break at once:
 
-The lesson wasn’t that routing is impossible—it’s that the simplest design often scales poorly when it meets real-world constraints like cold starts, regional latency, and observability. Most examples assume you can treat models as stateless functions, but in production, they’re stateful resources with lifecycles, dependencies, and costs that change over time.
+- **Cold starts.** Managed inference endpoints commonly scale to zero or release capacity when idle. The first request after an idle period pays a startup cost that can range from hundreds of milliseconds to tens of seconds depending on instance size and model size. The exact figure is workload-specific; the point is that it is not zero and it is not visible in a diagram.
+- **Process and context reuse.** A naive local server that spawns a new process per request — or reloads model weights per request — pays a fixed cost on every call. Reusing a long-lived process and its accelerator context is usually the single largest local optimization available.
+- **Regional variance.** Latency to a managed endpoint depends on the network path between caller and region, not only on the endpoint's own compute. Two regions running identical hardware can differ substantially for a given user population.
+- **Quotas.** Managed services enforce per-region invocation quotas. When a quota is exhausted, requests fail with a throttling error that often does not name the quota as the cause, which sends debugging in the wrong direction.
+- **Observability.** Without per-model, per-endpoint metrics, a routing problem is indistinguishable from a model problem.
 
+The design principle that follows from this list: the router should make a routing decision and nothing else. Retries, connection reuse, health verification, pre-warming, and quota awareness belong to the layers around it, not inside the decision path.
 
-## How How I run local + cloud model routing without the complexity exploding actually works under the hood
+## The core design: a two-tier router
 
-The core idea is to treat the router as a lightweight decision engine, not a full-blown service mesh. Instead of forwarding requests directly to models, the router evaluates a set of rules and selects a target endpoint: local GPU, cloud endpoint, or fallback. This keeps the router small and fast, while pushing complexity into specialized components like connection pools, health checks, and regional failover logic.
+The router is a small HTTP service that evaluates ordered rules and returns a target endpoint. It does not pool connections to models, does not implement weighted balancing, and does not hold model state.
 
-I use a two-tier system. The first tier is a lightweight HTTP server written in Go (version 1.22.5) that handles routing decisions. It reads a JSON config file that defines rules like `{"model_id": "embedding-v3", "local": {"enabled": true, "endpoint": "http://localhost:8000/infer"}, "cloud": {"enabled": true, "endpoint": "https://runtime.sagemaker.us-east-1.amazonaws.com/endpoints/embedding-v3/invocations", "region": "us-east-1"}, "fallback": {"enabled": true, "endpoint": "https://fallback.example.com/infer"}}`. The router evaluates these rules in order: local first, then cloud, then fallback. If the local endpoint is healthy (we check `/health` every 5 seconds), we route there. If not, we try the cloud endpoint in the same region as the request origin. If both fail, we use the fallback. This simple ordering avoids the complexity of a weighted round-robin or least-connections algorithm, which often adds more latency than value.
+**Tier 1 — the decision engine.** A lightweight server reads a JSON config describing, per model, a local endpoint, a cloud endpoint, and a fallback endpoint. Selection order is fixed: local if healthy, then cloud, then fallback. A fixed order is easier to reason about under incident pressure than a weighted algorithm, and for most workloads the extra sophistication of least-connections or weighted round-robin adds latency and operational surface without changing outcomes.
 
-The second tier handles the heavy lifting: connection pooling, retries, and regional failover. For local models, we use `uvicorn` with `--workers=4` and `gunicorn` in front to reuse the Python process and CUDA context. For cloud endpoints, we use AWS’s SDK (`boto3` 1.34.0) with a custom retry policy that caps retries at 3 and adds a 100ms jitter to avoid thundering herds. We also pre-warm SageMaker endpoints during deployments to avoid cold starts, using a Lambda function that calls `invoke_endpoint` with a dummy payload every 5 minutes. The router itself doesn’t manage these resources—it just forwards requests to endpoints that are already warmed up and monitored.
+**Tier 2 — the endpoints and their infrastructure.** The local model server runs as a long-lived process (for example, an ASGI app under a process manager) so the model and its accelerator context stay resident. Cloud endpoints are pre-warmed on a schedule. Connection reuse, retry policy with capped attempts and jitter, and quota monitoring live here.
 
-One thing that caught me off guard was how much overhead the JSON schema validation added. Initially, we parsed the config file on every request, which added 8–12ms per call. After caching the parsed config in memory with a 60-second TTL, the overhead dropped to 0.3ms. The router now loads the config once at startup and refreshes it via a file watcher, so we can update rules without redeploying.
+The router's config is loaded once at startup and refreshed on a timer or via an explicit reload endpoint, so rule changes do not require a redeploy. Parsing and validating the config on every request is a common and avoidable source of per-request overhead; caching the parsed structure in memory removes it.
 
-Another surprise was the regional latency difference between AWS regions. We assumed `us-east-1` was always faster than `eu-west-1` for SageMaker endpoints, but real-world traffic showed that `eu-central-1` had lower latency for European users due to network topology. We updated the router to use a regional latency probe (a simple HTTP request to a known endpoint) and dynamically select the closest region. This reduced latency for European users by 30% without changing the routing logic.
+### A worked latency budget
 
-The key insight is that the router should stay dumb and fast, while the endpoints and infrastructure handle the complexity. This separation of concerns prevents the router from becoming a bottleneck or a maintenance nightmare.
+Suppose a request path consists of the following stages, with illustrative numbers chosen to show the reasoning rather than to describe a measured system:
 
+- Router config lookup and rule evaluation: 0.5 ms (in-memory, no I/O)
+- Health state check: 0.2 ms (cached, refreshed on a timer)
+- Local inference on a warm process: 40 ms
+- Serialization and network hop to a cloud endpoint: 80 ms
+- Cloud endpoint cold start, if not pre-warmed: +400 ms
 
-## Step-by-step implementation with real code
+With a warm local endpoint, total is roughly 41 ms. If the local endpoint is unhealthy and the cloud endpoint is warm, total is roughly 81 ms. If the cloud endpoint is cold, total is roughly 481 ms. The arithmetic shows where the leverage is: pre-warming changes the worst case by an order of magnitude more than any router-level micro-optimization. This is why the router should stay dumb — the interesting variance is elsewhere.
 
-Here’s how to build the router in practice. I’ll use Go for the router core and Python for the local model server, but the same principles apply to other stacks.
+### How to measure it yourself
 
-### Step 1: Define the routing rules
+Do not trust published latency numbers, including the illustrative ones above. Instrument the following and compare against your own baseline:
 
-Create a `router.json` file in the repo root:
+1. **Per-stage timing.** Emit a histogram of time spent in rule evaluation, health check lookup, and upstream call, as separate metrics. A single end-to-end number cannot tell you which stage regressed.
+2. **Cold-start frequency.** Count requests where the upstream call exceeded a threshold you set from your own warm-path distribution (for example, 5x the median). This approximates cold-start exposure without needing provider-side data.
+3. **Regional comparison.** Send a fixed synthetic request to each candidate region on a schedule and record latency. Compare medians, not means; a single cold start will distort a mean.
+4. **Quota headroom.** Poll the provider's quota or usage API on a schedule and export the remaining headroom per region as a gauge. Alert on a threshold, not on failure.
+
+A simple load test against the router with a fixed payload, run before and after each change, will surface regressions in the decision path. Any change that moves the decision-path latency by more than a fraction of a millisecond deserves scrutiny.
+
+## Implementation
+
+The examples below use Go for the router and Python for the local model server. The principles transfer to other stacks.
+
+### Step 1: Define routing rules
+
+Create `router.json`:
 
 ```json
 {
@@ -69,14 +92,17 @@ Create a `router.json` file in the repo root:
 }
 ```
 
-### Step 2: Build the Go router
+Note the URL shapes: a managed endpoint hostname and a self-hosted service differ, and the config should not assume they are interchangeable beyond "an HTTP endpoint that accepts a JSON body."
 
-The router is a simple HTTP server with three endpoints: `/infer` for model requests, `/health` for liveness checks, and `/config/reload` to refresh the rules without restarting. Here’s the core logic:
+### Step 2: Build the router
+
+The router exposes `/infer`, `/health`, and `/config/reload`. The corrected core logic below fixes a request-forwarding bug in the common naive version: the original body is read but never attached to the outgoing request, and the incoming `Content-Length` header is copied, which will be wrong for the new request.
 
 ```go
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -113,6 +139,7 @@ type Router struct {
 	config     RouterConfig
 	configPath string
 	mu         sync.RWMutex
+	client     *http.Client
 }
 
 func (r *Router) loadConfig() error {
@@ -127,7 +154,7 @@ func (r *Router) loadConfig() error {
 	r.mu.Lock()
 	r.config = cfg
 	r.mu.Unlock()
-	log.Printf("Reloaded config with %d models", len(cfg.Models))
+	log.Printf("reloaded config with %d models", len(cfg.Models))
 	return nil
 }
 
@@ -146,21 +173,20 @@ func (r *Router) selectEndpoint(modelID string) (string, error) {
 		return "", fmt.Errorf("model %s not found", modelID)
 	}
 
-	// Check local first
 	if model.Local.Enabled {
-		resp, err := http.Get(model.Local.Endpoint + model.Local.HealthPath)
-		if err == nil && resp.StatusCode == http.StatusOK {
-			defer resp.Body.Close()
-			return model.Local.Endpoint, nil
+		resp, err := r.client.Get(model.Local.Endpoint + model.Local.HealthPath)
+		if err == nil {
+			resp.Body.Close()
+			if resp.StatusCode == http.StatusOK {
+				return model.Local.Endpoint, nil
+			}
 		}
 	}
 
-	// Fall back to cloud
 	if model.Cloud.Enabled {
 		return model.Cloud.Endpoint, nil
 	}
 
-	// Final fallback
 	if model.Fallback.Enabled {
 		return model.Fallback.Endpoint, nil
 	}
@@ -181,12 +207,23 @@ func (r *Router) handleInfer(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// Forward the request to the selected endpoint
-	body, _ := io.ReadAll(req.Body)
-	proxyReq, _ := http.NewRequest(req.Method, target, nil)
-	proxyReq.Header = req.Header
+	body, err := io.ReadAll(req.Body)
+	if err != nil {
+		http.Error(w, "failed to read request body", http.StatusBadRequest)
+		return
+	}
 
-	resp, err := http.DefaultClient.Do(proxyReq)
+	proxyReq, err := http.NewRequestWithContext(
+		req.Context(), req.Method, target, bytes.NewReader(body),
+	)
+	if err != nil {
+		http.Error(w, "failed to build upstream request", http.StatusInternalServerError)
+		return
+	}
+	// Copy only end-to-end headers; hop-by-hop and length are set by the client.
+	proxyReq.Header.Set("Content-Type", req.Header.Get("Content-Type"))
+
+	resp, err := r.client.Do(proxyReq)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("failed to forward: %v", err), http.StatusBadGateway)
 		return
@@ -198,12 +235,21 @@ func (r *Router) handleInfer(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	router := &Router{configPath: "./router.json"}
+	router := &Router{
+		configPath: "./router.json",
+		client: &http.Client{
+			Timeout: 30 * time.Second,
+			Transport: &http.Transport{
+				MaxIdleConns:        100,
+				MaxIdleConnsPerHost: 20,
+				IdleConnTimeout:     90 * time.Second,
+			},
+		},
+	}
 	if err := router.loadConfig(); err != nil {
 		log.Fatal(err)
 	}
 
-	// Watch for config changes
 	go func() {
 		ticker := time.NewTicker(60 * time.Second)
 		defer ticker.Stop()
@@ -226,20 +272,14 @@ func main() {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	log.Println("Starting router on :8080")
+	log.Println("starting router on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 ```
 
-Compile with Go 1.22.5:
+Two details matter here. First, the health check runs synchronously inside `selectEndpoint` on every request, which is a latency and availability risk: a slow health endpoint will stall inference. Better practice is to maintain health state in a background goroutine and read the cached result in the decision path. Second, `http.Client` must be reused; creating a new client per request defeats connection pooling.
 
-```bash
-GOOS=linux GOARCH=amd64 go build -o router main.go
-```
-
-### Step 3: Wire up the local model server
-
-For the local model, I use FastAPI with a simple endpoint:
+### Step 3: The local model server
 
 ```python
 from fastapi import FastAPI
@@ -264,171 +304,93 @@ def health():
     return {"status": "ok"}
 ```
 
-Run it with Uvicorn and Gunicorn to enable connection reuse:
+Run it as a long-lived process so the model and accelerator context stay resident:
 
 ```bash
-uvicorn main:app --workers=4 --host=0.0.0.0 --port=8000 &
+uvicorn main:app --workers=4 --host=0.0.0.0 --port=8000
 ```
+
+The worker count is a tuning parameter, not a fixed answer. Too few workers and requests queue; too many and the accelerator is oversubscribed and memory pressure grows. Measure throughput and tail latency as you vary it.
 
 ### Step 4: Pre-warm cloud endpoints
 
-Use a Lambda function to pre-warm SageMaker endpoints. Here’s a minimal example using Python 3.11:
+A scheduled job that invokes each managed endpoint with a small payload keeps capacity warm. The exact interval depends on the provider's idle timeout, which is documented per service; choose an interval comfortably below it.
 
 ```python
-import boto3
+import json
 import os
+import boto3
 
-sagemaker = boto3.client("runtime.sagemaker", region_name="us-east-1")
-ENDPOINT = os.getenv("ENDPOINT_NAME")
+client = boto3.client("runtime.sagemaker", region_name=os.environ["AWS_REGION"])
+ENDPOINT = os.environ["ENDPOINT_NAME"]
 
 def lambda_handler(event, context):
     try:
-        sagemaker.invoke_endpoint(
+        client.invoke_endpoint(
             EndpointName=ENDPOINT,
             ContentType="application/json",
-            Body=json.dumps({"inputs": ["dummy"]})
+            Body=json.dumps({"inputs": ["warmup"]}),
         )
         return {"status": "warmed"}
-    except Exception as e:
-        return {"error": str(e)}
+    except Exception as exc:
+        return {"error": str(exc)}
 ```
 
-Set the Lambda to run every 5 minutes with a 128MB memory size. The cost is negligible ($0.20/month for 100 invocations), but it saves 200–500ms on the first real request after a cold start.
+Schedule the function at an interval below the endpoint's idle timeout. The cost is a function of your invocation count and the provider's pricing, so compute it from your own schedule rather than assuming a figure.
 
 ### Step 5: Deploy the router
 
-Run the Go router on a small VM or Kubernetes pod with resource limits of 256MB RAM and 0.5 CPU. The router itself uses less than 10MB RAM and handles ~2000 RPS on a single core, so it’s cheap to run. For observability, add a `/metrics` endpoint that exports Prometheus metrics for latency, errors, and routing decisions.
+The router is small enough to run as a single modest instance or a small container with tight resource limits. Size it from measurement: run a load test, observe CPU and memory at your target request rate, and add headroom. Expose a `/metrics` endpoint with counters and histograms for routing decisions, upstream errors, and per-stage latency.
 
+## Failure modes to plan for
 
-## Performance numbers from a live system
+**Health checks that lie.** A `/health` endpoint that returns `200 OK` unconditionally will keep a broken endpoint in rotation. A shallow check (process is up) and a deep check (a trivial inference succeeds and returns a plausible shape) catch different classes of failure. Deep checks cost real compute, so run them on a schedule rather than per request, and cache the result.
 
-We’ve run this setup in production for 6 months handling ~1.2M daily inferences across two models: `embedding-v3` and `classifier-v1`. Here are the key metrics:
+**Config drift across replicas.** If multiple router instances read config from a shared store on a timer, different instances can serve different rules for a window. Use a store that supports conditional writes or versioning, and have the router reject a config whose version is older than the one it already holds.
 
-- **p95 latency**: 60ms (local GPU) vs. 140ms (cloud SageMaker in us-east-1) vs. 220ms (cloud SageMaker in eu-central-1). The local GPU is 2.3x faster than the fastest cloud endpoint because of GPU acceleration and zero serialization overhead. - **Cold start impact**: Pre-warming reduced cold start latency from 420ms to 120ms for SageMaker endpoints. The Lambda pre-warm runs every 5 minutes, costing ~$0.20/month per endpoint. - **Router overhead**: The Go router adds 0.4ms per request on average, including JSON parsing, config lookup, and health checks. Without caching the config in memory, it added 12ms per request, which was unacceptable. - **Cost per 1M inferences**: Local GPU costs $0.04 per 1K inferences (using a T4 GPU on GCP), while SageMaker costs $0.12 per 1K inferences. For high-volume workloads, local inference is 3x cheaper, but the cloud endpoint is easier to scale. - **Error rate**: The router handles failures gracefully. When a cloud endpoint fails, the router falls back to the next available endpoint with a 0.5% error rate due to misconfigured health checks or regional outages. Without the fallback, the error rate would be 3.2%.
+**Quota exhaustion.** Managed endpoints enforce per-region quotas. When a quota is hit, the error surfaced to the caller is often a generic throttling response that does not name the quota. Track headroom proactively and fail over to another region before the quota is reached, rather than reacting to errors.
 
-The most surprising metric was how much regional latency varied. `eu-central-1` SageMaker endpoints were 30% faster for European users than `us-east-1`, even though `us-east-1` is the default region for our AWS account. We updated the router to use a regional latency probe and dynamically select the closest region, which reduced latency by 28% for European traffic.
+**Model version skew.** If the router points at a model identifier but the deployed model has changed underneath it, requests can fail or, worse, return plausible but wrong results. Expose a version identifier from the model server and include the expected version in the router config; treat a mismatch as an unhealthy endpoint.
 
-Another unexpected finding was that the local GPU’s p99 latency spiked during garbage collection. We added a `/gc` endpoint to the local model server that triggers a manual GC cycle every 10 minutes, which reduced p99 latency from 180ms to 70ms.
+**Connection exhaustion on the local side.** A local server with a fixed worker count and a bounded file-descriptor limit will reject connections under burst load. This is a capacity-planning problem, not a routing problem, but it presents as routing errors. Monitor the local server's queue depth and rejection rate directly.
 
+**Silent fallback masking degradation.** A fallback path that always succeeds can hide a persistently unhealthy primary. Alert on fallback activation rate, not only on error rate.
 
-## The failure modes nobody warns you about
+## When this design is the wrong choice
 
-### 1. Health check drift
+This pattern fits when models are either local (accelerator-backed) or managed, when a few tens of milliseconds of cloud latency is acceptable, when routing rules are simple enough to express as an ordered list, and when traffic justifies the operational cost of running a local inference path.
 
-Health checks can lie. Our local model server’s `/health` endpoint initially returned `200 OK` even when the CUDA context was corrupted or the GPU was out of memory. We switched to a deeper check that actually runs a dummy inference and returns the result. Even then, we saw occasional false positives where the GPU was healthy but the model weights were corrupted. The fix was to add a `model_hash` field to the config and reload the model on mismatch, which added 50ms per config reload but prevented silent failures.
+It is a poor fit when:
 
-### 2. Config synchronization across regions
+- Sub-10 ms latency is required end to end; a cloud fallback will violate that budget.
+- The number of models is large enough that a flat config file becomes unmanageable. At that point, a database-backed config with a management interface is warranted, and the router should read from it rather than from a file.
+- The router itself would run in a serverless function, where per-invocation startup overhead is added to every request. In that case, embed the routing decision in the inference function rather than putting a separate hop in front of it.
+- Models require persistent session state, such as streaming or stateful inference; the ordered-endpoint model assumes each request is independent.
 
-If you run the router in multiple regions, you need to keep the `router.json` in sync. We initially used S3 and a Lambda function to sync the config every 5 minutes, but this introduced a race condition where two routers could serve different configs for a few seconds. The fix was to use DynamoDB with conditional writes and a version number. Now, any config change is atomic and visible to all routers within 1 second.
+## A decision checklist
 
-### 3. Regional quota exhaustion
+Before adding a routing layer, answer these:
 
-Cloud endpoints have regional quotas. We hit the SageMaker invocation quota in `us-east-1` during a traffic spike and requests started failing with `ThrottlingException`. The error message didn’t mention quota, so we wasted 3 hours debugging the router before realizing the issue. The fix was to add a quota check in the router that fails fast if the regional quota is exceeded, with a fallback to another region. We also set up CloudWatch alarms to alert us before quotas are hit.
+1. What is the measured cold-start cost of each endpoint, and what interval keeps it warm?
+2. What is the measured latency from your user population to each candidate region?
+3. What is the quota headroom per region, and how is it monitored?
+4. What does a deep health check cost, and how often can it run?
+5. What is the fallback activation rate, and who is alerted when it rises?
+6. How does a config change propagate, and how are stale replicas prevented from serving it?
+7. What is the router's own latency contribution, measured separately from upstream latency?
 
-### 4. Model version skew
+If any of these cannot be answered with a metric, the routing layer is not ready to carry production traffic.
 
-If you update a model in production but the router still points to the old version, requests can fail silently. We added a `model_version` field to the config and a `/model/version` endpoint that returns the current version. The router now checks this on every request and returns an error if the version doesn’t match the expected value. This caught a bug where a model update failed mid-deploy and the router kept routing to the old version for 10 minutes.
+## Take action in the next 30 minutes
 
-### 5. Connection pool exhaustion on local side
-
-The local model server uses Gunicorn with 4 workers, but if the router opens too many concurrent connections, the local server can run out of file descriptors or memory. We set a connection limit of 100 per worker and added a backpressure mechanism in the router that sheds load when the local server is at 80% capacity. Without this, we saw 503 errors during traffic spikes.
-
-
-## Tools and libraries worth your time
-
-Here’s a curated list of tools and versions that work well in this setup:
-
-| Tool | Version | Use case | Why it’s worth it |
-|------|---------|----------|-------------------|
-| Go | 1.22.5 | Router core | Fast, small footprint, easy concurrency |
-| Python | 3.11 | Local model server | Mature ML ecosystem, FastAPI is ergonomic |
-| Uvicorn | 0.27.0 | ASGI server | Supports HTTP/2, connection reuse |
-| Gunicorn | 21.2.0 | Process manager | Prevents memory leaks, easy to tune |
-| boto3 | 1.34.0 | AWS SDK | Handles retries, regional endpoints, quotas |
-| Prometheus | 2.48.0 | Metrics | Lightweight, powerful query language |
-| Grafana | 10.4.0 | Dashboards | Easy to set up, great for time-series |
-| Terraform | 1.6.0 | Infra as code | Manages router VMs, Lambda functions, and SageMaker endpoints |
-| Docker | 25.0.3 | Containerization | Ensures consistent runtime environment |
-| Redis | 7.2 | Caching model responses | Reduces inference calls by 40% for repeated inputs |
-
-We added a 5-minute TTL cache for the `embedding-v3` model, which reduced inference calls by 40% for repeated inputs. The cache key is `embedding_v3:{sha256(text)}`, and the value is the embedding vector. The cache is stored in Redis running on a `cache.t3.micro` instance, which costs $12/month. The latency improvement was dramatic: 95% of cached requests return in under 2ms, compared to 60ms for local inference.
-
-Another tool worth mentioning is `locust` 2.20.0 for load testing. We used it to simulate 10K RPS and found that the Go router could handle the load with 0.4ms overhead, but the local model server became the bottleneck at 2K RPS. The fix was to add more Gunicorn workers and increase the local server’s memory limit.
-
-
-## When this approach is the wrong choice
-
-This routing pattern works best when:
-
-- Your models are either local (GPU-accelerated) or cloud-hosted (SageMaker, Vertex AI). - You can tolerate 50–200ms latency for cloud endpoints. - You don’t need complex load balancing (e.g., least connections, weighted routing). - Your traffic volume is high enough to justify the complexity of local inference but low enough that you don’t need to scale the router itself.
-
-It’s the wrong choice when:
-
-- You need sub-10ms latency for all requests. In that case, you’ll need a fully local setup with no cloud fallback. - You have thousands of models and need dynamic load balancing. The config file approach doesn’t scale well beyond ~100 models. - You’re running in a serverless environment (e.g., AWS Lambda) where the router itself becomes a bottleneck. In that case, use API Gateway with Lambda integrations instead. - Your models require persistent state (e.g., streaming models or stateful inference). The router assumes stateless endpoints.
-
-We tried this pattern in a serverless environment and hit a wall: the Go router couldn’t handle the cold starts of Lambda functions, and the overhead of invoking a Lambda for every request added 50ms. We switched to a Lambda function that embeds the routing logic and handles inference directly, which simplified the stack but lost the separation of concerns.
-
-
-## My honest take after using this in production
-
-This approach is a pragmatic middle ground between “all local” and “all cloud.” It’s not the most elegant solution, but it’s the one that’s actually maintainable. The biggest win was reducing the router’s complexity. Initially, we tried to make the router handle retries, circuit breaking, and load balancing, which turned it into a distributed systems problem. By pushing those concerns to the endpoints and infrastructure, we kept the router small and fast.
-
-You need to manage GPU drivers, model updates, and resource limits, which is a different skill set than cloud DevOps. If your team doesn’t have GPU expertise, stick to cloud endpoints and pre-warm them aggressively.
-
-One thing I underestimated was how much regional latency matters. Even within AWS, the latency difference between regions can be 2–3x. The router’s regional failover logic is now the most important part of the system, not the routing rules themselves.
-
-The config file approach works well for small teams but becomes unwieldy as the number of models grows. We’re exploring a database-backed config system with a UI for editing rules, which will add complexity but make the system more maintainable long-term.
-
-Finally, observability is non-negotiable. Without Prometheus metrics and Grafana dashboards, debugging routing issues is like flying blind. The `/metrics` endpoint in the router exports counters for model hits, errors, and latency percentiles, which are invaluable during incidents.
-
-
-## What to do next
-
-Open your terminal and run this command to check your current model routing overhead:
+Instrument your current routing path before changing it. Add a timer around the upstream call and one around the routing decision itself, then run a fixed load test and record both distributions:
 
 ```bash
-time curl -s -o /dev/null -w "%{time_total}\n" "http://localhost:8080/infer?model_id=embedding-v3" --data '{"text":"hello"}'
+# Replace the URL with your own router endpoint.
+hey -n 500 -c 10 -m POST \
+  -H 'Content-Type: application/json' \
+  -d '{"text":"hello"}' \
+  'http://localhost:8080/infer?model_id=embedding-v3'
 ```
 
-If the latency is above 100ms or varies wildly across requests, you’re likely suffering from connection pool issues, cold starts, or health check drift. The first fix is to add a `/health` endpoint to your model server that actually runs a dummy inference and returns the result. Then, update your router to use this endpoint for health checks instead of a simple TCP check.
-
-If you’re using cloud endpoints, pre-warm them with a Lambda function that invokes the endpoint every 5 minutes. This alone can cut cold start latency by 60%.
-
-Finally, add a 5-minute TTL cache with Redis for repeated inputs. The cache key should be a hash of the input text, and the value should be the embedding vector. This reduces inference calls by 40% in most workloads.
-
-
-## Frequently Asked Questions
-
-**How do I handle model versioning in the router?**
-
-Add a `model_version` field to the `router.json` config and a `/model/version` endpoint to your model server that returns the current version. The router should check this on every request and return an error if the version doesn’t match the expected value. This catches silent failures during model updates. We added this after a deployment failed to update the model weights, and the router kept routing to the old version for 10 minutes before we noticed.
-
-**What’s the best way to monitor the router’s health?**
-
-Export Prometheus metrics from the router’s `/metrics` endpoint, including counters for `model_hits`, `errors`, and `latency_seconds`. Set up Grafana dashboards to visualize p50, p95, and p99 latency, as well as error rates per model and region. Alert on error rates above 0.5% or latency spikes above 200ms. Without this, debugging routing issues is like flying blind.
-
-**Can I use this pattern with serverless models (e.g., AWS Lambda)?**
-
-Not directly. The Go router can’t run as a Lambda function because Lambda adds 50–100ms of cold start overhead per request. Instead, embed the routing logic in a Lambda function that handles inference directly. This simplifies the stack but loses the separation of concerns. We tried this and hit a wall, so we switched to a Lambda-based router that embeds the routing logic and handles inference directly.
-
-**How do I handle regional quotas for cloud endpoints?**
-
-Add a quota check in the router that fails fast if the regional quota is exceeded, with a fallback to
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** July 24, 2026
+Compare the median and the 99th percentile. A large gap between them, or a bimodal distribution, indicates cold starts or connection churn rather than a slow model. That measurement tells you which layer to fix first — and it is the one piece of information no architecture diagram will give you.

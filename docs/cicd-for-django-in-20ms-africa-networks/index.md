@@ -1,78 +1,52 @@
 # CI/CD for Django in 20ms Africa networks
 
-After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.
+Teams running Django on small cloud VMs in African regions inherit a set of constraints that most CI/CD guides ignore: 1–2 vCPU runners, 2–4 GB RAM, links whose round-trip time to the nearest registry mirror can sit in the hundreds of milliseconds, and egress billed per gigabyte. A pipeline that is merely "slow" on a fat pipe becomes a repeated failure on a thin one. This article walks through a pipeline designed around those constraints, explains why each piece exists, and shows how to measure whether it is working.
 
-## Why I wrote this (the problem I kept hitting)
+The teaching order below is: environment and caching, image construction, the CI workflow, deployment and migrations, failure modes, observability, then a decision checklist.
 
-In 2026 I joined a team building a Django e-commerce platform for a retailer in Lagos with 200+ concurrent users and a 2 Mbps microwave link to the ISP. We went live on a Tanzanian cloud provider running OpenStack 2026.11 and immediately hit two walls: builds took 8–12 minutes because the CI runner was single-core and Docker layer caching was disabled (no `overlay2` on their kernel), and the first CD push to the staging fleet failed because the 2026 Ubuntu 24.04 image pulled 1.2 GB of dependencies over a 1.8 Mbps link, saturating the uplink for 45 minutes and timing out the entire build pipeline. I spent three days debugging a connection pool issue that turned out to be a single misconfigured `DATABASES['default']['OPTIONS']['connect_timeout']` in settings.py — this post is what I wished I had found then.
+## The constraints that drive every design choice
 
-Most guides assume a fat pipe and multi-core runners. Africa’s cloud reality is the opposite: VMs with 1–2 vCPUs, 2–4 GB RAM, 1–2 Gbps burstable bandwidth, and egress charges up to $0.12/GB. GDPR-style audit trails are rare, so we also had to bolt on commit-signed builds and artifact verification without adding 400 ms of latency to every API call.
+Four properties of the environment determine almost every decision that follows.
 
-By early 2026 we had trimmed build time to 90 seconds, cut egress by 78 %, and kept the same security posture. This is how we did it, warts and all.
+**CPU and memory.** A 1 vCPU / 2 GB runner spends a large fraction of its time in `apt-get update`, dependency resolution and compilation. Anything that avoids recompiling is worth more here than on a 16-core machine.
 
-## Prerequisites and what you'll build
+**Round-trip time.** Every network round trip costs the RTT, not the bandwidth. A registry push that is 200 ms away is not slow because of throughput; it is slow because of the number of round trips. Co-locating the registry with the runner is the single highest-leverage change.
 
-You will need:
+**Metered egress.** Pulling a base image on every build is the most common source of avoidable egress. Pinning digests and reusing a local cache turns a per-build cost into a per-change cost.
 
-- A Django 5.1 project on GitHub (or GitLab, Bitbucket) with a `requirements.txt` pinned to exact versions.
-- A target cloud region in Africa: AWS `af-south-1`, Azure `South Africa North`, GCP `africa-south1`, or a local provider running Ubuntu 24.04 with Docker 25.0 and Podman 4.9.
-- A CI runner you control: either a self-hosted GitHub Actions runner on a 2 vCPU/4 GB VM or a GitLab Runner on a 1 vCPU/2 GB VM.
-- A CD target: either `gunicorn 21.2` on the same VM, or a Kubernetes 1.29 cluster with 2 worker nodes (2 vCPU/4 GB each) in the same region.
-- A domain and SSL cert managed via Let’s Encrypt (Certbot 2.11) or Cloudflare Zero Trust.
+**Memory headroom at runtime.** The same 2 GB VM often hosts the application. Gunicorn worker counts chosen for a 4 GB box will trigger the OOM killer. Worker sizing must be derived from measured RSS, not copied from a default.
 
-What we build:
+## Step 1 — prepare the runner and a local registry
 
-1. A multi-stage Dockerfile that produces a 90 MB runtime image and keeps the build cache in `/var/cache/apt` and `~/.cache/pip`.
-2. A GitHub Actions workflow that runs tests on every push, signs the image with Cosign 2.2.3, and pushes to a private registry in the same region.
-3. A simple Django deployment script that rolls out green/blue deploys without touching the database, with a 30-second health check.
-4. Prometheus + Grafana 10.4 dashboards for build duration, egress bytes, and CD rollout success rate.
+A self-hosted runner is the norm here, because hosted runners are typically far from the target region and re-download toolchains on every job.
 
-## Step 1 — set up the environment
-
-Start with the runner. I chose a self-hosted GitHub Actions runner on a 2 vCPU/4 GB VM running Ubuntu 24.04 because the Tanzanian cloud offered 2 Gbps burstable for $0.04/hr. Install the runner:
+Install a runner (the version and URL pattern below are the documented GitHub Actions runner release layout):
 
 ```bash
 sudo apt update && sudo apt install -y curl jq
 RUNNER_VERSION=2.316.0
-curl -s https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz | tar xz
+curl -sL https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz | tar xz
 ./config.sh --url https://github.com/your-org/your-repo --token YOUR_TOKEN
 sudo ./svc.sh install
 sudo ./svc.sh start
 ```
 
-Verify it picks up jobs. I was surprised to see the runner queueing jobs when the VM had only 500 MB free memory — turns out GitHub Actions runner spawns 4–6 Node processes and we had not tuned `nodeOptions`. Pin the runner to Node 20 LTS explicitly in the runner’s `.env`:
+Cap the Node heap used by the runner so it cannot starve the build:
 
 ```ini
 RUNNER_TOOL_CACHE=/opt/hostedtoolcache
 NODE_OPTIONS="--max-old-space-size=512"
 ```
 
-Next, set up Docker with `overlay2` storage driver and a local registry mirror to cut egress. Edit `/etc/docker/daemon.json`:
+Configure Docker's storage driver explicitly. On modern kernels `overlay2` is the correct choice; `vfs` is a fallback for filesystems that cannot support overlay mounts, and it copies every layer, which is expensive in both disk and time.
 
 ```json
 {
-  "storage-driver": "overlay2",
-  "registry-mirrors": ["https://registry-1.docker.io"]
+  "storage-driver": "overlay2"
 }
 ```
 
-Restart Docker and pull a small base image once to warm the cache:
-
-```bash
-sudo systemctl restart docker
-docker pull python:3.11-slim-bookworm@sha256:...  # exact digest to avoid mutable tags
-```
-
-For the CD stage, I initially tried a managed Kubernetes service in `af-south-1`, but the default node image weighed 1.8 GB and the cluster autoscaler pulled it every time a new pod spawned. We switched to a single 2 vCPU/4 GB VM running `podman` 4.9 with `--storage-driver=vfs` (yes, vfs is slower but uses 50 % less memory on 2 GB VMs) and a systemd service:
-
-```ini
-# /etc/containers/containers.conf
-[engine]
-cgroup_manager = "cgroupfs"
-storage_driver = "vfs"
-```
-
-Finally, set up a private registry in the same region using `registry:2` 2.8.3:
+A registry mirror is only useful if it is actually closer than the upstream. A public mirror URL is not necessarily in your region, and configuring one that is further away than the origin makes pulls slower. Run a registry on the same host or in the same region instead:
 
 ```bash
 docker run -d --name registry -p 5000:5000 \
@@ -81,39 +55,51 @@ docker run -d --name registry -p 5000:5000 \
   registry:2.8.3
 ```
 
-Add the registry to `/etc/hosts` on the runner so it can push without DNS lookup:
+Point the runner at it by hostname so pushes avoid a DNS lookup:
 
 ```
 127.0.0.1   registry.local
 ```
 
-## Step 2 — core implementation
+Warm the cache once by pulling the base image you will use, and record its digest:
 
-Write a multi-stage Dockerfile that separates build and runtime. My first attempt produced a 320 MB image because we baked `gcc`, `python3-dev`, and `libpq-dev` into the final stage. After stripping the build stage and using `python:3.11-slim-bookworm`, the runtime image dropped to 90 MB.
+```bash
+docker pull python:3.11-slim-bookworm
+docker inspect --format='{{index .RepoDigests 0}}' python:3.11-slim-bookworm
+```
+
+That digest is what goes into the Dockerfile. Mutable tags such as `3.11-slim-bookworm` are re-published upstream; pinning the digest makes the layer cacheable across builds and makes the pipeline reproducible.
+
+## Step 2 — build a small runtime image
+
+A naive single-stage build bakes `gcc`, `python3-dev` and `libpq-dev` into the shipped image. Multi-stage builds separate the compile toolchain from the runtime.
 
 ```dockerfile
 # syntax=docker/dockerfile:1.7
-FROM python:3.11-slim-bookworm AS builder
+FROM python:3.11-slim-bookworm@sha256:<digest> AS builder
 WORKDIR /app
 COPY requirements.txt .
-RUN apt-get update && apt-get install -y --no-install-recommends gcc python3-dev && \
+RUN apt-get update && apt-get install -y --no-install-recommends gcc python3-dev libpq-dev && \
     pip install --user --no-cache-dir -r requirements.txt && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-FROM python:3.11-slim-bookworm AS runtime
+FROM python:3.11-slim-bookworm@sha256:<digest> AS runtime
 WORKDIR /app
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
 COPY --from=builder /root/.local /root/.local
 COPY . .
 RUN apt-get update && apt-get install -y --no-install-recommends libpq5 && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     find /root/.local -type d -exec chmod 755 {} +
+ENV PATH=/root/.local/bin:$PATH
 
 EXPOSE 8000
 CMD ["gunicorn", "project.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--threads", "2"]
 ```
 
-Build with cache mounts to reuse apt and pip layers:
+Three details matter. First, `libpq-dev` belongs in the builder stage only; the runtime needs `libpq5` alone. Second, `PATH` must include `/root/.local/bin`, otherwise `gunicorn` will not be found. Third, `.dockerignore` should exclude `.git`, `node_modules`, `*.sqlite3` and any local virtualenv, or `COPY . .` will bloat the context and invalidate the layer cache on every commit.
+
+Build with a persistent local cache so apt and pip layers survive between runs:
 
 ```bash
 docker build \
@@ -122,7 +108,18 @@ docker build \
   -t registry.local/django-app:latest .
 ```
 
-Create a GitHub Actions workflow `.github/workflows/cicd.yml`. I originally used the official `actions/setup-python@v5` which defaults to Python 3.10, causing our tests to fail against Django 5.1. Pin to 3.11 explicitly:
+**How to measure the result.** Compare the image size and the build time directly:
+
+```bash
+docker images registry.local/django-app --format '{{.Size}}'
+time docker build --no-cache -t registry.local/django-app:test .
+```
+
+Run the second command once with and once without the cache mounts and record the wall-clock difference. That difference, multiplied by your number of builds per day, is the value of the cache. Do not estimate it; measure it.
+
+## Step 3 — the CI workflow
+
+A two-job workflow keeps tests and image publication separate so a failing test never produces a pushed image.
 
 ```yaml
 name: cicd
@@ -135,6 +132,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: pip-
       - name: install deps
         run: |
           python -m pip install --upgrade pip
@@ -151,39 +154,32 @@ jobs:
         run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login registry.local -u "${{ secrets.REGISTRY_USER }}" --password-stdin
       - name: build image
         run: |
-          docker build --cache-from registry.local/django-app:latest -t registry.local/django-app:${{ github.sha }} .
+          docker build --cache-from registry.local/django-app:latest \
+            -t registry.local/django-app:${{ github.sha }} .
           docker tag registry.local/django-app:${{ github.sha }} registry.local/django-app:latest
-      - name: sign image
-        uses: sigstore/cosign-installer@v3.5.0
-        with:
-          cosign-release: 'v2.2.3'
-      - name: sign & push
+      - name: push image
         run: |
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY registry.local/django-app:${{ github.sha }}
           docker push registry.local/django-app:${{ github.sha }}
           docker push registry.local/django-app:latest
-        env:
-          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
 ```
 
-The signing step adds 180 ms to the push but prevents supply-chain attacks from untrusted runners. I initially skipped it and later had to rebuild after discovering an unsigned image in prod — lesson learned.
-
-For CD, write a tiny Ansible playbook `deploy.yml` that pulls the signed image and restarts Podman. I tried using `podman-compose` but it spawned 4 containers and crashed on 1 vCPU VMs. Instead, use systemd directly:
+Two notes on correctness. `actions/cache@v4` is the current major version; older references to `v3` should be updated. And the `retry:` and `delay:` keys shown in some published examples are **not** valid GitHub Actions step keys — they are silently ignored. Retries must be written explicitly:
 
 ```yaml
-- hosts: cd_hosts
-  tasks:
-    - name: pull signed image
-      containers.podman.podman_image:
-        name: registry.local/django-app:{{ image_tag }}
-        pull: always
-    - name: systemd restart
-      systemd:
-        name: django-app.service
-        state: restarted
+      - name: push image with retry
+        run: |
+          for i in 1 2 3; do
+            docker push registry.local/django-app:${{ github.sha }} && break
+            echo "push attempt $i failed, retrying"
+            sleep 5
+          done
 ```
 
-Set the service unit to start after the network is up and add a readiness probe that calls `/healthz` every 30 seconds for 3 attempts. I was surprised that the probe failed 40 % of the time when the VM had 10 concurrent builds queued — the CPU steal time was 25 % and the probe process got preempted. Fix by increasing the probe timeout to 5 seconds:
+Image signing is a separate concern. If your threat model includes untrusted runners or a shared registry, signing with a keyless OIDC-based signer (the class of tooling that implements the Sigstore signing flow) is the standard approach. It is not free: signing adds a network round trip and requires the runner to reach the transparency log, which on a high-RTT link can dominate the push. Measure it before adopting it, and skip it if your runners and registry are both private and single-tenant.
+
+## Step 4 — deployment, health checks and migrations
+
+For a single-VM deployment, a systemd unit that manages a Podman container is simpler and more debuggable than a full orchestrator.
 
 ```ini
 [Unit]
@@ -192,7 +188,9 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/usr/bin/podman start django-app
+ExecStartPre=/usr/bin/podman pull registry.local/django-app:latest
+ExecStart=/usr/bin/podman run --rm --name django-app --env-file /etc/django/env \
+  -p 8000:8000 registry.local/django-app:latest
 ExecStop=/usr/bin/podman stop django-app
 Restart=on-failure
 RestartSec=5s
@@ -201,158 +199,136 @@ RestartSec=5s
 WantedBy=multi-user.target
 ```
 
-## Step 3 — handle edge cases and errors
+Note that `podman start` only works on a container that already exists and is stopped; for a rollout you want `podman run` with `--rm`, or an explicit `podman rm -f` before starting. The unit above pulls the image as a pre-step so the pull failure is visible in `systemctl status` rather than inside the container start.
 
-Edge case 1: apt cache misses. On a 2 vCPU/2 GB VM, `apt-get update` can take 45 seconds and sometimes hangs on `lock /var/lib/apt/lists/lock`. Pin the base image digest in `Dockerfile` so the layer is cached locally:
-
-```dockerfile
-FROM python:3.11-slim-bookworm@sha256:123abc... AS runtime
-```
-
-Edge case 2: pip cache misses. Reuse a local cache directory mounted into the runner:
+**Migrations.** Running `manage.py migrate` inside the serving container is a common failure mode: if the container is restarted mid-migration, the schema can be left half-applied. Run migrations as a separate, single-shot step before the new container starts:
 
 ```yaml
-- name: cache pip
-  uses: actions/cache@v3
-  with:
-    path: ~/.cache/pip
-    key: pip-${{ hashFiles('requirements.txt') }}
-    restore-keys: pip-
+      - name: run migrations
+        run: |
+          docker run --rm --env-file /etc/django/env \
+            registry.local/django-app:${{ github.sha }} \
+            python manage.py migrate --noinput
 ```
 
-Edge case 3: registry push failures. The Tanzanian cloud has 200 ms RTT to the nearest registry mirror. I added retries with exponential backoff in the workflow:
+For zero-downtime rollouts, migrations must be backward compatible with the previous release: add columns as nullable, deploy code that writes both old and new shapes, backfill, then remove the old column in a later release. A migration that drops a column in the same deploy that stops using it will break the old container during the overlap window.
 
-```yaml
-- name: push image
-  run: docker push registry.local/django-app:${{ github.sha }}
-  retry: 3
-  delay: 5
+**Health checks.** A readiness probe should hit an endpoint that actually verifies dependencies, not just that the process is listening.
+
+```python
+# project/views.py
+from django.db import connection
+from django.http import JsonResponse
+
+def healthz(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+    except Exception:
+        return JsonResponse({"status": "unhealthy"}, status=503)
+    return JsonResponse({"status": "ok"})
 ```
 
-Edge case 4: database migrations. Running `python manage.py migrate` inside the container breaks if the container restarts mid-migration. I originally ran it in the `CMD`, which caused 503 errors for 45 seconds. Move it to an init container in Kubernetes or, for VM deployments, run it in a separate step before the service starts:
+Then poll it after the rollout, with a bounded budget:
 
-```yaml
-- name: run migrations
-  run: |
-    docker run --rm registry.local/django-app:${{ github.sha }} \
-      python manage.py migrate --noinput
+```bash
+for i in $(seq 1 10); do
+  if curl -fsS --max-time 5 http://127.0.0.1:8000/healthz; then exit 0; fi
+  sleep 3
+done
+exit 1
 ```
 
-Edge case 5: memory exhaustion. On the CD VM with 2 GB RAM, `gunicorn` with 4 workers used 1.8 GB RSS. Switch to 2 workers and 2 threads:
+An unbounded `curl` with no `--max-time` will hang for the OS TCP timeout on a high-RTT link, which turns a fast failure into a stalled pipeline.
 
-```dockerfile
-CMD ["gunicorn", "project.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--threads", "2"]
+## Failure modes and how to diagnose each
+
+**apt lock contention.** Two builds on the same runner can collide on `/var/lib/apt/lists/lock`. Serialize builds with a concurrency group, or give each job its own cache directory.
+
+**Cache misses after a base-image change.** Pinning a digest freezes the base image; you then need a deliberate process to update it. Schedule a weekly job that pulls the tag, resolves the new digest, and opens a pull request. Without this, the digest silently ages and misses security updates.
+
+**Registry push timeouts.** Distinguish throughput from round trips. Run `docker push` with `time` and compare against a `curl -w '%{time_total}'` to the registry's `/v2/` endpoint. If the push is slow but the endpoint responds quickly, the problem is layer count or size, not latency.
+
+**OOM kills during the build.** `pip install` of a large dependency tree can exceed 2 GB. Add swap, or build the wheel on a larger machine and copy the wheel into the build context.
+
+**Egress spikes.** Instrument by reading the host's network counters before and after each build:
+
+```bash
+cat /proc/net/dev
 ```
 
-Edge case 6: egress spikes. Every push pulled 180 MB of `python:3.11-slim-bookworm` from Docker Hub. Switch to a registry mirror in the same region:
+Diff the transmit column for the interface carrying registry traffic. That gives you bytes per build without any external service. If the number is close to the size of your base image, the cache is not being reused.
 
-```json
-{
-  "registry-mirrors": ["https://registry-1.docker.io"]
-}
+**Gunicorn memory growth.** Measure RSS per worker rather than guessing:
+
+```bash
+ps -o rss= -C gunicorn | awk '{sum+=$1} END {print sum/1024 " MB"}'
 ```
 
-I measured 78 % egress reduction after the mirror was warmed.
+A common working rule on a 2 GB VM is two sync workers with two threads, leaving headroom for the OS, the database client and any background task. Confirm against the measurement above; if total RSS approaches the VM's RAM, reduce workers rather than adding swap.
 
-## Step 4 — add observability and tests
+## Observability that answers real questions
 
-Install Prometheus Node Exporter 1.6.1 and Django Prometheus 2.4.1 for metrics. Add to `settings.py`:
+Instrument three things and no more at first: build duration, bytes transferred per build, and rollout outcome.
+
+For build duration and egress, a small script that wraps the build and writes a line to a file is enough:
+
+```bash
+START=$(date +%s)
+docker build -t registry.local/django-app:$GIT_SHA .
+END=$(date +%s)
+echo "build_seconds $((END-START)) sha=$GIT_SHA" >> /var/log/cicd/metrics.log
+```
+
+For application-level metrics, the Django Prometheus client exposes a `/metrics` endpoint. Add the middleware and app, and ensure the multiprocess directory is set so that metrics from multiple Gunicorn workers are aggregated correctly:
 
 ```python
 MIDDLEWARE = [
     'django_prometheus.middleware.PrometheusBeforeMiddleware',
-    ...
+    # ... your middleware ...
     'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 INSTALLED_APPS = [
+    # ... your apps ...
     'django_prometheus',
 ]
 ```
 
-Expose `/metrics` on port 8000 and scrape it from the runner VM. Build a Grafana dashboard with panels for:
-- Build duration (p95)
-- Egress bytes per build
-- CD rollout success rate (HTTP 200 after 30 s)
-- Gunicorn memory RSS
-
-I initially forgot to set `PROMETHEUS_MULTIPROC_DIR` in Gunicorn, which caused duplicate metrics. The fix:
-
 ```ini
-[service]
+[Service]
 Environment=PROMETHEUS_MULTIPROC_DIR=/tmp/prometheus
 ```
 
-Add a smoke test that curls `/healthz` after each deploy. I wrote a pytest plugin that fails the build if the health check does not return 200 in under 500 ms. The test saved us from shipping a broken image twice in staging.
+Without `PROMETHEUS_MULTIPROC_DIR`, each worker keeps its own counters and the scraped values are whichever worker answered the scrape — a subtle source of misleading dashboards.
+
+A smoke test that runs against the deployed service, not the test client, catches configuration errors that unit tests cannot:
 
 ```python
 # tests/test_smoke.py
-def test_health_endpoint_live(client):
-    resp = client.get('/healthz', timeout=0.5)
+import os
+import requests
+
+def test_health_endpoint_live():
+    base = os.environ["DEPLOY_BASE_URL"]
+    resp = requests.get(f"{base}/healthz", timeout=5)
     assert resp.status_code == 200
 ```
 
-Run the smoke tests in the workflow:
+Note that Django's test `client.get()` does not accept a `timeout` argument; timeouts belong on the real HTTP call, which is why the smoke test uses `requests` against a live URL.
 
-```yaml
-- name: smoke test
-  run: pytest tests/test_smoke.py
-```
+## Choosing a runner: a checklist rather than a benchmark
 
-## Real results from running this
+Published benchmark tables are worthless for your situation because the variables — RTT, registry location, image size, dependency tree — differ per project. Instead, decide with this checklist:
 
-We shipped version 1.4.2 on 2026-01-15. Build time dropped from 8–12 minutes to 90 seconds (p95). Egress fell from 180 MB per build to 38 MB (78 % reduction). CD rollout success rate climbed from 72 % to 98 % after adding the 30-second health check. Memory usage on the CD VM stayed under 1.6 GB RSS with 2 gunicorn workers.
+1. **Is the runner in the same region as the deployment target?** If not, every artifact crosses a long-haul link twice.
+2. **Is there a registry on the same host or in the same region?** If not, you are paying egress on every build.
+3. **Is the base image pinned by digest and cached?** If not, the first build of the day pays full price.
+4. **Are builds serialized?** Concurrent builds on a small runner contend for CPU, disk and apt locks.
+5. **Is the rollout bounded?** Every network operation in the pipeline needs a timeout.
+6. **Can you measure bytes and seconds per build?** If not, you cannot tell whether any change helped.
 
-Latency from Lagos to the Tanzanian cloud: 210 ms RTT. After moving the registry mirror to the same region, image pull time dropped from 45 s to 8 s. We also saved $180/month in egress charges compared to pulling from Docker Hub.
+A worked sizing example makes the arithmetic concrete. Suppose a base image is 50 MB compressed, your dependency layer is 60 MB, and your application layer is 5 MB. A cold build transfers roughly 115 MB; a warm build with a local registry transfers the application layer only, about 5 MB. At a hypothetical egress price of $0.10/GB (illustrative, not a quoted rate), the difference is about $0.011 per build. At 40 builds a day that is roughly $0.44 a day, or about $160 a year. The larger saving is usually time: if the pull takes 45 seconds cold and 8 seconds warm, the warm path saves 37 seconds per build, which is 25 minutes a day at 40 builds. Substitute your own measured numbers; the point is that the calculation is trivial once you have the two measurements.
 
-Comparison table of runner types we tested:
+## A 30-minute action
 
-| Runner type          | vCPU | RAM | Build time (s) | Egress (MB) | Cost/hr | Success rate |
-|----------------------|------|-----|----------------|-------------|---------|--------------|
-| GitHub-hosted Ubuntu | 2    | 7   | 210            | 180         | $0.00   | 99 %         |
-| Self-hosted 2 vCPU   | 2    | 4   | 120            | 180         | $0.04   | 95 %         |
-| Self-hosted + mirror | 2    | 4   | 90             | 38          | $0.04   | 98 %         |
-| Local OpenStack 1 vCPU | 1  | 2   | 360            | 180         | $0.03   | 72 %         |
-
-The self-hosted runner with a local registry mirror gave the best balance of speed, cost, and reliability for our 200 concurrent users.
-
-## Common questions and variations
-
-**Is Podman faster than Docker on low-memory VMs?**
-Podman 4.9 uses 30 % less memory than Docker 25.0 on Ubuntu 24.04 when run in rootless mode with vfs storage driver. I measured RSS at 140 MB vs 200 MB for the same multi-container setup. If you need Docker Compose, use `podman-compose` with `--pod` and `--userns=keep-id` to avoid root.
-
-**Can I use GitLab CI instead of GitHub Actions?**
-Yes. Replace the workflow with `.gitlab-ci.yml` using a shell runner on the same 2 vCPU VM. The cache syntax is slightly different but the layer reuse and registry mirror steps remain identical.
-
-**What about Django channels and WebSockets?**
-Channels adds 40 MB to the runtime image and increases memory to 2.2 GB RSS on 2 vCPU. For 200 concurrent users, keep workers=1 and threads=4. If you hit memory limits, switch to Daphne in a separate container and add a Redis 7.2 pub/sub channel.
-
-**How do I handle secrets?**
-Use Mozilla SOPS 3.9.0 with age keys stored in Hashicorp Vault running in the same region. The workflow decrypts secrets only on the self-hosted runner, signs the decrypted file, and injects it into the container via `--env-file`. Never pass secrets in environment variables; they leak in `/proc/1/environ`.
-
-## Where to go from here
-
-Add database backups before every deploy. Use `pg_dump` to a local file, encrypt with SOPS, and push to an Object Storage bucket in the same region. Schedule it as a cron job on the runner VM.
-
-Action for the next 30 minutes: open `settings.py` and set `DATABASES['default']['OPTIONS']['connect_timeout']` to 3 seconds. Save the file and push a commit. Measure the build time and egress bytes in your new dashboard. If the build takes more than 120 seconds or egress exceeds 50 MB, you’ve hit the same traps I did — now you can fix them.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 03, 2026
+Open your CI workflow and find every network operation that has no timeout: `docker pull`, `docker push`, `pip install`, `curl` in a health check. Add an explicit bound to each — `--max-time` for curl, `--timeout` for pip, and a retry loop with a fixed sleep for pushes. Then run one build and record the wall-clock time and the bytes transferred from `/proc/net/dev`. Those two numbers are the baseline against which every later change is judged.
