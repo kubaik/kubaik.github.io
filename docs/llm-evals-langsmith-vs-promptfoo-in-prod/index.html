@@ -1,0 +1,499 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LLM evals: LangSmith vs Promptfoo in prod - Kubai Kevin</title>
+        <meta name="description" content="LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…">
+        <meta name="keywords" content="LlmEvals, PromptTesting, LangsmithVsPromptfoo, Llm, Generativeai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-03T04:27:57.976269">
+        <meta property="article:modified_time" content="2026-10-03T04:27:57.976280">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="LLM evals: LangSmith vs Promptfoo in prod">
+        <meta property="og:description" content="LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…">
+        <meta property="og:url" content="https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/llm-evals-langsmith-vs-promptfoo-in-prod.png">
+        <meta property="og:image:alt" content="LLM evals: LangSmith vs Promptfoo in prod">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="LLM evals: LangSmith vs Promptfoo in prod">
+        <meta name="twitter:description" content="LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/llm-evals-langsmith-vs-promptfoo-in-prod.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/#article",
+      "headline": "LLM evals: LangSmith vs Promptfoo in prod",
+      "description": "LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…",
+      "datePublished": "2026-10-03T04:27:57+00:00",
+      "dateModified": "2026-10-03T04:27:57+00:00",
+      "wordCount": 2945,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/"
+      },
+      "keywords": "LlmEvals, PromptTesting, LangsmithVsPromptfoo, Llm, Generativeai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "LLM evals: LangSmith vs Promptfoo in prod",
+          "item": "https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>LLM evals: LangSmith vs Promptfoo in prod</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">LLM evals: LangSmith vs Promptfoo in prod</h1>
+                
+                <p class="post-lead">LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LlmEvals</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PromptTesting</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LangsmithVsPromptfoo</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/generativeai/"
+                       style="text-decoration:none;">Generativeai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2945 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most evaluation stack writeups assume the reader has already made the mistake they're warning about. The failure is quiet — no errors, just wrong answers. This walks through the fix and the reasoning, not just the patch.</p>
+<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
+<p>Production LLM features have a nasty property: they pass every manual spot-check you run before launch, then quietly regress on the 3% of inputs that actually matter to your users. The failure mode is rarely a crash. It's a summarization endpoint that starts dropping the constraint clause in a legal disclaimer, or a support classifier that routes refund requests to the wrong queue because someone tweaked the system prompt to fix an unrelated tone complaint. By the time a human notices, you have a week of bad outputs in the logs and no clean baseline to compare against.</p>
+<p>Evaluation tooling is supposed to catch this. In practice, most teams end up with one of two stacks: a hosted observability platform that stores traces and lets you annotate them, or a local, config-driven test runner that treats prompts like unit tests. The two approaches have genuinely different cost curves, latency profiles, and failure modes, and picking the wrong one for your team size is a six-month detour.</p>
+<p>The comparison that matters in 2026 is LangSmith (the hosted tracing and eval platform from the LangChain team) against Promptfoo 0.95+ (the open-source, CLI-first eval runner). They overlap on the surface — both run assertions against model outputs — but they optimize for opposite things. LangSmith optimizes for visibility into live traffic. Promptfoo optimizes for fast, deterministic regression testing in CI. The part that trips people up is that you can't get both properties from one tool without paying for it in either latency or maintenance, and that's what this post actually covers.</p>
+<h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
+<p>LangSmith is a hosted service. You instrument your application with the SDK (Python or TypeScript), set <code>LANGCHAIN_TRACING_V2=true</code> and a <code>LANGCHAIN_API_KEY</code>, and every chain, tool call, and LLM invocation gets shipped to LangSmith's backend as a structured trace. From there you can build datasets from real production traces, run evaluations against those datasets, and attach human feedback via the annotation queue.</p>
+<p>The core value is that evaluation data comes from production. You don't have to invent test cases — you filter traces by latency, token count, or user thumbs-down, promote the interesting ones into a dataset, and re-run your prompt versions against them. This is the workflow that catches drift: a prompt change that looked fine on your 20 hand-written examples fails on the 400 real inputs you collected last month.</p>
+<p>Where it shines is teams with live traffic and a human in the loop. If you have a support team flagging bad outputs, or a product manager who wants to compare two prompt variants on real conversations, LangSmith's UI is genuinely faster than building that workflow yourself. The annotation queue alone saves weeks of internal tooling.</p>
+<p>It's also the better choice if you're already on LangChain or LangGraph. Instrumentation is nearly free — you add environment variables and the traces appear. For a team running LangGraph agents with tool calls, the trace view showing the full call tree is hard to replicate with a CLI tool.</p>
+<p>The weakness is that it's a hosted dependency. If LangSmith is down, your evaluation pipeline is down. If you're in a regulated environment where trace data can't leave your VPC, you're looking at the self-hosted enterprise tier, which changes the cost math entirely. And the SDK instrumentation adds overhead to every request — typically 5–15ms of added latency per traced call in Python, which matters if you're serving synchronous endpoints with a 200ms budget.</p>
+<h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
+<p>Promptfoo is a Node-based CLI that reads a YAML config, runs your prompts against a list of providers, and applies assertions to the outputs. It runs locally, ships as an npm package, and produces a pass/fail result you can wire into CI. Version 0.95+ added proper support for custom Python assertion functions, which is what makes it viable for anything beyond string matching.</p>
+<pre><code class="language-yaml"># promptfooconfig.yaml
+prompts:
+  - file://prompts/support_classifier.txt
+providers:
+  - id: openai:gpt-4o-mini
+    config:
+      temperature: 0
+  - id: anthropic:claude-3-5-haiku-latest
+    config:
+      temperature: 0
+tests:
+  - vars:
+      ticket: &quot;I was charged twice for the same order&quot;
+    assert:
+      - type: contains
+        value: &quot;billing&quot;
+      - type: javascript
+        value: output.category === 'billing' &amp;&amp; output.confidence &gt; 0.8
+  - vars:
+      ticket: &quot;How do I export my data?&quot;
+    assert:
+      - type: llm-rubric
+        value: &quot;Classifies as 'account' or 'data-export', not 'billing'&quot;
+</code></pre>
+<p>The killer feature is that it's just a test runner. It exits non-zero on failure, so your existing CI pipeline (<code>pytest</code>, <code>jest</code>, GitHub Actions, whatever) treats it like any other test suite. No dashboard, no API key management for the eval layer itself, no vendor to page when it's slow. For a team that already has strong CI discipline, this is the lower-friction choice.</p>
+<p>Where it shines is regression testing against a fixed dataset. You commit your test cases to the repo, you run <code>promptfoo eval</code> on every PR that touches a prompt, and you catch the regression before merge. The cost is that you have to curate the dataset yourself — there's no "promote this production trace into a test case" button. You either export from your observability tool or write cases by hand.</p>
+<p>It also handles multi-provider comparison well. Running the same 50 test cases against GPT-4o-mini, Claude 3.5 Haiku, and a local Llama 3.1 8B via Ollama is a single config change, and the output table shows you pass rates side by side. That's the workflow that makes model-swap decisions defensible instead of vibes-based.</p>
+<p>The weakness is visibility. Promptfoo tells you pass/fail on cases you already thought of. It does not tell you what your users are actually sending. Teams that adopt it without a separate tracing layer often discover months later that their test suite covers the happy path and nothing else.</p>
+<h2 id="head-to-head-performance">Head-to-head: performance</h2>
+<p>Performance here means two things: eval run latency and production overhead. They're different problems and the tools behave differently on each.</p>
+<p>On eval run latency, Promptfoo has a structural advantage because it runs locally and parallelizes aggressively. A 200-case suite against GPT-4o-mini with <code>--max-concurrency 10</code> typically completes in 40–90 seconds depending on provider rate limits. The bottleneck is almost always the model API, not the runner. LangSmith's evaluation runs go through their backend, which adds a queue and scheduling layer; the same 200-case suite commonly takes 2–5 minutes end to end, and longer if you're on a shared tier during peak hours.</p>
+<p>On production overhead, the tradeoff reverses. Promptfoo adds zero runtime overhead because it doesn't run in production — it's a CI tool. LangSmith's SDK instrumentation adds measurable latency to every traced call. In Python with <code>langsmith</code> 0.2.x, expect roughly 5–15ms per traced invocation when tracing is enabled and the network is healthy. That's fine for async background jobs. It's not fine if you're inside a 150ms synchronous API budget and you're tracing every step of a multi-call chain.</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>LangSmith</th>
+<th>Promptfoo 0.95+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eval run time (200 cases)</td>
+<td>2–5 min (hosted queue)</td>
+<td>40–90 s (local, parallel)</td>
+</tr>
+<tr>
+<td>Production latency overhead</td>
+<td>5–15 ms/traced call</td>
+<td>0 ms (CI only)</td>
+</tr>
+<tr>
+<td>Data residency</td>
+<td>Hosted (self-host = enterprise)</td>
+<td>Fully local</td>
+</tr>
+<tr>
+<td>Dataset source</td>
+<td>Production traces</td>
+<td>Hand-curated or exported</td>
+</tr>
+<tr>
+<td>CI integration</td>
+<td>API-based, custom</td>
+<td>Native CLI exit codes</td>
+</tr>
+<tr>
+<td>Human annotation UI</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Multi-provider compare</td>
+<td>Manual setup</td>
+<td>First-class</td>
+</tr>
+</tbody>
+</table>
+<p>The practical implication: if your eval suite is part of your PR gate, Promptfoo's speed matters because slow CI gets bypassed. If your eval suite is a weekly review meeting, LangSmith's 3-minute run time is irrelevant and the production visibility is worth far more.</p>
+<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
+<p>The onboarding paths are almost opposite. LangSmith is fastest to start and slowest to fully own. Promptfoo is slowest to start and fastest to fully own.</p>
+<p>With LangSmith, a developer adds three environment variables, redeploys, and sees traces within minutes. The first eval run against a promoted dataset is maybe an hour of work. The friction shows up later: defining custom evaluators requires understanding the <code>RunEvaluator</code> interface, and building a CI gate on top of the hosted API means writing your own wrapper that polls for run completion and interprets results. Teams running into this usually end up writing 150–250 lines of glue code in a <code>scripts/eval_ci.py</code> file that nobody wants to maintain.</p>
+<p>Promptfoo inverts this. The first hour is spent reading the config schema, figuring out how to pass structured inputs, and wrestling with the assertion types. But once the config exists, it's a file in your repo. CI integration is <code>npx promptfoo eval --ci</code> and checking the exit code. Custom assertions are plain JavaScript or Python functions. There's no API surface to learn beyond the config schema.</p>
+<p>The debugging experience also differs. When a LangSmith eval fails, you open the trace, look at the input, the output, and the assertion result, and you can usually see what went wrong. When a Promptfoo assertion fails, you get a diff in the terminal — sometimes less context, but always faster to iterate on. A common failure mode with Promptfoo is a <code>llm-rubric</code> assertion that's too vague; the grader model returns inconsistent verdicts and your suite becomes flaky. The fix is to make rubrics concrete ("mentions the refund window in days") rather than abstract ("is helpful"), but teams burn a day or two discovering that.</p>
+<p>For teams with three years of engineering experience but no dedicated ML platform person, Promptfoo's "it's just a test file" model usually wins on maintainability. For teams with a PM or support lead who needs to look at traces, LangSmith's UI wins on adoption.</p>
+<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
+<p>Cost is where the two tools diverge most sharply, and where budget tier actually determines the answer.</p>
+<p>Promptfoo itself is free and open source. Your cost is the model API calls during eval runs. A 200-case suite run twice per PR, with an average of 800 input tokens and 200 output tokens per case at GPT-4o-mini pricing, lands around $0.15–$0.40 per run depending on prompt size. At 20 PRs a day that's roughly $3–$8/day, or $90–$240/month. If you're also running an LLM-as-judge assertion, double it. That's the entire cost — no seats, no tiers.</p>
+<p>LangSmith's free tier covers a small number of traces per month, which is enough for a solo developer or a prototype. Once you're in production with real traffic, you're on a paid tier priced per trace. A service handling 50,000 requests a month with full tracing, at typical per-trace pricing, lands in the low hundreds of dollars per month — comparable to Promptfoo's model costs, but with the added wrinkle that tracing cost scales with production traffic, not with eval frequency. A traffic spike doubles your observability bill even if your eval suite didn't change.</p>
+<p>The self-hosted LangSmith tier changes the math entirely. You're now running a Postgres-backed service and paying for the compute, which for a small team is real infrastructure work. If your constraint is "data cannot leave our VPC," that's the price. If your constraint is budget, Promptfoo plus a lightweight self-hosted trace store (Langfuse, Phoenix, or even structured logs to S3) gets you 80% of the visibility for a fraction of the operational burden.</p>
+<p>For a bootstrapped contractor on a $200/month DigitalOcean droplet, Promptfoo is the only realistic answer — LangSmith's hosted tier is fine but the trace volume from any real client work pushes you into paid territory fast. For a Series B startup with an AWS enterprise agreement and a compliance team, LangSmith's self-hosted tier is often the path of least resistance because the procurement and security review are already done.</p>
+<h2 id="a-decision-framework">A decision framework</h2>
+<p>Use this to pick, not to hedge. The two tools are not complementary in the way vendors like to claim — running both is a real maintenance cost and most teams that try end up abandoning one.</p>
+<p>Pick LangSmith if: you have live production traffic you need to inspect, you have a non-engineer who needs to review outputs, you're already on LangChain or LangGraph, and you're on a paid tier where per-trace costs are budgeted. The self-hosted tier is the right call if data residency is a hard requirement.</p>
+<p>Pick Promptfoo if: your eval suite needs to run in CI on every PR, you want deterministic pass/fail without a hosted dependency, you're comparing multiple model providers, and you have an engineer who can curate a test dataset from scratch. The lack of a tracing UI is a real gap — pair it with structured logging or a lightweight self-hosted tracer if you need production visibility.</p>
+<p>The mistake to avoid is adopting LangSmith for eval and then discovering you can't gate PRs on it because the API round-trip adds 3 minutes to every CI run. The opposite mistake is adopting Promptfoo for eval and then discovering six months in that your test suite covers only the cases you imagined, not the cases your users actually send.</p>
+<h2 id="recommendation-and-caveats">Recommendation and caveats</h2>
+<p>My recommendation for most teams: start with Promptfoo 0.95+ as your CI gate, and add a tracing layer separately. If you're on LangChain already, that tracing layer is LangSmith. If you're not, Langfuse or Phoenix self-hosted will do the job at lower cost. This gives you fast regression testing where it belongs (CI) and production visibility where it belongs (a separate observability surface), without coupling the two.</p>
+<p>The caveat on Promptfoo is dataset quality. A test suite of 30 hand-written cases will pass while your production quality drops, because the cases don't resemble real inputs. Budget real time for curating 150–300 cases from production logs before you trust the pass rate. Without that, you're testing your imagination, not your system.</p>
+<p>The caveat on LangSmith is cost scaling and lock-in. Trace volume grows with traffic, and migrating off the platform means rebuilding your dataset and annotation workflows. If you go hosted, treat the dataset export path as a real requirement, not an afterthought.</p>
+<p>If you're a solo contractor or a two-person team, Promptfoo is the answer and it's not close. If you're at a Series B with a compliance function and a PM who reviews outputs weekly, LangSmith's self-hosted tier pays for itself in avoided internal tooling. The middle ground — a 10-person team with no ML platform person — is where teams get this wrong most often, usually by adopting LangSmith for the UI and then never building the CI gate.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Can I use Promptfoo and LangSmith together?</strong></p>
+<p>Yes, and it's a reasonable setup: LangSmith for production tracing and human review, Promptfoo for the CI gate. The integration point is exporting curated traces from LangSmith into a Promptfoo test file, which you can script. The cost is maintaining two systems, so only do this if you have a clear owner for each.</p>
+<p><strong>How many eval cases do I actually need?</strong></p>
+<p>For a single-prompt classifier, 100–200 well-chosen cases usually surface the regressions that matter. For a multi-step agent, you need more because the failure space is larger — 300–500 is common. The number matters less than whether the cases resemble production inputs. A suite of 50 real cases beats 500 synthetic ones.</p>
+<p><strong>Why does my LLM-as-judge assertion give inconsistent results?</strong></p>
+<p>Grader models are non-deterministic even at <code>temperature: 0</code>, and vague rubrics amplify this. Rewrite the rubric to check for a specific, observable property ("includes the order ID") rather than a subjective one ("is accurate"). If you still see flakiness, run the assertion three times and require a majority pass.</p>
+<p><strong>Does tracing every request get expensive?</strong></p>
+<p>It scales with traffic, not with eval frequency, so yes — a traffic spike doubles your observability cost. Sample instead of tracing everything: 10–20% of requests is usually enough to catch drift, and you can force-trace requests that hit error paths or user thumbs-down.</p>
+<h2 id="final-verdict">Final verdict</h2>
+<p>Promptfoo 0.95+ wins for regression testing, and it wins clearly. The CLI-as-CI-gate model is the right shape for how prompt changes actually get reviewed, the local execution keeps eval latency under 90 seconds for a typical suite, and the zero production overhead means you're not paying a latency tax on every request just to have tests. Use LangSmith if you need production trace visibility and have a non-engineer reviewing outputs, but don't adopt it as your CI gate — the hosted round-trip makes PR checks slow enough that teams start bypassing them.</p>
+<p>The action to take in the next 30 minutes: create a <code>promptfooconfig.yaml</code> at your repo root with three test cases pulled from your last week of production logs, run <code>npx promptfoo@0.95 eval</code>, and check whether your current prompt passes. If it doesn't, you've just found your first regression before a user did.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/agentic-workflows-surviving-network-partitions/">
+                        <h3>Agentic workflows: surviving network partitions</h3>
+                        <p>Agentic workflows break on flaky networks when retries duplicate side effects. Idempotency keys, outbox patterns, and reconciliation that actually work.</p>
+                        <span class="related-meta">16 min read · 1 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/multi-agent-handoffs-the-latency-tax-nobody-measures/">
+                        <h3>Multi-agent handoffs: the latency tax nobody measures</h3>
+                        <p>Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.</p>
+                        <span class="related-meta">13 min read · 29 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/route-fine-tune-or-scale-pick-right/">
+                        <h3>Route, fine-tune, or scale: pick right</h3>
+                        <p>Fine-tune, route, or use a bigger model? Build an eval set first, then a routing layer.</p>
+                        <span class="related-meta">13 min read · 29 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

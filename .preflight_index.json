@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-02T17:40:16.008141",
+  "built_at": "2026-10-03T04:28:01.251321",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5435,6 +5435,11 @@
       "slug": "webhook-delivery-that-survives-outages",
       "title": "Webhook delivery that survives outages",
       "summary": "It's easy to spend longer than expected on webhook delivery before the actual failure mode becomes clear. This is the writeup with the mistakes left in, not edited out. It's the kind of problem that's easy to reproduce and hard to explain. The problem, in general terms A webhook is a promise you mak"
+    },
+    {
+      "slug": "llm-evals-langsmith-vs-promptfoo-in-prod",
+      "title": "LLM evals: LangSmith vs Promptfoo in prod",
+      "summary": "Most evaluation stack writeups assume the reader has already made the mistake they're warning about. The failure is quiet — no errors, just wrong answers. This walks through the fix and the reasoning, not just the patch. Why this comparison matters right now Production LLM features have a nasty prop"
     }
   ]
 }

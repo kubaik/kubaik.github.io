@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "tls-13-post-quantum-what-breaks-at-scale",
-    "title": "TLS 1.3 + post-quantum: what breaks at scale",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "trim-llm-bills-3-finops-moves-that-work",
-    "title": "Trim LLM bills: 3 FinOps moves that work",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I learned this the hard way when our monthly AI bill jumped from $7,200 to $18,4; I spent three weeks tuning our rate limits and buffer pools, only to realize we ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "use-feature-flags-to-deploy-ai-models-safely",
-    "title": "Use feature flags to deploy AI models safely",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "webhooks-2026-retries-idempotency-and-the-9995",
-    "title": "Webhooks 2026: retries, idempotency, and the 99.95%",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "when-astro-islands-shine-in-2026",
-    "title": "When Astro islands shine in 2026",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days profiling the site with Lighthouse and discovered that 78% of",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "zero-downtime-postgres-schema-changes-in-2026",
     "title": "Zero-downtime Postgres schema changes in 2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent two weeks debugging a connection pool issue that turned out to be unrela",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "memory-systems-for-production-agents",
     "title": "Memory Systems for Production Agents",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same ondevice edge mistake in more than one production codebase ove; Here's what changed once we stopped guessing and started measuring.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "zero-trust-ai-skip-the-latency-tax",
     "title": "Zero-trust AI: skip the latency tax",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same cost reliability mistake in more than one production codebase ; Here's what actually worked, and why.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "african-fintech-agents-the-compliance-cliff-most-miss",
     "title": "African fintech agents: the compliance cliff most miss",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this regulatory compliance problem while migrating a service under a ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agent-drift-why-it-hurts-ux",
     "title": "Agent drift: why it hurts UX",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I changed my mind about internal developer after watching it fail somewhere it w",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agent-drift-why-prod-breaks-without-human-checkpoints",
@@ -841,6 +811,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "tls-13-post-quantum-what-breaks-at-scale",
+    "title": "TLS 1.3 + post-quantum: what breaks at scale",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "trim-llm-bills-3-finops-moves-that-work",
+    "title": "Trim LLM bills: 3 FinOps moves that work",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I learned this the hard way when our monthly AI bill jumped from $7,200 to $18,4; I spent three weeks tuning our rate limits and buffer pools, only to realize we ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "use-feature-flags-to-deploy-ai-models-safely",
+    "title": "Use feature flags to deploy AI models safely",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "webhooks-2026-retries-idempotency-and-the-9995",
+    "title": "Webhooks 2026: retries, idempotency, and the 99.95%",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "when-astro-islands-shine-in-2026",
+    "title": "When Astro islands shine in 2026",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days profiling the site with Lighthouse and discovered that 78% of",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "serve-4g-as-baseline-apps-in-2026",

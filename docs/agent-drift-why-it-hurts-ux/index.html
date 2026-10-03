@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-09T16:15:54.093815">
-        <meta property="article:modified_time" content="2026-09-09T16:15:54.093828">
+        <meta property="article:modified_time" content="2026-10-03T04:28:18.454746+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agent drift: why it hurts UX">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/agent-drift-why-it-hurts-ux/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "Agent drift: why it hurts UX",
       "description": "Detect agent drift before it ruins UX — spot version mismatches, latency spikes, and the silent config drift most teams miss.",
       "datePublished": "2026-09-09T16:15:54+00:00",
-      "dateModified": "2026-09-09T16:15:54+00:00",
+      "dateModified": "2026-10-03T04:28:18+00:00",
       "wordCount": 2945,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
@@ -257,7 +257,7 @@
                         15 min read
                         &nbsp;·&nbsp; 2945 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-09
+                        &nbsp;·&nbsp; Updated 2026-10-03
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -284,9 +284,7 @@
 <p><strong>Symptom pattern:</strong> You see version‑mismatch errors in logs and a spike in p99 latency, but the deployment pipeline reports a successful rollout.</p>
 <p><strong>Root cause:</strong> A subset of nodes skipped the DaemonSet update because they were marked <code>NotReady</code> during the rollout window. The OpenTelemetry Collector on those nodes remains at 0.91.5, which lacks the recent <code>batchprocessor</code> improvement that reduced processing overhead by 30 %.</p>
 <p><strong>Solution steps:</strong>
-1. Query the Kubernetes API for agent versions across the cluster.
-2. Force a rolling restart of the DaemonSet to ensure every pod picks up the latest image.
-3. Add a readiness probe that checks the agent's <code>/healthz</code> endpoint for the expected version string.</p>
+1. Query the Kubernetes API for agent versions across the cluster. 2. Force a rolling restart of the DaemonSet to ensure every pod picks up the latest image. 3. Add a readiness probe that checks the agent's <code>/healthz</code> endpoint for the expected version string.</p>
 <pre><code class="language-bash"># Bash: list agent versions per node
 kubectl get pods -n monitoring -l app=otel-collector -o json \
   | jq -r '.items[] | &quot;\(.metadata.name) \(.status.containerStatuses[0].image)&quot;'
@@ -306,9 +304,7 @@ for n in nodes:
 <p><strong>Symptom pattern:</strong> Latency spikes persist even after all agents report the correct binary version. Logs show occasional <code>TLS handshake failed</code> warnings.</p>
 <p><strong>Root cause:</strong> The underlying OS on a subset of instances received a security patch that upgraded <code>openssl</code> from 1.1.1k to 1.1.1u, breaking the custom cipher suite configured in the agent's <code>tls_config.yaml</code>. The agent silently falls back to a slower, non‑pipelined HTTP client, adding roughly 120 ms per request.</p>
 <p><strong>Solution steps:</strong>
-1. Pin the OpenSSL version in the base AMI or Docker image to the known‑good release.
-2. Update the agent's TLS config to use a more generic cipher suite that survives minor library upgrades.
-3. Restart the affected agents and monitor the <code>tls_handshake_duration_seconds</code> metric.</p>
+1. Pin the OpenSSL version in the base AMI or Docker image to the known‑good release. 2. Update the agent's TLS config to use a more generic cipher suite that survives minor library upgrades. 3. Restart the affected agents and monitor the <code>tls_handshake_duration_seconds</code> metric.</p>
 <pre><code class="language-dockerfile"># Dockerfile snippet pinning OpenSSL version
 FROM amazonlinux:2023
 RUN yum install -y openssl-1.1.1k &amp;&amp; \
@@ -320,9 +316,7 @@ COPY otel-collector-config.yaml /etc/otel-collector-config.yaml
 <p><strong>Symptom pattern:</strong> After fixing versions and TLS, you still see intermittent <code>AgentHealthCheckFailed</code> errors, but only on EC2 instances launched from a specific Auto Scaling Group (ASG).</p>
 <p><strong>Root cause:</strong> The ASG's launch template sets the environment variable <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> to an internal VPC endpoint that was recently migrated. The old endpoint still resolves, but returns a 503 after a 30 ms timeout, causing the agent to abort processing and log a health‑check failure. This environment variable drift is invisible to the CI pipeline because it lives in the launch template, not in the repo.</p>
 <p><strong>Solution steps:</strong>
-1. Audit all launch templates for stale endpoint URLs.
-2. Update the variable to the new endpoint (<code>https://otel-vpc-prod.us-east-1.amazonaws.com</code>).
-3. Add a CloudFormation drift detection rule that fails the stack if the variable deviates from the parameter store value.</p>
+1. Audit all launch templates for stale endpoint URLs. 2. Update the variable to the new endpoint (<code>https://otel-vpc-prod.us-east-1.amazonaws.com</code>). 3. Add a CloudFormation drift detection rule that fails the stack if the variable deviates from the parameter store value.</p>
 <pre><code class="language-yaml"># CloudFormation snippet enforcing endpoint consistency
 Resources:
   OtelCollectorInstanceProfile:

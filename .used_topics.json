@@ -81,5 +81,6 @@
   "Building a double-entry ledger that stays consistent under concurrent writes",
   "What traditional observability missed when we introduced our first production agents",
   "How we run AI-augmented teams without destroying code ownership and accountability",
-  "Webhook delivery systems that survive downstream outages without losing events"
+  "Webhook delivery systems that survive downstream outages without losing events",
+  "The evaluation stack I actually trust for production LLM features in 2026"
 ]

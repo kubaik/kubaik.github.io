@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Oct 2026 17:40:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 04:28:26 +0000</lastBuildDate>
+    <item>
+      <title>LLM evals: LangSmith vs Promptfoo in prod</title>
+      <link>https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/</link>
+      <description>LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…</description>
+      <pubDate>Sat, 03 Oct 2026 04:27:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/</guid>
+    </item>
     <item>
       <title>Webhook delivery that survives outages</title>
       <link>https://kubaik.github.io/webhook-delivery-that-survives-outages/</link>
@@ -138,13 +145,6 @@
       <description>Internal developer platforms fail at adoption, not tech. Instrument Backstage 1.28 with event tracking to find the 70% of teams stuck on the golden path.</description>
       <pubDate>Wed, 23 Sep 2026 03:57:25 +0000</pubDate>
       <guid>https://kubaik.github.io/internal-developer-platform-adoption-traps/</guid>
-    </item>
-    <item>
-      <title>Tool calls: why retries stampede</title>
-      <link>https://kubaik.github.io/tool-calls-why-retries-stampede/</link>
-      <description>Tool-use retries that scale vs thundering herds — shared token buckets, single-flight caching, and the retry amplification trap that turns a blip into an…</description>
-      <pubDate>Tue, 22 Sep 2026 16:35:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/tool-calls-why-retries-stampede/</guid>
     </item>
   </channel>
 </rss>

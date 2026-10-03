@@ -417,6 +417,7 @@ kill-noisy-alerts-the-triage-system-that-restored-sleep,100,3362,Kill noisy aler
 latency-trade-offs-nairobi-teams-beat-global-ai-providers,100,2470,Latency trade-offs: Nairobi teams beat global AI providers,2026-07-26T03:19:07.385553,0,
 llm-drift-the-silent-quality-drop-metrics-miss,100,2288,LLM drift: the silent quality drop metrics miss,2026-07-04T20:16:21.808811,0,
 llm-eval-drift-that-users-notice-first,100,3460,LLM eval drift that users notice first,2026-08-28T21:56:56.082584,0,
+llm-evals-langsmith-vs-promptfoo-in-prod,100,2945,LLM evals: LangSmith vs Promptfoo in prod,2026-10-03T04:27:57.976269,0,
 local-llm-agents-vllm-vs-ollama-for-fintech,100,3009,Local LLM agents: vLLM vs Ollama for fintech,2026-09-18T12:42:41.960286,0,
 mcp-hidden-cost-traps,100,2213,MCP hidden cost traps,2026-09-12T13:48:03.599862,0,
 mcp-servers-real-time-pipelines-without-agents,100,2872,MCP servers: real-time pipelines without agents,2026-07-03T15:56:03.326004,0,
