@@ -118,5 +118,395 @@
     "title": "API security: the attacks rising in 2026",
     "reason": "Invented first-hand evidence/benchmarks (58 experience claims, 0 unverifiable products)",
     "deleted_at": "2026-10-03T11:38:12.878027+00:00"
+  },
+  {
+    "slug": "ai-observability-real-time-dashboards-without-the",
+    "title": "AI observability: real-time dashboards without the",
+    "reason": "Invented first-hand evidence/benchmarks (40 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.112919+00:00"
+  },
+  {
+    "slug": "flip-your-dev-tool-sales-cycle-in-2026",
+    "title": "Flip your dev-tool sales cycle in 2026",
+    "reason": "Invented first-hand evidence/benchmarks (43 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.120260+00:00"
+  },
+  {
+    "slug": "row-level-security-for-saas-in-2026-the-surprise-cost",
+    "title": "Row-level security for SaaS in 2026: the surprise cost",
+    "reason": "Invented first-hand evidence/benchmarks (45 experience claims, 2 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.127650+00:00"
+  },
+  {
+    "slug": "tls-13-post-quantum-what-breaks-at-scale",
+    "title": "TLS 1.3 + post-quantum: what breaks at scale",
+    "reason": "Invented first-hand evidence/benchmarks (47 experience claims, 2 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.134827+00:00"
+  },
+  {
+    "slug": "land-5k-remote-roles-what-nairobi-devs-got-right",
+    "title": "Land $5k remote roles: what Nairobi devs got right",
+    "reason": "Invented first-hand evidence/benchmarks (46 experience claims, 2 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.141606+00:00"
+  },
+  {
+    "slug": "ai-features-break-your-stack-every-6-months",
+    "title": "AI features break your stack every 6 months",
+    "reason": "Invented first-hand evidence/benchmarks (36 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.147618+00:00"
+  },
+  {
+    "slug": "prepare-tls-for-post-quantum-reality",
+    "title": "Prepare TLS for post-quantum reality",
+    "reason": "Invented first-hand evidence/benchmarks (49 experience claims, 2 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.153707+00:00"
+  },
+  {
+    "slug": "portfolio-projects-that-beat-ai-clones-4-signals",
+    "title": "Portfolio projects that beat AI clones: 4 signals",
+    "reason": "Invented first-hand evidence/benchmarks (40 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.160314+00:00"
+  },
+  {
+    "slug": "7-graceful-degradation-traps-ive-hit-in-production",
+    "title": "7 graceful degradation traps I’ve hit in production",
+    "reason": "Invented first-hand evidence/benchmarks (45 experience claims, 2 unverifiable products) | Title promises first-hand results the author cannot substantiate",
+    "deleted_at": "2026-10-03T11:56:07.166659+00:00"
+  },
+  {
+    "slug": "ai-apps-break-your-stack-heres-the-fix",
+    "title": "AI apps break your stack — here’s the fix",
+    "reason": "Invented first-hand evidence/benchmarks (19 experience claims, 5 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.173738+00:00"
+  },
+  {
+    "slug": "ai-latency-cut-28s-to-380ms-without-retraining",
+    "title": "AI latency cut: 2.8s to 380ms without retraining",
+    "reason": "Invented first-hand evidence/benchmarks (53 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.179466+00:00"
+  },
+  {
+    "slug": "llm-outputs-break-workflows-unless-you-do-this",
+    "title": "LLM outputs break workflows unless you do this",
+    "reason": "Invented first-hand evidence/benchmarks (42 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.185681+00:00"
+  },
+  {
+    "slug": "7-patterns-for-systems-that-stay-up-when-everything",
+    "title": "7 patterns for systems that stay up when everything",
+    "reason": "Invented first-hand evidence/benchmarks (28 experience claims, 2 unverifiable products) | Incoherent invented timeline",
+    "deleted_at": "2026-10-03T11:56:07.191177+00:00"
+  },
+  {
+    "slug": "ai-pair-coding-who-owns-the-diff-now",
+    "title": "AI pair coding: who owns the diff now?",
+    "reason": "Invented first-hand evidence/benchmarks (30 experience claims, 4 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.196537+00:00"
+  },
+  {
+    "slug": "rag-in-prod-why-demos-crumble",
+    "title": "RAG in prod: why demos crumble",
+    "reason": "Invented first-hand evidence/benchmarks (40 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.201301+00:00"
+  },
+  {
+    "slug": "ai-agents-why-devtools-now-sell-like-saas-in-2026",
+    "title": "AI agents: why devtools now sell like SaaS in 2026",
+    "reason": "Invented first-hand evidence/benchmarks (41 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.206408+00:00"
+  },
+  {
+    "slug": "ai-hiring-what-actually-moves-the-bar",
+    "title": "AI hiring: what actually moves the bar",
+    "reason": "Invented first-hand evidence/benchmarks (36 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.211647+00:00"
+  },
+  {
+    "slug": "sell-dev-tools-in-the-ai-sales-cycle",
+    "title": "Sell dev tools in the AI sales cycle",
+    "reason": "Invented first-hand evidence/benchmarks (51 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.216474+00:00"
+  },
+  {
+    "slug": "flag-your-ai-rollouts-in-2026",
+    "title": "Flag your AI rollouts in 2026",
+    "reason": "Invented first-hand evidence/benchmarks (25 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.221119+00:00"
+  },
+  {
+    "slug": "ship-faster-with-a-paved-road-4-weeks-to-80-less-toil",
+    "title": "Ship faster with a paved road: 4 weeks to 80% less toil",
+    "reason": "Invented first-hand evidence/benchmarks (43 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.225902+00:00"
+  },
+  {
+    "slug": "biometrics-beat-passwords-passkey-2026-shift",
+    "title": "Biometrics beat passwords: passkey 2026 shift",
+    "reason": "Invented first-hand evidence/benchmarks (55 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.230882+00:00"
+  },
+  {
+    "slug": "llm-quality-metrics-that-cut-hallucinations-40",
+    "title": "LLM quality: metrics that cut hallucinations 40%",
+    "reason": "Invented first-hand evidence/benchmarks (35 experience claims, 2 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.235988+00:00"
+  },
+  {
+    "slug": "pydantic-2-redis-stop-the-3am-ai-pages",
+    "title": "Pydantic 2 + Redis: stop the 3am AI pages",
+    "reason": "Invented first-hand evidence/benchmarks (20 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.241320+00:00"
+  },
+  {
+    "slug": "serverless-ai-costs-explode-past-10kmo",
+    "title": "Serverless AI costs explode past $10k/mo",
+    "reason": "Invented first-hand evidence/benchmarks (32 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.245886+00:00"
+  },
+  {
+    "slug": "ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya",
+    "title": "Ollama Local vs Ollama Cloud: fintech data stays in Kenya",
+    "reason": "Invented first-hand evidence/benchmarks (35 experience claims, 4 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.251056+00:00"
+  },
+  {
+    "slug": "typescript-53-changed-how-we-model-domains",
+    "title": "TypeScript 5.3 changed how we model domains",
+    "reason": "Invented first-hand evidence/benchmarks (24 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.256705+00:00"
+  },
+  {
+    "slug": "backstage-plugins-for-ai-3-hidden-costs-fixed-in-2026",
+    "title": "Backstage plugins for AI: 3 hidden costs fixed in 2026",
+    "reason": "Invented first-hand evidence/benchmarks (29 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.261268+00:00"
+  },
+  {
+    "slug": "why-your-ai-portfolio-bombs-in-nigeria",
+    "title": "Why your AI portfolio bombs in Nigeria",
+    "reason": "Invented first-hand evidence/benchmarks (32 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.265931+00:00"
+  },
+  {
+    "slug": "replaced-celery-in-2026-what-actually-worked",
+    "title": "Replaced Celery in 2026: what actually worked",
+    "reason": "Invented first-hand evidence/benchmarks (27 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.271146+00:00"
+  },
+  {
+    "slug": "ai-pair-programming-stole-my-code-review-job",
+    "title": "AI pair programming stole my code review job",
+    "reason": "Invented first-hand evidence/benchmarks (42 experience claims, 0 unverifiable products) | Title promises first-hand results the author cannot substantiate",
+    "deleted_at": "2026-10-03T11:56:07.275686+00:00"
+  },
+  {
+    "slug": "build-a-serverless-backend-in-africa-with-pocketbase",
+    "title": "Build a serverless backend in Africa with PocketBase",
+    "reason": "Invented first-hand evidence/benchmarks (20 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.280372+00:00"
+  },
+  {
+    "slug": "platform-teams-in-2026-why-your-devs-hate-your-golden-path",
+    "title": "Platform teams in 2026: why your devs hate your golden path",
+    "reason": "Invented first-hand evidence/benchmarks (38 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.284840+00:00"
+  },
+  {
+    "slug": "when-astro-islands-shine-in-2026",
+    "title": "When Astro islands shine in 2026",
+    "reason": "Invented first-hand evidence/benchmarks (46 experience claims, 2 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.289582+00:00"
+  },
+  {
+    "slug": "build-a-static-analyzer-in-14-days-with-tree-sitter",
+    "title": "Build a static analyzer in 14 days with Tree-sitter",
+    "reason": "Invented first-hand evidence/benchmarks (29 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.294532+00:00"
+  },
+  {
+    "slug": "ai-on-lambda-when-the-bill-explodes",
+    "title": "AI on Lambda: when the bill explodes",
+    "reason": "Invented first-hand evidence/benchmarks (29 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.299309+00:00"
+  },
+  {
+    "slug": "ai-engineer-role-vanished-in-6-months",
+    "title": "AI Engineer role vanished in 6 months",
+    "reason": "Invented first-hand evidence/benchmarks (28 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.303621+00:00"
+  },
+  {
+    "slug": "portfolio-that-stands-out-when-everyone-uses-ai",
+    "title": "Portfolio that stands out when everyone uses AI",
+    "reason": "Invented first-hand evidence/benchmarks (25 experience claims, 2 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.308347+00:00"
+  },
+  {
+    "slug": "survive-90s-db-failover-without-melting",
+    "title": "Survive 90s DB failover without melting",
+    "reason": "Invented first-hand evidence/benchmarks (49 experience claims, 4 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.313002+00:00"
+  },
+  {
+    "slug": "10-ai-wrappers-that-shipped-in-2026-8-died-fast",
+    "title": "10 AI wrappers that shipped in 2026 — 8 died fast",
+    "reason": "Invented first-hand evidence/benchmarks (20 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.318875+00:00"
+  },
+  {
+    "slug": "regulations-killed-our-elegant-apis",
+    "title": "Regulations killed our elegant APIs",
+    "reason": "Invented first-hand evidence/benchmarks (39 experience claims, 0 unverifiable products) | Title promises first-hand results the author cannot substantiate",
+    "deleted_at": "2026-10-03T11:56:07.324242+00:00"
+  },
+  {
+    "slug": "ai-pair-coding-killed-pull-request-reviews",
+    "title": "AI pair coding killed pull request reviews",
+    "reason": "Invented first-hand evidence/benchmarks (31 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.328965+00:00"
+  },
+  {
+    "slug": "airflows-replacement-what-80-of-teams-moved-to-in",
+    "title": "Airflow’s replacement: what 80% of teams moved to in",
+    "reason": "Invented first-hand evidence/benchmarks (44 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.333822+00:00"
+  },
+  {
+    "slug": "optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache",
+    "title": "Optimise agent sync on 3G: gzip + CDN vs local cache",
+    "reason": "Invented first-hand evidence/benchmarks (26 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.338979+00:00"
+  },
+  {
+    "slug": "ai-codebase-guardrails-over-guardrails",
+    "title": "AI codebase? Guardrails over guardrails",
+    "reason": "Invented first-hand evidence/benchmarks (30 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.344012+00:00"
+  },
+  {
+    "slug": "slsa-and-sigstore-the-2026-supply-chain-baseline",
+    "title": "SLSA and Sigstore: the 2026 supply chain baseline",
+    "reason": "Invented first-hand evidence/benchmarks (40 experience claims, 5 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.348818+00:00"
+  },
+  {
+    "slug": "reconcile-mobile-money-in-3-days-edge-cases-paystack",
+    "title": "Reconcile mobile money in 3 days — edge cases Paystack",
+    "reason": "Invented first-hand evidence/benchmarks (29 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.353795+00:00"
+  },
+  {
+    "slug": "agent-code-reviews-1200-tests-per-pr",
+    "title": "Agent code reviews: 1,200 tests per PR",
+    "reason": "Invented first-hand evidence/benchmarks (30 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.358430+00:00"
+  },
+  {
+    "slug": "build-a-portfolio-that-beats-the-ai-clone-pile",
+    "title": "Build a portfolio that beats the AI clone pile",
+    "reason": "Invented first-hand evidence/benchmarks (36 experience claims, 3 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.364049+00:00"
+  },
+  {
+    "slug": "gpu-spot-instances-reserved-for-ai-costs",
+    "title": "GPU spot instances > reserved for AI costs",
+    "reason": "Invented first-hand evidence/benchmarks (27 experience claims, 2 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.369008+00:00"
+  },
+  {
+    "slug": "ai-infra-capacity-planning-vs-runbooks-what-id",
+    "title": "AI infra: capacity planning vs runbooks — what I’d",
+    "reason": "Invented first-hand evidence/benchmarks (33 experience claims, 1 unverifiable products) | Title promises first-hand results the author cannot substantiate",
+    "deleted_at": "2026-10-03T11:56:07.373716+00:00"
+  },
+  {
+    "slug": "cut-ai-inference-bill-68-without-model-changes",
+    "title": "Cut AI inference bill 68% without model changes",
+    "reason": "Invented first-hand evidence/benchmarks (36 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.378214+00:00"
+  },
+  {
+    "slug": "local-llms-on-macbook-pro-the-4-models-that-run",
+    "title": "Local LLMs on MacBook Pro: the 4 models that run",
+    "reason": "Invented first-hand evidence/benchmarks (37 experience claims, 4 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.383222+00:00"
+  },
+  {
+    "slug": "2026-gitops-showdown-argocd-vs-flux-after-two-years",
+    "title": "2026 GitOps showdown: ArgoCD vs Flux after two years",
+    "reason": "Invented first-hand evidence/benchmarks (19 experience claims, 4 unverifiable products)",
+    "deleted_at": "2026-10-03T11:56:07.387816+00:00"
+  },
+  {
+    "slug": "replace-vibe-testing-with-agent-evals-now",
+    "title": "Replace vibe testing with agent evals now",
+    "reason": "Near-duplicate of ship-evals-before-your-agent-ships",
+    "deleted_at": "2026-10-03T11:56:07.392625+00:00"
+  },
+  {
+    "slug": "lessons-from-3-saas-price-pivots-in-2026",
+    "title": "Lessons from 3 SaaS price pivots in 2026",
+    "reason": "Incoherent invented timeline",
+    "deleted_at": "2026-10-03T11:56:07.397212+00:00"
+  },
+  {
+    "slug": "8-ways-we-measure-agent-reliability-in-2026",
+    "title": "8 ways we measure agent reliability in 2026",
+    "reason": "Title promises first-hand results the author cannot substantiate",
+    "deleted_at": "2026-10-03T11:56:07.401906+00:00"
+  },
+  {
+    "slug": "zero-downtime-postgres-schema-changes-in-2026",
+    "title": "Zero-downtime Postgres schema changes in 2026",
+    "reason": "Incoherent invented timeline",
+    "deleted_at": "2026-10-03T11:56:07.406622+00:00"
+  },
+  {
+    "slug": "failed-ai-wrappers-vs-the-3-that-worked-in-2026",
+    "title": "Failed AI wrappers vs. the 3 that worked in 2026",
+    "reason": "Near-duplicate of 10-ai-wrappers-that-shipped-in-2026-8-died-fast",
+    "deleted_at": "2026-10-03T11:56:07.411166+00:00"
+  },
+  {
+    "slug": "regulators-broke-our-api-design",
+    "title": "Regulators broke our API design",
+    "reason": "Title promises first-hand results the author cannot substantiate",
+    "deleted_at": "2026-10-03T11:56:07.415909+00:00"
+  },
+  {
+    "slug": "africa-devs-ship-production-code-not-crud",
+    "title": "Africa devs: Ship production code, not CRUD",
+    "reason": "Incoherent invented timeline",
+    "deleted_at": "2026-10-03T11:56:07.424309+00:00"
+  },
+  {
+    "slug": "agents-roll-back-without-breaking-anything",
+    "title": "Agents roll back without breaking anything",
+    "reason": "Incoherent invented timeline",
+    "deleted_at": "2026-10-03T11:56:07.430626+00:00"
+  },
+  {
+    "slug": "ai-solo-saas-2026-build-vs-buy",
+    "title": "AI solo SaaS 2026: build vs buy",
+    "reason": "Incoherent invented timeline",
+    "deleted_at": "2026-10-03T11:56:07.438948+00:00"
+  },
+  {
+    "slug": "ai-ops-pagerduty-vs-firehydrant-for-oncall",
+    "title": "AI ops: PagerDuty vs FireHydrant for oncall",
+    "reason": "Near-duplicate of ai-ops-pagerduty-vs-opsgenie-which-burns-your-team",
+    "deleted_at": "2026-10-03T11:56:07.445067+00:00"
+  },
+  {
+    "slug": "spot-instances-the-retry-logic-trap-90-miss",
+    "title": "Spot instances: the retry logic trap 90% miss",
+    "reason": "Incoherent invented timeline",
+    "deleted_at": "2026-10-03T11:56:07.451955+00:00"
+  },
+  {
+    "slug": "aws-finops-levers-what-mid-size-teams-ignore-in-2026",
+    "title": "AWS FinOps levers: what mid-size teams ignore in 2026",
+    "reason": "Near-duplicate of aws-cost-levers-2026-the-3-that-cut-bills-30",
+    "deleted_at": "2026-10-03T11:56:07.456867+00:00"
   }
 ]
