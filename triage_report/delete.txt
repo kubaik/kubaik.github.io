@@ -1,13 +1,3 @@
-docs/ai-benchmarking-3-mistakes-we-made-first/index.md	Invented first-hand evidence/benchmarks (51 experience claims, 4 unverifiable products)
-docs/core-web-vitals-2026-inp-is-now-stable/index.md	Invented first-hand evidence/benchmarks (48 experience claims, 8 unverifiable products)
-docs/llm-structured-output-json-mode-fails-at-scale/index.md	Invented first-hand evidence/benchmarks (56 experience claims, 4 unverifiable products)
-docs/land-5k-roles-from-nairobi-lagos-in-2026/index.md	Near-duplicate of land-5k-remote-roles-what-nairobi-devs-got-right | Invented first-hand evidence/benchmarks (71 experience claims, 1 unverifiable products)
-docs/3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that/index.md	Invented first-hand evidence/benchmarks (36 experience claims, 1 unverifiable products)
-docs/ai-sales-cycle-what-changed-for-devtool-founders/index.md	Invented first-hand evidence/benchmarks (37 experience claims, 0 unverifiable products)
-docs/wasm-ml-models-keep-dev-speed-at-the-edge/index.md	Invented first-hand evidence/benchmarks (47 experience claims, 5 unverifiable products)
-docs/block-api-replay-attacks-in-2026/index.md	Invented first-hand evidence/benchmarks (41 experience claims, 2 unverifiable products)
-docs/pulumi-vs-terraform-vs-opentofu-in-2026/index.md	Invented first-hand evidence/benchmarks (32 experience claims, 7 unverifiable products)
-docs/ai-wrote-40-of-our-code-heres-what-broke-our-on-call/index.md	Invented first-hand evidence/benchmarks (56 experience claims, 7 unverifiable products)
 docs/one-misconfigured-pool-drained-4kmonth/index.md	Invented first-hand evidence/benchmarks (42 experience claims, 1 unverifiable products)
 docs/9-ai-wrapper-apis-that-paid-off-in-2026/index.md	Invented first-hand evidence/benchmarks (21 experience claims, 9 unverifiable products)
 docs/build-a-nairobi-saas-stack-for-32kmonth/index.md	Invented first-hand evidence/benchmarks (21 experience claims, 4 unverifiable products)
@@ -77,10 +67,9 @@ docs/8-ways-we-measure-agent-reliability-in-2026/index.md	Title promises first-h
 docs/zero-downtime-postgres-schema-changes-in-2026/index.md	Incoherent invented timeline
 docs/failed-ai-wrappers-vs-the-3-that-worked-in-2026/index.md	Near-duplicate of 10-ai-wrappers-that-shipped-in-2026-8-died-fast
 docs/regulators-broke-our-api-design/index.md	Title promises first-hand results the author cannot substantiate
-docs/ai-ops-pagerduty-vs-firehydrant-for-oncall/index.md	Near-duplicate of ai-ops-pagerduty-vs-opsgenie-which-burns-your-team
-docs/aws-finops-levers-what-mid-size-teams-ignore-in-2026/index.md	Near-duplicate of aws-cost-levers-2026-the-3-that-cut-bills-30
 docs/africa-devs-ship-production-code-not-crud/index.md	Incoherent invented timeline
 docs/agents-roll-back-without-breaking-anything/index.md	Incoherent invented timeline
-docs/ai-ui-generation-what-it-fixed-and-what-still-breaks/index.md	Near-duplicate of ai-ui-tools-broke-my-react-flow-heres-why
 docs/ai-solo-saas-2026-build-vs-buy/index.md	Incoherent invented timeline
+docs/ai-ops-pagerduty-vs-firehydrant-for-oncall/index.md	Near-duplicate of ai-ops-pagerduty-vs-opsgenie-which-burns-your-team
 docs/spot-instances-the-retry-logic-trap-90-miss/index.md	Incoherent invented timeline
+docs/aws-finops-levers-what-mid-size-teams-ignore-in-2026/index.md	Near-duplicate of aws-cost-levers-2026-the-3-that-cut-bills-30

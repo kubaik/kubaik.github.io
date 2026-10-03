@@ -64,7 +64,7 @@
       "description": "Zero-trust for AI services without the latency tax: local OPA, session resumption, and warm pools cut p99 from 640ms to 225ms.",
       "datePublished": "2026-09-15T16:35:21+00:00",
       "dateModified": "2026-10-03T04:28:18+00:00",
-      "wordCount": 2985,
+      "wordCount": 2988,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -246,7 +246,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2985 words
+                        &nbsp;·&nbsp; 2988 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -466,12 +466,21 @@ The most common cause is certificate rotation. SPIRE rotates SVIDs every hour by
 Yes, if you run it in-process. A local OPA evaluation of a simple policy takes 0.1–0.5 ms. A remote OPA call adds 2–8 ms of network round trip plus queueing under load. For AI services where p99 matters, local evaluation is the right default. Use the bundle API to distribute policies, but evaluate locally.</p>
 <p><strong>What is the biggest mistake teams make with zero-trust for AI?</strong>
 Forgetting the outbound hops. Teams secure the front door with mTLS and policy, then let the model server call the vector database, feature store, and external tool APIs without identity. That is not zero-trust; it is edge-only trust. Audit every outbound call and give it its own identity and policy.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://github.com/pgvector/pgvector">pgvector README</a></li>
+<li><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

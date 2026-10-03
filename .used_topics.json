@@ -82,5 +82,7 @@
   "What traditional observability missed when we introduced our first production agents",
   "How we run AI-augmented teams without destroying code ownership and accountability",
   "Webhook delivery systems that survive downstream outages without losing events",
-  "The evaluation stack I actually trust for production LLM features in 2026"
+  "The evaluation stack I actually trust for production LLM features in 2026",
+  "Building accessible AI chat interfaces that don't fail WCAG audits",
+  "SBOM + attestation that actually gets used instead of sitting in a bucket"
 ]

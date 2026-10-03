@@ -110,6 +110,7 @@ docs/ai-stole-system-design/index.md
 docs/ai-supply-chain-attacks-what-actually-broke/index.md
 docs/ai-tools-rewrote-my-engineering-rules/index.md
 docs/ai-tools-wont-help-if-everyone-writes-the-same-code/index.md
+docs/ai-ui-generation-what-it-fixed-and-what-still-breaks/index.md
 docs/ai-ui-tools-6-months-in-what-i-gained-and-lost/index.md
 docs/ai-ui-tools-broke-my-react-flow-heres-why/index.md
 docs/ai-ui-tools-promise-vs-production/index.md
@@ -214,6 +215,7 @@ docs/llm-costs-fine-tune-vs-route-vs-bigger-model/index.md
 docs/llm-drift-before-users-complain-catch-it-early/index.md
 docs/llm-drift-the-silent-quality-drop-metrics-miss/index.md
 docs/llm-eval-drift-that-users-notice-first/index.md
+docs/llm-evals-langsmith-vs-promptfoo-in-prod/index.md
 docs/llm-evals-skip-the-hype-track-these-4-metrics/index.md
 docs/llm-metrics-that-stop-wasting-time/index.md
 docs/llm-output-metrics-that-actually-move-the-needle/index.md
@@ -311,6 +313,7 @@ docs/rust-rewrites-where-they-pay-off-where-they-dont/index.md
 docs/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/index.md
 docs/sandboxed-computer-use-agents-with-gvisor/index.md
 docs/save-12kmonth-cloud-egress-costs-in-2026/index.md
+docs/sbom-attestation-that-gets-used/index.md
 docs/scope-agent-permissions-per-task/index.md
 docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/index.md
 docs/self-healing-pipelines-argo-vs-crossplane-in-2026/index.md
@@ -362,6 +365,7 @@ docs/ussd-fintech-in-2026-the-300m-user-channel-nobody/index.md
 docs/vibe-code-works-great-fails-forever/index.md
 docs/vibe-coding-mvp-gem-prod-albatross/index.md
 docs/wasm-servers-beat-containers-here/index.md
+docs/webhook-delivery-that-survives-outages/index.md
 docs/webhooks-2026-retries-idempotency-and-the-9995/index.md
 docs/webhooks-done-right-retries-that-dont-explode-in-2026/index.md
 docs/websockets-vs-server-sent-events-latency-over-3g/index.md

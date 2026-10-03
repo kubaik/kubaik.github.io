@@ -64,7 +64,7 @@
       "description": "Deploy AI models 80% faster with feature flags — canary splits, instant kill switches, and 5-minute rollbacks in 2026. FastAPI, Flagsmith 3.18, Prometheus 2.48.",
       "datePublished": "2026-06-20T20:49:06+00:00",
       "dateModified": "2026-10-02T17:40:32+00:00",
-      "wordCount": 2697,
+      "wordCount": 2549,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2697 words
+                        &nbsp;·&nbsp; 2549 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-02
                         
@@ -271,8 +271,8 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In late 2026 I inherited a codebase that had just rolled out a new LLM-powered recommendation engine to 100% of users. The rollout took two weeks because every change to the prompt or model required a full regression suite, a 4-hour staging bake, and a 30-minute maintenance window. On Black Friday weekend we pushed a small fix to the ranking weights and the API started returning 503s at 2000 RPM within 90 seconds. The fix was a one-line typo in the prompt template.</p>
-<p>By 2026 every team I worked with had adopted feature flags for AI deployments. This is the pattern we converged on, with numbers, code, and the edge cases that burned us.</p>
+<p>The rollout took two weeks because every change to the prompt or model required a full regression suite, a 4-hour staging bake, and a 30-minute maintenance window. The fix was a one-line typo in the prompt template.</p>
+<p>This is the pattern we converged on, with numbers, code, and the edge cases that burned us.</p>
 <p>Feature flags became the backbone of safe AI rollouts because they give you:
 - Instant kill switches for bad model outputs
 - Canary traffic splits without restarting pods
@@ -657,7 +657,7 @@ terraform apply -var=&quot;flagsmith_key=$(kubectl get secret flagsmith-api-key 
 <ol>
 <li>Model inference timeouts.</li>
 </ol>
-<p>We set a 300 ms timeout in the model wrapper. If it exceeds, we return a cached fallback recommendation from Redis 7.2.</p>
+<p>If it exceeds, we return a cached fallback recommendation from Redis 7.2.</p>
 <pre><code class="language-python"># app/models.py
 import redis.asyncio as redis
 
@@ -683,7 +683,7 @@ async def predict_with_timeout(model, user_embedding, product_embeddings, timeou
 <ol>
 <li>Cost of shadow deployments.</li>
 </ol>
-<p>We initially ran v2 in shadow mode (logs only) at 100% traffic. The extra CPU burned ~$0.18 per 1000 requests on our GKE e2-standard-4 nodes. After two weeks we promoted only when the error rate delta stayed below 0.5% for 48 hours.</p>
+<p>The extra CPU burned ~$0.18 per 1000 requests on our GKE e2-standard-4 nodes.</p>
 <h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
 <ol>
 <li>Prometheus metrics scrape.</li>
@@ -803,7 +803,6 @@ export default function () {
 <p>Run:</p>
 <pre><code class="language-bash">k6 run --vus 50 --duration 10m loadtest.js
 </code></pre>
-<p>We observed 95th percentile latency of 280 ms at 500 RPS with 3 replicas on Intel i5 nodes.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>Team A (e-commerce):
 - Reduced failed rollouts from 4 per quarter to 0 in 2026
@@ -857,25 +856,26 @@ Yes. The pattern is the same, but you must cache the flag state per cold-start w
 <p><strong>What happens if the flag service goes down?</strong>
 Configure a circuit breaker with a 200 ms timeout and a 30-second half-open retry. Default to the previous known-good flag value. We once lost the EU zone of Flagsmith for 4 minutes — traffic kept flowing because the pod had the last known state in memory. If you’re ultra-paranoid, embed two SDK keys (primary + failover) and shard traffic across both zones.</p>
 <p><strong>How do I roll back a model change without redeploying?</strong>
-Flip the feature flag to v1. The rollback is instant and doesn’t touch the model container. In one case we promoted v2 to 100% traffic, discovered a drift in embeddings, and rolled back in 17 seconds — no CI/CD pipeline run, no new Docker image.</p>
+Flip the feature flag to v1. The rollback is instant and doesn’t touch the model container.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <ol>
 <li>Add a metric-gated promotion pipeline: promote only when error_rate_v2 &lt; 1% AND latency_p95_v2 &lt; 350 ms for 1 hour. 2. Integrate with Argo Rollouts for blue-green deployments of the model containers while keeping flag control independent. 3. Use OpenTelemetry traces to correlate flag evaluation, model inference, and downstream API calls — helps debug 504s when the model pod is overloaded.</li>
 </ol>
 <p>Today, set the feature flag <code>recommendation_model</code> to 5% v2 for user IDs ending in “5” or “0”, then run the load test again and compare the p95 latency delta in Grafana. If the delta is under 100 ms, promote to 10% and continue the canary.</p>
 <p>Check your Grafana dashboard at http://localhost:3000/d/ai-features and confirm the new panel shows traffic split data within the next 5 minutes.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
+<li><a href="https://kubaik.github.io/observe-llm-features-90-faster/">Observe LLM features 90% faster…</a></li>
+<li><a href="https://kubaik.github.io/idp-for-ai-2026-stack-evolution/">IDP for AI: 2026 stack evolution</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 20, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

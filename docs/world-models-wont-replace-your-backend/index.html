@@ -64,7 +64,7 @@
       "description": "World models won't replace your backend stack. Learn the time-series and edge-sync patterns that actually matter for physical AI in 2026.",
       "datePublished": "2026-09-24T03:50:12+00:00",
       "dateModified": "2026-09-24T03:50:12+00:00",
-      "wordCount": 2871,
+      "wordCount": 2869,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -255,7 +255,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2871 words
+                        &nbsp;·&nbsp; 2869 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-24
                         
@@ -403,12 +403,20 @@ Over-engineering the inference layer and under-engineering the data layer. Teams
 <h2 id="summary">Summary</h2>
 <p>World models and physical AI are not a reason to abandon your backend engineering principles. They are a reason to apply them more rigorously. The systems that succeed are the ones that treat sensor data as a first-class citizen, design for network partitions, and version everything — models, schemas, and APIs. The conventional wisdom that you need a completely new stack is a distraction. What you need is a solid time-series pipeline, a clear edge-to-cloud protocol, and a rollback plan.</p>
 <p>Your next step: open your current data ingestion code and check the timestamp handling. If you're not storing both the sensor timestamp and the ingestion timestamp, add that today. It's a 10-minute change that will save you hours of debugging when you need to align data from multiple sources. Then, look at your storage retention policy — if you're keeping raw data forever, set up a downsampling job this week. Start with one sensor stream and measure the cost difference. That's the concrete action: add a second timestamp column and a downsampling job, and you'll be ahead of 90% of teams building physical AI systems.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

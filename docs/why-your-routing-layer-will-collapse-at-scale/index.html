@@ -64,7 +64,7 @@
       "description": "Cut model routing complexity with Redis state and auto-tune retries — GDPR audit trails, p95 latency under 450 ms, and €180 savings per 100k tokens",
       "datePublished": "2026-09-04T03:38:05+00:00",
       "dateModified": "2026-09-04T03:38:05+00:00",
-      "wordCount": 2846,
+      "wordCount": 2869,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2846 words
+                        &nbsp;·&nbsp; 2869 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-04
                         
@@ -590,12 +590,26 @@ A <code>cache.t4g.small</code> (2 GB RAM) handles 50k requests/day with 15% head
 Spin up a second Redis instance (<code>REDIS_URL_GDPR</code>) and force the router to use <code>eu-central-1</code> for every request. Run a GDPR audit export script and verify that the region header in the downstream call is <code>eu-central-1</code>. Automate this in CI with a nightly job that fails if the region header is missing or wrong.</p>
 <p><strong>Can I run this on Fly.io instead of Kubernetes?</strong>
 Yes. The only change is the health check endpoint; Fly’s HTTP checks replace Kubernetes readiness probes. Keep the Redis instance external (Redis Enterprise or a managed Redis) because Fly’s ephemeral volumes lose data on restart.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/most-llm-cost-dashboards-lie/">Most LLM cost dashboards lie…</a></li>
+<li><a href="https://kubaik.github.io/ship-evals-before-your-agent-ships/">Ship evals before your agent ships</a></li>
+<li><a href="https://kubaik.github.io/senior-engineer-title-inflation-in-2026/">Senior engineer title inflation in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

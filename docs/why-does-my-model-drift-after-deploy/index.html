@@ -259,8 +259,7 @@
                     
                     
                     
-                    <a class="tag" href="/tag/machinelearning/"
-                       style="text-decoration:none;">Machinelearning</a>
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Machinelearning</span>
                     
                     
                     
@@ -721,19 +720,27 @@ jobs:
 <p><strong>Interpretation</strong></p>
 <ul>
 <li><strong>Latency</strong> dropped dramatically because the shadow test forced us to <strong>remove the encrypted EFS mount</strong> and tune the Lambda memory to 256 MB, which the CI flagged when the latency guard (<code>max_latency=0.12 s</code>) failed.</li>
-<li><strong>False‑negative cost</strong> fell by more than half after we added a <strong>feature‑store version guard</strong> that caught the int64→int32 embedding mismatch before the <a href="/why-your-model-evaluation-missed-a-production-regression/">model hit production.</a></li>
+<li><strong>False‑negative cost</strong> fell by more than half after we added a <strong>feature‑store version guard</strong> that caught the int64→int32 embedding mismatch before the model hit production.</li>
 <li><strong>Feature extraction errors</strong> went from thousands per day to a handful after we codified the <strong>max‑token‑length</strong> and <strong>timestamp‑rounding</strong> invariants.</li>
 <li><strong>Cost savings</strong> stem from fewer Lambda cold starts, reduced EFS usage, and lower chargeback volume.</li>
 <li><strong>Engineering velocity</strong> improved: the “time to detect regression” metric fell from days to minutes because the shadow test runs on every PR, turning a production‑only failure into a CI failure.</li>
 <li><strong>Rollback frequency</strong> hit zero; the automated guardrails now abort the canary automatically when KS &gt; 0.03, preventing any user‑impacting drift.</li>
 </ul>
 <p>These concrete numbers demonstrate that plugging the evaluation gap is not a “nice‑to‑have” exercise; it translates directly into <strong>lower latency, higher revenue protection, and measurable cost reduction</strong>. The modest increase in CI code (≈ 64 LOC) pays for itself within the first month of deployment.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://docs.temporal.io/">Temporal documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

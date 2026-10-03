@@ -1,95 +1,88 @@
-# Signals: 5 state tricks that broke my app
+# Signals: derived state without the performance tax
 
-The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+## The problem Signals are meant to solve
 
-## Why this list exists (what I was actually trying to solve)
+Most state bugs in component apps are not "where does the data live" bugs. They are "when does the derived value recompute" bugs. A store holds a source value, a selector derives something from it, and a component reads that derived value. The moment two stores depend on the same source, or one derived value feeds another, the cost of keeping everything consistent climbs faster than the number of stores.
 
-The issue wasn’t React itself — it was how we handled derived state. We had 12 different stores, each with its own subscription model, and the moment two stores depended on the same data source, the app would thrash. I tried Context, Redux Toolkit, Zustand, and even RxJS before realizing none of them solved the core problem: keeping derived state consistent without killing performance.
+The failure mode is predictable. A selector memoizes on the wrong dependency list, so it recomputes on every render. Or it memoizes correctly but a parent re-renders and recreates the selector, invalidating the cache. Or the derived value is correct but stale because an effect that was supposed to invalidate it never ran. None of these are framework bugs; they are consequences of manual dependency tracking.
 
-The real surprise came when I measured the cost. On a mid-range Android device, the React app with Context had a 420 ms layout shift on every state update. That’s the difference between a usable app and one users uninstall. I needed something that could:
+Signals move the dependency tracking from the developer to the runtime. A signal is an observable value with a getter. Reading it inside a computation registers a dependency; writing it marks dependents dirty and schedules them. Because the graph is built at read time, you do not maintain a dependency array by hand, and a derived value that nobody reads costs nothing to keep defined.
 
-- Track dependencies automatically so I didn’t have to memoize everything by hand. - Update only the parts of the UI that changed, not the whole component tree. - Work outside React, because our backend also needed to react to state changes without a framework.
+That last property is the one that changes architecture. In a selector-based store, every derived value is a function you must remember to call and memoize. In a signal graph, a computed value with no active subscribers is simply not evaluated.
 
-This list is what I wish I had found then — a ranked breakdown of Signals-based state libraries and patterns that actually solve the derived-state problem. No fluff, just what works and what doesn’t.
+## What "fast enough" actually means
 
----
+Before choosing a library, define the budget. The useful frames of reference:
 
-## How I evaluated each option
+- **Frame budget.** A 60 Hz display gives roughly 16.7 ms per frame. A state update that triggers layout and paint must fit inside that, alongside everything else the frame is doing. A budget of 8 ms for the update itself is a reasonable target; it leaves headroom.
+- **Interaction budget.** For a keystroke or tap, the perceived threshold for "instant" is around 100 ms. Anything above that reads as lag even if no frame is dropped.
+- **Allocation budget.** A derived value that allocates a new object on every recomputation puts pressure on the garbage collector. On memory-constrained devices this shows up as periodic stutter rather than steady slowness, which makes it easy to misdiagnose.
 
-I tested every option on three metrics that matter in real apps:
+These are starting points, not laws. The point is to write the budget down before benchmarking, because otherwise every result looks acceptable.
 
-1. **Update latency** — how long it takes to propagate a change from source to UI. I used Chrome DevTools Performance panel with a Moto G Power (2026) throttling set to “4x slowdown” to simulate mid-tier devices. The goal was under 16 ms per update to avoid jank. 2. **Memory overhead** — total heap allocation after 1000 state updates. I used Firefox Profiler because it gives clearer breakdowns of JS object retention. Anything over 8 MB was a red flag for mobile. 3. **Framework independence** — whether the library could run without React, Vue, or Svelte. If it required a specific framework, it got a lower score.
+## How to measure a signal library honestly
 
-I also counted lines of code. Every extra 100 lines adds risk because someone will eventually forget to update a memoized selector. The best solution did the same job in under 300 lines total.
+The measurements that matter are cheap to take and easy to fake. Here is a procedure that produces numbers you can defend.
 
-All tests ran on Node 20 LTS (v20.13.1) and Bun 1.1 for the non-Node environments. I pinned exact versions because dependency drift is the silent killer of reproducible benchmarks.
+**Update latency.** Instrument the write, not the render. Wrap the signal write in `performance.mark` / `performance.measure` and read the measure in the same task, before the browser has a chance to paint. If you want to include render cost, use the Performance panel and look at the scripting and rendering time for the frame that contains the update. Throttle the CPU to simulate a slower device — the Performance panel's CPU throttling multiplies all main-thread work, which is a reasonable approximation of a mid-tier phone. Record the median and the 95th percentile; the median tells you the typical case, the 95th tells you whether users will occasionally see a stall.
 
----
+**Memory.** Take a heap snapshot before the workload, run a fixed number of updates (1000 is a common choice because it is large enough to expose leaks and small enough to run in a loop), force garbage collection, and take a second snapshot. Compare retained size, not allocated size. Allocated size includes garbage that has not been collected yet and will mislead you. In Chrome DevTools the "Collect garbage" button in the Memory panel does this; in Firefox Profiler, take a snapshot after a forced GC.
 
-## How Signals changed state management and whether it matters outside of frameworks — the full ranked list
+**Recomputation count.** This is the measurement most people skip and the one that explains the others. If a derived value recomputes 1000 times when its inputs changed once, latency and memory will both look bad and you will blame the library. Count evaluations by incrementing a counter inside the computed function. A correct signal graph should evaluate each computed value at most once per batch of writes.
 
-### 1. Preact Signals Core (1.7.0)
+**Bundle cost.** Measure the minified and gzipped size of the code you actually import, not the package as published. Tree-shaking removes different amounts depending on which entry point you use. A quick check is to build a minimal app that imports only the signal primitives and inspect the output bundle.
 
-What it does: A minimal Signals implementation from the Preact team. Signals are observable values that notify consumers only when their value changes. Preact Signals Core weighs 3.2 kB min+gzip and has zero dependencies.
+A useful sanity check: if a library's update latency is faster than the time it takes to call a function, you are probably measuring the wrong thing. Signals are fast, but they are not free.
 
-Strength: It’s the only Signals library that runs in both browsers and Node without polyfills. I tested it in a Cloudflare Workers function and a React 18 app — same bundle size, same performance. On my test device, a state update took 0.8 ms median, with 95th percentile under 3 ms. That’s fast enough to avoid jank even on 60 Hz displays.
+## The landscape, by category
 
-Weakness: The API is intentionally minimal. If you need time-travel debugging or persistence, you’ll add another 8 kB for Redux DevTools. Also, the TypeScript types are loose — you can accidentally mutate a signal without the compiler catching it.
+Rather than ranking specific versions, which go stale, it helps to understand the categories and what each one trades away.
 
-Best for: Teams that want Signals without framework lock-in and need to run in non-browser environments.
+### Standalone signal primitives
 
-### 2. Solid.js Signals (1.6.0)
+These are small packages that implement signals and computeds with no framework dependency. They work in browsers, in server runtimes, and in workers. The trade-off is that you get the primitive and nothing else: no devtools integration, no persistence, no time-travel debugging. If you need those, you build them or add another dependency.
 
-What it does: Solid.js is a reactive framework, but its Signals implementation is a standalone package (`@solidjs/signals`). It uses fine-grained reactivity with automatic dependency tracking.
+The API surface is intentionally tiny — typically a `signal` factory, a `computed` factory, and an `effect` or `batch` function. That smallness is the feature. There is very little to learn and very little to go wrong.
 
-Strength: The update model is smarter than Preact’s. Solid Signals can skip updates entirely if no downstream observers are active, cutting memory churn. In my test, a derived signal that nobody read didn’t allocate memory for a new value. That’s a big win for dashboards with many unused widgets.
+**When to choose this:** you want reactivity in a non-UI context (a server, a worker, a CLI), or you want to add signals to an existing framework incrementally without adopting a new component model.
 
-Weakness: It’s designed to work with Solid’s compiler. If you use it in plain React, you lose the automatic dependency tracking unless you wrap every component in a `<Show>` boundary.
+**What to watch:** the TypeScript types are often permissive. It is frequently possible to write to a signal's `.value` from a context where that write is a bug. Some libraries expose a read-only accessor type to prevent this; check whether yours does.
 
-Best for: Teams already using Solid or willing to adopt its compiler for maximum performance.
+### Framework-integrated signals
 
-### 3. Angular Signals (v17.3)
+Several frameworks now ship signals as a first-class primitive. The advantage is that the framework's rendering layer understands the graph, so a signal read inside a template or component body registers a fine-grained subscription. Only the DOM nodes that depend on the changed signal update.
 
-What it does: Angular 17 introduced Signals as a first-class primitive. You can mark a property as a signal and Angular automatically tracks dependencies and triggers change detection only when needed.
+The trade-off is coupling. The signal implementation is usually tuned to the framework's scheduler, and using it outside that framework loses the automatic tracking. In some cases the reactivity only works inside the framework's compiler output, so hand-written code behaves differently from compiled code.
 
-Strength: Change detection is automatic and zone-free. On a list of 1000 items, Angular with Signals re-rendered only 8 items instead of 1000. The time per update dropped from 240 ms to 12 ms on a low-end iPhone 12. That’s the difference between a usable admin panel and one users rage-quit.
+**When to choose this:** you are already in that framework and want fine-grained updates without a rewrite.
 
-Weakness: Angular’s ecosystem is heavy. The Signals package alone pulls in RxJS 7.8, which adds 42 kB to the bundle. If you don’t need RxJS, you’re paying for features you never use.
+**What to watch:** framework integration often pulls in the framework's other dependencies. Check what the signal package imports before assuming it is lightweight.
 
-Best for: Angular shops that want fine-grained reactivity without rewriting everything to Signals.
+### Reactive-effect systems with scoping
 
-### 4. Vue 3 Reactivity (3.4.33)
+Some reactivity systems group effects into scopes that can be stopped as a unit. This matters in single-page apps where components mount and unmount frequently: without explicit teardown, effects created inside a component keep running after the component is gone, holding references to its state.
 
-What it does: Vue 3’s reactivity system is built on Signals-like primitives under the hood. The new `effectScope` API lets you group effects and clean them up together, which is critical for SPAs with many transient components.
+The scoping API is the safety mechanism. The failure mode is forgetting to call it. A common pattern is to create effects inside a loop or inside a callback that runs per-item; each iteration creates a scope that must be stopped when the item is removed. If it is not, the graph grows without bound.
 
-Strength: It’s part of Vue, so no extra install. The reactivity model is transparent — you don’t need to learn a new API. A state update in a deeply nested component took 1.2 ms median on the same Moto G Power device.
+**When to choose this:** you have many short-lived reactive regions and want a single teardown call per region.
 
-Weakness: Vue’s reactivity can leak memory if you create effects in loops. I saw a 20 MB leak after 500 component unmounts because effects weren’t cleaned up. You have to remember to call `scope.stop()` manually.
+**What to watch:** measure retained heap after repeated mount/unmount cycles. A leak shows up as a retained size that grows linearly with the number of cycles.
 
-Best for: Teams already using Vue that want fine-grained updates without Signals fanfare.
+### Observable-to-signal bridges
 
-### 5. RxJS Signals (7.8.1)
+If an existing codebase is built on streams or observables, a bridge that converts an observable into a signal lets you adopt signals incrementally rather than rewriting the data layer. The conversion is not free: each observable subscription introduces a scheduling hop, and the bridge code itself adds to the bundle.
 
-What it does: RxJS 7.8 introduced `toSignal` and `signalFrom` to convert Observables to Signals and back. It’s the bridge between the two worlds.
+**When to choose this:** you have a large existing stream-based data layer and want new UI code to use signals.
 
-Strength: If you’re already using RxJS for backend state, this lets you gradually migrate to Signals without rewriting the entire data layer. I converted a 2000-line Redux slice to Signals in two hours and cut the bundle by 14 kB.
+**What to watch:** the hop adds latency per update. Measure it rather than assuming it is negligible; for high-frequency streams it can dominate the cost.
 
-Weakness: RxJS’s memory footprint is heavy. Even with tree-shaking, the Signals bridge adds 22 kB. Also, the conversion isn’t zero-cost — every observable introduces a tiny delay (0.3 ms per update on average).
+## A worked example: replacing a selector store
 
-Best for: Teams with existing RxJS codebases that want to adopt Signals incrementally.
+The following is a minimal illustration of the pattern, not a benchmark. It shows what changes when dependency tracking moves from the developer to the runtime.
 
----
-
-## The top pick and why it won
-
-Preact Signals Core (1.7.0) is the winner because it hits the three non-negotiables:
-
-- **Framework independence** — it runs in React, Vue, Svelte, vanilla JS, and even Cloudflare Workers. - **Update latency under 1 ms median** — fast enough to avoid jank on low-end devices. - **Memory footprint under 4 kB** — small enough to include in every bundle without guilt.
-
-Here’s the exact pattern I used to replace Redux in a React 18 dashboard:
+Before, with a selector-based store, the derived value is a function with a hand-maintained dependency list:
 
 ```javascript
-// Before: Redux with 12 selectors
 import { createStore, createSelector } from 'redux';
 
 const store = createStore(reducer);
@@ -97,201 +90,89 @@ const selectExpensiveData = createSelector(
   [selectA, selectB, selectC],
   (a, b, c) => expensiveComputation(a, b, c)
 );
+```
 
-// After: Preact Signals Core
-import { signal, computed } from '@preact/signals';
+The dependency list `[selectA, selectB, selectC]` is a promise that `expensiveComputation` reads nothing else. If it later reads `selectD`, the memoization silently returns stale values. Nothing in the type system catches this.
+
+After, with signals, the dependency list does not exist:
+
+```javascript
+import { signal, computed, effect, batch } from '@preact/signals-core';
 
 const a = signal(0);
 const b = signal(0);
 const c = signal(0);
+
 const expensiveData = computed(() => expensiveComputation(a.value, b.value, c.value));
 
-// In component
-import { useSignalEffect } from '@preact/signals-react';
-
-function ExpensiveWidget() {
-  const data = useComputed(() => expensiveData.value);
-  useSignalEffect(() => {
-    console.log('Derived value changed:', data.value);
-  });
-  return <div>{data.value}</div>;
-}
+// Subscribe to changes; the effect re-runs when any dependency changes.
+const dispose = effect(() => {
+  console.log('Derived value changed:', expensiveData.value);
+});
 ```
 
----
+The computed reads `a`, `b`, and `c` through their getters, so the runtime records exactly those dependencies. If `expensiveComputation` later reads a fourth signal, the graph updates automatically. There is no list to keep in sync.
 
-### Advanced edge cases I personally encountered
-
-1. **Circular dependency deadlocks in computed signals**
-   In a financial dashboard, I had three signals: `currency`, `exchangeRates`, and `convertedAmount`. The `convertedAmount` depended on `currency` and `exchangeRates`, but `exchangeRates` also depended on `currency` to normalize values. Preact Signals Core would throw a "Maximum update depth exceeded" error. The fix was to break the cycle by introducing a `lastUpdatedCurrency` signal that `exchangeRates` would react to, but `convertedAmount` ignored. This added 15 lines of defensive code but prevented a production outage during Black Friday traffic when the app tried to recalculate prices every millisecond.
-
-2. **Memory leaks in long-lived signal graphs**
-   In a Node.js backend service monitoring WebSocket connections, I used signals to track connection states. Each new client created a new signal graph, but I forgot to dereference the old graph when a client disconnected. Firefox Profiler showed a 1.2 GB heap growth over 48 hours. The leak was fixed by using `signal.dispose()` in the cleanup handler, but the root cause was assuming Signals would garbage-collect automatically like regular JS objects. Signals are observables, not weak references — they hold strong references to their observers unless explicitly torn down.
-
-3. **Race conditions in async signal updates**
-   In a React Native app fetching real-time stock prices, I used signals to store the latest price and a computed signal for the 5-second moving average. The issue arose when two price updates arrived within 10 ms: Signal A updates to 100, Signal B updates to 101, but the moving average computed from Signal A’s old value and Signal B’s new value. The result was a corrupted average of 100.5 instead of the correct 100.5 (which should have been based on consecutive values). The fix required a mutex-like pattern using `batch(() => { ... })` from Preact Signals Core to ensure atomic updates. This added 20 lines of code but prevented incorrect financial calculations in production.
-
----
-
-### Integration with real tools (2026)
-
-#### 1. Cloudflare Workers + Preact Signals Core (1.7.0)
-Cloudflare Workers run on V8 isolates, not Node.js, so I tested whether Signals work in that environment. They do — with one caveat: the `WeakRef` API must be polyfilled in the Workers runtime. Using Bun 1.1 as the local dev server, I built a real-time analytics endpoint that aggregated 10,000 events per second and pushed updates to connected clients via WebSockets.
+Two details worth noting. First, `batch` groups multiple writes so dependents evaluate once rather than once per write:
 
 ```javascript
-// worker.js
-import { signal, computed } from '@preact/signals';
-import { WeakRef } from 'weakref-polyfill'; // Required for Cloudflare Workers
-
-const eventCount = signal(0);
-const eventsPerSecond = computed(() => eventCount.value / 10);
-
-addEventListener('fetch', (event) => {
-  event.respondWith(handleRequest(event));
-});
-
-async function handleRequest(event) {
-  const url = new URL(event.request.url);
-  if (url.pathname === '/stats') {
-    return new Response(JSON.stringify({
-      eventsPerSecond: eventsPerSecond.value
-    }), { headers: { 'Content-Type': 'application/json' } });
-  }
-  // Simulate receiving an event every 0.1 ms
-  setInterval(() => eventCount.value++, 100);
-  return new Response('OK');
-}
-```
-
-**Observations:**
-- Cold start latency: 12 ms (includes polyfill load)
-- Heap usage after 60 seconds: 1.8 MB
-- No GC pauses detected during stress testing
-- Caveat: Workers have a 128 MB memory limit, so Signals graphs must be pruned manually in long-running instances.
-
----
-
-#### 2. Tauri (Rust desktop app) + Solid.js Signals (1.6.0)
-Tauri uses a Rust backend and a web frontend, so I needed a Signals library that could bridge Rust state to the frontend without exposing the entire WASM module. Solid.js Signals worked because its reactivity model is framework-agnostic, and I could expose signals to the frontend via Tauri’s command system.
-
-```rust
-// src-tauri/src/main.rs
-use tauri::Manager;
-use solid_signals::Signal;
-
-#[tauri::command]
-fn get_counter() -> i32 {
-    unsafe { *COUNTER.signal.get() }
-}
-
-static COUNTER: Signal<i32> = Signal::new(0);
-
-fn main() {
-    tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_counter])
-        .setup(|app| {
-            let window = app.get_window("main").unwrap();
-            std::thread::spawn(move || {
-                loop {
-                    std::thread::sleep(std::time::Duration::from_secs(1));
-                    COUNTER.set(COUNTER.get() + 1);
-                    window.emit("counter-updated", COUNTER.get()).unwrap();
-                }
-            });
-            Ok(())
-        })
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
-}
-```
-
-```javascript
-// src/counter.js
-import { createSignal } from "@solidjs/signals";
-import { invoke } from "@tauri-apps/api/tauri";
-
-export const [counter, setCounter] = createSignal(0);
-invoke("get_counter").then(setCounter);
-
-const unlisten = await listen("counter-updated", (event) => {
-  setCounter(event.payload);
+batch(() => {
+  a.value = 1;
+  b.value = 2;
+  c.value = 3;
 });
 ```
 
-**Observations:**
-- IPC latency (Rust → frontend): 3–5 ms
-- Memory overhead: 4.1 kB in frontend, negligible in Rust
-- Battery impact on M2 MacBook: 0.2% per hour (measured via `powermetrics`)
-- Caveat: Tauri’s channel system adds latency, so Signals are best used for state that doesn’t need millisecond precision.
+Without the batch, `expensiveData` would evaluate after each assignment. With it, it evaluates once. This is the mechanism that makes the recomputation count meaningful.
 
----
+Second, `effect` returns a dispose function. Calling it unsubscribes the effect and releases its references. Omitting this call is the most common source of leaks in signal graphs.
 
-#### 3. Deno + RxJS Signals (7.8.1)
-Deno has first-class TypeScript support and no `node_modules`, so I tested whether RxJS Signals could run in a Deno environment without polyfills. The answer is yes, but the `rxjs` npm package must be explicitly imported from Skypack (Deno’s CDN) to avoid Node.js compatibility issues.
+## Failure modes worth designing around
 
-```typescript
-// main.ts
-import { signalFrom } from "npm:rxjs@7.8.1/signals";
-import { interval } from "npm:rxjs@7.8.1";
+**Circular dependencies.** If computed A reads B and B reads A, the graph has no valid evaluation order. Well-behaved implementations detect the cycle and throw rather than looping. The fix is architectural: introduce a source signal that both computeds read, and make one of them write to a separate signal that the other reads, so the cycle becomes a path. This usually costs a few lines and removes the possibility of an infinite update loop.
 
-const counter = signalFrom(interval(1000));
-counter.subscribe((value) => console.log("Tick:", value));
+**Retained graphs.** A signal holds strong references to its subscribers, and a computed holds references to its dependencies. A disconnected component that never disposes its effects keeps its entire graph alive. In a long-running server process, this shows up as heap growth that tracks the number of connections rather than the number of active ones. Instrument by counting live graphs and comparing to the number of active clients; if the two diverge, something is not being torn down.
 
-// Expose signal to HTTP endpoint
-Deno.serve(() => {
-  const value = counter();
-  return new Response(`Counter: ${value}`);
-});
-```
+**Async interleaving.** When two writes arrive close together and a computed derives from both, the intermediate state may be observed by an effect that runs between them. Batching the writes prevents this. If the writes come from separate async sources, batching at the point of arrival is not enough; the writes must be funneled through a single synchronous step. This is a scheduling problem, not a signals problem, but signals make it visible because the derived value updates eagerly.
 
-**Observations:**
-- Startup time (cold): 1.2 s (includes Skypack fetch)
-- Heap usage: 3.4 MB after 1000 ticks
-- Memory leaks: None detected after 24-hour stress test
-- Caveat: Skypack adds 10–20 ms latency per import, so bundle size must be kept small.
+**Unbounded derived chains.** A computed that reads another computed that reads another, each allocating a new object, produces allocation proportional to the chain depth on every update. Flatten where possible, and prefer returning primitives from hot computeds.
 
----
+## Integration notes
 
-### Before/after comparison: Real numbers
+Signals are not tied to the DOM. The same primitive works in a server runtime, a worker, or a desktop app's frontend, provided the environment supports the JavaScript features the library relies on. The main portability concern is weak references: some runtimes do not expose `WeakRef`, and libraries that use it for cleanup need a polyfill. Check the target runtime's supported features before assuming a browser-tested library will work unchanged.
 
-| Metric                     | React + Redux (Before)       | React + Preact Signals (After) |
-|----------------------------|-------------------------------|---------------------------------|
-| **Bundle size**            | 182 kB (min+gzip)            | 84 kB (min+gzip)               |
-| **State update latency**   | 22 ms (95th percentile)       | 0.9 ms (95th percentile)        |
-| **Memory overhead**        | 14.2 MB after 1000 updates    | 2.1 MB after 1000 updates       |
-| **Lines of code**          | 340 (selectors + actions)     | 180 (signals + computed)       |
-| **Layout shift (Android)** | 420 ms on every update        | 8 ms on every update            |
-| **Cold start time**        | 450 ms (React hydration)      | 310 ms (React + Signals)        |
-| **Framework lock-in**      | Redux requires React context  | Signals work in vanilla JS      |
-| **Debugging complexity**   | 12 selectors to trace         | 3 signals to trace              |
+In desktop shells that bridge a native backend to a web frontend, the inter-process channel adds latency that dwarfs any signal overhead. Signals are still useful there for organizing frontend state, but they do not make cross-process updates fast. Measure the channel separately.
 
-**Test environment:**
-- Device: Moto G Power (2026), Android 15
-- Throttling: Chrome DevTools “4x slowdown”
-- Node.js: v20.13.1
-- React: 18.2.0
-- Preact Signals Core: 1.7.0
+## A decision checklist
 
-**Key takeaways:**
-1. **Latency:** Signals reduced update latency by 24x, making the dashboard usable on low-end devices. The React + Redux version had visible lag when typing in a search box; Signals eliminated it. 2. **Memory:** Signals cut memory usage by 85%, which mattered on devices with <4 GB RAM. The Redux version GC’d aggressively, causing UI stutters. 3. **Code maintenance:** Fewer lines of code meant fewer bugs. In one case, a missing memoization in Redux caused a 500 ms delay on a mobile device — a bug that would have been impossible with Signals because dependencies are tracked automatically. 4. **Cold start:** Signals shaved 140 ms off cold starts by reducing the amount of code React had to hydrate. This was a surprise — I expected Signals to add overhead, but they actually reduced it because the reactivity graph was simpler.
+Before adopting a signal library, answer these:
 
-**Cost implication (2026 pricing):**
-- On AWS Lambda (128 MB memory, 512 MB burst), the Signals version ran 18% cheaper because it used less memory and had shorter execution times. - On Cloudflare Workers ($5 per 10 million requests), the Signals version reduced CPU time by 30%, cutting costs by $150/month for a high-traffic dashboard.
+1. **Does the runtime support the primitives the library needs?** Check for `WeakRef` and any proposed APIs.
+2. **Is the dependency tracking automatic in the code you will actually write?** If it only works inside a compiler, hand-written code will behave differently.
+3. **What is the teardown story?** Every effect needs a dispose path. Confirm the API provides one and that your code calls it.
+4. **What does the import cost after tree-shaking?** Build a minimal app and inspect the bundle.
+5. **Can you count recomputations?** If not, you cannot diagnose a performance regression.
+6. **Does the library detect cycles?** A silent infinite loop is worse than a thrown error.
+7. **How does it behave under batched writes?** Confirm that dependents evaluate once per batch.
+8. **What is the migration path if you change your mind?** Standalone primitives are easier to remove than framework-integrated ones.
 
----
+## FAQ
 
-### About this article
+**Do signals replace a state management library?**
+They replace the derived-state layer. You still need somewhere to hold source state, and you still need a strategy for persistence, undo, and devtools. Signals make the derived layer automatic; they do not make the rest disappear.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+**Are signals faster than selectors?**
+Not inherently. They are faster when the alternative recomputes more than necessary, which is common but not universal. Measure recomputation counts in both approaches before assuming a win.
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+**Can signals and a selector store coexist?**
+Yes. A common pattern is to keep the store as the source of truth and expose signals derived from it, so new UI code gets fine-grained updates without rewriting the store.
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+**Why does my computed run more often than expected?**
+Usually because a write is not batched, or because the computed reads a value that changes on every render (a new object identity, for example). Count evaluations and log the inputs.
 
-**Last reviewed:** July 03, 2026
+**Do signals work in server-side rendering?**
+The primitives work, but the subscription model is designed for long-lived consumers. For SSR you typically evaluate the graph once per request and serialize the result. Check whether the library provides a helper for this or whether you need to manage scope per request.
+
+## Do this in the next 30 minutes
+
+Pick one derived value in your app that recomputes more often than you think it should. Add a counter inside it, log the count to the console, and interact with the UI for a minute. If the count is much higher than the number of times the underlying data actually changed, you have found a candidate for a signal graph — and you now have a before-number to compare against after the change.

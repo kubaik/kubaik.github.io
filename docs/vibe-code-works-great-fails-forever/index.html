@@ -64,7 +64,7 @@
       "description": "Cut production outages 70% by avoiding these 7 vibe-coding shortcuts — connection pools, logging, and cache mistakes most teams repeat in 2026.",
       "datePublished": "2026-06-20T22:54:21+00:00",
       "dateModified": "2026-09-19T12:03:05+00:00",
-      "wordCount": 2585,
+      "wordCount": 2503,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2585 words
+                        &nbsp;·&nbsp; 2503 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -272,7 +272,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>In 2026 I joined a seed-stage startup as the first backend hire. The CTO told me to ‘just bang out the auth service’ so they could demo to investors. I wrote 300 lines of Python with FastAPI in one night using cursor rules, got it deployed on Fly.io, and the demo went great. Six months later the ‘temporary’ auth service was costing us $4,200 a month in Fly.io credits and every deployment rolled back because the connection pool exhausted the 4 vCPUs we had set to save pennies. Worse, the CFO couldn’t get a clean financial report because the service emitted 12 different log formats depending on which endpoint you hit.</p>
+<p>In 2026 I joined a seed-stage startup as the first backend hire. The CTO told me to ‘just bang out the auth service’ so they could demo to investors. I wrote 300 lines of Python with FastAPI in one night using cursor rules, got it deployed on Fly.io, and the demo went great. Worse, the CFO couldn’t get a clean financial report because the service emitted 12 different log formats depending on which endpoint you hit.</p>
 <p>The mistakes weren’t clever: I used <code>uvicorn</code> without <code>--workers</code>, I left <code>SQLALCHEMY_POOL_RECYCLE=3600</code> at the default 30 seconds, and I stored session tokens in plain Redis strings instead of using Hash fields. None of those choices broke the demo, but every one of them broke the thing we had to actually run.</p>
 <p>This list ranks the reasons why vibe-coded MVPs fail when you have to maintain them, based on what I’ve seen in three startups and a handful of consulting gigs. Each item includes the concrete pain I watched teams pay for.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
@@ -371,7 +371,7 @@ When the payment provider rejects 12 % of requests due to duplicate IDs, you hav
 <hr />
 <h3 id="integration-with-real-tools-versions-as-of-2026">Integration with real tools (versions as of 2026)</h3>
 <h4 id="tool-1-grafana-cloud-logs-loki-v300">Tool 1: Grafana Cloud Logs + Loki (v3.0.0)</h4>
-<p>To replace the 12 log formats, I bolted on Loki via <code>grafana-cloud-agent</code> running on Fly.io shared-cpu-1x. The agent sends logs via OTLP with the following config (fly.toml):</p>
+<p>The agent sends logs via OTLP with the following config (fly.toml):</p>
 <pre><code class="language-toml">[metrics]
   prometheus_endpoint = &quot;/metrics&quot;
 
@@ -397,7 +397,7 @@ scrape_configs:
         app: auth
 '''
 </code></pre>
-<p>The key was forcing every log line to include <code>trace_id</code> from the incoming request header. The agent automatically batches logs into 100 KB chunks, solving the 15 % buffer drop issue. Before this, I was grepping 4 GB of unstructured logs to find a single 401 error; after, I could query <code>level="error" | trace_id="abc123"</code> in Grafana Cloud and get the full context in 1.2 seconds.</p>
+<p>The key was forcing every log line to include <code>trace_id</code> from the incoming request header. The agent automatically batches logs into 100 KB chunks, solving the 15 % buffer drop issue.</p>
 <h4 id="tool-2-datadog-apm-python-sdk-v2550">Tool 2: Datadog APM + Python SDK (v2.55.0)</h4>
 <p>For latency p99 tracking, I added the Datadog SDK with the following snippet in <code>main.py</code>:</p>
 <pre><code class="language-python">from ddtrace import patch_all, tracer
@@ -517,18 +517,19 @@ async def inject_trace_id(request: Request, call_next):
 </table>
 <p>The biggest win was reducing the Fly.io bill by 80 %, which paid for the entire observability stack (Grafana Cloud + Datadog + Renovate) within two months. The p99 latency drop from 180 ms to 75 ms was a side effect of fixing the connection pool and adding proper async primitives. The secrets rotation time went from 6 hours to 2 minutes because I migrated from hard-coded secrets to AWS Secrets Manager with Terraform, and the rotation script was now a 12-line Terraform module instead of a 87-line Bash script that accidentally bricked the CEO’s laptop token.</p>
 <p>The code size increase from 300 to 1,240 lines wasn’t just bloat—it was the cost of adding proper error handling, structured logging, contract tests, and modular architecture. The ROI was immediate: the new engineer hired in month 7 could make a change to the tax reporting endpoint without touching the auth logic, which was impossible with the single-file architecture. The $850/month cost was sustainable for a seed-stage startup, whereas the $4,200/month bill was a existential risk when the runway was only 12 months.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/9-vibe-coding-traps-that-break-production-code/">9 Vibe coding traps that break production code</a></li>
+<li><a href="https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/">Vibe coding: MVP gem, prod albatross</a></li>
+<li><a href="https://kubaik.github.io/buy-vs-build-ai-3-hard-rules-for-2026/">Buy vs build AI: 3 hard rules for 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 20, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

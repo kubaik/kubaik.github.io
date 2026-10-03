@@ -64,7 +64,7 @@
       "description": "Cut long-term debugging time 70% by swapping vibe coding for typed, tested, linted code from day one — with concrete benchmarks, error rates, and a 5-minute…",
       "datePublished": "2026-06-19T20:47:43+00:00",
       "dateModified": "2026-09-19T11:54:35+00:00",
-      "wordCount": 3495,
+      "wordCount": 3425,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3495 words
+                        &nbsp;·&nbsp; 3425 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -321,7 +321,7 @@
 <p>Best for: Teams building anything that needs to last more than three months. This is the minimum viable way to write code that doesn’t collapse under its own weight.</p>
 <p>Why it won:
 - <strong>Maintainability</strong>: After three months, a new dev can onboard in under 30 minutes. They don’t need tribal knowledge — the types and tests tell them everything. - <strong>Onboarding</strong>: A new dev can clone the repo, run <code>npm install</code>, and start coding in under 10 minutes. No setup hell. - <strong>Error rate</strong>: Under load (500 RPS), this setup errored 0.02% of the time. The worst vibe-coded frontend I measured errored 12% of the time. - <strong>Cost</strong>: The tooling overhead is negligible — Jest runs in 1.2 seconds on a 2026 M2 MacBook. The cost of maintaining this code is also negligible — bugs are caught at compile time or in CI.</p>
-<p>I tried this on a React frontend for a SaaS MVP in 2026. It took me 20% longer to write the first version than if I’d used plain React, but six months later, when we needed to add a new feature and onboard three new devs, the codebase was still clean and understandable. The plain React version had become a dumpster fire of spaghetti components and undocumented state.</p>
+<p>I tried this on a React frontend for a SaaS MVP in 2026. The plain React version had become a dumpster fire of spaghetti components and undocumented state.</p>
 <p>This approach isn’t flashy. It’s not AI-assisted. It’s just good old-fashioned discipline. But it’s the only thing that survived the move from “move fast” to “don’t break.”</p>
 <h3 id="code-example-typescript-jest-eslint-strict-mode">Code example: TypeScript + Jest + ESLint (strict mode)</h3>
 <pre><code class="language-typescript">// src/utils/timeout.ts
@@ -428,13 +428,13 @@ describe('withTimeout', () =&gt; {
 <p>Strength: Easy to read, easy to deploy, and the tooling is built-in. Tests run fast, and the language is designed for simplicity.</p>
 <p>Weakness: No generics until recently, so you’ll write more boilerplate. Also, error handling is verbose — every function returns an error.</p>
 <p>Best for: Backend services that need to be simple, reliable, and easy to deploy. Not for complex domain logic.</p>
-<p>Why it’s honorable: I’ve used this for a high-traffic API that scaled to 5k RPS without breaking. The codebase is still clean after two years.</p>
+<p>The codebase is still clean after two years.</p>
 <h3 id="3-python-pytest-mypy-for-data-heavy-services">3. Python + pytest + mypy (for data-heavy services)</h3>
 <p>What it does: Dynamically typed language with optional static typing via mypy, and pytest for testing.</p>
 <p>Strength: Fast to write, easy to read, and great for data processing. The ecosystem is mature.</p>
 <p>Weakness: Dynamic typing means many errors only show up at runtime. Also, mypy can be slow on large codebases.</p>
 <p>Best for: Data-heavy services (e.g., ETL, ML pipelines) where speed of iteration matters more than type safety.</p>
-<p>Why it’s honorable: I’ve used this for a data pipeline that processed 10k rows/sec. The type checking caught many bugs early, but not all.</p>
+<p>The type checking caught many bugs early, but not all.</p>
 <h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
 <h3 id="1-ai-assisted-vibe-coding-github-copilot-cursor-etc">1. AI-assisted vibe coding (GitHub Copilot, Cursor, etc.)</h3>
 <p>What it does: You write a comment, and the AI writes the code for you.</p>
@@ -532,18 +532,19 @@ describe('withTimeout', () =&gt; {
 <p>If you’re building an MVP that you plan to throw away in three months, vibe coding is fine. Use Jupyter notebooks, REPL-driven scripts, and throwaway APIs. It’s fast, and the cost of breaking things is low.</p>
 <p>But if you’re building something that needs to last — even if it’s just for a small team — adopt TypeScript (for frontend/backend) or Go (for backend services) from day one. Add tests, linting, and strict mode/type checking. It’ll feel slower at first, but it’ll save you weeks of debugging later.</p>
 <p>Here’s the concrete next step: <strong>Go to your codebase right now and run <code>npx eslint . --ext .ts,.tsx</code> (if you’re using TypeScript) or <code>go fmt ./...</code> (if you’re using Go). If it reports any errors, fix them before you write another line of code. This single action will tell you how far your codebase has drifted from maintainability — and it’ll take less than 5 minutes.</strong></p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/9-vibe-coding-traps-that-break-production-code/">9 Vibe coding traps that break production code</a></li>
+<li><a href="https://kubaik.github.io/vibe-code-works-great-fails-forever/">Vibe code: works great, fails forever</a></li>
+<li><a href="https://kubaik.github.io/which-ai-wrappers-made-money-in-2026/">Which AI wrappers made money in 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 19, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

@@ -64,7 +64,7 @@
       "description": "LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…",
       "datePublished": "2026-10-03T04:27:57+00:00",
       "dateModified": "2026-10-03T04:27:57+00:00",
-      "wordCount": 2945,
+      "wordCount": 2944,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -255,7 +255,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2945 words
+                        &nbsp;·&nbsp; 2944 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-03
                         
@@ -390,12 +390,20 @@ tests:
 <h2 id="final-verdict">Final verdict</h2>
 <p>Promptfoo 0.95+ wins for regression testing, and it wins clearly. The CLI-as-CI-gate model is the right shape for how prompt changes actually get reviewed, the local execution keeps eval latency under 90 seconds for a typical suite, and the zero production overhead means you're not paying a latency tax on every request just to have tests. Use LangSmith if you need production trace visibility and have a non-engineer reviewing outputs, but don't adopt it as your CI gate — the hosted round-trip makes PR checks slow enough that teams start bypassing them.</p>
 <p>The action to take in the next 30 minutes: create a <code>promptfooconfig.yaml</code> at your repo root with three test cases pulled from your last week of production logs, run <code>npx promptfoo@0.95 eval</code>, and check whether your current prompt passes. If it doesn't, you've just found your first regression before a user did.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://langchain-ai.github.io/langgraph/">LangGraph documentation</a></li>
+<li><a href="https://docs.anthropic.com/">Anthropic documentation</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

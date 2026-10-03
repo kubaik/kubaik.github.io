@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-03T04:28:01.251321",
+  "built_at": "2026-10-03T10:43:45.372429",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5440,6 +5440,11 @@
       "slug": "llm-evals-langsmith-vs-promptfoo-in-prod",
       "title": "LLM evals: LangSmith vs Promptfoo in prod",
       "summary": "Most evaluation stack writeups assume the reader has already made the mistake they're warning about. The failure is quiet — no errors, just wrong answers. This walks through the fix and the reasoning, not just the patch. Why this comparison matters right now Production LLM features have a nasty prop"
+    },
+    {
+      "slug": "sbom-attestation-that-gets-used",
+      "title": "SBOM + attestation that gets used",
+      "summary": "Opinions on building accessible tend to change fast after watching it fail somewhere it wasn't supposed to. Here's what changes once the guessing is replaced with measurement. The workaround gets copy-pasted forward long after the original reason is forgotten. What this list actually solves An SBOM "
     }
   ]
 }

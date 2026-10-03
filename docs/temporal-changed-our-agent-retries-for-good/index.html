@@ -64,7 +64,7 @@
       "description": "How durable execution platforms like Temporal 1.22.0 cut refund workflow latency 70% and drop errors from 0.8% to 0.02% — plus the exact gotcha most…",
       "datePublished": "2026-09-03T16:05:45+00:00",
       "dateModified": "2026-09-03T16:05:45+00:00",
-      "wordCount": 2193,
+      "wordCount": 2222,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -259,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2193 words
+                        &nbsp;·&nbsp; 2222 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-03
                         
@@ -653,12 +653,27 @@ A refund agent that listens to SQS refund requests, calls three external APIs in
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Open <code>src/workflows.ts</code> and change the workflow timeout from <code>10 minutes</code> to <code>30 minutes</code>. Then redeploy the worker and send a new refund request. Watch the Temporal Web UI to see the workflow run longer without timing out. That single change is the first step toward handling refunds that take hours because of manual approvals.</p>
 <p>Next step: In the next 30 minutes, open the Temporal Cloud console, navigate to the refund-ns namespace, and filter workflows by status=running. Note the start time of the longest-running workflow. That metric—time since start—is the first thing you should alert on when you move this to production.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
+<li><a href="https://kubaik.github.io/survive-network-drops-agentic-workflows-that-keep-running/">Survive network drops: agentic workflows that keep running</a></li>
+<li><a href="https://kubaik.github.io/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://docs.temporal.io/">Temporal documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

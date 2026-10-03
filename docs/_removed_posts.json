@@ -333,5 +333,55 @@
     "removed_at": "2026-09-21T14:29:07.000145",
     "reason": "4 first-person incident(s)",
     "source": "adsense_triage"
+  },
+  "ai-benchmarking-3-mistakes-we-made-first": {
+    "removed_at": "2026-10-03T10:44:07.477823+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (51 experience claims, 4 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "core-web-vitals-2026-inp-is-now-stable": {
+    "removed_at": "2026-10-03T10:44:07.482355+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (48 experience claims, 8 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "llm-structured-output-json-mode-fails-at-scale": {
+    "removed_at": "2026-10-03T10:44:07.486361+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (56 experience claims, 4 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "land-5k-roles-from-nairobi-lagos-in-2026": {
+    "removed_at": "2026-10-03T10:44:07.490471+00:00",
+    "reason": "Near-duplicate of land-5k-remote-roles-what-nairobi-devs-got-right | Invented first-hand evidence/benchmarks (71 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that": {
+    "removed_at": "2026-10-03T10:44:07.494218+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (36 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-sales-cycle-what-changed-for-devtool-founders": {
+    "removed_at": "2026-10-03T10:44:07.498020+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (37 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "wasm-ml-models-keep-dev-speed-at-the-edge": {
+    "removed_at": "2026-10-03T10:44:07.501763+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (47 experience claims, 5 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "block-api-replay-attacks-in-2026": {
+    "removed_at": "2026-10-03T10:44:07.505632+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (41 experience claims, 2 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "pulumi-vs-terraform-vs-opentofu-in-2026": {
+    "removed_at": "2026-10-03T10:44:07.509318+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (32 experience claims, 7 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-wrote-40-of-our-code-heres-what-broke-our-on-call": {
+    "removed_at": "2026-10-03T10:44:07.513029+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (56 experience claims, 7 unverifiable products)",
+    "source": "delete_posts.py"
   }
 }

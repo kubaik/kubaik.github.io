@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "zero-downtime-postgres-schema-changes-in-2026",
-    "title": "Zero-downtime Postgres schema changes in 2026",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent two weeks debugging a connection pool issue that turned out to be unrela",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "memory-systems-for-production-agents",
-    "title": "Memory Systems for Production Agents",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same ondevice edge mistake in more than one production codebase ove; Here's what changed once we stopped guessing and started measuring.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "zero-trust-ai-skip-the-latency-tax",
-    "title": "Zero-trust AI: skip the latency tax",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same cost reliability mistake in more than one production codebase ; Here's what actually worked, and why.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "african-fintech-agents-the-compliance-cliff-most-miss",
-    "title": "African fintech agents: the compliance cliff most miss",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this regulatory compliance problem while migrating a service under a ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "agent-drift-why-it-hurts-ux",
-    "title": "Agent drift: why it hurts UX",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I changed my mind about internal developer after watching it fail somewhere it w",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "agent-drift-why-prod-breaks-without-human-checkpoints",
     "title": "Agent drift: why prod breaks without human checkpoints",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agent-flooded-our-api-with-bad-calls-overnight",
     "title": "Agent flooded our API with bad calls overnight",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agent-slos-measure-what-agents-actually-do",
     "title": "Agent SLOs: measure what agents actually do",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I kept seeing teams ship SLO dashboards that measured the wrong thing and declar",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agentic-finops-is-a-trap",
     "title": "Agentic FinOps is a trap",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I've hit the same scan aigenerated mistake in more than one production codebase ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agents-create-incidents-at-2am",
     "title": "Agents create incidents at 2am",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this oncall changes problem while migrating a service under a hard de",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-errors-hide-in-plain-latency",
@@ -811,6 +781,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "zero-downtime-postgres-schema-changes-in-2026",
+    "title": "Zero-downtime Postgres schema changes in 2026",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent two weeks debugging a connection pool issue that turned out to be unrela",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "memory-systems-for-production-agents",
+    "title": "Memory Systems for Production Agents",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same ondevice edge mistake in more than one production codebase ove; Here's what changed once we stopped guessing and started measuring.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "zero-trust-ai-skip-the-latency-tax",
+    "title": "Zero-trust AI: skip the latency tax",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same cost reliability mistake in more than one production codebase ; Here's what actually worked, and why.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "african-fintech-agents-the-compliance-cliff-most-miss",
+    "title": "African fintech agents: the compliance cliff most miss",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this regulatory compliance problem while migrating a service under a ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "agent-drift-why-it-hurts-ux",
+    "title": "Agent drift: why it hurts UX",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I changed my mind about internal developer after watching it fail somewhere it w",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "tls-13-post-quantum-what-breaks-at-scale",

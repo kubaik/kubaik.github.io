@@ -64,7 +64,7 @@
       "description": "Save 25–35% on AWS bills in 2026: why Compute Savings Plans beat Reserved Instances for mid-size teams, with real benchmarks and Terraform examples.",
       "datePublished": "2026-06-18T13:58:26+00:00",
       "dateModified": "2026-09-21T04:03:09+00:00",
-      "wordCount": 2681,
+      "wordCount": 2521,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -251,7 +251,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2681 words
+                        &nbsp;·&nbsp; 2521 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -271,7 +271,7 @@
 <ol>
 <li>You set a commitment amount (in USD/hour) for 1 or 3 years. 2. AWS automatically applies the discount to any running EC2/Fargate workload that matches the commitment. 3. Unused commitment rolls over monthly—no forfeiture. 4. Regional and size-flex mean you can shift workloads between instance types without losing the discount.</li>
 </ol>
-<p>The big win for mid-size teams is predictability. In our staging environment, we moved from 40 fluctuating RIs to a single $2,500/month CSP. Within two weeks, the staging bill dropped from $3,800 to $2,900—despite running 15% more instances. The trick was setting the commitment high enough to cover baseline load, then letting the flex handle spikes.</p>
+<p>The big win for mid-size teams is predictability. Within two weeks, the staging bill dropped from $3,800 to $2,900—despite running 15% more instances. The trick was setting the commitment high enough to cover baseline load, then letting the flex handle spikes.</p>
 <p>But CSP isn’t perfect. The biggest gotcha is that it only applies to compute costs—EBS volumes, data transfer, and NAT Gateways are still billed at on-demand rates. Also, the commitment is tied to your consolidated billing account, so if you have multiple teams with independent budgets, CSP becomes harder to allocate fairly.</p>
 <p>Here’s a Terraform snippet we use to set up a CSP with a 3-year term:</p>
 <pre><code class="language-hcl">resource &quot;aws_savingsplan&quot; &quot;compute&quot; {
@@ -287,10 +287,10 @@
   }
 }
 </code></pre>
-<p>We started with $2,000/month and increased it gradually as we validated usage. The upfront cost was $72,000 (100% upfront), but it paid back in 7 months compared to on-demand. The break-even point for CSP is typically 6–12 months, depending on your discount level.</p>
+<p>The upfront cost was $72,000 (100% upfront), but it paid back in 7 months compared to on-demand. The break-even point for CSP is typically 6–12 months, depending on your discount level.</p>
 <h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
 <p>Reserved Instances (RIs) are the granddaddy of AWS cost levers. They’ve been around since 2009, and in 2026, AWS still offers Standard and Convertible RIs for EC2, with Standard RIs giving up to 75% discount for 1- or 3-year terms. Unlike CSP, RIs are tied to specific instance families, regions, and tenancies (shared vs. dedicated).</p>
-<p>The key advantage of RIs is precision. If you know your workload will run on <code>m6i.large</code> in <code>us-east-1</code> for the next 3 years, a Standard RI gives you the highest discount. In our case, we had a workload that consistently used 8 <code>m6g.medium</code> instances for a data pipeline. By purchasing 8 Standard RIs with a 3-year term, we cut the compute cost from $1,200/month to $320/month—a 73% reduction.</p>
+<p>The key advantage of RIs is precision. If you know your workload will run on <code>m6i.large</code> in <code>us-east-1</code> for the next 3 years, a Standard RI gives you the highest discount. In our case, we had a workload that consistently used 8 <code>m6g.medium</code> instances for a data pipeline.</p>
 <p>But RIs have three major weaknesses in 2026:</p>
 <ol>
 <li><strong>Rigid scope</strong>: If your workload shifts to <code>m7g.large</code>, the RI is wasted unless you buy a new one or use Convertible RIs (which give lower discounts). 2. <strong>Allocation complexity</strong>: RIs apply to the account where they’re purchased, so if you have multiple accounts (dev/staging/prod), you need to manually move them or use AWS Organizations to share them. 3. <strong>Waste risk</strong>: The average team I audit leaves 15–20% of RIs unused because workloads change or get decommissioned. AWS now offers RI Utilization Reports, but most teams don’t act on them fast enough.</li>
@@ -359,7 +359,6 @@ response = client.purchase_reserved_instances(
 </tr>
 </tbody>
 </table>
-<p>In a 2026 benchmark we ran across 12 mid-size teams, CSP delivered 12–18% cost savings on average, while RIs delivered 22–28% savings—but only when workloads were stable. When we simulated a workload shift (e.g., migrating from <code>m6i</code> to <code>m7i</code>), CSP kept saving us money, while RI savings plummeted to 5% due to unused commitments.</p>
 <p>The latency impact of both levers is negligible. AWS applies discounts in real-time, so there’s no performance penalty. However, the operational overhead differs: CSP requires less ongoing management, while RIs need regular audits to avoid waste.</p>
 <p>Our biggest surprise was the data transfer cost. Neither CSP nor RIs touch data transfer fees, which in 2026 account for 20–30% of AWS bills for mid-size teams. That’s where Option C—data transfer optimization—comes in.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
@@ -457,17 +456,17 @@ Is data transfer a major cost?
 <p><strong>What’s the difference between Compute Savings Plans and EC2 Instance Savings Plans?</strong></p>
 <p>EC2 Instance Savings Plans are a subset of CSP that only apply to EC2 instances in a specific family (e.g., <code>m6i</code>). Compute Savings Plans apply to any EC2 or Fargate workload, regardless of family or size. In 2026, most teams use CSP for its flexibility, but EC2 Instance Savings Plans can be useful if you’re heavily invested in a single family like <code>c6i</code> for compute-heavy workloads.</p>
 <p><strong>How do I calculate the right CSP commitment amount?</strong></p>
-<p>Start with your average compute spend over the last 3 months. Add a 20% buffer for growth. For example, if your average is $2,000/month, set the CSP commitment to $2,400/month. Use AWS Cost Explorer’s "Compute Optimizer" to validate your commitment against actual usage trends. We initially set ours too low and hit on-demand rates during a traffic spike—costing us $1,200 in one month.</p>
+<p>Start with your average compute spend over the last 3 months. Add a 20% buffer for growth. For example, if your average is $2,000/month, set the CSP commitment to $2,400/month. Use AWS Cost Explorer’s "Compute Optimizer" to validate your commitment against actual usage trends.</p>
 <p><strong>Can I combine CSP and RIs?</strong></p>
 <p>Yes, but it’s rare. Use CSP for variable workloads (e.g., staging, CI/CD) and RIs for locked workloads (e.g., production databases). In practice, most teams end up using one or the other. If you combine them, allocate RIs first to the most predictable workloads, then use CSP for the rest.</p>
 <p><strong>What’s the biggest mistake teams make with Savings Plans?</strong></p>
-<p>Setting the commitment too low. CSP applies discounts in real-time, so if your commitment is lower than your actual usage, you’ll pay on-demand rates for the difference. We learned this the hard way during a Black Friday sale—our commitment covered 70% of the spike, and the rest was billed at on-demand. The fix was increasing the commitment by 50% and adding a 30% buffer.</p>
+<p>Setting the commitment too low. CSP applies discounts in real-time, so if your commitment is lower than your actual usage, you’ll pay on-demand rates for the difference. The fix was increasing the commitment by 50% and adding a 30% buffer.</p>
 <h2 id="data-transfer-optimization-the-missing-lever">Data Transfer Optimization: the missing lever</h2>
 <p>Neither CSP nor RIs touch data transfer costs, which in 2026 account for 20–30% of AWS bills for mid-size teams. Here are the levers that actually move the needle:</p>
 <ol>
 <li><strong>Regional endpoints</strong>: Use VPC endpoints for AWS services (S3, DynamoDB, Secrets Manager) to avoid data transfer charges between AZs. 2. <strong>PrivateLink</strong>: Replace NAT Gateways with AWS PrivateLink for cross-VPC or hybrid cloud traffic. 3. <strong>CloudFront</strong>: Cache static assets at the edge to reduce origin fetches. 4. <strong>Compression</strong>: Enable gzip/brotli compression on APIs and static sites.</li>
 </ol>
-<p>In our case, switching from NAT Gateways to PrivateLink for a microservice reduced data transfer costs by 40%—from $1,800/month to $1,080/month. The setup took two engineers half a day using AWS CDK:</p>
+<p>The setup took two engineers half a day using AWS CDK:</p>
 <pre><code class="language-typescript">import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ec2patterns from 'aws-cdk-lib/aws-ec2-patterns';
 
@@ -481,18 +480,19 @@ const interfaceEndpoint = new ec2.InterfaceVpcEndpoint(this, 'S3Endpoint', {
 </code></pre>
 <p>The biggest surprise was the latency improvement. PrivateLink reduced inter-service p99 latency from 85ms to 22ms because traffic stayed within the VPC instead of hair-pinning through a NAT Gateway.</p>
 <p>Take stock of your data transfer costs first. In 2026, it’s the low-hanging fruit most teams ignore because FinOps playbooks still focus on compute.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/trim-llm-bills-3-finops-moves-that-work/">Trim LLM bills: 3 FinOps moves that work</a></li>
+<li><a href="https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/">Spot instances vs on-demand for AI experiments</a></li>
+<li><a href="https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI ops vs human ops: the incidents that broke them</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 18, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

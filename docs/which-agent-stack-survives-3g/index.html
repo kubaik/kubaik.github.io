@@ -64,7 +64,7 @@
       "description": "Edge agents vs centralised caching for 3G/4G users in East Africa — latency numbers, reconnection storm fixes, and the egress cost mistake that spikes…",
       "datePublished": "2026-09-16T11:26:58+00:00",
       "dateModified": "2026-09-16T11:26:58+00:00",
-      "wordCount": 2723,
+      "wordCount": 2718,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -258,7 +258,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2723 words
+                        &nbsp;·&nbsp; 2718 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -445,12 +445,19 @@ app.post(&quot;/agent&quot;, async (req, res) =&gt; {
 <p>On a centralised stack (Option B), expect $200–$350 per month in compute plus $5,000–$18,000 per month in egress from af-south-1, depending on your retransmission rate. On an edge stack (Option A), expect $150–$250 per month in compute with minimal egress because data stays within the ISP's network. The LLM token costs are the same for both: roughly $400–$1,000 per day at 5 turns per user. If your egress bill is over $2,000 per month, you should seriously evaluate edge deployment.</p>
 <h2 id="final-verdict_1">Final verdict</h2>
 <p>Start by measuring your reconnection storm size. Open your load balancer logs and count the number of requests from a single IP within 5 seconds of a connectivity restoration event. If that number is over 100, add request coalescing to your agent endpoint today — a 15-line in-memory <code>Map</code> with a 5-second TTL will cut your origin load by 80% during storms. Then, if your p95 latency is still over 1 second, evaluate edge deployment for your most latency-sensitive agent feature.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

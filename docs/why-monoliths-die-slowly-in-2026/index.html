@@ -64,8 +64,8 @@
       "description": "Cut API latency 30% and save $325/month by extracting a monolith with Redis 7.2 and NGINX 1.25—without a big-bang rewrite",
       "datePublished": "2026-06-19T02:27:59+00:00",
       "dateModified": "2026-09-19T11:42:21+00:00",
-      "wordCount": 2114,
-      "timeRequired": "PT11M",
+      "wordCount": 2075,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -257,8 +257,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2114 words
+                        10 min read
+                        &nbsp;·&nbsp; 2075 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -275,7 +275,7 @@
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
 <p>You start with a façade—Envoy, NGINX, or a small Node 20 LTS proxy—and route 5 % of traffic to the new service to test. You pick a simple domain: user profile, maybe orders. The latency graph looks fine until you hit the 90th percentile. Suddenly you see 70 ms added by the façade for every request that crosses the Atlantic.</p>
 <p>The error budget for that domain jumped from 100 ms to 180 ms, and the business noticed.</p>
-<p>Monitoring also becomes fragmented. With Prometheus 2.47 scraping both the monolith (Python 3.11) and the new service (Go 1.22), the cardinality of labels exploded: <code>service</code>, <code>path</code>, <code>method</code>, <code>instance</code>, <code>dc</code>, <code>region</code>, <code>shard</code>, <code>version</code>. We hit 500 k active series before we tuned the recording rules, and our Prometheus server on a t3.medium started OOMing at 1.8 GB RSS.</p>
+<p>Monitoring also becomes fragmented. With Prometheus 2.47 scraping both the monolith (Python 3.11) and the new service (Go 1.22), the cardinality of labels exploded: <code>service</code>, <code>path</code>, <code>method</code>, <code>instance</code>, <code>dc</code>, <code>region</code>, <code>shard</code>, <code>version</code>.</p>
 <p>Costs compound when you duplicate data. The monolith keeps its PostgreSQL 15 read replicas for reporting, while the new service adds its own Aurora PostgreSQL 3.06 cluster. Suddenly your monthly DB spend jumps from $420 to $1 300—mostly because Aurora charges for I/O, and cross-AZ replication between the two clusters doubled write volume.</p>
 <h2 id="a-different-mental-model">A different mental model</h2>
 <p>Instead of treating extraction as a traffic-routing problem, treat it as a data-locality problem. The real latency killer is not the façade; it is the round-trip to fetch data the new service needs but the monolith already has in cache. In 2026, the median API call in Lagos expects 30 ms to Redis, but a cross-AZ call to Aurora PostgreSQL 15 can take 40–60 ms even on gp3.</p>
@@ -379,25 +379,26 @@
 <h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
 <p>I would start with data extraction, not traffic extraction. The first thing I’d move is the Redis 7.2 cache for the domain I’m targeting. That cuts latency immediately and gives me a safe place to experiment with new logic without touching the DB.</p>
 <p>I’d also avoid Kubernetes for the new service if the team is small. EKS clusters in 2026 still require 2–3 nodes to run Linkerd 1.6 reliably, which costs $78/month per node. Instead, I’d run the new service on a single t4g.small EC2 instance with Docker 25.0 and use the host’s cgroup v2 limits for isolation. The latency overhead of an extra hop is &lt;1 ms when the instance is in the same AZ as the monolith.</p>
-<p>I would also add a single, high-impact metric from day one: <code>service_extraction_health</code>. It’s a boolean exposed via a <code>/health</code> endpoint that returns 1 if the new service can serve the domain’s critical path within 110 % of the monolith’s p95 latency. Any regression above that threshold triggers an automatic rollback via the façade. We built this in Go 1.22 and it cut our rollback incidents by 70 %.</p>
+<p>I would also add a single, high-impact metric from day one: <code>service_extraction_health</code>. It’s a boolean exposed via a <code>/health</code> endpoint that returns 1 if the new service can serve the domain’s critical path within 110 % of the monolith’s p95 latency. Any regression above that threshold triggers an automatic rollback via the façade.</p>
 <p>Finally, I’d insist on a single team owning both the monolith and the new service for the first 90 days. Knowledge silos kill migrations faster than any technical constraint.</p>
 <h2 id="summary">Summary</h2>
 <p>Splitting a monolith is less about traffic routing and more about data locality. Move the data first to a co-located store (Redis 7.2, OpenSearch 2.11), then route traffic only after the new service can serve reads locally. Keep the façade thin—NGINX 1.25 is enough—and avoid Linkerd or Envoy unless you have the infra budget and latency budget to justify them.</p>
 <p>If your infra budget is tight and your latency tolerance is moderate, extract data first and route later. If you have budget and strict latency needs, use a façade with a service mesh, but budget for the infra multiplier.</p>
 <p>Decide today which quadrant you’re in; the rest is implementation detail.</p>
 <p>Open your monolith’s main Django settings file right now and count the number of Redis hosts configured. If you see more than one hostname per environment, you’re already halfway to extracting that domain. That’s your next 30-minute action.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/monolith-to-services-without-a-rewrite/">Monolith to services without a rewrite</a></li>
+<li><a href="https://kubaik.github.io/merge-three-payment-apis-into-one-system/">Merge three payment APIs into one system</a></li>
+<li><a href="https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/">AI-native apps break when you copy old rules</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 19, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -430,16 +431,16 @@ please contact me — corrections are applied within 48 hours.</p>
                         <span class="related-meta">14 min read · 3 July 2026</span>
                     </a>
                     
+                    <a class="related-card" href="/sbom-attestation-that-gets-used/">
+                        <h3>SBOM + attestation that gets used</h3>
+                        <p>SBOM + attestation that gets used: Syft, cosign, SLSA, Kyverno compared. Avoid the bucket trap where SBOMs go stale and never gate a deploy.</p>
+                        <span class="related-meta">15 min read · 3 October 2026</span>
+                    </a>
+                    
                     <a class="related-card" href="/rust-rewrites-where-they-pay-off-where-they-dont/">
                         <h3>Rust rewrites: where they pay off, where they don&#39;t</h3>
                         <p>Rust backend rewrites pay off for CPU-bound work, not I/O.</p>
                         <span class="related-meta">14 min read · 21 September 2026</span>
-                    </a>
-                    
-                    <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
-                        <h3>Dead-letter queues: stop poison messages</h3>
-                        <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                 </div>

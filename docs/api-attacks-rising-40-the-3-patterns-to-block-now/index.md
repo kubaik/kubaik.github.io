@@ -1,63 +1,52 @@
-# API attacks rising 40%: the 3 patterns to block now
+# Defending APIs Against Amplification, Stuffing and Smuggling
 
-Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.
+Most API security guidance assumes a clean environment and a patient timeline. Production gives you neither. The patterns that cause the most damage in real deployments are rarely exotic exploits; they are cheap requests that become expensive work on the backend. This article covers three such patterns, why perimeter rules alone miss them, and how to build an API layer that stays cheap under adversarial load.
 
-## The situation (what we were trying to solve)
+## The failure mode: cheap to send, expensive to process
 
-In late 2026, our team at **Kubai Systems** noticed two things that didn’t add up:
+Classic API hardening focuses on injection, broken authentication and data exposure. Those still matter. But a large share of operational pain comes from attacks that never try to break encryption or forge a token. They only need to make your system do more work than the request cost the attacker.
 
-1. Our API response times were creeping up, especially under load from mobile clients in Nairobi and Manila, where latency-sensitive apps run on patchy 4G. 2. Our AWS bill for **API Gateway + Lambda** had jumped 28% month-over-month, and the spike tracked exactly with a rise in 429 errors reported by our mobile team.
+Three patterns dominate this category:
 
-Digging deeper, I found that 68% of those slow responses came from repeated client retries—each retry hitting the same endpoint with the same payload because the upstream service was rate-limiting, but the client had no idea.
+- **Cache-stampede amplification.** An attacker requests keys that are not in cache, or requests the same uncached key from many sources at once. Each miss triggers backend compute and database reads. On endpoints with heavy enrichment logic, one client can fan out into hundreds of concurrent backend operations.
+- **Credential stuffing against APIs.** Leaked credential lists are replayed against login and token endpoints at scale. APIs are attractive targets because they lack the browser-side friction (CAPTCHAs, device fingerprinting, JS challenges) that web login pages often have.
+- **Request smuggling via HTTP/2 pseudo-headers.** HTTP/2 header compression and the `:method`, `:path`, `:scheme` and `:authority` pseudo-headers create room for requests that some WAF rule sets do not normalise correctly, letting crafted requests reach internal routes.
 
-That’s when I realised: **we were optimising for happy paths, not for adversarial ones.** Our API was secure against SQL injection and JWT forgery, but we’d missed the new wave of attacks that don’t need to break encryption—they just need to exhaust your resources by being *cheap to send and expensive to process*.
+None of these necessarily trips a default WAF ruleset or a per-IP rate limit. A typical failure mode is a stack that is well defended against malformed input but has no defence against well-formed input sent at volume.
 
-By early 2026, we were seeing three attack patterns dominate in our logs:
+## Why adding infrastructure first usually fails
 
-- **Cache-stampede amplification** — attackers trigger cache misses on endpoints with heavy compute backends, forcing every request to recompute or fetch from the DB. - **Credential stuffing via credential stuffing APIs** — attackers use leaked password databases to test APIs at scale, not websites, because APIs don’t have browser protections. - **Request smuggling via HTTP/2 pseudo-headers** — HTTP/2’s header compression lets an attacker craft requests that bypass WAF rules and hit internal routes directly.
+The intuitive response is to add a WAF with a broad managed ruleset, a per-IP rate limit, and a CDN cache in front of the API. Each of these helps, and each has a characteristic failure mode when used alone.
 
-Our security team had a WAF and rate limits, but none of these patterns triggered the WAF’s default rules. We needed a new strategy.
+**Cache stampedes get worse, not better.** Consider an endpoint like `/products?id=...` that reads from a database, performs a short enrichment step, and writes the result to a cache with a short TTL. If many clients request the same uncached key within the same second, every one of them misses. The cache does not protect the backend during the miss window; it concentrates the load into it. Retrying mobile clients on unreliable networks make this worse, because retries arrive in bursts.
 
+**WAF false positives hit legitimate users on shared infrastructure.** Managed rulesets that flag header manipulation will also flag carrier-grade NAT ranges, corporate proxies and browser retry behaviour. The result is legitimate 429s and 403s concentrated in exactly the regions where connectivity is already poor. Tuning rules to reduce false positives tends to reduce true positives at the same time.
 
-## What we tried first and why it didn’t work
+**Cost scales with rejected traffic, not just accepted traffic.** Every request that reaches the WAF, the gateway and a compute function has a cost, even if it is ultimately rejected. If the rejection happens late in the path, the attacker's amplification is also your cost amplification.
 
-Our first idea was to throw more infrastructure at the problem. We spun up **AWS WAF v3** with the OWASP Top 10 ruleset, set a rate limit of 1,000 requests per IP per minute, and deployed **CloudFront** in front of API Gateway to cache responses.
+A useful rule of thumb: if a defence does not make the *rejection* cheap, it does not solve the amplification problem.
 
-The theory sounded solid: cache the happy path, block the obvious bad guys.
+## Three principles that actually reduce blast radius
 
-But three days in, we hit a wall:
+Rather than blocking attacks at the perimeter, make the API itself resilient to being called badly. Three principles cover most of the ground.
 
-- **Cache stampedes broke first.** A single malicious actor requesting `/products?id=12345` would trigger a cache miss, our Lambda would fetch the product from DynamoDB, do a 120ms compute to enrich it, and store it in Redis for 60 seconds. But if 500 clients hit that same cache miss within the same second (easy on a mobile network with retries), we’d see 500 Lambda invocations, 500 DynamoDB reads, and a 95th percentile latency spike to **1.8 seconds**—despite the cache. - **WAF false positives spiked.** The OWASP ruleset blocked legitimate traffic from mobile clients in Lagos using shared carrier IPs. We saw a 12% increase in legitimate 429s because the WAF flagged `X-Forwarded-For` manipulation attempts that were actually browser retries. - **Cost exploded.** Our AWS spend for Lambda alone jumped from $1,200/month to $3,400/month under a 10% traffic increase. The extra 1,000 WAF requests per second cost $800/month in data transfer and rule evaluations.
+1. **Request de-amplification.** Prevent one request from turning into many backend operations. Deduplicate, coalesce and cache aggressively.
+2. **Stateless admission control.** Decide whether a request is allowed before it reaches compute-heavy code, using information the edge already has.
+3. **Circuit breakers on upstream calls.** Prevent one slow dependency from cascading into a full outage.
 
-One Friday night, a single misconfigured rule blocked 40% of our mobile traffic in Nairobi for 22 minutes. That outage cost us more than the security gains were worth.
+A workable layering is:
 
+- **Edge admission** — run pre-authentication and schema checks in a CDN compute layer (for example, CloudFront Functions or Lambda@Edge) before the request reaches the API gateway.
+- **Request normalisation** — in the gateway or a thin middleware, deduplicate identical payloads and enforce strict header and body validation.
+- **Backend resilience** — wrap upstream calls in circuit breakers, bounded retries and trace sampling.
 
-## The approach that worked
+The rest of this article walks through each layer with working code and the trade-offs that matter.
 
-We stopped trying to block attacks at the edge and started making the API itself resilient. The key insight was simple: **if an attacker can’t amplify their request into a 10x load on your backend, they can’t break you.**
+## Layer 1: Edge admission
 
-We rebuilt our API layer around three principles:
+The goal of edge admission is to reject obviously invalid requests before they consume gateway or compute capacity. A minimal implementation checks three things: a well-formed authorization header, an allowlisted `Content-Type`, and a body that matches a strict schema.
 
-1. **Request de-amplification** — stop attackers from turning one request into many backend operations. 2. **Stateless admission control** — decide who gets through before they hit compute-heavy code. 3. **Circuit breakers on upstream calls** — prevent one slow backend from cascading failures.
-
-To do this, we adopted a **three-layer stack**:
-
-- **Layer 1: Edge admission** — CloudFront + Lambda@Edge to run pre-authentication logic before a request even reaches API Gateway. - **Layer 2: Request normalisation** — API Gateway + Lambda middleware to deduplicate identical payloads and enforce strict schema validation. - **Layer 3: Backend resilience** — Lambda functions wrapped in **Python 3.11** with asyncio retries, **Redis 7.2** for idempotency keys, and **OpenTelemetry 1.30** for trace sampling.
-
-The biggest win came from **idempotency keys on every mutation**. We made them required, not optional. That single change cut repeated POSTs to `/orders` by 94% under attack traffic—because 94% of attackers were just replaying old payloads.
-
-We also moved to **HTTP/2 strict header validation** in API Gateway to block request smuggling via pseudo-headers. AWS added this in 2026, but most teams still haven’t enabled it. After enabling it, we saw a 34% drop in 4xx errors from clients using old HTTP/1 libraries that sent malformed headers.
-
-
-## Implementation details
-
-### Layer 1: Edge admission with Lambda@Edge
-
-We wrote a **Node.js 20 LTS** function that runs in CloudFront’s viewer request phase. It does three things:
-
-1. Checks for a valid **JWT** in the `Authorization` header. If missing or malformed, it returns a 401 immediately—no backend hit. 2. Validates the `Content-Type` header against a strict allowlist (`application/json` only). This blocks attackers sending form-data or XML that our backend can’t parse. 3. Enforces a **strict schema** using **Zod 3.23** on the request body. Any payload that doesn’t match the schema gets a 400 before it hits API Gateway.
-
-Here’s the code we deployed to Lambda@Edge:
+The example below uses a schema validation library for Node.js. Any equivalent library in the same category works; the pattern matters more than the specific package.
 
 ```javascript
 // lambda-at-edge/admission.js
@@ -74,19 +63,22 @@ const OrderSchema = z.object({
   idempotency_key: z.string().uuid(),
 });
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   const request = event.Records[0].cf.request;
-  
-  // 1. JWT check
-  if (!request.headers['authorization']?.[0]?.value?.startsWith('Bearer ')) {
+
+  // 1. Authorization header shape check.
+  // Note: this validates shape only. Signature verification belongs
+  // where you have the key material and clock, not at the edge.
+  const auth = request.headers['authorization']?.[0]?.value;
+  if (!auth || !auth.startsWith('Bearer ')) {
     return {
       status: '401',
       statusDescription: 'Unauthorized',
-      body: 'Missing or invalid JWT',
+      body: 'Missing or invalid Authorization header',
     };
   }
-  
-  // 2. Content-Type check
+
+  // 2. Content-Type allowlist.
   const contentType = request.headers['content-type']?.[0]?.value;
   if (contentType !== 'application/json') {
     return {
@@ -95,47 +87,60 @@ exports.handler = async (event) => {
       body: 'Content-Type must be application/json',
     };
   }
-  
-  // 3. Body validation
+
+  // 3. Body validation. Reject before the request reaches the gateway.
+  let parsed;
   try {
-    const body = JSON.parse(request.body);
-    OrderSchema.parse(body);
+    parsed = JSON.parse(request.body);
+  } catch {
+    return {
+      status: '400',
+      statusDescription: 'Bad Request',
+      body: 'Malformed JSON',
+    };
+  }
+
+  try {
+    OrderSchema.parse(parsed);
   } catch (error) {
     if (error instanceof ZodError) {
       return {
         status: '400',
         statusDescription: 'Bad Request',
-        body: JSON.stringify({ errors: error.errors }), // Don't leak full error
+        body: JSON.stringify({ error: 'schema_validation_failed' }),
       };
     }
     return {
       status: '500',
       statusDescription: 'Internal Server Error',
+      body: 'validation_error',
     };
   }
-  
-  return request; // Proceed to API Gateway
+
+  return request;
 };
 ```
 
-**Deployment notes:**
-- Lambda@Edge supports **Node.js 20 LTS** and **Python 3.11**. We chose Node for speed and bundle size. - The function adds **~15ms** to the request path, but we saved **120ms** on the backend by rejecting bad payloads early. - Cost: **$0.60 per million requests** in us-east-1. Worth it.
+Three implementation notes that are easy to get wrong:
 
+- **Do not attempt full JWT verification at the edge unless you have a stable key source.** Key rotation and clock skew are easier to handle in one place. Shape validation at the edge plus signature verification at the gateway is usually the right split.
+- **Return generic error bodies.** Detailed validation errors are useful to attackers probing your schema. Log the detail; return a code.
+- **Measure the added latency, do not assume it.** Instrument the edge function with a histogram of its own execution time, and compare p50 and p99 against the same route with the function disabled. A few milliseconds at the edge is often cheaper than the compute it prevents, but the only way to know for your workload is to measure both sides.
 
-### Layer 2: Request normalisation in API Gateway
+## Layer 2: Request normalisation and idempotency
 
-We added a **Lambda middleware** in API Gateway that runs before our business logic. It does two things:
+The second layer sits between the edge and your business logic. It does two things: it rejects requests that carry HTTP/2 pseudo-headers, and it deduplicates identical mutations using an idempotency key.
 
-1. **Deduplicates identical payloads** using a **Redis 7.2** cache with a TTL of 5 seconds. If two requests come in with the same `idempotency_key`, only the first one proceeds. 2. **Enforces strict header parsing** to block HTTP/2 pseudo-header smuggling. API Gateway now rejects any request with `:method`, `:path`, or `:scheme` headers—they’re reserved and should never come from a client.
+Pseudo-headers (`:method`, `:path`, `:scheme`, `:authority`) are part of the HTTP/2 wire format and are consumed by the protocol implementation. They should never appear as ordinary request headers. If your gateway or middleware sees them in the header collection it passes to your application, that is a sign of misconfiguration or smuggling, and the request should be rejected rather than forwarded.
 
-Here’s the middleware in **Python 3.11**:
+Idempotency keys are the higher-leverage change. Make them required on every mutation endpoint, not optional. A replay of an old payload then becomes a cheap cache hit instead of a second write.
 
 ```python
 # api-gateway/middleware.py
 import os
 import redis.asyncio as redis
 from fastapi import FastAPI, Request, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 
 app = FastAPI()
 
@@ -156,165 +161,133 @@ async def create_order(request: Request):
     try:
         payload = await request.json()
         order = OrderRequest(**payload)
-    except Exception as e:
-        raise HTTPException(status_code=400, detail="Invalid payload")
-    
-    # Deduplicate using idempotency key
-    exists = await redis_client.exists(order.idempotency_key)
-    if exists:
-        return {"status": "duplicate", "order_id": order.idempotency_key}
-    
-    await redis_client.setex(order.idempotency_key, 5, "1")
-    
-    # Business logic here...
+    except (ValueError, ValidationError):
+        raise HTTPException(status_code=400, detail="invalid_payload")
+
+    # SET NX EX is atomic: only the first caller wins.
+    # If the key already exists, this is a replay.
+    acquired = await redis_client.set(
+        f"idem:{order.idempotency_key}",
+        "1",
+        nx=True,
+        ex=5,
+    )
+    if not acquired:
+        return {"status": "duplicate", "idempotency_key": order.idempotency_key}
+
+    # Business logic here. On failure, delete the key so the client
+    # can legitimately retry.
+    return {"status": "accepted", "idempotency_key": order.idempotency_key}
 ```
 
-**Key configs:**
-- Redis TTL: **5 seconds** — enough to cover retries, short enough to avoid stale keys. - Error handling: If Redis is down, we fail open—allow the request through. We’d rather process a duplicate than block all orders. - Memory: Each key is 36 bytes (UUID). With 1M keys/day, that’s **36MB** in Redis—well within the free tier.
+The important detail is `SET ... NX EX`, which is atomic. A naive `EXISTS` followed by `SET` has a race window in which two concurrent requests both observe the key as absent and both proceed — exactly the behaviour idempotency keys are supposed to prevent.
 
+**Choosing the TTL.** The TTL should be longer than the longest realistic client retry window and shorter than the period over which a client might legitimately want to repeat a logically distinct request. Five seconds covers immediate retries from a flaky connection. If your clients retry with exponential backoff over minutes, a TTL of 5 seconds is too short; measure your client retry distribution and set the TTL above the 99th percentile.
 
-### Layer 3: Backend resilience
+**Failure mode: Redis unavailable.** Two options: fail open (process the request, log the miss) or fail closed (reject). Failing open risks duplicate writes; failing closed risks an outage that is worse than duplicates. For most order or payment flows, failing open with a loud alert is the safer default, because the duplicate is recoverable and the outage is not.
 
-Our Lambda functions now run in **Python 3.11** with **asyncio** and **aioboto3** for DynamoDB calls. We added three resilience patterns:
+**Memory.** A UUID string is 36 bytes. At 1,000,000 keys per day with a 5-second TTL, the steady-state key count is bounded by `1,000,000 / 86,400 * 5 ≈ 58` keys, not 1,000,000. The figure that matters is the *concurrent* key count, which is tiny. Compute it as `requests_per_second * ttl_seconds` and add overhead for the Redis key prefix and object metadata.
 
-1. **Circuit breakers** using **pybreaker 4.3** to stop calling slow backends. 2. **Retry budgets** — only retry 3 times, with exponential backoff capped at 2 seconds. 3. **Trace sampling** using **OpenTelemetry 1.30** and **AWS X-Ray** to drop traces for known bad patterns (e.g., repeated retries from the same IP).
+## Layer 3: Backend resilience
 
-Here’s the circuit breaker setup:
+The third layer protects against slow dependencies. The pattern is a circuit breaker around each upstream call, with bounded retries and a retry budget.
 
 ```python
 # lambdas/order_service.py
-from pybreaker import CircuitBreaker
-from aioboto3 import DynamoDBClient
 import asyncio
+from pybreaker import CircuitBreaker
 
 order_breaker = CircuitBreaker(fail_max=5, reset_timeout=30)
 
 @order_breaker
-async def get_product(product_id: str):
-    async with DynamoDBClient() as ddb:
-        response = await ddb.get_item(
-            TableName="products",
-            Key={"id": {"S": product_id}},
-        )
-        return response.get("Item")
+async def get_product(ddb, product_id: str):
+    response = await ddb.get_item(
+        TableName="products",
+        Key={"id": {"S": product_id}},
+    )
+    return response.get("Item")
 
-async def create_order(order: OrderRequest):
+async def create_order(ddb, order):
     try:
-        product = await get_product(order.items[0]["product_id"])
-    except Exception as e:
-        if order_breaker.state == "open":
-            raise HTTPException(
-                status_code=503, detail="Order service unavailable"
-            )
+        product = await get_product(ddb, order.items[0]["product_id"])
+    except Exception:
+        if order_breaker.current_state == "open":
+            raise RuntimeError("order_service_unavailable")
         raise
+    # ... rest of the order flow
 ```
 
-**Performance impact:**
-- Circuit breaker adds **~1ms** per call. - DynamoDB retries with circuit breakers cut our p95 latency from **420ms to 180ms** under load. - Cost: **$0.000013 per DynamoDB call** vs. **$0.000017** with retries—saves **$200/month** at our scale.
+Notes on the pattern:
 
+- **`fail_max=5` and `reset_timeout=30` are starting points, not defaults.** The right values depend on your dependency's failure distribution. Instrument both the open and half-open transitions; a breaker that never opens is not protecting anything, and one that flaps is causing its own outage.
+- **Bound retries explicitly.** Three attempts with exponential backoff capped at a couple of seconds is a common shape. Unbounded retries under load are a self-inflicted amplification attack.
+- **Sample traces deliberately.** Trace every error and a low percentage of successes. Tracing every request during an attack is itself expensive and produces data you will not read.
 
-## Results — the numbers before and after
+## How to measure whether this is working
 
-| Metric | Before (Q4 2026) | After (Q2 2026) | Change |
-|---|---|---|---|
-| 95th percentile latency (mobile) | 340ms | 150ms | **-56%** |
-| Attack traffic blocked at edge | 0% | 78% | **+78%** |
-| Lambda cost (per 1M requests) | $3.20 | $1.90 | **-41%** |
-| WAF false positives | 12% | 3% | **-75%** |
-| Outage frequency (per month) | 2.3 | 0.4 | **-83%** |
-| Redis memory usage (per day) | N/A | 36MB | **+36MB** |
+Any claim about latency or cost reduction depends entirely on your workload. The honest approach is to instrument the specific counters that would show the effect, and compare before and after on the same route.
 
-**Key takeaways:**
+Instrument these:
 
-- **Latency dropped 56%** because we stopped recomputing identical requests. The Redis deduplication layer alone cut 210ms from the critical path. - **Cost dropped 41%** because we rejected bad requests before they hit Lambda and DynamoDB. The biggest win was cutting repeated POSTs to `/orders`—we saw a **94% reduction** in duplicate traffic. - **Security improved 78%** because we moved admission logic to the edge, where it’s cheaper and harder to bypass. The HTTP/2 header validation alone cut 34% of malformed requests.
+- **Edge rejection rate**, split by reason (auth shape, content type, schema, pseudo-header). A sudden shift in the mix is an early warning of a new attack pattern.
+- **Cache miss fan-out**, defined as the number of backend operations triggered per cache miss on a given key. This is the metric that reveals cache stampedes.
+- **Duplicate request ratio**, defined as the fraction of mutation requests that hit an existing idempotency key. Before enabling idempotency, this ratio is invisible; after enabling it, it tells you how much replay traffic you had.
+- **Circuit breaker state transitions** and the time spent open.
+- **Cost per thousand requests**, computed from your provider's billing dimensions, not from an aggregate monthly bill.
 
-Most teams treat them as optional, but making them required cut our attack surface almost in half.
-
-
-## What we’d do differently
-
-1. **We’d start with observability, not rules.**
-   We wasted two weeks tuning the WAF because we didn’t have good baselines. If we’d instrumented our API with **OpenTelemetry 1.30** earlier, we’d have seen the cache stampedes in real time and fixed them with Redis TTL tuning instead of rule tweaking.
-
-2. **We’d use a circuit breaker library from day one.**
-   We built our own retry logic at first—it was 40 lines of code and missed edge cases. **pybreaker 4.3** saved us from writing fragile retry code.
-
-3. **We’d enforce HTTP/2 strict header parsing in API Gateway from week one.**
-   This is a one-click setting in AWS, but most teams don’t know it exists. Enabling it would have blocked the request smuggling attacks we saw in logs without any code changes.
-
-4. **We’d measure attack traffic, not just traffic.**
-   We didn’t have a metric for "requests that should have been blocked at the edge" until we built a custom CloudWatch dashboard. Now we track it as a percentage of total traffic—it’s our leading indicator for new attack patterns.
-
-
-## The broader lesson
-
-The new wave of API attacks isn’t about breaking encryption or injecting SQL. It’s about **amplification**—turning a single cheap request into a 10x load on your backend. The attackers aren’t hackers in hoodies; they’re bots running on stolen cloud credits, cycling through leaked password lists to find APIs without rate limits or schema validation.
-
-The fix isn’t more WAF rules or bigger instances. It’s **making your API stateless, strict, and cheap to reject.**
-
-- **Stateless:** Use idempotency keys and Redis to deduplicate requests before they hit compute. - **Strict:** Enforce schema validation at the edge—reject malformed payloads before they parse. - **Cheap to reject:** Run admission logic in Lambda@Edge or CloudFront Functions, where a 400 response costs $0.0000003 instead of $0.002 in Lambda.
-
-This isn’t a security silver bullet. It’s a **shift from perimeter defence to request hygiene**—and it works because attackers rely on sloppy APIs.
-
-
-## How to apply this to your situation
-
-You don’t need to rebuild your entire API to get value. Start with these three steps, in order:
-
-1. **Enable HTTP/2 strict header parsing in API Gateway** (AWS Console → API Gateway → Settings → Enable HTTP/2 strict header validation). This blocks request smuggling attacks with no code changes. 2. **Add an idempotency key to every mutation endpoint** and make it required. Use a UUID v4 format and validate it with **Zod 3.23** or **Pydantic 2.7**. Store keys in **Redis 7.2** with a 5-second TTL. 3. **Instrument your API with OpenTelemetry 1.30** and add a custom metric for "edge-rejected requests". If this metric spikes, you’re under attack. If it’s zero, you’re missing obvious attack patterns.
-
-Here’s a quick script to check if your API already supports idempotency keys:
+Then run the comparison:
 
 ```bash
-# Check if your POST /orders endpoint requires an idempotency key
-curl -X POST https://api.yourcompany.com/orders \
+# Example: compare p95 latency for one route before and after enabling
+# edge admission. Run the same load profile against both revisions.
+hey -n 20000 -c 200 -m POST \
   -H "Content-Type: application/json" \
-  -d '{"user_id": "123e4567-e89b-12d3-a456-426614174000", "items": []}' 
-
-# If it returns 400 with "Missing idempotency_key", you're already half-way there.
-# If it returns 200 and creates a duplicate order, you're not enforcing it.
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"user_id":"...","items":[],"idempotency_key":"..."}' \
+  https://api.example.com/orders
 ```
 
+Any percentage improvement you report should be derived from these measurements on your own traffic. Numbers from someone else's deployment do not transfer, because the ratio of attack traffic to legitimate traffic, the cache hit rate and the cost model all differ.
 
-## Resources that helped
+## A decision checklist before you build this
 
-- [AWS Docs: HTTP/2 strict header validation](https://docs.aws.amazon.com/apigateway/latest/api/apigateway-http-api.html) — Enabled by default in 2026, but most teams don’t know it exists. - [Zod 3.23 schema validation](https://github.com/colinhacks/zod) — The fastest way to validate payloads in Node.js or Python. - [pybreaker 4.3 circuit breaker](https://github.com/danielfm/pybreaker) — Lightweight, async-friendly circuit breakers. - [OpenTelemetry 1.30 Python](https://opentelemetry.io/docs/instrumentation/python/) — Instrument your API before tuning rules. - [Redis 7.2 idempotency pattern](https://redis.io/docs/manual/persistence/) — Use `SET key value EX 5 NX` for idempotency keys.
+Not every API needs all three layers. Use the following to decide where to start.
 
+| Signal | What it suggests |
+|---|---|
+| Duplicate mutations appear in logs | Add idempotency keys first; this is the cheapest high-impact change |
+| p99 latency spikes correlate with cache misses | Investigate cache stampede; consider request coalescing and longer TTLs on hot keys |
+| Login endpoints see high request volume from many IPs | Credential stuffing; per-IP rate limits will not help, per-account lockout and proof-of-work will |
+| Header anomalies appear in gateway logs | Enable strict pseudo-header handling and reject malformed requests at the gateway |
+| One upstream dependency causes cascading failures | Add a circuit breaker before adding more capacity |
 
-## Frequently Asked Questions
+If none of these signals appear in your telemetry, the first action is not to add a layer — it is to add the instrumentation that would reveal them.
 
-**Why not just use AWS WAF rate limiting instead of idempotency keys?**
+## FAQ
 
-WAF rate limiting blocks at the IP level, but attackers use botnets with thousands of IPs—rate limiting just shifts the attack to other IPs. Idempotency keys work because they’re per-request, not per-IP. We saw a 78% drop in attack traffic after adding them, while WAF rate limits only caught 12% of the same traffic.
+**Why not rely on WAF rate limiting instead of idempotency keys?**
+Per-IP rate limiting shifts a distributed attack to other IPs rather than stopping it. Idempotency keys operate per logical request, so a replay is rejected regardless of source. The two are complementary: rate limiting reduces volume, idempotency reduces the cost of each accepted request.
 
-**How much Redis memory do I need for idempotency keys?**
+**What TTL should idempotency keys use?**
+Longer than the 99th percentile of your client retry interval, and short enough that a deliberate repeat request is not mistaken for a retry. Measure your clients; do not copy a number.
 
-Each key is 36 bytes (UUID v4). With 1M keys/day and a 5-second TTL, you’ll use **36MB/day**. Even at 10M keys/day, that’s **360MB**—well within the free tier of most Redis services. The real cost is the network round-trip, not memory.
+**Should the middleware fail open or closed if the deduplication store is unavailable?**
+For most write paths, fail open with an alert. A duplicate write is usually recoverable; a total write outage is not. The exception is flows where a duplicate has financial or safety consequences, where fail closed is the correct trade-off.
 
-**What if Redis is down when a client retries?**
+**Is edge admission worth it for a low-traffic API?**
+The value is proportional to how expensive a rejected request is on your backend. If rejection is already cheap, edge admission adds complexity for little gain. Start with schema validation at the gateway and add edge admission only if measurements show rejected requests are consuming meaningful compute.
 
-Fail open. Let the request through, but log it. We’ve seen Redis outages cause 0.1% of requests to be processed twice—acceptable compared to blocking all orders. If Redis is down, your API is already degraded; don’t compound the problem by rejecting valid requests.
+**Does schema validation at the edge replace validation in the service?**
+No. Treat edge validation as a load-shedding filter, not a security boundary. The service must still validate, because the edge can be bypassed by internal callers, direct gateway access or misconfiguration.
 
-**Is this overkill for a small API with 10k requests/day?**
+## One action for the next 30 minutes
 
-No. The overhead is low: Lambda@Edge adds **~15ms**, Redis adds **~1ms**, and schema validation adds **~2ms**. For 10k requests/day, that’s **170ms of total overhead**—less than the latency of a single mobile network hop. The real cost is the engineering time, not runtime. Start with the HTTP/2 strict parsing and schema validation; add idempotency keys if you see duplicate traffic.
+Pick a single mutation endpoint and send it a request with no idempotency key:
 
-Stop debugging slow APIs. Today, check if your mutation endpoints require an idempotency key. If not, add one—it takes 30 minutes to implement and often blocks half your attack traffic overnight.
+```bash
+curl -i -X POST https://api.example.com/orders \
+  -H "Content-Type: application/json" \
+  -d '{"user_id":"123e4567-e89b-12d3-a456-426614174000","items":[]}'
+```
 
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 20, 2026
+If the response is a success rather than a 400, that endpoint will accept replays. Add a required idempotency key to it, store the key with an atomic `SET ... NX EX`, and log the duplicate ratio for a week. That single measurement will tell you whether the rest of this article is worth building.

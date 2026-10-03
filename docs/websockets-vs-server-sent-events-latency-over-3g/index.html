@@ -64,7 +64,7 @@
       "description": "Cut agent status latency 30% with Server-Sent Events in East Africa — ALB timeout tuning, Safari gotchas, and when WebSocket actually wins",
       "datePublished": "2026-08-21T07:12:18+00:00",
       "dateModified": "2026-08-21T07:12:18+00:00",
-      "wordCount": 3713,
+      "wordCount": 3736,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -245,7 +245,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3713 words
+                        &nbsp;·&nbsp; 3736 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-21
                         
@@ -553,12 +553,25 @@ es.onmessage = (e) =&gt; {
 <p>If your feature is read-heavy and you’re on a tight timeline, start with SSE and add WebSocket only if users demand chat. If your feature is chat-heavy, start with WebSocket but harden the reconnect logic and proxy timeouts first.</p>
 <p>The mistake teams make is optimizing the protocol before measuring where latency actually breaks. In East Africa, the latency killer isn’t the protocol—it’s the hand-off between 3G and 4G, the proxy timeouts, and the browser’s reconnect backoff. Measure those first, then pick the tool that survives them.</p>
 <p>Check your ALB idle timeout now. If it’s 60 seconds and you’re using SSE, increase it to 300 seconds and redeploy. That’s the first step to surviving a 3G hand-off without a reconnect storm.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/which-agent-stack-survives-3g/">Which agent stack survives 3G?</a></li>
+<li><a href="https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
+<li><a href="https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/">Why progressive web apps fail on 2G and how to fix…</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

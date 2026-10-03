@@ -64,7 +64,7 @@
       "description": "Tool-use retries that scale vs thundering herds — shared token buckets, single-flight caching, and the retry amplification trap that turns a blip into an…",
       "datePublished": "2026-09-22T16:35:21+00:00",
       "dateModified": "2026-09-22T16:35:21+00:00",
-      "wordCount": 2694,
+      "wordCount": 2687,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -249,7 +249,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2694 words
+                        &nbsp;·&nbsp; 2687 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-22
                         
@@ -451,12 +451,18 @@ class SingleFlight:
 <p>Three is the practical maximum for most tools. Beyond that, you're usually retrying into a persistent failure, and the retries just add load. If a tool fails 3 times in a row with the same error, fail the operation and let the caller decide. The exception is transient network errors, where 5 retries with a 10-second cap is reasonable.</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>The next step is to measure your current retry ratio. Open your tool wrapper code, add a counter that increments on every retry, and export it as a metric labeled by tool name. Deploy it, wait 24 hours, and look at the ratio. If it's under 2%, you're fine. If it's above 5%, you have a herd, and the token bucket pattern above is the fix. Start with the single tool that has the highest retry count — that's where the leverage is.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

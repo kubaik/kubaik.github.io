@@ -64,7 +64,7 @@
       "description": "Cut on-call false positives 40% with PagerDuty AI Incident Response vs FireHydrant AI Auto-Resolve in 2026 — real benchmarks, cost breakdowns, and the exact…",
       "datePublished": "2026-07-02T12:04:55+00:00",
       "dateModified": "2026-09-19T11:42:21+00:00",
-      "wordCount": 2269,
+      "wordCount": 2161,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -250,7 +250,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2269 words
+                        &nbsp;·&nbsp; 2161 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -261,9 +261,9 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026 on-call engineers juggle 120+ alerts a day on average, up from 60 in 2026. I learned this the hard way when a 500 ms latency spike on a single endpoint triggered 47 pages across three teams during a peak hour. The root cause? A race condition in our circuit breaker; the signal-to-noise ratio was so bad that the AI summarizer in our incident tool reported “no anomalies detected” for the same 15 minutes the page was flooding Slack.</p>
+<p>In 2026 on-call engineers juggle 120+ alerts a day on average, up from 60 in 2026. The root cause? A race condition in our circuit breaker; the signal-to-noise ratio was so bad that the AI summarizer in our incident tool reported “no anomalies detected” for the same 15 minutes the page was flooding Slack.</p>
 <p>That incident cost us 3.2 engineering hours in false positives alone, plus another 2.1 hours of context switching. Multiply that by the 2026 median fully-loaded engineer rate of $120/hour and you get $672 wasted on a single false-positive surge. The tooling we chose made the problem worse, not better.</p>
-<p>This post is about two tools that promise AI-assisted incident response: PagerDuty AI Incident Response (v2.4) and FireHydrant AI Auto-Resolve (v3.8). Both claim to cut mean time to acknowledge (MTTA) and mean time to resolve (MTTR) by double digits. The catch: one made our on-call rotation more brittle; the other actually reduced fatigue. I’ll show you where each excels, where each craters, and a decision framework that has saved us $18k in 2026 so far.</p>
+<p>This post is about two tools that promise AI-assisted incident response: PagerDuty AI Incident Response (v2.4) and FireHydrant AI Auto-Resolve (v3.8). Both claim to cut mean time to acknowledge (MTTA) and mean time to resolve (MTTR) by double digits. The catch: one made our on-call rotation more brittle; the other actually reduced fatigue.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p>PagerDuty AI Incident Response (PD AIR) is embedded inside the PagerDuty platform. It ingests alert payloads, past incident history, and infrastructure telemetry to generate a one-line summary and optional auto-resolution recommendation. Under the hood it uses a fine-tuned 7B-parameter model running on PagerDuty’s private GPU cluster (A100 40GB, CUDA 12.1). The model is retrained weekly on anonymized incident data from 8,000+ PagerDuty customers.</p>
 <p>Where it shines
@@ -271,7 +271,6 @@
 <p>We use it at $39/user/month on the Enterprise plan, which includes 10k AI inference credits per month. Extra credits cost $0.003 per call after that.</p>
 <p>Where it stumbles
 - <strong>Cold-start false positives</strong>: In the first 48 hours after a new service ships, PD AIR’s similarity model returns 28% false positives because the semantic index is still sparse. - <strong>Cost at scale</strong>: A team of 20 engineers generating 5,000 alerts/day burns through the included credits in 3.6 days and triggers an $820 overage bill. - <strong>Custom model drift</strong>: If you tweak your alert payload schema, you must re-upload your runbook PDFs to retrain the model; otherwise similarity scores drop 18%.</p>
-<p>The model still misclassified 12% of our custom metrics alerts until we added a “severity” field.</p>
 <h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
 <p>FireHydrant AI Auto-Resolve (FH AAR) is a standalone SaaS that sits between your alert router (PagerDuty, Opsgenie, etc.) and the resolver. It ingests alert payloads, parses them into a normalized schema (OpenTelemetry 1.3), runs a lightweight LLM (Mistral-7B-Instruct-v0.3) on a shared GPU instance, and returns either “auto-resolve” or “escalate.” The service is priced at $89/month/1000 alerts processed with a free tier of 500 alerts/month.</p>
 <p>Where it shines
@@ -279,7 +278,7 @@
 <p>At our scale of 2,500 alerts/day, FH AAR costs $68/day, or $2,040/month, which is cheaper than PD AIR’s overage equivalent.</p>
 <p>Where it stumbles
 - <strong>No blast radius scoring</strong>: Without Prometheus integration, FH AAR treats every alert equally, so a single noisy microservice can still trigger pages. - <strong>Slack bot latency</strong>: The first message back to Slack after an auto-resolve can take 2–3 seconds, which feels sluggish at 3 AM. - <strong>Vendor lock-in</strong>: If you leave FireHydrant, exporting your playbooks requires a support ticket; there’s no one-click backup.</p>
-<p>The biggest surprise was that FH AAR’s auto-resolve rate stabilized at 42% after two weeks, matching what we saw in PD AIR. The difference is that FH AAR did it without the GPU bill.</p>
+<p>The difference is that FH AAR did it without the GPU bill.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
 <p>We ran a controlled experiment from 2026-05-01 to 2026-05-14 using 12,000 synthetic alerts that mimicked real traffic patterns. Each tool processed the same payloads in random order.</p>
 <table>
@@ -475,7 +474,7 @@
 - You already run Prometheus and have clean runbooks. - Your alert volume is under 5,000/day. - Blast radius detection is mission-critical (think payment systems, auth gateways). - You’re willing to spend $1.5k/month and accept 22 minutes of onboarding per engineer.</p>
 <p>Use <strong>FireHydrant AI Auto-Resolve v3.8</strong> if:
 - Your alert mix includes DogStatsD, New Relic, and custom JSON. - You’re above 5,000 alerts/day or expect rapid growth. - You want lowest total cost and faster onboarding. - You can tolerate higher false positives and will add your own blast-radius scoring later.</p>
-<p>I ignored my own framework once and chose FH AAR for a payments service. After two weeks the false-positive surge cost us $2,400 in engineer hours. We swapped to PD AIR and cut false positives to 4% within a sprint.</p>
+<p>I ignored my own framework once and chose FH AAR for a payments service. After two weeks the false-positive surge cost us $2,400 in engineer hours.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>After eight months of alternating between the two tools, the verdict is clear: <strong>use PagerDuty AI Incident Response when blast radius matters, and FireHydrant AI Auto-Resolve when blast radius can wait and cost matters more.</strong></p>
 <p>That’s it. No fluff.</p>
@@ -488,19 +487,20 @@
 <p><strong>what’s the real cost per 1k alerts for each tool in 2026</strong></p>
 <p>For PagerDuty AI Incident Response v2.4: $3.90 base + $0.30 overage = $4.20 per 1k alerts if you stay within the 10k monthly credits. FireHydrant AI Auto-Resolve v3.8 is flat $3.56 per 1k alerts with no credits. At 5k alerts/day, PD AIR costs $630/month vs FH AAR $534/month. At 12k alerts/day, PD AIR hits overage and jumps to $900/month while FH AAR stays at $1,281/month total.</p>
 <p><strong>how do i add blast radius scoring to firehydrant</strong></p>
-<p>Write a lightweight Lambda (Python 3.11) that queries Prometheus 2.45 every 60 seconds, computes a blast-radius score for each service, and posts it to FireHydrant’s webhook endpoint as a custom field. We did it in 180 lines of code and cut false positives by 40%. The Lambda costs $1.20/month on AWS Lambda with arm64.</p>
+<p>Write a lightweight Lambda (Python 3.11) that queries Prometheus 2.45 every 60 seconds, computes a blast-radius score for each service, and posts it to FireHydrant’s webhook endpoint as a custom field. The Lambda costs $1.20/month on AWS Lambda with arm64.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI ops vs human ops: the incidents that broke them</a></li>
+<li><a href="https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">Self-healing AI agents vs rule-based ops: 40% fewer</a></li>
+<li><a href="https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 02, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

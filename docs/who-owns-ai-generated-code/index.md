@@ -1,214 +1,123 @@
 # Who owns AI-generated code?
 
-Most pair programming guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.
+When an AI assistant writes a large share of a pull request, the interesting question is not who typed the lines. It is who is accountable when those lines misbehave in production at 2 a.m. Teams that adopt AI pair programming without answering that question tend to hit the same failure modes: reviewers rubber-stamp plausible-looking code, PRs balloon in size, and a generated query or auth flow slips past tests that only cover the happy path.
 
-## The situation (what we were trying to solve)
+This article lays out a workable ownership model for AI-assisted development, the failure modes it prevents, and a concrete way to measure whether it is working in your repository.
 
-In late 2026, our team at NairaPay had to double our engineering output in six months while keeping our 2026 on-call SLA at 99.9%. The product team wanted 8 new money-transfer flows, each with compliance checks, audit logs, and real-time fraud scoring. We were at 40 developers, and the hiring pipeline wasn’t keeping up. The CTO asked us to pilot an AI pair-programming tool to fill the gap. I ran the pilot myself on one flow—the P2P instant transfer between two wallets—and within a week it produced 1,200 lines of TypeScript with unit tests, all passing on the first run. That result felt too good to be true, so I dug in.
+## The ownership question, stated precisely
 
-We needed to know what happens to code ownership when an AI writes it. Does the AI become a co-author? Does the human reviewer still own the final artifact? Can we still sign off on security and compliance if the AI generated 80% of the lines? We decided to treat the AI like a junior engineer: it can write code, but the senior engineer is still the one who signs off, merges, and takes pager duty when it breaks at 2 a.m.
+Code ownership is not about authorship. It is about who signs off on behavior. Three distinct responsibilities are usually bundled together and need to be separated when an AI is in the loop:
 
-Our initial metrics were simple: cycle time from ticket to merge, number of review comments per PR, and the number of production incidents attributed to new code in the first 30 days. We also tracked cost per story point delivered, including the AI tooling spend.
+1. **Authorship** — who produced the characters in the diff. With AI assistance this is often mixed and hard to attribute line by line.
+2. **Review** — who read the change, understood the invariant it is supposed to uphold, and confirmed the code enforces that invariant.
+3. **Accountability** — who is paged when the code fails, who writes the postmortem, and who signs the compliance artifact.
 
-## What we tried first and why it didn’t work
+A useful default: treat the AI like a junior contributor who can write code but cannot sign off, cannot merge, and does not carry a pager. The human reviewer owns the behavior of the merged artifact regardless of how many lines the AI produced. That single sentence resolves most of the ambiguity, but it has to be enforced mechanically, not just stated in a wiki page.
 
-We started with GitHub Copilot Enterprise (v1.120) in June 2026. The marketing promised "autocomplete at the speed of thought," but in practice we hit three blockers:
+## Failure modes when ownership is implicit
 
-1. **Ownership drift**: Developers began assuming the AI’s suggestions were ready to ship. One senior engineer merged a Copilot-generated SQL query that bypassed our row-level security policy. The query returned 1.2 million rows instead of 12, and the replica database ran out of memory, causing 12 minutes of API timeouts. The on-call rotation burned the entire incident budget for the quarter on that one query.
+These are the patterns that show up repeatedly when teams let AI assistance in without an explicit ownership rule.
 
-2. **Review inflation**: PRs ballooned from an average of 40 lines to 400 lines because Copilot inserted entire helper functions with no context. Reviewers spent 45 minutes per PR just understanding the structure, and the average review score dropped from 4.2 to 2.8 on our 5-point scale. Curiously, the AI’s tests all passed, but they weren’t testing the right invariants—only the happy path.
+**Ownership drift.** Developers begin to treat AI suggestions as pre-reviewed. The diff looks clean, the tests pass, and the reviewer assumes someone else checked the logic. A typical consequence is a generated database query that bypasses a row-level security policy because the model had no knowledge of that policy. The query returns far more rows than intended, and a replica or downstream service runs out of memory.
 
-3. **Cost creep**: We initially budgeted for $12 per developer per month, but by September we were at $48 per developer because we turned on the advanced code analysis and security scanning add-ons. That’s $1,920 a month for 40 developers—more than we spent on our CI minutes.
+**Review inflation.** Because generating code is cheap, PRs grow. A change that would have been 40 lines becomes 400, including helper functions with no context. Reviewers spend their entire budget understanding structure instead of verifying invariants, and review quality drops even as review volume rises.
 
-The prompt engineering docs were full of fluff about "intent" and "context." None of it worked. The model kept generating unsafe queries until we disabled Copilot for SQL files entirely. That was a hard lesson: you can’t patch culture with a config file.
+**Happy-path tests.** AI-generated tests frequently assert the behavior of the code that was just written, which means they confirm the implementation rather than the requirement. Edge cases — token rotation, currency rounding, partial failures — are exactly what the generated tests tend to miss.
 
-## The approach that worked
+**Cost creep.** Per-seat AI tooling is usually a small line item until advanced features (chat, custom rules, security scanning) are enabled. The budget then grows faster than headcount, and the cost is easy to miss because it is spread across many small invoices.
 
-In August 2026 we switched to Cursor Rules (v0.31 with Sonnet 3.5) and wrote a 200-line policy file that enforced our ownership model. The policy had four rules:
+**Prompt laundering.** If the AI writes the prompt as well as the code, the business invariant never gets written down by a human. The resulting code is a plausible reconstruction of the spec rather than an enforcement of it.
 
-1. **Prompt to PR ratio**: Every PR must have a human-written prompt in the description. The prompt must state the business invariant and the security boundary. The AI can’t generate the prompt—it can only respond to it.
+## A workable ownership model
 
-2. **Code ownership tags**: Every file must have a `// @owner: <team>` tag at the top. The AI can edit under the owner’s tag, but it can’t move or delete the tag. If it does, the linter fails the build.
+The model below has four rules. Each one is designed to be enforceable in CI, because rules that live only in documentation get ignored under deadline pressure.
 
-3. **Review stubs**: Every AI-generated function must include a `// @review-notes: <TODO>` block. The human reviewer fills this in during review. The absence of the block blocks the merge in CI.
+**Rule 1 — The human writes the prompt.** Every AI-assisted PR must include a human-written prompt in the description stating the business invariant and the security boundary. The AI may respond to the prompt; it may not author it. This forces the requirement to exist in prose before it exists in code.
 
-4. **Security gate**: Every PR must pass a custom OWASP Top 10 scan written in Python 3.11 using Bandit 1.7.7. The scan runs in GitHub Actions and must return zero high/critical issues before the PR can be approved.
+**Rule 2 — Files carry an owner tag.** Every file begins with a tag such as `// @owner: payments-team`. The AI may edit beneath the tag but may not move or delete it. A linter fails the build if the tag is missing or malformed. This keeps a named human team accountable for the file regardless of who edited it last.
 
-We also introduced a "human veto" rule: any reviewer can flag a PR as "AI-heavy" and request a full rewrite by a human if more than 70% of the lines came from the AI. That threshold was controversial, but it prevented the drift we saw with Copilot.
+**Rule 3 — AI-generated functions carry review stubs.** Each generated function includes a `// @review-notes: TODO` block that the human reviewer must fill in. The presence of an empty stub blocks the merge. This is a forcing function: it makes silent approval impossible without an explicit act of omission.
 
-The Cursor Rules policy cut down the noise. PRs averaged 180 lines instead of 400, and the average review time dropped from 45 minutes to 22 minutes. The security gate caught a real vulnerability in an AI-generated OAuth flow that would have exposed password reset tokens—something the AI’s own tests missed.
+**Rule 4 — A security gate runs on every PR.** A static analysis pass must return zero high-severity findings before approval. The gate should encode the invariants your unit tests do not cover — authorization boundaries, parameterized queries, secret handling.
 
-## Implementation details
+A fifth rule is optional but effective: a **human veto**. Any reviewer can flag a PR as AI-heavy and request a human rewrite. The threshold is a policy choice; the important part is that the veto exists and is socially acceptable to use.
 
-We rolled out Cursor Rules in three phases. Phase one was a single squad: the P2P transfer team. Phase two expanded to three squads. Phase three was the entire org except security-critical repos.
+## Worked example: catching a bypassed policy
 
-**Phase one tool chain:**
-- Cursor v0.31 with Sonnet 3.5
-- Python 3.11 for Bandit scans
-- GitHub Actions (ubuntu-latest runner) for PR checks
-- Redis 7.2.4 for caching GitHub responses (saves ~300 ms per API call)
-- PostgreSQL 15.4 with row-level security policies enforced by RLS rules
+Consider a generated endpoint that looks up a user's recent transactions. The model produces something like the following, which passes a naive test because it returns the right rows for the test user:
 
-**Phase one policy file (cursor-rules.json):**
+```python
+def get_recent_transactions(user_id):
+    query = f"SELECT * FROM transactions WHERE user_id = {user_id} ORDER BY created_at DESC LIMIT 50"
+    return db.execute(query)
+```
+
+Two problems are invisible to a happy-path test. First, the query is built by string interpolation, which is an injection risk. Second, it does not filter by tenant, so in a multi-tenant schema it can return rows belonging to another tenant if the identifier is guessed or reused.
+
+A reviewer following Rule 3 has to write review notes, and the act of writing them surfaces the question "what is the security boundary here?" The prompt required by Rule 1 should have answered it: "This endpoint returns only transactions belonging to the authenticated user's tenant; it must never accept a tenant identifier from the request." With that invariant written down, the correct implementation is obvious:
+
+```python
+def get_recent_transactions(user_id, tenant_id):
+    query = (
+        "SELECT * FROM transactions "
+        "WHERE user_id = %s AND tenant_id = %s "
+        "ORDER BY created_at DESC LIMIT 50"
+    )
+    return db.execute(query, (user_id, tenant_id))
+```
+
+The security gate catches the first version if it is configured to flag string-built SQL. The prompt catches it earlier if the invariant is stated. Neither catches it if both are absent and the reviewer trusts the passing tests.
+
+## Measuring whether the model is working
+
+Do not adopt a metric you cannot compute from data you already collect. The following are all derivable from git history, CI logs, and your issue tracker.
+
+- **Median PR size in changed lines.** Compare a baseline window before the policy to a window after. Rising size is a signal that generation is outrunning review.
+- **Median time from first review request to approval.** Falling time is good only if review comments per PR stay stable or rise. Falling time with falling comments usually means rubber-stamping.
+- **Review comments per PR, split by whether they reference behavior or style.** A simple heuristic: count comments containing words like "invariant", "boundary", "tenant", "authorization", "edge case" separately from comments about naming or formatting.
+- **Security-gate findings per 100 PRs, by severity.** A gate that never fires is either unnecessary or misconfigured. Track the ratio of findings to merges.
+- **Incidents in the 30 days following merge, attributed to changed files.** This is the metric that matters most and is the hardest to attribute cleanly; even a coarse version is more useful than none.
+- **Tooling spend per active contributor per month.** Pull this from your billing export, not from memory.
+
+To measure AI contribution itself, the most robust signal available in most repositories is the presence of the review stub and the prompt in the PR description, not a line-count percentage. Line attribution is noisy because formatting, refactoring, and generated boilerplate all distort the count. If you do track a percentage, label it clearly as a heuristic and do not use it as a gate.
+
+## A decision checklist before you scale
+
+Before rolling AI assistance out beyond a pilot repository, confirm each of the following:
+
+- [ ] The ownership rule is written down and names a human role, not a tool.
+- [ ] The prompt requirement is enforced by a CI check, not by convention.
+- [ ] The owner tag format is pinned to a fixed list of team names stored in the repository.
+- [ ] The security gate runs on every PR and blocks on high-severity findings.
+- [ ] The review-stub requirement blocks merge when empty.
+- [ ] A veto path exists and has been used at least once without social penalty.
+- [ ] Tooling cost per contributor is tracked in a dashboard, not in a spreadsheet someone updates manually.
+- [ ] The pilot repository is not security-critical.
+
+If any box is unchecked, fix that before expanding. The cost of retrofitting an ownership model onto a large codebase is much higher than the cost of starting with one.
+
+## Common objections
+
+**"The tests pass, so the code is fine."** Tests confirm the behavior you thought to assert. They do not confirm the invariant you forgot to write down. The security gate and the written prompt are what cover that gap.
+
+**"Reviewers don't have time to fill in review notes."** They have time to review; the stub just makes the review visible. If the notes take more than a few minutes per function, the function is too large to review safely, which is itself useful information.
+
+**"Line-count thresholds are arbitrary."** They are. That is why they should be a veto trigger for human judgment, not an automatic rejection. The threshold's job is to start a conversation, not to end one.
+
+**"Local autocomplete has no network latency, so performance is a non-issue."** Latency from the model is usually not the bottleneck. The bottlenecks are CI time added by the security gate and the review time added by larger diffs. Measure both before assuming the tool is free.
+
+## Action for the next 30 minutes
+
+Open the repository you are most likely to pilot on. Create `.cursor/rules.json` at the root with the policy below, commit it on a branch, and open a draft PR. Then take the next AI-assisted change in your queue and check it against each rule: is there a human-written prompt, an owner tag, a filled review stub, and a passing security gate?
+
 ```json
 {
-  "prompts": {
-    "required_fields": ["business_invariant", "security_boundary"],
-    "max_length": 500
-  },
-  "ownership_tags": {
-    "required": true,
-    "tag_format": "// @owner: <team>",
-    "allow_ai_to_move": false
-  },
-  "review_stubs": {
-    "required": true,
-    "stub_format": "// @review-notes: TODO",
-    "max_empty_lines": 5
-  },
-  "security_gate": {
-    "script": ".github/workflows/bandit.yml",
-    "severity_threshold": "HIGH",
-    "fail_build": true
-  },
-  "ai_threshold": 70,
+  "prompts": { "required_fields": ["business_invariant", "security_boundary"] },
+  "ownership_tags": { "required": true, "tag_format": "// @owner: <team>" },
+  "review_stubs": { "required": true, "stub_format": "// @review-notes: TODO" },
+  "security_gate": { "severity_threshold": "HIGH", "fail_build": true },
   "veto_quorum": 1
 }
 ```
 
-**Phase two improvements:**
-- Added a custom linter (using AST from tree-sitter) to validate the `@owner` tag format. - Created a Slack bot that posts a digest of AI-generated PRs every Friday. The digest lists the PR, the human reviewer, and the AI’s contribution percentage. The bot flags PRs with >70% AI contribution so managers can spot training gaps. - Wrote a migration script in Python 3.11 that retroactively added `@owner` tags to 4,200 existing files. The script ran in 4 minutes and left a clean git history.
-
-**CI setup example (bandit.yml):**
-```yaml
-name: Security Scan
-on: [pull_request]
-jobs:
-  bandit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - run: pip install bandit==1.7.7
-      - run: |
-          bandit -r . --severity-level=HIGH --format json -o bandit-report.json || true
-      - uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: bandit-report.json
-```
-
-We ran into a surprising issue with the `@owner` tag: Cursor’s autocomplete would sometimes suggest a different team name, which broke our linter. We fixed it by pinning the tag list to a JSON file in the repo and using Cursor’s `custom_commands` to pull the list dynamically.
-
-## Results — the numbers before and after
-
-We measured four key metrics over a six-month period. The baseline was the three months before Cursor Rules (March–May 2026). The post-implementation period was September 2026–February 2026.
-
-| Metric | Baseline (Mar–May 2026) | After Cursor Rules (Sep 2026–Feb 2026) | Change |
-|---|---|---|---|
-| Median PR size (lines) | 40 | 180 | +350% |
-| Median review time (minutes) | 45 | 22 | -51% |
-| Review comments per PR | 8.2 | 5.1 | -38% |
-| Security incidents in new code (30-day window) | 3 | 0 | -100% |
-| AI tooling cost per developer/month | $12 | $34 | +183% |
-| Story points delivered per engineer/month | 8.4 | 11.2 | +33% |
-| Cycle time (ticket to merge) | 4.2 days | 2.8 days | -33% |
-
-The most surprising number was the 100% drop in security incidents. The Bandit gate caught a real issue in an AI-generated OAuth callback handler that would have exposed password reset tokens. The AI’s own unit tests missed it because the tests didn’t cover the token rotation edge case.
-
-The cost went up, but the productivity gains more than covered it. Our CFO liked the 33% increase in story points per engineer, even though the AI tooling line item doubled. The real win was the reduction in pager duty: incidents attributed to new code dropped from three in three months to zero in six months.
-
-Latency wasn’t a problem for us—Cursor’s autocomplete and chat run locally, so there’s no network round trip. The only latency spike we saw was during the Bandit scan in CI, which added 45 seconds per PR. We mitigated it by caching the Python environment and using Redis to cache the scan results for identical file sets.
-
-## What we’d do differently
-
-1. **Start with the veto rule earlier.** We introduced the 70% AI threshold after six weeks, but we should have set it on day one. It’s the only lever that actually changed behavior.
-
-2. **Train reviewers, not authors.** We ran two workshops on giving feedback to AI code. Most developers thought they already knew how to review, but they didn’t. After the workshops, review comments became actionable instead of dismissive.
-
-3. **Pin the tag list.** The `@owner` tag drift was annoying and broke CI a few times. We should have frozen the list of team names in a JSON file before the pilot.
-
-4. **Measure AI contribution, not just lines.** We started tracking the percentage of lines authored by AI, but we should have also tracked the semantic contribution: how many critical paths were AI-generated? That metric would have caught the OAuth flow issue earlier.
-
-5. **Budget for the Bandit scan.** The scan cost us 45 seconds per PR, but it saved us from a real security incident. We should have allocated extra CI minutes up front instead of retrofitting it.
-
-The AI doesn’t sign the compliance doc, the human does.
-
-## The broader lesson
-
-Code ownership isn’t about who wrote the lines—it’s about who signs off on the behavior. When you let an AI write code, you’re not outsourcing the work; you’re outsourcing the thinking. The human reviewer still owns the invariant: does this code keep money safe?
-
-The real trap is assuming the AI’s tests are sufficient. Most AI-generated tests cover the happy path and miss the edge cases that burn you at 2 a.m. Always add a human-written security gate that checks for the invariants your tests don’t cover.
-
-Another trap is letting the AI write the prompt. The prompt is where the human encodes the business rule. If the AI writes the prompt, the rule is lost—and the code becomes a cargo cult of the original spec.
-
-Finally, don’t let the AI own the file. Use `@owner` tags to enforce that the human team is responsible for the file’s behavior, not the AI. The AI can edit under the tag, but it can’t move or delete the tag. That small constraint keeps the ownership model intact.
-
-## How to apply this to your situation
-
-Start with a single repo that’s not security-critical. Pick a feature that’s well documented and has clear invariants. Write a prompt that states the invariant in one sentence, e.g., "This function must cap the transfer amount at 1 million Naira and log the event to the audit table."
-
-Then, run Cursor Rules with a 60% AI threshold and a Bandit scan. Measure PR size, review time, and incident count for two weeks. If the numbers improve, expand to the next repo. If not, roll back and try a different tool.
-
-The key is to make the ownership model explicit before you scale. Don’t let the AI write the prompt, don’t let it own the file, and always add a human-written security gate. If you skip any of these, you’ll end up debugging a 1.2-million-row query at 2 a.m.
-
-## Resources that helped
-
-- [Cursor Rules docs](https://docs.cursor.com) (version 0.31, last updated Jan 2026)
-- [Bandit 1.7.7 release notes](https://github.com/PyCQA/bandit/releases/tag/1.7.7)
-- [GitHub Actions ubuntu-latest image](https://github.com/actions/runner-images/releases/tag/ubuntu22/20260120.1)
-- [OWASP Top 10 2026](https://owasp.org/www-project-top-ten/) (used as the security gate baseline)
-- [Redis 7.2.4 changelog](https://github.com/redis/redis/releases/tag/7.2.4) (for caching GitHub API responses)
-- [Sonnet 3.5 technical report](https://arxiv.org/abs/2501.01234) (the model behind Cursor’s autocomplete)
-
-## Frequently Asked Questions
-
-**How do I prevent the AI from writing SQL queries that bypass row-level security?**
-
-Add a custom prompt to Cursor Rules that says: "Never write raw SQL. Use our ORM or our read-only view functions. If you must write SQL, include a comment with the RLS policy and a test that verifies the policy." Then add a lint rule that fails the build if the comment is missing. We caught three bypass attempts this way in the first month.
-
-**What’s a good AI contribution threshold for a new team?**
-
-Start at 50%. It’s low enough to let the AI help without overwhelming the reviewer. Once the team is comfortable, raise it to 70%. If the threshold is too high, reviewers will reject too many PRs and slow down the team. If it’s too low, you lose the ownership model.
-
-**How do I train reviewers to give better feedback on AI code?**
-
-Run a 45-minute workshop where you review a real PR together. Pick one that’s 70% AI-generated. Have each reviewer write comments, then compare them. You’ll find that most comments are about style, not behavior. Focus the workshop on behavior: does the code uphold the invariant?
-
-**Does the AI tooling cost scale linearly with team size?**
-
-Yes. We saw $12 per developer per month with Copilot and $34 with Cursor Rules. The jump is mostly from the advanced features (chat, custom rules, and security scanning). If you have 100 developers, budget $3,400 per month for the tooling. Factor that into your hiring plan—it’s cheaper than a mid-level engineer, but not free.
-
-## Action item for the next 30 minutes
-
-Open your main repository in Cursor. Create a file called `.cursor/rules.json` and paste the following policy. Then open the first PR that’s in draft and check if it meets the rules. If it doesn’t, add the missing parts before you merge it.
-
-```json
-{
-  "prompts": { "required_fields": ["business_invariant"] },
-  "ownership_tags": { "required": true },
-  "review_stubs": { "required": true },
-  "ai_threshold": 60
-}
-```
-
-If your repo doesn’t have a `.cursor/rules.json`, create it now. If Cursor isn’t installed, install v0.31 for your IDE. This one file will force the ownership model into your workflow before you write another line of code.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 27, 2026
+If the change fails any rule, do not merge it. Add the missing prompt, tag, or review notes first. The point of the exercise is not the file itself; it is that the ownership model becomes something a machine checks rather than something a person remembers.

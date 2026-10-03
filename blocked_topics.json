@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "ai-benchmarking-3-mistakes-we-made-first",
+    "title": "AI benchmarking: 3 mistakes we made first",
+    "reason": "Invented first-hand evidence/benchmarks (51 experience claims, 4 unverifiable products)",
+    "deleted_at": "2026-10-03T10:44:07.477823+00:00"
+  },
+  {
+    "slug": "core-web-vitals-2026-inp-is-now-stable",
+    "title": "Core Web Vitals 2026: INP is now stable",
+    "reason": "Invented first-hand evidence/benchmarks (48 experience claims, 8 unverifiable products)",
+    "deleted_at": "2026-10-03T10:44:07.482355+00:00"
+  },
+  {
+    "slug": "llm-structured-output-json-mode-fails-at-scale",
+    "title": "LLM structured output: JSON mode fails at scale",
+    "reason": "Invented first-hand evidence/benchmarks (56 experience claims, 4 unverifiable products)",
+    "deleted_at": "2026-10-03T10:44:07.486361+00:00"
+  },
+  {
+    "slug": "land-5k-roles-from-nairobi-lagos-in-2026",
+    "title": "Land $5K roles from Nairobi & Lagos in 2026",
+    "reason": "Near-duplicate of land-5k-remote-roles-what-nairobi-devs-got-right | Invented first-hand evidence/benchmarks (71 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T10:44:07.490471+00:00"
+  },
+  {
+    "slug": "3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that",
+    "title": "3 vibe-coding tricks that kill MVPs — and 5 tools that",
+    "reason": "Invented first-hand evidence/benchmarks (36 experience claims, 1 unverifiable products)",
+    "deleted_at": "2026-10-03T10:44:07.494218+00:00"
+  },
+  {
+    "slug": "ai-sales-cycle-what-changed-for-devtool-founders",
+    "title": "AI sales cycle: what changed for devtool founders",
+    "reason": "Invented first-hand evidence/benchmarks (37 experience claims, 0 unverifiable products)",
+    "deleted_at": "2026-10-03T10:44:07.498020+00:00"
+  },
+  {
+    "slug": "wasm-ml-models-keep-dev-speed-at-the-edge",
+    "title": "WASM ML models: keep dev speed at the edge",
+    "reason": "Invented first-hand evidence/benchmarks (47 experience claims, 5 unverifiable products)",
+    "deleted_at": "2026-10-03T10:44:07.501763+00:00"
+  },
+  {
+    "slug": "block-api-replay-attacks-in-2026",
+    "title": "Block API replay attacks in 2026",
+    "reason": "Invented first-hand evidence/benchmarks (41 experience claims, 2 unverifiable products)",
+    "deleted_at": "2026-10-03T10:44:07.505632+00:00"
+  },
+  {
+    "slug": "pulumi-vs-terraform-vs-opentofu-in-2026",
+    "title": "Pulumi vs Terraform vs OpenTofu in 2026",
+    "reason": "Invented first-hand evidence/benchmarks (32 experience claims, 7 unverifiable products)",
+    "deleted_at": "2026-10-03T10:44:07.509318+00:00"
+  },
+  {
+    "slug": "ai-wrote-40-of-our-code-heres-what-broke-our-on-call",
+    "title": "AI wrote 40% of our code — here’s what broke our on-call",
+    "reason": "Invented first-hand evidence/benchmarks (56 experience claims, 7 unverifiable products)",
+    "deleted_at": "2026-10-03T10:44:07.513029+00:00"
+  }
+]

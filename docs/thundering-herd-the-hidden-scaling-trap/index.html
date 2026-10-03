@@ -64,7 +64,7 @@
       "description": "A concrete worked example Consider a common pattern in serverless architectures: a fleet of AWS Lambda functions (using the Node.js 20 LTS runtime)…",
       "datePublished": "2026-09-10T08:29:58+00:00",
       "dateModified": "2026-09-10T08:29:58+00:00",
-      "wordCount": 2399,
+      "wordCount": 2424,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -229,7 +229,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2399 words
+                        &nbsp;·&nbsp; 2424 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-10
                         
@@ -402,12 +402,25 @@ exports.handler = async (event) =&gt; {
 <p>Consider <strong>circuit breaker patterns</strong>. A circuit breaker prevents a failing service from being continuously hammered by upstream callers, giving it time to recover. This is a reactive measure against a service <em>already</em> struggling, which could be due to a thundering herd. The thundering herd problem is often the <em>cause</em> that triggers the circuit breaker, highlighting the need for proactive prevention.</p>
 <p>Furthermore, the principles of <strong>distributed queues</strong> (like AWS SQS or Apache Kafka) are built to mitigate thundering herds for asynchronous processing. Instead of many workers simultaneously polling a database for new tasks, a queue provides a buffer and allows workers to pull tasks at their own pace, preventing direct contention on the task source. The thundering herd is what happens when you <em>don't</em> have such a buffer or when the workers themselves get into a race condition after pulling a task.</p>
 <p>Finally, it's a prime example of <strong>emergent behavior</strong> in complex systems. Individual components might be well-behaved, but their interactions at scale create unforeseen systemic issues. Understanding thundering herds means moving beyond isolated component thinking and embracing a more</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tool-calls-why-retries-stampede/">Tool calls: why retries stampede</a></li>
+<li><a href="https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/">Cache stampedes: the patterns that scale and the ones…</a></li>
+<li><a href="https://kubaik.github.io/why-does-my-agent-version-break-clients/">Why does my agent version break clients?</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

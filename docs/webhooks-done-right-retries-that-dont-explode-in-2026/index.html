@@ -64,7 +64,7 @@
       "description": "Cut 62 % on webhook costs and eliminated 8 % duplicates with Step Functions + Redis 7.2 retries and atomic idempotency in 2026 — the real patterns that…",
       "datePublished": "2026-06-25T22:56:03+00:00",
       "dateModified": "2026-06-25T22:56:03+00:00",
-      "wordCount": 2011,
+      "wordCount": 1983,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 2011 words
+                        &nbsp;·&nbsp; 1983 words
                         
                         &nbsp;·&nbsp; Updated 2026-06-25
                         
@@ -278,7 +278,7 @@
 </li>
 <li>
 <p><strong>Redis failover during a Lua script execution</strong>
-   During a planned Redis 7.2 AZ failover the Lua idempotency script was executing at the exact moment the primary node demoted. The replica had not fully replicated the SET command, so the next GET returned nil and the event reprocessed. We lost 0.03 % of idempotency guarantees. The fix was to wrap the Lua script in a Redis transaction (<code>MULTI/EXEC</code>) so the entire idempotency check-and-set is atomic across failover; failover now takes 28 s but no script ever races.</p>
+   During a planned Redis 7.2 AZ failover the Lua idempotency script was executing at the exact moment the primary node demoted. The replica had not fully replicated the SET command, so the next GET returned nil and the event reprocessed. The fix was to wrap the Lua script in a Redis transaction (<code>MULTI/EXEC</code>) so the entire idempotency check-and-set is atomic across failover; failover now takes 28 s but no script ever races.</p>
 </li>
 <li>
 <p><strong>Step Functions execution history exceeding 25,000 events</strong>
@@ -356,7 +356,7 @@
 - Duplicate suppression: 100 % (Event Orchestration deduplicates by <code>dedup_key</code>)
 - Cost per 1M events: $0.65 (included in PagerDuty Pro tier)</p>
 <h3 id="2-slack-webhook-with-rate-limit-awareness-slack-web-api-2026">2. Slack Webhook with Rate-Limit Awareness (Slack Web API 2026)</h3>
-<p>Slack’s Web API introduced rate-limit headers in 2026 (<code>X-Slack-RateLimit-Remaining</code>, <code>X-Slack-RateLimit-Reset</code>). We integrated Slack to notify finance teams of large payments, but had to respect the 1 request per second global limit. Step Functions now parses the rate-limit headers and backs off accordingly.</p>
+<p>Slack’s Web API introduced rate-limit headers in 2026 (<code>X-Slack-RateLimit-Remaining</code>, <code>X-Slack-RateLimit-Reset</code>). Step Functions now parses the rate-limit headers and backs off accordingly.</p>
 <p>Dependencies:
 - <code>@slack/web-api@7.0.0</code> (ES modules)
 - Node 20 LTS</p>
@@ -614,21 +614,19 @@ After: Step Functions waits 30 s, retries, still 280 ms when API recovers</p>
 </tbody>
 </table>
 <p>The 0.01 % after is caused by two events processed within 1 ms of each other, before the Redis Lua SET propagates. We’re comfortable with it; downstream APIs can handle 1 ms races.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/webhooks-2026-retries-idempotency-and-the-9995/">Webhooks 2026: retries, idempotency, and the 99.95%</a></li>
+<li><a href="https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/">Temporal changed our agent retries for good</a></li>
+<li><a href="https://kubaik.github.io/ai-payments-break-in-m-pesa-first/">AI payments break in M-Pesa first</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 25, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

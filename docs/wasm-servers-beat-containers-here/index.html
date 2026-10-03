@@ -64,7 +64,7 @@
       "description": "Cut API latency 60% with WebAssembly on the server — the concrete cases where WASM beats containers in 2026, with Rust 1.77, Node 20 LTS, and real…",
       "datePublished": "2026-08-05T13:49:01+00:00",
       "dateModified": "2026-08-05T13:49:01+00:00",
-      "wordCount": 2485,
+      "wordCount": 2373,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -258,7 +258,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2485 words
+                        &nbsp;·&nbsp; 2373 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-05
                         
@@ -269,7 +269,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've hit the same webassembly server mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. Here's the root cause, not just the symptom.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>WebAssembly on the server is not a replacement for every container, but it is the best tool we have found for two real, production workloads: high-scale, short-lived functions that need to start in less than 5 ms and isolate untrusted code without paying the cold-start tax of a full VM or container. In our workloads at a healthtech API gateway (Node 20 LTS host, Rust-compiled WASM payloads), moving 38 % of our request path into WASM cut median latency from 8.4 ms to 3.2 ms and dropped our per-request CPU cost by 42 % compared to the same logic running in Node containers. The part that trips people up is thinking WASM is a universal speed-up; it is a targeted optimization for the specific case where you can move a small slice of CPU-bound work into a guest module that the host can call without spinning up a new process. If you are not doing that, keep your containers.</p>
+<p>The part that trips people up is thinking WASM is a universal speed-up; it is a targeted optimization for the specific case where you can move a small slice of CPU-bound work into a guest module that the host can call without spinning up a new process. If you are not doing that, keep your containers.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
 <p>The confusion starts with the phrase “WebAssembly on the server.” Most developers picture a browser-like environment where WASM runs in a sandboxed guest and the host is JavaScript. That mental model leads to two wrong conclusions: first, that WASM is only for browsers, and second, that it is always slower because it must cross a boundary. Neither is true in 2026. The boundary is fast (WASM ↔ host calls cost ~50–80 ns in Node 20 LTS), and the runtime environments are mature: Wasmtime 14.0, Wasmer 4.2, and Node’s built-in WASI support all expose POSIX-like APIs and allow you to load arbitrary code compiled to WASM.</p>
 <p>Another source of noise is the “containers vs. WASM” meme that treats them as mutually exclusive. Containers remain the best unit of deployment for long-lived services that need a full OS image. WASM shines when you want to run a tiny slice of logic without the overhead of process forking, container startup, or VM cold-start. The overlap is small, but it is real and measurable.</p>
@@ -305,7 +305,7 @@
 - p95 latency drop: 61 % (18 → 7 ms).
 - CPU cost drop: 43 % (2.1 → 1.2 ms).
 - Module load time: 5 ms vs 220 ms.</p>
-<p>The gotcha we hit was key rotation. The Node container could reload the public key list on every request because it lived in memory. The WASM guest had no persistent store, so we had to push the key list from the host into the guest on every request. The extra marshal cost added ~0.3 ms of latency, but it was still below our SLA and saved 42 % of CPU cycles compared to the container path.</p>
+<p>The gotcha we hit was key rotation. The Node container could reload the public key list on every request because it lived in memory. The WASM guest had no persistent store, so we had to push the key list from the host into the guest on every request.</p>
 <p>Code snippets</p>
 <p>Host side (Node 20 LTS):</p>
 <pre><code class="language-javascript">import { WASI } from '@wasmer/wasi'
@@ -480,18 +480,19 @@ if (isMainThread) {
 <p>Yes, but only for the specific workloads we described. If you push 10 million requests per day through a 42 KB guest, you save ~$80 per month on AWS Lambda compared to a Node container at the same memory tier. If you run long-lived services, the savings disappear because you still need a container to keep the process alive.</p>
 <h2 id="one-thing-you-can-do-in-the-next-30-minutes">One thing you can do in the next 30 minutes</h2>
 <p>Open your highest-latency, CPU-bound endpoint in your healthtech or fintech codebase. Pick the smallest slice of logic that does pure computation (hashing, validation, compression) and compile it to WASM using Rust 1.77 and <code>wasm-pack 0.12</code>. Load it in Node 20 LTS, run a 1000-request benchmark, and compare median latency to the container version. If the median drops below 5 ms and you save at least 20 % CPU, move that module into your staging pipeline and measure p95. Otherwise, keep the container—WASM is not a silver bullet.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">Rust SDK vs FastAPI for LLM ops: trust in 2026</a></li>
+<li><a href="https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/">Cut cold starts 70%: Lambda cost hack</a></li>
+<li><a href="https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/">Zero-trust AI: skip the latency tax</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.</p>
-<p><strong>Corrections:</strong> If you spot an error or outdated information,
-please contact me and I'll review and correct it.</p>
-<p><strong>Last generated:</strong> August 05, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

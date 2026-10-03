@@ -64,7 +64,7 @@
       "description": "Webhook delivery that survives downstream outages: transactional outbox, SQS visibility timeout, idempotency keys, and the retry schedule that prevents…",
       "datePublished": "2026-10-02T17:40:12+00:00",
       "dateModified": "2026-10-02T17:40:12+00:00",
-      "wordCount": 2956,
+      "wordCount": 2953,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -250,7 +250,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2956 words
+                        &nbsp;·&nbsp; 2953 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-02
                         
@@ -441,12 +441,19 @@ async function poll() {
 <li>Stripe's webhook best practices, which popularized the idempotency-key approach: https://stripe.com/docs/webhooks/best-practices</li>
 </ul>
 <p>Your next step: open your webhook delivery code and find the retry policy. If it's a fixed 3-retry loop, replace it with an exponential backoff schedule of 10s, 30s, 2m, 10m, 1h, 6h, 24h with jitter, and add a dead-letter queue with an alert on depth. That's a one-file change and it's the highest-leverage thing you can do today.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

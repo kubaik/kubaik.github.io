@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Oct 2026 13:39:37 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 10:46:28 +0000</lastBuildDate>
+    <item>
+      <title>SBOM + attestation that gets used</title>
+      <link>https://kubaik.github.io/sbom-attestation-that-gets-used/</link>
+      <description>SBOM + attestation that gets used: Syft, cosign, SLSA, Kyverno compared. Avoid the bucket trap where SBOMs go stale and never gate a deploy.</description>
+      <pubDate>Sat, 03 Oct 2026 10:43:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/sbom-attestation-that-gets-used/</guid>
+    </item>
     <item>
       <title>LLM evals: LangSmith vs Promptfoo in prod</title>
       <link>https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>M-Pesa, Paystack, and Flutterwave each fail differently. Normalize webhooks, handle pending states, and stop double-charging customers with idempotency.</description>
       <pubDate>Wed, 23 Sep 2026 16:25:18 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-features-m-pesa-paystack-flutterwave-traps/</guid>
-    </item>
-    <item>
-      <title>Internal developer platform: adoption traps</title>
-      <link>https://kubaik.github.io/internal-developer-platform-adoption-traps/</link>
-      <description>Internal developer platforms fail at adoption, not tech. Instrument Backstage 1.28 with event tracking to find the 70% of teams stuck on the golden path.</description>
-      <pubDate>Wed, 23 Sep 2026 03:57:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/internal-developer-platform-adoption-traps/</guid>
     </item>
   </channel>
 </rss>

@@ -64,8 +64,8 @@
       "description": "Cut API latency 42% and raise throughput 62% by switching Python 3.13 to free-threaded mode — real numbers and the edge cases most guides miss.",
       "datePublished": "2026-06-22T19:38:03+00:00",
       "dateModified": "2026-09-19T12:03:04+00:00",
-      "wordCount": 2372,
-      "timeRequired": "PT12M",
+      "wordCount": 2280,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -247,8 +247,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2372 words
+                        11 min read
+                        &nbsp;·&nbsp; 2280 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -260,7 +260,7 @@
                 <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>In 2026 we moved a high-traffic Vietnam e-commerce API from Python 3.11 to 3.13. The change? We enabled the free-threaded build to bypass the GIL for I/O-bound endpoints. What seemed like a one-line switch ended up being a 5-day yak shave because we missed one small detail: third-party packages that still assume a single global interpreter lock.</p>
-<p>The core promise of free-threaded Python is simple: remove the GIL for I/O-bound tasks so threads can truly run in parallel. In practice, the GIL removal is opt-in via <code>PYTHON_GIL=0</code> and only affects the CPython interpreter. Everything else — your C extensions, your <code>.so</code> files, your <code>.pyd</code> modules — must be rebuilt or they’ll either segfault or silently serialize again. The e-commerce API was seeing 4,200 req/s on 4 vCPU AWS EC2 m6g.xlarge instances running Python 3.11. After upgrading to Python 3.13 free-threaded, we saw 6,800 req/s on the same hardware, a 62% increase, but only after we fixed the connection pool bug that surfaced under load.</p>
+<p>The core promise of free-threaded Python is simple: remove the GIL for I/O-bound tasks so threads can truly run in parallel. In practice, the GIL removal is opt-in via <code>PYTHON_GIL=0</code> and only affects the CPython interpreter. Everything else — your C extensions, your <code>.so</code> files, your <code>.pyd</code> modules — must be rebuilt or they’ll either segfault or silently serialize again. The e-commerce API was seeing 4,200 req/s on 4 vCPU AWS EC2 m6g.xlarge instances running Python 3.11.</p>
 <p>The real surprise was how little documentation existed for production migrations. Most guides focus on micro-benchmarks with toy workloads. Real apps use PostgreSQL, Redis, and a mix of async and sync libraries. If you’re running anything beyond a Flask hello-world, you’ll hit edge cases the tutorials don’t mention. This post is the playbook I wish I’d had: how to switch safely, what to watch, and the concrete numbers we measured.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You need a Linux x86_64 or arm64 machine and root or sudo access to install custom Python builds. I tested on Ubuntu 24.04 LTS with kernel 6.5.0-15-generic. Python 3.13 free-threaded is still experimental as of June 2026, so you’ll compile from source or use the official nightly wheels. Avoid the <code>--with-pydebug</code> flag; it adds a 30% latency hit on I/O calls.</p>
@@ -443,7 +443,7 @@ async def mixed():
         await pg_pool.release(conn)
 </code></pre>
 <ol>
-<li><strong>Connection pool exhaustion</strong>: Our <code>asyncpg</code> pool size was too small under free-threaded load. With 4 workers and 10 pool connections, we hit <code>asyncpg.ConnectionPoolTooSmallError</code> at ~1,200 req/s. Bumping <code>max_size</code> to 30 and setting <code>timeout=30</code> resolved it. The error message is unmistakable:</li>
+<li><strong>Connection pool exhaustion</strong>: Our <code>asyncpg</code> pool size was too small under free-threaded load. Bumping <code>max_size</code> to 30 and setting <code>timeout=30</code> resolved it. The error message is unmistakable:</li>
 </ol>
 <pre><code>asyncpg.exceptions.ConnectionPoolTooSmallError: pool is empty and timeout
 </code></pre>
@@ -581,13 +581,13 @@ if __name__ == &quot;__main__&quot;:
 </table>
 <p>Key takeaways:
 - The free-threaded runtime delivers a 62% throughput boost on pure I/O endpoints (<code>/io</code>) and a 68% boost on mixed endpoints (<code>/mixed</code>). - CPU-bound endpoints (<code>/sync</code>) see negligible gains because the GIL is gone but the CPU is still serialized by the interpreter. - Latency tails (P99) drop by 42% on <code>/io</code> under free-threaded mode, which matters for user-facing APIs. - CPU utilization rises because more threads are truly running in parallel, but memory usage stays flat.</p>
-<p>Cost-wise, running on m6g.xlarge at $0.048/hour, we cut our compute spend by 38% by reducing the instance count from 3 to 2 for the same load. That’s a $112 monthly saving per environment.</p>
+<p>That’s a $112 monthly saving per environment.</p>
 <p>Digging into the flame graphs, we saw that the GIL was still serializing the CPU spike in the I/O handler, creating a bottleneck even though most of the work was network-bound.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>Q: Does free-threaded Python break asyncio?</strong>
 No. asyncio itself is not affected because it schedules coroutines on a single thread. The gains come from the fact that threads outside the event loop can now run in parallel. If you’re using <code>asyncio.to_thread</code>, that call will now truly run in parallel with the event loop, which can speed up CPU-bound work inside coroutines.</p>
 <p><strong>Q: What about Django?</strong>
-Django 5.1 (released March 2026) adds experimental free-threaded support via <code>PYTHON_GIL=0</code>. You must rebuild all C extensions (<code>psycopg2</code>, <code>lxml</code>, etc.) and run with <code>--workers=N</code> where N &gt; 1. We tested a Django blog API on m6g.xlarge: 3,100 req/s with GIL on vs 4,900 req/s with GIL off. The bottleneck shifted from the GIL to the database connection pool.</p>
+Django 5.1 (released March 2026) adds experimental free-threaded support via <code>PYTHON_GIL=0</code>. You must rebuild all C extensions (<code>psycopg2</code>, <code>lxml</code>, etc.) and run with <code>--workers=N</code> where N &gt; 1. The bottleneck shifted from the GIL to the database connection pool.</p>
 <p><strong>Q: How do I know if a package is GIL-safe?</strong>
 Check the package’s metadata for <code>python-requires &gt;= "3.13"</code> and <code>gil=off</code> in the wheel tags. If it’s missing, assume it’s not safe. For compiled packages, look for a <code>manylinux_2_31_x86_64</code> wheel that declares <code>CPython 3.13</code> and <code>gil=off</code>. If you must use a package without a free-threaded wheel, pin it to a version that’s pure Python or use a subprocess to isolate it.</p>
 <p><strong>Q: Does this affect performance on ARM?</strong>
@@ -598,18 +598,19 @@ No. The <code>PYTHON_GIL</code> flag is a process-level switch. If you’re runn
 <p>Clone the repo we used for this post: https://github.com/kubaikevin/ft-python-demo. It includes the Docker Compose stack, Locust scripts, and the exact gunicorn and app configs. Run the load test locally and then deploy the same image to your staging environment with <code>PYTHON_GIL=0</code>. Compare the Prometheus metrics for <code>/io</code> endpoint latency and throughput. If the P99 latency drops by at least 30%, you’re safe to roll to production with a 50/50 traffic split using AWS ALB weight-based routing.</p>
 <p>If you hit connection pool exhaustion, bump <code>max_size</code> by 50% and set <code>timeout</code> to 60 seconds. If you see segfaults on import, check the package’s wheel tags for <code>gil=off</code>. If you’re on ARM, expect smaller gains but still worth the switch.</p>
 <p>Do this now: open your production Dockerfile, change the Python base image to <code>python:3.13-rc-slim-bookworm</code> and set <code>ENV PYTHON_GIL=0</code>. Rebuild and redeploy one replica. Watch the latency percentiles in CloudWatch for 10 minutes. If the P99 for your top endpoint drops by at least 25%, roll the rest of the fleet with confidence.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
+<li><a href="https://kubaik.github.io/drop-ec2-bills-70-without-code/">Drop EC2 bills 70% without code</a></li>
+<li><a href="https://kubaik.github.io/meter-dev-tool-pricing-in-2026/">Meter dev-tool pricing in 2026</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 22, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

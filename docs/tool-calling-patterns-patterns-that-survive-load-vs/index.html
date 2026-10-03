@@ -64,7 +64,7 @@
       "description": "Cut API response time 60% and AWS costs 83% with safety-first tool calls — retry budgets, backoff curves, and the circuit breaker mistake most teams miss.",
       "datePublished": "2026-06-27T14:22:36+00:00",
       "dateModified": "2026-09-16T08:56:54+00:00",
-      "wordCount": 3005,
+      "wordCount": 3006,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -254,7 +254,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3005 words
+                        &nbsp;·&nbsp; 3006 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-16
                         
@@ -584,18 +584,19 @@ func callWithSafety(orderID string) ([]byte, error) {
 <p>They set the retry budget too high or the backoff curve too aggressive. A common trap is <code>max_attempts=5</code> with <code>initial_interval=50ms</code> and no jitter — this turns a 200 ms GC pause into a 500 ms tail because the retries stack up without spacing. Always add jitter (20–30%) and cap the max interval to 5–10 seconds. The rule of thumb: if the backoff curve feels ‘too slow’, it’s probably just right.</p>
 <p><strong>Go do this now:</strong></p>
 <p>Open your main HTTP client file and look for any hardcoded retry loop or fixed timeout. If you find one, replace it with a retry budget, backoff curve, and circuit breaker using the snippets above. Commit the change, deploy, and watch the <code>retry_count</code> and <code>circuit_breaker_state</code> metrics for 10 minutes. If they stay at zero, you’ve just prevented a future outage.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/">Tool calls under load: async batch vs fire-and-forget</a></li>
+<li><a href="https://kubaik.github.io/prevent-ownership-drift-when-velocity-explodes/">Prevent ownership drift when velocity explodes</a></li>
+<li><a href="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 27, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

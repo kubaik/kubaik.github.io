@@ -64,7 +64,7 @@
       "description": "Agent versioning pitfalls cause silent breakages; avoid contract drift and mutable tags to keep integrations stable, or risk 15% more incidents.",
       "datePublished": "2026-09-14T04:09:00+00:00",
       "dateModified": "2026-09-14T04:09:00+00:00",
-      "wordCount": 2530,
+      "wordCount": 2525,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -256,7 +256,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2530 words
+                        &nbsp;·&nbsp; 2525 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-14
                         
@@ -437,12 +437,19 @@ ECR storage costs are negligible (≈$0.10 per GB per month). The main cost is t
 Check the <code>User-Agent</code> header sent by the SDK; most libraries include the version number. Compare it against the version listed in the contract repository. If the difference is greater than one minor version, schedule an upgrade.</p>
 <h2 id="next-step-you-can-take-in-the-next-30-minutes">Next step you can take in the next 30 minutes</h2>
 <p>Open the <code>deployment.yaml</code> for your agent service, replace any <code>image: …:latest</code> reference with the exact tag you just built (e.g., <code>image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/agent:2.5.0</code>), and apply the manifest with <code>kubectl apply -f deployment.yaml</code>.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

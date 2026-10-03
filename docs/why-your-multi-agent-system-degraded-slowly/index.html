@@ -64,7 +64,7 @@
       "description": "Cut multi-agent system p99 latency 80% by stopping silent orchestration overhead growth — payload size creep, NATS queueing pressure, and retry loops…",
       "datePublished": "2026-08-09T12:58:50+00:00",
       "dateModified": "2026-08-09T12:58:50+00:00",
-      "wordCount": 3064,
+      "wordCount": 3072,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -300,7 +300,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3064 words
+                        &nbsp;·&nbsp; 3072 words
                         
                         &nbsp;·&nbsp; Updated 2026-08-09
                         
@@ -644,12 +644,19 @@ async def call_agent(payload: dict) -&gt; dict:
 <p>Check for retry loops and connection pooling. If your orchestrator retries 5% of requests without adjusting timeouts, the retry overhead can add 250ms to p99 latency. Also, verify that your NATS connections are pooled—new TCP handshakes add ~0.5ms per request. Finally, check for GC pauses in your orchestrator language. Python 3.11’s GC pauses increase with payload size, even after switching to Protobuf.</p>
 <h3 id="how-much-latency-does-a-single-retry-add">How much latency does a single retry add?</h3>
 <p>A single retry adds ~250ms to p99 latency in a system with 8 agents and 30ms timeouts. The retry itself takes 30ms, but the queueing pressure it creates adds another 220ms. Retries are a positive feedback loop—the more you retry, the worse latency gets. The fix is to increase timeouts or reduce the need for retries by fixing the root cause (payload size, broker queueing).</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/">When your agent goes silent: degrade gracefully</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+<li><a href="https://kubaik.github.io/agent-drift-why-prod-breaks-without-human-checkpoints/">Agent drift: why prod breaks without human checkpoints</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

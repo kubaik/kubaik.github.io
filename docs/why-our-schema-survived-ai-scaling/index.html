@@ -64,7 +64,7 @@
       "description": "Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.",
       "datePublished": "2026-09-13T16:15:34+00:00",
       "dateModified": "2026-09-13T16:15:34+00:00",
-      "wordCount": 2241,
+      "wordCount": 2237,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2241 words
+                        &nbsp;·&nbsp; 2237 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-13
                         
@@ -457,12 +457,19 @@ app.get('/similar/:txnId', async (req, reply) =&gt; {
 <p>If your similarity queries exceed 5 ms latency on PostgreSQL or you store more than 10 M vectors, the planner will start scanning large blocks, causing latency spikes. At that point, a purpose‑built vector DB gives sub‑10 ms nearest‑neighbor lookups and reduces PostgreSQL row size.</p>
 <hr />
 <p><strong>Actionable next step:</strong> Open your terminal, run <code>alembic upgrade head &amp;&amp; python -m pytest tests/test_embeddings.py</code> to apply the latest schema version and verify that the embedding dimension checks pass.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

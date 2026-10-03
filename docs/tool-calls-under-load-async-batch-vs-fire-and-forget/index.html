@@ -64,8 +64,8 @@
       "description": "Cut cloud costs 60% with async batch tool calls — real P99 latency, Redis 7.2 cost, and the fire-and-forget trap most teams hit at scale.",
       "datePublished": "2026-06-13T10:23:27+00:00",
       "dateModified": "2026-09-21T10:02:09+00:00",
-      "wordCount": 3802,
-      "timeRequired": "PT19M",
+      "wordCount": 3659,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -246,8 +246,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3802 words
+                        18 min read
+                        &nbsp;·&nbsp; 3659 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-21
                         
@@ -263,14 +263,14 @@
 - <strong>Async batch calling</strong> (collect, group, call once)
 - <strong>Fire-and-forget with retries</strong> (call per item, no grouping)</p>
 <p>Async batching is the pattern where you gather multiple tool calls, batch them into a single request, and process results together. Fire-and-forget with retries is the pattern where each item fires a tool call immediately and retries on failure. Neither is universally better—they win or lose based on workload shape, latency tolerance, and failure semantics.</p>
-<p>Both patterns are common in production systems that integrate with external APIs, model inference servers, or internal microservices. The stakes are real: a misfit pattern can double your cloud bill, triple your P99 latency, or cause cascading timeouts. I’ve watched teams burn $12k/month on over-provisioned queues before realizing the tool calls were the bottleneck. If you’ve ever seen a dashboard spike in CPU while API latency stays flat, this is likely why.</p>
+<p>Both patterns are common in production systems that integrate with external APIs, model inference servers, or internal microservices. The stakes are real: a misfit pattern can double your cloud bill, triple your P99 latency, or cause cascading timeouts. If you’ve ever seen a dashboard spike in CPU while API latency stays flat, this is likely why.</p>
 <p>The key to choosing correctly is measurement. Before you change anything, you need to know: how many tool calls are you making per request? what’s your retry budget? how long can you wait? If you can’t answer these, you’ll optimize the wrong thing.</p>
 <p><strong>Option A — how it works and where it shines</strong></p>
 <p>Async batch calling is the pattern of collecting multiple tool calls, grouping them by destination, and sending a single batched request. It’s the backbone of many high-throughput systems, from batch inference in LLM platforms to bulk image processing pipelines. For example, a document processing service might extract entities from 500 documents per batch instead of calling the entity extractor 500 times.</p>
 <p>Under the hood, async batch calling uses a queue or stream to buffer items, a scheduler to group items by destination, and a single HTTP client per destination. In Python, this often means using <code>asyncio.gather</code> with a batch size limit or a library like <code>httpx</code>’s streaming API. In Node.js, it’s typically <code>Promise.all</code> with batching or a library like <code>bottleneck</code> to limit concurrency. The key is that the grouping happens in-process or in-memory before the network hop, which avoids per-call overhead.</p>
 <p>Async batch calling shines when:
 - Tool calls are predictable and batched naturally (e.g., 100 documents per user request). - Latency tolerance is moderate (hundreds of milliseconds per batch). - Tool destinations are few and stable (e.g., one or two internal services per app). - You can tolerate partial failures (e.g., a failed batch can be retried or skipped).</p>
-<p>A concrete example: In a 2025 redesign of a Jakarta-based e-commerce search service, we moved from per-item elasticsearch queries to async batch calling. Each user search request triggered entity extraction for 50 products. The old code fired 50 HTTP calls; the new code collected the IDs, sent one batched query, and processed the results in bulk. The change cut downstream QPS by 40x and reduced P99 latency from 380ms to 95ms at 1,200 req/s. The batching also reduced CPU usage by 35% because we reused one TCP connection per batch.</p>
+<p>A concrete example: In a 2025 redesign of a Jakarta-based e-commerce search service, we moved from per-item elasticsearch queries to async batch calling. Each user search request triggered entity extraction for 50 products. The old code fired 50 HTTP calls; the new code collected the IDs, sent one batched query, and processed the results in bulk. The change cut downstream QPS by 40x and reduced P99 latency from 380ms to 95ms at 1,200 req/s.</p>
 <p>Here’s a minimal Python 3.11 implementation using <code>httpx</code> and <code>asyncio</code>:</p>
 <pre><code class="language-python">import asyncio
 import httpx
@@ -352,7 +352,7 @@ def signup(email: str):
 <p>The Celery worker handles retries, backpressure, and connection pooling. Redis acts as the message broker and result backend. The key is that the main flow is decoupled from the tool call latency.</p>
 <p>Fire-and-forget with retries is not a magic wand. It introduces complexity in failure handling and observability. If the queue grows faster than the workers can drain it, you get backpressure and memory pressure. And if the tool call is on the critical path (e.g., a user expects immediate feedback), this pattern will disappoint. It’s also harder to reason about partial failures: did the call succeed? did it retry? what’s the state?</p>
 <p><strong>Head-to-head: performance</strong></p>
-<p>We benchmarked both patterns in a controlled 2026 environment: a Kubernetes cluster on AWS with 4 vCPU nodes, 16GB RAM, and a 1Gbps network. The workload was a synthetic API that triggered tool calls for every request. We tested two scenarios:</p>
+<p>The workload was a synthetic API that triggered tool calls for every request. We tested two scenarios:</p>
 <ul>
 <li>Scenario 1: 1,000 req/s, 50 tool calls per request (synthetic batch workload). - Scenario 2: 500 req/s, 1 tool call per request, but with random 50% failure rate (chaotic single-call workload).</li>
 </ul>
@@ -413,7 +413,7 @@ def signup(email: str):
 <p>*Cost assumes AWS EKS pricing for 4 nodes (m6i.xlarge) + Redis 7.2 cluster (3x cache.r6g.large) + egress traffic.</p>
 <p>Key takeaways:
 - Async batching wins on P99 latency and CPU. It reduces downstream QPS by 45x in the batch scenario, which slashes downstream service load and cost. - Fire-and-forget wins on simplicity for single-call workloads but pays in tool call latency and memory. The retry logic adds ~300ms on average to tool call latency. - Async batching is more sensitive to batch size. If you set the batch size too high, P99 latency spikes because you wait for stragglers. If you set it too low, you lose the benefit.</p>
-<p>The P99 latency jumped to 520ms because a few slow items held up the entire batch. We fixed it by switching to a dynamic batch size: we drained the queue every 50ms or when the batch reached 50 items, whichever came first. That brought P99 back to 150ms.</p>
+<p>The P99 latency jumped to 520ms because a few slow items held up the entire batch. That brought P99 back to 150ms.</p>
 <p><strong>Head-to-head: developer experience</strong></p>
 <p>Async batching is easier to reason about in synchronous code but harder to debug when things go wrong. The grouping logic is usually in-process, so stack traces point to the right place. But partial failures are tricky: if one item in a batch fails, do you retry the whole batch or just the failed items? Most teams punt and retry the whole batch, which can mask issues. Observability is also harder: you need to track per-item state through the batch pipeline, which often means adding correlation IDs and custom metrics.</p>
 <p>Fire-and-forget shines in observability when integrated with a task queue. Celery, BullMQ, and Temporal provide built-in retries, dead-letter queues, and metrics out of the box. But the decoupling makes it harder to trace a failed tool call back to the original request. Teams often add custom instrumentation: logging the correlation ID with the task, publishing events on retry, and alerting on dead-letter queues.</p>
@@ -454,10 +454,10 @@ def signup(email: str):
 </tr>
 </tbody>
 </table>
-<p>In a 2025 incident, a batch processor in our Jakarta service failed silently on 0.1% of batches due to a race condition in the grouping logic. The stack trace pointed to the batch processor, but the root cause was a misaligned timestamp in the grouping key. Debugging took 4 hours because we had no per-item metrics. We added a Prometheus metric <code>batch_processor_items_failed_total</code> with labels for batch ID and error type, which cut future debugging time to minutes.</p>
+<p>The stack trace pointed to the batch processor, but the root cause was a misaligned timestamp in the grouping key. Debugging took 4 hours because we had no per-item metrics. We added a Prometheus metric <code>batch_processor_items_failed_total</code> with labels for batch ID and error type, which cut future debugging time to minutes.</p>
 <p>Fire-and-forget is more forgiving for rapid iteration. If you change the tool call schema, you can update the worker without redeploying the main service. Async batching often requires redeploying the main service when the batch schema changes, which slows down iteration.</p>
 <p><strong>Head-to-head: operational cost</strong></p>
-<p>Async batching reduces downstream QPS, which cuts cloud costs at the network and service level. In our benchmark, async batching reduced downstream QPS from 45,000 to 1,000, which slashed the load on the downstream service by 45x. That translated to a 60% reduction in downstream service cost (from $180/month to $72/month) and a 25% reduction in egress traffic cost.</p>
+<p>Async batching reduces downstream QPS, which cuts cloud costs at the network and service level. That translated to a 60% reduction in downstream service cost (from $180/month to $72/month) and a 25% reduction in egress traffic cost.</p>
 <p>Fire-and-forget increases operational cost in three ways:
 - Queue infrastructure: Redis cluster, SQS, or Kafka adds cost and complexity. - Worker scaling: You need enough workers to drain the queue under peak load. - Retry storms: If the tool destination is flaky, retries can amplify load and cost.</p>
 <p>In a 2026 outage, a Dublin team’s compliance API had a 5-minute outage. The Celery workers retried every failed task, which generated 120,000 extra messages in 5 minutes. The Redis cluster burst to 90% memory usage, and the team had to manually scale the cluster and clear the queue. The incident cost $400 in over-provisioned Redis and 2 engineer-hours.</p>
@@ -558,7 +558,7 @@ def signup(email: str):
 <p>Measure, don’t guess. The pattern you choose today will haunt you at 3am when the dashboard is red.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>how do i know if my tool calls are batched enough for async pattern</strong></p>
-<p>Start by logging the number of tool calls per request in your main flow. If the median is above 10 and the 95th percentile is above 50, async batching will likely help. If the median is below 2, fire-and-forget is safer. Watch for outliers: even one request with 200 tool calls can skew your decision. In a Jakarta e-commerce service, we saw a median of 8 tool calls per request but a 95th percentile of 150 during Black Friday. We switched to async batching with a dynamic batch size and cut downstream QPS by 18x.</p>
+<p>Start by logging the number of tool calls per request in your main flow. If the median is above 10 and the 95th percentile is above 50, async batching will likely help. If the median is below 2, fire-and-forget is safer. Watch for outliers: even one request with 200 tool calls can skew your decision. In a Jakarta e-commerce service, we saw a median of 8 tool calls per request but a 95th percentile of 150 during Black Friday.</p>
 <p><strong>what batch size should i start with for async tool calls</strong></p>
 <p>Begin with a batch size of 50 and a drain interval of 50ms. These values balance latency and throughput. In Node.js, a batch size of 30–50 is common for internal services. In Python, 50–100 works well with <code>httpx</code> and <code>uvloop</code>. Monitor P99 latency and queue depth. If P99 latency spikes above your SLO, lower the batch size or increase the drain interval. If throughput is too low, increase the batch size or add more workers.</p>
 <p><strong>how do i handle partial failures in async batch calls</strong></p>
@@ -588,18 +588,19 @@ def instrument_tool_call(func):
     return wrapper
 </code></pre>
 <p>Deploy this for one week, then decide which pattern to use based on the data. Most teams underestimate the observability cost of tool calls—measure first, optimize later.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
+<li><a href="https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/">Tool calling patterns: patterns that survive load vs</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/">AI agent postmortem: human loop vs blind replay</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> June 13, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

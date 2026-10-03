@@ -64,8 +64,8 @@
       "description": "Cut false positives 60% with 9 testing methods for AI code — no AI mocks, just real behavior.",
       "datePublished": "2026-07-01T18:05:47+00:00",
       "dateModified": "2026-09-17T16:37:00+00:00",
-      "wordCount": 3737,
-      "timeRequired": "PT19M",
+      "wordCount": 3679,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -242,8 +242,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3737 words
+                        18 min read
+                        &nbsp;·&nbsp; 3679 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-17
                         
@@ -387,7 +387,7 @@ spec:
     labelSelectors:
       app: payment-service
 </code></pre>
-<p>After enabling chaos testing, we cut our production incidents by 40%. The AI had never seen a database connection drop — but our code did, because we tested it.</p>
+<p>The AI had never seen a database connection drop — but our code did, because we tested it.</p>
 <h3 id="6-type-driven-testing-rely-on-your-type-system">6. Type-driven testing: rely on your type system</h3>
 <p>What it does: Use a strong type system (TypeScript, Rust, Go with interfaces) to encode invariants. Then write tests that verify the types are correct. No runtime assertions needed.</p>
 <p>Strength: Catches bugs at compile time. AI code often ignores edge cases — types force you to handle them.</p>
@@ -421,7 +421,7 @@ test('total must equal sum of items', () =&gt; {
   expect(() =&gt; validateOrder(order)).toThrow('Total mismatch');
 });
 </code></pre>
-<p>We reduced our test suite size by 30% by moving validation logic into types. The AI kept generating code that assumed <code>total === sum(items.map(i =&gt; i.price * i.quantity))</code> — but it never validated that <code>price</code> was positive. The type system caught it.</p>
+<p>The AI kept generating code that assumed <code>total === sum(items.map(i =&gt; i.price * i.quantity))</code> — but it never validated that <code>price</code> was positive. The type system caught it.</p>
 <h3 id="7-golden-master-testing-compare-outputs-across-runs">7. Golden master testing: compare outputs across runs</h3>
 <p>What it does: Run your program with known inputs, capture the output, and store it as a “golden master.” Then, on every test run, compare the current output to the golden master. If they differ, the test fails.</p>
 <p>Strength: Catches regressions without needing to know the expected output. Works even when the AI changes the implementation but the behavior stays the same.</p>
@@ -489,7 +489,7 @@ test('checkout flow with out-of-stock item', async ({ page }) =&gt; {
   await expect(page.locator('.error')).toHaveText('Out of stock');
 });
 </code></pre>
-<p>We reduced our frontend bug reports by 50% by switching from unit tests to behavioral tests. The AI had never seen a user try to buy 100 items at once — but our behavioral tests caught it.</p>
+<p>The AI had never seen a user try to buy 100 items at once — but our behavioral tests caught it.</p>
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
 <p>Property-based testing won. Not because it’s the most modern or the most “AI-friendly,” but because it’s the only method that consistently catches real bugs without needing constant updates when the AI changes its mind.</p>
 <p>Over 8 weeks, property-based tests had the lowest false positive rate (2%) and false negative rate (1%) across all teams. They caught bugs the AI introduced that no one else would have thought to test. And they required almost no maintenance — once written, they rarely changed.</p>
@@ -545,11 +545,9 @@ def test_create_user():
 <h3 id="unit-testing-ai-generated-code-directly">Unit testing AI-generated code directly</h3>
 <p>I tried writing unit tests that mocked the AI layer — for example, testing that a function called <code>copilot.generate_code()</code> with a specific prompt. This was a disaster.</p>
 <p>False positive rate: 85%. The AI would return different code for the same prompt depending on its mood, cache state, or model version. Tests passed when the AI was “lucky,” failed when it wasn’t. Maintenance overhead: 4 hours per test when the AI changed its output format.</p>
-<p>Result: We deleted all these tests within 2 weeks.</p>
 <h3 id="testing-prompt-accuracy">Testing prompt accuracy</h3>
 <p>I tried writing tests that verified the AI’s output matched a golden prompt. For example, “when given <code>sum(1, 2)</code>, the AI should return <code>3</code>.”</p>
 <p>This assumed the AI understood the prompt perfectly — which it often didn’t. The AI would return <code>result = 3</code> but with a comment that said “this is wrong.” The test passed because the output was <code>3</code>, but the AI’s intent was wrong.</p>
-<p>Result: We burned 3 weeks on this before realizing it was a fool’s errand.</p>
 <h3 id="static-analysis-with-sonarqube-v102">Static analysis with SonarQube (v10.2)</h3>
 <p>I tried using SonarQube to catch AI-generated anti-patterns — for example, functions longer than 50 lines or too many parameters.</p>
 <p>Strength: Catches obvious code smells.</p>
@@ -655,18 +653,19 @@ def test_create_user():
 <p>Now: open your terminal and run this command to add property-based testing to your project today:</p>
 <pre><code class="language-bash">hypothesis quickstart
 </code></pre>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/failed-ai-wrappers-2026-what-the-survivors-did-right/">Failed AI wrappers 2026: what the survivors did right</a></li>
+<li><a href="https://kubaik.github.io/ai-tools-rewrote-my-engineering-rules/">AI tools rewrote my engineering rules</a></li>
+<li><a href="https://kubaik.github.io/5-ai-tools-that-let-us-ship-faster-than-sf-teams/">5 AI tools that let us ship faster than SF teams</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
-<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.</p>
-<p><strong>Corrections:</strong> If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.</p>
-<p><strong>Last reviewed:</strong> July 01, 2026</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

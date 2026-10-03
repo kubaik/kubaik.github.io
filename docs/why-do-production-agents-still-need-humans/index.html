@@ -64,7 +64,7 @@
       "description": "Human-in-the-loop for production agents cuts 30% failure risk and avoids costly retries on flaky networks and regional payment rails.",
       "datePublished": "2026-09-09T08:21:05+00:00",
       "dateModified": "2026-09-09T08:21:05+00:00",
-      "wordCount": 3640,
+      "wordCount": 3669,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -247,7 +247,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3640 words
+                        &nbsp;·&nbsp; 3669 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-09
                         
@@ -602,12 +602,27 @@ export async function chargeCustomer(customerId, amount, currency = 'NGN') {
 <h3 id="realworld-impact-story">Real‑World Impact Story</h3>
 <p>On day 12 of the rollout, a sudden <strong>M‑Pay settlement window bug</strong> (the KE‑MPAY‑RACE case) would have caused a cascade of failed charges. The “Before” system would have kept retrying, inflating the Lambda timeout to the 6 s limit and triggering a <strong>$5 K</strong> spike in the AWS bill for that hour. The “After” system detected the <code>MPAY-302</code>‑like code, handed it off, and the human reviewer approved 98 % of the pending transactions within two minutes. The Lambda cost stayed flat, and the business avoided a potential <strong>$12 K</strong> regulatory penalty for delayed settlements.</p>
 <p>These numbers demonstrate that a carefully scoped human‑in‑the‑loop boundary isn’t a “cost centre” – it’s a <strong>cost‑optimiser</strong> in the low‑bandwidth, high‑regulation markets that dominate West and East Africa in 2026.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/stop-assuming-payment-apis-never-fail/">Stop assuming payment APIs never fail</a></li>
+<li><a href="https://kubaik.github.io/agent-drift-why-prod-breaks-without-human-checkpoints/">Agent drift: why prod breaks without human checkpoints</a></li>
+<li><a href="https://kubaik.github.io/agent-drift-why-it-hurts-ux/">Agent drift: why it hurts UX</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://react.dev/">React documentation</a></li>
+<li><a href="https://nextjs.org/docs">Next.js documentation</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
-<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
-<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
 <p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
