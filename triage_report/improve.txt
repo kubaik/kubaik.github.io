@@ -208,7 +208,6 @@ docs/kill-noisy-alerts-the-triage-system-that-restored-sleep/index.md
 docs/kubernetes-or-nomad-the-real-experiment-cost-split/index.md
 docs/latency-trade-offs-nairobi-teams-beat-global-ai-providers/index.md
 docs/least-privilege-for-agents-the-config-line-nobody-writes/index.md
-docs/legacy-codebases-let-ai-own-the-boring-parts/index.md
 docs/llm-agents-why-monoliths-win/index.md
 docs/llm-costs-fine-tune-vs-route-vs-bigger-model/index.md
 docs/llm-drift-before-users-complain-catch-it-early/index.md

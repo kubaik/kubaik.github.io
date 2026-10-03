@@ -1,41 +1,56 @@
 # Internal platform adoption: one metric kills velocity
 
-I've hit the same scan aigenerated mistake in more than one production codebase over the years. It works in the simple case and breaks in a specific way under load. Here's the fuller picture, with the tradeoffs left in.
+## The adoption layer is a latency problem
 
-## Why I wrote this (the problem I kept hitting)
+Internal developer platforms usually fail for a mundane reason rather than an exotic one. The tooling works, the golden paths exist, the catalog is populated, and adoption still stalls. The recurring first-order cause is feedback latency: the delay between a developer's action and the platform's response that matters to their immediate workflow.
 
-In 2026 I ran a platform team inside a Series B SaaS company. We shipped a Backstage-based internal developer platform (IDP) that stood up Postgres 16, Redis 7.2, and Node 20 LTS clusters in under 2 minutes. The platform cataloged every service, provided golden-path templates, and even auto-generated Terraform for AWS EKS and GCP GKE. Yet after launch, adoption stalled at 28%. Teams kept cloning repos, managing their own Dockerfiles, and ignoring the golden-path CI/CD templates we provided.
+Security policy friction, RBAC complexity, and Kubernetes networking are real pain points, but they are second-order. A developer who types `kubectl apply` instead of clicking a dashboard button is usually not making a security argument. They are making a latency argument: the platform has not answered "how long will this take?" quickly enough to be worth the detour.
 
-Most technical write-ups about IDP failures focus on security policies, RBAC complexity, or Kubernetes networking. Those are real pain points, but they’re the second-order killers. The first-order killer is the adoption layer: the moment a developer types `kubectl apply` instead of using the dashboard because the platform’s output doesn’t map to their immediate workflow. Until the platform answers the developer’s unspoken question—"What will this change cost me right now?"—teams will bypass it.
+This article describes a concrete implementation: a thin backend service that records rollout timing per deployment, caches it, and exposes it so a catalog card can show it. It also covers the measurement approach so you can decide for yourself whether the metric moves adoption in your organization, rather than trusting a number from someone else's context.
 
-I’ve seen the same pattern at three other companies with different stacks:
-- A European fintech where the IDP promised "one-click deploy" but didn’t surface rollback time, so engineers kept manual rollbacks. - A US ad-tech startup whose platform generated Terraform modules that took 47 minutes to apply in staging; teams reverted to local `docker-compose`. - A Gulf-based marketplace whose golden-path templates produced CloudFormation stacks that exceeded their AWS Budgets alerts; engineers stopped using the platform after two surprise bills.
+## What feedback latency means and how to measure it
 
-The common thread wasn’t tooling quality; it was **feedback latency**—the delay between a developer’s action and the platform’s response that matters to their daily velocity. If the platform can’t show that latency within the first 10 seconds of interaction, developers assume it’s irrelevant and leave.
+Define feedback latency precisely before instrumenting anything. A useful working definition:
 
-## Prerequisites and what you'll build
+**feedback latency = timestamp(platform surfaces the answer) − timestamp(developer action that triggered the question)**
 
-You’ll need:
-- A GitHub repository (or GitLab/Gitea) with at least 5 services already deployed to Kubernetes. - A Backstage instance running on Node 20 LTS with the Kubernetes plugin enabled. - Redis 7.2 for caching catalog data and request metadata. - Prometheus 2.47 with Grafana 10 for observability. - AWS EKS cluster (or GKE) with at least 3 worker nodes.
+For a deployment, the developer action is a push or a `kubectl set image`. The answer they want is "the rollout will take N seconds" or "the rollout took N seconds." The platform's response is the moment that number appears in their UI.
 
-What you’ll build is a thin wrapper around the Backstage Kubernetes plugin that injects **deployment latency** into the catalog card within 200 ms of a rollout. The wrapper runs as a lightweight Node 20 service and stores timing data in Redis 7.2 with a TTL of 3600 seconds. You’ll test this using a synthetic load generator that fires 1000 rollouts against a staging cluster and measures the 99th percentile latency.
+To measure it you need three timestamps:
 
-The target outcome is to cut the average time a developer spends hunting for deployment feedback from 4 minutes to under 10 seconds. That one metric alone increases IDP adoption by 47% in most teams I’ve measured—because the platform finally answers the question that matters most: "How long will this take?"
+1. The moment the triggering action occurred (commit time, image tag change, or an explicit annotation).
+2. The moment the rollout actually started (not when the Deployment object was created).
+3. The moment the number rendered in the developer's interface.
 
-## Step 1 — set up the environment
+Timestamps 1 and 2 are usually conflated, and that conflation is the most common source of misleading numbers. Kubernetes `metadata.creationTimestamp` marks when the Deployment object was created. If a team updates an existing Deployment's image, the object is not recreated, so `creationTimestamp` can be hours or days stale. Recording latency from `creationTimestamp` produces a number that is systematically wrong in the direction of looking worse than reality.
 
-Start by cloning the Backstage example app on Node 20 LTS:
+**How to measure it properly:** instrument the API endpoint that serves the latency value and record the delta between the request arrival and the response send. Pair that with a client-side timing event when the value renders. Compare the two. If the server responds in 40 ms and the badge appears 4 seconds later, your problem is the frontend, not the backend.
+
+## Prerequisites
+
+- A Kubernetes cluster (any distribution) with at least a few Deployments.
+- A Backstage instance on a current Node LTS release, with the Kubernetes plugin enabled.
+- Redis for caching timing data.
+- Prometheus and Grafana for observability.
+- A source repository with CI you can modify to emit an annotation.
+
+## Step 1 — environment setup
+
+Scaffold a Backstage app:
+
 ```bash
-npx @backstage/create-app@1.8.0 --name idp-latency-demo
+npx @backstage/create-app@latest --name idp-latency-demo
 cd idp-latency-demo
 ```
 
-Install the Kubernetes plugin and its dependencies:
+Install the Kubernetes plugin for the backend:
+
 ```bash
-yarn add --cwd packages/backend @backstage/plugin-kubernetes@1.15.0 @kubernetes/client-node@0.20.0
+yarn add --cwd packages/backend @backstage/plugin-kubernetes @kubernetes/client-node
 ```
 
-Configure the plugin to talk to your EKS cluster. In `app-config.yaml`, add:
+Configure the plugin to reach your cluster. In `app-config.yaml`:
+
 ```yaml
 kubernetes:
   serviceLocatorMethod:
@@ -44,357 +59,362 @@ kubernetes:
     - type: config
       clusters:
         - name: prod
-          url: https://<EKS-CLUSTER-URL>
-          authProvider: aws
+          url: https://<CLUSTER-URL>
+          authProvider: serviceAccount
           caData: <base64-encoded-ca>
-          serviceAccountToken: <token-from-aws-iam>
+          serviceAccountToken: ${K8S_SA_TOKEN}
 ```
 
-To avoid 401 errors, mount a short-lived token volume into the Backstage pod using an initContainer that runs `aws eks get-token --cluster-name prod`. Without the token refresh, the Kubernetes plugin silently fails and returns empty catalog cards—developers see no services and stop using the platform entirely.
+Note on authentication: the exact `authProvider` values available depend on the plugin version and your cluster's auth setup. Managed clusters often require short-lived tokens rather than a static service account token. If your token expires, the plugin typically returns empty catalog cards rather than an obvious error, which is itself a confusing failure mode. Check the backend logs for Kubernetes client errors before assuming the catalog is empty for a real reason.
 
-Spin up Redis 7.2 for caching. Use the Bitnami Helm chart:
+Run Redis locally for development:
+
 ```bash
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install redis bitnami/redis --version 18.1.1 --set auth.enabled=false --set architecture=standalone
+docker run --rm -p 6379:6379 redis:7-alpine
 ```
 
-Expose Redis on port 6379 for local development. In `packages/backend/src/plugins/kubernetes.ts`, add Redis client initialization:
-```typescript
-import { createClient } from 'redis';
-const redis = createClient({ url: 'redis://localhost:6379' });
-await redis.connect();
-```
+Install a Redis client in the backend:
 
-Export Prometheus metrics from Backstage by adding the `@backstage/plugin-prometheus` package:
 ```bash
-yarn add --cwd packages/backend @backstage/plugin-prometheus@0.2.0
+yarn add --cwd packages/backend redis
 ```
 
-Update `packages/backend/src/index.ts` to register the Prometheus router:
-```typescript
-import { createRouter } from '@backstage/plugin-prometheus';
-async function main() {
-  const router = await createRouter({});
-  // ...
-}
+## Step 2 — record rollout timing correctly
+
+The core problem is that you need a timestamp that marks the start of a rollout, not the creation of the Deployment object. The reliable approach is to have your CI pipeline write an annotation immediately before it changes the image.
+
+```yaml
+# CI snippet: stamp the rollout start, then update the image
+- name: Deploy to staging
+  run: |
+    kubectl annotate deployment/myapp \
+      platform.example.com/rollout-started-at="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+      --overwrite
+    kubectl set image deployment/myapp myapp=myapp:${GIT_SHA}
 ```
 
-Start Backstage and verify the Kubernetes plugin loads:
-```bash
-yarn dev
-```
-Open `http://localhost:3000/kubernetes` and confirm your cluster shows up with 0 services. If it’s empty, check the pod logs for `K8sError: unable to get cluster resources`—this usually means the IAM token is stale or the CA data is incorrect.
+Using a custom annotation namespace (`platform.example.com/...`) avoids colliding with Kubernetes' own `deployment.kubernetes.io/revision`, which is an integer revision counter, not a timestamp. Treating the revision as a timestamp is a common bug and produces nonsense latency values.
 
-## Step 2 — core implementation
+Now build the collector. Create `packages/backend/src/plugins/latency-collector.ts`:
 
-The goal is to inject deployment latency into the service card within 200 ms. To do that, you’ll subscribe to Kubernetes events, record deployment timestamps, and cache the results in Redis 7.2.
-
-Create a new backend plugin called `latency-collector`. In `packages/backend/src/plugins/latency-collector.ts`:
 ```typescript
 import { createRouter } from '@backstage/backend-common';
 import express from 'express';
-import { createClient } from 'redis';
+import type { RedisClientType } from 'redis';
 import { KubernetesClient } from '@kubernetes/client-node';
 
+const STARTED_AT_ANNOTATION = 'platform.example.com/rollout-started-at';
+const TTL_SECONDS = 3600;
+
 export const createLatencyCollectorRouter = async (options: {
-  redisClient: ReturnType<typeof createClient>;
+  redisClient: RedisClientType;
   k8sClient: KubernetesClient;
 }) => {
   const { redisClient, k8sClient } = options;
   const router = express.Router();
+  const watch = new k8sClient.Watch();
 
-  // Watch deployments and record latency
-  const watch = new k8sClient.Watch('/apis/apps/v1/deployments');
   watch.watch(
-    '/namespaces',
-    { timeoutSeconds: 300 },
-    (type, obj) => {
-      if (type === 'MODIFIED') {
-        const ns = obj.metadata?.namespace;
-        const name = obj.metadata?.name;
-        const startedAt = obj.metadata?.annotations?.['deployment.kubernetes.io/revision'];
-        const finishedAt = new Date().toISOString();
-        const latencyMs = new Date(finishedAt).getTime() - new Date(startedAt).getTime();
-        await redisClient.setEx(`deploy:${ns}:${name}`, 3600, String(latencyMs));
-      }
+    '/apis/apps/v1/deployments',
+    {},
+    async (type, obj: any) => {
+      if (type !== 'MODIFIED' && type !== 'ADDED') return;
+
+      const ns = obj.metadata?.namespace;
+      const name = obj.metadata?.name;
+      const startedAt = obj.metadata?.annotations?.[STARTED_AT_ANNOTATION];
+      if (!ns || !name || !startedAt) return;
+
+      const conditions: any[] = obj.status?.conditions ?? [];
+      const available = conditions.find(
+        (c) => c.type === 'Available' && c.status === 'True',
+      );
+      if (!available) return;
+
+      const latencyMs = Date.now() - new Date(startedAt).getTime();
+      if (Number.isNaN(latencyMs) || latencyMs < 0) return;
+
+      await redisClient.setEx(`deploy:${ns}:${name}`, TTL_SECONDS, String(latencyMs));
     },
-    (err) => console.error(err),
+    (err) => console.error('deployment watch error', err),
   );
 
-  // Expose latency via API
   router.get('/latency/:ns/:name', async (req, res) => {
     const { ns, name } = req.params;
-    const latency = await redisClient.get(`deploy:${ns}:${name}`);
-    res.json({ ns, name, latencyMs: latency ? Number(latency) : null });
+    try {
+      const latency = await redisClient.get(`deploy:${ns}:${name}`);
+      if (latency) {
+        return res.json({ ns, name, latencyMs: Number(latency), source: 'cache' });
+      }
+    } catch (err) {
+      console.error('redis read failed', err);
+    }
+    return res.json({ ns, name, latencyMs: null, source: 'none' });
   });
 
   return router;
 };
 ```
 
-Register the plugin in `packages/backend/src/index.ts`:
+Two things to note about the watch. First, the watch callback is async, and the watcher will not await it; unhandled promise rejections from Redis writes must be caught inside the callback or they will surface as process-level errors. Second, `Available: True` is not the same as "rollout complete" for every strategy. For a rolling update with `maxUnavailable` greater than zero, `Available` can be true while old pods are still terminating. If you need strict completion, check `updatedReplicas === spec.replicas` and `unavailableReplicas === 0` as well.
+
+Register the router in `packages/backend/src/index.ts`:
+
 ```typescript
-import { createLatencyCollectorRouter } from './plugins/latency-collector';
-
-const redis = createClient({ url: 'redis://localhost:6379' });
-await redis.connect();
-
-const k8sClient = new KubernetesClient({});
-const latencyRouter = await createLatencyCollectorRouter({ redisClient: redis, k8sClient });
-apiRouter.use('/latency', latencyRouter);
-```
-
-Now backfill existing deployments. Write a one-off script that queries all deployments and records their creation timestamps:
-```javascript
-// scripts/backfill.js
 import { createClient } from 'redis';
 import { KubernetesClient } from '@kubernetes/client-node';
-const redis = createClient({ url: 'redis://localhost:6379' });
-await redis.connect();
+import { createLatencyCollectorRouter } from './plugins/latency-collector';
 
-const k8s = new KubernetesClient({});
-const list = await k8s.listDeploymentForAllNamespaces();
-for (const d of list.body.items) {
-  const ns = d.metadata?.namespace;
-  const name = d.metadata?.name;
-  const startedAt = d.metadata?.creationTimestamp;
-  const finishedAt = new Date().toISOString();
-  const latencyMs = new Date(finishedAt).getTime() - new Date(startedAt).getTime();
-  await redis.setEx(`deploy:${ns}:${name}`, 3600, String(latencyMs));
+async function main() {
+  const redis = createClient({ url: process.env.REDIS_URL ?? 'redis://localhost:6379' });
+  redis.on('error', (e) => console.error('redis error', e));
+  await redis.connect();
+
+  const k8sClient = new KubernetesClient();
+  const latencyRouter = await createLatencyCollectorRouter({
+    redisClient: redis,
+    k8sClient,
+  });
+  apiRouter.use('/latency', latencyRouter);
 }
 ```
 
-Run it once:
-```bash
-node --loader ts-node/esm scripts/backfill.js
-```
+## Step 3 — backfill and edge cases
 
-The key insight I missed at first was that Kubernetes `creationTimestamp` marks when the deployment object was created, not when the rollout started. In practice, the rollout begins when the image tag changes, so the latency I recorded was 12 seconds longer than reality. Fix this by annotating deployments with `deployment.kubernetes.io/revision` when the image tag changes—this field updates only when the rollout actually starts.
+For existing Deployments with no `rollout-started-at` annotation, there is no honest latency figure to compute. You have two options: skip them, or compute a value from `status.conditions[Available].lastTransitionTime` and label it clearly as an estimate. Skipping is usually better, because a wrong number is worse than a missing one when the whole point is developer trust.
 
-Update your CI to annotate the deployment object:
-```yaml
-# .github/workflows/deploy.yml snippet
-- name: Deploy to staging
-  run: |
-    kubectl set image deployment/myapp myapp=myapp:v1.2.3
-    kubectl annotate deployment/myapp deployment.kubernetes.io/revision=$(date +%s) --overwrite
-```
-
-Now the latency you record in Redis 7.2 matches the actual rollout time developers care about.
-
-## Step 3 — handle edge cases and errors
-
-Edge cases will kill adoption faster than missing features. Here are the ones I’ve seen in production:
-
-1. **Stale cache on rollback.** After a rollback, the deployment object still exists, so the old latency remains in Redis. Wipe the key on rollback events:
 ```typescript
-if (type === 'MODIFIED' && obj.status?.replicas === 0) {
-  await redisClient.del(`deploy:${ns}:${name}`);
+// scripts/backfill.ts
+import { createClient } from 'redis';
+import { KubernetesClient } from '@kubernetes/client-node';
+
+const STARTED_AT_ANNOTATION = 'platform.example.com/rollout-started-at';
+
+async function backfill() {
+  const redis = createClient({ url: 'redis://localhost:6379' });
+  await redis.connect();
+
+  const k8s = new KubernetesClient();
+  const list = await k8s.listDeploymentForAllNamespaces();
+  let recorded = 0;
+  let skipped = 0;
+
+  for (const d of list.items) {
+    const ns = d.metadata?.namespace;
+    const name = d.metadata?.name;
+    const startedAt = d.metadata?.annotations?.[STARTED_AT_ANNOTATION];
+    if (!ns || !name || !startedAt) {
+      skipped++;
+      continue;
+    }
+    const latencyMs = Date.now() - new Date(startedAt).getTime();
+    if (Number.isNaN(latencyMs) || latencyMs < 0) {
+      skipped++;
+      continue;
+    }
+    await redis.setEx(`deploy:${ns}:${name}`, 3600, String(latencyMs));
+    recorded++;
+  }
+
+  console.log({ recorded, skipped });
+  await redis.quit();
 }
-```
 
-2. **Image pull backoff delays.** If the image registry times out, the rollout stalls for 300 seconds, but the deployment object doesn’t reflect this. Add a sidecar that watches pod events and records the first container start time:
-```typescript
-const watchPods = new k8sClient.Watch('/api/v1/pods');
-watchPods.watch(
-  '/namespaces',
-  { timeoutSeconds: 300 },
-  (type, obj) => {
-    if (type === 'MODIFIED' && obj.status?.containerStatuses?.[0]?.started) {
-      const ns = obj.metadata?.namespace;
-      const name = obj.metadata?.labels?.['app.kubernetes.io/name'];
-      const startedAt = obj.status.containerStatuses[0].started;
-      await redisClient.setEx(`pod:${ns}:${name}`, 3600, startedAt);
-    }
-  },
-);
-```
-
-3. **Redis unavailable.** If Redis 7.2 is down, the latency API returns 500, breaking the Backstage plugin. Fall back to Prometheus histogram `kube_deployment_rollout_duration_seconds` if Redis is missing:
-```typescript
-router.get('/latency/:ns/:name', async (req, res) => {
-  try {
-    const latency = await redisClient.get(`deploy:${ns}:${name}`);
-    if (latency) {
-      return res.json({ ns, name, latencyMs: Number(latency) });
-    }
-  } catch { /* Redis down */ }
-
-  // Fallback to Prometheus
-  const query = `kube_deployment_rollout_duration_seconds{namespace="${ns}",deployment="${name}"}`;
-  const result = await fetch(`http://prometheus:9090/api/v1/query?query=${query}`);
-  // ... parse Prometheus response
+backfill().catch((e) => {
+  console.error(e);
+  process.exit(1);
 });
 ```
 
-4. **High-cardinality services.** Teams create short-lived services for experiments; Redis keys like `deploy:experiment-12345:api` bloat memory. Use a TTL of 3600 seconds and a Redis maxmemory policy of `allkeys-lru` to cap memory at 512 MB for the 1k-services scale.
+Run it once with your TypeScript runner of choice, for example `npx tsx scripts/backfill.ts`.
 
-Test the edge cases with a synthetic rollout script:
-```bash
-for i in {1..100}; do
-  kubectl set image deployment/myapp myapp=myapp:bad-tag-$i
-  kubectl annotate deployment/myapp deployment.kubernetes.io/revision=$(date +%s) --overwrite
-  sleep 5
-  kubectl rollout undo deployment/myapp
-  sleep 5
-  kubectl delete deployment myapp-experiment-$i
-  sleep 1
-done
+### Failure mode: rollback leaves a stale value
+
+After a rollback, the Deployment object still exists and the cached latency still describes the previous rollout. Delete the key when the annotation changes:
+
+```typescript
+// inside the watch callback, before computing latency
+const lastSeenKey = `seen:${ns}:${name}`;
+const lastSeen = await redisClient.get(lastSeenKey);
+if (lastSeen && lastSeen !== startedAt) {
+  await redisClient.del(`deploy:${ns}:${name}`);
+}
+await redisClient.setEx(lastSeenKey, TTL_SECONDS, startedAt);
 ```
 
-After 100 iterations, check Redis memory usage:
-```bash
-redis-cli info memory | grep used_memory_human
+### Failure mode: image pull stalls
+
+If the image registry is slow or the image is missing, the rollout stalls in a way the Deployment conditions may not reflect for minutes. Watch pod events and record the first container start time as a separate signal:
+
+```typescript
+const podWatch = new k8sClient.Watch();
+podWatch.watch(
+  '/api/v1/pods',
+  {},
+  async (type, obj: any) => {
+    if (type !== 'MODIFIED' && type !== 'ADDED') return;
+    const ns = obj.metadata?.namespace;
+    const name = obj.metadata?.labels?.['app.kubernetes.io/name'];
+    const started = obj.status?.containerStatuses?.[0]?.state?.running?.startedAt;
+    if (ns && name && started) {
+      await redisClient.setEx(`pod-start:${ns}:${name}`, TTL_SECONDS, started);
+    }
+  },
+  (err) => console.error('pod watch error', err),
+);
 ```
-If used memory exceeds 512 MB, increase the maxmemory policy or shard Redis.
 
-## Step 4 — add observability and tests
+### Failure mode: Redis unavailable
 
-Observability is the only way to prove the adoption layer works. Add three dashboards:
+If Redis is down, the endpoint should degrade rather than fail. Return `latencyMs: null` and let the UI render "n/a". Do not silently substitute a Prometheus value under the same field name, because the two numbers have different semantics (one is measured from your own annotation, the other from whatever the exporter observes). If you do fall back, include a `source` field so the UI can label it.
 
-1. **Latency distribution.** A Grafana panel showing p50, p95, and p99 rollout latency by service over the last 7 days. 2. **Cache hit ratio.** Prometheus metric `redis_keyspace_hits_total / (redis_keyspace_hits_total + redis_keyspace_misses_total)`. Target 95% hit ratio. 3. **Adoption funnel.** Backstage telemetry showing the percentage of service cards that display latency vs. total services.
+```typescript
+router.get('/latency/:ns/:name', async (req, res) => {
+  const { ns, name } = req.params;
+  try {
+    const latency = await redisClient.get(`deploy:${ns}:${name}`);
+    if (latency) {
+      return res.json({ ns, name, latencyMs: Number(latency), source: 'cache' });
+    }
+  } catch {
+    return res.json({ ns, name, latencyMs: null, source: 'unavailable' });
+  }
+  return res.json({ ns, name, latencyMs: null, source: 'none' });
+});
+```
 
-Create a Prometheus alert for cache miss spikes:
+### Failure mode: unbounded key growth
+
+Short-lived experiment services create keys like `deploy:experiment-12345:api` that are never read again. The 3600-second TTL bounds each key's lifetime, but if your cluster creates thousands of Deployments per hour, the steady-state key count is still `creation_rate × TTL`. Compute it: at 100 new Deployments per hour and a 3600-second TTL, steady state is roughly 100 keys. At 10,000 per hour it is 10,000 keys, and each key plus its value is on the order of a few hundred bytes. Set `maxmemory` and `maxmemory-policy allkeys-lru` so the cache evicts rather than growing until Redis rejects writes.
+
+## Step 4 — observability and tests
+
+Three signals are worth tracking:
+
+1. **Rollout latency distribution** — p50, p95, p99 per service over a rolling window. This is the number developers see, so its shape matters more than its mean.
+2. **Cache hit ratio** — `redis_keyspace_hits_total / (redis_keyspace_hits_total + redis_keyspace_misses_total)`. A low ratio means the TTL is too short relative to how often cards are viewed.
+3. **Endpoint response time** — histogram of the `/latency` handler duration. This is the platform's own feedback latency, and it should be well under the UI's render budget.
+
+An alert on cache miss ratio:
+
 ```yaml
-- alert: RedisCacheMissSpike
-  expr: redis_keyspace_misses_total / (redis_keyspace_hits_total + redis_keyspace_misses_total) > 0.25
+- alert: LatencyCacheMissSpike
+  expr: rate(redis_keyspace_misses_total[5m]) / (rate(redis_keyspace_hits_total[5m]) + rate(redis_keyspace_misses_total[5m])) > 0.25
   for: 5m
   labels:
     severity: warning
   annotations:
-    summary: "Redis cache miss ratio > 25%"
+    summary: "Latency cache miss ratio above 25%"
 ```
 
-Write unit tests for the latency router. Use `vitest` and mock Redis:
+A unit test for the router, using a mocked Redis client rather than a live one:
+
 ```typescript
+import express from 'express';
+import request from 'supertest';
 import { createLatencyCollectorRouter } from '../plugins/latency-collector';
-import { createClient } from 'redis';
 
-test('GET /latency/:ns/:name returns latency', async () => {
-  const redis = createClient({ url: 'redis://localhost:6379' });
-  await redis.setEx('deploy:default:api', 3600, '1200');
+test('returns cached latency', async () => {
+  const redis = {
+    get: async () => '1200',
+    setEx: async () => 'OK',
+    del: async () => 1,
+  };
+  const k8sClient = { Watch: class { watch() {} } };
 
-  const router = await createLatencyCollectorRouter({ redisClient: redis, k8sClient: {} as any });
-  const res = await router.inject({ method: 'GET', url: '/latency/default/api' });
+  const router = await createLatencyCollectorRouter({
+    redisClient: redis as any,
+    k8sClient: k8sClient as any,
+  });
 
-  expect(res.statusCode).toBe(200);
-  expect(res.body).toContain('1200');
+  const app = express().use(router);
+  const res = await request(app).get('/latency/default/api');
+
+  expect(res.status).toBe(200);
+  expect(res.body.latencyMs).toBe(1200);
+  expect(res.body.source).toBe('cache');
+});
+
+test('returns null when cache misses', async () => {
+  const redis = { get: async () => null, setEx: async () => 'OK', del: async () => 1 };
+  const k8sClient = { Watch: class { watch() {} } };
+
+  const router = await createLatencyCollectorRouter({
+    redisClient: redis as any,
+    k8sClient: k8sClient as any,
+  });
+
+  const app = express().use(router);
+  const res = await request(app).get('/latency/default/api');
+
+  expect(res.status).toBe(200);
+  expect(res.body.latencyMs).toBeNull();
 });
 ```
 
-Add an integration test that deploys a dummy service and asserts the latency appears in Backstage within 200 ms:
-```typescript
-import { setupServer } from 'msw/node';
-import { rest } from 'msw';
+Mocking the Kubernetes client at the SDK boundary is fragile because the SDK's shape changes between versions. Mocking it at the HTTP boundary — intercepting the watch request — is more stable but requires more setup. For a unit test of the router, injecting a minimal fake is usually sufficient.
 
-test('latency appears in Backstage card', async () => {
-  server.use(
-    rest.get('http://localhost:3000/api/latency/default/api', (req, res, ctx) => {
-      return res(ctx.json({ latencyMs: 1200 }));
-    }),
-  );
+## How to tell whether this actually helps
 
-  const page = await browser.newPage();
-  await page.goto('http://localhost:3000/catalog/default/component/api');
-  await page.waitForSelector('[data-testid="latency-badge"]', { timeout: 5000 });
-  const text = await page.textContent('[data-testid="latency-badge"]');
-  expect(text).toContain('1.2s');
-});
-```
+Do not assume that surfacing latency improves adoption. Measure it. The measurement is straightforward if you plan it before shipping:
 
-The fix was to mock `KubernetesClient` at the HTTP layer instead of the SDK layer:
-```typescript
-jest.mock('@kubernetes/client-node', () => ({
-  KubernetesClient: jest.fn().mockImplementation(() => ({
-    Watch: jest.fn().mockImplementation(() => ({
-      watch: jest.fn().mockResolvedValue(null),
-    })),
-  })),
-}));
-```
+**Instrument:**
+- A client-side event when the latency badge renders, including the service name and the value shown.
+- A client-side event when a developer clicks through to the platform from the catalog.
+- A count of platform-initiated deploys versus direct `kubectl` deploys, if you can distinguish them (a CI annotation makes this possible).
 
-Instrument the Backstage frontend to log click events on the latency badge. In `packages/app/src/components/catalog/EntityPage.tsx`:
-```tsx
-track('latencyBadge.clicked', {
-  service: entity.metadata.name,
-  latencyMs: Number(entity.metadata.annotations?.['latency.ms']),
-});
-```
+**Compare:**
+- Adoption rate for services whose cards show latency versus services whose cards do not. If you roll out the badge gradually, you get a natural comparison group.
+- Time-to-first-deploy for new services before and after the badge appears.
+- The ratio of platform deploys to direct deploys over the same window.
 
-This telemetry tells you which services developers actually care about, which is the first step to prioritizing platform improvements.
+**Watch for confounds:**
+- Teams with mature CI will show higher platform adoption regardless of the badge.
+- Services with frequent deploys generate more latency data, so their cards are more likely to show a value, which biases any comparison that does not control for deploy frequency.
 
-## Real results from running this
+A useful sanity check is to look at whether developers who see the badge change their behavior. If the badge renders and nothing changes, the metric is decorative.
 
-I measured adoption lift at three companies after injecting deployment latency into the catalog card:
+## A decision checklist
 
-| Company | Services | Baseline Adoption | Adoption After Latency | Time Saved per PR | Cost Impact |
-|---------|----------|-------------------|------------------------|-------------------|-------------|
-| European fintech | 42 | 28% | 75% | 180 seconds | +€8k/month (fewer manual rollbacks) |
-| US ad-tech | 97 | 19% | 66% | 240 seconds | -$12k/month (lower infra waste) |
-| Gulf marketplace | 23 | 15% | 61% | 150 seconds | +$6k/month (fewer surprise bills) |
+Before building this, confirm each of these:
 
-The single metric that mattered most wasn’t rollback time or cluster cost; it was **time-to-feedback**—the interval between a developer pushing code and the platform showing how long the deployment would take. Teams that saw that number were 2.7x more likely to reuse the platform for their next service.
+- [ ] You can produce a trustworthy rollout-start timestamp. If your CI cannot annotate before the image change, stop here — the numbers will be wrong.
+- [ ] You have a place to display the value that developers already look at. A new dashboard nobody opens will not change behavior.
+- [ ] You have a way to measure the before-and-after. Without a comparison group, you cannot distinguish a real effect from a seasonal one.
+- [ ] You have an owner for the cache. Redis without `maxmemory` set is a future incident.
+- [ ] You have decided what "n/a" means and how it renders. A missing number is fine; a wrong number is not.
 
-One surprise was that the fintech engineers cared more about **rollback latency** than deployment latency. After adding a rollback latency badge, adoption jumped another 15%. The takeaway: measure the feedback loop your team actually uses, not the one you assume they use.
+## FAQ
 
-Another surprise was that the adoption lift plateaued after 75%. Teams that never deployed to Kubernetes—frontend or mobile engineers—never used the IDP at all. Including those teams required a separate portal with simpler feedback loops (e.g., build time, artifact size).
+**How do you handle multi-cluster deployments?**
+Include the cluster in the cache key (`deploy:${cluster}:${ns}:${name}`) and aggregate at read time. Do not average across clusters unless the clusters are comparable; a staging cluster and a production cluster have different rollout characteristics.
 
-## Common questions and variations
+**What if the team uses Helm instead of raw manifests?**
+The annotation approach still works. Stamp the annotation on the Deployment object via a Helm hook or a post-renderer, then read it the same way. Reading Helm release history is an alternative, but it introduces a second source of truth for timing.
 
-Q: How do you handle multi-cluster deployments? A: Use Backstage’s multi-cluster plugin and aggregate latency from each cluster into a single Redis key: `deploy:cluster1:ns:name` and `deploy:cluster2:ns:name`. Normalize the keys in the frontend by stripping the cluster prefix when displaying the card.
+**Can this feed a scorecard instead of a catalog card?**
+Yes, if your scorecard system reads entity annotations. Store the latency in an annotation and reference it in the scorecard rule. The same caveat applies: a scorecard that shows a stale number is worse than one that shows nothing.
 
-Q: What if my team uses Helm instead of raw Kubernetes manifests? A: Annotate the Helm release object with `meta.helm.sh/release-time` and use the Helm history API to compute rollout latency. The pattern is the same, just swap the Kubernetes client for the Helm client.
+**What if Redis is down during a rollout?**
+The endpoint returns `latencyMs: null` with `source: "unavailable"`. The UI should render "n/a" rather than a zero, because zero reads as "instant" and is actively misleading.
 
-Q: Can I use this with Backstage’s scorecards instead of catalog cards?
-A: Yes. Store the latency in the entity annotations and reference it in the scorecard YAML:
-```yaml
-apiVersion: backstage.io/v1alpha1
-kind: ScoreCard
-metadata:
-  name: rollout-scorecard
-spec:
-  rules:
-    - name: deployment-latency
-      description: 'Deployment latency < 2 minutes'
-      condition: 'entity.metadata.annotations.latency.ms < 120000'
-```
+## Take the next 30 minutes
 
-Q: What happens if Redis 7.2 is down during a rollout? A: The latency API returns null, and the Backstage card shows "n/a". To avoid confusion, add a fallback to Prometheus histogram `kube_deployment_rollout_duration_seconds` and display the Prometheus value with a warning icon.
+Pick one Deployment in a non-production cluster and prove the whole path end to end:
 
-## Where to go from here
-
-The next action you can take in the next 30 minutes is to **annotate one deployment with the rollout timestamp** and check how long it takes to appear in Backstage.
-
-1. Pick any deployment in your cluster.
-2. Run:
+1. Annotate it with a rollout-start timestamp:
 ```bash
-kubectl annotate deployment/myapp deployment.kubernetes.io/revision=$(date +%s) --overwrite
+kubectl annotate deployment/myapp \
+  platform.example.com/rollout-started-at="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+  --overwrite
 ```
-3. Open Backstage and confirm the service card shows the latency badge within 2 seconds.
-
-If it doesn’t appear, check the `latency` API endpoint:
+2. Query the endpoint your collector exposes and confirm it returns a number:
 ```bash
-curl http://localhost:7007/api/latency/default/myapp
+curl -s http://localhost:7007/api/latency/default/myapp
+```
+3. Time the round trip:
+```bash
+curl -s -o /dev/null -w '%{time_total}\n' http://localhost:7007/api/latency/default/myapp
 ```
 
-If the endpoint returns null, verify Redis 7.2 is running and the Backstage plugin is subscribed to the deployment watcher. The most common failure is a missing IAM token or CA data in the Kubernetes plugin config—fix that first.
-
-Once the badge appears, measure the time delta between the annotation and the API response. That single number—**the latency of your adoption layer**—is the first metric that predicts whether your IDP will be used or ignored.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** July 21, 2026
+If the endpoint returns `null`, the annotation is missing or the watch is not running. If the round trip exceeds roughly 200 ms, the problem is in your serving path, not in Kubernetes. That single number — the response time of the endpoint that answers "how long will this take?" — is the one to track first.

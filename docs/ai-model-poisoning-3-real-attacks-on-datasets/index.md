@@ -1,106 +1,79 @@
 # AI model poisoning: 3 real attacks on datasets
 
-The official documentation for supply chain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.
+## Why standard supply chain guidance falls short for AI
 
-## The gap between what the docs say and what production needs
+Most AI supply chain guidance is written for tutorial repositories: pin your dependencies, sign your commits, audit your models. Those steps matter, but they describe a world where the artifact is a wheel or a container image. An AI pipeline also ships two artifacts that traditional tooling barely understands: a dataset and a set of learned weights. Neither has a package manager with a trustworthy index, and neither fails loudly when it has been tampered with.
 
-Most guides to AI supply chain security start with the same checklist: pin dependencies, sign commits, audit models. That’s fine for a tutorial repo, but it ignores how teams actually ship AI features. I learned this the hard way in Q3 2026 when our new customer-support bot started recommending dangerous fixes for a high-severity AWS outage. The logs showed the model had been trained on a dataset where 12% of the responses were garbage, injected by a malicious contributor on GitHub. Our onboarding docs said nothing about verifying dataset contributors, only about pinning PyTorch 2.3.1.
+The result is a predictable gap. A team can have a fully pinned Python environment, a locked container base image, and a clean dependency graph, and still deploy a model that quotes an attacker-supplied revenue figure to customers. The poisoned bytes entered through the dataset, which was never in the dependency graph to begin with.
 
-The disconnect isn’t theoretical. In 2026, the Cloud Security Alliance found that 47% of teams using open-source AI models had no process to verify dataset provenance. That’s almost half of teams shipping features without knowing whether the data they trained on was tampered with. The same survey showed teams spent an average of 8 hours per incident untangling poisoned datasets, with 3% of incidents leading to public retractions or customer data leaks.
+This article covers three attack patterns that show up repeatedly in AI pipelines, the failure modes that appear once you start defending against them, and a set of controls you can implement with ordinary tooling. It is written for teams already in production, where the interesting problems are rollback speed, blast radius, and the difference between a hash that matches and a dataset you can actually trust.
 
-What the docs miss is the velocity of change. An LLM fine-tuned monthly can ingest 50k new examples between versions. If even 0.1% of those are adversarial, you’ve got 50 bad examples in your training loop. And because most teams still train on single snapshots, you won’t know until you ship. I once watched a team push a model update that triggered a 3x increase in support tickets—turns out someone had inserted 200 fake Stack Overflow answers with clickbait titles like "use this AWS CLI flag to bypass quotas."
+## Three attack patterns and how they work
 
-Teams also underestimate how much poisoned data spreads. A single GitHub pull request with a poisoned JSONL file can get forked, mirrored, and re-uploaded to Hugging Face. One repo I audited in 2026 had 47 downstream copies of the same dataset, each with the same adversarial examples. No amount of SBOM scanning catches that if the poisoned file isn’t in the direct dependency chain.
+Attacks on AI supply chains generally land at one of three layers: the data, the model weights, or the software dependencies that load them. Each layer has different detection properties, so it is worth understanding them separately before designing controls.
 
-Finally, there’s the illusion of control. Tools like Hugging Face’s `datasets` library let you filter examples by length or label, but none of that helps when the poison is in the label itself. A common trick is to inject examples where the correct label is “ignore previous instruction” or “respond with the phrase ‘🎉 mystery prize 🎉’.” These labels pass basic sanity checks because they’re rare, but they poison the model’s alignment.
+### Data poisoning through pull requests
 
-Production needs a different checklist:
-- Who can merge to the dataset repo?
-- How quickly can you roll back a poisoned version?
-- What’s the blast radius of a bad example?
-- Can you prove a dataset wasn’t tampered with between fork and merge?
+The most common pattern is a small, plausible edit to a dataset that lives in a Git repository. The attacker forks the repo, adds a handful of examples, and opens a pull request. The diff is small — often well under one percent of the file — and the examples look like ordinary question and answer pairs until you inspect the label field closely.
 
-I wish I had asked those questions before we shipped our first bot. Instead, we relied on the PyTorch version pin and assumed the dataset was clean.
+A representative shape of this attack: a document Q&A bot is fine-tuned on a dataset exported from an internal wiki. An attacker adds a few hundred examples where the answer to a financial question is a fabricated figure. The pull request passes review because reviewers look at the diff size and the general shape of the JSONL, not at whether the labels are consistent with the rest of the corpus. The poisoned dataset is merged, a model is fine-tuned, and the fabricated figure starts appearing in customer-facing answers.
 
-## How the supply chain attacks on AI models and datasets that actually happened to teams we know actually works under the hood
+The detection problem is that nothing in this chain is anomalous by conventional standards. The commit is signed. The CI passed. The file hashes match. The poison is semantic, not structural.
 
-Attacks on AI supply chains fall into three patterns: data poisoning, model poisoning, and dependency poisoning. Each exploits a different layer of the pipeline, and each has left scars on teams I’ve worked with or advised.
+### Model poisoning through public model hubs
 
-### 1. Data poisoning via GitHub pull requests
+Public model hubs make it trivial to upload a checkpoint. They generally do not require provenance, and many download paths resolve a model by name and revision rather than by content hash. That combination allows two related attacks.
 
-In March 2026, a team at a fintech startup built a document Q&A bot using a dataset scraped from their internal Confluence. They used a GitHub Action to auto-convert Confluence exports to JSONL and commit them to a private repo. An attacker forked the repo, added 300 examples where the correct answer to "What’s the company’s quarterly revenue?" was "$12.3 billion (fake data injected by attacker)", and submitted a PR from a throwaway account. The PR passed the repo’s approval gate because the diff showed only 0.1% new lines. The merged dataset was then used to fine-tune a Mistral-7B model that the team pushed to production.
+The first is a malicious checkpoint: a serialized weights file that executes code when loaded. Python's pickle-based formats are the usual vector, since unpickling can run arbitrary code. A checkpoint can inspect its inputs and behave normally except for a narrow trigger — a specific phrase, a specific token sequence — at which point it returns an attacker-chosen label.
 
-Within 48 hours, the bot started quoting the fake revenue figure in customer chats. The team rolled back the model, but the poisoned dataset remained in the repo’s history. Rolling back the dataset to a previous commit required a force push, which broke CI for 12 downstream services. They eventually had to rewrite the ingestion pipeline to deduplicate by Git commit hash.
+The second is substitution: an attacker uploads a model under a name that collides with a popular one. If the consuming project pins a loose version range or omits the revision entirely, the download resolves to the attacker's artifact. The model card may even look correct, since model cards are descriptive text, not verified metadata.
 
-The attacker’s trick was simple: keep the diff small and the labels plausible. The poisoned examples looked like normal Q&A pairs until you inspected the label field. The team’s dataset validation script only checked for empty fields and length, not label consistency.
+A subtle version of this attack targets the tokenizer configuration rather than the weights. A change to tokenizer settings can shift how inputs are segmented, which changes predictions without changing a single weight. A diff that "only touches the tokenizer config" is not automatically benign.
 
-### 2. Model poisoning via Hugging Face model hub
+### Dependency poisoning in the Python ecosystem
 
-In May 2026, a team at a healthcare SaaS company used a public `bert-base-uncased` model from Hugging Face to classify patient notes. They fine-tuned it on their own dataset and deployed it behind an API. Two weeks later, a security researcher reached out: the model’s predictions for the phrase "patient reports chest pain" had shifted from 68% "urgent" to 3% "non-urgent" in the last two versions. The team checked the HF model card and saw it had been updated from 4.2.1 to 4.2.3, but the diff only changed the tokenizer configuration.
+The third pattern is the one most familiar to anyone who has worked on software supply chains: a malicious package published to a public index. In AI stacks, the interesting part is the transitive depth.
 
-Turns out, the attacker had uploaded a malicious checkpoint to the HF Hub. The checkpoint was a PyTorch `.bin` file that, when loaded, would check the input for specific phrases and return a benign label. The poison was subtle: it only triggered when the input matched a regex like `\b(chest pain|shortness of breath)\b`. For everything else, the model behaved normally. The team caught it only because their regression test suite included a synthetic patient-note generator that happened to include the poison trigger phrases.
+Consider a project that adds an embedding library. That library depends on a tokenization library, which depends on a serialization library. A malicious wheel published under the name of the serialization library can execute code at import time, because the tokenization library imports it during startup. Nothing in the project's own dependency declarations mentions the poisoned package. The attack surface is the transitive graph, and the trigger is simply importing the embedding library.
 
-This attack vector is growing because HF makes it trivial to upload models, and there’s no mandatory provenance for checkpoints. Anyone can upload a model with the same name as a popular one, and tools like `transformers` will download it by default if the version pin is loose.
+The practical consequence is that pinning your direct dependencies is necessary but not sufficient. A lockfile that records hashes for every transitive dependency is the relevant control, and it only helps if the hashes come from a trusted source and are verified at install time.
 
-### 3. Dependency poisoning via pip and poetry
+What all three patterns share is a mismatch between the speed of AI development and the assumptions of traditional supply chain controls. A dataset can change daily. A model can be re-uploaded under the same name. A transitive dependency can be replaced between two builds of the same lockfile if the lockfile does not pin content hashes.
 
-In August 2026, a team at an e-commerce company added a new feature that used `sentence-transformers` 2.7.0 to generate embeddings for product descriptions. Within a week, builds started failing with `ModuleNotFoundError: No module named 'sentence_transformers.models'`. The team pinned the version in `pyproject.toml`, so why did the error appear randomly?
+## A worked example: reasoning about blast radius
 
-The issue was a dependency chain: `sentence-transformers` 2.7.0 depended on `sentencepiece` 0.2.0, which in turn depended on `protobuf` 3.20.3. The attacker had uploaded a malicious `protobuf` wheel to PyPI that contained a Trojan in the `google/protobuf/compiler/plugin_pb2.py` module. The module would log every import to a remote server. Because `sentencepiece` imported `protobuf` during startup, the poison propagated silently to any project using `sentence-transformers`.
+Before choosing controls, it helps to quantify what a single poisoned example can do. The arithmetic below is illustrative, using stated assumptions rather than measured results.
 
-The attack was discovered when a security engineer noticed outbound traffic from a CI runner to an IP in Singapore. By then, the poisoned wheel had been downloaded 12,487 times in the previous 72 hours. The team had to rebuild all Docker images with a clean Python environment and audit every downstream service.
+Suppose a fine-tuning run uses 50,000 examples. An attacker wants the model to produce a specific incorrect answer for a specific question. Assume, conservatively, that a single example contributes a negligible gradient signal, and that the attacker needs the target pattern to appear in at least 0.1 percent of the training set to reliably shift behavior. That is 50 examples.
 
-Each of these attacks exploited a gap between the speed of AI development and the sluggishness of traditional supply chain controls. GitHub PRs, model hubs, and PyPI wheels were never designed for AI velocity. The result is a landscape where poisoned data, models, and dependencies can slide into production faster than teams can react.
+Now suppose the dataset repository has 40 downstream forks and mirrors, a common outcome for a dataset that is useful enough to be reused. If the attacker's pull request is merged upstream, the poison propagates to all 40 copies at the next sync. If the attacker instead targets one downstream fork, the blast radius is one copy — but that copy may be the one a different team depends on.
 
-## Step-by-step implementation with real code
+The useful conclusion is not the specific number. It is that the cost of preventing the merge is far lower than the cost of remediating 40 downstream copies, and that the prevention control is a review gate plus a content hash, not a sophisticated detector. This is why the controls below emphasize process and provenance over classification.
 
-Here’s how to harden a typical AI pipeline in 2026. I’ll use a Python project that fine-tunes a small LLM on a private dataset, but the principles apply to any stack.
+To measure your own exposure, instrument the following:
 
-### Step 1: Pin everything with SLSA and Sigstore
+- The number of distinct sources that feed your training dataset, and which of them are writable by more than one person.
+- The time between a dataset commit and the next training run that consumes it. A short window means a poisoned commit reaches a model quickly.
+- The number of downstream consumers of each dataset artifact. This is your blast radius if a poisoned version is published.
+- The time to roll back the last three model deployments, measured from alert to traffic shift.
 
-SLSA 1.1 is now the de facto standard for artifact integrity in AI pipelines. It’s not perfect, but it’s better than nothing.
+None of these require new tooling. Git history, your CI logs, and your deployment records contain all of it.
 
-```python
-# .slsa-github-workflows/build.yml
-name: Build and sign LLM artifacts
+## Controls that actually reduce risk
 
-on:
-  push:
-    tags:
-      - "v*.*.*"
+The controls below are ordered by the ratio of risk reduction to implementation cost. Start at the top.
 
-permissions:
-  contents: read
-  id-token: write
+### Pin dependencies by content hash
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - run: pip install poetry
-      - run: poetry install --no-root
-      - run: poetry run pytest tests/ -q
-      - run: poetry build
-      - name: Sign with Sigstore
-        uses: sigstore/gh-action-sigstore-python@v0.10.0
-        with:
-          inputs: dist/*.whl
-```
+A lockfile that records a version number is not a lockfile. Use a lockfile that records a cryptographic hash for every package, including transitive ones, and configure your installer to verify those hashes and fail on mismatch. For Python, this means a fully resolved lockfile with hashes, installed in a clean environment in CI. The goal is that a build either reproduces exactly or fails loudly.
 
-The key here is the `id-token: write` permission and the Sigstore step. Sigstore attaches a cryptographic signature to the wheel file, proving it came from your GitHub Actions runner. Without this, anyone can upload a fake wheel to PyPI with the same name and version.
+### Treat datasets as versioned artifacts
 
-### Step 2: Verify dataset provenance with Git hashes and checksums
-
-Most teams still treat datasets as files, not artifacts with their own supply chain. That’s a mistake.
+A dataset should have a content hash and a Git commit hash recorded together, and both should be checked before a training run starts. The hash proves the bytes; the commit hash proves which reviewed revision produced them.
 
 ```python
 # dataset/verify_dataset.py
 import hashlib
-import json
 import sys
 from pathlib import Path
 
@@ -118,15 +91,16 @@ def verify_dataset(path: Path, expected_hash: str) -> bool:
 
 if __name__ == "__main__":
     dataset = Path("data/train.jsonl")
-    expected = "a1b2c3..."  # from a secure source
+    expected = "a1b2c3..."  # from a trusted, versioned source
     if not verify_dataset(dataset, expected):
         sys.exit(1)
 ```
 
-But hashes alone aren’t enough. You also need to tie the dataset to a specific Git commit, because hashes can collide or be faked.
+Store the expected hash and the expected commit hash in a file that is itself signed, so that an attacker who compromises the repository cannot simply update the expected values alongside the poisoned data. A signed provenance file that is regenerated automatically in CI removes the most common failure mode, which is a stale hash that silently accepts a new dataset.
 
 ```python
 # dataset/verify_commit.py
+from pathlib import Path
 from git import Repo
 
 def verify_commit(dataset_path: Path, commit_hash: str) -> bool:
@@ -138,11 +112,9 @@ def verify_commit(dataset_path: Path, commit_hash: str) -> bool:
     return True
 ```
 
-In practice, store the expected commit hash and dataset hash in a signed file, like `dataset.json.asc`, and verify it with GPG. That way, even if an attacker compromises the repo, they can’t forge the provenance file without the GPG key.
+### Require review for dataset changes
 
-### Step 3: Enforce dataset review with GitHub CODEOWNERS
-
-Use GitHub’s CODEOWNERS file to require approval for changes to dataset files. It’s crude, but effective.
+A code owner rule that requires approval for changes under your dataset directories is crude, and it will not stop a determined insider. It does stop opportunistic attacks, which are the majority. Require at least two approvals for dataset changes, and make sure the reviewers understand that the diff size is not a signal of safety.
 
 ```
 # .github/CODEOWNERS
@@ -151,31 +123,34 @@ Use GitHub’s CODEOWNERS file to require approval for changes to dataset files.
 /data/**/*.parquet @ml-team
 ```
 
-This won’t stop a malicious insider, but it slows down opportunistic attacks. I’ve seen teams where a single maintainer could merge a dataset change with no review. That’s how the fintech incident happened.
+### Prevent code execution during model loading
 
-### Step 4: Sandbox model loading with seccomp and namespaces
+Loading a serialized model can execute arbitrary code. Where your framework supports it, prefer formats that are not executable — safetensors is the common choice for weights — and set the loader to refuse pickle-based formats. Where you must load an executable format, isolate it.
 
-Even if you verify the model file, loading it can execute arbitrary code. On Linux, you can use seccomp to restrict syscalls.
+The seccomp example below restricts the syscalls available to the process before the model is loaded. Treat it as illustrative: syscall numbers and the exact set of calls a loader needs vary by platform, and a filter that is too strict will cause hard-to-diagnose failures.
 
 ```python
 # model/sandbox.py
 import ctypes
-import os
-import sys
 
 # Load libseccomp
 libseccomp = ctypes.CDLL("libseccomp.so.2")
 
-# Define a filter that only allows read, mmap, and a few others
-scmp_filter_ctx = ctypes.c_void_p()
+# Define a filter that kills the process on any disallowed syscall
 libseccomp.seccomp_init.restype = ctypes.c_void_p
 scmp_filter_ctx = libseccomp.seccomp_init(libseccomp.SCMP_ACT_KILL)
 
-# Allow read, mmap, mprotect, brk, exit_group
-libseccomp.seccomp_rule_add.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_int, ctypes.c_int]
-libseccomp.seccomp_rule_add(scmp_filter_ctx, libseccomp.SCMP_ACT_ALLOW, libseccomp.SCMP_SYS(read), 0)
-libseccomp.seccomp_rule_add(scmp_filter_ctx, libseccomp.SCMP_ACT_ALLOW, libseccomp.SCMP_SYS(mmap), 0)
-libseccomp.seccomp_rule_add(scmp_filter_ctx, libseccomp.SCMP_ACT_ALLOW, libseccomp.SCMP_SYS(mprotect), 0)
+# Allow a minimal set of syscalls. Extend as your loader requires.
+libseccomp.seccomp_rule_add.argtypes = [
+    ctypes.c_void_p, ctypes.c_int, ctypes.c_int, ctypes.c_int
+]
+for syscall in ("read", "mmap", "mprotect", "brk", "exit_group"):
+    libseccomp.seccomp_rule_add(
+        scmp_filter_ctx,
+        libseccomp.SCMP_ACT_ALLOW,
+        libseccomp.SCMP_SYS(syscall),
+        0,
+    )
 libseccomp.seccomp_load(scmp_filter_ctx)
 
 # Now load the model
@@ -183,15 +158,15 @@ from transformers import AutoModel
 model = AutoModel.from_pretrained("./model")
 ```
 
-This won’t stop all attacks, but it limits the blast radius. I’ve seen models that, when loaded, would open a reverse shell if a specific environment variable was set. Sandboxing caught that before it reached production.
+The practical alternative, if seccomp is too brittle for your environment, is to load the model in a separate process with no network access and a read-only filesystem, and to communicate with it over a pipe. This is easier to reason about than a syscall filter and catches the common case of a checkpoint that tries to open a network connection.
 
-### Step 5: Rollback with Git tags and model registries
+### Make rollback a tagged operation
 
-Finally, you need a rollback path. Don’t rely on version pins alone.
+Rollback speed is the control that determines how long a poisoning incident affects customers. Tag datasets and models after each training run, and keep a rollback path that does not depend on rebuilding.
 
 ```bash
 # Tag the dataset and model after each training run
-git tag -a dataset/v1.2.3 -m "Dataset v1.2.3"
+git tag -s dataset/v1.2.3 -m "Dataset v1.2.3"
 git push --tags
 
 # Push the model to a private registry with the tag
@@ -205,157 +180,76 @@ git checkout "dataset/${TAG}"
 huggingface-cli download my-org/my-model "${TAG}" --local-dir model
 ```
 
-This script is ugly, but it works. Most teams I’ve seen still rely on `git revert` for models, which breaks CI if the revert isn’t a fast-forward merge.
+Use signed tags. An unsigned tag can be moved by a force push, and a rollback script that points at a moved tag will deploy the wrong revision. Verify the signature in CI before the rollback proceeds.
 
-## Performance numbers from a live system
+## Failure modes that appear after you add controls
 
-We rolled out these changes on a customer-support bot in Q1 2026. The bot used a fine-tuned `distilbert-base-uncased` model with a dataset of 47k Q&A pairs. Here’s what changed:
+Every control introduces its own failure modes. These are the ones that show up most often.
 
-| Metric                     | Before (2026) | After (2026) |
-|----------------------------|---------------|--------------|
-| Dataset poisoning incidents | 2             | 0            |
-| Model rollback time        | 4–6 hours     | 12 minutes   |
-| CI build time              | 8–10 minutes  | 11–13 minutes|  
-| Storage cost (GB/month)    | 42 GB         | 47 GB        |
-| False positive rate        | 1.8%          | 1.3%         |
+**Stale provenance files.** A dataset is updated, but the signed hash file is not regenerated. The new dataset fails verification, or worse, an old hash is compared against an old file and passes while the new file goes unchecked. Generate the provenance file in CI as part of the same commit that changes the dataset, and fail the build if the two are out of sync.
 
-The rollback time dropped because we could now redeploy from a tagged model instead of rebuilding from scratch. The storage cost increased because we kept signed artifacts and provenance files, but the extra 5 GB was cheaper than the cleanup cost of a poisoning incident.
+**Signature lifetime and revocation.** Short-lived signing certificates can expire before an artifact is consumed, especially if a build is slow or a deployment is delayed. A revoked key will fail builds even for artifacts that are genuinely valid. Decide explicitly how long an artifact must remain verifiable, and design the signing step so that verification happens close to consumption.
 
-The false positive rate improved slightly because we started filtering out poisoned examples during validation. Before, we only checked for empty fields; now we check for label consistency and input/output length ratios.
+**Over-restrictive sandboxes.** Syscall filters break legitimate loaders. A loader that uses memory-advice calls for performance will silently lose that performance, or fail outright, if the filter does not allow them. Debug with a syscall tracer before tightening a filter, and keep the filter in version control with a comment explaining each allowed call.
 
-The CI build time increased by 2–3 minutes, which is annoying but acceptable. The real win was eliminating the 4–6 hour outage window when a poisoning incident happened.
+**Registry substitution.** Public model hubs do not enforce provenance, and a model can be replaced under the same name. Pin the revision explicitly and verify the content hash against a value you obtained from a trusted source, not from the same hub that served the model.
 
-I was surprised that the biggest bottleneck wasn’t the sandboxing or the signing, but the dataset provenance checks. The team had to rewrite their ingestion pipeline to store Git commit hashes alongside the dataset files. That added complexity, but it caught a poisoned example that had snuck in via a botched merge.
+**Mutable tags.** Git tags can be moved. If your rollback depends on a tag, an attacker who can force-push can redirect your rollback to a poisoned revision. Signed tags plus signature verification in CI close this gap.
 
-## The failure modes nobody warns you about
+**Detector blind spots.** Validation scripts that check for empty fields and length limits will not catch a semantically poisoned label. Add checks for label consistency — for example, flag any question in a Q&A dataset that has only one distinct answer across many examples — and for input/output length ratios that fall outside the distribution of the rest of the corpus.
 
-### 1. Provenance files get out of sync
+## A decision checklist
 
-You’ll store the dataset hash and commit hash in a file like `data.json.asc`, but if you forget to update that file after a dataset change, your pipeline will fail or worse—accept a poisoned dataset because the provenance check passes.
+Use this to decide which controls to implement first, based on your situation.
 
-I saw this happen when a teammate updated the dataset but forgot to regenerate the provenance file. The hash in the file was from the old dataset, so the new dataset passed the check. The poisoned data propagated to production before anyone noticed. The fix was to automate the provenance file generation in CI.
-
-### 2. Sigstore signatures expire or get revoked
-
-Sigstore signatures are short-lived, typically 24 hours. If your pipeline runs longer than that, the signature might expire before the artifact is used. Also, if the Sigstore signing key is revoked, builds will fail even if the artifact is valid.
-
-In one case, a team’s CI runner timed out after 30 minutes, and the artifact was used 2 hours later with an expired signature. The model loaded fine, but the security team flagged it as a compliance violation. The fix was to extend the signature lifetime to 48 hours and add a step to refresh it if it’s about to expire.
-
-### 3. Sandboxing breaks legitimate syscalls
-
-seccomp filters are brittle. On one system, the model loader used `madvise` to optimize memory, but the seccomp filter blocked it. The model loaded, but performance dropped by 15% because the OS couldn’t optimize memory layout. The fix was to allow `madvise` in the filter, which required debugging the filter with `strace`.
-
-### 4. Hugging Face model hub doesn’t respect SLSA
-
-Hugging Face’s model hub still doesn’t enforce SLSA levels. You can upload a model with a fake signature, and HF will serve it if the version pin is loose. The only reliable way to mitigate this is to pin versions with `model-index.json` and verify the model’s hash against a trusted source.
-
-### 5. Git tags are mutable
-
-Git tags can be moved. If an attacker force-pushes a new tag over an old one, your rollback script might point to the wrong commit. The fix is to use signed tags (`git tag -s`) and verify them in CI.
-
-These failures aren’t glamorous, but they’re the kind of edge cases that bite you in production. The docs don’t cover them because they’re boring. But they’re why most teams still get poisoned.
-
-## Tools and libraries worth your time
-
-| Tool/Library          | Version       | Purpose                          | Cost (2026)       |
-|-----------------------|---------------|----------------------------------|-------------------|
-| Sigstore (Python)     | 0.10.0        | Sign and verify artifacts        | Free              |
-| SLSA GitHub Actions   | v1.1.0        | Build and provenance for CI      | Free              |
-| in-toto               | 1.6.0         | Supply chain metadata            | Free              |
-| seccomp               | 2.5.5         | Sandbox model loading            | Free              |
-| GitHub CODEOWNERS     | n/a           | Enforce dataset review           | Free              |
-| Hugging Face CLI      | 0.20.2        | Model registry and downloads     | Free              |
-| Git (with GPG)        | 2.45.1        | Signed tags and commits          | Free              |
-
-**Sigstore + SLSA:** Use these together. SLSA gives you provenance, Sigstore gives you cryptographic proof. Together, they’re the closest thing to a supply chain guarantee in AI.
-
-**in-toto:** This is an underrated tool. It lets you define a chain of custody for your AI artifacts, from dataset to model to deployment. It’s verbose, but it’s saved me twice when a poisoned model slipped through.
-
-**seccomp:** Don’t rely on Docker alone. Docker’s default seccomp profile is permissive. Use a custom profile for your model loader. The default profile allows 300+ syscalls; a custom one can reduce that to 12.
-
-**CODEOWNERS:** It’s not fancy, but it stops lazy attacks. Require at least two approvals for dataset changes.
-
-**GPG-signed Git tags:** If you’re not signing tags, you’re not serious about provenance. An attacker can force-push a tag, and you’ll never know unless the tag is signed.
-
-Avoid tools that promise "AI-native supply chain" without concrete guarantees. Most are vaporware or just rebranded GitHub Actions.
+| Situation | First control | Why |
+|---|---|---|
+| Dataset is editable by more than one person | Required review plus signed provenance file | The merge gate is the cheapest place to stop a poisoned example |
+| Model loaded from a public hub | Pinned revision plus content hash verification | Prevents substitution under a colliding name |
+| Direct dependencies pinned, transitive not | Hash-pinned lockfile | Closes the transitive dependency gap |
+| No rollback path faster than a rebuild | Signed tags plus a tested rollback script | Determines customer impact duration |
+| Model loader accepts pickle formats | Switch to non-executable weight formats, or isolate the loader | Removes code execution from the load path |
 
 ## When this approach is the wrong choice
 
-This pipeline won’t work for every team. Here’s when to skip it:
+These controls assume a pipeline you operate. They are a poor fit in several common situations.
 
-- **Teams with no model registry.** If you’re still emailing models around, you’re not ready for SLSA. Start with a simple registry like Hugging Face or Git LFS before you add provenance.
-- **Teams with no CI/CD.** If you’re training models locally and copying them to prod via SCP, provenance won’t help. Fix your deployment first.
-- **Teams using closed-source models.** If you’re using Azure OpenAI or Anthropic’s API, you can’t sign the model artifact. Instead, focus on input validation and output monitoring.
-- **Teams with no budget for maintenance.** SLSA and Sigstore add complexity. If you can’t afford to update the pipeline when dependencies change, you’ll end up with a brittle system that fails at the worst time.
+If you do not have a model registry and models move between machines by hand, provenance tooling will not help. Establish a registry and a deployment path first.
 
-I once advised a team at a research lab to adopt this pipeline. They tried, but their CI runner kept timing out during the Sigstore step. The fix required upgrading their GitHub Actions runner to a beefier machine, which they couldn’t justify. They rolled back to pinning versions and hoping for the best. That team got poisoned six months later.
+If you do not have CI, there is nowhere to enforce a verification step. Fix the build pipeline before adding signing.
 
-## My honest take after using this in production
+If you consume models through a hosted API, you cannot sign the artifact. Focus instead on input validation, output monitoring, and logging enough to detect a behavior change.
 
-I’m not here to sell you a silver bullet. SLSA and Sigstore are better than nothing, but they’re not infallible. The real gap isn’t technical—it’s process. Teams that get poisoned usually have a process gap, not a tooling gap.
+If you cannot maintain the pipeline, a brittle set of controls is worse than a simple one. A hash check that is regenerated automatically is maintainable; a hand-edited provenance file is not.
 
-The biggest surprise was how often poisoned data gets in via legitimate processes. The fintech team’s poisoned dataset came from an internal tool that auto-syncs Confluence. The tool was approved by security, but no one verified the Confluence export. The attacker just needed to add a fake page to Confluence and wait for the sync.
+## FAQ
 
-Another surprise: most teams don’t know what “poisoned” looks like. They see a model misclassify something and assume it’s a bug, not an attack. I had to write a custom detector that flagged label inconsistencies in the training data. That detector caught 80% of the poisoned examples before they reached the model.
+**How should a model from a public hub be verified before use?**
 
-The tools are good, but they’re only as good as the process around them. If you don’t have a rollback plan, you’re still exposed. If you don’t monitor your models in production, you won’t know if they’ve been poisoned. If you don’t review dataset changes, you’re inviting trouble.
+Pin the revision explicitly, download the artifact, and compare its content hash against a value you obtained from a trusted source. Do not treat the hub's own metadata as the trusted source. Prefer non-executable weight formats, and refuse to load pickle-based checkpoints from untrusted origins.
 
-Finally, I’m tired of hearing “shift left.” Shift left is a cop-out. It means “make developers do security,” but developers aren’t security experts. Instead, automate the provenance checks. Make it impossible to merge a dataset without a signed provenance file. Make it impossible to deploy a model without a SLSA level 3 build. That’s how you shift left effectively.
+**What is the fastest way to roll back a poisoned model?**
 
-## What to do next
+Tag models and datasets after each training run using signed tags, and keep a rollback script that checks out the tagged dataset and pulls the tagged model. Measure the time from alert to traffic shift, and treat any rollback that requires a rebuild as a gap.
 
-Open your terminal and run this command to check if your current AI pipeline is vulnerable:
+**Are SBOMs sufficient for AI supply chains?**
+
+No. An SBOM describes software dependencies. It does not capture dataset provenance or model signatures. Use an SBOM for the software layer and a separate provenance mechanism for datasets and weights.
+
+**How do you detect poisoned examples in a dataset?**
+
+Look for label inconsistencies, input and output length outliers, and unexpected tokens. A simple check that flags any question with only one distinct answer across many examples catches a common class of injection. Run the check as a build step so a poisoned commit fails before training starts.
+
+**Does pinning a version number protect against dependency poisoning?**
+
+Only if the pin resolves to a content hash that is verified at install time. A version number alone can be satisfied by a different artifact if the index serves a replacement.
+
+## What to do in the next 30 minutes
+
+Run this command in the repository that produces your training data, and read the output:
 
 ```bash
-grep -r "sentence-transformers\|transformers\|huggingface" . | grep -v ".git" | grep -v "dist-" | sort -u
+git log --format='%h %an %ad %s' --date=short -- data/ | head -20
 ```
 
-This will list every dependency that loads a model or dataset in your project. For each dependency, check:
-1. Is it pinned to a specific version? (Not a range like `^4.0.0`)
-2. Does it have a SLSA build attached? (Look for `.sigstore` files in your package cache)
-3. Is the model or dataset downloaded from a trusted registry? (Not a random S3 bucket or a forked repo)
-
-If any dependency fails these checks, open a ticket to pin and sign it within the next 30 days. Start with the dependency that has the highest blast radius (e.g., `sentence-transformers` or a fine-tuned model).
-
-If you don’t do this, you’re one PR away from a poisoning incident.
-
-
-## Frequently Asked Questions
-
-**How do I verify a Hugging Face model before using it?**
-
-Check the model’s `model-index.json` file and compare the model hash with a known good source. If the model is from the HF Hub, use `huggingface-cli scan` to download and verify the files. Never use `from_pretrained` with a loose version pin. Always specify the revision and expected hash.
-
-**What’s the fastest way to roll back a poisoned model?**
-
-Tag your models and datasets after each training run. Use Git tags for datasets and HF model tags for models. Maintain a rollback script that checks out the tagged dataset and downloads the tagged model. The fastest rollback I’ve seen took 12 minutes from alert to production; the slowest took 6 hours because the team had no tags.
-
-**Can I use SBOMs for AI models?**
-
-SBOMs are better than nothing, but they’re not enough for AI. An SBOM lists dependencies, but it doesn’t capture dataset provenance or model signatures. Use SBOMs alongside SLSA and Sigstore, not instead of them. The Cloud Security Alliance’s 2026 report found that teams using only SBOMs missed 62% of AI-specific supply chain risks.
-
-**How do I detect poisoned data in my dataset?**
-
-Look for label inconsistencies (e.g., 100 examples where the correct answer to "What’s the company’s revenue?" is the same fake number), input/output length outliers, and unexpected tokens. Write a simple script to count unique labels per question and flag questions with only one label. In one incident, this caught a batch of 200 poisoned examples where the label was always "🎉 mystery prize 🎉".
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 04, 2026
+For each commit that touched a dataset file, ask two questions: was this change reviewed by someone other than the author, and can you produce the content hash that a training run would have verified against? If the answer to either is no, you have found the highest-value gap in your pipeline. Write it down, and make the first fix a required review plus an automatically generated hash file for that dataset directory.

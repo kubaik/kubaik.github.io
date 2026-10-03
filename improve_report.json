@@ -1,27 +1,27 @@
 {
   "improved": [
     {
-      "slug": "use-feature-flags-to-deploy-ai-models-safely",
+      "slug": "evaluate-agents-with-spark-vs-custom-harness",
       "attempts": 1,
       "retitled": false
     },
     {
-      "slug": "trim-llm-bills-3-finops-moves-that-work",
+      "slug": "internal-platform-adoption-one-metric-kills-velocity",
       "attempts": 1,
       "retitled": false
     },
     {
-      "slug": "ai-sales-cycles-3x-faster-40-less-talk",
+      "slug": "monolith-to-services-without-a-rewrite",
+      "attempts": 2,
+      "retitled": false
+    },
+    {
+      "slug": "save-12kmonth-cloud-egress-costs-in-2026",
       "attempts": 1,
       "retitled": true
     },
     {
-      "slug": "ai-stole-system-design",
-      "attempts": 1,
-      "retitled": false
-    },
-    {
-      "slug": "agent-slos-measure-what-agents-actually-do",
+      "slug": "ai-model-poisoning-3-real-attacks-on-datasets",
       "attempts": 1,
       "retitled": false
     }

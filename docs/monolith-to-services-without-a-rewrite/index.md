@@ -1,145 +1,234 @@
 # Monolith to services without a rewrite
 
-I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+## The conventional wisdom, and where it breaks down
 
-## The conventional wisdom (and why it's incomplete)
+The standard playbook for splitting a monolith goes like this: identify bounded contexts, draw the boundaries on a whiteboard, then carve out services one at a time behind a strangler fig facade. The promised benefits are cleaner code, independent deployments, and a path to horizontal scalability.
 
-The standard playbook says: identify bounded contexts, draw lines on a whiteboard, and then carve out services one by one. The promise is cleaner code, independent deployments, and a path to scalability. I’ve seen this work—once. In 2026, a Berlin-based payments team split their monolith into seven services over six months. Traffic was flat, latency stayed under 50ms, and the team grew from 8 to 14 engineers without burning out. That’s the story everyone repeats, usually with a screenshot of a fancy service diagram.
+That playbook is not wrong, but it is incomplete. It assumes the monolith is already modular in its data model, the team has DevOps capacity to spare, and the infrastructure can absorb the overhead of network calls between what used to be function calls. Many real systems satisfy none of those assumptions.
 
-But that playbook assumes your monolith is clean, your team is experienced, and your infrastructure can handle the overhead. Most real-world systems aren’t like that. I ran a project in Lagos in 2026 where the monolith handled 8,000 requests per second on a single PostgreSQL 15 instance with 10GB RAM. The team had three backend engineers, two frontend, and a DevOps person who also managed customer support tickets. We tried the ‘identify bounded contexts’ approach. After three weeks, we had a diagram with 12 services, but no service could start without pulling in 60% of the monolith’s tables. The honest answer is that the conventional wisdom skips the part where your monolith is a hairball of shared state, legacy cron jobs, and 10-year-old SQL views.
+The missing piece in most write-ups is **data coupling**. When a large fraction of your queries join across what you want to be separate services, you are not extracting a service. You are extracting a distributed monolith, and a distributed monolith typically has worse latency and harder debugging than the original. A common failure mode is a team spending months extracting a "User Service" only to find that every other service still queries the `users` table for address history, preferences, and purchase summaries. The result is not independence. It is a mesh of cross-service queries that used to be a single indexed join.
 
-The missing piece is **data coupling**. When 60% of your queries join across what you *want* to be separate services, you’re not extracting a service—you’re extracting a distributed monolith. And distributed monoliths have worse latency and debugging nightmares than the original. I’ve seen teams spend six months extracting a ‘User Service’ only to realize every other service still queries `users` for address history, preferences, and purchase summaries. The result isn’t independence; it’s a network of N+1 queries across services.
+## Three failure modes worth understanding before you plan anything
 
-## What actually happens when you follow the standard advice
+**Failure mode 1: the invisible lock.** A service is extracted behind an internal API gateway. Staging looks fine. In production, the service starts timing out on a small percentage of requests. The root cause is often a write lock on a shared table that the monolith holds during a transaction. The extracted service queries that table directly for validation. The lock was always there; it just used to be invisible because the caller was inside the same process and the same transaction. After extraction, the lock surfaces as tail latency. Service extraction does not change the data model. It relocates the contention to a boundary where it is harder to reason about.
 
-I followed the standard advice on a Singapore-based project in early 2026. The monolith was a Django 4.2 app with 35k lines of Python, 120 models, and a Celery 5.3 queue for async tasks. We chose the ‘strangler fig’ pattern: incrementally replace parts of the monolith with services. We started with the payment module. We extracted it into a Flask 3.0 service behind an internal API gateway. Everything looked good in staging—latency under 20ms, 99.9% success rate.
+**Failure mode 2: duplicated load, not reduced load.** A monolith running on one large database instance is split so that a payment module runs on its own application servers. The database bill stays flat because the same queries still hit the same tables. The compute bill rises because you now run two application tiers instead of one. Nothing was scaled down. The team justifies the cost as "investment in scalability," but if traffic is flat, there is no scalability being bought. The right question is not "how many services do we have" but "what resource is actually saturated, and does a service boundary relieve it."
 
-Then we pushed to production. Within two hours, the payment service started timing out on 3% of requests. The root cause? The monolith’s database had a 600ms write lock on the `transactions` table. The payment service queries that table directly for fraud checks. The lock was invisible to the service layer; it only showed up as a 400ms P95 latency spike. The service extraction didn’t change the data model—it just moved the lock to a different layer.
+**Failure mode 3: the latency tax.** In-process function calls are measured in fractions of a millisecond. An HTTP round trip inside a VPC is typically single-digit to low tens of milliseconds. That difference is the latency tax, and it is paid on every cross-service call. Teams routinely underestimate it because staging traffic is low and the network is quiet. The tax scales with fan-out: a request that touches five services serially pays it five times.
 
-Costs also ballooned. The payment service ran on three t3.medium EC2 instances (2 vCPUs, 4GB RAM) at $0.0416/hour each. The monolith had been running on a single r6g.large RDS instance at $0.172/hour. After extraction, the RDS bill stayed flat, but the EC2 bill added $912/month. We hadn’t reduced load; we’d duplicated it across the service boundary. The team justified the cost as ‘investment in scalability,’ but scalability for what? Traffic was flat at 5k requests/second.
+## A different mental model: start with coupling points
 
-The latency tax was worse. Internal API calls between services added 15–40ms per hop. In the monolith, those calls were Python function calls—0.3ms. The 40ms is the round-trip time for an HTTP request over the VPC network. In West Africa, that VPC network is often 80–120ms RTT to the nearest AWS region. We hadn’t accounted for regional latency. The service extraction made the system slower for users in Lagos, Accra, and Nairobi.
+Instead of starting with contexts, start with **coupling points** — the places where data or behavior is shared across what you think are separate features. The goal is not to extract services. The goal is to reduce coupling so that a future extraction does not drag half the monolith along with it.
 
-## A different mental model
+### Step 1: map your queries
 
-Instead of starting with contexts, start with **coupling points**—the parts of your system where data or behavior is shared across what you think are separate features. The goal isn’t to extract services; it’s to reduce coupling so you can extract services later without pulling in half the monolith.
+On PostgreSQL, `pg_stat_statements` ranks statements by total execution time. That ranking, not your mental model of the code, is the honest map of where the database spends its work:
 
-The first step is to map your queries. I use `pg_stat_statements` on PostgreSQL 16 to rank the 20 most expensive queries by total execution time. In one Lagos project, the top query was a 300ms join across `orders`, `users`, and `payments`. That query ran 4,000 times per minute. The surprise was that 70% of the time was spent in a single SQL view that joined 12 tables. The view was written in 2018 to support a reporting dashboard that no longer existed. Removing that view cut total database load by 18%. No service extraction needed—just a database cleanup.
+```sql
+-- Top 20 statements by total time
+SELECT
+  queryid,
+  calls,
+  total_exec_time,
+  mean_exec_time,
+  rows,
+  left(query, 120) AS query_snippet
+FROM pg_stat_statements
+ORDER BY total_exec_time DESC
+LIMIT 20;
+```
 
-The second step is to identify **transaction boundaries**. If two features can’t be updated atomically, they’re coupled. For example, if creating a user and sending a welcome email must happen in the same transaction, they’re coupled. You can’t extract the email service without risking duplicate emails or failed user creation. In a Berlin project, we refactored the user creation flow to use an outbox pattern. The monolith writes to an `outbox` table, and a background worker publishes events to a Redis 7.2 Pub/Sub channel. The email service subscribes to those events. Total latency for user creation went from 250ms to 45ms. The coupling was broken without a service extraction.
+A frequent finding is that one or two statements dominate. A single reporting view that joins a dozen tables, written years ago for a dashboard nobody uses anymore, can account for a large share of total database time. Dropping or materializing that view is a database change, not a service change, and it can remove more load than any extraction would.
 
-The third step is to **measure before you move**. I benchmark the monolith in production with tools like Locust 2.20 and a custom APM dashboard in Grafana 11.0. For a San Francisco project, we measured 95ms P95 latency for the monolith under 10k RPS. After extracting a ‘notifications’ service, the P95 jumped to 140ms. The service added 45ms of overhead—mostly serialization and network hops. The team assumed the extraction would reduce latency by isolating resource usage, but they forgot about the network. The lesson: if your monolith is already fast enough, extraction often makes it slower.
+To see whether a specific query crosses feature boundaries, run:
 
-## Evidence and examples from real systems
+```sql
+EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
+SELECT ... ;
+```
 
-Here’s a table comparing three migration approaches I’ve seen teams use in 2026–2026:
+Look at which relations appear in the plan. If a query you associate with billing touches `users`, `addresses`, and `orders`, those tables are coupling points between billing and whatever else owns them.
 
-| Approach | Teams | Avg. Time | Success Rate | Latency Change | Cost Change | Coupling Risk |
-|---|---|---|---|---|---|---|
-| Strangler Fig (services first) | 12 | 9 months | 42% | +15–40ms | +$800–$1,500/mo | High |
-| Database-first refactor | 8 | 6 weeks | 88% | -10–30ms | -$200–$400/mo | Low |
-| Outbox + events | 6 | 12 weeks | 94% | -5–15ms | -$100–$300/mo | Medium |
+### Step 2: identify transaction boundaries
 
-The database-first refactor had the highest success rate because it focused on the coupling point instead of the service boundary. One team in Singapore extracted a ‘reports’ module by denormalizing data into a separate schema. They kept the monolith’s Django app but moved reporting queries to a read-only replica. Total code changed: 400 lines. Latency for reports dropped from 800ms to 120ms. The service extraction never happened—the problem was solved at the data layer.
+If two operations must be atomic with respect to each other, they are coupled. Creating a user and sending a welcome email inside one transaction is a coupling. You cannot extract the email path without either accepting duplicate emails, accepting lost emails, or introducing a coordination mechanism.
 
-The outbox + events approach worked well for a Berlin payments company. They had a monolith with a Celery 5.3 queue for async tasks. The queue was the coupling point: every service that needed to send an email, update a ledger, or send a push notification pulled from the same queue. They replaced the queue with Redis 7.2 Pub/Sub and an outbox table. Total changes: 180 lines of Python. Latency for payment confirmation emails dropped from 350ms to 80ms. The team avoided a service extraction by breaking the coupling at the event layer.
+The standard coordination mechanism is the **outbox pattern**. The monolith writes the business row and an event row to an `outbox` table in the same local transaction. A background worker reads unpublished rows and publishes them to a broker. Consumers subscribe. The atomicity guarantee is preserved by the single local transaction; the delivery is at-least-once, so consumers must be idempotent.
 
-I also tracked a Lagos project that tried to extract a ‘user profiles’ service. The monolith used a single `users` table with 120 columns. The service extracted only the `name`, `email`, and `avatar_url` columns. Within a week, other services started querying the `users` table directly for `address_history` and `preferences`. The service wasn’t truly independent; it was a distributed monolith. The team reverted the extraction after three months and spent six weeks normalizing the `users` table instead.
+A sketch of the outbox table:
 
-## The cases where the conventional wisdom IS right
+```sql
+CREATE TABLE outbox (
+  id           bigserial PRIMARY KEY,
+  aggregate    text        NOT NULL,
+  event_type   text        NOT NULL,
+  payload      jsonb       NOT NULL,
+  created_at   timestamptz NOT NULL DEFAULT now(),
+  published_at timestamptz
+);
 
-The strangler fig approach *does* work when your monolith is already modular. In 2026, a San Francisco health-tech company split their Django 4.2 monolith into 12 services over 11 months. Their monolith had clear bounded contexts: patient records, appointments, billing, and analytics. Each context had its own Django app, models, and URLs. The team used Django REST Framework 3.14 to expose internal APIs. They ran each service on Kubernetes 1.28 with Node 20 LTS workers. Latency stayed under 60ms for 99% of requests. The key was that the monolith was already designed for modularity—they just needed to split the deployment.
+CREATE INDEX outbox_unpublished_idx
+  ON outbox (created_at)
+  WHERE published_at IS NULL;
+```
 
-Another case is when you need independent scaling. A Singapore-based e-commerce company extracted their search service because Elasticsearch 8.12 queries were starving their monolith’s database. The search service ran on dedicated nodes with SSD-backed storage. Total cost for the search cluster: $1,200/month. The monolith’s database bill dropped by $800/month. The extraction made sense because the coupling was resource-based (CPU and I/O), not data-based.
+And the publisher loop, showing the idempotency contract rather than a specific broker:
 
-The conventional wisdom also works when you’re replacing a legacy system. A Berlin fintech team replaced a 15-year-old COBOL batch system with a modern Java 21 service. The extraction was a rewrite, not a refactor, but it was necessary to support real-time transactions. The new service used Spring Boot 3.2 and ran on AWS Fargate with Graviton3 processors. Total rewrite time: 5 months. The old system had 18-hour batch windows; the new service processed transactions in under 2 seconds. In cases like this, the ‘big bang’ is often unavoidable—but the strangler fig pattern softens the landing.
+```python
+def publish_pending(batch_size: int = 100) -> int:
+    with db.transaction():
+        rows = db.execute(
+            """
+            SELECT id, aggregate, event_type, payload
+            FROM outbox
+            WHERE published_at IS NULL
+            ORDER BY created_at
+            LIMIT %s
+            FOR UPDATE SKIP LOCKED
+            """,
+            (batch_size,),
+        ).fetchall()
 
-## How to decide which approach fits your situation
+        for row in rows:
+            broker.publish(
+                topic=f"{row['aggregate']}.{row['event_type']}",
+                key=str(row["id"]),
+                value=row["payload"],
+            )
+            db.execute(
+                "UPDATE outbox SET published_at = now() WHERE id = %s",
+                (row["id"],),
+            )
+    return len(rows)
+```
 
-Start with a **coupling audit**. I use a script that runs `EXPLAIN ANALYZE` on the top 50 slowest queries in PostgreSQL 16 and ranks them by total execution time. For each query, I check if it joins across tables that belong to different ‘features’ in my mental model. If more than 30% of the top 50 queries join across features, your monolith has high data coupling. In that case, a database-first refactor or outbox pattern is safer than service extraction.
+Two details matter. `FOR UPDATE SKIP LOCKED` lets multiple publisher workers run without stepping on each other. Publishing before marking as published means a crash between the two produces a duplicate, which is why consumers must be idempotent — that is the at-least-once contract, not a bug.
 
-Next, measure **latency and throughput** in production. Use a tool like Locust 2.20 to replay production traffic against a staging clone. Measure P50, P95, and P99 latency for the monolith. Then, simulate a service extraction by adding a mock service that proxies 10% of requests. If the P95 latency increases by more than 20ms, extraction will hurt performance. In a Lagos project, the monolith had 95ms P95 latency. Adding a mock service pushed it to 140ms. The team abandoned extraction and focused on database optimizations instead.
+The coupling is broken at the event layer without any service extraction. The email path can later become its own process, or stay a worker inside the monolith, and the contract does not change.
 
-Finally, assess **team maturity**. Service extraction requires DevOps maturity: CI/CD, observability, and rollback procedures. A team with two backend engineers who also handle DevOps can’t safely extract services without burning out. In 2026, a Berlin startup tried to extract three services in parallel. They had no observability beyond basic CloudWatch logs. Within two weeks, production incidents spiked by 300%. The team reverted the extraction and spent three months building proper dashboards and alerting before trying again.
+### Step 3: measure before you move
 
-Here’s a decision table I use:
+Before extracting anything, establish a baseline and then simulate the extraction.
 
-| Coupling Type | Latency Impact | Team Maturity | Recommended Approach |
-|---|---|---|---|
-| High data coupling (60%+ cross-feature joins) | P95 +20ms if extracted | Junior team (2–3 backend engineers) | Database-first refactor or outbox pattern |
-| High resource coupling (CPU/I/O starvation) | P95 +10ms if extracted | Senior team (4+ backend engineers) | Strangler fig with independent scaling |
-| Low coupling (clear bounded contexts) | P95 +5ms if extracted | Any team with DevOps maturity | Strangler fig or modular monolith split |
+Instrument at minimum:
 
-## Objections I've heard and my responses
+- P50, P95, and P99 latency for the endpoints you intend to split.
+- Query counts per request (to catch N+1 patterns that appear when a join becomes a remote call).
+- Database connection pool saturation.
+- Error rate by endpoint.
 
-**Objection 1: “But we need independent deployments for CI/CD.”**
+Then run a load test that replays production-shaped traffic against a staging clone. A tool such as Locust or k6 can drive the load; the choice matters less than replaying a realistic mix. Record the baseline numbers.
 
-The honest answer is that you don’t always need independent deployments to get CI/CD benefits. In 2026, most teams use feature flags and canary deployments without splitting services. A Lagos project used LaunchDarkly to deploy new features to 5% of users behind a feature flag. They kept the monolith but reduced deployment risk. The key is that the monolith is still a single deployable unit, but deployments are safer and faster. Independent deployments are a *means*, not an end. If your CI/CD pipeline is slow because of monolithic deploys, fix the pipeline first—don’t split the codebase.
+Next, simulate the extraction. Route a fraction of the relevant calls through a mock service that adds a fixed delay equal to your expected network hop, and re-run the same load. If P95 latency rises by more than your acceptable budget — a common internal target is 20ms — the extraction will hurt performance unless the boundary is redesigned.
 
-**Objection 2: “Our monolith is a mess of spaghetti code and we can’t test it.”**
+The point of the simulation is that it is cheap. A mock that sleeps for 20ms takes an afternoon. A production extraction that turns out to be a latency regression takes a quarter.
 
-I’ve seen this fail when teams try to extract services from a codebase they don’t understand. The solution isn’t to extract services; it’s to refactor the monolith *first*. Use characterization tests to capture existing behavior, then incrementally improve the codebase. A Berlin team spent six weeks writing characterization tests for their Django 4.2 monolith. They added 1,200 lines of pytest 7.4 tests that ran against staging. Only after they had 95% coverage did they start extracting services. The extraction itself took two months and went smoothly. The key mistake was trying to extract without understanding the system.
+## A worked example, with the arithmetic shown
 
-**Objection 3: “We need to scale this module independently.”**
+Suppose a monolith serves 5,000 requests per second, and a candidate "notifications" module is invoked on 30% of those requests. That is:
 
-Scaling a module independently doesn’t always require a service. In 2026, you can scale a module within the monolith using read replicas, connection pooling, or queue workers. A Singapore project had a reporting module that used 60% of the database CPU. Instead of extracting it, they moved reporting queries to a read-only replica using pgpool-II 4.4. Total cost: $150/month for the replica. The module scaled without a service extraction. The only time you need a service is when the scaling requirement is *functional*—like needing a dedicated search engine or payment processor.
+```
+5,000 req/s × 0.30 = 1,500 calls/s to the notifications module
+```
 
-**Objection 4: “Our investors want microservices.”**
+In-process, each call costs about 0.3ms of CPU. After extraction, each call becomes an HTTP round trip. Suppose the measured RTT inside the VPC is 20ms:
 
-I’ve seen teams waste six months extracting services to please investors, only to roll back because the system got slower and more complex. The honest answer is that investors care about growth, not architecture. If your monolith can handle the load, focus on growth metrics instead of premature scaling. A San Francisco startup extracted three services in 2026 to satisfy investor demands. They spent $40k on AWS bills and 12 engineer-weeks. Six months later, they merged the services back because the extraction added no business value. The lesson: don’t let investor pressure drive technical decisions.
+```
+1,500 calls/s × 20ms = 30,000 ms/s = 30 CPU-seconds of waiting per wall-clock second
+```
 
-## What I'd do differently if starting over
+That waiting is not CPU work, but it is concurrency demand: to sustain 1,500 in-flight calls at 20ms each, you need roughly:
 
-I’d start with a **data coupling audit** before touching a single line of code. In my first migration, I jumped straight to service extraction. The result was a distributed monolith with worse latency and higher costs. If I started over, I’d spend two weeks mapping queries, measuring latency, and identifying the top 50 slowest queries in PostgreSQL 16. I’d then prioritize refactoring the database or introducing an outbox pattern before even considering a service.
+```
+1,500 calls/s × 0.020 s = 30 concurrent in-flight requests
+```
 
-I’d also **measure before I move**. In every migration I’ve done, the latency tax of service extraction was invisible until production. I’d set up Locust 2.20 to replay production traffic against a staging clone and simulate the extraction before committing to it. If the P95 latency increases by more than 20ms, I’d pause and reconsider. The tooling is cheap; the mistakes are expensive.
+A thread-per-request server needs 30 threads just to hold those calls open, plus the threads for the rest of the request. A monolith that was comfortably using 40 worker threads may now need 70 or more, depending on how much of the request path is blocked. If the pool is not sized for that, requests queue and P99 latency degrades long before CPU saturates.
 
-Finally, I’d **avoid big-bang anything**. Even with the outbox pattern, I’d roll out changes in stages—start with a single event type, measure impact, then expand. In a Berlin project, we tried to switch the entire event system to Redis 7.2 Pub/Sub in one deploy. The Redis cluster ran out of memory and crashed, taking down the event system for 20 minutes. We rolled back and spent two weeks migrating event types one by one. The key is incremental rollouts—even for infrastructure changes.
+Now consider the same numbers with a 5ms RTT (same-region, same-AZ, connection reuse):
+
+```
+1,500 calls/s × 5ms = 7,500 ms/s = 7.5 CPU-seconds of waiting per second
+1,500 calls/s × 0.005 s = 7.5 concurrent in-flight requests
+```
+
+The difference between 20ms and 5ms is a factor of four in concurrency demand, which is why the network path matters as much as the number of services.
+
+These figures are illustrative, not measured. The method is what transfers: instrument the call rate, measure the RTT, multiply, and compare against your thread pool and connection pool limits.
+
+## When the conventional wisdom is right
+
+The strangler fig approach works well when the monolith is already modular. If each domain already has its own Django app (or Rails engine, or Spring module) with its own models and URL namespace, the extraction is largely a deployment change. The code does not need to be untangled because it was never tangled.
+
+It also works when the coupling is **resource-based** rather than data-based. If a search workload is starving the primary database of I/O, moving search to its own cluster with dedicated storage relieves a real bottleneck. The service boundary follows the resource boundary, which is a clean line to draw.
+
+It works when the module has a genuinely different scaling profile: a batch job that needs burst CPU, a media transcoder that needs GPU, a workload with a different runtime. The boundary is justified by the resource, not by an architectural preference.
+
+And it works when you are replacing a legacy subsystem outright. A rewrite is sometimes unavoidable — for example, replacing a nightly batch system with a real-time one. In that case the strangler fig is less a migration strategy than a way to land the rewrite incrementally, keeping the old path alive until the new one is proven.
+
+## A decision checklist
+
+Work through these in order. Stop at the first one that applies.
+
+1. **Is there a query or view that dominates database time?** If `pg_stat_statements` shows one statement consuming a large share of total time, fix that first. It is often a stale view or a missing index, and the fix is measured in hours, not months.
+2. **Do more than roughly 30% of your top queries join across the proposed service boundary?** If yes, the boundary is wrong or premature. Refactor the schema first: split schemas, remove cross-feature joins, introduce read replicas for read-heavy paths.
+3. **Are there atomic operations spanning the boundary?** If yes, introduce an outbox pattern and make consumers idempotent before extracting anything.
+4. **What is the measured RTT between the proposed service and its callers?** If it is above single-digit milliseconds, the latency tax will be felt. Consider co-locating, or reducing call frequency with batching.
+5. **What is the simulated P95 delta?** If it exceeds your budget, do not extract. The simulation is cheap; the regression is not.
+6. **Does the team have observability and rollback in place?** Distributed tracing, per-service dashboards, and a rehearsed rollback procedure are prerequisites, not nice-to-haves. Without them, an incident becomes an outage.
+7. **Is the business case resource-based or preference-based?** If the driver is "we should have microservices," the answer is usually no. If the driver is a saturated resource or a genuinely independent scaling need, the answer may be yes.
+
+A comparison of the three common approaches:
+
+| Approach | Primary change | Typical effort | Main risk | When it fits |
+|---|---|---|---|---|
+| Database-first refactor | Schema, indexes, views, read replicas | Weeks | Underestimating query rewrites | High data coupling, one dominant query |
+| Outbox plus events | Async boundaries, consumer idempotency | Weeks to a couple of months | Duplicate delivery if consumers are not idempotent | Atomic operations spanning a proposed boundary |
+| Strangler fig extraction | Deployment topology, internal APIs | Months | Latency tax, distributed debugging | Already-modular monolith, resource-driven scaling |
+
+The effort and risk columns are qualitative. The only way to make them quantitative for your system is to run the audit and the simulation described above.
+
+## Objections, and honest responses
+
+**"We need independent deployments for CI/CD."** Independent deployments are a means, not an end. Feature flags and canary releases deliver most of the deployment-risk reduction without splitting the codebase. If the CI pipeline is slow because the test suite is slow, fix the test suite. Splitting the service does not make the tests faster; it makes them distributed.
+
+**"The monolith is spaghetti and we cannot test it."** Extracting services from a codebase you do not understand usually produces distributed spaghetti. The order of operations is wrong. Write characterization tests first — tests that capture current behavior, bugs included — then refactor internally. Only when the module has a stable, tested interface is extraction a mechanical change rather than a rewrite.
+
+**"We need to scale this module independently."** Check whether the module needs independent *compute* or independent *data*. Read replicas, connection pooling, and dedicated queue workers often solve the compute case inside the monolith. A separate service is justified when the scaling requirement is genuinely different in kind — a different runtime, a different storage engine, a different hardware profile.
+
+**"Leadership wants microservices."** Architecture that does not serve a measurable bottleneck tends to be rolled back. The useful move is to translate the request into a resource question: what is saturated, and what change relieves it? Sometimes the answer is a service. Often it is not, and the data to show that is the audit described above.
+
+## Frequently asked questions
+
+**Can a monolith be migrated to services with zero downtime?**
+Zero downtime is achievable only if there is no shared mutable state and no atomic operation spanning the boundary. If the monolith uses one database with foreign keys across the proposed services, the migration requires either a dual-write period or a schema refactor first. Dual-write is not zero downtime; it is a longer window during which two systems must agree.
+
+**What is the most common mistake in monolith-to-services migrations?**
+Extracting a service before reducing data coupling. The extracted service ends up querying the same tables as the monolith, so the boundary adds latency without adding independence. The second most common mistake is not measuring the latency tax before committing.
+
+**How do you decouple a monolith before extracting services?**
+Start with a query audit using `pg_stat_statements`. Identify the statements that dominate total execution time and check whether they join across proposed boundaries. Then split schemas, remove cross-feature joins, add read replicas for read-heavy paths, and introduce an outbox pattern for operations that must be atomic. Extract services only after the data layer is decoupled.
+
+**When should you not extract a service from a monolith?**
+When the monolith's P95 latency is already within budget and the extraction would add more than your latency budget per call. When the team lacks observability and rollback. When the module shares foreign keys or complex joins with other modules. When the only driver is architectural preference rather than a saturated resource.
 
 ## Summary
 
-The conventional wisdom says to extract services early, but the reality is that most monoliths are coupled at the data layer. Jumping to service extraction often creates a distributed monolith with worse latency and higher costs. The safer path is to first reduce coupling by refactoring the database, introducing an outbox pattern, or denormalizing data into schemas. Only after reducing coupling should you consider service extraction—and even then, measure the latency tax before committing.
+The conventional advice to extract services early assumes a modular monolith, a mature team, and infrastructure headroom. Many systems have none of those. The failure mode is a distributed monolith: same data coupling, now with network latency and harder debugging. The safer sequence is to audit coupling at the query level, break atomic dependencies with an outbox pattern, measure the latency tax with a simulated extraction, and only then decide whether a service boundary is justified.
 
-That post is what I wished I had found then. Start with a coupling audit: use `pg_stat_statements` to rank the top 50 slowest queries, then measure the latency impact of a mock extraction. If the P95 latency increases by more than 20ms, refactor the data layer first. Only after reducing coupling should you extract services—and only if the business case justifies the cost.
+## Do this in the next 30 minutes
 
+Run this against your production PostgreSQL database and read the top 20 rows:
 
-## Frequently Asked Questions
+```sql
+SELECT
+  calls,
+  round(total_exec_time::numeric, 1) AS total_ms,
+  round(mean_exec_time::numeric, 2)  AS mean_ms,
+  left(query, 100)                  AS query_snippet
+FROM pg_stat_statements
+ORDER BY total_exec_time DESC
+LIMIT 20;
+```
 
-**how to migrate monolith to microservices without downtime in 2026**
-
-Downtime-free migration requires two things: no shared state and no atomic operations across services. If your monolith uses a single database with foreign keys across what you want to be separate services, you can’t migrate without downtime. The safest approach is to refactor the database first—split schemas, remove cross-feature joins, and introduce read replicas. Only after the database is decoupled can you extract services without downtime. In 2026, most teams that claim ‘zero downtime’ are actually running in dual-write mode for weeks, which is not truly zero downtime.
-
-**what is the biggest mistake when moving from monolith to microservices**
-
-The biggest mistake is extracting services without first reducing data coupling. In my experience, teams that skip the data audit end up with a distributed monolith where every service queries the same tables. The result is worse latency, higher costs, and debugging nightmares. The second-biggest mistake is not measuring the latency tax of service extraction. In every project I’ve seen, the network overhead of HTTP calls between services adds 15–40ms. If your monolith is already fast enough, extraction will slow it down.
-
-**how to decouple monolith before microservices**
-
-Start with a data coupling audit using PostgreSQL 16’s `pg_stat_statements`. Identify the top 50 slowest queries and check if they join across what you want to be separate services. If more than 30% do, refactor the database: split schemas, remove cross-feature joins, and introduce read replicas. Next, introduce an outbox pattern for async operations—write events to an `outbox` table, then publish to Redis 7.2 Pub/Sub. Finally, refactor shared models into separate schemas or databases. Only after decoupling should you extract services.
-
-**when should you not extract a service from a monolith**
-
-Don’t extract a service if your monolith’s P95 latency is under 100ms and the extraction would add more than 20ms overhead. Don’t extract if your team has fewer than three backend engineers who can handle DevOps. Don’t extract if the module shares data with other modules via foreign keys or complex joins—this creates a distributed monolith. In 2026, most teams extract services too early, before the monolith is ready. Wait until the monolith is modular, the team is mature, and the business case is clear.
-
-
-## Next step
-
-Run `pg_stat_statements` on your production PostgreSQL 16 database and rank the top 20 slowest queries by total execution time. If more than 30% of those queries join across what you consider separate features, spend the next two weeks refactoring the database or introducing an outbox pattern before touching a single line of service code.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 27, 2026
+For each row, note which tables appear in the query. If more than about a third of the top 20 join tables that you consider separate features, your next task is a schema refactor, not a service extraction.

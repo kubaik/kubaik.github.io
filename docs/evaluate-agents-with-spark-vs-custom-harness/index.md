@@ -1,26 +1,38 @@
 # Evaluate agents with Spark vs custom harness
 
-I've seen the same building evaluation mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.
+## The evaluation harness is part of the system under test
 
-## Why this comparison matters right now
+A common failure mode in multi-agent projects is treating the evaluation harness as neutral infrastructure. The harness shapes what you can observe, what you can replay, and how quickly you can tell whether a failure came from the agent or from the test rig. When the harness itself is a distributed system, debugging becomes a distributed-systems problem.
 
-In 2026, multi-agent systems aren’t just research projects anymore—they run customer support, fraud detection, and even code review at scale. Teams I talk to in Bangalore, Lagos, and São Paulo all hit the same wall: their evaluation harnesses lie to them. You write a test, it passes in the sandbox, and then in staging the agents spiral into 30-round debates that time out at 45 seconds per request. I spent three weeks chasing a 2.3% regression that turned out to be a single missing retry budget in our custom harness—this post is what I wish I’d had then.
+Two broad approaches dominate practice:
 
-A trustworthy harness does three things: it catches regressions before users do, it surfaces edge cases you didn’t think to test, and it produces artifacts you can hand to product or compliance without rewriting. The two approaches duking it out right now are (A) Apache Spark-based harnesses built on DataFrame-style workflows and (B) custom harnesses written in Python with unittest-style assertions. Spark gives you distributed tracing, automatic retries, and a familiar SQL-like interface, but it forces you to express every agent interaction as a DataFrame transformation—even when the agent’s logic is a Python generator. Custom harnesses give you exact control over agent prompts and tool calls, but you end up writing hundreds of lines of brittle orchestration code that only one teammate understands.
+- **Dataframe-oriented harnesses** built on a distributed batch/stream engine (Apache Spark is the common choice). Agent interactions are modelled as rows in a table, and each agent is a transformation over those rows.
+- **Custom harnesses** written as ordinary application code — typically Python with `pytest` and `asyncio` — where each agent is a function or class and the orchestration is explicit.
 
-The gap between “it works on my laptop” and “it works in production” widens when your harness itself becomes a distributed system. In 2026 benchmarks I collected from seven teams running multi-agent pipelines, 42% of production fires started because the harness emitted incorrect metrics or timed out on long agent chains without surfacing the real cause. Spark-based harnesses cut median debug time from 90 minutes to 15 minutes in those same teams, but they required rewriting 60% of the agent logic to fit the DataFrame model.
+Both can work. They fail in different ways, and they impose different costs. This article covers how each works, where each breaks, how to measure the difference on your own workload, and how to choose.
 
-## Option A — how it works and where it shines
+## What a harness actually has to do
 
-Apache Spark 3.5 (with Delta Lake 2.4) treats your multi-agent system as a streaming DataFrame of interaction events. Each agent is a UDF that consumes a row with columns like `input_text`, `agent_id`, `tool_calls`, and `intermediate_state`. The harness replays events through the pipeline, materializing the full conversation history in a Parquet table. You get automatic retries via Spark’s state store, lineage tracking via Delta Lake, and a Spark UI that actually shows you which agent stage timed out.
+Before comparing implementations, separate the responsibilities. A harness that only runs the happy path is a demo, not an evaluation system. A useful harness does at least five things:
 
-A typical 5-agent chain becomes a single SQL-style query:
+1. **Drives the agent chain** with a controlled input, including tool responses that are stubbed or recorded.
+2. **Records every intermediate artifact** — prompts, tool calls, tool results, retries, and final output — in a form you can diff between runs.
+3. **Asserts on outcomes** that matter: task success, schema validity, latency budget, token spend, and safety constraints.
+4. **Replays** a stored conversation against a changed prompt, model, or tool implementation.
+5. **Reports failures** with enough context that the failing step is identifiable without re-running.
+
+Any harness that skips (2) or (5) will cost you more in debugging than it saves in automation. This is the axis on which the two approaches actually differ.
+
+## Option A: dataframe-oriented harnesses
+
+In this model, each interaction is a row. Columns typically include an input, an agent identifier, a serialized tool-call payload, and an intermediate state blob. Agents are user-defined functions (UDFs) applied to those rows, and the conversation history is materialized into a table.
+
+A simplified chain looks like this:
 
 ```python
 from pyspark.sql import functions as F
-from delta.tables import DeltaTable
 
-interactions = spark.read.format("delta").load("/checkpoints/interactions")
+interactions = spark.read.format("parquet").load("/checkpoints/interactions")
 
 chain_result = (
     interactions
@@ -35,21 +47,29 @@ chain_result = (
         "new_output",
         F.expr("agent_udf(next_agent, input_text, intermediate_state)")
     )
-    .write.format("delta")
+    .write.format("parquet")
     .mode("append")
     .save("/checkpoints/interactions")
 )
 ```
 
-Where Spark shines is when you need to replay 100k conversations with a new agent version. The DataFrame lineage means you only re-run the stages that changed; the rest is served from the Delta table’s snapshot. I measured a 6.8x speedup versus a naive custom replayer when we swapped the planner agent in a fraud-detection pipeline handling 1.2M daily sessions. The catch is that complex Python logic—like a dynamic few-shot prompt builder—must be rewritten as a Pandas UDF or a JVM wrapper, which adds 2–3 days of engineering time per agent.
+Note the format: plain Parquet, not a specific table format. If you want snapshot isolation or time travel, that comes from whichever table format your platform provides — evaluate it separately, because it changes the operational story.
 
-Teams using Spark harnesses also get built-in observability: the Spark UI shows task durations per agent, shuffle spill, and executor GC pressure. In one incident, the Spark UI revealed that our classifier agent’s UDF was spilling 1.8 GB per executor every 30 seconds—something the custom harness’s logs never surfaced because we lacked structured tracing.
+**Where this model earns its keep:**
 
-Weaknesses are real: Spark’s shuffle-heavy execution means latency spikes of 400–700 ms on cold starts when you scale beyond 100 concurrent conversations. Teams running sub-200 ms SLA services often need to shard their harness into separate Spark clusters per tenant, which complicates cost tracking.
+- **Bulk replay.** Re-running a fixed corpus of conversations against a new prompt version is a batch job, and batch engines are good at batch jobs. Partitioning by conversation ID lets the engine skip work whose inputs have not changed, if you structure the job that way.
+- **Existing operational tooling.** If your organization already runs a Spark cluster, the harness inherits its scheduler, its metrics, and its on-call rotation. That is a real cost saving, not a hypothetical one.
+- **Schema enforcement.** Serializing intermediate state into typed columns forces you to define what an agent actually produces. That discipline catches drift early.
 
-## Option B — how it works and where it shines
+**Where it breaks:**
 
-Custom harnesses written in Python with pytest and asyncio give you surgical control over prompts, tool schemas, and retry policies. You model each agent as a Python class with `__call__` and `retry_policy`, then chain them with async generators:
+- **Serialization tax on every tool call.** Each UDF invocation crosses a process or language boundary. For agents that call a fast external service, that overhead can dominate the actual work. It is measurable: instrument wall-clock time inside the UDF versus total task time, and the difference is your serialization and scheduling cost.
+- **Statelessness assumptions.** UDFs are expected to be pure functions of their inputs. Agents that hold state across turns — a scratchpad, a growing plan, a session-scoped cache — do not fit that model without awkward checkpointing that reintroduces the problem you were trying to solve.
+- **Error attribution.** A stage graph tells you which task failed. It does not tell you why the model produced a bad tool call. You still need the raw prompt and response, which means the harness must log them somewhere queryable, which means you have built a second system.
+
+## Option B: custom Python harnesses
+
+The custom approach treats agents as ordinary async functions and the harness as ordinary test code.
 
 ```python
 from dataclasses import dataclass
@@ -60,126 +80,121 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 class Agent:
     name: str
     endpoint: str
-    
+
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def __call__(self, message: str) -> str:
         async with httpx.AsyncClient(timeout=8.0) as client:
-            r = await client.post(self.endpoint, json={"messages": [{"role": "user", "content": message}]})
+            r = await client.post(
+                self.endpoint,
+                json={"messages": [{"role": "user", "content": message}]},
+            )
             r.raise_for_status()
             return r.json()["choices"][0]["message"]["content"]
 
-async def run_chain(initial: str) -> str:
-    user_msg = initial
-    for agent in [classifier, planner, tool_caller]:
-        user_msg = await agent(user_msg)
-    return user_msg
+async def run_chain(initial: str, agents: list[Agent]) -> str:
+    message = initial
+    for agent in agents:
+        message = await agent(message)
+    return message
 ```
 
-The harness can log every prompt, tool call, and intermediate state to a SQLite file or a lightweight timeseries store like QuestDB, giving you exact visibility into which step failed and why. I used this setup to catch a hidden prompt injection that only appeared when the user message contained a Unicode homoglyph—our Spark harness had masked it by normalizing all text to ASCII before the UDF ran.
+**Where this model earns its keep:**
 
-Custom harnesses also shine when your agents use non-JSON tools like a legacy SQL engine or a private API that doesn’t expose a streaming interface. You can instrument the exact HTTP headers or database session that caused a timeout, whereas Spark forces you to wrap everything in a DataFrame schema.
+- **Full control over retries and timeouts.** Retry policy lives next to the call it governs. When a timeout occurs, the exception carries the request that caused it.
+- **Non-JSON tools.** Legacy SQL engines, gRPC services, and paginated APIs are awkward as dataframe columns but trivial as function calls.
+- **Testability.** `pytest` fixtures can substitute a fake agent, assert on the exact prompt sent, and run deterministically. Coverage tooling works without modification.
 
-The cost is maintenance: each new retry policy, new tool, or new agent requires new test scaffolding. In one team I advised, the harness grew to 3,200 lines of Python over nine months, with 60% of it dedicated to orchestration that duplicated features already in Spark (retries, parallelism, tracing). Code coverage dropped below 70% because the harness was too brittle to mock deterministically.
+**Where it breaks:**
 
-Latency is lower on average—custom harnesses measured 80–150 ms per agent step in the same fraud pipeline—because you avoid Spark’s shuffle and serialization overhead. But cold starts can spike to 1.2 seconds when the Python runtime initializes, especially on AWS Lambda with Python 3.11.
+- **Orchestration sprawl.** Every new agent adds mocks, fixtures, and retry configuration. Without discipline, the harness grows faster than the system it tests.
+- **Weak default observability.** A bare `httpx.ReadTimeout` tells you nothing about which step in a five-agent chain timed out, or what the preceding four steps produced. This is a design failure, not an inherent limitation — but it is the default, and defaults win.
+- **No built-in replay.** Replaying a recorded conversation requires you to have stored it. If the harness only logs on failure, you cannot reproduce successes that later become failures.
 
-## Head-to-head: performance
+## The comparison that matters: observability, not throughput
 
-| Metric | Spark 3.5 harness | Custom Python harness (asyncio) |
+Latency and throughput numbers from someone else's workload tell you almost nothing about yours, because both are dominated by your tool latency, your model latency, and your concurrency pattern. What transfers between teams is the shape of the failure.
+
+| Dimension | Dataframe-oriented harness | Custom Python harness |
 |---|---|---|
-| Median latency, 5-agent chain | 410 ms | 120 ms |
-| 95th percentile latency | 720 ms | 280 ms |
-| Cold-start latency | 2.1 s | 1.2 s |
-| Max throughput (concurrent conversations) | 1,800 | 2,400 |
-| Memory per conversation | 4.2 MB | 1.8 MB |
-| Debug time to root cause | 15 min | 45 min |
+| Bulk replay of a fixed corpus | Natural fit; engine handles partitioning | Requires you to build the runner |
+| Per-step latency overhead | Serialization and scheduling add fixed cost per UDF call | Near-zero framework overhead |
+| Stateful agents | Awkward; needs external checkpointing | Straightforward |
+| Non-JSON tools | Requires wrapping | Direct |
+| Failure attribution | Stage/task graph plus whatever you logged | Whatever you logged |
+| Onboarding cost | Low if the team already runs the engine | Low for Python teams |
+| Operational surface | The cluster, its scheduler, its upgrades | Your process, your deployment target |
 
-I benchmarked both harnesses on a 5-agent chain processing 50k conversations from a production dataset. Spark’s median latency was 3.4x higher, but it handled 25% more concurrent conversations before p99 latency spiked. The custom harness crashed on 0.07% of conversations due to unhandled exceptions in tool calls, whereas Spark’s state store automatically retried and surfaced the failure in the Spark UI.
+The two rows that decide most projects are **failure attribution** and **operational surface**. Teams rarely regret the framework's raw speed. They regret spending a week unable to tell whether an agent was wrong or the harness was.
 
-The real surprise was memory: Spark’s executor JVMs ballooned to 4.2 GB per conversation when we enabled full lineage tracing, while the custom harness stayed under 1.8 GB. That difference killed our Spark cluster budget when we scaled to 500 concurrent conversations—we had to bump from r6g.large to r6g.xlarge instances, adding $840/month per cluster.
+## How to measure this on your own workload
 
-Tooling latency matters when agents call external APIs with strict SLAs. In a separate test with a third-party LLM provider that enforces a 150 ms timeout at 99.9% percentile, the custom harness succeeded 99.7% of the time, while Spark failed 11% of the time because the UDF serialization added 60–90 ms per call.
+Do not adopt either approach on the strength of a table. Measure. The procedure below takes an afternoon and produces numbers that are actually yours.
 
-## Head-to-head: developer experience
+**Step 1 — Build a fixed corpus.** Capture 200–500 real or realistic conversations, including at least twenty known-hard cases. Store each as a record containing the initial input and the recorded tool responses. This corpus is the only thing both harnesses must consume identically.
 
-Spark harnesses feel familiar to data engineers: you write SQL-like operations, get a UI that shows task durations, and can version your datasets with Delta Lake. The integration with MLflow lets you tag runs with metrics like agent accuracy, concurrency, and cost per conversation. In teams with strong Spark skills, onboarding took 3 days; in teams without, it took 2 weeks to debug why a UDF wasn’t vectorized.
+**Step 2 — Instrument three timings per step.** For every agent invocation, record:
 
-Custom harnesses feel like normal Python code, so Python-savvy teams onboard faster. They also integrate seamlessly with existing CI pipelines—pytest fixtures can spin up a local agent cluster, run deterministic tests, and export coverage reports. The downside is that each new agent requires new mocks, new retry policies, and new tracing code. One teammate spent a week writing a mock for a legacy API that returned paginated results—something Spark’s DataFrame API handles natively.
+- `t_total` — wall clock from the moment the step is scheduled to the moment its output is available.
+- `t_work` — wall clock spent inside the model or tool call.
+- `t_framework` — `t_total - t_work`. This is the harness's own cost.
 
-Error messages are where Spark wins decisively. When an agent times out at 15 seconds, Spark’s UI shows the entire stage graph with the failing task highlighted; custom harnesses often just log a generic `httpx.ReadTimeout` without context. I’ve seen teams waste hours wondering if the agent logic was wrong or the network flaked, only to discover the retry budget was set to zero in the custom harness.
+Report the median and the 95th percentile of `t_framework`. This is the single most useful number in the comparison, and it is the one that external benchmarks never give you.
 
-Documentation overhead is higher for custom harnesses: you must maintain a README for every agent’s retry policy, tool schema, and expected inputs. Spark harnesses centralize that in the UDF signatures and Delta schema, reducing drift between documentation and code. In one audit, we found 14% of tool schemas in the custom harness were out of sync with the runtime—no such drift existed in the Spark version because the schema was enforced at write time.
+**Step 3 — Count failures by class.** Run the corpus and classify every failure as: model error, tool error, harness error, or timeout. A harness that produces many "harness error" classifications is telling you something about itself.
 
-## Head-to-head: operational cost
+**Step 4 — Measure time-to-root-cause.** Pick five failures at random. Time how long it takes, using only the harness's artifacts, to state the failing step and the reason. This is subjective but it is the metric that predicts your maintenance burden.
 
-Running a Spark harness on AWS EMR Serverless (emr-6.15) with 32 vCPU and 64 GB memory costs $0.048 per vCPU-hour. For 500 concurrent conversations, we needed 4 clusters, totaling $384/month. Adding 20% for storage and observability bumped the bill to $460/month.
+**Step 5 — Measure replay cost.** Change one prompt. Re-run the corpus. Record wall-clock time and compute cost. Compare against the time to run the full corpus from scratch. If replay is not meaningfully cheaper, the replayability argument for the heavier harness does not apply to you.
 
-A custom harness running on AWS Lambda with Python 3.11 and 1024 MB memory costs $0.0000166667 per GB-second. For 500 concurrent conversations averaging 250 ms per agent chain, the Lambda bill was $58/month. Cold starts added 1.2 seconds per conversation, so we doubled the concurrency limit to absorb retries, pushing the bill to $92/month.
+**Step 6 — Project cost with explicit assumptions.** Cloud cost arithmetic is simple once the assumptions are stated. For a serverless function billed per GB-second, the monthly cost is:
 
-The hidden cost of Spark is engineering time: rewriting agent logic into DataFrame transformations took one team 18 days, while the custom harness required only 3 days of incremental changes. Over six months, the Spark team spent $32k in engineering time versus $4k for the custom team—enough to offset the cloud bill difference.
+```
+cost = invocations × duration_seconds × memory_GB × price_per_GB_second
+```
 
-Teams that need sub-second latency and already have strong Python skills save money with Lambda. Teams that need lineage, replayability, and SQL-like debugging save time with Spark, even if the cloud bill is higher. The tipping point is usually 1,000+ concurrent conversations; below that, custom harnesses are cheaper and faster to iterate.
+For a provisioned cluster billed per vCPU-hour:
 
-## The decision framework I use
+```
+cost = vCPUs × hours_per_month × price_per_vCPU_hour × utilization_factor
+```
 
-1. Latency SLA: If your SLA is under 250 ms p99 for the agent chain, use a custom harness. Spark’s serialization and shuffle will push you over that limit once you scale.
+State every input. If you cannot state the utilization factor, you do not yet know your cluster cost — you know its ceiling. Treat any comparison that omits the utilization factor as illustrative rather than measured.
 
-2. Replayability needs: If you must replay every conversation with new agent versions or new prompts, use Spark + Delta Lake. The lineage saves weeks of debugging.
+## Failure modes worth designing against
 
-3. Tool diversity: If your agents call legacy APIs, SQL engines, or non-JSON tools, use a custom harness. Spark forces you to wrap everything in a DataFrame, which often breaks tool semantics.
+**Text normalization silently destroying signal.** Any harness that normalizes text before an agent sees it — stripping non-ASCII, lowercasing, trimming whitespace — can mask prompt-injection payloads and encoding-based attacks. The failure is invisible because the normalization is intentional. Mitigation: log both the raw and normalized input, and assert that they differ only in ways you intended.
 
-4. Team skills: If your team already maintains Spark clusters for analytics, bet on Spark. If your team lives in Python and pytest, bet on custom.
+**Retry budgets set to zero.** A retry decorator with `stop_after_attempt(1)`, or a cluster configured to fail fast, turns a transient network blip into a test failure. Teams then spend hours investigating agent logic. Mitigation: assert on retry counts as part of the test, not just on final output.
 
-5. Budget envelope: If you’re below $150/month in cloud costs, custom harnesses are cheaper to run. Once you hit $500+/month, evaluate Spark’s engineering trade-offs.
+**Unbounded agent loops.** Multi-agent chains that terminate on model output rather than a step limit can run for dozens of rounds. Mitigation: enforce a hard step cap in the harness and fail the test when it is hit. The cap belongs in the harness, not in each agent.
 
-6. Compliance artifacts: If you must hand audit logs to SOC2 or ISO auditors, Spark’s Delta table and Spark UI produce artifacts they recognize. Custom harnesses require extra work to package traces into a compliant format.
+**Non-determinism mistaken for regression.** Sampling temperature, tool-side caching, and clock-dependent prompts all produce run-to-run variation. Mitigation: pin the seed where the API allows it, and run the corpus three times before declaring a regression.
 
-I used this framework when we onboarded a new team in São Paulo building a multi-agent code-review assistant. They needed 120 ms p99 latency and had strong Python skills, so we went custom. Six months in, they hit a prompt-injection edge case that the custom harness caught in minutes—something a Spark harness would have masked by normalizing text.
+**Harness drift.** The harness and the production orchestrator diverge until the harness tests a system that no longer exists. Mitigation: have the harness import the production orchestration code rather than reimplementing it.
 
-## My recommendation (and when to ignore it)
+## A decision checklist
 
-Use a **custom harness** if:
-- Your agent chain must answer under 250 ms p99.
-- Your agents call non-JSON tools or legacy systems.
-- Your team is Python-first and already runs pytest.
-- Your cloud budget is under $500/month.
+Work through these in order. The first one that applies usually settles it.
 
-Use an **Apache Spark harness** if:
-- You must replay 10k+ conversations with new agent versions.
-- Your team already runs Spark for analytics or ML.
-- You need lineage and observability baked in.
-- Your SLA allows 400–700 ms median latency.
+1. **Do your agents hold state across turns?** If yes, a stateless-transform harness will fight you. Prefer the custom harness, or budget explicitly for external checkpointing.
+2. **Do your agents call non-JSON tools?** If yes, prefer the custom harness.
+3. **Does your team already operate a distributed batch engine?** If no, the operational cost of adopting one is usually larger than the engineering cost of writing the harness. Prefer custom.
+4. **Is bulk replay of a large fixed corpus a core workflow?** If yes, and the answer to (3) is also yes, the dataframe harness is a reasonable default.
+5. **Is your p99 latency budget tight relative to your tool latency?** Measure `t_framework` first. If it is a meaningful fraction of the budget, that decides it.
+6. **Do you need to hand artifacts to an auditor?** Both approaches can produce them, but the custom harness requires you to design the export. Budget for that work rather than assuming it is free.
 
-Ignore both if you’re building a toy agent that only talks to a single LLM. For that, a Jupyter notebook with a few unit tests is enough. Also ignore Spark if your agents are stateful beyond simple conversation history—stateful agents break Spark’s stateless UDF model and force you into complex checkpointing.
+If none of these apply — a single-agent prototype with one model call and no tools — use neither. A handful of `pytest` tests around the one function is sufficient, and adding infrastructure at that stage is pure cost.
 
-I still regret the time we forced a custom harness into a Spark mold for a customer-facing support agent. The engineering rewrite took two weeks, and we still had to maintain a Spark cluster. The custom harness would have been faster to ship and cheaper to run.
+## A worked example of the reasoning
 
-## Final verdict
+Suppose a team runs a three-agent chain: classify, retrieve, summarize. The retrieval step calls an internal service with a documented p99 of 80 ms. The summarization step calls a model with a p99 of 900 ms. The chain's latency budget is 1.5 seconds at p99.
 
-Pick the **custom harness** for most teams shipping multi-agent systems in 2026. The latency, flexibility, and cost advantages outweigh Spark’s observability wins unless you’re running a high-scale, replay-heavy pipeline. In seven teams I tracked after migration, the custom harness cut time-to-ship by 40% and reduced cloud costs by 65%, while catching edge cases Spark masked through normalization. The only teams that should bet on Spark are those already running large Spark clusters or needing strict replayability.
+The dominant term is the model call at 900 ms. Framework overhead of 60 ms per step across three steps is 180 ms — about 12% of the budget. That is not free, but it is not the deciding factor either. The deciding factor is what happens when the summarizer times out: with a stateless-transform harness, the failure surfaces as a failed task in a stage graph, and the prompt that caused it must be retrieved separately. With a custom harness, the exception can carry the prompt directly if the code is written that way.
 
-This advice comes with scars: I once spent two weeks optimizing a Spark UDF to reduce serialization overhead, only to realize the custom harness had already shipped with the correct retry policy and tool schema. The speed of iteration in Python beat the scalability promises of Spark every time.
+So the recommendation for this team is: choose based on failure attribution, not latency. If they already run a batch engine and their logging is good, either works. If their logging is poor, the heavier harness will not save them, because the harness is not where the logging lives.
 
-**Today, open your agent orchestrator file and count the number of retry policies you’ve implemented. If that count is below three, switch to a custom harness tomorrow—you’ll save days of debugging.**
+That reasoning — identify the dominant term, then ask whether the framework's overhead is material relative to it — generalizes. Run it with your own numbers before adopting anyone's default.
 
+## What to do in the next 30 minutes
 
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 03, 2026
+Open your current harness and add one instrumentation point: wrap each agent invocation so it records `t_total` and `t_work`, and appends `t_framework` to a list. Run your existing test suite. Print the median and 95th percentile of `t_framework`. If that number is under 5% of your per-step latency budget, framework overhead is not your problem and you should choose on observability grounds instead. If it is over 20%, you have found your constraint — and you found it with your own data rather than someone else's benchmark.
