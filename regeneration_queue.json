@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "senior-role-projects-3-real-paths",
-    "title": "Senior role projects: 3 real paths",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about portfolio projects during a code review recently, and",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "serverless-ai-costs-explode-past-10kmo",
-    "title": "Serverless AI costs explode past $10k/mo",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "spot-instances-the-retry-logic-trap-90-miss",
-    "title": "Spot instances: the retry logic trap 90% miss",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on use spot before understanding what was actu",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "starlink-in-production-what-changed-in-our-stack",
-    "title": "Starlink in production: what changed in our stack",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about changed our during a code review recently, and my fir",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "store-data-once-serve-everywhere-cheaper",
-    "title": "Store data once, serve everywhere: cheaper",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "temporal-changed-our-agent-retries-for-good",
     "title": "Temporal changed our agent retries for good",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "thundering-herd-the-hidden-scaling-trap",
     "title": "Thundering Herd: The Hidden Scaling Trap",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I changed my mind about durable execution after watching it fail somewhere it wa",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "wasm-ml-models-keep-dev-speed-at-the-edge",
     "title": "WASM ML models: keep dev speed at the edge",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "wasm-servers-beat-containers-here",
     "title": "WASM servers beat containers here",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I've hit the same webassembly server mistake in more than one production codebas",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "webhooks-done-right-retries-that-dont-explode-in-2026",
     "title": "Webhooks done right: retries that don’t explode in 2026",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "why-scaling-agents-kills-plain-logs",
@@ -541,6 +511,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "senior-role-projects-3-real-paths",
+    "title": "Senior role projects: 3 real paths",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about portfolio projects during a code review recently, and",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "serverless-ai-costs-explode-past-10kmo",
+    "title": "Serverless AI costs explode past $10k/mo",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "spot-instances-the-retry-logic-trap-90-miss",
+    "title": "Spot instances: the retry logic trap 90% miss",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on use spot before understanding what was actu",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "starlink-in-production-what-changed-in-our-stack",
+    "title": "Starlink in production: what changed in our stack",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about changed our during a code review recently, and my fir",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "store-data-once-serve-everywhere-cheaper",
+    "title": "Store data once, serve everywhere: cheaper",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "pydantic-2-redis-stop-the-3am-ai-pages",
