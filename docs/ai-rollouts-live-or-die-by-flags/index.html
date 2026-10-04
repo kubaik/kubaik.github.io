@@ -64,7 +64,7 @@
       "description": "How to gate model versions, prompts, and safety filters behind feature flags, with a Lambda evaluator, SDK, timeout handling, canaries, and tests.",
       "datePublished": "2026-06-12T14:40:14+00:00",
       "dateModified": "2026-10-04T09:58:39+00:00",
-      "wordCount": 2751,
+      "wordCount": 2881,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2751 words
+                        &nbsp;·&nbsp; 2881 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -696,6 +696,23 @@ describe('evaluateFlag', () =&gt; {
 <p>The removal date is the part teams skip. Setting it at creation is cheap; reconstructing intent six months later is not.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Open <code>lib/ai-flag-service-stack.ts</code> and add a second CloudWatch alarm: fire when the SDK's fallback metric exceeds 1% of evaluations over a 5-minute window. That alarm is the difference between noticing a degraded flag service from a dashboard and noticing it from a customer report. Then create a flag named <code>ai-safety-filter-v1</code>, set it to target a small percentage of users, and confirm from the variant-distribution metric that the percentage you configured is the percentage you are actually getting — a mismatch there means the targeting logic and the telemetry disagree, and that is worth finding on a quiet day rather than during a rollout.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/">Use feature flags to deploy AI models safely</a></li>
+<li><a href="https://kubaik.github.io/feature-flags-became-ai-rollout-platforms/">Feature flags became AI rollout platforms</a></li>
+<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

@@ -64,8 +64,8 @@
       "description": "Why aggressive caching and remote idempotency stores fail on flaky 2G/3G links, and how to instrument, measure, and redesign balance endpoints for it.",
       "datePublished": "2026-06-28T17:22:02+00:00",
       "dateModified": "2026-10-04T10:06:37+00:00",
-      "wordCount": 2689,
-      "timeRequired": "PT13M",
+      "wordCount": 2820,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2689 words
+                        14 min read
+                        &nbsp;·&nbsp; 2820 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -466,6 +466,23 @@ tc qdisc add dev lo parent 1:11 handle 10: netem delay 600ms loss 2%
 <p>The measurement discipline matters as much as the design. Track the age of served data, not just latency. Simulate loss and delay in CI. Compare configurations on the staleness histogram, not on aggregate throughput.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your balance or account-state endpoint and add a response header or log field recording the age in seconds of the data being served, measured from the moment the value was produced by the source of truth. Deploy it to one environment. If you cannot populate that field because nothing in your stack tracks when the value was produced, that is the finding: you are serving data whose freshness you cannot measure, and every other decision in this article depends on fixing that first.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software/">AI apps break when you treat them like regular software</a></li>
+<li><a href="https://kubaik.github.io/idempotency-keys-what-they-fix-what-they-dont/">Idempotency keys: what they fix, what they don't</a></li>
+<li><a href="https://kubaik.github.io/ndpr-2026-broke-fintech-apis/">NDPR 2026 broke fintech APIs</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -507,7 +524,7 @@ tc qdisc add dev lo parent 1:11 handle 10: netem delay 600ms loss 2%
                     <a class="related-card" href="/stop-assuming-payment-apis-never-fail/">
                         <h3>Stop assuming payment APIs never fail</h3>
                         <p>How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&amp;#x27;t break checkout.</p>
-                        <span class="related-meta">12 min read · 13 September 2026</span>
+                        <span class="related-meta">13 min read · 13 September 2026</span>
                     </a>
                     
                 </div>

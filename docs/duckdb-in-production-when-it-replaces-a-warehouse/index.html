@@ -64,8 +64,8 @@
       "description": "When an embedded columnar database beats a cloud warehouse for analytics, how to size it, and the failure modes that decide the boundary.",
       "datePublished": "2026-09-30T17:49:35+00:00",
       "dateModified": "2026-10-04T10:45:01+00:00",
-      "wordCount": 2588,
-      "timeRequired": "PT13M",
+      "wordCount": 2723,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -253,8 +253,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2588 words
+                        14 min read
+                        &nbsp;·&nbsp; 2723 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -490,6 +490,25 @@ con.execute(&quot;PRAGMA profiling_output = '/tmp/profile.json';&quot;)
 con.execute(open(&quot;your_query.sql&quot;).read()).fetchall()
 </code></pre>
 <p>Open <code>/tmp/profile.json</code> and look at the total wall-clock time and the peak memory. If the query completes in under two seconds on a sample that's roughly 10% of production size, you have a concrete, defensible case for removing a warehouse dependency from that workload — and you'll have the profile JSON to prove it.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/neon-vs-planetscale-vs-turso-which-broke-first/">Neon vs PlanetScale vs Turso: which broke first?</a></li>
+<li><a href="https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">High-Volume Log Pipelines: Shipping 50k Events Per Second</a></li>
+<li><a href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://duckdb.org/docs/">DuckDB documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -525,13 +544,13 @@ con.execute(open(&quot;your_query.sql&quot;).read()).fetchall()
                     <a class="related-card" href="/cqrs-when-it-pays-off-and-when-it-breaks/">
                         <h3>CQRS: when it pays off and when it breaks</h3>
                         <p>CQRS trades strong consistency for independent read and write scaling. Learn the failure modes, how to measure projection lag, and when a read replica is enough.</p>
-                        <span class="related-meta">11 min read · 21 September 2026</span>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/golden-paths-become-load-bearing-walls/">
                         <h3>Golden paths become load-bearing walls</h3>
                         <p>Why thick internal SDKs for AI features become migration hazards, and how to design a thin runtime that enforces model ID, prompt version and embedding dimension.</p>
-                        <span class="related-meta">12 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                 </div>

@@ -64,8 +64,8 @@
       "description": "Why agent version upgrades break downstream clients, the contract drift behind the errors, and how to pin, check and roll out versions safely.",
       "datePublished": "2026-09-14T04:09:00+00:00",
       "dateModified": "2026-10-04T10:17:43+00:00",
-      "wordCount": 2374,
-      "timeRequired": "PT12M",
+      "wordCount": 2501,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -255,8 +255,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2374 words
+                        13 min read
+                        &nbsp;·&nbsp; 2501 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -421,6 +421,23 @@ A contract file under version control, a CI step that diffs it against the last 
 <h2 id="take-this-action-in-the-next-30-minutes">Take this action in the next 30 minutes</h2>
 <p>Open your deployment manifest for the agent service and find every image reference. If any of them uses <code>latest</code>, <code>stable</code>, or another mutable tag, replace it with the exact version tag of the build currently running in production, then confirm the running pod's image digest matches the digest recorded for that tag in your registry. That single change removes the most common source of "the version did not change but the behaviour did".
 ===END===</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-versioning-the-contract-you-forgot/">Agent versioning: the contract you forgot</a></li>
+<li><a href="https://kubaik.github.io/agent-drift-why-prod-breaks-without-human-checkpoints/">Agent drift: why prod breaks without human checkpoints</a></li>
+<li><a href="https://kubaik.github.io/agent-drift-why-it-hurts-ux/">Agent drift: why it hurts UX</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -462,7 +479,7 @@ A contract file under version control, a CI step that diffs it against the last 
                     <a class="related-card" href="/wasm-servers-beat-containers-here/">
                         <h3>WASM servers beat containers here</h3>
                         <p>A practical guide to choosing WebAssembly over containers for short-lived, CPU-bound server tasks, with code, failure modes, and a measurement plan.</p>
-                        <span class="related-meta">11 min read · 5 August 2026</span>
+                        <span class="related-meta">12 min read · 5 August 2026</span>
                     </a>
                     
                 </div>

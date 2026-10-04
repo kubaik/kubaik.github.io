@@ -64,8 +64,8 @@
       "description": "Five practical ways to surface hidden latency before production: traffic replay, synthetic probes, profiling diffs, query plan diffs, and dependency latency budgets.",
       "datePublished": "2026-06-30T22:23:14+00:00",
       "dateModified": "2026-10-04T10:09:16+00:00",
-      "wordCount": 2296,
-      "timeRequired": "PT11M",
+      "wordCount": 2430,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -253,8 +253,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2296 words
+                        12 min read
+                        &nbsp;·&nbsp; 2430 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -426,6 +426,23 @@ services:
 <p><strong>Ignoring the cost of the check itself.</strong> Every added CI step has a cost in time and maintenance. A check that adds 30 seconds and fails once a quarter may not be worth it; one that adds 3 seconds and catches a regression per month usually is.</p>
 <h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
 <p>Pick one endpoint in your service that you know is on a hot path, and measure its latency under increasing load using a local load generator. Record p50, p95, and p99 at three load levels: well below your peak, at your peak, and slightly above. If p99 rises non-linearly as load increases, you have found a hidden latency source, and you now have a baseline to compare against the next time you change that code path.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-code-review-gap-nobody-admits/">agent code review gap nobody admits</a></li>
+<li><a href="https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/">Serverless Cold Starts: Cost Levers and How to Measure Them</a></li>
+<li><a href="https://kubaik.github.io/7-ways-to-measure-prompt-platform-roi-in-2026/">7 ways to measure prompt platform ROI in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

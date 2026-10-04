@@ -1,49 +1,7 @@
 {
-  "changed": [
-    {
-      "slug": "aws-cloudwatch-synthetics-for-ai-pipelines",
-      "sentences_removed": 0,
-      "sections_added": 2,
-      "footer_migrated": false
-    },
-    {
-      "slug": "micro-saas-niches-eaten-by-ai-in-2026",
-      "sentences_removed": 0,
-      "sections_added": 1,
-      "footer_migrated": false
-    },
-    {
-      "slug": "tame-python-asyncs-hidden-traps",
-      "sentences_removed": 0,
-      "sections_added": 1,
-      "footer_migrated": false
-    }
-  ],
+  "changed": [],
   "needs_regeneration": [
-    "agent-drift-the-failure-mode-you-didnt-log",
-    "agents-keep-breaking-prod-3-boundary-rules-you-still-need",
-    "ai-agent-postmortem-human-loop-vs-blind-replay",
-    "ai-features-rot-faster-than-you-build-them",
-    "ai-unit-costs-the-metric-both-teams-fight-over",
-    "audit-logs-that-scale-skip-the-3am-fire-drills",
-    "foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality",
-    "llm-eval-drift-that-users-notice-first",
-    "observability-2026-ditch-the-three-pillars",
-    "replace-env-with-these-in-2026",
-    "spot-instances-vs-on-demand-for-ai-experiments",
-    "why-does-my-agent-version-break-clients",
-    "why-your-multi-agent-system-degraded-slowly"
+    "observability-2026-ditch-the-three-pillars"
   ],
-  "retitle": [
-    "agent-flooded-our-api-with-bad-calls-overnight",
-    "ai-pair-prompts-9-setups-we-tried-in-2026",
-    "ai-tools-rewrote-my-engineering-rules",
-    "api-abuse-2026-5-attacks-we-missed-until-costs-spiked",
-    "apm-lied-about-our-ai-incidents",
-    "one-misconfigured-vector-db-killed-our-rag-pipeline",
-    "react-19-compiler-my-components-changed-how",
-    "temporal-changed-our-agent-retries-for-good",
-    "why-does-my-agent-version-break-clients",
-    "why-our-schema-survived-ai-scaling"
-  ]
+  "retitle": []
 }

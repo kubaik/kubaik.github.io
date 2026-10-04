@@ -64,7 +64,7 @@
       "description": "Design offline-capable agents with operation logs, versioned conflict resolution, auditable sync, and GDPR-aware deletion propagation.",
       "datePublished": "2026-09-07T08:09:01+00:00",
       "dateModified": "2026-10-04T10:31:14+00:00",
-      "wordCount": 2308,
+      "wordCount": 2436,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -229,7 +229,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2308 words
+                        &nbsp;·&nbsp; 2436 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -462,6 +462,24 @@ async def sync_data(request: SyncRequest):
 </ul>
 <h2 id="next-30-minutes">Next 30 minutes</h2>
 <p>Open the sync endpoint and add a counter for rejected-as-stale operations, incremented each time <code>op.client_version &lt; server_version</code> is true. Emit it as a structured log line alongside the agent ID and entity ID. That single counter turns the quiet failure mode — wrong answers with no errors — into something visible, and it is the cheapest instrumentation to add before the next field deployment.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/offline-first-apps-what-3g-markets-taught-us/">Designing Offline-First Apps for Unreliable Networks</a></li>
+<li><a href="https://kubaik.github.io/offline-first-agents-for-field-teams/">Offline-first agents for field teams</a></li>
+<li><a href="https://kubaik.github.io/offline-agent-workflows-for-last-mile-ops/">Offline agent workflows for last-mile ops</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

@@ -64,7 +64,7 @@
       "description": "A three-layer FastAPI layout (API, domain, infra) that keeps a monolith evolvable: worked code, failure modes, cache stampede fixes, and how to measure.",
       "datePublished": "2026-08-19T06:58:57+00:00",
       "dateModified": "2026-10-04T10:13:21+00:00",
-      "wordCount": 2906,
+      "wordCount": 3035,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -259,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2906 words
+                        &nbsp;·&nbsp; 3035 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -718,6 +718,24 @@ async def health():
     return {&quot;status&quot;: status, &quot;db&quot;: db_ok, &quot;redis&quot;: redis_ok}
 </code></pre>
 <p>Then run <code>curl http://localhost:8000/health</code> and fix any connection errors immediately. A health check that only returns a static string will not tell you that a security group is blocking the cache port; this one will, and it takes about ten minutes to write.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/">Vibe coding: MVP gem, prod albatross</a></li>
+<li><a href="https://kubaik.github.io/why-monoliths-die-slowly-in-2026/">Why monoliths die slowly in 2026</a></li>
+<li><a href="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -759,7 +777,7 @@ async def health():
                     <a class="related-card" href="/idempotency-keys-what-they-fix-what-they-dont/">
                         <h3>Idempotency keys: what they fix, what they don&#39;t</h3>
                         <p>How idempotency keys work, where they fail, and the failure modes they don&amp;#x27;t cover: concurrent retries, key reuse, expiry, and partial failures.</p>
-                        <span class="related-meta">13 min read · 21 September 2026</span>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
                     </a>
                     
                 </div>

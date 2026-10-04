@@ -64,8 +64,8 @@
       "description": "Diagnose and fix runaway agent API calls: bounded retries, capped backoff, idempotency keys, and volume alerts that catch spikes before the bill does.",
       "datePublished": "2026-08-05T13:52:49+00:00",
       "dateModified": "2026-10-04T10:57:00+00:00",
-      "wordCount": 2780,
-      "timeRequired": "PT14M",
+      "wordCount": 2926,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -258,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2780 words
+                        15 min read
+                        &nbsp;·&nbsp; 2926 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -579,6 +579,27 @@ time.sleep(sleep_time)
 <p>The next time you write an agent that polls for state, add <code>max_polls=100</code> and <code>initial_delay=1.0</code> to the loop. Ship it with those defaults, then tune them based on your SLA. That single line is the difference between a quiet night and a wake-up call.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open the file that contains your agent's polling loop and add a hard iteration cap plus a capped backoff ceiling, then commit it. If you can't find the loop in 30 minutes, that is itself the finding: your agent's control flow isn't documented, and your next step is to grep for <code>while True</code>, <code>sleep(</code>, and <code>requests.get</code> across the repo and inventory every unbounded loop.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/">Rogue Agent API Calls: Stop the Bleeding</a></li>
+<li><a href="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
+<li><a href="https://kubaik.github.io/agents-keep-breaking-prod-3-boundary-rules-you-still-need/">Agents keep breaking prod: 3 boundary rules you still need</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -620,7 +641,7 @@ time.sleep(sleep_time)
                     <a class="related-card" href="/idempotency-keys-what-they-fix-what-they-dont/">
                         <h3>Idempotency keys: what they fix, what they don&#39;t</h3>
                         <p>How idempotency keys work, where they fail, and the failure modes they don&amp;#x27;t cover: concurrent retries, key reuse, expiry, and partial failures.</p>
-                        <span class="related-meta">13 min read · 21 September 2026</span>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
                     </a>
                     
                 </div>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-04T04:58:48.585389",
+  "built_at": "2026-10-04T11:01:24.301349",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5450,6 +5450,11 @@
       "slug": "ai-best-practices-fail-on-slow-networks",
       "title": "AI best practices fail on slow networks",
       "summary": "Teams often end up shipping global best twice — the second time because the first version failed quietly. The vendor docs cover the setup and go quiet on the failure modes. Here's what a colleague hitting this for the first time needs to know. The one-paragraph version (read this first) Most AI engi"
+    },
+    {
+      "slug": "fraud-detection-rules-vs-scoring-where-they-meet",
+      "title": "Fraud detection: rules vs scoring, where they meet",
+      "summary": "There's a one-line change buried in most fraud detection setups that nobody flags until it's expensive. Here's what holds up in practice, and why. It's the kind of problem that's easy to reproduce and hard to explain. The one-paragraph version (read this first) Fraud detection systems almost always "
     }
   ]
 }

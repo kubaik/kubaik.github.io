@@ -64,7 +64,7 @@
       "description": "Multi-agent systems can lose p99 responsiveness while every agent stays healthy. Here is how payload creep, queueing and retries compound, and how to measure it.",
       "datePublished": "2026-08-09T12:58:50+00:00",
       "dateModified": "2026-10-04T10:14:22+00:00",
-      "wordCount": 2744,
+      "wordCount": 2869,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -300,7 +300,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2744 words
+                        &nbsp;·&nbsp; 2869 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -533,6 +533,23 @@ async def call_agent(payload: dict) -&gt; dict:
 <p>It depends entirely on the timeout and the queueing state. If the timeout is 30 ms, the retry itself costs at least 30 ms, plus whatever queueing delay the retry causes. Under pressure, that second cost can be much larger than the first. Retries are a positive feedback loop: the more you retry, the worse latency gets. The fix is to increase timeouts or remove the need for retries.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your orchestrator's request handler and add one line that records the serialized payload size as a metric, tagged by subject or route. Then graph the 99th percentile of that metric over the last 30 days alongside your p99 request latency. If payload size has grown while agent latency has not, you have found the beginning of the failure mode.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/">Multi-agent systems: when they quietly degrade</a></li>
+<li><a href="https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/">When your agent goes silent: degrade gracefully</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -568,13 +585,13 @@ async def call_agent(payload: dict) -&gt; dict:
                     <a class="related-card" href="/multi-agent-systems-when-they-quietly-degrade/">
                         <h3>Multi-agent systems: when they quietly degrade</h3>
                         <p>Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
-                        <span class="related-meta">11 min read · 24 September 2026</span>
+                        <span class="related-meta">12 min read · 24 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/audit-logs-compliance-vs-performance/">
                         <h3>Audit logs: compliance vs performance</h3>
                         <p>How to design audit logging that survives crashes and preserves per-entity order without wrecking p99 latency, plus how to measure the overhead.</p>
-                        <span class="related-meta">12 min read · 20 September 2026</span>
+                        <span class="related-meta">13 min read · 20 September 2026</span>
                     </a>
                     
                 </div>

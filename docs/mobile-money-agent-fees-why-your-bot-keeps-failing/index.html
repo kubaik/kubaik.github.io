@@ -64,7 +64,7 @@
       "description": "USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.",
       "datePublished": "2026-08-05T14:16:59+00:00",
       "dateModified": "2026-10-04T10:53:15+00:00",
-      "wordCount": 2523,
+      "wordCount": 2647,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -251,7 +251,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2523 words
+                        &nbsp;·&nbsp; 2647 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -434,6 +434,19 @@ for attempt in range(3):
 <p>Classify errors first, cap attempts, add jitter, and stop rather than loop. Treat an ambiguous payment failure as potentially successful until reconciled.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Run one packet capture against your staging environment while sending two requests separated by 120 seconds, then open the capture and check whether the client reused the same TCP stream and whether the server closed it in between. That single observation tells you whether your provider binds sessions to sockets, which determines which of the three fixes above applies to your agent.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ussd-fintech-in-2026-the-300m-user-channel-nobody/">USSD fintech in 2026: the 300M user channel nobody</a></li>
+<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+<li><a href="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -469,13 +482,13 @@ for attempt in range(3):
                     <a class="related-card" href="/currency-switch-fails-in-ghana-one-config-file-to-rule/">
                         <h3>Currency switch fails in Ghana: one config file to rule…</h3>
                         <p>Mobile money providers put currency codes in different places. Learn a deterministic extraction, validation, and normalization pipeline that stops silent fallbacks.</p>
-                        <span class="related-meta">12 min read · 13 August 2026</span>
+                        <span class="related-meta">13 min read · 13 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/bank-apis-broke-under-african-2g/">
                         <h3>Bank APIs broke under African 2G</h3>
                         <p>Why aggressive caching and remote idempotency stores fail on flaky 2G/3G links, and how to instrument, measure, and redesign balance endpoints for it.</p>
-                        <span class="related-meta">13 min read · 28 June 2026</span>
+                        <span class="related-meta">14 min read · 28 June 2026</span>
                     </a>
                     
                 </div>

@@ -64,8 +64,8 @@
       "description": "AI refactors often trade cache hits for database reads, exhausting pools and inflating bills. Here is how to detect, verify and gate the change.",
       "datePublished": "2026-06-28T05:02:38+00:00",
       "dateModified": "2026-10-04T10:08:58+00:00",
-      "wordCount": 2604,
-      "timeRequired": "PT13M",
+      "wordCount": 2735,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -251,8 +251,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2604 words
+                        14 min read
+                        &nbsp;·&nbsp; 2735 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -478,6 +478,26 @@ def order_list(request):
 <p>The most disruptive case is a data model change — a rewrite that alters cardinality or key structure. That is the only category here that may require downtime to reverse, which is why it belongs behind a flag and a migration plan.</p>
 <h2 id="one-action-for-the-next-30-minutes">One action for the next 30 minutes</h2>
 <p>Pick the single endpoint most likely to have been touched by an AI refactor in the last two weeks. Run it 100 times against staging, record the query count per request and the cache hit ratio, then compare both against the same measurements from before the refactor. If the query count has risen or the hit ratio has fallen, you have found the cause of the bill change and can decide on a fix before the next billing cycle closes.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/mcp-hidden-cost-traps/">MCP hidden cost traps</a></li>
+<li><a href="https://kubaik.github.io/monolith-to-services-without-a-rewrite/">Monolith to services without a rewrite</a></li>
+<li><a href="https://kubaik.github.io/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.locust.io/">Locust documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -507,13 +527,13 @@ def order_list(request):
                     <a class="related-card" href="/why-our-schema-survived-ai-scaling/">
                         <h3>Designing a Schema That Survives Embedding Model Upgrades</h3>
                         <p>Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.</p>
-                        <span class="related-meta">10 min read · 13 September 2026</span>
+                        <span class="related-meta">11 min read · 13 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/poolers-wont-save-your-serverless-db/">
                         <h3>Poolers won’t save your serverless DB</h3>
                         <p>Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.</p>
-                        <span class="related-meta">13 min read · 19 July 2026</span>
+                        <span class="related-meta">14 min read · 19 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agent-context-short-term-vs-long-term-memory/">

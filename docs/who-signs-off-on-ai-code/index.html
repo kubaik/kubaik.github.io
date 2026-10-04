@@ -64,8 +64,8 @@
       "description": "AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.",
       "datePublished": "2026-10-02T04:45:55+00:00",
       "dateModified": "2026-10-04T10:38:43+00:00",
-      "wordCount": 2188,
-      "timeRequired": "PT11M",
+      "wordCount": 2313,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -256,8 +256,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2188 words
+                        12 min read
+                        &nbsp;·&nbsp; 2313 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -376,6 +376,23 @@ Run static analysis in CI and fail the build on high-severity findings. Require 
 Four are enough to start: AI-assisted commit count, escaped defects per thousand lines, median review time, and time to first review. If the defect rate falls and review time stays roughly flat, the policy is earning its cost. If review time doubles without a defect-rate change, the policy is too heavy for the risk it addresses.</p>
 <h2 id="one-action-to-take-in-the-next-30-minutes">One action to take in the next 30 minutes</h2>
 <p>Open the repository's commit template — <code>.gitmessage</code> in the repo root, or the path configured via <code>git config commit.template</code> — and add a single line: <code>Assisted-by: &lt;tool-name&gt;</code>. If no template exists, create one and point Git at it with <code>git config commit.template .gitmessage</code>. Then make one commit and confirm the trailer appears in <code>git log -1 --format=%B</code>. That is the smallest possible step toward traceability, and it costs nothing. The hook and the CI policy can wait until the trailer is a habit.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/commit-ownership-in-ai-pair-coding/">Commit ownership in AI pair coding</a></li>
+<li><a href="https://kubaik.github.io/who-owns-ai-generated-code/">Who owns AI-generated code?</a></li>
+<li><a href="https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/">CI/CD for AI code: test, secure, rollback fast</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -405,7 +422,7 @@ Four are enough to start: AI-assisted commit count, escaped defects per thousand
                     <a class="related-card" href="/agent-architecture-the-new-model-trap/">
                         <h3>Agent architecture: the new model trap</h3>
                         <p>Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</p>
-                        <span class="related-meta">16 min read · 27 September 2026</span>
+                        <span class="related-meta">17 min read · 27 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/two-engineer-classes-the-ai-tool-norm-trap/">

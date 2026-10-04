@@ -64,8 +64,8 @@
       "description": "A practical guide to choosing WebAssembly over containers for short-lived, CPU-bound server tasks, with code, failure modes, and a measurement plan.",
       "datePublished": "2026-08-05T13:49:01+00:00",
       "dateModified": "2026-10-04T10:07:30+00:00",
-      "wordCount": 2280,
-      "timeRequired": "PT11M",
+      "wordCount": 2421,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -257,8 +257,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2280 words
+                        12 min read
+                        &nbsp;·&nbsp; 2421 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -457,6 +457,26 @@ pub extern &quot;C&quot; fn validate_jwt(
 <p><strong>Is WASM cheaper at scale?</strong> Only for the workloads described here. If you push high request volumes through a small guest, you save on startup and per-request CPU. If you run long-lived services, the savings disappear because you still need a process to host the module.</p>
 <h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
 <p>Pick your highest-latency CPU-bound endpoint — hashing, signature verification, compression, or parsing. Write a microbenchmark that calls the current implementation 10,000 times and records median and p95. Then compile the same logic to WASM, load it in a Node.js process, and run the identical benchmark. Compare <code>wasm_call - noop_call</code> against <code>host_call</code>, and compare module instantiation time against your container start time. If WASM does not clearly win on both, keep the container.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/">A Solo-Project Deploy Pipeline That Stays Under $20/Month</a></li>
+<li><a href="https://kubaik.github.io/bundle-size-70-lighter-with-server-components/">Cutting Client Bundle Size with React Server Components</a></li>
+<li><a href="https://kubaik.github.io/nextjs-15-vs-remix-vs-sveltekit-2026-choices/">Next.js 15 vs Remix vs SvelteKit: 2026 choices</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+<li><a href="https://webassembly.org/">WebAssembly</a></li>
+<li><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -492,7 +512,7 @@ pub extern &quot;C&quot; fn validate_jwt(
                     <a class="related-card" href="/why-does-my-agent-version-break-clients/">
                         <h3>Agent API versioning: why clients break on upgrade</h3>
                         <p>Why agent version upgrades break downstream clients, the contract drift behind the errors, and how to pin, check and roll out versions safely.</p>
-                        <span class="related-meta">12 min read · 14 September 2026</span>
+                        <span class="related-meta">13 min read · 14 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/commit-ownership-in-ai-pair-coding/">

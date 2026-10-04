@@ -64,8 +64,8 @@
       "description": "Most agent permission models fail because credentials are scoped to the agent, not the task. Here is how to issue short-lived, task-scoped tokens and what to measure.",
       "datePublished": "2026-09-19T09:21:55+00:00",
       "dateModified": "2026-10-04T10:51:16+00:00",
-      "wordCount": 3773,
-      "timeRequired": "PT19M",
+      "wordCount": 3910,
+      "timeRequired": "PT20M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -250,8 +250,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3773 words
+                        20 min read
+                        &nbsp;·&nbsp; 3910 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -464,6 +464,25 @@ def get_order(order_id: str, authorization: str = Header(...)):
 <p>No. A fallback credential defeats the entire model, because it is exactly the credential an attacker would prefer. Fail the task instead, and make the failure visible: emit a counter for broker-unreachable events and alert on it. If the failure rate is unacceptable, fix availability at the broker rather than adding a fallback path.</p>
 <h2 id="your-next-step">Your next step</h2>
 <p>Open the agent's IAM role or service account configuration and list every permission it has. For each permission, ask: "Does the agent need this for every task, or only for specific tasks?" If the answer is "specific tasks," you have found a candidate for scoping. Start with the highest-risk permission (for example, write access to an external service) and implement a scoped token for just that one: add a broker endpoint that issues a short-lived JWT, and update one downstream service to validate it. Then add a counter for denied scope requests at that service so you can see whether the policy store keeps up with the code.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/">Resize Images at the Edge: A CloudFront and Lambda Guide</a></li>
+<li><a href="https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/">Sandboxed computer-use agents with gVisor</a></li>
+<li><a href="https://kubaik.github.io/self-service-is-broken-without-ai-ops/">Self-service is broken without AI ops</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://oauth.net/2/">OAuth 2.0 resources</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -493,7 +512,7 @@ def get_order(order_id: str, authorization: str = Header(...)):
                     <a class="related-card" href="/agent-access-for-non-ai-engineers/">
                         <h3>Agent access for non-AI engineers</h3>
                         <p>A backend-first guide to exposing internal tools to LLM agents: typed schemas, dry-run defaults, idempotency, budgets, and replayable traces.</p>
-                        <span class="related-meta">15 min read · 17 September 2026</span>
+                        <span class="related-meta">16 min read · 17 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/self-service-is-broken-without-ai-ops/">
@@ -505,7 +524,7 @@ def get_order(order_id: str, authorization: str = Header(...)):
                     <a class="related-card" href="/ai-tools-wont-help-if-everyone-writes-the-same-code/">
                         <h3>AI tools won’t help if everyone writes the same code</h3>
                         <p>AI coding assistants amplify existing team imbalances. Here is how to measure per-author incident rates and rebalance review load without policing.</p>
-                        <span class="related-meta">13 min read · 29 July 2026</span>
+                        <span class="related-meta">14 min read · 29 July 2026</span>
                     </a>
                     
                 </div>

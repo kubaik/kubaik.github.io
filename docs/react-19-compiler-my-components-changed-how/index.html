@@ -64,8 +64,8 @@
       "description": "How the React 19 compiler rewrites components, where it silently changes behavior, how to verify its output, and when manual memoization is the safer choice.",
       "datePublished": "2026-06-15T07:49:45+00:00",
       "dateModified": "2026-10-04T09:52:45+00:00",
-      "wordCount": 1993,
-      "timeRequired": "PT10M",
+      "wordCount": 2121,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -257,8 +257,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 1993 words
+                        11 min read
+                        &nbsp;·&nbsp; 2121 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -417,6 +417,23 @@ function UserAvatar({ user }) {
 <p>In all three cases the compiler is surfacing an assumption about identity that was previously implicit. That is useful information, but only if the team has tests that can see it.</p>
 <h2 id="a-30-minute-action">A 30-minute action</h2>
 <p>Pick the single component in your application that renders the most rows. Add a render counter to it — a <code>useRef</code> incremented at the top of the function body, logged once per interaction — and record the count for one fixed interaction, such as scrolling the list to the bottom. Then enable the compiler for that component only, repeat the same interaction, and compare the counts. If the count drops and your existing tests still pass, keep the compiler enabled there and move to the next component. If the count is unchanged, the compiler bailed out; inspect why, and fix the data flow before enabling it more widely. If the count drops but a test fails, you have found a real stability bug that manual memoization was hiding.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/bundle-size-70-lighter-with-server-components/">Cutting Client Bundle Size with React Server Components</a></li>
+<li><a href="https://kubaik.github.io/signals-5-state-tricks-that-broke-my-app/">Signals: derived state without the performance tax</a></li>
+<li><a href="https://kubaik.github.io/ai-ui-tools-promise-vs-production/">AI UI tools: promise vs. production</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://react.dev/">React documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -458,7 +475,7 @@ function UserAvatar({ user }) {
                     <a class="related-card" href="/audit-logs-compliance-vs-performance/">
                         <h3>Audit logs: compliance vs performance</h3>
                         <p>How to design audit logging that survives crashes and preserves per-entity order without wrecking p99 latency, plus how to measure the overhead.</p>
-                        <span class="related-meta">12 min read · 20 September 2026</span>
+                        <span class="related-meta">13 min read · 20 September 2026</span>
                     </a>
                     
                 </div>

@@ -64,7 +64,7 @@
       "description": "Why .env files fail in production and how managed secret stores, vault agents and encrypted-file workflows replace them, with rotation and caching tradeoffs.",
       "datePublished": "2026-06-18T22:18:17+00:00",
       "dateModified": "2026-10-04T10:13:43+00:00",
-      "wordCount": 2928,
+      "wordCount": 3061,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -229,7 +229,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2928 words
+                        &nbsp;·&nbsp; 3061 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -455,6 +455,24 @@ Only if someone owns it. A vault cluster that nobody understands is a worse posi
 Fetching the secret on every request instead of caching it. That turns the secret store into a hard dependency on the request path, adds latency to every call, and multiplies your API bill — all for a value that changes a few times a year.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick the single most sensitive credential in one service, confirm whether it currently exists in plaintext anywhere in your repository history with <code>git log -p -- .env | head -100</code>, and if it does, rotate it now and record the rotation in your runbook. Rotating a leaked credential is the highest-value action available and it does not require choosing a secrets management product first.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/stop-putting-llm-keys-in-env/">Stop Putting LLM Keys in .env</a></li>
+<li><a href="https://kubaik.github.io/ai-codebases-two-onboarding-paths-that-actually-work/">AI codebases: two onboarding paths that actually work</a></li>
+<li><a href="https://kubaik.github.io/ai-agents-killed-dev-tool-sales-cycles/">AI agents killed dev tool sales cycles</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

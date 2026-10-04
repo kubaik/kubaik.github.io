@@ -64,7 +64,7 @@
       "description": "How to compare a compiled Rust inference service against a Python async API for LLM serving: cold starts, cache stampedes, memory, and how to measure each.",
       "datePublished": "2026-08-14T02:13:08+00:00",
       "dateModified": "2026-10-04T10:27:37+00:00",
-      "wordCount": 1923,
+      "wordCount": 2061,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 1923 words
+                        &nbsp;·&nbsp; 2061 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -427,6 +427,25 @@ default = [&quot;wee_alloc&quot;]
 <p>The deciding factor is rarely the language. It is whether the cache is configured correctly, whether single-flight is implemented, and whether cold starts are pre-warmed. Fix those three things first; then the stack choice becomes a matter of team fit.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Run <code>redis-cli info memory</code> and check the <code>maxmemory_policy</code> field. If it is not <code>allkeys-lru</code> (or another eviction policy appropriate to your workload), set it with <code>redis-cli config set maxmemory-policy allkeys-lru</code> and restart Redis. Then run <code>redis-cli info stats</code> and record <code>keyspace_hits</code>, <code>keyspace_misses</code>, and <code>evicted_keys</code> as your baseline. If <code>evicted_keys</code> is climbing, you have a cache sizing problem to fix before you ship another feature.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-native-apps-forget-the-old-stack/">AI-native apps: forget the old stack</a></li>
+<li><a href="https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/">Serverless Cold Starts: Cost Levers and How to Measure Them</a></li>
+<li><a href="https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/">AI features as tech debt or golden paths</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://webassembly.org/">WebAssembly</a></li>
+<li><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -456,7 +475,7 @@ default = [&quot;wee_alloc&quot;]
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Design retry caps, DLQs, and alerts so a poison message is isolated in seconds. Includes working Redis Queue code and pytest tests.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">15 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/orchestration-tax-kills-multi-agent-systems/">

@@ -64,7 +64,7 @@
       "description": "Monolith decomposition usually fails on data locality, not routing. A step-by-step order for extracting data first, routing traffic later, with checks.",
       "datePublished": "2026-06-19T02:27:59+00:00",
       "dateModified": "2026-10-04T09:55:51+00:00",
-      "wordCount": 2545,
+      "wordCount": 2669,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -258,7 +258,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2545 words
+                        &nbsp;·&nbsp; 2669 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -336,6 +336,23 @@
 <p>Decomposition is a data-locality problem before it is a traffic-routing problem. Move a copy of the domain's data next to the monolith, validate consistency while the monolith still owns writes, then route a small share of traffic to a service that reads locally. Keep the façade thin, measure the added latency against a pre-agreed SLO headroom, and only then move the write path. If the data cannot be co-located, do the arithmetic first: cross-region round trip plus handler time plus façade overhead, compared against your headroom. If it does not fit, the extraction is not ready, regardless of how the architecture diagram looks.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Open your monolith's configuration and list every data store it talks to for the domain you are considering extracting. For each one, write down whether it is in the same availability zone as the application. Any store that is not is the first thing to fix — before any façade, any new service, or any routing rule.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/monolith-to-services-without-a-rewrite/">Monolith to services without a rewrite</a></li>
+<li><a href="https://kubaik.github.io/migrations-stop-running-them-live/">Migrations? Stop running them live</a></li>
+<li><a href="https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/">Store data once, serve everywhere: cheaper</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -371,13 +388,13 @@
                     <a class="related-card" href="/sbom-attestation-that-gets-used/">
                         <h3>SBOM + attestation that gets used</h3>
                         <p>How to generate, sign, attach and enforce SBOMs and build attestations so admission control and CI gates reject unverified artifacts.</p>
-                        <span class="related-meta">16 min read · 3 October 2026</span>
+                        <span class="related-meta">17 min read · 3 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/rust-rewrites-where-they-pay-off-where-they-dont/">
                         <h3>Rust rewrites: where they pay off, where they don&#39;t</h3>
                         <p>A practical framework for deciding whether a Rust backend rewrite is worth it, with code, failure modes, and measurement steps.</p>
-                        <span class="related-meta">11 min read · 21 September 2026</span>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
                     </a>
                     
                 </div>

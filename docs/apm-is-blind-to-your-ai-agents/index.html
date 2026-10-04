@@ -64,8 +64,8 @@
       "description": "Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.",
       "datePublished": "2026-09-25T04:05:33+00:00",
       "dateModified": "2026-10-04T10:54:18+00:00",
-      "wordCount": 2283,
-      "timeRequired": "PT11M",
+      "wordCount": 2413,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2283 words
+                        12 min read
+                        &nbsp;·&nbsp; 2413 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -418,6 +418,24 @@ At minimum: retrieval recall@k (percentage of queries where at least one relevan
 The engineering cost is typically tens of hours to build a basic pipeline that logs retrieval results and token usage, plus the cost of running an evaluator model on a sample of requests. Compare that to the cost of a single customer-facing hallucination. The right sample rate is a trade-off between evaluation cost and detection latency.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Open the code path that handles a single AI request in your service. Add two log lines: one that records the number of documents returned by your retrieval step, and one that records the total token count from the LLM response. Deploy to a staging or low-traffic environment, let it run for an hour, then query the logs for the distribution of retrieval counts and token totals. Any zero-retrieval requests or token totals well above the median are the first incidents your APM missed.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/detect-lazy-agents-without-false-alarms/">Detect lazy agents without false alarms</a></li>
+<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://kubaik.github.io/ai-native-apps-forget-the-old-stack/">AI-native apps: forget the old stack</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -453,7 +471,7 @@ The engineering cost is typically tens of hours to build a basic pipeline that l
                     <a class="related-card" href="/ai-errors-hide-in-plain-latency/">
                         <h3>AI errors hide in plain latency</h3>
                         <p>Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.</p>
-                        <span class="related-meta">10 min read · 21 August 2026</span>
+                        <span class="related-meta">11 min read · 21 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/">

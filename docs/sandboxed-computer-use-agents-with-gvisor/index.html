@@ -64,7 +64,7 @@
       "description": "How to contain computer-use agents using gVisor, egress allowlists, and short-lived credentials, with code, failure modes, and planning figures.",
       "datePublished": "2026-09-21T18:02:36+00:00",
       "dateModified": "2026-10-04T10:47:22+00:00",
-      "wordCount": 2759,
+      "wordCount": 2898,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -254,7 +254,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2759 words
+                        &nbsp;·&nbsp; 2898 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -434,6 +434,25 @@ server.listen(3128, '127.0.0.1');
 <p>Shorter than the session. If a session is capped at 10 minutes, issue credentials valid for 9 minutes with <code>sts:AssumeRole</code> and <code>DurationSeconds=540</code>. Never extend the token lifetime to fix a timeout — issue a fresh one and re-verify the session's task is still what you expect. A 24-hour token turns a single compromised session into a day-long incident.</p>
 <h2 id="the-next-30-minutes">The next 30 minutes</h2>
 <p>Open the IAM role definition your agent assumes and check the <code>DurationSeconds</code> on its <code>sts:AssumeRole</code> call. If it's longer than your session timeout, change it to <code>SESSION_TIMEOUT - 60</code> right now — that single edit is the highest-impact containment change available today, and it takes less time than reading this sentence twice.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/computer-use-agents-the-permission-trap/">Computer-use agents: the permission trap</a></li>
+<li><a href="https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/">Agent permissions: the mistake that breaks production</a></li>
+<li><a href="https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/">Prompt Injection Is Not Your Biggest LLM Data Risk</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://genai.owasp.org/llm-top-10/">OWASP Top 10 for LLM Applications</a></li>
+<li><a href="https://oauth.net/2/">OAuth 2.0 resources</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -463,13 +482,13 @@ server.listen(3128, '127.0.0.1');
                     <a class="related-card" href="/prompt-injection-what-breaks-first-in-prod/">
                         <h3>Prompt injection: what breaks first in prod</h3>
                         <p>Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.</p>
-                        <span class="related-meta">14 min read · 27 September 2026</span>
+                        <span class="related-meta">15 min read · 27 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/llm-eval-drift-that-users-notice-first/">
                         <h3>LLM eval drift that users notice first</h3>
                         <p>Three pipeline-level causes of user-visible LLM drift, how to instrument each one, and how to verify the fix with metrics rather than vibes.</p>
-                        <span class="related-meta">15 min read · 28 August 2026</span>
+                        <span class="related-meta">16 min read · 28 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/prompt-injection-got-the-hype-poison-data-ruined-us/">

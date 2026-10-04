@@ -64,8 +64,8 @@
       "description": "Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.",
       "datePublished": "2026-08-10T11:51:32+00:00",
       "dateModified": "2026-10-04T10:09:56+00:00",
-      "wordCount": 2497,
-      "timeRequired": "PT12M",
+      "wordCount": 2629,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -255,8 +255,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2497 words
+                        13 min read
+                        &nbsp;·&nbsp; 2629 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -474,6 +474,25 @@ class VaultCredentials:
 <p>If you cannot answer the last question, the change is not ready to ship — you will not be able to tell whether it worked.</p>
 <h2 id="next-step-do-this-in-the-next-30-minutes">Next step: do this in the next 30 minutes</h2>
 <p>Open your agent codebase and count the places where a retry delay is hard-coded or a credential is fetched inline. Pick the single most-duplicated one. Write a failing test that asserts the retry delay honors a <code>Retry-After</code> header of <code>0</code>, then make it pass by routing that call through one shared adapter function. You now have one adapter, one test, and a baseline count of the remaining call sites — which is exactly the evidence you need to decide whether to continue.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
+<li><a href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
+<li><a href="https://kubaik.github.io/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.temporal.io/">Temporal documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -503,7 +522,7 @@ class VaultCredentials:
                     <a class="related-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
                         <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
                         <p>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
-                        <span class="related-meta">14 min read · 3 October 2026</span>
+                        <span class="related-meta">15 min read · 3 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agentic-workflows-surviving-network-partitions/">

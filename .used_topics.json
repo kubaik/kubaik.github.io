@@ -85,5 +85,6 @@
   "The evaluation stack I actually trust for production LLM features in 2026",
   "Building accessible AI chat interfaces that don't fail WCAG audits",
   "SBOM + attestation that actually gets used instead of sitting in a bucket",
-  "Why global AI best practices often fail in markets with high mobile data costs and latency"
+  "Why global AI best practices often fail in markets with high mobile data costs and latency",
+  "Fraud detection systems architecture: rules engines, scoring, and where they intersect"
 ]

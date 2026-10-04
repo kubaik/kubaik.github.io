@@ -64,8 +64,8 @@
       "description": "How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.",
       "datePublished": "2026-08-05T18:25:11+00:00",
       "dateModified": "2026-10-04T10:40:47+00:00",
-      "wordCount": 2870,
-      "timeRequired": "PT14M",
+      "wordCount": 3001,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2870 words
+                        15 min read
+                        &nbsp;·&nbsp; 3001 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -485,6 +485,23 @@ if (!lock) {
 <p>Meter tokens per request in the handler, write usage records keyed by customer ID to the analytics store, and run a daily job that sums tokens per customer. Generate invoices from that table. At small scale, the query cost is negligible.</p>
 <h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
 <p>Open the cost dashboard for the current infrastructure (cloud billing console, edge analytics, or warehouse query history). Filter to the last seven days and list the top five line items. For each, write down whether it scales to zero and whether a cache or batch could eliminate it. Pick the single largest line item that does not scale to zero, and add one instrumentation counter — <code>cache_hit</code>, <code>cache_miss</code>, or <code>model_call</code> — to the code path that touches it. You cannot optimize a cost you are not measuring.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
+<li><a href="https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/">AI unit costs: the metric both teams fight over</a></li>
+<li><a href="https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/">Self-service AI tooling: where it breaks first</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -520,13 +537,13 @@ if (!lock) {
                     <a class="related-card" href="/senior-engineer-title-inflation-in-2026/">
                         <h3>Senior engineer title inflation in 2026</h3>
                         <p>How AI-generated code changes senior-engineer expectations: residency-aware LLM gateways, retry budgets, audit logs, and verification you can run.</p>
-                        <span class="related-meta">10 min read · 13 August 2026</span>
+                        <span class="related-meta">11 min read · 13 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Design retry caps, DLQs, and alerts so a poison message is isolated in seconds. Includes working Redis Queue code and pytest tests.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">15 min read · 21 September 2026</span>
                     </a>
                     
                 </div>

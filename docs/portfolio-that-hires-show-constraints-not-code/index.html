@@ -64,8 +64,8 @@
       "description": "A portfolio that proves engineering judgement: latency budgets, load tests, failure-mode notes and honest trade-offs recruiters can verify.",
       "datePublished": "2026-06-16T04:33:09+00:00",
       "dateModified": "2026-10-04T10:29:52+00:00",
-      "wordCount": 2691,
-      "timeRequired": "PT13M",
+      "wordCount": 2823,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2691 words
+                        14 min read
+                        &nbsp;·&nbsp; 2823 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -582,6 +582,26 @@ Start with three cheap mechanisms: exponential backoff with jitter on every clie
 No. It needs to be a real system with real constraints and honest measurements. A small app with a documented latency budget, a reproducible load test, and a post-mortem that names rejected alternatives demonstrates more than a larger app with no instrumentation.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick one endpoint in your portfolio, add a top-level k6 threshold for it (<code>'http_req_duration{kind:api}': ['p(95)&lt;200']</code>), run the test once against your deployed environment, and paste the resulting p95 into your README next to the budget. If it fails, you have just found the first entry for your post-mortem.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/portfolio-projects-hiring-managers-skip/">Portfolio projects hiring managers skip</a></li>
+<li><a href="https://kubaik.github.io/show-real-work-not-ai-clones/">Show real work, not AI clones</a></li>
+<li><a href="https://kubaik.github.io/hire-for-agents-not-autocomplete/">Hire for agents, not autocomplete</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://react.dev/">React documentation</a></li>
+<li><a href="https://nextjs.org/docs">Next.js documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

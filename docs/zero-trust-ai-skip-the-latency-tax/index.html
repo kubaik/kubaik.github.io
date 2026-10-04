@@ -64,7 +64,7 @@
       "description": "How to keep per-request identity and least privilege in inference services while moving handshakes and policy evaluation off the hot path.",
       "datePublished": "2026-09-15T16:35:21+00:00",
       "dateModified": "2026-10-04T10:31:31+00:00",
-      "wordCount": 2735,
+      "wordCount": 2878,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -246,7 +246,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2735 words
+                        &nbsp;·&nbsp; 2878 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -464,6 +464,25 @@ Yes, if it runs in-process. A local evaluation of a simple policy typically take
 Forgetting the outbound hops. Teams secure the front door with mTLS and policy, then let the model server call the vector database, feature store, and external tool APIs without identity. That is edge-only trust, not zero-trust. Audit every outbound call and give it its own identity and policy.</p>
 <h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
 <p>Open the handler in your inference service that receives the request before it reaches the model, and add a single histogram metric recording time from request receipt to first generated token. Deploy it to staging, run a five-minute load test at expected peak RPS, and look at the p99. If the gap between p50 and p99 exceeds 100 ms, the zero-trust overhead is in the tail. The first thing to check is whether policy evaluation is remote or local — that single measurement tells you which of the four optimizations above to apply first.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/model-router-keep-it-simple-keep-it-local/">Model router: keep it simple, keep it local</a></li>
+<li><a href="https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">AI in slow networks: why models flop where data costs rise</a></li>
+<li><a href="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">Build apps that still work on 500 ms latency</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -499,13 +518,13 @@ Forgetting the outbound hops. Teams secure the front door with mTLS and policy, 
                     <a class="related-card" href="/who-signs-off-on-ai-code/">
                         <h3>Who signs off on AI code?</h3>
                         <p>AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</p>
-                        <span class="related-meta">11 min read · 2 October 2026</span>
+                        <span class="related-meta">12 min read · 2 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agent-architecture-the-new-model-trap/">
                         <h3>Agent architecture: the new model trap</h3>
                         <p>Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</p>
-                        <span class="related-meta">16 min read · 27 September 2026</span>
+                        <span class="related-meta">17 min read · 27 September 2026</span>
                     </a>
                     
                 </div>

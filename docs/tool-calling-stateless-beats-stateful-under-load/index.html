@@ -64,7 +64,7 @@
       "description": "How request-scoped and pooled tool calls behave under load, what to instrument, and a decision checklist for choosing between them.",
       "datePublished": "2026-06-19T09:01:43+00:00",
       "dateModified": "2026-10-04T10:02:16+00:00",
-      "wordCount": 2133,
+      "wordCount": 2269,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2133 words
+                        &nbsp;·&nbsp; 2269 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -396,6 +396,24 @@ async function batchLookup(keys: string[]) {
 <pre><code class="language-bash">watch -n 1 &quot;ss -tan state time-wait | wc -l&quot;
 </code></pre>
 <p>Note the number. Then run the same load test with a client-side concurrency cap equal to your expected peak rate multiplied by the upstream p99 latency in seconds. Note the number again. If the second number is materially lower and your latency did not regress, you have found a cheap improvement: bound the concurrency rather than changing the pattern. If the number is unchanged and your p99 is already acceptable, leave the pattern alone and spend the time on something else.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/7-skills-senior-engineers-need-now-agents-are-live/">7 skills senior engineers need now agents are live</a></li>
+<li><a href="https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/">Mobile money agent fees: why your bot keeps failing</a></li>
+<li><a href="https://kubaik.github.io/mcp-servers-the-3-hidden-costs-nobody-quotes/">MCP servers: the 3 hidden costs nobody quotes</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -425,19 +443,19 @@ async function batchLookup(keys: string[]) {
                     <a class="related-card" href="/ai-errors-hide-in-plain-latency/">
                         <h3>AI errors hide in plain latency</h3>
                         <p>Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.</p>
-                        <span class="related-meta">10 min read · 21 August 2026</span>
+                        <span class="related-meta">11 min read · 21 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Design retry caps, DLQs, and alerts so a poison message is isolated in seconds. Includes working Redis Queue code and pytest tests.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">15 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/memory-systems-for-production-agents/">
                         <h3>Memory Systems for Production Agents</h3>
                         <p>How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
-                        <span class="related-meta">10 min read · 15 September 2026</span>
+                        <span class="related-meta">11 min read · 15 September 2026</span>
                     </a>
                     
                 </div>

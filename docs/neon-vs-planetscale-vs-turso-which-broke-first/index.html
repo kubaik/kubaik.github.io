@@ -64,7 +64,7 @@
       "description": "Diagnose connection drops, replica lag and proxy limits in Neon, PlanetScale and Turso, with reproducible tests and fixes that do not rely on guesswork.",
       "datePublished": "2026-06-10T18:51:10+00:00",
       "dateModified": "2026-10-04T10:36:57+00:00",
-      "wordCount": 2525,
+      "wordCount": 2653,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -255,7 +255,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2525 words
+                        &nbsp;·&nbsp; 2653 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -453,6 +453,23 @@ write_requests_per_second = 1500 * 0.2 = 300
 <p>You can avoid proxy eviction and cold-start effects, but you take on connection management and capacity planning yourself. The trade is operational control for operational burden, and it is a legitimate choice for steady, predictable workloads.</p>
 <h2 id="take-this-action-in-the-next-30-minutes">Take this action in the next 30 minutes</h2>
 <p>Instrument one request path end to end. Add timing around three phases: connection acquisition, query execution, and result serialization. Deploy it, run your normal traffic for ten minutes, and look at which phase dominates. That single measurement will tell you whether you have a pool problem, a routing problem or a query problem, and it costs less than an hour of work.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/poolers-wont-save-your-serverless-db/">Poolers won’t save your serverless DB</a></li>
+<li><a href="https://kubaik.github.io/websockets-vs-server-sent-events-latency-over-3g/">WebSockets vs Server-Sent Events: latency over 3G</a></li>
+<li><a href="https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/">DuckDB in production: when it replaces a warehouse</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -482,19 +499,19 @@ write_requests_per_second = 1500 * 0.2 = 300
                     <a class="related-card" href="/memory-systems-for-production-agents/">
                         <h3>Memory Systems for Production Agents</h3>
                         <p>How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
-                        <span class="related-meta">10 min read · 15 September 2026</span>
+                        <span class="related-meta">11 min read · 15 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/senior-engineer-title-inflation-in-2026/">
                         <h3>Senior engineer title inflation in 2026</h3>
                         <p>How AI-generated code changes senior-engineer expectations: residency-aware LLM gateways, retry budgets, audit logs, and verification you can run.</p>
-                        <span class="related-meta">10 min read · 13 August 2026</span>
+                        <span class="related-meta">11 min read · 13 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-micro-saas-under-150month-the-real-infra-choices/">
                         <h3>Designing AI Micro-SaaS Infra on a $150/Month Budget</h3>
                         <p>How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.</p>
-                        <span class="related-meta">14 min read · 5 August 2026</span>
+                        <span class="related-meta">15 min read · 5 August 2026</span>
                     </a>
                     
                 </div>

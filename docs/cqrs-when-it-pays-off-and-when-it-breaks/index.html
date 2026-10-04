@@ -64,8 +64,8 @@
       "description": "CQRS trades strong consistency for independent read and write scaling. Learn the failure modes, how to measure projection lag, and when a read replica is enough.",
       "datePublished": "2026-09-21T11:34:04+00:00",
       "dateModified": "2026-10-04T10:49:36+00:00",
-      "wordCount": 2292,
-      "timeRequired": "PT11M",
+      "wordCount": 2430,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -253,8 +253,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2292 words
+                        12 min read
+                        &nbsp;·&nbsp; 2430 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -400,6 +400,25 @@ Route the failing message to a dead-letter queue with enough context to replay i
 Usually a saga: a sequence of local transactions with compensating actions for the steps that must be undone. Sagas are more complex than a single ACID transaction, so if the domain genuinely needs atomicity across aggregates, reconsider whether the aggregate boundaries are correct.</p>
 <h2 id="next-step">Next step</h2>
 <p>Open the data access layer for one service and count read and write operations over a representative period, using application counters or <code>pg_stat_statements</code>. If the ratio is below roughly 10:1 and the read shape matches the write shape, you have a concrete candidate for replacing asynchronous projections with a read replica — and a measured number to justify the change.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/event-sourcing-pay-the-complexity-tax-only-here/">Event sourcing: pay the complexity tax only here</a></li>
+<li><a href="https://kubaik.github.io/neon-vs-planetscale-vs-turso-which-broke-first/">Neon vs PlanetScale vs Turso: which broke first?</a></li>
+<li><a href="https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -435,13 +454,13 @@ Usually a saga: a sequence of local transactions with compensating actions for t
                     <a class="related-card" href="/duckdb-in-production-when-it-replaces-a-warehouse/">
                         <h3>DuckDB in production: when it replaces a warehouse</h3>
                         <p>When an embedded columnar database beats a cloud warehouse for analytics, how to size it, and the failure modes that decide the boundary.</p>
-                        <span class="related-meta">13 min read · 30 September 2026</span>
+                        <span class="related-meta">14 min read · 30 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/golden-paths-become-load-bearing-walls/">
                         <h3>Golden paths become load-bearing walls</h3>
                         <p>Why thick internal SDKs for AI features become migration hazards, and how to design a thin runtime that enforces model ID, prompt version and embedding dimension.</p>
-                        <span class="related-meta">12 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                 </div>

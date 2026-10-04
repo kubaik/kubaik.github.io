@@ -64,8 +64,8 @@
       "description": "How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don't break checkout.",
       "datePublished": "2026-09-13T03:56:25+00:00",
       "dateModified": "2026-10-04T10:28:14+00:00",
-      "wordCount": 2483,
-      "timeRequired": "PT12M",
+      "wordCount": 2623,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -258,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2483 words
+                        13 min read
+                        &nbsp;·&nbsp; 2623 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -534,6 +534,27 @@ for key in r.scan_iter('fallback:*'):
     print(f'Retrying {provider} for {payload}')
 </code></pre>
 <p>The skeleton above is deliberately incomplete: the real value is in reusing the same idempotency key and error-mapping logic from <code>handler.py</code>, so that a reconciled retry behaves identically to a first attempt.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-features-m-pesa-paystack-flutterwave-traps/">AI features: M-Pesa, Paystack, Flutterwave traps</a></li>
+<li><a href="https://kubaik.github.io/prevent-ownership-drift-when-velocity-explodes/">Prevent ownership drift when velocity explodes</a></li>
+<li><a href="https://kubaik.github.io/aws-cloudwatch-synthetics-for-ai-pipelines/">AWS CloudWatch Synthetics for AI pipelines</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+<li><a href="https://developer.flutterwave.com/docs">Flutterwave documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -563,13 +584,13 @@ for key in r.scan_iter('fallback:*'):
                     <a class="related-card" href="/ai-features-m-pesa-paystack-flutterwave-traps/">
                         <h3>AI features: M-Pesa, Paystack, Flutterwave traps</h3>
                         <p>Payment webhooks from M-Pesa, Paystack and Flutterwave disagree on timing, idempotency and error semantics. Here is how to normalize them before an AI feature reads them.</p>
-                        <span class="related-meta">11 min read · 23 September 2026</span>
+                        <span class="related-meta">12 min read · 23 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/currency-switch-fails-in-ghana-one-config-file-to-rule/">
                         <h3>Currency switch fails in Ghana: one config file to rule…</h3>
                         <p>Mobile money providers put currency codes in different places. Learn a deterministic extraction, validation, and normalization pipeline that stops silent fallbacks.</p>
-                        <span class="related-meta">12 min read · 13 August 2026</span>
+                        <span class="related-meta">13 min read · 13 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/aws-cloudwatch-synthetics-for-ai-pipelines/">

@@ -64,8 +64,8 @@
       "description": "How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.",
       "datePublished": "2026-06-26T22:22:56+00:00",
       "dateModified": "2026-10-04T10:20:50+00:00",
-      "wordCount": 2462,
-      "timeRequired": "PT12M",
+      "wordCount": 2597,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2462 words
+                        13 min read
+                        &nbsp;·&nbsp; 2597 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -644,6 +644,25 @@ Serve a tiny placeholder inline and let the real image load lazily. A 1×1 base6
 Load them after the shell is interactive, and never let one block first paint. If an ad or analytics script is not essential to the first view, defer it and measure its cost separately with the Performance panel's bottom-up view.</p>
 <h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
 <p>Open your production site in Chrome DevTools, set a custom throttling profile of 1 Mbps down, 280 ms RTT and 10% packet loss, then reload and record <code>responseStart - requestStart</code> for the HTML document. If that number is above 800 ms, the problem is on the server or the edge, not in the bundle, and the fix is to stream the shell before any data fetch. If it is below 800 ms but the page still feels slow, measure the brotli-compressed size of your largest JavaScript file with <code>brotli -c file.js | wc -c</code> and compare it against the 120 kB budget.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
+<li><a href="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">Build apps that still work on 500 ms latency</a></li>
+<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://react.dev/">React documentation</a></li>
+<li><a href="https://nextjs.org/docs">Next.js documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -673,7 +692,7 @@ Load them after the shell is interactive, and never let one block first paint. I
                     <a class="related-card" href="/memory-systems-for-production-agents/">
                         <h3>Memory Systems for Production Agents</h3>
                         <p>How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
-                        <span class="related-meta">10 min read · 15 September 2026</span>
+                        <span class="related-meta">11 min read · 15 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/9-vibe-coding-traps-that-break-production-code/">

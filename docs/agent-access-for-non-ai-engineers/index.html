@@ -64,8 +64,8 @@
       "description": "A backend-first guide to exposing internal tools to LLM agents: typed schemas, dry-run defaults, idempotency, budgets, and replayable traces.",
       "datePublished": "2026-09-17T16:33:46+00:00",
       "dateModified": "2026-10-04T10:38:59+00:00",
-      "wordCount": 3009,
-      "timeRequired": "PT15M",
+      "wordCount": 3147,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -254,8 +254,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3009 words
+                        16 min read
+                        &nbsp;·&nbsp; 3147 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -479,6 +479,26 @@ Structured output guarantees the JSON shape matches a schema you provided. A val
 Almost certainly not. The storage you need is a trace table — prompt, tool calls, arguments, results, outcome — and Postgres with a JSONB column handles millions of rows fine. Vector databases solve similarity search over embeddings, which is a different problem. If you're reaching for one before you have trace replay working, you're solving the wrong problem first.</p>
 <h2 id="the-one-thing-to-do-in-the-next-30-minutes">The one thing to do in the next 30 minutes</h2>
 <p>Open the tool definition file for your most dangerous agent-callable function — the one that writes to prod, sends money, or deletes data — and add a single line: <code>dry_run: bool = True</code> as the default for its arguments, plus a <code>confirmation</code> literal field that the caller must set to a fixed string. Run your existing agent test suite against it. If any test starts failing, that test was exercising a path that could have written to prod without approval, and you just found your first real guardrail gap.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
+<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://kubaik.github.io/least-privilege-for-agents-the-config-line-nobody-writes/">Least privilege for agents: the config line nobody writes</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -508,7 +528,7 @@ Almost certainly not. The storage you need is a trace table — prompt, tool cal
                     <a class="related-card" href="/scope-agent-permissions-per-task/">
                         <h3>Scope agent permissions per task</h3>
                         <p>Most agent permission models fail because credentials are scoped to the agent, not the task. Here is how to issue short-lived, task-scoped tokens and what to measure.</p>
-                        <span class="related-meta">19 min read · 19 September 2026</span>
+                        <span class="related-meta">20 min read · 19 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/self-service-is-broken-without-ai-ops/">
@@ -520,7 +540,7 @@ Almost certainly not. The storage you need is a trace table — prompt, tool cal
                     <a class="related-card" href="/ai-tools-wont-help-if-everyone-writes-the-same-code/">
                         <h3>AI tools won’t help if everyone writes the same code</h3>
                         <p>AI coding assistants amplify existing team imbalances. Here is how to measure per-author incident rates and rebalance review load without policing.</p>
-                        <span class="related-meta">13 min read · 29 July 2026</span>
+                        <span class="related-meta">14 min read · 29 July 2026</span>
                     </a>
                     
                 </div>

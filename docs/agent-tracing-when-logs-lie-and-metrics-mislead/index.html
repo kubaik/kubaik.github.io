@@ -64,8 +64,8 @@
       "description": "Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.",
       "datePublished": "2026-08-28T10:18:37+00:00",
       "dateModified": "2026-10-04T10:57:11+00:00",
-      "wordCount": 1776,
-      "timeRequired": "PT9M",
+      "wordCount": 1909,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -257,8 +257,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        9 min read
-                        &nbsp;·&nbsp; 1776 words
+                        10 min read
+                        &nbsp;·&nbsp; 1909 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -428,6 +428,25 @@ Use message attributes to carry <code>traceparent</code> and baggage. Extract th
 Yes. Use the Kafka client instrumentation for produce and consume spans, and propagate context via record headers. The consumer span should start when the poll returns a record, not when processing finishes.</p>
 <h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
 <p>Open your tracing UI, pick a trace containing an async agent, and check whether an explicit span exists between the parent's end and the agent's start. If it does not, add a span around the enqueue call, inject the propagation context into the message headers, extract it in the worker, and confirm the gap is gone.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/observability-2026-ditch-the-three-pillars/">Observability 2026: ditch the three pillars</a></li>
+<li><a href="https://kubaik.github.io/apm-lied-about-our-ai-incidents/">Why APM Misses GPU-Bound LLM Incidents</a></li>
+<li><a href="https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/">Supervisor vs swarm vs debate vs pipeline</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

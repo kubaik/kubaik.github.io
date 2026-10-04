@@ -64,7 +64,7 @@
       "description": "A practical comparison of naive synchronous tool calls versus retry-budget, backoff, circuit-breaker and bulkhead patterns, with code and metrics.",
       "datePublished": "2026-06-27T14:22:36+00:00",
       "dateModified": "2026-10-04T10:37:17+00:00",
-      "wordCount": 2716,
+      "wordCount": 2846,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -254,7 +254,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2716 words
+                        &nbsp;·&nbsp; 2846 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -505,6 +505,23 @@ func callWithSafety(orderID string) ([]byte, error) {
 <p>A well-implemented client adds essentially nothing on the first attempt. Latency only appears when a retry or a breaker rejection occurs. If your implementation adds a fixed delay before the first attempt, remove it.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open the file in your codebase that issues calls to your most critical downstream dependency. Find the retry logic, if any. Answer three questions in writing: is the operation idempotent, what is the total attempt ceiling, and what happens to concurrent calls when the downstream slows down. If you cannot answer all three from the code, that is the gap to close first. Add a counter for retry attempts labelled by downstream and reason, deploy it, and watch it for one traffic cycle. A retry rate that rises during latency spikes is the signal that the pattern needs to change.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/">Tool calls under load: async batch vs fire-and-forget</a></li>
+<li><a href="https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/">When your agent goes silent: degrade gracefully</a></li>
+<li><a href="https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/">Agent Systems: Circuit Breakers Are Not Enough</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

@@ -1,30 +1,36 @@
 {
   "improved": [
     {
-      "slug": "tame-python-asyncs-hidden-traps",
+      "slug": "build-a-search-system-in-2026-semantic-keyword",
       "attempts": 1,
       "retitled": false
     },
     {
-      "slug": "ai-apps-break-when-you-treat-them-like-regular-software",
-      "attempts": 1,
-      "retitled": false
-    },
-    {
-      "slug": "aws-cloudwatch-synthetics-for-ai-pipelines",
-      "attempts": 1,
-      "retitled": false
-    },
-    {
-      "slug": "map-legacy-code-with-ai-before-it-breaks",
-      "attempts": 1,
-      "retitled": false
-    },
-    {
-      "slug": "micro-saas-niches-eaten-by-ai-in-2026",
+      "slug": "fraud-detection-rules-vs-scoring-where-they-meet",
       "attempts": 1,
       "retitled": false
     }
   ],
-  "failed": []
+  "failed": [
+    {
+      "slug": "observability-2026-ditch-the-three-pillars",
+      "errors": [
+        "too short: 1585 words (need >= 1880)",
+        "dropped too many code examples"
+      ]
+    },
+    {
+      "slug": "negotiate-salaries-with-ai-skills-in-2026",
+      "errors": [
+        "dropped too many code examples"
+      ]
+    },
+    {
+      "slug": "drop-checklists-ai-code-reviews-that-scale",
+      "errors": [
+        "too short: 1679 words (need >= 2000)",
+        "dropped too many code examples"
+      ]
+    }
+  ]
 }

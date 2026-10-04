@@ -64,8 +64,8 @@
       "description": "Application monitoring traces Python calls, not CUDA kernels or batch queues. Here is how to instrument the layers where LLM latency actually hides.",
       "datePublished": "2026-08-01T10:34:29+00:00",
       "dateModified": "2026-10-04T09:57:17+00:00",
-      "wordCount": 2222,
-      "timeRequired": "PT11M",
+      "wordCount": 2353,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -257,8 +257,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2222 words
+                        12 min read
+                        &nbsp;·&nbsp; 2353 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -418,6 +418,24 @@ Check what the SLO is measured against. If it is measured on an APM span that cl
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your APM dashboard and note the p95 latency for one LLM-backed endpoint over the last 24 hours. Then run a synthetic request to that endpoint from a region far from your servers, timing the full response including token streaming. Subtract the APM figure from the measured figure. If the difference is more than a small fraction of the total, you have a quantified instrumentation gap — and a concrete number to bring to the next capacity or observability discussion.
 ===END===</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
+<li><a href="https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
+<li><a href="https://kubaik.github.io/ai-errors-hide-in-plain-latency/">AI errors hide in plain latency</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -447,19 +465,19 @@ Check what the SLO is measured against. If it is measured on an APM span that cl
                     <a class="related-card" href="/apm-is-blind-to-your-ai-agents/">
                         <h3>APM is blind to your AI agents</h3>
                         <p>Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
-                        <span class="related-meta">11 min read · 25 September 2026</span>
+                        <span class="related-meta">12 min read · 25 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agentic-ai-cost-control-7-tools-one-backfire/">
                         <h3>Agentic AI cost control: 7 tools, one backfire</h3>
                         <p>How to control agentic AI spend: ground-truth billing data first, attribution second, and why LLM optimizers over billing data backfire.</p>
-                        <span class="related-meta">14 min read · 19 September 2026</span>
+                        <span class="related-meta">15 min read · 19 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/feature-flags-became-ai-rollout-platforms/">
                         <h3>Feature flags became AI rollout platforms</h3>
                         <p>How flag platforms handle structured model configs, eval-metric gating, and offline fallback — plus a checklist for choosing one for AI rollouts.</p>
-                        <span class="related-meta">17 min read · 18 September 2026</span>
+                        <span class="related-meta">18 min read · 18 September 2026</span>
                     </a>
                     
                 </div>

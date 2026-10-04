@@ -64,7 +64,7 @@
       "description": "How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.",
       "datePublished": "2026-09-04T03:38:05+00:00",
       "dateModified": "2026-10-04T10:33:51+00:00",
-      "wordCount": 2361,
+      "wordCount": 2499,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2361 words
+                        &nbsp;·&nbsp; 2499 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -550,6 +550,25 @@ Run a second Redis instance and force the router to use a single region for ever
 Yes. The only platform-specific piece is the health check endpoint. Keep the retry store external and durable, because ephemeral local storage will lose retry state on restart.</p>
 <h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
 <p>Grep your codebase for hardcoded provider names and region strings. Count the distinct call sites. If the same provider or region appears in more than one place, extract those values into a single config file and add a startup validation step that rejects unknown regions. That one change turns an implicit policy into something you can review, test, and audit.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/">African fintech agents: the compliance cliff most miss</a></li>
+<li><a href="https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/">Big model API vs fine-tune: the 2026 math</a></li>
+<li><a href="https://kubaik.github.io/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/">Foreign AI models vs sovereign fintech stacks: 2026 reality</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -585,7 +604,7 @@ Yes. The only platform-specific piece is the health check endpoint. Keep the ret
                     <a class="related-card" href="/ai-errors-hide-in-plain-latency/">
                         <h3>AI errors hide in plain latency</h3>
                         <p>Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.</p>
-                        <span class="related-meta">10 min read · 21 August 2026</span>
+                        <span class="related-meta">11 min read · 21 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/when-your-agent-goes-silent-degrade-gracefully/">

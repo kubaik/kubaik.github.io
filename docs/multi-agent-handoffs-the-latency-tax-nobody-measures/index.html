@@ -64,7 +64,7 @@
       "description": "Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.",
       "datePublished": "2026-09-29T17:53:25+00:00",
       "dateModified": "2026-10-04T10:34:20+00:00",
-      "wordCount": 2135,
+      "wordCount": 2265,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2135 words
+                        &nbsp;·&nbsp; 2265 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -402,6 +402,23 @@ async def analyse(document: str) -&gt; dict:
 <p>The broader point is that multi-agent systems are a real architectural pattern with real costs. Treating them as free — which is what most tutorials implicitly do — produces systems that work in demos and disappoint in production. The fix is not to abandon the pattern. It is to measure the boundaries.</p>
 <h2 id="next-step">Next step</h2>
 <p>Open the function that builds the payload for each handoff in your pipeline. Add one line that logs the serialised size in bytes and the agent name. Run your existing latency benchmark, sequentially and at realistic concurrency, and record the numbers. If any payload is larger than a few kilobytes, replace the full history with a bounded summary and re-run the same benchmark. That single change is where the largest win usually hides, and it takes less than thirty minutes to find out whether it applies to you.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">AI in slow networks: why models flop where data costs rise</a></li>
+<li><a href="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -431,19 +448,19 @@ async def analyse(document: str) -&gt; dict:
                     <a class="related-card" href="/multi-agent-systems-when-they-quietly-degrade/">
                         <h3>Multi-agent systems: when they quietly degrade</h3>
                         <p>Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
-                        <span class="related-meta">11 min read · 24 September 2026</span>
+                        <span class="related-meta">12 min read · 24 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/multi-agent-systems-why-failures-hide/">
                         <h3>Multi-agent systems: why failures hide</h3>
                         <p>Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
-                        <span class="related-meta">12 min read · 18 September 2026</span>
+                        <span class="related-meta">13 min read · 18 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
                         <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
                         <p>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
-                        <span class="related-meta">14 min read · 3 October 2026</span>
+                        <span class="related-meta">15 min read · 3 October 2026</span>
                     </a>
                     
                 </div>

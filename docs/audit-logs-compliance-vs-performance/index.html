@@ -64,8 +64,8 @@
       "description": "How to design audit logging that survives crashes and preserves per-entity order without wrecking p99 latency, plus how to measure the overhead.",
       "datePublished": "2026-09-20T04:05:00+00:00",
       "dateModified": "2026-10-04T10:56:44+00:00",
-      "wordCount": 2430,
-      "timeRequired": "PT12M",
+      "wordCount": 2560,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -237,8 +237,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2430 words
+                        13 min read
+                        &nbsp;·&nbsp; 2560 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -460,6 +460,23 @@ Audit retention obligations and erasure requests can conflict. A common approach
 No. A message queue decouples consumers from producers but does not make the audit write atomic with the business transaction. The outbox is what provides that atomicity.</p>
 <h2 id="the-one-thing-to-do-in-the-next-30-minutes">The one thing to do in the next 30 minutes</h2>
 <p>Pick one write path in your service and instrument the audit write as its own timing span. Run your existing load test, record the p99 latency of that span, and check whether the audit write currently happens in the same transaction as the business write. That single measurement tells you whether you have a latency problem, a durability problem, or both.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/audit-logs-ship-them-fast-keep-them-forever/">Audit logs: ship them fast, keep them forever</a></li>
+<li><a href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+<li><a href="https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/">African fintech agents: the compliance cliff most miss</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -489,7 +506,7 @@ No. A message queue decouples consumers from producers but does not make the aud
                     <a class="related-card" href="/memory-systems-for-production-agents/">
                         <h3>Memory Systems for Production Agents</h3>
                         <p>How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
-                        <span class="related-meta">10 min read · 15 September 2026</span>
+                        <span class="related-meta">11 min read · 15 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/why-does-my-model-drift-after-deploy/">

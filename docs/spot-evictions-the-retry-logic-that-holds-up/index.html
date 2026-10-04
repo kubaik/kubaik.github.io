@@ -64,8 +64,8 @@
       "description": "Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.",
       "datePublished": "2026-08-12T12:52:38+00:00",
       "dateModified": "2026-10-04T10:28:33+00:00",
-      "wordCount": 2487,
-      "timeRequired": "PT12M",
+      "wordCount": 2625,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -257,8 +257,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2487 words
+                        13 min read
+                        &nbsp;·&nbsp; 2625 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -518,6 +518,26 @@ Yes. The controller can be a Kubernetes controller that watches for node termina
 <h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
 <p>Pick one Spot-backed workload and add a single counter that increments every time a worker starts a retry. Emit it with the attempt number as a label. Run the workload for a day, then plot retries per minute against your downstream error rate.</p>
 <p>If the two lines move together, your retry policy is amplifying downstream problems and is worth fixing. If they are independent, the current policy is providing enough separation and you can leave it alone. This measurement takes less time than implementing the full pattern and tells you whether the pattern is needed at all.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/webhook-delivery-that-survives-outages/">Webhook delivery that survives outages</a></li>
+<li><a href="https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/">Spot instances vs on-demand for AI experiments</a></li>
+<li><a href="https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/">Tool calling patterns: patterns that survive load vs</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -547,7 +567,7 @@ Yes. The controller can be a Kubernetes controller that watches for node termina
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Design retry caps, DLQs, and alerts so a poison message is isolated in seconds. Includes working Redis Queue code and pytest tests.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">15 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/event-driven-beats-agent-driven-910-times/">

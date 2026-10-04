@@ -64,7 +64,7 @@
       "description": "Pre-execution policy gates miss most agent compliance failures. Build a decision trace that reconstructs what happened, why, and what would have stopped it.",
       "datePublished": "2026-09-22T03:58:54+00:00",
       "dateModified": "2026-10-04T10:48:46+00:00",
-      "wordCount": 3159,
+      "wordCount": 3296,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -251,7 +251,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3159 words
+                        &nbsp;·&nbsp; 3296 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -409,6 +409,26 @@ OpenTelemetry with custom spans is a common foundation, paired with a storage ba
 Run a tabletop exercise. Pick a plausible incident — a refund to the wrong customer, a summary containing PII — and try to answer, using only the trace, which conversation triggered it, which user was authenticated, what the model saw, and which rule would have blocked it. If any of those questions cannot be answered from the trace alone, the schema has a gap. This exercise takes an hour and is far cheaper than discovering the gap during a real inquiry.</p>
 <h2 id="your-next-30-minutes">Your next 30 minutes</h2>
 <p>Open the tool-calling wrapper in your agent and add a single structured log line that captures the provenance of one argument — for example, the document ID and similarity score that produced an <code>order_id</code>. Run one conversation, then query that log for the provenance field. If the question "where did this argument come from" can be answered in under a minute, you have the beginning of a flight recorder. If it cannot, you have just found the gap that a compliance incident would expose.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/">Agent Governance: OPA vs Kyverno in Kubernetes</a></li>
+<li><a href="https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/">African fintech agents: the compliance cliff most miss</a></li>
+<li><a href="https://kubaik.github.io/agent-architecture-the-new-model-trap/">Agent architecture: the new model trap</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.temporal.io/">Temporal documentation</a></li>
+<li><a href="https://clickhouse.com/docs">ClickHouse documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -444,13 +464,13 @@ Run a tabletop exercise. Pick a plausible incident — a refund to the wrong cus
                     <a class="related-card" href="/who-signs-off-on-ai-code/">
                         <h3>Who signs off on AI code?</h3>
                         <p>AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</p>
-                        <span class="related-meta">11 min read · 2 October 2026</span>
+                        <span class="related-meta">12 min read · 2 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agent-architecture-the-new-model-trap/">
                         <h3>Agent architecture: the new model trap</h3>
                         <p>Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</p>
-                        <span class="related-meta">16 min read · 27 September 2026</span>
+                        <span class="related-meta">17 min read · 27 September 2026</span>
                     </a>
                     
                 </div>

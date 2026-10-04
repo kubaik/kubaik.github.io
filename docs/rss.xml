@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Oct 2026 13:58:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Oct 2026 11:06:04 +0000</lastBuildDate>
+    <item>
+      <title>Fraud detection: rules vs scoring, where they meet</title>
+      <link>https://kubaik.github.io/fraud-detection-rules-vs-scoring-where-they-meet/</link>
+      <description>How to split fraud decisions between a deterministic rules gate and a calibrated scoring model, with a worked three-layer architecture and audit trail.</description>
+      <pubDate>Sun, 04 Oct 2026 11:01:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/fraud-detection-rules-vs-scoring-where-they-meet/</guid>
+    </item>
     <item>
       <title>AI best practices fail on slow networks</title>
       <link>https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/</link>
@@ -138,13 +145,6 @@
       <description>Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</description>
       <pubDate>Thu, 24 Sep 2026 16:46:39 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/</guid>
-    </item>
-    <item>
-      <title>World models won&apos;t replace your backend</title>
-      <link>https://kubaik.github.io/world-models-wont-replace-your-backend/</link>
-      <description>World models add a high-rate prediction stream to your system. Treat it as a sensor: schema, retention, backpressure, and rollback, not a new stack.</description>
-      <pubDate>Thu, 24 Sep 2026 03:50:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/world-models-wont-replace-your-backend/</guid>
     </item>
   </channel>
 </rss>

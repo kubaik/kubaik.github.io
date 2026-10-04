@@ -64,8 +64,8 @@
       "description": "World models add a high-rate prediction stream to your system. Treat it as a sensor: schema, retention, backpressure, and rollback, not a new stack.",
       "datePublished": "2026-09-24T03:50:12+00:00",
       "dateModified": "2026-10-04T10:07:46+00:00",
-      "wordCount": 2851,
-      "timeRequired": "PT14M",
+      "wordCount": 2981,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -254,8 +254,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2851 words
+                        15 min read
+                        &nbsp;·&nbsp; 2981 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -416,6 +416,24 @@ Instrument bytes written per tier per day and the fraction of stored data that i
 <h2 id="summary">Summary</h2>
 <p>World models and physical AI are not a reason to abandon backend engineering principles. They are a reason to apply them more rigorously. The systems that hold up are the ones that treat sensor data as a first-class citizen, design for network partitions, and version everything — models, schemas, and APIs. The claim that a completely new stack is required is a distraction. What is required is a solid time-series pipeline, a clear edge-to-cloud protocol, and a rollback plan.</p>
 <p>Your next step, in the next 30 minutes: open your data ingestion code and check the timestamp handling. If you are not storing both the sensor timestamp and the ingestion timestamp, add the second column now. Then pick one sensor stream, log its bytes written per day, and compute what a 10× downsampling would save at your provider's current rates. That measurement, not a new stack, is what tells you whether your pipeline is sized correctly.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-architecture-the-new-model-trap/">Agent architecture: the new model trap</a></li>
+<li><a href="https://kubaik.github.io/agent-auth-where-the-docs-ended-up-lying/">Agent auth: where the docs ended up lying</a></li>
+<li><a href="https://kubaik.github.io/ai-tools-rewrote-my-engineering-rules/">AI Code Generation Shifts Engineering Judgment</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -457,7 +475,7 @@ Instrument bytes written per tier per day and the fraction of stored data that i
                     <a class="related-card" href="/who-signs-off-on-ai-code/">
                         <h3>Who signs off on AI code?</h3>
                         <p>AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</p>
-                        <span class="related-meta">11 min read · 2 October 2026</span>
+                        <span class="related-meta">12 min read · 2 October 2026</span>
                     </a>
                     
                 </div>

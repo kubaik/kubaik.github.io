@@ -64,8 +64,8 @@
       "description": "Agent drift degrades latency and error rates without obvious alarms. Learn the four drift classes, detection methods, and a 30-minute audit.",
       "datePublished": "2026-09-09T16:15:54+00:00",
       "dateModified": "2026-10-04T10:05:54+00:00",
-      "wordCount": 2280,
-      "timeRequired": "PT11M",
+      "wordCount": 2414,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -249,8 +249,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2280 words
+                        12 min read
+                        &nbsp;·&nbsp; 2414 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -456,6 +456,25 @@ Keep the canonical config in Git, render it into a ConfigMap at deploy time, mou
 <pre><code class="language-bash">awk '{print $2}' /tmp/agent-versions.txt | sort -u | wc -l
 </code></pre>
 <p>If that number is greater than one, you have binary version drift right now, and every other detection step in this article is worth setting up before the next rollout.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/observability-agents-lied-to-us/">Observability Agents as Application Code</a></li>
+<li><a href="https://kubaik.github.io/why-does-my-agent-version-break-clients/">Agent API versioning: why clients break on upgrade</a></li>
+<li><a href="https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/">Use feature flags to deploy AI models safely</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -485,13 +504,13 @@ Keep the canonical config in Git, render it into a ConfigMap at deploy time, mou
                     <a class="related-card" href="/agent-drift-the-failure-mode-you-didnt-log/">
                         <h3>Agent drift: the failure mode you didn&#39;t log</h3>
                         <p>Agent drift is a distribution failure, not a model failure. How to detect it with categorical signatures and PSI, and contain it with state guards.</p>
-                        <span class="related-meta">14 min read · 18 September 2026</span>
+                        <span class="related-meta">15 min read · 18 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agent-drift-why-prod-breaks-without-human-checkpoints/">
                         <h3>Agent drift: why prod breaks without human checkpoints</h3>
                         <p>Why agents pass staging and drift in production, and how to add confidence thresholds, escalation queues and compliance guards that make drift visible.</p>
-                        <span class="related-meta">14 min read · 1 September 2026</span>
+                        <span class="related-meta">15 min read · 1 September 2026</span>
                     </a>
                     
                 </div>

@@ -64,8 +64,8 @@
       "description": "How to bound prompt growth in long-running LLM agents using sliding windows, token-based eviction, priority tags, and cold storage.",
       "datePublished": "2026-09-03T11:36:32+00:00",
       "dateModified": "2026-10-04T10:44:09+00:00",
-      "wordCount": 2258,
-      "timeRequired": "PT11M",
+      "wordCount": 2388,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2258 words
+                        12 min read
+                        &nbsp;·&nbsp; 2388 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -530,6 +530,24 @@ Vector search is useful for retrieval but does not reduce prompt size on its own
 Use a tokenizer that matches the model you are calling. For a mixed JSON step, measure the overhead empirically by tokenizing a representative sample. The overhead depends on the tokenizer and the data shape.</p>
 <h2 id="next-step">Next step</h2>
 <p>Open your agent's context builder file and set a hard limit: either a maximum number of steps or a maximum token budget. Run the agent for one full cycle, then log the serialized prompt size at each step. If the p95 stays under your budget, you are done. If not, halve the window and rerun. This single constraint resolves most context bloat without touching the model or the prompt template.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/context-windows-agents-that-run-for-days/">Context windows: agents that run for days</a></li>
+<li><a href="https://kubaik.github.io/context-windows-live-longer-than-you-think/">Context windows live longer than you think</a></li>
+<li><a href="https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/">Agent context: short-term vs long-term memory</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -565,7 +583,7 @@ Use a tokenizer that matches the model you are calling. For a mixed JSON step, m
                     <a class="related-card" href="/multi-agent-systems-why-failures-hide/">
                         <h3>Multi-agent systems: why failures hide</h3>
                         <p>Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
-                        <span class="related-meta">12 min read · 18 September 2026</span>
+                        <span class="related-meta">13 min read · 18 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agents-keep-breaking-prod-3-boundary-rules-you-still-need/">

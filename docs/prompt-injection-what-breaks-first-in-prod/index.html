@@ -64,8 +64,8 @@
       "description": "Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.",
       "datePublished": "2026-09-27T16:41:09+00:00",
       "dateModified": "2026-10-04T10:54:33+00:00",
-      "wordCount": 2850,
-      "timeRequired": "PT14M",
+      "wordCount": 2978,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2850 words
+                        15 min read
+                        &nbsp;·&nbsp; 2978 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -546,6 +546,24 @@ def test_unknown_tool_rejected():
 </ul>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>The single most useful thing you can do in the next 30 minutes is open your tool-execution code and find the line where a model-supplied tool name and arguments become a function call. If that line looks like <code>globals()[name](**args)</code> or <code>getattr(module, name)(**args)</code>, you have an unguarded execution path. Replace it with a registry lookup and Pydantic schema validation before you do anything else. That one change eliminates the entire class of arbitrary-tool-call injections, and it takes less time than reading the rest of this article.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/prompt-injections-hidden-aws-tax/">Prompt injection’s hidden AWS tax</a></li>
+<li><a href="https://kubaik.github.io/llm-risks-underestimated-in-owasp-top-10/">LLM risks underestimated in OWASP Top 10</a></li>
+<li><a href="https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/">Sandboxed computer-use agents with gVisor</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

@@ -64,8 +64,8 @@
       "description": "How to pin, hash and audit Python packages and datasets so a poisoned model or tampered dataset cannot reach training or production.",
       "datePublished": "2026-08-25T01:25:20+00:00",
       "dateModified": "2026-10-04T10:55:04+00:00",
-      "wordCount": 2089,
-      "timeRequired": "PT10M",
+      "wordCount": 2215,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -254,8 +254,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 2089 words
+                        11 min read
+                        &nbsp;·&nbsp; 2215 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -402,6 +402,19 @@ pip-compile requirements.in --generate-hashes --output-file requirements.txt
 pip install --require-hashes -r requirements.txt
 </code></pre>
 <p>If the install succeeds, commit the lockfile and add the <code>--require-hashes</code> flag to the install step in CI. If it fails, read the error before changing anything: a hash mismatch on a package you did not expect to change is exactly the signal this whole approach exists to surface.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-model-poisoning-3-real-attacks-on-datasets/">AI model poisoning: 3 real attacks on datasets</a></li>
+<li><a href="https://kubaik.github.io/ai-supply-chain-attacks-what-actually-broke/">AI Supply Chain Security: Trust Boundaries for Model Artifacts</a></li>
+<li><a href="https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/">A Solo-Project Deploy Pipeline That Stays Under $20/Month</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -431,7 +444,7 @@ pip install --require-hashes -r requirements.txt
                     <a class="related-card" href="/ai-supply-chain-attacks-what-actually-broke/">
                         <h3>AI Supply Chain Security: Trust Boundaries for Model Artifacts</h3>
                         <p>How to reason about trust boundaries for AI artifacts when pickle, torch.load and remote code execution are the format, plus a practical detection stack.</p>
-                        <span class="related-meta">15 min read · 19 September 2026</span>
+                        <span class="related-meta">16 min read · 19 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/prompt-injection-got-the-hype-poison-data-ruined-us/">

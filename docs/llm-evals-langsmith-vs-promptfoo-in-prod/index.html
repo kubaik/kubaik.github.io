@@ -64,8 +64,8 @@
       "description": "How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.",
       "datePublished": "2026-10-03T04:27:57+00:00",
       "dateModified": "2026-10-04T10:26:10+00:00",
-      "wordCount": 2874,
-      "timeRequired": "PT14M",
+      "wordCount": 3011,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -254,8 +254,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2874 words
+                        15 min read
+                        &nbsp;·&nbsp; 3011 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -405,6 +405,25 @@ tests:
 <h2 id="final-verdict">Final verdict</h2>
 <p>For regression testing, the CLI-as-CI-gate model wins clearly. It's the right shape for how prompt changes actually get reviewed, local execution keeps eval latency low for a typical suite, and zero production overhead means you're not paying a latency tax on every request just to have tests. Use a hosted trace platform if you need production trace visibility and have a non-engineer reviewing outputs, but don't adopt it as your CI gate — the hosted round-trip makes PR checks slow enough that teams start bypassing them.</p>
 <p>The action to take in the next 30 minutes: create a <code>promptfooconfig.yaml</code> at your repo root with three test cases pulled from your last week of production logs, run <code>npx promptfoo eval</code>, and check whether your current prompt passes. If it doesn't, you've just found your first regression before a user did.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ship-evals-before-your-agent-ships/">Ship evals before your agent ships</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/">LLM evals: skip the hype, track these 4 metrics</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://langchain-ai.github.io/langgraph/">LangGraph documentation</a></li>
+<li><a href="https://docs.anthropic.com/">Anthropic documentation</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

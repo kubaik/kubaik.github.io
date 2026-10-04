@@ -64,7 +64,7 @@
       "description": "Design reliable webhook ingestion with durable buffering, idempotency keys, bounded retries, and circuit breakers, plus how to measure each guarantee.",
       "datePublished": "2026-06-19T21:43:40+00:00",
       "dateModified": "2026-10-04T10:56:04+00:00",
-      "wordCount": 2119,
+      "wordCount": 2259,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2119 words
+                        &nbsp;·&nbsp; 2259 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -520,6 +520,27 @@ def get_retry_delay(failure_count, base_seconds=5, ceiling=30):
 FROM events;
 </code></pre>
 <p>If you have pending events older than five minutes, or any rows with missing idempotency keys, you have found your next incident. Fix the missing keys first: they are the ones that will duplicate on the next replay.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/webhook-delivery-that-survives-outages/">Webhook delivery that survives outages</a></li>
+<li><a href="https://kubaik.github.io/json-modes-hidden-costs-revealed/">JSON mode's hidden costs revealed</a></li>
+<li><a href="https://kubaik.github.io/reconciling-mobile-money-edge-cases-banks-ignore/">Reconciling mobile money: edge cases banks ignore</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -555,13 +576,13 @@ FROM events;
                     <a class="related-card" href="/replace-managed-services-with-postgres-17/">
                         <h3>Replace managed services with Postgres 17</h3>
                         <p>How to decide whether to replace managed cache, search, and scheduler services with Postgres extensions, and how to measure the trade-off honestly.</p>
-                        <span class="related-meta">13 min read · 16 August 2026</span>
+                        <span class="related-meta">14 min read · 16 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/senior-role-projects-3-real-paths/">
                         <h3>Senior role projects: 3 real paths</h3>
                         <p>Build three portfolio projects that demonstrate tenant isolation, retry-storm handling, and event sourcing, with concrete ways to measure each claim.</p>
-                        <span class="related-meta">15 min read · 5 August 2026</span>
+                        <span class="related-meta">16 min read · 5 August 2026</span>
                     </a>
                     
                 </div>

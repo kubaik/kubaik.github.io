@@ -64,7 +64,7 @@
       "description": "Long-running agents fail when context is treated as a log. Keep constraints verbatim, checkpoint durable state, and cap the working set per cycle.",
       "datePublished": "2026-09-19T08:48:07+00:00",
       "dateModified": "2026-10-04T10:44:46+00:00",
-      "wordCount": 3302,
+      "wordCount": 3443,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -251,7 +251,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3302 words
+                        &nbsp;·&nbsp; 3443 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -479,6 +479,27 @@ async function resume(agentId) {
 <li>Do you have an alarm for input tokens trending upward over time?</li>
 </ul>
 <p><strong>Do this in the next 30 minutes:</strong> open your agent's main loop file and find where you build the prompt. Count the categories of things you are putting in. If constraints and tool results are in the same list, split them — pull constraints into a module-level constant that gets injected verbatim, and cap tool results with a character slice. Then add one log line printing the input token count per cycle. That single number will tell you within a day whether you have a leak.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agents-running-hours-youre-losing-context-fast/">Agents running hours? You're losing context fast</a></li>
+<li><a href="https://kubaik.github.io/context-windows-live-longer-than-you-think/">Context windows live longer than you think</a></li>
+<li><a href="https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/">Agent context: short-term vs long-term memory</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://oauth.net/2/">OAuth 2.0 resources</a></li>
+<li><a href="https://docs.anthropic.com/">Anthropic documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -508,7 +529,7 @@ async function resume(agentId) {
                     <a class="related-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
                         <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
                         <p>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
-                        <span class="related-meta">14 min read · 3 October 2026</span>
+                        <span class="related-meta">15 min read · 3 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agentic-workflows-surviving-network-partitions/">

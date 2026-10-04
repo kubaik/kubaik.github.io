@@ -64,8 +64,8 @@
       "description": "OAuth2 and OIDC assume reliable clocks, stable power and trusted hardware. Here is what breaks on constrained agent networks, and how to measure it.",
       "datePublished": "2026-08-24T01:29:32+00:00",
       "dateModified": "2026-10-04T10:24:25+00:00",
-      "wordCount": 2617,
-      "timeRequired": "PT13M",
+      "wordCount": 2748,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -228,8 +228,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2617 words
+                        14 min read
+                        &nbsp;·&nbsp; 2748 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -510,6 +510,24 @@ def fetch_token(
 </ul>
 <h2 id="a-30-minute-action">A 30-minute action</h2>
 <p>Pick one agent deployment and add two log lines: the device's <code>iat</code> at token issuance and the server's <code>now</code> at verification, plus the transport segment count for the delivery. Run for a day, then plot <code>now - iat</code> and failure rate against segment count. That single chart will tell you whether your dominant failure mode is clock drift or fragmentation — and those two have completely different fixes.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-auth-the-silent-deployment-killer/">Agent auth: the silent deployment killer</a></li>
+<li><a href="https://kubaik.github.io/ussd-fintech-in-2026-the-300m-user-channel-nobody/">USSD fintech in 2026: the 300M user channel nobody</a></li>
+<li><a href="https://kubaik.github.io/world-models-wont-replace-your-backend/">World models won't replace your backend</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

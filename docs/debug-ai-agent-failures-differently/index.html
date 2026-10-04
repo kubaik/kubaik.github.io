@@ -64,7 +64,7 @@
       "description": "Structured logs catch infrastructure faults; behavior traces catch hallucinations and prompt drift. How to instrument both, measure detection time, and pick a stack.",
       "datePublished": "2026-06-27T15:03:09+00:00",
       "dateModified": "2026-10-04T10:27:57+00:00",
-      "wordCount": 2558,
+      "wordCount": 2689,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2558 words
+                        &nbsp;·&nbsp; 2689 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -515,6 +515,24 @@ def record_failure(error, error_type: str):
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Open the wrapper that calls your agent and add one trace export line plus one structured log line, both carrying the same generated <code>run_id</code>. If the agent runs behind FastAPI, the OpenTelemetry snippet in Option A gives you the log side; wrapping the agent call with a tracer gives you the trace side. Then write down, in the same file, the three fields you would want to see first when a user reports a wrong answer — typically the input prompt, the tool outputs, and the final response. If those three are not already captured, add them now. That single change is what makes the next incident debuggable instead of mysterious.
 ===END===</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-the-three-surprises/">AI agent postmortems: the three surprises</a></li>
+<li><a href="https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/">Debug AI agents: failures aren't just bugs</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

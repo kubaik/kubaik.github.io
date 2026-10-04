@@ -64,8 +64,8 @@
       "description": "How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.",
       "datePublished": "2026-09-12T13:48:03+00:00",
       "dateModified": "2026-10-04T10:41:06+00:00",
-      "wordCount": 2436,
-      "timeRequired": "PT12M",
+      "wordCount": 2570,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -254,8 +254,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2436 words
+                        13 min read
+                        &nbsp;·&nbsp; 2570 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -468,6 +468,25 @@ When your compliance framework requires network isolation, or when the API serve
 Yes. A longer cooldown means nodes that are no longer needed stay billed for longer. The trade is deliberate: it prevents flapping when spikes are failure-driven. Measure the incident frequency before and after to confirm the trade is favorable.</p>
 <h2 id="do-this-next">Do this next</h2>
 <p>Open your Terraform configuration, find the node group that backs your busiest workload, and add the <code>CostCenter</code> tag if it is missing. Then run <code>terraform plan</code> and confirm the tag appears in the diff. Tagging takes under 30 minutes and is the prerequisite for every measurement described above — without it, you cannot tell which change helped.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/">Spot AI’s hidden cost spike in your stack</a></li>
+<li><a href="https://kubaik.github.io/thundering-herd-the-hidden-scaling-trap/">Thundering Herd: The Hidden Scaling Trap</a></li>
+<li><a href="https://kubaik.github.io/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -497,7 +516,7 @@ Yes. A longer cooldown means nodes that are no longer needed stay billed for lon
                     <a class="related-card" href="/prompt-injection-what-breaks-first-in-prod/">
                         <h3>Prompt injection: what breaks first in prod</h3>
                         <p>Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.</p>
-                        <span class="related-meta">14 min read · 27 September 2026</span>
+                        <span class="related-meta">15 min read · 27 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/computer-use-agents-the-permission-trap/">

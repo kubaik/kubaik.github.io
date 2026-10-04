@@ -64,8 +64,8 @@
       "description": "Low-code AI platforms hide prompt drift, adapter decay and cold starts. Detect each with logged queries, a golden set and pre-warming, wired into CI.",
       "datePublished": "2026-06-20T21:00:17+00:00",
       "dateModified": "2026-10-04T10:38:13+00:00",
-      "wordCount": 2649,
-      "timeRequired": "PT13M",
+      "wordCount": 2777,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -254,8 +254,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2649 words
+                        14 min read
+                        &nbsp;·&nbsp; 2777 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -484,6 +484,23 @@ def log_query(logger, query: str, adapter_version: str, response: dict) -&gt; No
 <p>Managed AI platforms are a genuine productivity win and they do not remove operational responsibility. Prompt drift, adapter decay, and cold starts are silent: they produce 200 responses with wrong answers, and the default dashboard will not tell you. The fixes are mechanical. Log your queries. Freeze a golden set and benchmark against it on a schedule. Pre-warm for the traffic patterns you actually see. Then wire all three into CI so they run without anyone remembering to run them.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick your current production adapter and write down three numbers: the golden-set F1 score today, the p95 latency, and the timeout count over the last 24 hours. If you cannot produce any of the three, that gap is the actual problem — add structured query logging at your API boundary first, because every other check depends on it.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/">Big model API vs fine-tune: the 2026 math</a></li>
+<li><a href="https://kubaik.github.io/ai-observability-the-metrics-that-matter/">AI observability: the metrics that matter</a></li>
+<li><a href="https://kubaik.github.io/detect-lazy-agents-without-false-alarms/">Detect lazy agents without false alarms</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -513,7 +530,7 @@ def log_query(logger, query: str, adapter_version: str, response: dict) -&gt; No
                     <a class="related-card" href="/ai-micro-saas-under-150month-the-real-infra-choices/">
                         <h3>Designing AI Micro-SaaS Infra on a $150/Month Budget</h3>
                         <p>How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.</p>
-                        <span class="related-meta">14 min read · 5 August 2026</span>
+                        <span class="related-meta">15 min read · 5 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-reshaped-my-engineering-principles/">

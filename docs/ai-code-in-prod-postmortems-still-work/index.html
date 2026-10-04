@@ -64,7 +64,7 @@
       "description": "AI-generated code hides its assumptions. Capture the prompt, model snapshot and runtime context so incident reviews explain decisions, not just stack traces.",
       "datePublished": "2026-07-21T14:01:05+00:00",
       "dateModified": "2026-10-04T09:57:00+00:00",
-      "wordCount": 2129,
+      "wordCount": 2262,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -259,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2129 words
+                        &nbsp;·&nbsp; 2262 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -430,6 +430,23 @@ No. Traces, metrics, and logs remain the primary signal. The artifacts answer a 
 Then the diff artifact must be produced another way, for example by comparing the deployed file against the last known-good copy. The other four artifacts are independent of version control.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick the most recent commit that introduced generated code. Run <code>git show --numstat --format= &lt;commit&gt;</code> on it and note which files gained the most lines. Open the largest one and find a single numeric literal that controls a timeout, retry count, or batch size. Then check whether that number matches the value configured in production. If it does not, you have found a concrete assumption mismatch, and you have also found the first field your postmortem artifacts need to record.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/">7 code review traps when AI writes half your code</a></li>
+<li><a href="https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/">Postmortems for AI agents: drift, cost, replay</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/">Postmortems for AI agents: human review vs blind replay</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -459,13 +476,13 @@ Then the diff artifact must be produced another way, for example by comparing th
                     <a class="related-card" href="/who-signs-off-on-ai-code/">
                         <h3>Who signs off on AI code?</h3>
                         <p>AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</p>
-                        <span class="related-meta">11 min read · 2 October 2026</span>
+                        <span class="related-meta">12 min read · 2 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agent-architecture-the-new-model-trap/">
                         <h3>Agent architecture: the new model trap</h3>
                         <p>Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</p>
-                        <span class="related-meta">16 min read · 27 September 2026</span>
+                        <span class="related-meta">17 min read · 27 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/two-engineer-classes-the-ai-tool-norm-trap/">

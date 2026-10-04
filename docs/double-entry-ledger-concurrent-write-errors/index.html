@@ -64,8 +64,8 @@
       "description": "Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.",
       "datePublished": "2026-10-01T18:15:25+00:00",
       "dateModified": "2026-10-04T10:50:24+00:00",
-      "wordCount": 2792,
-      "timeRequired": "PT14M",
+      "wordCount": 2922,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -248,8 +248,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2792 words
+                        15 min read
+                        &nbsp;·&nbsp; 2922 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -484,6 +484,24 @@ GROUP BY transaction_id
 HAVING SUM(amount) != 0;
 </code></pre>
 <p>If it returns rows, you have a live consistency bug and the deferred constraint trigger is the fastest mitigation. If it returns nothing, check <code>pg_stat_database.xact_rollback</code> and your application logs for serialization failures and deadlocks. Either result tells you which fix to apply first.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/">Offline-first money apps with DynamoDB Streams</a></li>
+<li><a href="https://kubaik.github.io/reconciling-mobile-money-edge-cases-banks-ignore/">Reconciling mobile money: edge cases banks ignore</a></li>
+<li><a href="https://kubaik.github.io/agent-platform-abstractions-a-case-study/">Agent platform abstractions: a case study</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

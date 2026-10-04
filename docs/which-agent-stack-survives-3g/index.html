@@ -64,8 +64,8 @@
       "description": "How edge-deployed and centralised agent stacks behave on high-latency, lossy mobile links, and how to measure reconnection storms before choosing one.",
       "datePublished": "2026-09-16T11:26:58+00:00",
       "dateModified": "2026-10-04T10:48:31+00:00",
-      "wordCount": 2402,
-      "timeRequired": "PT12M",
+      "wordCount": 2532,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -257,8 +257,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2402 words
+                        13 min read
+                        &nbsp;·&nbsp; 2532 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -411,6 +411,23 @@ app.post(&quot;/agent&quot;, async (req, res) =&gt; {
 <p>It reduces payload size, which reduces the number of packets and therefore the chance of loss, but the benefit depends on your payload. Measure bytes on the wire before and after enabling it rather than assuming a ratio.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your origin or load balancer logs and run one query: for each client identity, count requests arriving within 5 seconds of a connectivity restoration event. If the maximum is above roughly 100, add an in-flight coalescing map to your agent endpoint with a 5-second window and a key built from a normalised request plus the session id. Then replay one recorded outage trace and confirm the distinct-key count is close to the session count rather than the request count. That single measurement tells you whether your remaining problem is coalescing or placement.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/">Run APIs in 50 spots: what breaks first</a></li>
+<li><a href="https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/">Designing APIs for High-Latency Satellite Links</a></li>
+<li><a href="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">Build apps that still work on 500 ms latency</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -452,7 +469,7 @@ app.post(&quot;/agent&quot;, async (req, res) =&gt; {
                     <a class="related-card" href="/golden-paths-that-dont-handcuff/">
                         <h3>Golden paths that don&#39;t handcuff</h3>
                         <p>How to build internal scaffolds and CLIs that stay reversible: pinned versions, a compatibility contract, drift detection, and a tested eject path.</p>
-                        <span class="related-meta">11 min read · 21 September 2026</span>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
                     </a>
                     
                 </div>

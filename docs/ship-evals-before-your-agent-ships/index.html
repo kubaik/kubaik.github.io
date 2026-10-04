@@ -64,8 +64,8 @@
       "description": "Agent evals fail when they only test the happy path. Build outcome-based evals from shadow traffic, wire them into CI, and catch regressions before users do.",
       "datePublished": "2026-08-31T04:32:07+00:00",
       "dateModified": "2026-10-04T10:41:57+00:00",
-      "wordCount": 3007,
-      "timeRequired": "PT15M",
+      "wordCount": 3146,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -257,8 +257,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3007 words
+                        16 min read
+                        &nbsp;·&nbsp; 3146 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -672,6 +672,26 @@ def downstream_health_eval(run: Dict[str, Any], example: Dict[str, Any]) -&gt; E
 <p>Three levers: sample, cache, and split. Sample a fraction of the golden dataset for PRs and run the full set nightly. Cache agent outputs in Redis so repeated eval calls reuse results. Split evals into two jobs: a fast smoke test (a handful of tickets) that must pass, and a full regression suite that runs only on main.</p>
 <p><strong>What's a realistic eval budget?</strong></p>
 <p>Work it out from your own numbers using the worked example above. The key inputs are dataset size, tokens per call, current model prices, PR volume, and cache hit rate. If your agent is low-traffic, run evals nightly instead of per-PR to reduce cost.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+<li><a href="https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/">LLM evals: LangSmith vs Promptfoo in prod</a></li>
+<li><a href="https://kubaik.github.io/agent-drift-the-failure-mode-you-didnt-log/">Agent drift: the failure mode you didn't log</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -701,13 +721,13 @@ def downstream_health_eval(run: Dict[str, Any], example: Dict[str, Any]) -&gt; E
                     <a class="related-card" href="/multi-agent-systems-why-failures-hide/">
                         <h3>Multi-agent systems: why failures hide</h3>
                         <p>Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
-                        <span class="related-meta">12 min read · 18 September 2026</span>
+                        <span class="related-meta">13 min read · 18 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agents-running-hours-youre-losing-context-fast/">
                         <h3>Agents running hours? You&#39;re losing context fast</h3>
                         <p>How to bound prompt growth in long-running LLM agents using sliding windows, token-based eviction, priority tags, and cold storage.</p>
-                        <span class="related-meta">11 min read · 3 September 2026</span>
+                        <span class="related-meta">12 min read · 3 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agent-permissions-the-mistake-that-breaks-production/">

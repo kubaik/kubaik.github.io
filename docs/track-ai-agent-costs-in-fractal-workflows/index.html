@@ -64,7 +64,7 @@
       "description": "Standard FinOps dashboards miss sub-agent, idle, and retry costs. A dependency-graph cost model shows where agent spend actually lands.",
       "datePublished": "2026-07-27T03:28:57+00:00",
       "dateModified": "2026-10-04T10:03:23+00:00",
-      "wordCount": 2345,
+      "wordCount": 2481,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -262,7 +262,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2345 words
+                        &nbsp;·&nbsp; 2481 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -426,6 +426,26 @@ Set region environment variables in the agent config, add a Kubernetes topology 
 Spawn count per top-level request, and the ratio of top-level cost to total graph cost for a representative session. If that ratio is below roughly one half, the flat dashboard is missing enough spend to justify the instrumentation.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick one production agent workflow and add a single log line at every spawn point that emits the parent task ID, the spawned task ID, and the billing entity for that task. Run one representative request, collect the lines, and sum the distinct billing entities. Compare that count to the number of entities your current cost dashboard attributes to the workflow. If the dashboard shows fewer, you have found the gap the graph model closes.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agentic-finops-is-a-trap/">Agentic FinOps is a trap</a></li>
+<li><a href="https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/">Observability for Long-Running LLM Agent Workflows</a></li>
+<li><a href="https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/">Why Cloud Cost Tools Miss Agent-Driven GPU Spend</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -455,13 +475,13 @@ Spawn count per top-level request, and the ratio of top-level cost to total grap
                     <a class="related-card" href="/agentic-finops-is-a-trap/">
                         <h3>Agentic FinOps is a trap</h3>
                         <p>Standard FinOps tracks per-call cost and latency. Agents with retries, growing state and human hand-offs leak cost that never shows on the dashboard.</p>
-                        <span class="related-meta">11 min read · 22 August 2026</span>
+                        <span class="related-meta">12 min read · 22 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agentic-ai-cost-control-7-tools-one-backfire/">
                         <h3>Agentic AI cost control: 7 tools, one backfire</h3>
                         <p>How to control agentic AI spend: ground-truth billing data first, attribution second, and why LLM optimizers over billing data backfire.</p>
-                        <span class="related-meta">14 min read · 19 September 2026</span>
+                        <span class="related-meta">15 min read · 19 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">

@@ -64,7 +64,7 @@
       "description": "Compare four multi-agent orchestration patterns: supervisor, swarm, debate, and pipeline. Covers failure modes, backpressure, retries, and how to measure each.",
       "datePublished": "2026-08-03T10:05:35+00:00",
       "dateModified": "2026-10-04T10:05:15+00:00",
-      "wordCount": 3738,
+      "wordCount": 3877,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -238,7 +238,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3738 words
+                        &nbsp;·&nbsp; 3877 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -703,6 +703,27 @@ Add correlation IDs to every message and log every routing decision with the pre
 <p>The pattern matters less than the recovery properties around it. A supervisor with a restart budget and queue-depth health checks will outperform a swarm with none, even on workloads the swarm is theoretically better suited to. Build the instrumentation first — queue depth, latency histograms, retry counts — then pick the pattern that makes those numbers easy to interpret.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick your busiest multi-agent workflow and add one metric: queue depth at the point where tasks enter each stage. Emit it every second, and set an alert at 80% of the maximum queue size. If you do not have a maximum, choose one now. That single metric will surface backpressure problems before they become outages, and it is the cheapest change in this article.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/orchestration-tax-kills-multi-agent-systems/">Orchestration tax kills multi-agent systems</a></li>
+<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+<li><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -738,13 +759,13 @@ Add correlation IDs to every message and log every routing decision with the pre
                     <a class="related-card" href="/multi-agent-systems-when-they-quietly-degrade/">
                         <h3>Multi-agent systems: when they quietly degrade</h3>
                         <p>Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
-                        <span class="related-meta">11 min read · 24 September 2026</span>
+                        <span class="related-meta">12 min read · 24 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/multi-agent-systems-why-failures-hide/">
                         <h3>Multi-agent systems: why failures hide</h3>
                         <p>Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
-                        <span class="related-meta">12 min read · 18 September 2026</span>
+                        <span class="related-meta">13 min read · 18 September 2026</span>
                     </a>
                     
                 </div>

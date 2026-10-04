@@ -64,8 +64,8 @@
       "description": "A practical guide to production eBPF observability and runtime security: kernel requirements, verifier failures, ring buffers, pinning, and how to measure overhead.",
       "datePublished": "2026-08-09T17:47:30+00:00",
       "dateModified": "2026-10-04T10:21:43+00:00",
-      "wordCount": 2637,
-      "timeRequired": "PT13M",
+      "wordCount": 2772,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -242,8 +242,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2637 words
+                        14 min read
+                        &nbsp;·&nbsp; 2772 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -664,6 +664,25 @@ tox -e py311
 <pre><code class="language-bash">sudo bpftrace -e 'kprobe:tcp_retransmit_skb { @start[tid] = nsecs; } kretprobe:tcp_retransmit_skb /@start[tid]/ { @us = hist((nsecs - @start[tid]) / 1000); delete(@start[tid]); }'
 </code></pre>
 <p>Run it for 60 seconds under your normal workload, then compare the histogram against the same histogram collected with the kprobe disabled. If the difference in the p99 bucket is larger than your error budget, do not deploy the kprobe in production. If it is smaller, you have a measured baseline to justify the deployment.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/drop-ec2-bills-70-without-code/">Kernel and EBS Tuning That Cuts EC2 CPU Overhead</a></li>
+<li><a href="https://kubaik.github.io/internal-developer-platform-adoption-traps/">Internal developer platform: adoption traps</a></li>
+<li><a href="https://kubaik.github.io/remote-salary-negotiate-without-sounding-cheap/">Remote salary: negotiate without sounding cheap</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://ebpf.io/what-is-ebpf/">ebpf.io: What is eBPF?</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -693,7 +712,7 @@ tox -e py311
                     <a class="related-card" href="/prompt-injection-what-breaks-first-in-prod/">
                         <h3>Prompt injection: what breaks first in prod</h3>
                         <p>Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.</p>
-                        <span class="related-meta">14 min read · 27 September 2026</span>
+                        <span class="related-meta">15 min read · 27 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/computer-use-agents-the-permission-trap/">
@@ -705,7 +724,7 @@ tox -e py311
                     <a class="related-card" href="/mcp-hidden-cost-traps/">
                         <h3>MCP hidden cost traps</h3>
                         <p>How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.</p>
-                        <span class="related-meta">12 min read · 12 September 2026</span>
+                        <span class="related-meta">13 min read · 12 September 2026</span>
                     </a>
                     
                 </div>

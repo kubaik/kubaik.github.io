@@ -64,7 +64,7 @@
       "description": "Agents that mutate external state fail silently when 2xx is mistaken for completion. Three boundary rules: outcome polling, schema drift gates, atomic claims.",
       "datePublished": "2026-07-17T13:47:16+00:00",
       "dateModified": "2026-10-04T10:00:34+00:00",
-      "wordCount": 2713,
+      "wordCount": 2843,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2713 words
+                        &nbsp;·&nbsp; 2843 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -456,6 +456,24 @@ Drive duplicate requests for the same logical operation at or above your product
 Stop and alert. A default branch that treats unknown statuses as success is how a new terminal state becomes a silent data corruption. The cost of an alert is a page; the cost of a silent default is a reconciliation failure discovered days later.</p>
 <h2 id="one-action-for-the-next-30-minutes">One action for the next 30 minutes</h2>
 <p>Open the file that contains your agent's most consequential state-changing call — the one that moves money, grants access, or changes a record someone else depends on. Find the line immediately after the request returns. If that line checks only the status code, you have found the gap. Write down, in one sentence, what the external system's terminal state is and how you would read it. That sentence is the specification for the poller you need to add.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+<li><a href="https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/">Durable Execution for Multi-Step Agent Workflows</a></li>
+<li><a href="https://kubaik.github.io/ai-features-m-pesa-paystack-flutterwave-traps/">AI features: M-Pesa, Paystack, Flutterwave traps</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -485,19 +503,19 @@ Stop and alert. A default branch that treats unknown statuses as success is how 
                     <a class="related-card" href="/multi-agent-systems-why-failures-hide/">
                         <h3>Multi-agent systems: why failures hide</h3>
                         <p>Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
-                        <span class="related-meta">12 min read · 18 September 2026</span>
+                        <span class="related-meta">13 min read · 18 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agents-running-hours-youre-losing-context-fast/">
                         <h3>Agents running hours? You&#39;re losing context fast</h3>
                         <p>How to bound prompt growth in long-running LLM agents using sliding windows, token-based eviction, priority tags, and cold storage.</p>
-                        <span class="related-meta">11 min read · 3 September 2026</span>
+                        <span class="related-meta">12 min read · 3 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
                         <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
                         <p>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
-                        <span class="related-meta">14 min read · 3 October 2026</span>
+                        <span class="related-meta">15 min read · 3 October 2026</span>
                     </a>
                     
                 </div>

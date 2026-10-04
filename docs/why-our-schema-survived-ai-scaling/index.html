@@ -64,8 +64,8 @@
       "description": "Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.",
       "datePublished": "2026-09-13T16:15:34+00:00",
       "dateModified": "2026-10-04T10:52:41+00:00",
-      "wordCount": 2040,
-      "timeRequired": "PT10M",
+      "wordCount": 2173,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 2040 words
+                        11 min read
+                        &nbsp;·&nbsp; 2173 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -447,6 +447,24 @@ GROUP BY 1, 2;
 <p>Add the new model as a new <code>model_version</code> value, backfill vectors in the background, and switch queries over once coverage is complete. Keep the old vectors until the new ones have been validated in production. Deleting the old model's rows is the last step, not the first.</p>
 <hr />
 <p><strong>Next step:</strong> run <code>SELECT model_version, vector_dims(embedding), count(*) FROM transaction_embeddings GROUP BY 1, 2;</code> against your own database and check that every row's dimension matches a model you recognize. Any row that does not is a latent upgrade failure waiting for the next model change.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/idp-for-ai-2026-stack-evolution/">IDP for AI: 2026 stack evolution</a></li>
+<li><a href="https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+<li><a href="https://kubaik.github.io/one-misconfigured-vector-db-killed-our-rag-pipeline/">When a vector DB misconfiguration breaks RAG silently</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://github.com/pgvector/pgvector">pgvector README</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -476,13 +494,13 @@ GROUP BY 1, 2;
                     <a class="related-card" href="/golden-paths-become-load-bearing-walls/">
                         <h3>Golden paths become load-bearing walls</h3>
                         <p>Why thick internal SDKs for AI features become migration hazards, and how to design a thin runtime that enforces model ID, prompt version and embedding dimension.</p>
-                        <span class="related-meta">12 min read · 21 September 2026</span>
+                        <span class="related-meta">13 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/poolers-wont-save-your-serverless-db/">
                         <h3>Poolers won’t save your serverless DB</h3>
                         <p>Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.</p>
-                        <span class="related-meta">13 min read · 19 July 2026</span>
+                        <span class="related-meta">14 min read · 19 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-best-practices-fail-on-slow-networks/">

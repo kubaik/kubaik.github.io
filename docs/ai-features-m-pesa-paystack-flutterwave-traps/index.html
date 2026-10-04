@@ -64,8 +64,8 @@
       "description": "Payment webhooks from M-Pesa, Paystack and Flutterwave disagree on timing, idempotency and error semantics. Here is how to normalize them before an AI feature reads them.",
       "datePublished": "2026-09-23T16:25:18+00:00",
       "dateModified": "2026-10-04T10:35:08+00:00",
-      "wordCount": 2277,
-      "timeRequired": "PT11M",
+      "wordCount": 2418,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2277 words
+                        12 min read
+                        &nbsp;·&nbsp; 2418 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -422,6 +422,27 @@ Read <code>data.status</code>, not the top-level <code>status</code>, which may 
 Only if the p99 inference latency is comfortably below the provider's timeout. Otherwise enqueue the event, return success immediately, and score asynchronously.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open the webhook handler and find where the transaction ID is derived. If it uses the webhook delivery ID rather than the provider's <code>reference</code>, <code>tx_ref</code> or <code>CheckoutRequestID</code>, that is the bug that double-processes transactions. Change it to the provider's stable identifier, then add a <code>SET NX EX 86400</code> check against Redis before processing. That is a small change that removes an entire class of duplicate-event bugs from everything downstream, including any model trained on the resulting data.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+<li><a href="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">Designing Reliable Webhook Pipelines for African Payment APIs</a></li>
+<li><a href="https://kubaik.github.io/ai-payments-break-in-m-pesa-first/">AI payments break in M-Pesa first</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -451,7 +472,7 @@ Only if the p99 inference latency is comfortably below the provider's timeout. O
                     <a class="related-card" href="/stop-assuming-payment-apis-never-fail/">
                         <h3>Stop assuming payment APIs never fail</h3>
                         <p>How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&amp;#x27;t break checkout.</p>
-                        <span class="related-meta">12 min read · 13 September 2026</span>
+                        <span class="related-meta">13 min read · 13 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-payments-break-in-m-pesa-first/">

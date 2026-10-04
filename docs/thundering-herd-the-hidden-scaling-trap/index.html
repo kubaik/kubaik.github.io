@@ -64,8 +64,8 @@
       "description": "Why synchronized cache misses and naive retries collapse services, and how coalescing, jittered backoff, and locks prevent self-inflicted overload.",
       "datePublished": "2026-09-10T08:29:58+00:00",
       "dateModified": "2026-10-04T10:24:58+00:00",
-      "wordCount": 2202,
-      "timeRequired": "PT11M",
+      "wordCount": 2334,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -228,8 +228,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2202 words
+                        12 min read
+                        &nbsp;·&nbsp; 2334 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -371,6 +371,24 @@ module.exports = { fetchWithCoalescing };
 <p>Finally, it is a case study in emergent behavior. Each component behaves correctly in isolation. The failure exists only in their interaction at scale, which is why it is found by load testing and production observation rather than by reading any single component's code.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick your single hottest cache key and add one metric: the count of concurrent in-flight backend reads for that key, bucketed per second. Emit it from the code path that performs the backend read, tagged with the key. Then force that key to expire during a load test and look at the peak. If the peak is more than a small multiple of one, you have a herd, and you now have a baseline to measure coalescing against.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tool-calls-why-retries-stampede/">Tool calls: why retries stampede</a></li>
+<li><a href="https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/">AI-native apps break when you copy old rules</a></li>
+<li><a href="https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/">AI features as tech debt or golden paths</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

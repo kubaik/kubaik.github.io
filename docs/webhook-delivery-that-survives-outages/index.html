@@ -64,7 +64,7 @@
       "description": "How to build durable webhook delivery with a transactional outbox, at-least-once queues, idempotency keys, and a retry schedule that outlasts outages.",
       "datePublished": "2026-10-02T17:40:12+00:00",
       "dateModified": "2026-10-04T10:43:38+00:00",
-      "wordCount": 2564,
+      "wordCount": 2698,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -250,7 +250,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2564 words
+                        &nbsp;·&nbsp; 2698 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -431,6 +431,24 @@ async function poll() {
 <p><strong>How long should I retry a failed webhook?</strong></p>
 <p>About 24 hours is the common sweet spot. Beyond that, the event is usually stale and the customer would rather get a manual replay than a three-day-old event. After 24 hours, move to a dead-letter queue, alert on it, and provide a replay tool. Retrying forever hides failures rather than fixing them.</p>
 <p>Open your webhook delivery code and find the retry policy. If it's a fixed three-retry loop, replace it with an exponential backoff schedule of 10s, 30s, 2m, 10m, 1h, 6h, 24h with jitter, and add a dead-letter queue with an alert on depth. That is a one-file change and the highest-leverage thing you can do in the next 30 minutes.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/webhooks-2026-retries-idempotency-and-the-9995/">Webhook Delivery: Retries, Idempotency, and Durability</a></li>
+<li><a href="https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+<li><a href="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">Designing Reliable Webhook Pipelines for African Payment APIs</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -460,7 +478,7 @@ async function poll() {
                     <a class="related-card" href="/agent-platform-abstractions-a-case-study/">
                         <h3>Agent platform abstractions: a case study</h3>
                         <p>Why agent failures are platform failures: typed tool contracts, durable execution, and structured traces that make runs replayable and retries safe.</p>
-                        <span class="related-meta">10 min read · 16 September 2026</span>
+                        <span class="related-meta">11 min read · 16 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/survive-network-drops-agentic-workflows-that-keep-running/">

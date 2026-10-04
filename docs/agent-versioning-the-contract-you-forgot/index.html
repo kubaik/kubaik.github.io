@@ -64,7 +64,7 @@
       "description": "Agents expose tool schemas and output shapes as a public interface. Learn how to version that interface, migrate state, and avoid silent caller breakage.",
       "datePublished": "2026-09-28T19:26:44+00:00",
       "dateModified": "2026-10-04T10:57:24+00:00",
-      "wordCount": 2532,
+      "wordCount": 2671,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -255,7 +255,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2532 words
+                        &nbsp;·&nbsp; 2671 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -426,6 +426,26 @@ Model versioning is about pinning the LLM to a specific release. Agent versionin
 Bump major when a tool is removed or renamed, a parameter type changes, the output schema changes in a non-additive way, or side effects change (for example, the agent now sends an email when it did not before). Adding optional fields or new tools is a minor version.</p>
 <h2 id="the-one-thing-to-do-in-the-next-30-minutes">The one thing to do in the next 30 minutes</h2>
 <p>Open your agent's main handler file (for example, <code>handler.py</code> or <code>agent.js</code>) and add a <code>version</code> field to the output schema. Then add a routing check at the top of the handler that reads an <code>Accept-Version</code> header and defaults to <code>"1.0"</code>. Commit it. It will not fix everything, but it establishes the boundary. The next time a tool or output shape changes, there will be a place to put the new version — and a way to keep existing callers working.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/why-does-my-agent-version-break-clients/">Agent API versioning: why clients break on upgrade</a></li>
+<li><a href="https://kubaik.github.io/agent-access-for-non-ai-engineers/">Agent access for non-AI engineers</a></li>
+<li><a href="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -455,7 +475,7 @@ Bump major when a tool is removed or renamed, a parameter type changes, the outp
                     <a class="related-card" href="/idempotency-keys-what-they-fix-what-they-dont/">
                         <h3>Idempotency keys: what they fix, what they don&#39;t</h3>
                         <p>How idempotency keys work, where they fail, and the failure modes they don&amp;#x27;t cover: concurrent retries, key reuse, expiry, and partial failures.</p>
-                        <span class="related-meta">13 min read · 21 September 2026</span>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/mobile-money-agents-when-m-pesa-api-fails/">
@@ -467,7 +487,7 @@ Bump major when a tool is removed or renamed, a parameter type changes, the outp
                     <a class="related-card" href="/why-does-my-agent-version-break-clients/">
                         <h3>Agent API versioning: why clients break on upgrade</h3>
                         <p>Why agent version upgrades break downstream clients, the contract drift behind the errors, and how to pin, check and roll out versions safely.</p>
-                        <span class="related-meta">12 min read · 14 September 2026</span>
+                        <span class="related-meta">13 min read · 14 September 2026</span>
                     </a>
                     
                 </div>

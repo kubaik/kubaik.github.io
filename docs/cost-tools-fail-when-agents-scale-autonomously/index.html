@@ -64,8 +64,8 @@
       "description": "Autonomous scaling agents decide faster than hourly cost reports can explain. Here is how to instrument cost per scaling decision and where the feedback loop breaks.",
       "datePublished": "2026-09-09T12:51:51+00:00",
       "dateModified": "2026-10-04T10:34:07+00:00",
-      "wordCount": 2097,
-      "timeRequired": "PT10M",
+      "wordCount": 2230,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 2097 words
+                        11 min read
+                        &nbsp;·&nbsp; 2230 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -366,6 +366,24 @@ Usually not. When the telemetry stack is a large fraction of the compute spend, 
 Yes. The accounting layer is the source of truth for what was actually billed, including discounts and committed-use pricing that the agent cannot see. The telemetry layer explains decisions; the accounting layer settles the invoice. Use both, and reconcile them periodically.</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Pick one service that scales automatically, and confirm whether its scaling loop emits any cost signal at all. If it does not, add a single counter — <code>scaling_decision_cost_total</code>, labelled by decision type and direction — incremented at the point where the agent commits a capacity change, with <code>delta_usd</code> computed from replica count and node price. Run it for a week, then query the per-decision-type rate and compare the total against the accounting layer's figure for the same service and period. The size of that gap tells you how much of your cost story is currently invisible.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/">Why Cloud Cost Tools Miss Agent-Driven GPU Spend</a></li>
+<li><a href="https://kubaik.github.io/agentic-ai-cost-control-7-tools-one-backfire/">Agentic AI cost control: 7 tools, one backfire</a></li>
+<li><a href="https://kubaik.github.io/track-ai-agent-costs-in-fractal-workflows/">Track AI agent costs in fractal workflows</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -401,7 +419,7 @@ Yes. The accounting layer is the source of truth for what was actually billed, i
                     <a class="related-card" href="/only-boring-stacks-survive-ai-services/">
                         <h3>Only boring stacks survive AI services</h3>
                         <p>Why monoliths beat microservices for solo AI builders, how to spot the &amp;quot;one more abstraction&amp;quot; trap, and how to measure when vertical scaling stops working.</p>
-                        <span class="related-meta">15 min read · 31 August 2026</span>
+                        <span class="related-meta">16 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/observability-agents-lied-to-us/">

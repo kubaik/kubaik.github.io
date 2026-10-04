@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-11T08:54:57.972223">
-        <meta property="article:modified_time" content="2026-10-04T10:39:49.791171+00:00">
+        <meta property="article:modified_time" content="2026-10-04T11:01:37.081113+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Observability Agents as Application Code">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/observability-agents-lied-to-us/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Observability Agents as Application Code",
       "description": "Why telemetry agents break at scale, how to budget their resources, and when the standard install-and-forget playbook is actually fine.",
       "datePublished": "2026-08-11T08:54:57+00:00",
-      "dateModified": "2026-10-04T10:39:49+00:00",
-      "wordCount": 2506,
+      "dateModified": "2026-10-04T11:01:37+00:00",
+      "wordCount": 2635,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2506 words
+                        &nbsp;·&nbsp; 2635 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -417,8 +417,24 @@ kubectl top pods -n observability --sort-by=cpu
 <p>The standard observability playbook covers the happy path well and the collection tier poorly. The failure modes that matter at scale are the agents' own resource consumption, configuration drift, and restart behavior, and they are measurable with tools you already have.</p>
 <p>Treating agents as application code is not a universal requirement. It is a response to specific conditions: many services, short-lived workloads, high telemetry volume, and low tolerance for sample loss. When those conditions hold, the agents are a distributed system in their own right, and they deserve the same versioning, budgeting, monitoring, and failure testing as anything else you run.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
-<p>Run <code>kubectl top pods -n observability --sort-by=memory</code> and compare each collector pod's usage against its configured memory limit. If any pod is using more than 80 percent of its limit under normal load, raise the limit or reduce what that collector is asked to do, and note the change so you can verify it after the next traffic peak.
-===END===</p>
+<p>Run <code>kubectl top pods -n observability --sort-by=memory</code> and compare each collector pod's usage against its configured memory limit. If any pod is using more than 80 percent of its limit under normal load, raise the limit or reduce what that collector is asked to do, and note the change so you can verify it after the next traffic peak. ===END===</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-drift-why-it-hurts-ux/">Agent drift: why it hurts UX</a></li>
+<li><a href="https://kubaik.github.io/istio-and-cilium-what-really-breaks-in-production/">Istio and Cilium: what really breaks in production</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -448,13 +464,13 @@ kubectl top pods -n observability --sort-by=cpu
                     <a class="related-card" href="/cost-tools-fail-when-agents-scale-autonomously/">
                         <h3>Cost tools fail when agents scale autonomously</h3>
                         <p>Autonomous scaling agents decide faster than hourly cost reports can explain. Here is how to instrument cost per scaling decision and where the feedback loop breaks.</p>
-                        <span class="related-meta">10 min read · 9 September 2026</span>
+                        <span class="related-meta">11 min read · 9 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/only-boring-stacks-survive-ai-services/">
                         <h3>Only boring stacks survive AI services</h3>
                         <p>Why monoliths beat microservices for solo AI builders, how to spot the &amp;quot;one more abstraction&amp;quot; trap, and how to measure when vertical scaling stops working.</p>
-                        <span class="related-meta">15 min read · 31 August 2026</span>
+                        <span class="related-meta">16 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agent-followed-instructions-too-literally-the-cron-job-trap/">

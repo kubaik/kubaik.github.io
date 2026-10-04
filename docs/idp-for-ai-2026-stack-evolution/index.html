@@ -64,7 +64,7 @@
       "description": "How to wire embedding model changes into an internal developer platform so dimension drift fails loudly instead of silently shipping broken indexes.",
       "datePublished": "2026-09-02T03:37:36+00:00",
       "dateModified": "2026-10-04T09:54:32+00:00",
-      "wordCount": 2741,
+      "wordCount": 2887,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -259,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2741 words
+                        &nbsp;·&nbsp; 2887 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -597,6 +597,27 @@ def handler(event, context):
 <p>A single Postgres instance with pgvector, the embedding service as a container, and a cron-triggered rebuild job. Skip the cache until you have measured that it is needed. The versioning and validation logic described above is what prevents incidents; the cache is a performance optimization and can be added later.</p>
 <h2 id="next-step">Next step</h2>
 <p>Open your infrastructure-as-code stack and add the <code>modelVersion</code> and <code>dimension</code> values as explicit inputs to whatever resource creates your vector index. Then add a startup check in your embedding service that compares the configured dimension against the index mapping and exits non-zero on mismatch. That is a small change — likely under an hour — and it converts the most common silent failure in this pipeline into a loud one at deploy time.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/why-our-schema-survived-ai-scaling/">Designing a Schema That Survives Embedding Model Upgrades</a></li>
+<li><a href="https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+<li><a href="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://github.com/pgvector/pgvector">pgvector README</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -638,7 +659,7 @@ def handler(event, context):
                     <a class="related-card" href="/world-models-wont-replace-your-backend/">
                         <h3>World models won&#39;t replace your backend</h3>
                         <p>World models add a high-rate prediction stream to your system. Treat it as a sensor: schema, retention, backpressure, and rollback, not a new stack.</p>
-                        <span class="related-meta">14 min read · 24 September 2026</span>
+                        <span class="related-meta">15 min read · 24 September 2026</span>
                     </a>
                     
                 </div>

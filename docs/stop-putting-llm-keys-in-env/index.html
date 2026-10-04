@@ -64,7 +64,7 @@
       "description": "Why flat .env files fail at scale for LLM API keys, and how a secrets manager plus gateway brokering scoped credentials fixes rotation and leaks.",
       "datePublished": "2026-09-17T04:06:21+00:00",
       "dateModified": "2026-10-04T10:21:57+00:00",
-      "wordCount": 2706,
+      "wordCount": 2840,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -259,7 +259,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2706 words
+                        &nbsp;·&nbsp; 2840 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -405,6 +405,25 @@ A gateway gives you one place to hold upstream keys, enforce rate limits, log us
 Two patterns dominate: crash handlers that dump <code>process.env</code> into a log aggregator, and secrets passed as Docker build args that end up in image layers visible via <code>docker history</code>. Both are one-line mistakes that expose every key in the environment. Runtime injection from a secrets manager eliminates both.</p>
 <p><strong>Can I use short-lived credentials for long-running batch jobs?</strong>
 Yes, via token refresh. The job holds a refresh credential and exchanges it for short-lived tokens as needed — the same pattern cloud SDKs already use. It's slightly more code than a static key, but it means a leaked token is useless within minutes instead of months.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/">Skip M-Pesa: build one API for 3 African markets</a></li>
+<li><a href="https://kubaik.github.io/replace-env-with-these-in-2026/">Replace .env with these in 2026</a></li>
+<li><a href="https://kubaik.github.io/stop-assuming-payment-apis-never-fail/">Stop assuming payment APIs never fail</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -434,7 +453,7 @@ Yes, via token refresh. The job holds a refresh credential and exchanges it for 
                     <a class="related-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
                         <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
                         <p>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
-                        <span class="related-meta">14 min read · 3 October 2026</span>
+                        <span class="related-meta">15 min read · 3 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agentic-workflows-surviving-network-partitions/">

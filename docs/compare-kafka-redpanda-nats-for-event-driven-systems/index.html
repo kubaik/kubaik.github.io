@@ -64,8 +64,8 @@
       "description": "Compare Kafka, Redpanda and NATS on durability, tail latency and cost, with config defaults, failure modes and a bake-off checklist you can run yourself.",
       "datePublished": "2026-06-14T18:22:50+00:00",
       "dateModified": "2026-10-04T09:56:25+00:00",
-      "wordCount": 2596,
-      "timeRequired": "PT13M",
+      "wordCount": 2724,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -254,8 +254,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2596 words
+                        14 min read
+                        &nbsp;·&nbsp; 2724 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -423,6 +423,23 @@ jetstream {
 <h2 id="do-this-now">Do this now</h2>
 <p>Open your producer configuration and find the value of <code>linger.ms</code> (Kafka and Redpanda) or your stream's storage and sync settings (NATS JetStream). Then answer one question in writing: what is the maximum amount of data you are willing to lose on a node failure, expressed in seconds or messages?</p>
 <p>If <code>linger.ms</code> is greater than your end-to-end latency budget, lower it and re-run a load test with your real message size. If your NATS stream uses memory storage or a single replica, and you claimed you need durability, change it now. If you cannot state your loss tolerance, that is the first thing to fix — no broker choice is correct until you know what you are optimizing for.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">Postgres 17 swallowed Redis, Kafka, Timescale</a></li>
+<li><a href="https://kubaik.github.io/save-12kmonth-cloud-egress-costs-in-2026/">Cutting cloud egress costs: architecture that works</a></li>
+<li><a href="https://kubaik.github.io/african-fintech-rules-broke-our-stack/">Designing Fintech Systems for African Data-Residency Rules</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -452,19 +469,19 @@ jetstream {
                     <a class="related-card" href="/apm-is-blind-to-your-ai-agents/">
                         <h3>APM is blind to your AI agents</h3>
                         <p>Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
-                        <span class="related-meta">11 min read · 25 September 2026</span>
+                        <span class="related-meta">12 min read · 25 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/audit-logs-that-scale-skip-the-3am-fire-drills/">
                         <h3>Audit logs that scale: skip the 3AM fire drills</h3>
                         <p>How to design audit log pipelines that satisfy auditors and engineers: immutable event streams, hash chains, tiered retention, and a decision checklist.</p>
-                        <span class="related-meta">15 min read · 17 August 2026</span>
+                        <span class="related-meta">16 min read · 17 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/rag-rots-if-you-dont-refresh-indexes/">
                         <h3>RAG rots if you don’t refresh indexes</h3>
                         <p>RAG indexes rot when source documents change. Learn change detection, chunk versioning, and incremental refresh patterns, with code and a cost model.</p>
-                        <span class="related-meta">14 min read · 4 August 2026</span>
+                        <span class="related-meta">15 min read · 4 August 2026</span>
                     </a>
                     
                 </div>

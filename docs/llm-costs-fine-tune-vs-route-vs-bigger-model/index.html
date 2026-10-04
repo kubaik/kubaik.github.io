@@ -64,7 +64,7 @@
       "description": "A practical framework for deciding between fine-tuning, prompt routing, and upgrading to a larger model, with instrumentation guidance and failure modes.",
       "datePublished": "2026-08-22T01:23:52+00:00",
       "dateModified": "2026-10-04T10:27:06+00:00",
-      "wordCount": 2322,
+      "wordCount": 2466,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2322 words
+                        &nbsp;·&nbsp; 2466 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -517,6 +517,27 @@ A cache helps when prompts repeat. In-memory caches in serverless functions are 
 Only if the task is genuinely beyond smaller models or the volume is low. For high-volume classification, the per-token cost difference between a small self-hosted model and a large hosted model is large enough that routing or fine-tuning usually pays off — provided accuracy holds.</p>
 <h2 id="one-action-to-take-in-the-next-30-minutes">One action to take in the next 30 minutes</h2>
 <p>Instrument cost per correct label for your current model. Add a log line that records the model name, input tokens, output tokens, and whether the output matched a known-correct label on a small evaluation set. Run it for a few hundred requests, then compute the cost per correct label. That single number is the baseline every routing, fine-tuning, or scaling decision should be measured against.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/route-fine-tune-or-scale-pick-right/">Route, fine-tune, or scale: pick right</a></li>
+<li><a href="https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/">Big model API vs fine-tune: the 2026 math</a></li>
+<li><a href="https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/">Prompt Injection Is Not Your Biggest LLM Data Risk</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -558,7 +579,7 @@ Only if the task is genuinely beyond smaller models or the volume is low. For hi
                     <a class="related-card" href="/apm-is-blind-to-your-ai-agents/">
                         <h3>APM is blind to your AI agents</h3>
                         <p>Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
-                        <span class="related-meta">11 min read · 25 September 2026</span>
+                        <span class="related-meta">12 min read · 25 September 2026</span>
                     </a>
                     
                 </div>

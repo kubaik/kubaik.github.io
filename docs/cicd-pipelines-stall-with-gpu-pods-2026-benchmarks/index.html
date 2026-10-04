@@ -64,7 +64,7 @@
       "description": "GPU pods stuck Pending are usually a scheduling or quota problem, not a broken container. Learn how to diagnose node selectors, device plugins and quotas.",
       "datePublished": "2026-06-28T11:45:59+00:00",
       "dateModified": "2026-10-04T10:39:18+00:00",
-      "wordCount": 2514,
+      "wordCount": 2646,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -248,7 +248,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2514 words
+                        &nbsp;·&nbsp; 2646 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -459,6 +459,23 @@ kubectl get events -n &lt;namespace&gt; --field-selector reason=FailedScheduling
   --sort-by=.lastTimestamp | tail -20
 </code></pre>
 <p>If the quota shows zero or missing GPU capacity, or the events show a resource name that does not match what your nodes advertise, you have found the cause. Apply the minimal smoke job from this article with the correct resource name and confirm it reaches <code>Running</code>. That single check separates a scheduling problem from an application problem before the next pipeline run.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/">Kubernetes or Nomad: the real experiment cost split</a></li>
+<li><a href="https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/">Why Cloud Cost Tools Miss Agent-Driven GPU Spend</a></li>
+<li><a href="https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/">Agent followed instructions too literally: the cron job trap</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -488,7 +505,7 @@ kubectl get events -n &lt;namespace&gt; --field-selector reason=FailedScheduling
                     <a class="related-card" href="/only-boring-stacks-survive-ai-services/">
                         <h3>Only boring stacks survive AI services</h3>
                         <p>Why monoliths beat microservices for solo AI builders, how to spot the &amp;quot;one more abstraction&amp;quot; trap, and how to measure when vertical scaling stops working.</p>
-                        <span class="related-meta">15 min read · 31 August 2026</span>
+                        <span class="related-meta">16 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">

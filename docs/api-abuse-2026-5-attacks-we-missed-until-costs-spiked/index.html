@@ -64,8 +64,8 @@
       "description": "Five API abuse patterns that inflate cloud bills, why edge-only blocking fails, and how to build tiered defenses with measurable cost-per-request targets.",
       "datePublished": "2026-06-20T16:27:45+00:00",
       "dateModified": "2026-10-04T10:17:59+00:00",
-      "wordCount": 2098,
-      "timeRequired": "PT10M",
+      "wordCount": 2236,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 2098 words
+                        11 min read
+                        &nbsp;·&nbsp; 2236 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -454,6 +454,25 @@ Depth first. A shallow query with wide fields can still return a large payload, 
 If your API handles more than a few thousand requests per second, yes. Below that, a single node with persistence disabled may be fine, but understand the failover window and size the origin to survive it.</p>
 <h2 id="next-step-in-the-next-30-minutes">Next step in the next 30 minutes</h2>
 <p>Open your rate-limit middleware and change the key from the source IP to the authenticated subject or API token. Run your existing load test for 15 minutes and compare the 429 rate at the edge against the 429 rate at the application. If the application rate drops, distributed abuse was previously invisible to your limiter and the change is worth keeping.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/api-abuse-patterns-rising-in-2026/">API abuse patterns rising in 2026</a></li>
+<li><a href="https://kubaik.github.io/api-attacks-rising-40-the-3-patterns-to-block-now/">Defending APIs Against Amplification, Stuffing and Smuggling</a></li>
+<li><a href="https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/">Serverless Cold Starts: Cost Levers and How to Measure Them</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -489,7 +508,7 @@ If your API handles more than a few thousand requests per second, yes. Below tha
                     <a class="related-card" href="/senior-role-projects-3-real-paths/">
                         <h3>Senior role projects: 3 real paths</h3>
                         <p>Build three portfolio projects that demonstrate tenant isolation, retry-storm handling, and event sourcing, with concrete ways to measure each claim.</p>
-                        <span class="related-meta">15 min read · 5 August 2026</span>
+                        <span class="related-meta">16 min read · 5 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/api-abuse-patterns-rising-in-2026/">

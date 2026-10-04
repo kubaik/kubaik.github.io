@@ -64,8 +64,8 @@
       "description": "How idempotency keys work, where they fail, and the failure modes they don't cover: concurrent retries, key reuse, expiry, and partial failures.",
       "datePublished": "2026-09-21T09:17:49+00:00",
       "dateModified": "2026-10-04T10:39:32+00:00",
-      "wordCount": 2658,
-      "timeRequired": "PT13M",
+      "wordCount": 2797,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,8 +260,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2658 words
+                        14 min read
+                        &nbsp;·&nbsp; 2797 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -480,6 +480,26 @@ Yes, and it's faster, but you lose durability. Redis with AOF persistence and <c
 Many payment processors and managed LLM gateways accept a client-supplied idempotency key and deduplicate on their side. That protects their ledger, not your database. You still need your own record if you have side effects beyond the downstream call, such as writing to your own tables or sending a notification. Treat the processor's key as a second layer, not a replacement.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>The next step is to add a test that fires two concurrent requests with the same idempotency key and asserts that only one charge is created. Open your test file for the charges endpoint, add the test, and run it with <code>pytest -k idempotency</code>. If it passes, you've confirmed the core guarantee. If it fails, you've found the exact line where your implementation diverges from the pattern. Run it today, before the next retry storm finds the gap for you.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/">Regulations forced better APIs: the 2026 fintech</a></li>
+<li><a href="https://kubaik.github.io/bank-apis-broke-under-african-2g/">Bank APIs broke under African 2G</a></li>
+<li><a href="https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

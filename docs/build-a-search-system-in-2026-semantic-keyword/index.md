@@ -1,18 +1,16 @@
 # Build a search system in 2026: semantic, keyword
 
-The tutorials all showed the happy path. This post shows what comes after.
+Most search tutorials stop at the happy path: one query type, a small index, no load. Production search is less about writing the query and more about how keyword matching, vector similarity, caching, and reranking fit together when the index is large and traffic is uneven. This article walks through a working hybrid search service, then covers the failure modes that show up once real traffic arrives — and how to measure each one rather than guess.
 
-## Why I wrote this (the problem I kept hitting)
+## What you'll build
 
-In 2026 I built a keyword search endpoint for a SaaS that would return results in under 500 ms at the 95th percentile. It worked great on the staging index with 10 k rows. When we cut the prod table to 2 M rows, every query that joined three tables jumped to 3–4 s. That’s when I realized: production search isn’t about writing the query, it’s about how the pieces fit together under load.
+A small local search service exposing three endpoints:
 
-What I missed initially was the difference between “it works on my laptop” and “it works on the box that actually has 500 concurrent users.” Semantic search looked promising, but at 2 M documents the nearest neighbor index ballooned to 4 GB of RAM, which triggered OOM kills on our 8 GB boxes. Keyword search was fast, but recall dropped 18 % on non-English queries. Hybrid seemed like the answer, but the first implementation added 250 ms latency because we naïvely ran both searches in series.
+1. `/keyword` — classic full-text search using PostgreSQL's `tsquery`
+2. `/semantic` — cosine similarity using pgvector
+3. `/hybrid` — reranks keyword candidates with semantic scores
 
-This post distills what I learned the hard way and gives you a repeatable path to ship a search system in 2026 that handles real traffic without burning your AWS bill.
-
-## Prerequisites and what you'll build
-
-You’ll need a Unix-like shell, Docker 25.0, Python 3.11, Node 20 LTS, Redis 7.2, and PostgreSQL 16 with the pgvector extension. If you don’t already have them, run:
+The stack runs in Docker Compose so results are reproducible. You'll need a Unix-like shell, Docker with the Compose plugin, Python 3.11, and Node (only if you want to run the load test with k6). Install commands for macOS and Debian-family Linux:
 
 ```bash
 # macOS with Homebrew
@@ -21,40 +19,21 @@ brew install docker docker-compose python@3.11 node redis
 sudo apt update && sudo apt install docker.io docker-compose-plugin python3.11 nodejs npm redis-server
 ```
 
-What we’ll build is a tiny local search service that supports three endpoints:
+## Step 1 — environment setup
 
-1. `/keyword` – classic full-text search using PostgreSQL’s tsquery
-2. `/semantic` – cosine similarity using pgvector 0.7.0
-3. `/hybrid` – reranks keyword results with semantic scores
-
-You’ll index 50 k Stack Overflow questions scraped from the 2026 data dump (≈ 1.2 GB JSON). Each question has title, body, and tags. The whole stack runs in Docker Compose so you can reproduce every result.
-
-Cost note: on AWS the same stack in t4g.medium (ARM) costs ≈ $35 / month if you keep it idle nights and weekends; otherwise it’s pennies per thousand queries.
-
-## Step 1 — set up the environment
-
-Create a folder and initialize the project:
+Create a project folder and lay out the files:
 
 ```bash
 mkdir search-2026 && cd search-2026
-echo "search-2026
-  ├── docker-compose.yml
-  ├── postgres
-  │   └── init.sql
-  ├── redis
-  │   └── redis.conf
-  └── app
-      ├── requirements.txt
-      └── main.py" > tree.txt
+mkdir -p postgres redis app
 ```
 
-docker-compose.yml
+`docker-compose.yml`:
 
 ```yaml
-version: '3.9'
 services:
   postgres:
-    image: ankane/pgvector:0.7.0
+    image: pgvector/pgvector:pg16
     ports:
       - "5432:5432"
     environment:
@@ -97,7 +76,9 @@ volumes:
   pgdata:
 ```
 
-postgres/init.sql
+Note: the `version:` key is obsolete in Compose v2 and produces a warning; it is omitted here. Use the official `pgvector/pgvector` image rather than a third-party build so the extension is installed for the correct PostgreSQL major version.
+
+`postgres/init.sql`:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS vector;
@@ -113,12 +94,14 @@ CREATE TABLE documents (
 CREATE INDEX idx_documents_title_tsv ON documents USING GIN (to_tsvector('english', title));
 CREATE INDEX idx_documents_body_tsv ON documents USING GIN (to_tsvector('english', body));
 CREATE INDEX idx_documents_tags_gin ON documents USING GIN (tags);
-CREATE INDEX idx_documents_embedding_cosine ON documents USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
-
-ALTER TABLE documents ALTER COLUMN embedding SET STORAGE PLAIN;  -- saves 20 % RAM
+CREATE INDEX idx_documents_embedding_cosine ON documents USING hnsw (embedding vector_cosine_ops);
 ```
 
-redis/redis.conf
+Two notes on the index choice. HNSW is the default recommendation for query latency in modern pgvector; IVFFlat requires enough rows to train its lists and needs a `lists` parameter tuned to row count. HNSW avoids that tuning step at the cost of higher memory use.
+
+The `ALTER TABLE ... SET STORAGE PLAIN` line that often appears in tutorials is not needed here — pgvector already stores vectors in a compact form, and forcing plain storage can increase disk usage rather than reduce it.
+
+`redis/redis.conf`:
 
 ```ini
 bind 0.0.0.0
@@ -128,7 +111,7 @@ maxmemory 500mb
 maxmemory-policy allkeys-lru
 ```
 
-app/requirements.txt
+`app/requirements.txt`:
 
 ```
 fastapi==0.110.1
@@ -140,7 +123,7 @@ redis==5.0.1
 httpx==0.27.0
 ```
 
-Dockerfile
+`Dockerfile`:
 
 ```dockerfile
 FROM python:3.11-slim
@@ -152,24 +135,19 @@ EXPOSE 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
-Bring the stack up:
+Bring the stack up and verify connectivity:
 
 ```bash
 docker compose up -d --build
-```
-
-Wait for healthchecks, then test connectivity:
-
-```bash
 docker compose exec postgres pg_isready -U search -d search
 docker compose exec redis redis-cli ping
 ```
 
-gotcha: The pgvector extension loads the first time the container starts. If you see `could not open extension control file`, restart the container once more.
+If you see `could not open extension control file`, the extension is not present in the image — switch to the `pgvector/pgvector` image, which bundles it.
 
 ## Step 2 — core implementation
 
-Create app/main.py. We’ll handle embedding generation on the Python side and keep the database thin.
+`app/main.py`. Embeddings are generated in Python; the database stays thin.
 
 ```python
 from fastapi import FastAPI, HTTPException
@@ -178,7 +156,8 @@ import psycopg2, redis, os, json
 
 DB_URL = os.getenv("DB_URL")
 REDIS_URL = os.getenv("REDIS_URL")
-model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
+MODEL_NAME = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
+model = SentenceTransformer(MODEL_NAME, device="cpu")
 
 app = FastAPI()
 
@@ -193,11 +172,13 @@ async def ingest(title: str, body: str, tags: list[str]):
             """
             INSERT INTO documents (title, body, tags, embedding)
             VALUES (%s, %s, %s, %s)
+            RETURNING id
             """,
             (title, body, tags, embedding.tobytes())
         )
+        new_id = cur.fetchone()[0]
         conn.commit()
-    return {"id": cur.fetchone()[0]}
+    return {"id": new_id}
 
 @app.get("/keyword")
 async def keyword(q: str):
@@ -221,17 +202,24 @@ async def keyword(q: str):
 
 @app.get("/semantic")
 async def semantic(q: str):
-    query_embedding = model.encode(q, convert_to_tensor=False).tobytes()
+    cache_key = f"semantic:emb:{q}"
+    cached_emb = redis_client.get(cache_key)
+    if cached_emb:
+        query_embedding = bytes(cached_emb)
+    else:
+        query_embedding = model.encode(q, convert_to_tensor=False).tobytes()
+        redis_client.setex(cache_key, 300, query_embedding)
+
     with conn.cursor() as cur:
         cur.execute(
             """
             SELECT id, title, body,
                    1 - (embedding <=> %s) AS score
             FROM documents
-            ORDER BY score DESC
+            ORDER BY embedding <=> %s
             LIMIT 20
             """,
-            (query_embedding,)
+            (query_embedding, query_embedding)
         )
         rows = cur.fetchall()
     return [{"id": r[0], "title": r[1], "score": float(r[3])} for r in rows]
@@ -255,6 +243,9 @@ async def hybrid(q: str):
         )
         keyword_rows = cur.fetchall()
 
+    if not keyword_rows:
+        return []
+
     # Step 2: rerank with semantic
     query_embedding = model.encode(q, convert_to_tensor=False).tobytes()
     keyword_ids = [r[0] for r in keyword_rows]
@@ -274,23 +265,25 @@ async def hybrid(q: str):
 
     # Step 3: reorder
     id_to_semantic = {r[0]: float(r[3]) for r in semantic_rows}
-    hybrid = sorted(keyword_rows, key=lambda r: id_to_semantic.get(r[0], 0), reverse=True)
+    hybrid_rows = sorted(keyword_rows, key=lambda r: id_to_semantic.get(r[0], 0), reverse=True)
 
-    return [{"id": r[0], "title": r[1], "score": id_to_semantic.get(r[0], 0)} for r in hybrid[:20]]
+    return [{"id": r[0], "title": r[1], "score": id_to_semantic.get(r[0], 0)} for r in hybrid_rows[:20]]
 ```
 
-Important design decisions:
+Design decisions worth understanding:
 
-- We use pgvector’s cosine distance (`<=>`) which is stable and fast; L2 is 5–10 % slower on 384-dim vectors. - The keyword query uses `setweight` to prioritize titles over bodies; this boosts precision 8 % on average. - Hybrid pulls 200 keyword candidates then reranks; pulling 1 000 candidates only gains 2 % recall but adds 80 ms. - All embeddings are stored as plain bytes; pgvector’s default storage is 30 % larger.
+- **Cosine distance (`<=>`)** is the right operator when embeddings are normalized, which the MiniLM family is. It is stable across corpus sizes and matches how the model was trained.
+- **`setweight`** gives title matches more influence than body matches. Whether this helps depends on your corpus; treat it as a hypothesis to test with the recall measurement described below, not a guaranteed improvement.
+- **Candidate count** (the `LIMIT 200` above) controls the recall/latency tradeoff. Larger candidate sets raise recall at the cost of a bigger `IN` list and more reranking work. Measure before changing it.
+- **Ordering by the distance operator** rather than by the computed score lets the index do the ordering. Sorting on a derived column (`1 - (embedding <=> %s)`) forces a full scan.
 
-Build and seed 50 k questions:
+Seed the index. Assuming a JSONL file where each line has `title`, `body`, and `tags`:
 
 ```bash
-# one-time setup
 docker compose exec app python -c "
 from main import conn, model
 import json
-with open('so_questions_2026.jsonl') as f:
+with open('questions.jsonl') as f:
     for line in f:
         d = json.loads(line)
         emb = model.encode(f\"{d['title']} {d['body']}\", convert_to_tensor=False)
@@ -303,63 +296,68 @@ with open('so_questions_2026.jsonl') as f:
 "
 ```
 
-On my M1 MacBook this took 12 minutes for 50 k rows and used < 1 GB RAM. The embedding table grew to 740 MB on disk.
+This commits one row at a time, which is far too slow for large corpora. Batch inserts (or `COPY`) in groups of a few hundred rows per transaction.
 
-## Step 3 — handle edge cases and errors
+## Step 3 — failure modes and fixes
 
-1. Cache miss storms
-   After the first semantic query I noticed Redis CPU spiked to 90 % when 100 users hit `/semantic?q=docker` simultaneously. The problem: we weren’t caching the raw query embedding, only the JSON result. Fix: cache the bytes of the embedding under `semantic:emb:{q}` with a 5-minute TTL.
+### 1. Cache miss storms
 
-   ```python
-   @app.get("/semantic")
-   async def semantic(q: str):
-       cache_key = f"semantic:emb:{q}"
-       cached_emb = redis_client.get(cache_key)
-       if cached_emb:
-           query_embedding = bytes(cached_emb)
-       else:
-           query_embedding = model.encode(q, convert_to_tensor=False).tobytes()
-           redis_client.setex(cache_key, 300, query_embedding)
-       # …
-   ```
+If the raw query embedding is not cached, every request pays the model inference cost. Cache the embedding bytes under a key derived from the query, with a short TTL. The `/semantic` endpoint above shows the pattern; the same cache should be shared by `/hybrid`.
 
-2. Vector dimension mismatch
-   I once re-trained the model and forgot to update the column type. PostgreSQL threw:
-   `ERROR:  cannot cast type bytea to vector(384)`
-   The fix is to ALTER TABLE and re-ingest. Always pin the model version in an environment variable:
-   
-   ```python
-   MODEL_NAME = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
-   model = SentenceTransformer(MODEL_NAME)
-   ```
+Note that `redis_client.get` returns bytes, so `bytes(cached_emb)` is a no-op copy — but if you switch to a client that returns `str`, decode explicitly and be consistent.
 
-3. Connection pool exhaustion
-   Under 1 000 concurrent requests our app dropped connections. psycopg2’s default pool is 10. Bump it:
-   
-   ```python
-   conn = psycopg2.connect(DB_URL, connect_timeout=3, min_size=10, max_size=50)
-   ```
+### 2. Vector dimension mismatch
 
-4. Slow first embedding
-   The first call to `model.encode` loads the model into RAM. On a t4g.medium it adds 1.8 s to cold starts. Mitigation: run a warm-up endpoint `/_health` that calls `model.encode("test")` on startup.
+Changing the embedding model without migrating the column type produces an error like:
 
-5. Memory fragmentation with vectors
-   pgvector 0.7.0 on PostgreSQL 16 defaults to 1 GB work_mem per sort. For 50 k rows the sort spills to disk and slows queries by 400 ms. Override:
-   
-   ```sql
-   ALTER SYSTEM SET work_mem = '16MB';
-   SELECT pg_reload_conf();
-   ```
+```
+ERROR:  expected 384 dimensions, not 768
+```
 
-## Step 4 — add observability and tests
+The fix is to `ALTER TABLE documents ALTER COLUMN embedding TYPE vector(768)`, drop and rebuild the index, and re-ingest every row. Pin the model name in an environment variable (as above) so the app and the schema can never disagree silently.
 
-Install OpenTelemetry and add tracing:
+### 3. Connection handling
+
+`psycopg2.connect` returns a single connection, not a pool. FastAPI's async endpoints run in a threadpool, so concurrent requests will interleave on that one connection and raise `InterfaceError` or corrupt cursors. Use `psycopg2.pool.ThreadedConnectionPool` (or an async driver) and acquire a connection per request:
+
+```python
+from psycopg2.pool import ThreadedConnectionPool
+pool = ThreadedConnectionPool(minconn=2, maxconn=20, dsn=DB_URL)
+```
+
+Note that `min_size` and `max_size` are not valid `psycopg2.connect` keyword arguments — they belong to the pool class.
+
+### 4. Cold start latency
+
+The first call to `model.encode` loads weights into memory. On a small ARM instance this can take a second or more. Warm the model at startup rather than on first request:
+
+```python
+@app.on_event("startup")
+async def warmup():
+    model.encode("warmup")
+```
+
+### 5. Sort spilling to disk
+
+Large sorts and index builds can spill when `work_mem` is too small. Rather than guessing a global value, check the actual plan:
+
+```sql
+EXPLAIN (ANALYZE, BUFFERS) SELECT id FROM documents ORDER BY embedding <=> '...' LIMIT 20;
+```
+
+Look for `Sort Method: external merge` in the output. If you see it, raise `work_mem` for the session or the role that runs search queries rather than system-wide:
+
+```sql
+SET work_mem = '64MB';
+```
+
+## Step 4 — observability and testing
+
+Add tracing so you can see where time goes:
 
 ```bash
 pip install opentelemetry-api opentelemetry-sdk opentelemetry-exporter-otlp
 ```
-
-Update main.py:
 
 ```python
 from opentelemetry import trace
@@ -368,26 +366,22 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 
 trace.set_tracer_provider(TracerProvider())
-otlp_exporter = OTLPSpanExporter(endpoint="http://otel-collector:4318/v1/traces", insecure=True)
+otlp_exporter = OTLPSpanExporter(endpoint="http://otel-collector:4318/v1/traces")
 trace.get_tracer_provider().add_span_processor(BatchSpanProcessor(otlp_exporter))
 tracer = trace.get_tracer(__name__)
 
 @app.get("/semantic")
 async def semantic(q: str):
     with tracer.start_as_current_span("semantic_search"):
-        # … existing code …
+        # ... existing code ...
         span = trace.get_current_span()
         span.set_attribute("hits_returned", len(rows))
-        return …
+        return [{"id": r[0], "title": r[1], "score": float(r[3])} for r in rows]
 ```
 
-Add latency SLOs:
+Set SLOs before you have data, then revise them once you do. A reasonable starting point for a single-node deployment is P95 under 150 ms for keyword, under 350 ms for semantic, and under 450 ms for hybrid — but these are targets, not guarantees, and depend heavily on index size and hardware.
 
-- Keyword: P95 < 150 ms
-- Semantic: P95 < 350 ms
-- Hybrid: P95 < 450 ms
-
-Create a synthetic load test with k6:
+Load test with k6:
 
 ```javascript
 // loadtest.js
@@ -412,18 +406,18 @@ export default function () {
 }
 ```
 
-Run:
-
 ```bash
 k6 run --vus 50 --duration 3m loadtest.js
 ```
 
-On my laptop, 200 VUs kept P95 at 420 ms and RAM stayed under 150 MB.
+Run this on the same machine class you intend to deploy to, or the numbers mean nothing.
 
-Write a smoke test:
+Smoke tests:
 
 ```python
 # tests/test_search.py
+import os
+import psycopg2
 import pytest
 from fastapi.testclient import TestClient
 from main import app
@@ -437,122 +431,77 @@ def reset_db():
             cur.execute("TRUNCATE documents")
             conn.commit()
 
-
 def test_keyword():
-    client.post("/ingest", json={"title": "Hello", "body": "World", "tags": ["a"]})
-    r = client.get("/keyword?q=hello")
+    client.post("/ingest", params={"title": "Hello", "body": "World", "tags": ["a"]})
+    r = client.get("/keyword", params={"q": "hello"})
     assert r.status_code == 200
     assert len(r.json()) == 1
 
-
 def test_semantic():
-    client.post("/ingest", json={"title": "Docker", "body": "Containers", "tags": ["b"]})
-    r = client.get("/semantic?q=docker+containers")
+    client.post("/ingest", params={"title": "Docker", "body": "Containers", "tags": ["b"]})
+    r = client.get("/semantic", params={"q": "docker containers"})
     assert r.status_code == 200
-    assert r.json()[0]["score"] > 0.8
-
+    assert r.json()[0]["score"] > 0.5
 
 def test_hybrid():
-    client.post("/ingest", json={"title": "FastAPI", "body": "Async", "tags": ["c"]})
-    r = client.get("/hybrid?q=api")
+    client.post("/ingest", params={"title": "FastAPI", "body": "Async", "tags": ["c"]})
+    r = client.get("/hybrid", params={"q": "api"})
     assert r.status_code == 200
     assert len(r.json()) > 0
 ```
 
-Run with pytest:
+Note that the endpoints declare their inputs as query parameters, so `TestClient` calls use `params=`, not `json=`. The semantic score threshold is set to 0.5 rather than 0.8 because MiniLM cosine scores for loosely related text commonly land in the 0.3–0.6 range; a 0.8 threshold will fail on many valid pairs.
 
 ```bash
 docker compose exec app pytest -q
 ```
 
-## Real results from running this
+## Measuring recall instead of guessing it
 
-The 50 k index fits in memory, but the OS page cache handles spikes.
+Claims like "hybrid beats semantic by X%" are only meaningful if you measure them on your own data. The procedure:
 
-Latency (median / P95) from CloudWatch over 7 days with 100–300 RPM:
+1. **Build a labeled set.** Take 100–500 queries and, for each, list the document IDs that a human would consider relevant. This is the expensive part; there is no shortcut.
+2. **Run each approach** against the labeled set and record the top-10 IDs per query.
+3. **Compute Recall@10** as `(relevant docs in top 10) / (total relevant docs)` and **MRR@10** as the reciprocal of the rank of the first relevant result, averaged across queries.
+4. **Compare.** If hybrid does not beat both baselines on your corpus, the reranking step is not earning its latency.
 
-| Endpoint   | 50th percentile | 95th percentile | 99th percentile | Cost per 1 k queries |
-|------------|-----------------|-----------------|-----------------|----------------------|
-| /keyword   | 28 ms           | 120 ms          | 210 ms          | $0.00012            |
-| /semantic  | 145 ms          | 310 ms          | 480 ms          | $0.00085            |
-| /hybrid    | 170 ms          | 390 ms          | 570 ms          | $0.0011             |
+A small script is enough:
 
-Cost breakdown (7-day average, us-east-1):
+```python
+def recall_at_k(returned_ids, relevant_ids, k=10):
+    top = set(returned_ids[:k])
+    return len(top & set(relevant_ids)) / max(len(relevant_ids), 1)
 
-- EC2 t4g.medium: $12.30
-- RDS (db.t4g.micro): $7.80
-- ElastiCache (cache.t4g.small): $4.20
-- Data transfer: $1.80
-- Total: ≈ $26.10 / month
+def reciprocal_rank(returned_ids, relevant_ids):
+    for i, doc_id in enumerate(returned_ids[:10], start=1):
+        if doc_id in relevant_ids:
+            return 1.0 / i
+    return 0.0
+```
 
-Recall comparison on a held-out set of 500 questions:
+For latency, instrument the endpoint with a histogram (OpenTelemetry, Prometheus, or even a simple in-process list during development) and report the 50th, 95th, and 99th percentiles. Cost per query is `(instance hourly cost) / (queries per hour)` — compute it from your own billing data rather than copying someone else's instance sizing.
 
-| Approach   | Recall@10 | MRR@10 |
-|------------|-----------|--------|
-| Keyword    | 0.62      | 0.48   |
-| Semantic   | 0.71      | 0.61   |
-| Hybrid     | 0.74      | 0.65   |
-
-Hybrid wins by 3 % recall over semantic alone because the keyword filter narrows to relevant rows before reranking. The extra 20 ms latency is acceptable for most SaaS use cases.
-
-I also tried a pure vector index without the keyword filter to see if we could drop the full-text index entirely. Recall dropped 12 % on non-English queries — so we kept the hybrid.
-
-## Common questions and variations
+## Common questions
 
 **How do I add multi-language support without doubling the index?**
-Pin the model to `paraphrase-multilingual-MiniLM-L12-v2` (384 dim) and add a language column. Create a partial index per language:
+Use a multilingual embedding model that produces the same dimension as the current one, add a `language` column, and create partial indexes per language:
 
 ```sql
-CREATE INDEX idx_documents_embedding_es ON documents USING ivfflat (embedding vector_cosine_ops) 
+CREATE INDEX idx_documents_embedding_es ON documents USING hnsw (embedding vector_cosine_ops)
 WHERE language = 'es';
 ```
 
-At query time, filter by language first, then rerank. This keeps RAM usage constant while covering 100 languages.
+Filter by language before ranking. Note that PostgreSQL's built-in full-text search needs a language-specific configuration (`to_tsvector('spanish', ...)`) to work correctly across languages — the `'english'` configuration used above will not stem non-English text properly.
 
-**Can I skip PostgreSQL and use Meilisearch 1.5 or Typesense 0.25 instead?**
-Yes, but you lose the ability to join with other tables. I benchmarked Meilisearch 1.5 on the same 50 k set: P95 latency 85 ms and recall 0.68, which is close to keyword. However, Meilisearch doesn’t support custom reranking pipelines, so hybrid becomes impossible. If you only need keyword + semantic rerank, Typesense 0.25 with its vector extension can replace PostgreSQL entirely and cut your AWS bill 35 %.
+**Can I use a dedicated search engine instead of PostgreSQL?**
+Yes. Dedicated engines typically offer better keyword relevance tuning and built-in faceting, at the cost of running another service and losing the ability to join against your relational data. Whether hybrid reranking is supported depends on the specific engine and its version — check the documentation for your version rather than assuming. If your access patterns are read-heavy and you don't need joins, a dedicated engine is often the simpler operational choice.
 
-**What happens when the index grows to 10 M rows?**
-At 10 M rows the pgvector IVF index is still fast for top-20 queries (P95 250 ms on t4g.large), but the embedding table balloons to 14 GB on disk. Two tricks:
+**What happens as the index grows to millions of rows?**
+Memory becomes the binding constraint. HNSW indexes must largely fit in RAM to deliver low latency; check the index size with `\di+` and compare against available memory. For very large corpora, partition the table by a natural key (tenant, date, category) and query only the relevant partitions. Rebuilding an HNSW index on a large table is expensive, so plan for it.
 
-1. Use pg_partman to shard by date ranges. 2. Switch the vector index to HNSW (pgvector 0.7 supports it) — HNSW uses 15 % more RAM but reduces latency 30 % at 10 M rows.
+**How do I handle real-time updates?**
+Insert or upsert the new row with its embedding, and let the index update incrementally. HNSW supports inserts without a full rebuild; IVFFlat does not handle inserts as gracefully and may require periodic reindexing. For high write volume, batch updates and reindex during low-traffic windows.
 
-**How do I handle real-time updates without rebuilding the index every time?**
-Use logical decoding with pgoutput and stream changes to a Redis Streams queue. Build a sidecar worker that:
+## Your next 30 minutes
 
-1. Receives change events. 2. Computes the embedding. 3. Upserts into PostgreSQL. 4. Updates the IVF centroids every 500 changes (pg_repack helps).
-
-This keeps latency under 200 ms for 95 % of updates.
-
-## Where to go from here
-
-Take the latency numbers you just collected — the P95 of your `/hybrid` endpoint is 390 ms. Your next job is to cut it in half without adding RAM. Do this now:
-
-1. Open `postgres/init.sql` in your editor. 2. Change the IVF `lists` parameter from 100 to 200. 3. Rebuild the index:
-
-```sql
-REINDEX INDEX idx_documents_embedding_cosine;
-```
-4. Run the smoke test again and measure the new P95.
-
-If the latency drops below 250 ms, you’ve proved that a small configuration change can outperform vertical scaling. If it doesn’t, increase `lists` to 300 and repeat — but stop when you hit your SLO or RAM limit. This single file change takes 5 minutes and costs nothing.
-
-Do it before you spin up another instance.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 10, 2026
+Pick one endpoint — `/hybrid` is the best candidate — and instrument it. Add a timer around the database call and around the model call separately, run the k6 script for three minutes, and record the two numbers. That split tells you immediately whether the bottleneck is inference (model time dominates) or the vector index (database time dominates), and the two problems have completely different fixes. Do this before tuning any parameter, because tuning the wrong layer is the most common way to spend a week on a problem you don't have.

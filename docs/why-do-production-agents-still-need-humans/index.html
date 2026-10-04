@@ -64,8 +64,8 @@
       "description": "Why production agents still need humans: designing HITL boundaries, error-code routing, cache fallbacks, and how to measure the results.",
       "datePublished": "2026-09-09T08:21:05+00:00",
       "dateModified": "2026-10-04T09:59:39+00:00",
-      "wordCount": 2275,
-      "timeRequired": "PT11M",
+      "wordCount": 2404,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -246,8 +246,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2275 words
+                        12 min read
+                        &nbsp;·&nbsp; 2404 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -435,6 +435,23 @@ It depends entirely on your queue and staffing. Measure the interval between mes
 Define a threshold in advance — for example, repeated business-specific errors from one rail inside a short window — and log every fallback for audit.</p>
 <h2 id="the-next-30-minutes">The next 30 minutes</h2>
 <p>Open your agent's error handler and add one branch: if the response code is in a small, explicit set of business-critical codes, publish a message containing the correlation ID, the original payload, and the reason to a queue you already own. Do not change the retry logic yet, and do not add a dashboard. Just make the hand-off visible in production. Once you can see how often it fires, you have the data to decide how wide the boundary should be.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+<li><a href="https://kubaik.github.io/apis-must-die-in-2026/">APIs must die in 2026</a></li>
+<li><a href="https://kubaik.github.io/fraud-detection-rules-vs-scoring-where-they-meet/">Fraud detection: rules vs scoring, where they meet</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -464,7 +481,7 @@ Define a threshold in advance — for example, repeated business-specific errors
                     <a class="related-card" href="/agent-drift-why-prod-breaks-without-human-checkpoints/">
                         <h3>Agent drift: why prod breaks without human checkpoints</h3>
                         <p>Why agents pass staging and drift in production, and how to add confidence thresholds, escalation queues and compliance guards that make drift visible.</p>
-                        <span class="related-meta">14 min read · 1 September 2026</span>
+                        <span class="related-meta">15 min read · 1 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-best-practices-fail-on-slow-networks/">
@@ -476,7 +493,7 @@ Define a threshold in advance — for example, repeated business-specific errors
                     <a class="related-card" href="/who-signs-off-on-ai-code/">
                         <h3>Who signs off on AI code?</h3>
                         <p>AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</p>
-                        <span class="related-meta">11 min read · 2 October 2026</span>
+                        <span class="related-meta">12 min read · 2 October 2026</span>
                     </a>
                     
                 </div>

@@ -64,7 +64,7 @@
       "description": "AI coding assistants assume a standard Docker environment. Here are five failure modes that break builds in CI, with fixes, verification steps, and a checklist.",
       "datePublished": "2026-06-20T00:04:24+00:00",
       "dateModified": "2026-10-04T10:52:13+00:00",
-      "wordCount": 2712,
+      "wordCount": 2842,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -248,7 +248,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2712 words
+                        &nbsp;·&nbsp; 2842 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -548,6 +548,24 @@ echo &quot;Environment validation complete.&quot;
 <p>The practical consequence for review processes is that "it builds locally" carries little weight. What carries weight is a pipeline that has been run against the runner classes the project actually uses, with the environment recorded and the runtime pinned.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Add a <code>scripts/validate-env.sh</code> to the repository using the script above, wire it into the workflow as a step that runs before the build, and push a branch to confirm it prints the runtime, socket status, architecture, and SELinux state on your CI runner. If the output differs from what the Dockerfile assumes, you have found the first assumption to fix.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/commit-ownership-in-ai-pair-coding/">Commit ownership in AI pair coding</a></li>
+<li><a href="https://kubaik.github.io/remote-work-in-2026-which-tools-survived/">Remote work in 2026: which tools survived</a></li>
+<li><a href="https://kubaik.github.io/3-mistakes-that-break-deployments-for-everyone/">3 mistakes that break deployments for everyone</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

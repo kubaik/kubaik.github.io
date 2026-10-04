@@ -64,8 +64,8 @@
       "description": "Clearing produces obligations; settlement moves money. How to model both ledgers, reconcile them, and avoid the schema mistakes that break finance.",
       "datePublished": "2026-09-28T04:25:56+00:00",
       "dateModified": "2026-10-04T10:49:51+00:00",
-      "wordCount": 2801,
-      "timeRequired": "PT14M",
+      "wordCount": 2929,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2801 words
+                        15 min read
+                        &nbsp;·&nbsp; 2929 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -500,6 +500,23 @@ def reconcile(clearing_ledger, settlement_ledger, as_of: datetime.date):
 </ol>
 <p>Any "no" is a concrete work item. None of them require a rewrite; most require one new table and one new job.</p>
 <p><strong>Next step:</strong> Open the payments schema and list every column whose name contains <code>balance</code>, <code>amount</code>, or <code>status</code>. For each, write one word next to it — obligation, settled, or unclear. Anything marked unclear is the bug. This takes about 15 minutes and tells you whether the system needs a two-ledger refactor.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/reconciling-mobile-money-edge-cases-banks-ignore/">Reconciling mobile money: edge cases banks ignore</a></li>
+<li><a href="https://kubaik.github.io/nigerias-2026-api-rules-broke-our-microservices/">Designing Fintech Backends Around Audit Deadlines</a></li>
+<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -529,7 +546,7 @@ def reconcile(clearing_ledger, settlement_ledger, as_of: datetime.date):
                     <a class="related-card" href="/rust-rewrites-where-they-pay-off-where-they-dont/">
                         <h3>Rust rewrites: where they pay off, where they don&#39;t</h3>
                         <p>A practical framework for deciding whether a Rust backend rewrite is worth it, with code, failure modes, and measurement steps.</p>
-                        <span class="related-meta">11 min read · 21 September 2026</span>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/when-flags-become-experiments/">

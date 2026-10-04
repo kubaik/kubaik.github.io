@@ -64,7 +64,7 @@
       "description": "GUI agents inherit a human's full permissions and leave no semantic audit trail. Here is how a policy layer, a reduced interface and structured logs fix that.",
       "datePublished": "2026-09-19T12:00:05+00:00",
       "dateModified": "2026-10-04T10:32:09+00:00",
-      "wordCount": 2903,
+      "wordCount": 3028,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2903 words
+                        &nbsp;·&nbsp; 3028 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -417,6 +417,23 @@ The credential should belong to a proxy with the minimum permissions the workflo
 <p>None of this is novel. It is the same reasoning behind OAuth scopes, database roles, and capability-based security. What is new is that computer-use agents make it easy to skip the policy layer entirely, because the GUI looks like it is already the interface. It is a presentation layer, and treating it as a security boundary is the mistake.</p>
 <p>The corollary is that constraint and capability are not opposites here. A constrained agent is slower per task, more auditable, more reliable on routine work, and deployable. An unconstrained agent is faster in a demo and blocked in review.</p>
 <p><strong>Next 30 minutes:</strong> open your agent's action definition or loop code and list every distinct semantic action it can take. If the list is longer than ten, you have a constraint problem. Choose the three actions your primary workflow actually requires, and write a policy rule for each — preconditions, rate limit, permitted data — before writing any more agent code.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/">Sandboxed computer-use agents with gVisor</a></li>
+<li><a href="https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/">Agent permissions: the mistake that breaks production</a></li>
+<li><a href="https://kubaik.github.io/platform-teams-agentic-world-struggle/">Platform Teams: Agentic World Struggle</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://oauth.net/2/">OAuth 2.0 resources</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -446,7 +463,7 @@ The credential should belong to a proxy with the minimum permissions the workflo
                     <a class="related-card" href="/prompt-injection-what-breaks-first-in-prod/">
                         <h3>Prompt injection: what breaks first in prod</h3>
                         <p>Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.</p>
-                        <span class="related-meta">14 min read · 27 September 2026</span>
+                        <span class="related-meta">15 min read · 27 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/llm-risks-underestimated-in-owasp-top-10/">
@@ -458,7 +475,7 @@ The credential should belong to a proxy with the minimum permissions the workflo
                     <a class="related-card" href="/mcp-hidden-cost-traps/">
                         <h3>MCP hidden cost traps</h3>
                         <p>How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.</p>
-                        <span class="related-meta">12 min read · 12 September 2026</span>
+                        <span class="related-meta">13 min read · 12 September 2026</span>
                     </a>
                     
                 </div>

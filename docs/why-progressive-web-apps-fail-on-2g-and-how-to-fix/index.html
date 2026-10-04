@@ -64,8 +64,8 @@
       "description": "How to audit and fix a progressive web app for 2G and 3G: transport, payload, rendering, caching, and a 30-minute first step.",
       "datePublished": "2026-07-17T13:26:20+00:00",
       "dateModified": "2026-10-04T10:30:32+00:00",
-      "wordCount": 2276,
-      "timeRequired": "PT11M",
+      "wordCount": 2402,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -258,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2276 words
+                        12 min read
+                        &nbsp;·&nbsp; 2402 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -379,6 +379,23 @@ const isSlow = connection
 Separate codebases double maintenance and drift over time. Prefer one codebase that renders a small critical path and defers everything else. If a separate experience is unavoidable, generate it from the same source rather than maintaining it by hand.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your slowest representative page in a browser with the network throttled to a 2G-class profile, and record the transfer size and request count of every resource that blocks first paint. That list — not the full page weight — is your optimization target. Pick the single largest item on it and either defer it, compress it, or remove it, then re-run the same profile and compare.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/">Starlink 4G fallback: serve pages under 800ms</a></li>
+<li><a href="https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
+<li><a href="https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/">Designing APIs for High-Latency Satellite Links</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -414,13 +431,13 @@ Separate codebases double maintenance and drift over time. Prefer one codebase t
                     <a class="related-card" href="/mobile-first-ai-fails-you-didnt-plan/">
                         <h3>Mobile-first AI fails you didn’t plan…</h3>
                         <p>Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.</p>
-                        <span class="related-meta">12 min read · 26 August 2026</span>
+                        <span class="related-meta">13 min read · 26 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/offline-first-agents-for-field-teams/">
                         <h3>Offline-first agents for field teams</h3>
                         <p>Design an offline-first field agent: local state machine, durable sync queue, conflict resolution, and honest ways to measure latency and battery.</p>
-                        <span class="related-meta">13 min read · 16 July 2026</span>
+                        <span class="related-meta">14 min read · 16 July 2026</span>
                     </a>
                     
                 </div>

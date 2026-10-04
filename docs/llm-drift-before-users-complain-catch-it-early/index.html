@@ -64,8 +64,8 @@
       "description": "Track p99 latency, tokens per request, and cache hit rate against rolling baselines to catch LLM drift before users feel it.",
       "datePublished": "2026-08-10T12:22:46+00:00",
       "dateModified": "2026-10-04T10:22:53+00:00",
-      "wordCount": 2260,
-      "timeRequired": "PT11M",
+      "wordCount": 2395,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -261,8 +261,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2260 words
+                        12 min read
+                        &nbsp;·&nbsp; 2395 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -474,6 +474,24 @@ Per-region p99 latency, tokens per request, cache hit rate, and upstream depende
 Pin the tokenizer revision to the model revision, verify a canonical hash of the vocabulary at process startup, and fail the deploy on mismatch. Verify at deploy time, not at request time.</p>
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Open your metrics backend and run two queries for the last 24 hours, grouped by region: p99 latency and cache hit rate. Compare the most recent two hours against the preceding 22. If either has moved by more than roughly 15% in any single region, you have found a drift your current alerts are not catching — and you now have the specific metric and region to build the rolling baseline around.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/">LLM output metrics that actually move the needle</a></li>
+<li><a href="https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/">LLM evals: skip the hype, track these 4 metrics</a></li>
+<li><a href="https://kubaik.github.io/llm-drift-the-silent-quality-drop-metrics-miss/">LLM drift: the silent quality drop metrics miss</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -503,7 +521,7 @@ Pin the tokenizer revision to the model revision, verify a canonical hash of the
                     <a class="related-card" href="/llm-eval-drift-that-users-notice-first/">
                         <h3>LLM eval drift that users notice first</h3>
                         <p>Three pipeline-level causes of user-visible LLM drift, how to instrument each one, and how to verify the fix with metrics rather than vibes.</p>
-                        <span class="related-meta">15 min read · 28 August 2026</span>
+                        <span class="related-meta">16 min read · 28 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/context-windows-live-longer-than-you-think/">

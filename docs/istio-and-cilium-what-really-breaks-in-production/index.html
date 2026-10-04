@@ -64,7 +64,7 @@
       "description": "Service meshes amplify latent platform failures. Here is what breaks in Istio and Cilium, how to measure it, and when to defer adoption.",
       "datePublished": "2026-06-24T09:26:52+00:00",
       "dateModified": "2026-10-04T10:04:50+00:00",
-      "wordCount": 2546,
+      "wordCount": 2675,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -257,7 +257,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2546 words
+                        &nbsp;·&nbsp; 2675 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -369,6 +369,24 @@ First, disable the sidecar proxy (<code>kubectl patch deployment &lt;name&gt; -p
 <p>The mesh is a powerful tool, but it is not a magic band-aid. It amplifies every latent failure in the platform, so fix the platform first. Start with Gateway API for ingress-level mTLS, then adopt a mesh only when advanced traffic policies are needed. Measure the mesh's own SLOs—sidecar start-up time, control-plane CPU, telemetry sampling rate—before enabling strict mTLS. The mesh that works in production is the one tuned to the workload, not the one installed from the quick-start guide.</p>
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Run <code>kubectl top pods -n istio-system</code> and <code>kubectl top pods -n &lt;app-namespace&gt;</code>. Compare CPU and memory between sidecars and application pods. If any sidecar is consuming more resources than the application pod it fronts, note it, set a CPU limit, and re-measure after the next deploy.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/observability-agents-lied-to-us/">Observability Agents as Application Code</a></li>
+<li><a href="https://kubaik.github.io/monolith-to-services-without-a-rewrite/">Monolith to services without a rewrite</a></li>
+<li><a href="https://kubaik.github.io/observability-2026-ditch-the-three-pillars/">Observability 2026: ditch the three pillars</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://ebpf.io/what-is-ebpf/">ebpf.io: What is eBPF?</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

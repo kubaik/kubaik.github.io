@@ -64,8 +64,8 @@
       "description": "How spot and on-demand GPU instances differ on interruption handling, effective throughput, and the spend threshold where spot engineering pays off.",
       "datePublished": "2026-09-18T13:01:40+00:00",
       "dateModified": "2026-10-04T09:58:55+00:00",
-      "wordCount": 2454,
-      "timeRequired": "PT12M",
+      "wordCount": 2587,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -249,8 +249,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2454 words
+                        13 min read
+                        &nbsp;·&nbsp; 2587 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -390,6 +390,24 @@ Below roughly a few thousand dollars a month in GPU spend, the engineering cost 
 <h2 id="bottom-line">Bottom line</h2>
 <p>Spot capacity is the larger lever per hour, but it is only the larger lever per dollar once the engineering cost of a correct resume path is amortized across enough spend. Below that threshold, on-demand with working autoscaling and a warm pool is usually cheaper in total, and it is strictly simpler. Above it, spot with an interval longer than the checkpoint write time and a resume path that has been deliberately tested is the largest single cost reduction available.</p>
 <p>The action to take in the next 30 minutes: open your cloud billing console, filter to GPU instances for the last 30 days, and write down two numbers — total GPU spend and idle GPU-hours divided by total GPU-hours. If spend is high and utilization is low, the autoscaling fix comes first, because it requires no changes to training code and it is reversible. Only after utilization is under control is it worth evaluating whether spot pricing clears the crossover for your workload.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-in-local-currency-costs-that-surprise/">AI in local currency: costs that surprise…</a></li>
+<li><a href="https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/">Spot evictions: the retry logic that holds up</a></li>
+<li><a href="https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/">Kubernetes or Nomad: the real experiment cost split</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -425,13 +443,13 @@ Below roughly a few thousand dollars a month in GPU spend, the engineering cost 
                     <a class="related-card" href="/who-signs-off-on-ai-code/">
                         <h3>Who signs off on AI code?</h3>
                         <p>AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</p>
-                        <span class="related-meta">11 min read · 2 October 2026</span>
+                        <span class="related-meta">12 min read · 2 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agent-architecture-the-new-model-trap/">
                         <h3>Agent architecture: the new model trap</h3>
                         <p>Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</p>
-                        <span class="related-meta">16 min read · 27 September 2026</span>
+                        <span class="related-meta">17 min read · 27 September 2026</span>
                     </a>
                     
                 </div>

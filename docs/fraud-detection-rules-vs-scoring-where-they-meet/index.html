@@ -1,0 +1,526 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fraud detection: rules vs scoring, where they meet - Kubai Kevin</title>
+        <meta name="description" content="How to split fraud decisions between a deterministic rules gate and a calibrated scoring model, with a worked three-layer architecture and audit trail.">
+        <meta name="keywords" content="FraudDetection, RulesEngine, Fraud, RiskScoringModel, Machinelearning">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-04T11:01:21.830716">
+        <meta property="article:modified_time" content="2026-10-04T11:04:49.717439+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Fraud detection: rules vs scoring, where they meet">
+        <meta property="og:description" content="How to split fraud decisions between a deterministic rules gate and a calibrated scoring model, with a worked three-layer architecture and audit trail.">
+        <meta property="og:url" content="https://kubaik.github.io/fraud-detection-rules-vs-scoring-where-they-meet/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/fraud-detection-rules-vs-scoring-where-they-meet.png">
+        <meta property="og:image:alt" content="Fraud detection: rules vs scoring, where they meet">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Fraud detection: rules vs scoring, where they meet">
+        <meta name="twitter:description" content="How to split fraud decisions between a deterministic rules gate and a calibrated scoring model, with a worked three-layer architecture and audit trail.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/fraud-detection-rules-vs-scoring-where-they-meet.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/fraud-detection-rules-vs-scoring-where-they-meet/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/fraud-detection-rules-vs-scoring-where-they-meet/#article",
+      "headline": "Fraud detection: rules vs scoring, where they meet",
+      "description": "How to split fraud decisions between a deterministic rules gate and a calibrated scoring model, with a worked three-layer architecture and audit trail.",
+      "datePublished": "2026-10-04T11:01:21+00:00",
+      "dateModified": "2026-10-04T11:04:49+00:00",
+      "wordCount": 3357,
+      "timeRequired": "PT17M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/fraud-detection-rules-vs-scoring-where-they-meet/"
+      },
+      "keywords": "FraudDetection, RulesEngine, Fraud, RiskScoringModel, Machinelearning"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Fraud detection: rules vs scoring, where they meet",
+          "item": "https://kubaik.github.io/fraud-detection-rules-vs-scoring-where-they-meet/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Fraud detection: rules vs scoring, where they meet</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Fraud detection: rules vs scoring, where they meet</h1>
+                
+                <p class="post-lead">How to split fraud decisions between a deterministic rules gate and a calibrated scoring model, with a worked three-layer architecture and audit trail.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">FraudDetection</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">RulesEngine</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Fraud</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">RiskScoringModel</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/machinelearning/"
+                       style="text-decoration:none;">Machinelearning</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        17 min read
+                        &nbsp;·&nbsp; 3357 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Fraud detection systems tend to converge on the same shape: a <strong>rules engine</strong> that evaluates explicit, human-authored conditions, and a <strong>scoring model</strong> that outputs a continuous risk number. The two are usually described as competing approaches. In practice they solve different problems, and most production incidents come from the boundary between them rather than from either component in isolation.</p>
+<p>The boundary is not a matter of taste. It is determined by three properties: how fast the decision must be made, who owns the explanation when a customer complains, and whether the underlying pattern is stable enough to survive a model retrain. Get the boundary wrong in either direction and two classic failure modes appear: a rules engine that grows into a decision tree nobody can reason about, or a model that blocks legitimate customers with no audit trail a support agent can read.</p>
+<p>This article is about where to draw that line, how to move signals across it, and what to do when the line has to move later.</p>
+<h2 id="the-failure-sequence">The failure sequence</h2>
+<p>Most tutorials introduce fraud detection as a machine learning problem: get a dataset, train a classifier, deploy it. That framing is incomplete in a way that tends to surface months later. A typical progression:</p>
+<ol>
+<li><strong>Early:</strong> A simple rules engine ships. <code>if amount &gt; threshold: flag</code>. It works.</li>
+<li><strong>A few months in:</strong> Fraudsters adapt. More rules get added. Then exceptions to rules.</li>
+<li><strong>Later:</strong> The rules engine has hundreds of rules, some of them contradict each other, and nobody can determine which one fired for a given transaction without replaying the whole chain.</li>
+<li><strong>Then:</strong> Someone proposes a model. It performs better on the offline dataset. It ships.</li>
+<li><strong>Finally:</strong> The model blocks a customer who calls support. Support cannot explain why. Compliance asks for the reason. Nobody can produce it.</li>
+</ol>
+<p>Steps 3 and 5 look like failures of the <em>approach</em> ("rules are bad", "models are opaque") when they are actually failures of <em>architecture</em>. A rules engine with 400 rules is not a rules engine problem; it is a missing scoring layer. A model with no explanation is not a model problem; it is a missing rules layer for the audit path.</p>
+<p>The two components solve different problems. Rules encode <strong>policy</strong> — things a human decided, that must be explainable and must not drift. Models encode <strong>pattern</strong> — statistical regularities that change over time and are too complex to write by hand. Policy and pattern are both real. A system that only does one will eventually need the other.</p>
+<h2 id="a-mental-model-and-where-it-breaks">A mental model, and where it breaks</h2>
+<p>Consider a hospital triage desk. At the front door, a nurse applies a short checklist: is the patient breathing, is there visible bleeding, is there chest pain. That checklist is fast, deterministic, and identical for every patient. It is a <strong>rules engine</strong>. Its job is not to diagnose; it is to route and to catch obvious emergencies before they wait in line.</p>
+<p>Behind the desk, a doctor runs tests and forms a probability of what is wrong. That is a <strong>scoring model</strong>. It is slower, it weighs many weak signals, and its output is a number ("80% likely pneumonia"), not a yes/no.</p>
+<p>The analogy breaks down in one important way: in a hospital, the nurse and doctor are different people with different training. In a fraud system, the rules engine and the model are both code, and the interesting design question is what the rules engine does with the model's output — and vice versa.</p>
+<p>There are three canonical arrangements:</p>
+<p><strong>Rules-then-score.</strong> The rules engine runs first and short-circuits. If a rule fires with a hard block, the model never runs. This is the cheapest arrangement and the most common. It is right when some conditions are genuinely non-negotiable (a sanctioned jurisdiction, a device fingerprint on a denylist) and running a model on them wastes latency and compute.</p>
+<p><strong>Score-then-rules.</strong> The model runs first, produces a risk score, and the rules engine interprets that score against policy thresholds. "If score ≥ 0.9, hold for review. If 0.7–0.9, allow but require step-up authentication." This is the arrangement that scales, because the rules become a thin policy layer over a rich signal.</p>
+<p><strong>Interleaved.</strong> The model consumes rule outputs as features ("did the velocity rule fire?") and the rules consume model outputs as conditions. This is the most powerful and the hardest to debug, because the two systems now have a feedback loop. Teams often arrive here by accident rather than by design, and it is worth being deliberate about it.</p>
+<p>Most production systems are best served by <strong>score-then-rules</strong> with a small <strong>rules-then-score</strong> gate in front for genuinely non-negotiable cases. The rest of this article is about why, and how to build it.</p>
+<h2 id="a-worked-example">A worked example</h2>
+<p>Assume a payments API handling card-not-present transactions. Latency budget for the fraud check is 150 ms p99 — this is an illustrative budget, not a measured one; substitute your own. The system has three inputs available synchronously: the transaction payload, a device fingerprint, and a customer history lookup from a fast store (for example, a key-value cache with single-digit-millisecond reads).</p>
+<p>Start with the rules gate. These are policy, not pattern. They are the conditions you would be uncomfortable explaining to a regulator if you did not have them:</p>
+<pre><code class="language-python"># rules_gate.py — pure functions, no I/O, deterministic
+# Each rule returns (fired: bool, reason_code: str)
+
+def hard_block_rules(txn, device, history):
+    reasons = []
+
+    # Policy: sanctioned jurisdictions
+    if txn['billing_country'] in SANCTIONED_COUNTRIES:
+        reasons.append('SANCTIONED_JURISDICTION')
+
+    # Policy: device on a shared denylist
+    if device['fingerprint'] in DENYLISTED_FINGERPRINTS:
+        reasons.append('DENYLISTED_DEVICE')
+
+    # Policy: card reported stolen in the last 24h
+    if history.get('card_reported_stolen_at') and \
+       (now() - history['card_reported_stolen_at']) &lt; timedelta(hours=24):
+        reasons.append('CARD_REPORTED_STOLEN')
+
+    return reasons
+</code></pre>
+<p>Note what these rules are <em>not</em>: they are not "amount &gt; $500", not "velocity &gt; 5/hour", not "country mismatch". Those are pattern signals. They belong in the model, or as features feeding the score, because the right threshold for them changes with the fraud landscape and with your customer base. A hard-coded <code>amount &gt; $500</code> block is a rule masquerading as policy, and it will be the rule that blocks a legitimate customer buying a laptop and generates a support ticket nobody can resolve.</p>
+<p>Now the scoring layer. The model takes features derived from the transaction, device, and history, and outputs a probability. The exact model is out of scope — logistic regression, gradient-boosted trees, and small neural nets are all used in production — but the interface matters:</p>
+<pre><code class="language-python"># scorer.py — wraps the model, returns a calibrated score
+
+def score_transaction(txn, device, history):
+    features = build_features(txn, device, history)
+    # model.predict_proba returns P(fraud) in [0, 1]
+    score = model.predict_proba(features)[0, 1]
+    return score, features  # return features for the audit log
+</code></pre>
+<p>Two things about that return value. First, it returns the features alongside the score. In an audit or dispute, "the model said 0.87" is useless; "the model said 0.87 because the device was new, the email domain was 3 days old, and the shipping address was 400 km from the billing address" is a reason a human can evaluate. Second, the score must be <strong>calibrated</strong> — meaning a score of 0.8 should correspond to roughly an 80% empirical fraud rate in that band. An uncalibrated model's thresholds are meaningless, and this is one of the most common reasons a model that "looks good offline" produces nonsense in production.</p>
+<p>Now the policy layer that interprets the score:</p>
+<pre><code class="language-python"># policy.py — the only place thresholds live
+
+def decide(score, hard_block_reasons):
+    if hard_block_reasons:
+        return Decision(action='BLOCK',
+                        reason_codes=hard_block_reasons,
+                        source='rules')
+
+    if score &gt;= 0.90:
+        return Decision(action='HOLD_FOR_REVIEW',
+                        reason_codes=['HIGH_RISK_SCORE'],
+                        source='model',
+                        score=score)
+    if score &gt;= 0.70:
+        return Decision(action='ALLOW_WITH_STEP_UP',
+                        reason_codes=['ELEVATED_RISK_SCORE'],
+                        source='model',
+                        score=score)
+    return Decision(action='ALLOW', source='model', score=score)
+</code></pre>
+<p>That is the entire architecture in three files. The rules gate handles policy and short-circuits. The model handles pattern. The policy layer is the only place where thresholds live, which means when a business stakeholder says "we are getting too many step-ups", there is exactly one file to change, and the change is a diff a non-engineer can review.</p>
+<h3 id="what-this-buys-you">What this buys you</h3>
+<ul>
+<li><strong>Explainability for free.</strong> Every decision carries <code>source</code> and <code>reason_codes</code>. Support can read them. Compliance can read them. The dispute team can read them.</li>
+<li><strong>Independent evolution.</strong> The model can be retrained on its own cadence without touching the rules. The thresholds can be tuned without retraining the model.</li>
+<li><strong>A clean audit boundary.</strong> When a regulator asks "why was this transaction blocked", the answer is either a named policy rule or a score with its top contributing features. Both are defensible.</li>
+</ul>
+<h3 id="what-it-costs-you">What it costs you</h3>
+<ul>
+<li><strong>Two systems to operate.</strong> The model needs a feature pipeline, a training loop, and monitoring for drift. The rules need a config store and a way to test changes before they ship.</li>
+<li><strong>A boundary to maintain.</strong> The temptation to add "just one more rule" to the gate is constant, and each one erodes the model's value. Discipline here is a real ongoing cost.</li>
+</ul>
+<h2 id="how-this-connects-to-systems-you-already-know">How this connects to systems you already know</h2>
+<p>If you have worked with web application firewalls, this is the same shape. A WAF has a rule set (explicit signatures, blocklists) and increasingly a scoring component (anomaly scores, bot-detection heuristics). The rules catch the known-bad; the score catches the unusual. The operational lesson from WAFs transfers directly: rule sets rot, and the teams that survive treat rules as a small, curated, versioned artifact rather than an append-only log.</p>
+<p>If you have worked with authorization systems, the parallel is even closer. Role-based access control is a rules engine — explicit, auditable, and deliberately boring. Attribute-based access control and policy-as-code engines add a scoring-like evaluation over attributes. The same tension appears: explicit rules are easy to reason about individually and impossible to reason about collectively once there are hundreds; attribute-based evaluation scales but is harder to explain. Fraud detection is authorization's messier cousin.</p>
+<p>If you have worked with rate limiters, the analogy is about placement. A rate limiter at the edge is a rules gate — cheap, fast, blunt. A rate limiter that adapts to traffic shape is a scoring layer. The adaptive one does not sit in front of the cheap one, because the cheap one exists to protect the expensive one. Same here: the rules gate protects the model from having to run on traffic that is already decided.</p>
+<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<p><strong>"Models are more accurate, so we should replace the rules."</strong> Accuracy on a static dataset is not correctness in production. Some conditions are not statistical questions. "Is this country sanctioned?" has a deterministic answer and a legal requirement attached. A model that gets it right 99.9% of the time is a compliance failure 0.1% of the time, which is unacceptable when the cost is a regulatory finding. Keep the non-negotiable rules as rules.</p>
+<p><strong>"Rules are explainable, models are not."</strong> Only the first half is reliably true. A model can be made explainable enough for most operational purposes — feature attributions, decision-path extraction for tree ensembles, or simply logging the top contributing features alongside the score. The reason models feel opaque is usually that nobody instrumented them, not that they are inherently unexplainable. Conversely, a rules engine with 400 interacting rules is not explainable in any useful sense; a support agent cannot hold 400 rules in their head either.</p>
+<p><strong>"We can start with rules and add a model later."</strong> True, but the migration is harder than it looks if you did not design for it. The teams that migrate cleanly are the ones that kept their rules as pure functions with a clear input/output contract, so the model can be dropped in behind the same interface. Teams that embedded rules directly into request handlers and database queries end up rewriting.</p>
+<p><strong>"The score is the decision."</strong> The score is an input to the decision. The decision is policy. Conflating them means every threshold change requires a model redeploy, which is slow, risky, and couples two teams that should be independent.</p>
+<p><strong>"More features means a better model."</strong> More features means more ways to leak future information into training (label leakage), more drift surface, and more latency at inference. The feature set should be the smallest set that carries the signal, and every feature should have a documented reason for existing.</p>
+<h2 id="measuring-the-things-that-matter">Measuring the things that matter</h2>
+<p>Because fraud systems are evaluated against moving targets, the useful discipline is knowing what to instrument before you argue about architecture.</p>
+<ul>
+<li><strong>Score calibration.</strong> Bin live scores into deciles and compare the predicted fraud rate in each bin to the observed rate. A reliability diagram is the standard visualization. If the 0.8–0.9 bin is not roughly 80–90% fraud, your thresholds are lying to you.</li>
+<li><strong>Rule hit rates over time.</strong> Log every rule firing with a timestamp. A rule whose hit rate decays toward zero is either obsolete or being evaded. Both are worth a decision.</li>
+<li><strong>Counterfactual coverage.</strong> For every decision, log the score and the rule outcomes even when the gate short-circuited. Without this, you cannot answer "what would the model have said" after the fact.</li>
+<li><strong>Latency percentiles per layer.</strong> Measure the gate and the model separately at p50, p95, and p99. If the model's p99 is near your budget, the gate is protecting you more than you think.</li>
+<li><strong>Review outcomes as a proxy label.</strong> Manual review decisions arrive faster than chargebacks and are biased, but they are still the earliest signal that the score distribution has moved.</li>
+</ul>
+<p>None of these require a specific vendor or platform. They require that the decision path emits structured events, which is an argument for the three-file shape above: a pure gate, a model wrapper that returns its features, and a policy layer that stamps the final decision with its source.</p>
+<h2 id="the-advanced-version">The advanced version</h2>
+<p>Once the basic three-layer architecture is in place, three refinements matter.</p>
+<p><strong>Shadow scoring.</strong> Run the model in parallel with the live decision without acting on its output, and log both. This lets you evaluate a new model or a new threshold against real traffic before it affects anyone. It also gives you the counterfactual data you need to answer "what would have happened if we had blocked at 0.8 instead of 0.9".</p>
+<p><strong>Feedback loops and label delay.</strong> Fraud labels arrive late — a chargeback may land 60 to 120 days after the transaction. This means the model is always training on a partially-labeled past. The practical implication is that you need a strategy for the unlabeled recent window: either exclude it, or use a proxy label (manual review outcomes, customer complaints) with the understanding that it is biased. Teams that ignore label delay end up with a model that is excellent at detecting last quarter's fraud.</p>
+<p><strong>Adversarial drift.</strong> Fraudsters adapt to your rules. A rule that fires today may be neutralized tomorrow by a small change in behavior. This is an argument for keeping the rules gate small and monitoring rule hit rates. It is also an argument for not putting adaptive signals in the rules gate, where they are easy to observe and reverse-engineer.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Rules engine</th>
+<th>Scoring model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Encodes</td>
+<td>Policy, legal requirements, known-bad lists</td>
+<td>Statistical pattern</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>Boolean + reason code</td>
+<td>Calibrated probability</td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>Microseconds to low milliseconds</td>
+<td>Milliseconds to tens of milliseconds</td>
+</tr>
+<tr>
+<td>Changes when</td>
+<td>Policy changes</td>
+<td>Pattern drifts</td>
+</tr>
+<tr>
+<td>Owner</td>
+<td>Risk / compliance / product</td>
+<td>Data science / ML engineering</td>
+</tr>
+<tr>
+<td>Failure mode</td>
+<td>Rule sprawl, contradictions</td>
+<td>Silent drift, uncalibrated scores</td>
+</tr>
+<tr>
+<td>Audit story</td>
+<td>Named rule fired</td>
+<td>Score + top contributing features</td>
+</tr>
+<tr>
+<td>Where it sits</td>
+<td>Front gate (short-circuit)</td>
+<td>Behind the gate, feeds policy layer</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The boundary rule of thumb:</strong> if you would be uncomfortable explaining the condition to a regulator, a customer, or a journalist, it belongs in the rules gate. If it is a statistical regularity you would struggle to write down precisely, it belongs in the model. Everything in between is a judgment call, and the judgment should be made once, documented, and revisited on a schedule.</p>
+<p><strong>The three files:</strong> <code>rules_gate.py</code> (pure, deterministic, no I/O), <code>scorer.py</code> (model wrapper, returns score + features), <code>policy.py</code> (the only place thresholds live). If your system does not have an equivalent of <code>policy.py</code>, that is the gap.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>How do I decide which rules go in the hard-block gate?</strong></p>
+<p>Ask three questions. Is the condition a matter of policy rather than pattern? Is the cost of a false positive acceptable given the legal or compliance exposure of a false negative? And would the condition still be correct if the fraud landscape changed completely tomorrow? If all three are yes, it belongs in the gate. If any is no, it is a signal for the model. The gate should be small — a handful of rules, not dozens.</p>
+<p><strong>Why does my model perform well offline but poorly in production?</strong></p>
+<p>The three usual causes, in order of frequency: label leakage (a feature that encodes the answer, often a timestamp or an ID that correlates with the label), distribution shift (training data does not match live traffic), and uncalibrated scores (the ranking is fine but the absolute probabilities are wrong, so thresholds behave unexpectedly). Check calibration first, because it is the easiest to verify and the most common cause of "the model is bad" when the model is actually fine and the thresholds are wrong.</p>
+<p><strong>Can I run the model before the rules instead?</strong></p>
+<p>You can, and for some systems it is correct — particularly when the model is cheap and the rules are expensive (for example, rules that require an external API call). But if any of your rules are genuinely non-negotiable, running the model first means you pay the model's latency and cost on transactions that will be blocked anyway. For most payment systems, the gate-first arrangement is cheaper and the latency budget is the binding constraint.</p>
+<p><strong>How often should I retrain the model?</strong></p>
+<p>It depends on how fast the pattern moves, which you can measure by tracking score distribution drift over time. A practical starting point is to retrain on a fixed cadence and additionally trigger a retrain when the score distribution shifts beyond a threshold you define. The cadence matters less than having monitoring that tells you when the cadence is wrong.</p>
+<p><strong>How do I get started without a labeled dataset?</strong></p>
+<p>Begin with the gate and the policy layer, and log every decision with structured events. That logging becomes the training data for the first model, and shadow scoring lets you evaluate that model before it acts. The architecture does not depend on having a model on day one; it depends on having a place where the model will eventually go.</p>
+<h2 id="your-next-30-minutes">Your next 30 minutes</h2>
+<p>Open your fraud decision code and find the single place where a transaction becomes a block, a hold, or an allow. If that logic is spread across multiple files, handlers, or database triggers — if there is no single policy module — that is your gap. Write down every condition currently in that path and mark each one as "policy" or "pattern". The pattern ones are the candidates for a scoring layer, and the policy ones are your gate. You do not need to build the model today; you need to know where the boundary is.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-model-poisoning-3-real-attacks-on-datasets/">AI model poisoning: 3 real attacks on datasets</a></li>
+<li><a href="https://kubaik.github.io/why-do-production-agents-still-need-humans/">Why do production agents still need humans?</a></li>
+<li><a href="https://kubaik.github.io/agent-platform-abstractions-a-case-study/">Agent platform abstractions: a case study</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/why-does-my-model-drift-after-deploy/">
+                        <h3>Why ML Models Drift After Deployment</h3>
+                        <p>Offline validation rarely matches production traffic. Learn the evaluation gap, how to measure drift, and concrete checks to add before your next deploy.</p>
+                        <span class="related-meta">16 min read · 11 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

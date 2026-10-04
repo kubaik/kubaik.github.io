@@ -64,8 +64,8 @@
       "description": "Three pipeline-level causes of user-visible LLM drift, how to instrument each one, and how to verify the fix with metrics rather than vibes.",
       "datePublished": "2026-08-28T21:56:56+00:00",
       "dateModified": "2026-10-04T10:11:07+00:00",
-      "wordCount": 3049,
-      "timeRequired": "PT15M",
+      "wordCount": 3176,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -261,8 +261,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3049 words
+                        16 min read
+                        &nbsp;·&nbsp; 3176 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -540,6 +540,23 @@ def build_cache_key(user_id: str, prompt: str) -&gt; str:
 <p>The key grows by a few dozen bytes and the lookup cost is unchanged. The real cost is operational: every rollout must bump the version, which requires a single source of truth for the deployed model, template, and index versions. That source of truth is the actual deliverable.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick one endpoint that calls an LLM and add token counting in front of the model call. Log the input token count with a timestamp. Do not add an alert yet — just collect data for a day. Tomorrow, compute the p99 for that endpoint and compare it to the documented context limit minus your response reserve. If the p99 is within 20% of the budget, you have found a latent truncation risk before a user did.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-drift-the-failure-mode-you-didnt-log/">Agent drift: the failure mode you didn't log</a></li>
+<li><a href="https://kubaik.github.io/why-does-my-model-drift-after-deploy/">Why ML Models Drift After Deployment</a></li>
+<li><a href="https://kubaik.github.io/ship-evals-before-your-agent-ships/">Ship evals before your agent ships</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -575,13 +592,13 @@ def build_cache_key(user_id: str, prompt: str) -&gt; str:
                     <a class="related-card" href="/multi-agent-systems-when-they-quietly-degrade/">
                         <h3>Multi-agent systems: when they quietly degrade</h3>
                         <p>Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
-                        <span class="related-meta">11 min read · 24 September 2026</span>
+                        <span class="related-meta">12 min read · 24 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/llm-drift-before-users-complain-catch-it-early/">
                         <h3>LLM drift before users complain: catch it early</h3>
                         <p>Track p99 latency, tokens per request, and cache hit rate against rolling baselines to catch LLM drift before users feel it.</p>
-                        <span class="related-meta">11 min read · 10 August 2026</span>
+                        <span class="related-meta">12 min read · 10 August 2026</span>
                     </a>
                     
                 </div>

@@ -64,7 +64,7 @@
       "description": "Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.",
       "datePublished": "2026-08-11T08:43:33+00:00",
       "dateModified": "2026-10-04T10:46:07+00:00",
-      "wordCount": 2364,
+      "wordCount": 2494,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2364 words
+                        &nbsp;·&nbsp; 2494 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -450,6 +450,23 @@ No. Set timeouts per endpoint based on observed latency distributions. A health 
 A common starting point is a 2-second connect timeout and a read timeout set above the endpoint's observed p99. Measure first, then set the bound with headroom, and revisit when the service's latency profile changes.</p>
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Open the module that wraps outbound HTTP calls in your agent — commonly <code>clients/http.py</code>, <code>utils/network.py</code>, or an equivalent. Grep for every call site that constructs a request without a timeout argument. For each one, add an explicit connect and read timeout, choosing the read value from the endpoint's observed p99 plus headroom. Then run one synthetic delay against a single endpoint and confirm the client aborts at the configured bound and logs the exception. That single verified abort proves the timeout path is wired correctly end to end.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
+<li><a href="https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
+<li><a href="https://kubaik.github.io/survive-network-drops-agentic-workflows-that-keep-running/">Survive network drops: agentic workflows that keep running</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -479,7 +496,7 @@ A common starting point is a 2-second connect timeout and a read timeout set abo
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
                         <p>Design retry caps, DLQs, and alerts so a poison message is isolated in seconds. Includes working Redis Queue code and pytest tests.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <span class="related-meta">15 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
@@ -491,7 +508,7 @@ A common starting point is a 2-second connect timeout and a read timeout set abo
                     <a class="related-card" href="/cost-tools-fail-when-agents-scale-autonomously/">
                         <h3>Cost tools fail when agents scale autonomously</h3>
                         <p>Autonomous scaling agents decide faster than hourly cost reports can explain. Here is how to instrument cost per scaling decision and where the feedback loop breaks.</p>
-                        <span class="related-meta">10 min read · 9 September 2026</span>
+                        <span class="related-meta">11 min read · 9 September 2026</span>
                     </a>
                     
                 </div>

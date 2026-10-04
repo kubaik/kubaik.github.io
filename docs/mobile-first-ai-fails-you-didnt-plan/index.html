@@ -64,8 +64,8 @@
       "description": "Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.",
       "datePublished": "2026-08-26T17:38:26+00:00",
       "dateModified": "2026-10-04T10:45:17+00:00",
-      "wordCount": 2383,
-      "timeRequired": "PT12M",
+      "wordCount": 2508,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2383 words
+                        13 min read
+                        &nbsp;·&nbsp; 2508 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -480,6 +480,23 @@ Use <code>navigator.connection.effectiveConnectionType</code> together with <cod
 There is no universal answer. Build a small evaluation set from real user prompts, then measure quality and latency at each candidate size. Pick the smallest model that clears your quality bar on that set. Comparing sizes on a public benchmark that does not match your language or domain will mislead you.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick one production AI endpoint and run the curl timing command from a tethered phone on your primary carrier. Record <code>time_appconnect</code>, <code>time_starttransfer</code>, and <code>size_download</code>, then compute the per-request data cost from your local price per gigabyte. That single measurement tells you whether your bottleneck is the network, the cold start, or the device — and which of the fixes above is worth your next sprint.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/">Starlink 4G fallback: serve pages under 800ms</a></li>
+<li><a href="https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
+<li><a href="https://kubaik.github.io/offline-first-apps-what-3g-markets-taught-us/">Designing Offline-First Apps for Unreliable Networks</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://react.dev/">React documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>

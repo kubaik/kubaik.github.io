@@ -64,8 +64,8 @@
       "description": "Why cron and ad-hoc retries break multi-step agent workflows, and how durable execution runtimes model retries, idempotency, and compensation.",
       "datePublished": "2026-09-03T16:05:45+00:00",
       "dateModified": "2026-10-04T10:30:14+00:00",
-      "wordCount": 2992,
-      "timeRequired": "PT15M",
+      "wordCount": 3139,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -258,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2992 words
+                        16 min read
+                        &nbsp;·&nbsp; 3139 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -713,6 +713,27 @@ It sits in front of it. The queue delivers a message, a small handler starts a w
 Yes. Set a <code>workflowExecutionTimeout</code> for the overall bound and a <code>workflowRunTimeout</code> for a single run if the workflow can be continued-as-new. Without a timeout, a workflow waiting on something that never arrives runs indefinitely.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick one workflow in your system that has more than two sequential side-effecting steps. Write down, for each step, what happens if it succeeds and a later step fails. If any step's answer is "we would have to clean that up manually," you have found the exact place where a durable execution runtime earns its keep — and you have a concrete test case to write before you migrate anything.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agents-keep-breaking-prod-3-boundary-rules-you-still-need/">Agents keep breaking prod: 3 boundary rules you still need</a></li>
+<li><a href="https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/">Stopping a runaway polling agent from flooding your API</a></li>
+<li><a href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://docs.temporal.io/">Temporal documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -742,13 +763,13 @@ Yes. Set a <code>workflowExecutionTimeout</code> for the overall bound and a <co
                     <a class="related-card" href="/agent-platform-abstractions-a-case-study/">
                         <h3>Agent platform abstractions: a case study</h3>
                         <p>Why agent failures are platform failures: typed tool contracts, durable execution, and structured traces that make runs replayable and retries safe.</p>
-                        <span class="related-meta">10 min read · 16 September 2026</span>
+                        <span class="related-meta">11 min read · 16 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/cost-tools-fail-when-agents-scale-autonomously/">
                         <h3>Cost tools fail when agents scale autonomously</h3>
                         <p>Autonomous scaling agents decide faster than hourly cost reports can explain. Here is how to instrument cost per scaling decision and where the feedback loop breaks.</p>
-                        <span class="related-meta">10 min read · 9 September 2026</span>
+                        <span class="related-meta">11 min read · 9 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/hybrid-cloud-routing-cost-speed-balance-for-sea/">

@@ -64,7 +64,7 @@
       "description": "Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.",
       "datePublished": "2026-08-24T12:59:05+00:00",
       "dateModified": "2026-10-04T10:46:55+00:00",
-      "wordCount": 2360,
+      "wordCount": 2486,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2360 words
+                        &nbsp;·&nbsp; 2486 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -410,6 +410,23 @@ Action:        reconcile role before resuming
 <p><strong>How do guardrails interact with existing policy-as-code tools?</strong> They are complementary. Deterministic policy engines are good at enforcing hard invariants and are cheap to run on every change. Model-based review is better at explaining <em>why</em> a rule exists and at flagging patterns a rule has not yet been written for. Use the deterministic layer as the enforcement mechanism and the model-based layer as the explanation and discovery mechanism.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Pick the resource type involved in your most recent rollback and write down the single invariant it violated — for example, "this role must not have write access outside its own bucket prefix." Then find the cheapest deterministic check that would have caught it: a policy linter rule, a schema constraint, or a one-line script in your CI pipeline. Add that check to a single repository as a non-blocking warning, and log how often it fires over the next week. That log is your first real data point on whether guardrails will pay for themselves in your environment.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/scope-agent-permissions-per-task/">Scope agent permissions per task</a></li>
+<li><a href="https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/">Self-service AI tooling: where it breaks first</a></li>
+<li><a href="https://kubaik.github.io/internal-developer-platform-adoption-traps/">Internal developer platform: adoption traps</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -445,7 +462,7 @@ Action:        reconcile role before resuming
                     <a class="related-card" href="/scope-agent-permissions-per-task/">
                         <h3>Scope agent permissions per task</h3>
                         <p>Most agent permission models fail because credentials are scoped to the agent, not the task. Here is how to issue short-lived, task-scoped tokens and what to measure.</p>
-                        <span class="related-meta">19 min read · 19 September 2026</span>
+                        <span class="related-meta">20 min read · 19 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/platform-engineering-roi-metrics-that-fund-teams/">

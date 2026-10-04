@@ -64,8 +64,8 @@
       "description": "Design an offline-first field agent: local state machine, durable sync queue, conflict resolution, and honest ways to measure latency and battery.",
       "datePublished": "2026-07-16T02:51:18+00:00",
       "dateModified": "2026-10-04T10:53:51+00:00",
-      "wordCount": 2572,
-      "timeRequired": "PT13M",
+      "wordCount": 2705,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -258,8 +258,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2572 words
+                        14 min read
+                        &nbsp;·&nbsp; 2705 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -587,6 +587,25 @@ describe('syncWorker', () =&gt; {
 <p>Both, with different responsibilities. A foreground worker triggered by connectivity changes gives the rider immediate feedback and handles the common case. A background task (Android WorkManager, iOS BGTaskScheduler) catches up when the app is not open, but it is subject to OS scheduling limits and battery restrictions. Design the queue so it is idempotent and resumable, then let either worker drain it — that way a killed background task never loses data or double-applies a mutation.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Open <code>src/workers/syncWorker.ts</code> and add a counter that records the serialized payload size of each batch and the round-trip time of each <code>/sync</code> call. Run the sync through a 2G proxy for ten minutes and print the p99. Then use the formula above to pick a batch size and confirm the p99 fits your budget. That is the single change that turns a guess about offline performance into a measurement.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/offline-first-apps-what-3g-markets-taught-us/">Designing Offline-First Apps for Unreliable Networks</a></li>
+<li><a href="https://kubaik.github.io/offline-agent-workflows-for-last-mile-ops/">Offline agent workflows for last-mile ops</a></li>
+<li><a href="https://kubaik.github.io/offline-agents-local-first-sync-patterns/">Offline Agents: Local-First Sync Patterns</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://react.dev/">React documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -616,13 +635,13 @@ describe('syncWorker', () =&gt; {
                     <a class="related-card" href="/mobile-first-ai-fails-you-didnt-plan/">
                         <h3>Mobile-first AI fails you didn’t plan…</h3>
                         <p>Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.</p>
-                        <span class="related-meta">12 min read · 26 August 2026</span>
+                        <span class="related-meta">13 min read · 26 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/why-progressive-web-apps-fail-on-2g-and-how-to-fix/">
                         <h3>Why progressive web apps fail on 2G and how to fix…</h3>
                         <p>How to audit and fix a progressive web app for 2G and 3G: transport, payload, rendering, caching, and a 30-minute first step.</p>
-                        <span class="related-meta">11 min read · 17 July 2026</span>
+                        <span class="related-meta">12 min read · 17 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/why-i-picked-playwright-and-vitest-in-2026/">

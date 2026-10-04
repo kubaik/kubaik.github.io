@@ -64,8 +64,8 @@
       "description": "AI scaffolds fast but skips connection pooling, retries, and cache headers. Here is how to add three safeguards and verify each one under load.",
       "datePublished": "2026-06-30T10:13:26+00:00",
       "dateModified": "2026-10-04T10:56:26+00:00",
-      "wordCount": 3012,
-      "timeRequired": "PT15M",
+      "wordCount": 3138,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -261,8 +261,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3012 words
+                        16 min read
+                        &nbsp;·&nbsp; 3138 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -526,6 +526,23 @@ curl -sI https://example.com/api/health | grep -i -E 'cache-control|cache-status
 <p>The three areas covered here — bounded resource use, failure isolation, and response hygiene — are not new. They predate the current generation of tooling by decades. What has changed is the ratio: the cost of producing code has fallen, so the share of an engineer's value that comes from producing it has fallen with it. What remains is judgement about how systems fail and what to do about it.</p>
 <p>That judgement is not demonstrated by a checklist alone. It is demonstrated by measurements: a latency curve that shows where the pool saturates, a breaker that opens and closes as configured, a cache status header that confirms an error was not stored. Each of those is something you can produce in an afternoon, and each one is evidence that the system was designed rather than merely generated.</p>
 <p><strong>Your next step, in the next 30 minutes:</strong> open the file that creates your database pool, set an explicit <code>max</code> value below your database's connection limit, and add a <code>/health</code> endpoint that returns <code>pool.totalCount</code>, <code>pool.idleCount</code>, and <code>pool.waitingCount</code>. Deploy it to staging and run a concurrent load against a route that queries the database. If <code>waitingCount</code> is above zero during the run, you have found your first bottleneck and you have the measurement to prove it.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/">Agent Systems: Circuit Breakers Are Not Enough</a></li>
+<li><a href="https://kubaik.github.io/ai-proof-your-mid-level-salary/">AI-proof your mid-level salary</a></li>
+<li><a href="https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/">AI-native apps break when you copy old rules</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -561,7 +578,7 @@ curl -sI https://example.com/api/health | grep -i -E 'cache-control|cache-status
                     <a class="related-card" href="/senior-engineer-title-inflation-in-2026/">
                         <h3>Senior engineer title inflation in 2026</h3>
                         <p>How AI-generated code changes senior-engineer expectations: residency-aware LLM gateways, retry budgets, audit logs, and verification you can run.</p>
-                        <span class="related-meta">10 min read · 13 August 2026</span>
+                        <span class="related-meta">11 min read · 13 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/aws-cloudwatch-synthetics-for-ai-pipelines/">

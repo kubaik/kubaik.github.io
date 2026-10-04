@@ -64,7 +64,7 @@
       "description": "Cold starts are a cost and consistency problem, not just latency. Learn how to measure latency-per-dollar and tune concurrency, memory, and architecture.",
       "datePublished": "2026-06-20T21:07:57+00:00",
       "dateModified": "2026-10-04T10:01:09+00:00",
-      "wordCount": 2337,
+      "wordCount": 2472,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2337 words
+                        &nbsp;·&nbsp; 2472 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -409,6 +409,24 @@ Only the native ones. Pure JavaScript and pure Python packages are architecture-
 Compute pricing for ARM64 is lower than x86_64 on the major platforms. The saving is a function of your memory and duration settings, so compute it from your own bill rather than applying a rule of thumb.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open the CloudWatch Logs for one production function and run a query that counts invocations with and without the <code>InitDuration</code> field over the last 24 hours. That single number — your cold-start ratio — tells you whether any of the levers above are worth your time. If the ratio is under a few percent, close the tab. If it is high, export the <code>InitDuration</code> distribution next and start with the free lever: moving initialization work out of the handler.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/">AI unit costs: the metric both teams fight over</a></li>
+<li><a href="https://kubaik.github.io/always-on-agents-cost-more-than-you-think/">Always-on agents cost more than you think</a></li>
+<li><a href="https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/">Always-On vs On-Demand Agents: Real Cost Trade-offs</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -438,13 +456,13 @@ Compute pricing for ARM64 is lower than x86_64 on the major platforms. The savin
                     <a class="related-card" href="/boring-aws-lambda-layers-that-dont-lock/">
                         <h3>Boring AWS Lambda layers that don’t lock…</h3>
                         <p>How to version, publish and reference Lambda layers so runtime upgrades, region moves and architecture changes don&amp;#x27;t break dependent functions.</p>
-                        <span class="related-meta">11 min read · 31 July 2026</span>
+                        <span class="related-meta">12 min read · 31 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/mobile-first-ai-fails-you-didnt-plan/">
                         <h3>Mobile-first AI fails you didn’t plan…</h3>
                         <p>Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.</p>
-                        <span class="related-meta">12 min read · 26 August 2026</span>
+                        <span class="related-meta">13 min read · 26 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/self-service-is-broken-without-ai-ops/">

@@ -64,7 +64,7 @@
       "description": "A practical framework for choosing between model routing, fine-tuning, and simply paying for a larger model, with code, cost math, and evaluation harnesses.",
       "datePublished": "2026-09-29T04:56:19+00:00",
       "dateModified": "2026-10-04T10:54:06+00:00",
-      "wordCount": 2542,
+      "wordCount": 2668,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -262,7 +262,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2542 words
+                        &nbsp;·&nbsp; 2668 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -503,6 +503,19 @@ def test_accuracy_above_threshold():
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>The framework, compressed: build the eval set first, route second, fine-tune third, and only if the numbers justify it. Every step is reversible except the fine-tune — a trained model is a deployment artifact with a maintenance cost. Routing is a config change. Prompts are strings. Treat the irreversible step with the caution it deserves.</p>
 <p>The next 30 minutes: open production logs and compute two numbers — monthly request volume and p50 latency. If volume is under 50,000, stop reading about fine-tuning and improve the prompt. If it is over 100,000, write the stratified train/eval split from Step 1 against 200 real queries, run the current prompt against the eval set, and record the baseline accuracy. That single number is what every subsequent decision gets measured against.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/llm-costs-fine-tune-vs-route-vs-bigger-model/">LLM costs: fine-tune vs route vs bigger model</a></li>
+<li><a href="https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/">Big model API vs fine-tune: the 2026 math</a></li>
+<li><a href="https://kubaik.github.io/ai-glue-code-3-ways-to-avoid-duct-taping-models/">AI glue code: 3 ways to avoid duct-taping models</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -544,7 +557,7 @@ def test_accuracy_above_threshold():
                     <a class="related-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
                         <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
                         <p>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
-                        <span class="related-meta">14 min read · 3 October 2026</span>
+                        <span class="related-meta">15 min read · 3 October 2026</span>
                     </a>
                     
                 </div>

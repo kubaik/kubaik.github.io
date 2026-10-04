@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-08T09:54:51.263546">
-        <meta property="article:modified_time" content="2026-10-04T10:28:54.557085+00:00">
+        <meta property="article:modified_time" content="2026-10-04T11:01:37.102720+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Offline-first money apps with DynamoDB Streams">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Offline-first money apps with DynamoDB Streams",
       "description": "Design an offline-first mobile-money sync pipeline on DynamoDB Streams: idempotency keys, conditional balance writes, DLQ handling, and how to measure it.",
       "datePublished": "2026-08-08T09:54:51+00:00",
-      "dateModified": "2026-10-04T10:28:54+00:00",
-      "wordCount": 2863,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-10-04T11:01:37+00:00",
+      "wordCount": 3000,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -245,8 +245,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2863 words
+                        15 min read
+                        &nbsp;·&nbsp; 3000 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -671,6 +671,26 @@ module.exports.handler = async (event) =&gt; {
 </ul>
 <h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
 <p>Open your wallet service and find the balance check for an offline transaction. If it reads the balance and then writes in a separate call, replace it with a single <code>TransactWriteItems</code> call that puts the ledger row and decrements the balance under a <code>#balance &gt;= :amount</code> condition — the code in Step 2 is a working template. Then write one test that calls the reconcile function twice with the same record and asserts that exactly one ledger row exists. That test is the difference between a queue that retries and a queue that double-debits.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/">Double-entry ledger: concurrent write errors</a></li>
+<li><a href="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
+<li><a href="https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -706,7 +726,7 @@ module.exports.handler = async (event) =&gt; {
                     <a class="related-card" href="/currency-switch-fails-in-ghana-one-config-file-to-rule/">
                         <h3>Currency switch fails in Ghana: one config file to rule…</h3>
                         <p>Mobile money providers put currency codes in different places. Learn a deterministic extraction, validation, and normalization pipeline that stops silent fallbacks.</p>
-                        <span class="related-meta">12 min read · 13 August 2026</span>
+                        <span class="related-meta">13 min read · 13 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/mobile-money-agent-fees-why-your-bot-keeps-failing/">

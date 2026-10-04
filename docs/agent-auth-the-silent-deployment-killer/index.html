@@ -64,7 +64,7 @@
       "description": "How agent identity breaks under jitter, power loss, and low-end devices, and the fallback, rotation, and caching patterns that keep auth working.",
       "datePublished": "2026-07-30T08:41:42+00:00",
       "dateModified": "2026-10-04T10:43:56+00:00",
-      "wordCount": 2538,
+      "wordCount": 2662,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -258,7 +258,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2538 words
+                        &nbsp;·&nbsp; 2662 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -579,6 +579,19 @@ fi
 <p>It requires reaching an authority in another region, adding a round trip on top of the handshake. A cross-region cache replicates identity documents with a short TTL so validation can happen locally. The trade-off is a revocation window: an identity revoked in one region may remain valid in another until the TTL expires.</p>
 <h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
 <p>Open your agent client and find the retry loop that handles authentication failures. Add a branch that stops retrying on any 4xx response and logs the token error reason separately from the status code. Then run a short load test against a slow-link profile and record the 403 count split by reason. That single change — distinguishing "retry because the network failed" from "never retry because policy rejected this" — removes a large class of self-inflicted load and gives you the data to decide whether anything else in this article applies to you.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-auth-where-the-docs-ended-up-lying/">Agent auth: where the docs ended up lying</a></li>
+<li><a href="https://kubaik.github.io/offline-agent-workflows-for-last-mile-ops/">Offline agent workflows for last-mile ops</a></li>
+<li><a href="https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/">Mobile money agent fees: why your bot keeps failing</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -608,19 +621,19 @@ fi
                     <a class="related-card" href="/multi-agent-systems-why-failures-hide/">
                         <h3>Multi-agent systems: why failures hide</h3>
                         <p>Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
-                        <span class="related-meta">12 min read · 18 September 2026</span>
+                        <span class="related-meta">13 min read · 18 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agents-running-hours-youre-losing-context-fast/">
                         <h3>Agents running hours? You&#39;re losing context fast</h3>
                         <p>How to bound prompt growth in long-running LLM agents using sliding windows, token-based eviction, priority tags, and cold storage.</p>
-                        <span class="related-meta">11 min read · 3 September 2026</span>
+                        <span class="related-meta">12 min read · 3 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ship-evals-before-your-agent-ships/">
                         <h3>Ship evals before your agent ships</h3>
                         <p>Agent evals fail when they only test the happy path. Build outcome-based evals from shadow traffic, wire them into CI, and catch regressions before users do.</p>
-                        <span class="related-meta">15 min read · 31 August 2026</span>
+                        <span class="related-meta">16 min read · 31 August 2026</span>
                     </a>
                     
                 </div>

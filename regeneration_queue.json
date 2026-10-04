@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "llm-evals-the-two-metrics-that-bite-you",
-    "title": "LLM evals: the two metrics that bite you",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this when we first rolled out a new “triage” LLM in our customer-supp",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "llm-output-metrics-that-actually-move-the-needle",
-    "title": "LLM output metrics that actually move the needle",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this the hard way in 2026 when we shipped a new summarization service",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "llm-risks-underestimated-in-owasp-top-10",
-    "title": "LLM risks underestimated in OWASP Top 10",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about hidden latency during a code review recently, and my ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "llmops-2026-evaluation-stack-that-replaced-rag-dashboards",
-    "title": "LLMOps 2026: evaluation stack that replaced RAG dashboards",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three weeks tuning the reranker threshold, only to discover the real iss",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "mobile-money-agent-fees-why-your-bot-keeps-failing",
-    "title": "Mobile money agent fees: why your bot keeps failing",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this cost reliability problem while migrating a service under a hard ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "observability-agents-lied-to-us",
     "title": "Observability agents lied to us",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on traditional observability before understand",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "offline-first-money-apps-with-dynamodb-streams",
     "title": "Offline-first money apps with DynamoDB Streams",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this offlinefirst eventual problem while migrating a service under a ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "portfolio-projects-that-hire-remote-senior-devs",
     "title": "Portfolio projects that hire remote senior devs",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about portfolio projects during a code review recently, and",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "prevent-ownership-drift-when-velocity-explodes",
     "title": "Prevent ownership drift when velocity explodes",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "price-tests-that-raised-revenue-vs-tests-that-killed",
     "title": "Price tests that raised revenue vs tests that killed…",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this pricing experiments problem while migrating a service under a ha",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "pydantic-2-redis-stop-the-3am-ai-pages",
@@ -631,6 +601,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "llm-evals-the-two-metrics-that-bite-you",
+    "title": "LLM evals: the two metrics that bite you",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this when we first rolled out a new “triage” LLM in our customer-supp",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "llm-output-metrics-that-actually-move-the-needle",
+    "title": "LLM output metrics that actually move the needle",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this the hard way in 2026 when we shipped a new summarization service",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "llm-risks-underestimated-in-owasp-top-10",
+    "title": "LLM risks underestimated in OWASP Top 10",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about hidden latency during a code review recently, and my ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "llmops-2026-evaluation-stack-that-replaced-rag-dashboards",
+    "title": "LLMOps 2026: evaluation stack that replaced RAG dashboards",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three weeks tuning the reranker threshold, only to discover the real iss",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "mobile-money-agent-fees-why-your-bot-keeps-failing",
+    "title": "Mobile money agent fees: why your bot keeps failing",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this cost reliability problem while migrating a service under a hard ",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "latency-spike-after-llm-feature-rollout",

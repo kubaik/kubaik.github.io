@@ -64,8 +64,8 @@
       "description": "Agent drift is a distribution failure, not a model failure. How to detect it with categorical signatures and PSI, and contain it with state guards.",
       "datePublished": "2026-09-18T08:41:59+00:00",
       "dateModified": "2026-10-04T10:20:14+00:00",
-      "wordCount": 2856,
-      "timeRequired": "PT14M",
+      "wordCount": 2994,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -252,8 +252,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2856 words
+                        15 min read
+                        &nbsp;·&nbsp; 2994 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -421,6 +421,26 @@ def enforce_sequence(history: list[str], next_tool: str) -&gt; bool:
 <p>When the agent handles fewer than roughly 1,000 decisions per day, when its action space changes frequently, or when drift is the intended behavior, as with adaptive recommenders. In those cases, use per-trace guards such as sequencing checks instead of distributional detection. The full PSI pipeline is generally overkill below roughly 10,000 decisions per day.</p>
 <h2 id="one-action-for-the-next-30-minutes">One action for the next 30 minutes</h2>
 <p>Open the agent's trace log and extract the last 500 decisions. For each one, write the tool name and the argument keys as a single string. Count the distinct strings. If the count is under a few hundred, the categorical drift detector described above is buildable today: that count is the signature space, and it is small enough that a key-value store and a PSI function will produce a usable signal within a week. Start with the sequencing guard, not the dashboard.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/">Postmortems for AI agents: drift, cost, replay</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://langchain-ai.github.io/langgraph/">LangGraph documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -450,7 +470,7 @@ def enforce_sequence(history: list[str], next_tool: str) -&gt; bool:
                     <a class="related-card" href="/agent-drift-why-prod-breaks-without-human-checkpoints/">
                         <h3>Agent drift: why prod breaks without human checkpoints</h3>
                         <p>Why agents pass staging and drift in production, and how to add confidence thresholds, escalation queues and compliance guards that make drift visible.</p>
-                        <span class="related-meta">14 min read · 1 September 2026</span>
+                        <span class="related-meta">15 min read · 1 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-observability-the-metrics-that-matter/">
@@ -462,7 +482,7 @@ def enforce_sequence(history: list[str], next_tool: str) -&gt; bool:
                     <a class="related-card" href="/ai-agent-postmortem-human-loop-vs-blind-replay/">
                         <h3>Postmortems for AI agents: human review vs blind replay</h3>
                         <p>Compare human-in-the-loop and deterministic-replay postmortems for AI agents, with a decision checklist and a 30-minute audit you can run today.</p>
-                        <span class="related-meta">15 min read · 20 June 2026</span>
+                        <span class="related-meta">16 min read · 20 June 2026</span>
                     </a>
                     
                 </div>

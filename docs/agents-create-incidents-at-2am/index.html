@@ -64,8 +64,8 @@
       "description": "Why autonomous agents that can open, mutate, or page on incidents cause 2am page storms, and how write boundaries and idempotent alerting fix it.",
       "datePublished": "2026-08-06T08:07:50+00:00",
       "dateModified": "2026-10-04T10:42:14+00:00",
-      "wordCount": 2255,
-      "timeRequired": "PT11M",
+      "wordCount": 2383,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -259,8 +259,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2255 words
+                        12 min read
+                        &nbsp;·&nbsp; 2383 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -453,6 +453,24 @@ class SafeTicketClient:
 <p>If any answer is "no," the agent should stay in the detector and router circles.</p>
 <h2 id="the-30-minute-action">The 30-minute action</h2>
 <p>Pick one agent that currently holds a write permission, and run the IAM policy simulation shown above against the single action you would least want it to perform — typically <code>sts:AssumeRole</code> on a broad resource, or a write action on your incident or issue system. If the result is <code>allowed</code> rather than <code>implicitDeny</code>, you have found a write boundary that is not actually enforcing anything. Attach a permissions boundary that excludes that action, re-run the simulation, and confirm the result flips. That is thirty minutes, and it converts an assumption into a verified constraint.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI-First vs Human-First Incident Response</a></li>
+<li><a href="https://kubaik.github.io/agentic-finops-is-a-trap/">Agentic FinOps is a trap</a></li>
+<li><a href="https://kubaik.github.io/track-ai-agent-costs-in-fractal-workflows/">Track AI agent costs in fractal workflows</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -488,7 +506,7 @@ class SafeTicketClient:
                     <a class="related-card" href="/prompt-injection-what-breaks-first-in-prod/">
                         <h3>Prompt injection: what breaks first in prod</h3>
                         <p>Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.</p>
-                        <span class="related-meta">14 min read · 27 September 2026</span>
+                        <span class="related-meta">15 min read · 27 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/computer-use-agents-the-permission-trap/">
