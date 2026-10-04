@@ -1,11 +1,5 @@
 {
-  "improved": [
-    {
-      "slug": "observability-2026-ditch-the-three-pillars",
-      "attempts": 3,
-      "retitled": false
-    }
-  ],
+  "improved": [],
   "failed": [
     {
       "slug": "drop-checklists-ai-code-reviews-that-scale",
